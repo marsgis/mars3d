@@ -5,7 +5,7 @@ MarsGIS for Cesium三维地球框架 是[火星科技](http://www.marsgis.cn/)�
  
 详情请点击： [http://cesium.marsgis.cn](http://cesium.marsgis.cn)
 
-demo系统： [http://www.marsgis.cn/cesium/demo.html](http://www.marsgis.cn/cesium/demo.html) 
-
+demo系统： [http://cesium.marsgis.cn/demo.html](http://cesium.marsgis.cn/demo.html) 
+ ![image](http://cesium.marsgis.cn/img/project/1.jpg)
 
 说明：当前我们框架并未开源，也许将来的某一天，我们选择将平台框架进行开源，您可以先Star我们的仓库，关注我们，第1时间了解我们的更新！
