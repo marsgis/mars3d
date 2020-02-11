@@ -9,7 +9,6 @@ Mars3D官网： [http://cesium.marsgis.cn](http://cesium.marsgis.cn)
 
 demo系统： [http://cesium.marsgis.cn/demo.html](http://cesium.marsgis.cn/demo.html) 
  ![image](http://cesium.marsgis.cn/docs/img/project/1.jpg)
- ![image](http://cesium.marsgis.cn/docs/img/project/2.jpg)
  ![image](http://cesium.marsgis.cn/docs/img/project/3.jpg)
  ![image](http://cesium.marsgis.cn/docs/img/project/4.jpg)
 
