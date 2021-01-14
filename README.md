@@ -23,32 +23,32 @@ Mars3D三维地球平台软件,简称Mars3D（曾用名 MarsGIS for Cesium ） �
 ## 已开源的子项目 
 
 ### 功能示例
-1. 部分示例 [https://github.com/marsgis/mars3d-examples](https://github.com/marsgis/mars3d-examples)
+1. 部分示例 [https://github.com/marsgis/mars3d-example](https://github.com/marsgis/mars3d-example)
 
 ### 传统技术栈 项目模版
-1. 最简项目[https://github.com/marsgis/mars3d-simple-es5](https://github.com/marsgis/mars3d-simple-es5)
-2. 基础项目（含widget模块）[https://github.com/marsgis/mars3d-simple-es5-widget](https://github.com/marsgis/mars3d-simple-es5-widget)
+1. 最简项目[https://github.com/marsgis/mars3d-es5-project](https://github.com/marsgis/mars3d-es5-project)
+2. 基础项目（含widget模块）[https://github.com/marsgis/mars3d-es5-project-widget](https://github.com/marsgis/mars3d-es5-project-widget)
 
 ### Vue技术栈 项目模版
 1. 脚手架[https://github.com/marsgis/mars3d-vue-cli](https://github.com/marsgis/mars3d-vue-cli)
-2. 最简项目[https://github.com/marsgis/mars3d-simple-vue](https://github.com/marsgis/mars3d-simple-vue)
-3. 基础项目（含widget模块）[https://github.com/marsgis/mars3d-simple-vue-widget](https://github.com/marsgis/mars3d-simple-vue-widget)
+2. 最简项目[https://github.com/marsgis/mars3d-vue-project](https://github.com/marsgis/mars3d-vue-project)
+3. 基础项目（含widget模块）[https://github.com/marsgis/mars3d-vue-project-widget](https://github.com/marsgis/mars3d-vue-project-widget)
 4. CS桌面程序 项目模版 [https://github.com/marsgis/mars3d-vue-electron](https://github.com/marsgis/mars3d-vue-electron)
 
  
 ### React技术栈 项目模版
 1. 脚手架[https://github.com/marsgis/mars3d-react-cli](https://github.com/marsgis/mars3d-react-cli)
-2. 最简项目[https://github.com/marsgis/mars3d-react-vue](https://github.com/marsgis/mars3d-simple-react)
-3. 基础项目（含widget模块）[https://github.com/marsgis/mars3d-simple-react-widget](https://github.com/marsgis/mars3d-simple-react-widget)
+2. 最简项目[https://github.com/marsgis/mars3d-react-vue](https://github.com/marsgis/mars3d-react-project-react)
+3. 基础项目（含widget模块）[https://github.com/marsgis/mars3d-react-project-react-widget](https://github.com/marsgis/mars3d-react-project-react-widget)
  
 ### Angular技术栈 项目模版
 1. 脚手架[https://github.com/marsgis/mars3d-angular-cli](https://github.com/marsgis/mars3d-angular-cli)
-2. 最简项目[https://github.com/marsgis/mars3d-simple-angular](https://github.com/marsgis/mars3d-simple-angular)
-3. 基础项目（含widget模块）[https://github.com/marsgis/mars3d-simple-angular-widget](https://github.com/marsgis/mars3d-simple-angular-widget)
+2. 最简项目[https://github.com/marsgis/mars3d-angular-project](https://github.com/marsgis/mars3d-angular-project)
+3. 基础项目（含widget模块）[https://github.com/marsgis/mars3d-angular-project-widget](https://github.com/marsgis/mars3d-angular-project-widget)
  
 
 ### 超图技术栈 项目模版
-1. 基础项目（含widget模块）[https://github.com/marsgis/mars3d-supermap](https://github.com/marsgis/mars3d-supermap)
+1. 基础项目（含widget模块）[https://github.com/marsgis/mars3d-link-supermap](https://github.com/marsgis/mars3d-link-supermap)
 
 
 ## 版权说明

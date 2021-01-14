@@ -29,9 +29,9 @@ Mars3D 3d earth platform software, referred to as Mars3D (formerly known as Mars
 
 Traditional technology stack project template
 
-1. The minimalist program [https://github.com/marsgis/mars3d-simple-es5](https://github.com/marsgis/mars3d-simple-es5)
+1. The minimalist program [https://github.com/marsgis/mars3d-es5-project](https://github.com/marsgis/mars3d-es5-project)
 
-2. The infrastructure projects (including the widget module) [https://github.com/marsgis/mars3d-simple-es5-widget](https://github.com/marsgis/mars3d-simple-es5-widget)
+2. The infrastructure projects (including the widget module) [https://github.com/marsgis/mars3d-es5-project-widget](https://github.com/marsgis/mars3d-es5-project-widget)
 
 
 
@@ -39,9 +39,9 @@ Vue technology stack project template
 
 1. The scaffold [https://github.com/marsgis/mars3d-vue-cli](https://github.com/marsgis/mars3d-vue-cli)
 
-2. The minimalist program [https://github.com/marsgis/mars3d-simple-vue](https://github.com/marsgis/mars3d-simple-vue)
+2. The minimalist program [https://github.com/marsgis/mars3d-vue-project](https://github.com/marsgis/mars3d-vue-project)
 
-3. Infrastructure projects (including the widget module) [https://github.com/marsgis/mars3d-simple-vue-widget](https://github.com/marsgis/mars3d-simple-vue-widget)
+3. Infrastructure projects (including the widget module) [https://github.com/marsgis/mars3d-vue-project-widget](https://github.com/marsgis/mars3d-vue-project-widget)
 
 
 
@@ -49,9 +49,9 @@ React technology stack project template
 
 1. The scaffold [https://github.com/marsgis/mars3d-react-cli](https://github.com/marsgis/mars3d-react-cli)
 
-2. The minimalist program [https://github.com/marsgis/mars3d-react-vue](https://github.com/marsgis/mars3d-simple-react)
+2. The minimalist program [https://github.com/marsgis/mars3d-react-vue](https://github.com/marsgis/mars3d-react-project-react)
 
-3. Infrastructure projects (including the widget module) [https://github.com/marsgis/mars3d-simple-react-widget](https://github.com/marsgis/mars3d-simple-react-widget)
+3. Infrastructure projects (including the widget module) [https://github.com/marsgis/mars3d-react-project-react-widget](https://github.com/marsgis/mars3d-react-project-react-widget)
 
 
 
@@ -59,9 +59,9 @@ Angular technology stack project template
 
 1. The scaffold [https://github.com/marsgis/mars3d-angular-cli](https://github.com/marsgis/mars3d-angular-cli)
 
-2. The minimalist program [https://github.com/marsgis/mars3d-simple-angular](https://github.com/marsgis/mars3d-simple-angular)
+2. The minimalist program [https://github.com/marsgis/mars3d-angular-project](https://github.com/marsgis/mars3d-angular-project)
 
-3. Infrastructure projects (including the widget module) [https://github.com/marsgis/mars3d-simple-angular-widget](https://github.com/marsgis/mars3d-simple-angular-widget)
+3. Infrastructure projects (including the widget module) [https://github.com/marsgis/mars3d-angular-project-widget](https://github.com/marsgis/mars3d-angular-project-widget)
 
 
 
@@ -69,7 +69,7 @@ Angular technology stack project template
 
 Hypergraph technology stack project template
 
-1. The infrastructure projects (including the widget module) [https://github.com/marsgis/mars3d-supermap](https://github.com/marsgis/mars3d-supermap)
+1. The infrastructure projects (including the widget module) [https://github.com/marsgis/mars3d-link-supermap](https://github.com/marsgis/mars3d-link-supermap)
 
 
 
