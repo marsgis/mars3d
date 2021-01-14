@@ -31,9 +31,10 @@ Mars3D三维地球平台软件,简称Mars3D（曾用名 MarsGIS for Cesium ） �
 
 ### Vue技术栈 项目模版
 1. 脚手架[https://github.com/marsgis/mars3d-vue-cli](https://github.com/marsgis/mars3d-vue-cli)
-2. 最简项目[https://github.com/marsgis/mars3d-vue-project](https://github.com/marsgis/mars3d-vue-project)
-3. 基础项目（含widget模块）[https://github.com/marsgis/mars3d-vue-project-widget](https://github.com/marsgis/mars3d-vue-project-widget)
-4. CS桌面程序 项目模版 [https://github.com/marsgis/mars3d-vue-electron](https://github.com/marsgis/mars3d-vue-electron)
+2. 脚手架(Cesium用火星版)[https://github.com/marsgis/mars3d-vue-cli-cdn](https://github.com/marsgis/mars3d-vue-cli-cdn)
+3. 最简项目[https://github.com/marsgis/mars3d-vue-project](https://github.com/marsgis/mars3d-vue-project)
+4. 基础项目（含widget模块）[https://github.com/marsgis/mars3d-vue-project-widget](https://github.com/marsgis/mars3d-vue-project-widget)
+5. CS桌面程序 项目模版 [https://github.com/marsgis/mars3d-vue-electron](https://github.com/marsgis/mars3d-vue-electron)
 
  
 ### React技术栈 项目模版
