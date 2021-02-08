@@ -1,0 +1,148 @@
+<!-- 2017-12-4 14:24:12 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>雾场景 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,jquery.minicolors,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+  <div class="infoview">
+    <table class="mars-table">
+      <tr>
+        <td>状态</td>
+        <td>
+          <div class="checkbox checkbox-primary checkbox-inline">
+            <input id="chkShowEffect" class="styled" type="checkbox" checked>
+            <label for="chkShowEffect">
+              开启雾效果
+            </label>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>雾颜色：</td>
+        <td>
+          <input type="text" id="txtColor" class="form-control" style="width:180px;" value="#ffffff">
+        </td>
+      </tr>
+      <tr>
+        <td>近距离</td>
+        <td>
+          <input id="fogByDistanceX" type="range" min="1" max="5000" step="1" value='100'>
+        </td>
+      </tr>
+      <tr>
+        <td>远距离</td>
+        <td>
+          <input id="fogByDistanceZ" type="range" min="100" max="50000" step="1" value='9000'>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        scene: {
+          center: {
+            y: 31.251138,
+            x: 121.463588,
+            z: 1729.97,
+            heading: 110.7,
+            pitch: -25,
+            roll: 0.2
+          }
+        }
+      })
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //创建gltf模型，
+      let gltfLayer = new mars3d.layer.ModelLayer({
+        name: '上海浦东',
+        url: 'http://data.marsgis.cn/gltf/mars/shanghai/scene.gltf',
+        style: { scale: 520, heading: 215 }, //style同标绘的model类型
+        position: [121.507762, 31.233975, 200],
+        center: { lat: 31.251138, lng: 121.463588, alt: 1729.97, heading: 110.7, pitch: -25, roll: 0.2 },
+        flyTo: true
+      })
+      map.addLayer(gltfLayer)
+
+      //雾效果
+      var fogEffect = new mars3d.effect.FogEffect({
+        maxHeight: 20000, //大于此高度后不显示
+        fogByDistance: new Cesium.Cartesian4(100, 0.0, 9000, 0.9),
+        color: Cesium.Color.WHITE
+      })
+      map.addEffect(fogEffect)
+
+      $('#chkShowEffect').change(function() {
+        var val = $(this).is(':checked')
+
+        fogEffect.show = val
+      })
+
+      $('#fogByDistanceX').range({
+        onChange: function(value, bfb) {
+          if (value > fogEffect.fogByDistance.z) {
+            haoutil.msg('近距离不能大于远距离')
+            return
+          }
+          fogEffect.fogByDistance.x = value
+        }
+      })
+      $('#fogByDistanceZ').range({
+        onChange: function(value, bfb) {
+          if (value < fogEffect.fogByDistance.x) {
+            haoutil.msg('远距离 不能小于 近距离')
+            return
+          }
+          fogEffect.fogByDistance.z = value
+        }
+      })
+
+      $('#txtColor').minicolors({
+        position: 'bottom left',
+        control: 'saturation',
+        change: function(color, opacity) {
+          fogEffect.color = Cesium.Color.fromCssColorString(color)
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>

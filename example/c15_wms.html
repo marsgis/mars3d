@@ -1,0 +1,150 @@
+<!-- 2017-12-4 14:24:10 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>OGC WMS服务 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+  <div class="infoview">
+    <input id="btnAddLayer" type="button" class="btn btn-primary" value="叠加图层" onclick="addLayer()" />
+    <input id="btnRemoveLayer" type="button" class="btn btn-primary" value="移除图层" onclick="removeLayer()" />
+  </div>
+
+
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    $(document).ready(function() {
+      if (!mars3d.util.webglreport()) {
+        mars3d.util.webglerror()
+        return
+      }
+      initMap()
+    })
+
+    var map
+    function initMap() {
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', {
+        scene: {
+          center: { lat: 19.171756, lng: 107.215418, alt: 9274074, heading: 356, pitch: -85 }
+        },
+        control: {
+          baseLayerPicker: true, //basemaps底图切换按钮
+          homeButton: true, //视角复位按钮
+          sceneModePicker: true, //二三维切换按钮
+          contextmenu: true //右键菜单
+        },
+        terrain: {
+          url: 'http://data.marsgis.cn/terrain',
+          show: true
+        },
+        //方式1：在创建地球前的参数中配置
+        basemaps: [
+          {
+            name: '光污染图层',
+            icon: 'img/basemaps/blackMarble.png',
+            type: 'wms',
+            url: '//www.lightpollutionmap.info/geoserver/gwc/service/wms',
+            layers: 'PostGIS:VIIRS_2019',
+            crs: 'EPSG:3857',
+            parameters: {
+              transparent: true,
+              format: 'image/png'
+            },
+            alpha: 0.6, //透明度
+            proxy: 'http://data.marsgis.cn/proxy/', //代理服务，解决跨域问题
+            show: true
+          },
+          {
+            //wms也可以换一种xyz的直接写法
+            name: '光污染图层(XYZ方式)',
+            icon: 'img/basemaps/blackMarble.png',
+            type: 'xyz',
+            url:
+              '//www.lightpollutionmap.info/geoserver/gwc/service/wms?transparent=true&format=image%2Fpng&service=WMS&version=1.1.1&request=GetMap&styles=&layers=PostGIS%3AVIIRS_2019&bbox={westProjected},{southProjected},{eastProjected},{northProjected}&width={width}&height={height}&srs=EPSG%3A3857',
+            alpha: 0.6, //透明度
+            proxy: 'http://data.marsgis.cn/proxy/' //代理服务，解决跨域问题
+          }
+        ]
+      })
+    }
+
+    //叠加的图层
+    var tileLayer
+
+    function addLayer() {
+      removeLayer()
+
+      map.centerAt({ lat: 31.793441, lng: 117.223353, alt: 3401, heading: 360, pitch: -48 })
+
+      //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+      tileLayer = new mars3d.layer.WmsLayer({
+        url: 'http://data.marsgis.cn/geoserver/mars/wms',
+        layers: 'mars:hf',
+        crs: 'EPSG:4326',
+        parameters: {
+          transparent: 'true',
+          format: 'image/png'
+        },
+        showClickFeature: true,
+        pickFeatureStyle: {
+          // showTime: 9000, //可设置自动定时关闭
+          clampToGround: true, //选择的要素样式，同Draw类样式
+          fill: true,
+          color: '#2deaf7',
+          opacity: 0.6,
+          outline: true,
+          outlineWidth: 3,
+          outlineColor: '#e000d9',
+          outlineOpacity: 1.0
+        },
+        getFeatureInfoParameters: {
+          feature_count: 10
+        },
+        popup: 'all'
+        // "popupPosition":{"top":10,"left":10 }, //固定再左侧位置，不浮动 ，数值对应top/btoom、left/right
+      })
+
+      //单击事件
+      tileLayer.on(mars3d.EventType.click, function(event) {
+        console.log('单击了矢量数据，共' + event.features.length + '条', event)
+      })
+
+      map.addLayer(tileLayer)
+    }
+    function removeLayer() {
+      if (tileLayer) {
+        map.removeLayer(tileLayer, true)
+        tileLayer = null
+      }
+    }
+  </script>
+</body>
+
+</html>

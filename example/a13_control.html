@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn ">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>控件 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <!--第三方lib-->
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    $(document).ready(function() {
+      if (!mars3d.util.webglreport()) {
+        mars3d.util.webglerror()
+        return
+      }
+      initMap()
+    })
+
+    function initMap() {
+      //添加控件有2种方式:
+
+      //方式1：在创建地球前的传参中配置control参数
+      var map = new mars3d.Map('mars3dContainer', {
+        scene: {
+          center: { lat: 33.938752, lng: 103.753712, alt: 18401000, heading: 0, pitch: -90 }
+        },
+        control: {
+          //以下是Cesium.Viewer所支持的控件相关的options
+          baseLayerPicker: true, //basemaps底图切换按钮
+          homeButton: true, //视角复位按钮
+          sceneModePicker: true, //二三维切换按钮
+          navigationHelpButton: true, //帮助按钮
+          infoBox: true, //信息框
+          selectionIndicator: true, //选择框
+          vrButton: true, //vr模式按钮
+          fullscreenButton: true, //全屏按钮
+          animation: false, //动画部件按钮
+          timeline: false, //时间线
+          geocoder: true, //POI查询按钮
+          geocoderConfig: { key: ['ae29a37307840c7ae4a785ac905927e0'], citycode: '' }, //POI查询按钮参数配置
+
+          //以下是mars3d.control定义的控件
+          contextmenu: true, //右键菜单
+          mouseDownView: true,
+          // "location": {
+          //     "fps": true,
+          //     "format": "<div>经度:{x}</div> <div>纬度:{y}</div> <div>海拔：{z}米</div> <div>层级：{level}</div> <div>方向：{heading}度</div> <div>俯仰角：{pitch}度</div> <div>视高：{height}米</div>"
+          // },
+          navigation: {
+            legend: { left: '100px', bottom: '-1px' },
+            compass: { top: '10px', right: '5px' }
+          }
+        },
+        basemaps: [
+          {
+            name: '单张图片',
+            icon: 'img/basemaps/offline.png',
+            type: 'image',
+            url: 'img/tietu/world.jpg',
+            show: true
+          }
+        ]
+      })
+
+      //方式2：在创建地球后按需调用addControl添加(直接new对应type类型的控件)
+      var locationBar = new mars3d.control.LocationBar({
+        fps: true,
+        format:
+          '<div>经度:{x}</div> <div>纬度:{y}</div> <div>海拔：{z}米</div> <div>层级：{level}</div> <div>方向：{heading}度</div> <div>俯仰角：{pitch}度</div> <div>视高：{height}米</div>'
+      })
+      map.addControl(locationBar)
+    }
+  </script>
+</body>
+
+</html>

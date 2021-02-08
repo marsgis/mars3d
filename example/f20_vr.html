@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn ">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>三维地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <!--第三方lib-->
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+
+
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        scene: {
+          center: {
+            y: 28.440942,
+            x: 119.482189,
+            z: 191.32,
+            heading: 227.4,
+            pitch: -27.6,
+            roll: 359.9
+          }
+        },
+        control: {
+          vrButton: true
+        }
+      })
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //加个模型，效果更NB
+      var tiles3dLayer = new mars3d.layer.TilesetLayer({
+        name: '县城社区',
+        url: 'http://data.marsgis.cn/3dtiles/qx-shequ/tileset.json',
+        maximumScreenSpaceError: 1,
+        maximumMemoryUsage: 1024,
+        dynamicScreenSpaceError: true,
+        cullWithChildrenBounds: false,
+        skipLevelOfDetail: true,
+        preferLeaves: true,
+        offset: { z: 3 }
+      })
+      map.addLayer(tiles3dLayer)
+
+      //这句话打开VR
+      map.scene.useWebVR = true
+
+      //WebVR相关参数: 眼镜的视角距离（单位：米）
+      map.scene.eyeSeparation = 100.0
+
+      //WebVR相关参数: 焦距
+      map.scene.eyeSeparation.focalLength = 5.0
+      haoutil.alert('为确保该范例的正常显示效果，请确保您的显示器调整到3D模式并佩戴3D眼镜', '提示')
+    }
+  </script>
+</body>
+
+</html>

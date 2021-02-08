@@ -1,0 +1,256 @@
+<!-- 2017-12-7 14:56:03 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>标绘GeoJson图层 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,ztree,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+  <!-- <div id="viewSL" class="infoview">
+      示例：
+      <input type="button" class="btn btn-primary" value="安徽各市" onclick="showAnhuiDemo()" />
+  </div> -->
+
+
+  <div class="infoview" style="overflow:auto;right:5px;left:auto; top:50px;max-height:90%;">
+    <ul id="treeOverlays" class="ztree"></ul>
+  </div>
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        scene: {
+          center: { lat: 30.383648, lng: 116.275216, alt: 51293, heading: 3, pitch: -42 }
+        },
+        layers: [
+          {
+            id: 20210208,
+            name: '标绘示例数据',
+            type: 'geojson-draw',
+            url: 'http://data.marsgis.cn/file/geojson/draw-demo.json',
+            popup: '{name}',
+            show: true
+          }
+        ]
+      })
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //绑定config.json中图层的事件示例
+      let layerJson = map.getLayer(20210208)
+      layerJson.on(mars3d.EventType.click, function(event) {
+        console.log('单击了draw图层', event)
+      })
+
+      showAnhuiDemo()
+    }
+
+    var drawLayer
+
+    function removeLayer() {
+      if (drawLayer) {
+        map.removeLayer(drawLayer, true)
+        drawLayer = null
+      }
+    }
+
+    //示例：显示点数据
+    function showAnhuiDemo() {
+      removeLayer()
+
+      drawLayer = new mars3d.layer.DrawLayer({
+        name: '安徽各市',
+        url: 'http://data.marsgis.cn/file/geojson/anhui.json',
+        symbol: {
+          type: 'wall',
+          styleOptions: {
+            diffHeight: 9000, //墙高
+            fill: true, //是否填充
+            fillType: 'animationLine', //填充类型 ,可选项：color(纯色),animationLine(动画),grid(网格),stripe(条纹),checkerboard(棋盘),
+            animationDuration: 3000, //速度
+            animationImage: 'img/textures/fence.png', //图片
+            animationRepeatX: 1, //重复数量
+            animationAxisY: true, //竖直方向
+            color: '#FFFF00', //颜色
+            opacity: 0.6, //透明度
+            outline: false
+          }
+        },
+        format: function(geojson) {
+          return polygon2line(geojson) //面转线
+        },
+        popup: '{name}'
+      })
+      map.addLayer(drawLayer)
+
+      //绑定事件
+      drawLayer.on(mars3d.EventType.load, function(event) {
+        console.log('数据加载完成', event)
+        initTree(event.graphics)
+      })
+      drawLayer.on(mars3d.EventType.click, function(event) {
+        console.log('单击了图层', event)
+      })
+    }
+
+    //===========================演示format参数进行数据转换处理============================
+
+    /**
+     * Transforms Polygons and MultiPolygons to LineStrings.
+     *
+     * @module turf/polygonToLine
+     * @category transformation
+     * @param {Object} geojson any GeoJSON object
+     * @returns {Object} FeatureCollection where
+     * Polygons and MultiPolygons transformed to LineStrings.
+     */
+    function polygon2line(geojson) {
+      var features = geojson.features.map(toLineString)
+      return turf.featureCollection(flatten(features))
+    }
+    function flatten(array) {
+      return [].concat.apply([], array)
+    }
+
+    function polygonToLineString(coordinates, properties) {
+      return coordinates.map(function(coordinates) {
+        return turf.lineString(coordinates, properties)
+      })
+    }
+
+    function multiPolygonToLineString(coordinates, properties) {
+      return flatten(
+        coordinates.map(function(coordinates) {
+          return polygonToLineString(coordinates, properties)
+        })
+      )
+    }
+
+    function toLineString(feature) {
+      var geometry = feature.geometry,
+        properties = feature.properties
+
+      switch (geometry.type) {
+        case 'Polygon':
+          return polygonToLineString(geometry.coordinates, properties)
+        case 'MultiPolygon':
+          return multiPolygonToLineString(geometry.coordinates, properties)
+        default:
+          return feature
+      }
+    }
+
+    //===========================树控件处理============================
+    var layersObj = {}
+
+    function initTree(arr) {
+      //初始化树
+      var setting = {
+        check: {
+          enable: true
+        },
+        data: {
+          simpleData: {
+            enable: true
+          }
+        },
+        callback: {
+          onCheck: treeOverlays_onCheck,
+          onClick: treeOverlays_onClick
+        }
+      }
+
+      var zNodes = []
+      var pnode = {
+        id: -1,
+        name: '全部',
+        type: 'group',
+        open: false,
+        checked: true,
+        icon: '../lib/jquery/ztree/css/mars/images/folder.png'
+      }
+      zNodes.push(pnode)
+
+      for (var i = 0, len = arr.length; i < len; i++) {
+        var item = arr[i]
+        var name = item?.label?.text || item.name || item.id || '未命名'
+
+        var node = {
+          id: i,
+          pId: pnode.id,
+          name: name,
+          checked: true,
+          icon: '../lib/jquery/ztree/css/mars/images/layer.png'
+        }
+        zNodes.push(node)
+
+        layersObj[i] = item
+      }
+
+      $.fn.zTree.destroy()
+      $.fn.zTree.init($('#treeOverlays'), setting, zNodes)
+    }
+
+    function treeOverlays_onCheck(e, treeId) {
+      var zTree = $.fn.zTree.getZTreeObj(treeId)
+
+      //获得所有改变check状态的节点
+      var changedNodes = zTree.getChangeCheckedNodes()
+      for (var i = 0; i < changedNodes.length; i++) {
+        var treeNode = changedNodes[i]
+        treeNode.checkedOld = treeNode.checked
+        var entity = layersObj[treeNode.id]
+        if (entity == null) {
+          continue
+        }
+
+        //处理图层显示隐藏
+        entity.show = treeNode.checked
+      }
+    }
+
+    function treeOverlays_onClick(event, treeId, treeNode) {
+      var entity = layersObj[treeNode.id]
+      if (entity == null) {
+        return
+      }
+
+      map.flyTo(entity)
+    }
+  </script>
+</body>
+
+</html>

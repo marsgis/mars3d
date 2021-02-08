@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>Mapbox矢量瓦片(.pbf) |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+  <script src="../lib/mars3d/plugins/pbf/ol.js"></script>
+  <script src="../lib/mars3d/plugins/pbf/mvt.js"></script>
+  <script src="../lib/mars3d/plugins/pbf/style/MapboxStreetsV6.js"></script>
+
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    $(document).ready(function() {
+      if (!mars3d.util.webglreport()) {
+        mars3d.util.webglerror()
+        return
+      }
+      initMap()
+    })
+
+    var map
+    function initMap() {
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', {
+        scene: {
+          center: {
+            y: 20.758452,
+            x: 108.198353,
+            z: 7733735.96,
+            heading: 357.7,
+            pitch: -82.4,
+            roll: 0.9
+          },
+          globe: {
+            baseColor: '#ffffff'
+          },
+          highDynamicRange: false
+        },
+        control: {
+          baseLayerPicker: true, //basemaps底图切换按钮
+          homeButton: true, //视角复位按钮
+          sceneModePicker: true, //二三维切换按钮
+          contextmenu: true //右键菜单
+        },
+        terrain: {
+          url: 'http://data.marsgis.cn/terrain',
+          show: true
+        },
+        //方式1：在创建地球前的参数中配置
+        basemaps: [
+          {
+            name: 'OSM开源地图',
+            icon: 'img/basemaps/osm.png',
+            type: 'mvt',
+            url: 'https://a.tiles.mapbox.com/v4/mapbox.mapbox-streets-v6/{z}/{x}/{y}.vector.pbf?access_token={k}',
+            key: mars3d.Token.mapbox,
+            style: 'mapbox-streets-v6',
+            show: true
+          }
+        ]
+      })
+
+      //另外的实现方式可以参考：https://github.com/robbo1975/MapboxVectorTileImageryProvider
+    }
+  </script>
+</body>
+
+</html>

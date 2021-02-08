@@ -1,0 +1,159 @@
+<!-- 2017-12-4 14:24:10 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>xyz金字塔瓦片 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+  <div class="infoview">
+    <input id="btnAddLayer" type="button" class="btn btn-primary" value="叠加图层" onclick="addLayer()" />
+    <input id="btnRemoveLayer" type="button" class="btn btn-primary" value="移除图层" onclick="removeLayer()" />
+  </div>
+
+
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    $(document).ready(function() {
+      if (!mars3d.util.webglreport()) {
+        mars3d.util.webglerror()
+        return
+      }
+      initMap()
+    })
+
+    var map
+    function initMap() {
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', {
+        scene: {
+          center: { y: 31.026852, x: 117.164195, z: 154181.14, heading: 0, pitch: -63.5, roll: 0 }
+        },
+        control: {
+          baseLayerPicker: true, //basemaps底图切换按钮
+          homeButton: true, //视角复位按钮
+          sceneModePicker: true, //二三维切换按钮
+          contextmenu: true //右键菜单
+        },
+        terrain: {
+          url: 'http://data.marsgis.cn/terrain',
+          show: true
+        },
+        //方式1：在创建地球前的参数中配置
+        basemaps: [
+          {
+            name: '电子地图',
+            icon: 'img/basemaps/google_vec.png',
+            type: 'xyz',
+            url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            subdomains: 'abc',
+            show: true
+          },
+          {
+            name: '卫星地图',
+            icon: 'img/basemaps/gaode_img.png',
+            type: 'group',
+            layers: [
+              {
+                name: '全球',
+                type: 'xyz',
+                url: 'http://data.marsgis.cn/maptile/wgs3857img/{z}/{x}/{y}.jpg',
+                minimumLevel: 0,
+                maximumLevel: 9
+              },
+              {
+                name: '中国',
+                type: 'xyz',
+                url: 'http://data.marsgis.cn/maptile/wgs3857img/{z}/{x}/{y}.jpg',
+                minimumTerrainLevel: 10,
+                minimumLevel: 10,
+                maximumLevel: 12,
+                rectangle: { xmin: 69.706929, xmax: 136.560941, ymin: 15.831038, ymax: 52.558005 }
+              },
+              {
+                name: '具体项目(如合肥)',
+                type: 'xyz',
+                url: 'http://data.marsgis.cn/maptile/wgs3857img/{z}/{x}/{y}.jpg',
+                minimumTerrainLevel: 12,
+                minimumLevel: 12,
+                maximumLevel: 18,
+                rectangle: { xmin: 116.33236, xmax: 118.183557, ymin: 31.143784, ymax: 32.565035 }
+              }
+            ]
+          },
+          {
+            name: 'EPSG4326示例',
+            icon: 'img/basemaps/google_vec.png',
+            type: 'xyz',
+            url: 'http://data.marsgis.cn/maptile/google_earth/{z}/{x}/{y}.jpg',
+            crs: 'EPSG4326' //标识坐标系
+          },
+          {
+            name: 'EPSG4490示例',
+            icon: 'img/basemaps/google_vec.png',
+            type: 'xyz',
+            url:
+              'http://t3.tianditu.gov.cn/img_c/wmts?service=WMTS&version=1.0.0&request=GetTile&tilematrix={z}&layer=img&style=default&tilerow={y}&tilecol={x}&tilematrixset=c&format=tiles&tk=6c99c7793f41fccc4bd595b03711913e',
+            crs: 'EPSG4490' //标识坐标系
+          }
+        ]
+      })
+    }
+
+    //叠加的图层
+    var tileLayer
+
+    function addLayer() {
+      removeLayer()
+
+      //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+      tileLayer = new mars3d.layer.XyzLayer({
+        url: 'http://data.marsgis.cn/geoserver/gwc/service/tms/1.0.0/mars%3Ahfgh3857@EPSG%3A3857@png/{z}/{x}/{reverseY}.png',
+        rectangle: { xmin: 116.850438, xmax: 117.635666, ymin: 31.5375784, ymax: 32.16236297 },
+        crs: 'EPSG3857',
+        queryParameters: {
+          //可以传自定义url参数，如token等
+          token: 'mars3d'
+        },
+        minimumLevel: 0,
+        maximumLevel: 18,
+        minimumTerrainLevel: 0,
+        maximumTerrainLevel: 18
+      })
+      map.addLayer(tileLayer)
+    }
+    function removeLayer() {
+      if (tileLayer) {
+        map.removeLayer(tileLayer, true)
+        tileLayer = null
+      }
+    }
+  </script>
+</body>
+
+</html>

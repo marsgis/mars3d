@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>Point 点|Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+  <link href="css/divpoint.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+  <div class="infoview">
+    <div>
+      图层状态：
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkShow" class="styled" type="checkbox" checked>
+        <label for="chkShow">
+          显示隐藏
+        </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkPopup" class="styled" type="checkbox" checked>
+        <label for="chkPopup">
+          Popup绑定
+        </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkTooltip" class="styled" type="checkbox">
+        <label for="chkTooltip">
+          Tooltip绑定
+        </label>
+      </div>
+      <!-- <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkContextMenu" class="styled" type="checkbox" checked>
+        <label for="chkContextMenu">
+          右键菜单绑定
+        </label>
+      </div> -->
+    </div>
+    <div>
+      数据维护：
+      <input id="btnStartDraw" type="button" class="btn btn-primary" value="图上标绘" title="在图上绘制新增一个矢量数据" />
+
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkHasEdit" class="styled" type="checkbox">
+        <label for="chkHasEdit">
+          是否编辑
+        </label>
+      </div>
+    </div>
+    <div>
+      数据管理：
+      <input id="btnClear" type="button" class="btn btn-danger" value="清除" />
+      <input id="btnExpFile" type="button" class="btn btn-primary" value="保存GeoJSON" title="保存为GeoJSON文件" />
+      <input id="btnImpFile" type="button" class="btn btn-primary" value="打开GeoJSON" title="打开之前保存的GeoJSON文件" />
+
+      <input id="input_draw_file" type="file" accept=".json" style="display:none;" />
+    </div>
+  </div>
+
+  <!-- 切换视角到模型或地形（山区）的快捷按钮 -->
+  <script type="text/javascript" src="js/center_terrain_3dtiles.js"></script>
+
+  <!-- 图层管理相关处理js -->
+  <script type="text/javascript" src="./js/graphicManager.js"></script>
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {})
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //创建DIV数据图层
+      var graphicLayer = new mars3d.layer.DivLayer()
+      map.addLayer(graphicLayer)
+
+      //图层管理的相关处理，代码在\js\graphicManager.js
+      initLayerManager(graphicLayer)
+
+      $('#btnStartDraw').click(function() {
+        graphicLayer.startDraw({
+          type: 'div',
+          style: {
+            html: `<div class="divpoint2">
+                            <div class="title">测试DIV点</div>
+                            <div class="content">此处可以绑定任意Html代码和css效果</div>
+                        </div >`,
+            horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+            heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+          }
+        })
+      })
+
+      //加一些演示数据
+      addGraphic_01(graphicLayer)
+      addGraphic_02(graphicLayer)
+      addGraphic_03(graphicLayer)
+      addGraphic_04(graphicLayer)
+      addGraphic_05(graphicLayer)
+    }
+
+    /**
+     style 支持的参数说明：
+      "style": {
+
+      }
+    */
+
+    //加css动画的扩散点
+    function addGraphic_01(graphicLayer) {
+      var graphic = new mars3d.graphic.DivGraphic({
+        position: [116.325461, 30.933429, 543.67],
+        style: {
+          html: '<div class="mars3d-animation-point" style="color:#f33349;"><p></p></div>',
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000) //按视距距离显示
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+    }
+
+    //添加GIF图标，DIV方式
+    function addGraphic_02(graphicLayer) {
+      var graphic = new mars3d.graphic.DivGraphic({
+        position: [116.467993, 31.040598, 671.05],
+        style: {
+          html: '<img src="img/marker/tf.gif" style="width:100px;height:100px;" ></img>',
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), //按视距距离显示
+          horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+          verticalOrigin: Cesium.VerticalOrigin.CENTER
+        },
+        pointerEvents: false //false时不允许拾取和触发任意鼠标事件，但可以穿透div缩放地球
+      })
+      graphicLayer.addGraphic(graphic)
+    }
+
+    //类似toolitp的自定义html
+    function addGraphic_03(graphicLayer) {
+      var graphic = new mars3d.graphic.DivGraphic({
+        position: [116.239443, 30.862119, 506.6],
+        style: {
+          html: `<div class="mars3d-popup-content-wrapper  divpoint-background">
+                  <div class="mars3d-popup-content divpoint-color">
+                      这里可以放入任意html代码
+                  </div>
+              </div>
+              <div class="mars3d-popup-tip-container"><div class="mars3d-popup-tip divpoint-background"></div></div>`,
+          horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000) //按视距距离显示
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+    }
+
+    //自定义的面板
+    function addGraphic_04(graphicLayer) {
+      var graphic = new mars3d.graphic.DivGraphic({
+        position: Cesium.Cartesian3.fromDegrees(116.174302, 31.00681, 751.6),
+        style: {
+          html: `<div class="divpoint divpoint-theme-29baf1">
+                <div class="divpoint-wrap">
+                    <div class="area">
+                        <div class="arrow-lt"></div>
+                        <div class="b-t"></div>
+                        <div class="b-r"></div>
+                        <div class="b-b"></div>
+                        <div class="b-l"></div>
+                        <div class="arrow-rb"></div>
+                        <div class="label-wrap">
+                            <div class="title">大别山水厂</div>
+                            <div class="label-content">
+                                <div class="data-li">
+                                    <div class="data-label">实时流量：</div>
+                                    <div class="data-value"><span class="label-num">99</span><span class="label-unit">m³/s</span>
+                                    </div>
+                                </div>
+                                <div class="data-li">
+                                    <div class="data-label">水池液位：</div>
+                                    <div class="data-value"><span class="label-num">20.02</span><span class="label-unit">m</span>
+                                    </div>
+                                </div>
+                                <div class="data-li">
+                                    <div class="data-label">水泵状态：</div>
+                                    <div class="data-value"><span class="label-tag data-value-status-1" alt="中间状态">1号</span><span
+                                            class="label-tag data-value-status-0" alt="关闭状态">2号</span></div>
+                                </div>
+                                <div class="data-li">
+                                    <div class="data-label">出水阀门：</div>
+                                    <div class="data-value"><span class="label-tag data-value-status-1" alt="中间状态">1号</span><span
+                                            class="label-tag data-value-status-2" alt="打开状态">2号</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="b-t-l"></div>
+                    <div class="b-b-r"></div>
+                </div>
+                <div class="arrow" ></div>
+            </div>`,
+          // anchor: [0, 0],
+          horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(1000, 200000), //按视距距离显示
+          scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 100000, 0.1),
+          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+        },
+        pointerEvents: false //false时不允许拾取和触发任意鼠标事件，但可以穿透div缩放地球
+      })
+      graphicLayer.addGraphic(graphic)
+
+      graphic.testPoint = true //打开测试点，与DIV点进行对比位置调整css
+    }
+
+    //自定义的面板
+    function addGraphic_05(graphicLayer) {
+      var graphic = new mars3d.graphic.DivGraphic({
+        position: Cesium.Cartesian3.fromDegrees(116.406756, 30.835499, 396.93),
+        style: {
+          html: `<div class="divpoint divpoint-theme-29baf1">
+                <div class="divpoint-wrap">
+                    <div class="area">
+                        <div class="arrow-lt"></div>
+                        <div class="b-t"></div>
+                        <div class="b-r"></div>
+                        <div class="b-b"></div>
+                        <div class="b-l"></div>
+                        <div class="arrow-rb"></div>
+                        <div class="label-wrap">
+                            <div class="title">岳西水厂</div>
+                            <div class="label-content">
+                                <div class="data-li">
+                                    <div class="data-label">实时流量：</div>
+                                    <div class="data-value"><span class="label-num">98</span><span class="label-unit">m³/s</span>
+                                    </div>
+                                </div>
+                                <div class="data-li">
+                                    <div class="data-label">水池液位：</div>
+                                    <div class="data-value"><span class="label-num">13.14</span><span class="label-unit">m</span>
+                                    </div>
+                                </div>
+                                <div class="data-li">
+                                    <div class="data-label">水泵状态：</div>
+                                    <div class="data-value"><span class="label-tag data-value-status-1" alt="中间状态">1号</span><span
+                                            class="label-tag data-value-status-0" alt="关闭状态">2号</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="b-t-l"></div>
+                    <div class="b-b-r"></div>
+                </div>
+                <div class="arrow" ></div>
+            </div>`,
+          horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(1000, 200000) //按视距距离显示
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+
+      movePoint(graphic) //动画移动示例
+    }
+
+    //动画移动示例
+    function movePoint(graphic) {
+      map.clock.shouldAnimate = true
+
+      //动画移动
+      var property = new Cesium.SampledPositionProperty()
+      var time = 20 //移动的时长 ，秒
+      var tempTime
+
+      //起点
+      var startPoint = Cesium.Cartesian3.fromDegrees(116.406756, 30.835499, 396.93)
+      tempTime = map.clock.currentTime //飞行开始时间
+      property.addSample(tempTime, startPoint)
+
+      //移动到的第1个目标点
+      var point1 = Cesium.Cartesian3.fromDegrees(116.171998, 30.86887, 733.6)
+      tempTime = Cesium.JulianDate.addSeconds(tempTime, time, new Cesium.JulianDate())
+      property.addSample(tempTime, point1)
+
+      //移动到的第2个目标点
+      var point2 = Cesium.Cartesian3.fromDegrees(116.311677, 31.038516, 768.84)
+      tempTime = Cesium.JulianDate.addSeconds(tempTime, time, new Cesium.JulianDate())
+      property.addSample(tempTime, point2)
+
+      //移动到的第3个目标点
+      var point3 = Cesium.Cartesian3.fromDegrees(116.406756, 30.835499, 396.93)
+      tempTime = Cesium.JulianDate.addSeconds(tempTime, time, new Cesium.JulianDate())
+      property.addSample(tempTime, point3)
+
+      //为了保证到结束时间了，一直停留在那，所以加个很远的时间
+      tempTime = Cesium.JulianDate.addDays(tempTime, 365, new Cesium.JulianDate())
+      property.addSample(tempTime, point3)
+
+      graphic.position = property
+    }
+  </script>
+</body>
+
+</html>

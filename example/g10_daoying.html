@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn ">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>镜面倒影 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,bootstrap-checkbox,jquery.range,layer,haoutil,turf,mars3d"></script>
+
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+  <div class="infoview info-tips">
+    提示：<br />
+    (1) 模型越平整效果越好<br />
+  </div>
+
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        scene: {
+          center: {
+            y: 33.591733,
+            x: 119.032381,
+            z: 32.31,
+            heading: 331,
+            pitch: -21.2,
+            roll: 0
+          },
+          globe: {
+            depthTestAgainstTerrain: true
+          }
+        }
+      })
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //添加参考三维模型
+      var tiles3dLayer = new mars3d.layer.TilesetLayer({
+        url: 'http://data.marsgis.cn/3dtiles/qx-simiao/tileset.json',
+        offset: {
+          z: 81.5
+        },
+        maximumScreenSpaceError: 1,
+        maximumMemoryUsage: 2048,
+        dynamicScreenSpaceError: true,
+        cullWithChildrenBounds: false
+      })
+      map.addLayer(tiles3dLayer)
+
+      //倒影效果
+      var invertedEffect = new mars3d.effect.InvertedEffect()
+      map.addEffect(invertedEffect)
+    }
+  </script>
+</body>
+
+</html>

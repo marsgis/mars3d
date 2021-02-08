@@ -1,0 +1,149 @@
+<!-- 2017-12-4 14:24:12 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>arcgis featureserver 矢量服务加载 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d,mars3d-esri"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        scene: {
+          //此处参数会覆盖config.json中的对应配置
+          center: {
+            y: 31.810597,
+            x: 117.220617,
+            z: 1038.28,
+            heading: 13.2,
+            pitch: -30.4,
+            roll: 0.1
+          }
+        },
+        //方式1：在创建地球前的参数中配置
+        layers: [
+          {
+            name: '兴趣点',
+            type: 'arcgis_wfs',
+            url: 'http://data.marsgis.cn/arcgis/rest/services/mars/hefei/MapServer/1',
+            where: ' 1=1 ',
+            minimumLevel: 16,
+            symbol: {
+              styleOptions: {
+                image: 'img/marker/mark3.png',
+                scale: 1,
+                heightReference: 'NONE',
+                label: {
+                  text: '{NAME}',
+                  font_size: 15,
+                  color: '#ffffff',
+                  border: true,
+                  border_color: '#000000',
+                  pixelOffset: [0, -50],
+                  heightReference: 'NONE'
+                }
+              }
+            },
+            //点的聚合配置
+            clustering: {
+              enabled: true,
+              pixelRange: 20,
+              color: '#0000ff',
+              pixelSize: 48
+            },
+            popup: '名称：{NAME}<br />地址：{address}',
+            show: true
+          }
+        ],
+        terrain: false
+      })
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //添加测试的演示图层
+      addArcGisWFSLayer1()
+    }
+
+    //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+    function addArcGisWFSLayer1() {
+      var changeLevel = 15
+
+      //瓦片图，对比参考用
+      var tileLayer = new mars3d.layer.ArcGisLayer({
+        name: '瓦片图层',
+        url: 'http://data.marsgis.cn/arcgis/rest/services/mars/hefei/MapServer',
+        layers: '37',
+        popup: '名称：{NAME}<br />层数：{floor}',
+        maximumLevel: changeLevel - 1,
+        maximumTerrainLevel: changeLevel - 1
+      })
+      map.addLayer(tileLayer)
+
+      //动态矢量图
+      var wfsLayer = new mars3d.layer.ArcGisWfsLayer({
+        name: '建筑物面矢量图层',
+        url: 'http://data.marsgis.cn/arcgis/rest/services/mars/hefei/MapServer/37',
+        where: " NAME like '%合肥%' ",
+        minimumLevel: changeLevel,
+        symbol: {
+          styleOptions: {
+            color: '#FED976',
+            outline: false,
+            opacity: 1
+          }
+        },
+        buildings: {
+          cloumn: 'floor'
+        },
+        debuggerTileInfo: false,
+        popup: '名称：{NAME}<br />层数：{floor}'
+      })
+      map.addLayer(wfsLayer)
+
+      //绑定事件
+      wfsLayer.on(mars3d.EventType.click, function(event) {
+        console.log('单击了图层', event)
+      })
+
+      setTimeout(function() {
+        //测试更换条件
+        wfsLayer.setWhere(' 1=1 ')
+      }, 10000)
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn ">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>积雪场景 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,bootstrap-checkbox,jquery.range,layer,haoutil,turf,mars3d"></script>
+
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+  <div class="infoview">
+    <table class="mars-table">
+      <tr>
+        <td>
+          <div class="checkbox checkbox-primary checkbox-inline">
+            <input id="chkSnow" class="styled" type="checkbox" checked>
+            <label for="chkSnow">
+              下雪效果
+            </label>
+          </div>
+        </td>
+        <td>速度</td>
+        <td>
+          <input id="snowSpeed" type="range" min="1" max="50" step="1" value='10'>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="checkbox checkbox-primary checkbox-inline">
+            <input id="chkSnowCover" class="styled" type="checkbox" checked>
+            <label for="chkSnowCover">
+              积雪效果
+            </label>
+          </div>
+        </td>
+        <td>积雪程度</td>
+        <td>
+          <input id="alpha" type="range" min="0.0" max="1.0" step="0.1" value='0.6'>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        scene: {
+          center: {
+            y: 33.591015,
+            x: 119.032698,
+            z: 72.51,
+            heading: 343.3,
+            pitch: -20.8,
+            roll: 0
+          },
+          globe: {
+            depthTestAgainstTerrain: true
+          }
+        }
+      })
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //添加参考三维模型
+      var tiles3dLayer = new mars3d.layer.TilesetLayer({
+        url: 'http://data.marsgis.cn/3dtiles/qx-simiao/tileset.json',
+        offset: {
+          z: 81.5
+        },
+        maximumScreenSpaceError: 1,
+        maximumMemoryUsage: 2048,
+        dynamicScreenSpaceError: true,
+        cullWithChildrenBounds: false
+      })
+      map.addLayer(tiles3dLayer)
+
+      //====================下雪效果=====================
+      var snowEffect = new mars3d.effect.SnowEffect({
+        speed: 10
+      })
+      map.addEffect(snowEffect)
+
+      $('#chkSnow').change(function() {
+        var val = $(this).is(':checked')
+        snowEffect.enabled = val
+      })
+      $('#snowSpeed').range({
+        onChange: function(value, bfb) {
+          if (snowEffect) {
+            snowEffect.speed = value
+          }
+        }
+      })
+
+      //====================地面积雪效果=====================
+      var snowCover = new mars3d.effect.SnowCoverEffect({
+        maxHeight: 8000, //大于此高度后不显示
+        alpha: Number($('#alpha').val())
+      })
+      map.addEffect(snowCover)
+
+      $('#chkSnowCover').change(function() {
+        var val = $(this).is(':checked')
+        snowCover.enabled = val
+      })
+
+      $('#alpha').range({
+        onChange: function(value, bfb) {
+          snowCover.alpha = Number(value)
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>

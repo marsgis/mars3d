@@ -3,7 +3,21 @@
 
 
 > 介绍资料：[http://mars3d.cn](http://mars3d.cn)  
-> 功能示例：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d)
+> 功能示例：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d) `本仓库内`
+ 
+
+
+## **本仓库说明** 
+
+### 运行站点
+ 在任意开发编辑器（如vscode等）或http服务器(如node、nginx、tomcat、IIS等)下直接运行浏览`examples.html`即可
+
+> 运行效果 
+ [在线预览](http://mars3d.cn/examples.html)  
+ 
+### 反馈问题
+ 为了方便交流及留存，所有bug及建议均统一提交至：
+ [https://github.com/marsgis/mars3d/issues](https://github.com/marsgis/mars3d/issues)  
 
 
 ## 开源仓库导航 

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>Model 小模型 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+  <div class="infoview">
+    <div>
+      图层状态：
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkShow" class="styled" type="checkbox" checked>
+        <label for="chkShow">
+          显示隐藏
+        </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkPopup" class="styled" type="checkbox" checked>
+        <label for="chkPopup">
+          Popup绑定
+        </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkTooltip" class="styled" type="checkbox">
+        <label for="chkTooltip">
+          Tooltip绑定
+        </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkContextMenu" class="styled" type="checkbox" checked>
+        <label for="chkContextMenu">
+          右键菜单绑定
+        </label>
+      </div>
+    </div>
+    <div>
+      数据维护：
+      <input id="btnStartDraw" type="button" class="btn btn-primary" value="图上标绘" title="在图上绘制新增一个矢量数据" />
+
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkHasEdit" class="styled" type="checkbox">
+        <label for="chkHasEdit">
+          是否编辑
+        </label>
+      </div>
+    </div>
+    <div>
+      数据管理：
+      <input id="btnClear" type="button" class="btn btn-danger" value="清除" />
+      <input id="btnExpFile" type="button" class="btn btn-primary" value="保存GeoJSON" title="保存为GeoJSON文件" />
+      <input id="btnImpFile" type="button" class="btn btn-primary" value="打开GeoJSON" title="打开之前保存的GeoJSON文件" />
+
+      <input id="input_draw_file" type="file" accept=".json" style="display:none;" />
+    </div>
+  </div>
+
+  <!-- 切换视角到模型或地形（山区）的快捷按钮 -->
+  <script type="text/javascript" src="js/center_terrain_3dtiles.js"></script>
+
+  <!-- 图层管理相关处理js -->
+  <script type="text/javascript" src="./js/graphicManager.js"></script>
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        scene: {
+          fxaa: true,
+          center: { y: 30.857606, x: 116.345359, z: 886, heading: 33, pitch: -34, roll: 0 }
+        }
+      })
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //固定光照，避免gltf模型随时间存在亮度不一致。
+      map.scene.light = new Cesium.DirectionalLight({
+        direction: new Cesium.Cartesian3(0.35492591601301104, -0.8909182691839401, -0.2833588392420772)
+      })
+
+      //创建矢量数据图层
+      var graphicLayer = new mars3d.layer.GraphicLayer()
+      map.addLayer(graphicLayer)
+
+      //图层管理的相关处理，代码在\js\graphicManager.js
+      initLayerManager(graphicLayer)
+
+      $('#btnStartDraw').click(function() {
+        graphicLayer.startDraw({
+          type: 'model',
+          style: {
+            scale: 10,
+            url: 'http://data.marsgis.cn/gltf/mars/firedrill/xiaofangche.gltf',
+            label: {
+              //不需要文字时，去掉label配置即可
+              text: '可以同时支持文字',
+              font_size: 20,
+              color: '#ffffff',
+              border: true,
+              border_color: '#000000',
+              pixelOffset: [0, -15]
+            }
+          }
+        })
+      })
+
+      //加一些演示数据
+      addGraphic_01(graphicLayer)
+      addGraphic_02(graphicLayer)
+      addGraphic_03(graphicLayer)
+    }
+
+    /**
+     style 支持的参数说明：
+     "style": {
+        支持 Cesium.ModelGraphics.ConstructorOptions 中所有属性（Cesium原生的属性）
+
+        "url": "data/test.gltf",      //路径
+        "scale": 1,      //比例
+        "heading": 0,      //方向角
+        "pitch": 0,      //俯仰角
+        "roll": 0,      //翻滚角
+        "fill": false,      //是否填充
+        "color": "#3388ff",      //颜色
+        "opacity": 1,      //透明度
+        "silhouette": false,      //是否轮廓
+        "silhouetteColor": "#ffffff",      //轮廓颜色
+        "silhouetteSize": 2,      //轮廓宽度
+        "silhouetteAlpha": 0.8,      //轮廓透明度
+        "distanceDisplayCondition": false,      //是否按视距显示
+        "distanceDisplayCondition_far": 100000,      //最大距离
+        "distanceDisplayCondition_near": 0,      //最小距离
+        "hasShadows": true,      //是否阴影
+        "clampToGround": false,      //是否贴地
+     }
+    */
+
+    function addGraphic_01(graphicLayer) {
+      var graphic = new mars3d.graphic.ModelEntity({
+        name: '消防员',
+        position: [116.346929, 30.861947, 401.34],
+        style: {
+          url: 'http://data.marsgis.cn/gltf/mars/firedrill/xiaofangyuan-run.gltf',
+          scale: 20,
+          minimumPixelSize: 50,
+          label: {
+            text: '我是原始模型',
+            font_size: 18,
+            color: '#ffffff',
+            pixelOffset: [0, -50],
+            distanceDisplayCondition: true,
+            distanceDisplayCondition_far: 500000,
+            distanceDisplayCondition_near: 0
+          }
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+
+      //演示个性化处理graphic，代码在\js\graphicManager.js
+      initGraphicManager(graphic)
+
+      //entity转geojson
+      var geojson = graphic.toGeoJSON()
+      console.log(geojson)
+
+      //geojson转entity
+      var graphic1Copy = mars3d.graphic.ModelEntity.fromGeoJSON(geojson)
+      graphic1Copy.position = [116.348278, 30.861971, 393.99]
+      graphic1Copy.label.text = '我是转换后生成的模型'
+      graphicLayer.addGraphic(graphic1Copy)
+      console.log(graphic1Copy)
+    }
+
+    function addGraphic_02(graphicLayer) {
+      var graphic = new mars3d.graphic.ModelEntity({
+        name: '风机',
+        position: [116.35104, 30.86225, 374.4],
+        style: {
+          url: 'http://data.marsgis.cn/gltf/mars/fengche.gltf',
+          heading: 270,
+          scale: 30,
+          minimumPixelSize: 100
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+    }
+
+    function addGraphic_03(graphicLayer) {
+      var graphic = new mars3d.graphic.ModelEntity({
+        name: '汽车',
+        position: [116.349194, 30.864603, 376.58],
+        style: {
+          url: 'http://data.marsgis.cn/gltf/mars/qiche.gltf',
+          scale: 0.5,
+          minimumPixelSize: 50
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+    }
+  </script>
+</body>
+
+</html>

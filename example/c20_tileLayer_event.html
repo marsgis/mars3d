@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn ">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>瓦片加载事件 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <!--第三方lib-->
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+  <div id="toolbar" class="infoview">
+    请 F12 打开查看 console.log 打印的日志
+  </div>
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        scene: {
+          center: {
+            y: 26.458931,
+            x: 115.730494,
+            z: 1175444.01,
+            heading: 0,
+            pitch: -69.5,
+            roll: 0
+          }
+        },
+        control: {
+          baseLayerPicker: false
+        },
+        basemaps: [],
+        layers: [{ type: 'tileinfo', name: '瓦片信息', order: 2, show: true }]
+      })
+
+      //创建三维地球场景
+      var map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //添加图层
+      var tileLayer = new mars3d.layer.TdtLayer({
+        name: '天地图卫星',
+        layer: 'img_d',
+        order: 1
+      })
+      map.addLayer(tileLayer)
+
+      var count = 0
+      tileLayer.on(mars3d.EventType.loadTileStart, function(event) {
+        count++
+        console.log(`${count},开始请求加载瓦片: L:${event.imagery.level},X:${event.imagery.x},Y:${event.imagery.y}`)
+      })
+
+      tileLayer.on(mars3d.EventType.loadTileEnd, function(event) {
+        count--
+        console.log(`${count},开始请求加载瓦片: L:${event.imagery.level},X:${event.imagery.x},Y:${event.imagery.y}`)
+      })
+
+      tileLayer.on(mars3d.EventType.loadTileError, function(event) {
+        count--
+        console.log(`${count},开始请求加载瓦片: L:${event.imagery.level},X:${event.imagery.x},Y:${event.imagery.y}`)
+      })
+
+      //wms、arcgis等矢量发布类型图层支持click事件
+      var wmsLayer = new mars3d.layer.WmsLayer({
+        url: 'http://data.marsgis.cn/geoserver/mars/wms',
+        layers: 'mars:hf',
+        crs: 'EPSG:4326',
+        parameters: {
+          transparent: 'true',
+          format: 'image/png'
+        },
+        getFeatureInfoParameters: {
+          feature_count: 10
+        },
+        popup: 'all'
+      })
+      map.addLayer(wmsLayer)
+
+      //单击事件
+      wmsLayer.on(mars3d.EventType.click, function(event) {
+        //单击事件
+        console.log('单击了矢量数据，共' + event.features.length + '条', event)
+      })
+    }
+  </script>
+</body>
+
+</html>

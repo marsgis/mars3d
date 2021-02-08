@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn ">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title> 天地图地形 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <!--第三方lib-->
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+
+
+  <!-- 天地图地形服务需要引入该js-->
+  <script src="../lib/mars3d/plugins/tdt/cesiumTdt.js"></script>
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        terrain: false
+      })
+
+      //创建三维地球场景
+      var map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //天地图提供的地形服务
+      var tk = mars3d.Token.tianditu
+      map.terrainProvider = new Cesium.GeoTerrainProvider({
+        urls: [
+          'https://t0.tianditu.gov.cn/DataServer?T=elv_c&tk=' + tk,
+          'https://t1.tianditu.gov.cn/DataServer?T=elv_c&tk=' + tk,
+          'https://t2.tianditu.gov.cn/DataServer?T=elv_c&tk=' + tk,
+          'https://t3.tianditu.gov.cn/DataServer?T=elv_c&tk=' + tk,
+          'https://t4.tianditu.gov.cn/DataServer?T=elv_c&tk=' + tk,
+          'https://t5.tianditu.gov.cn/DataServer?T=elv_c&tk=' + tk,
+          'https://t6.tianditu.gov.cn/DataServer?T=elv_c&tk=' + tk,
+          'https://t7.tianditu.gov.cn/DataServer?T=elv_c&tk=' + tk
+        ]
+      })
+    }
+  </script>
+</body>
+
+</html>

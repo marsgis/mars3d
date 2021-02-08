@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn ">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>特效 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <!--第三方lib-->
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+  <!-- 面板 -->
+  <div class="infoview">
+    <table class="mars-table">
+      <tr>
+        <td>状态</td>
+        <td>
+          <div class="checkbox checkbox-primary checkbox-inline">
+            <input id="chkShowEffect" class="styled" type="checkbox" checked>
+            <label for="chkShowEffect">
+              开启效果
+            </label>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>焦距</td>
+        <td>
+          <input id="txt_focalDistance"  type="range" min="0.0" max="500.0" step="1" value="87" >
+        </td>
+      </tr>
+      <tr>
+        <td>增量</td>
+        <td>
+          <input id="txt_delta"  type="range" min="0.1" max="2" step="0.01" value="1" >
+        </td>
+      </tr>
+      <tr>
+        <td>Sigma</td>
+        <td>
+          <input id="txt_sigma"  type="range" min="0.5" max="5" step="0.01" value="3.78" >
+        </td>
+      </tr>
+      <tr>
+        <td>步长</td>
+        <td>
+          <input id="txt_stepSize"  type="range" min="0" max="7" step="0.01" value="2.46">
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        scene: {
+          center: {
+            y: 33.591015,
+            x: 119.032698,
+            z: 72.51,
+            heading: 343.3,
+            pitch: -20.8,
+            roll: 0
+          }
+        }
+      })
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //添加参考三维模型
+      var tiles3dLayer = new mars3d.layer.TilesetLayer({
+        url: 'http://data.marsgis.cn/3dtiles/qx-simiao/tileset.json',
+        offset: {
+          z: 81.5
+        },
+        maximumScreenSpaceError: 1,
+        maximumMemoryUsage: 2048,
+        dynamicScreenSpaceError: true,
+        cullWithChildrenBounds: false
+      })
+      map.addLayer(tiles3dLayer)
+
+      //构造效果
+      var depthOfField = new mars3d.effect.DepthOfFieldEffect()
+      map.addEffect(depthOfField)
+
+      $('#chkShowEffect').change(function() {
+        var val = $(this).is(':checked')
+
+        depthOfField.show = val
+      })
+      $('#txt_focalDistance').range({
+        onChange: function(value, bfb) {
+          depthOfField.focalDistance = value
+        }
+      })
+      $('#txt_delta').range({
+        onChange: function(value, bfb) {
+          depthOfField.delta = value
+        }
+      })
+      $('#txt_sigma').range({
+        onChange: function(value, bfb) {
+          depthOfField.sigma = value
+        }
+      })
+      $('#txt_stepSize').range({
+        onChange: function(value, bfb) {
+          depthOfField.stepSize = value
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>

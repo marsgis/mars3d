@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn ">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>三维地形 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <!--第三方lib-->
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+  <!-- demo面板 -->
+  <div class="infoview">
+    <div class="checkbox checkbox-primary checkbox-inline">
+      <input id="chkTerrain" class="styled" type="checkbox" checked>
+      <label for="chkTerrain">
+        开启地形
+      </label>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    $(document).ready(function() {
+      if (!mars3d.util.webglreport()) {
+        mars3d.util.webglerror()
+        return
+      }
+      initMap()
+    })
+
+    function initMap() {
+      //添加可叠加图层有3种方式（参数除指定的type类型外无需type参数，其他参数都相同）:
+
+      //方式1：在创建地球前的传参中配置layers参数
+      var map = new mars3d.Map('mars3dContainer', {
+        scene: {
+          center: { lat: 30.715648, lng: 116.300527, alt: 10727, heading: 3, pitch: -25 }
+        },
+        control: {
+          baseLayerPicker: true, //basemaps底图切换按钮
+          homeButton: true, //视角复位按钮
+          sceneModePicker: true, //二三维切换按钮
+          navigationHelpButton: true, //帮助按钮
+          fullscreenButton: true, //全屏按钮
+          contextmenu: true //右键菜单
+        },
+        basemaps: [
+          {
+            name: '天地图卫星',
+            icon: 'img/basemaps/tdt_img.png',
+            type: 'tdt',
+            layer: 'img_d',
+            key: ['9ae78c51a0a28f06444d541148496e36'],
+            show: true
+          }
+        ],
+        terrain: {
+          url: 'http://data.marsgis.cn/terrain',
+          show: true
+        }
+      })
+
+      $('#chkTerrain').change(function() {
+        var val = $(this).is(':checked')
+
+        //可以开启和关闭地形
+        map.terrain = val
+      })
+    }
+  </script>
+</body>
+
+</html>

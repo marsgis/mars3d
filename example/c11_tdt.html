@@ -1,0 +1,183 @@
+<!-- 2017-12-4 14:24:10 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>天地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+  <div class="infoview">
+    <input id="btnAddLayer" type="button" class="btn btn-primary" value="叠加图层" onclick="addLayer()" />
+    <input id="btnRemoveLayer" type="button" class="btn btn-primary" value="移除图层" onclick="removeLayer()" />
+  </div>
+
+
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    $(document).ready(function() {
+      if (!mars3d.util.webglreport()) {
+        mars3d.util.webglerror()
+        return
+      }
+      initMap()
+    })
+
+    var map
+    function initMap() {
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', {
+        scene: {
+          center: { y: 25.816726, x: 114.165359, z: 3339609.8, heading: 355.7, pitch: -81.2, roll: 0 }
+        },
+        control: {
+          baseLayerPicker: true, //basemaps底图切换按钮
+          homeButton: true, //视角复位按钮
+          sceneModePicker: true, //二三维切换按钮
+          contextmenu: true //右键菜单
+        },
+        terrain: {
+          url: 'http://data.marsgis.cn/terrain',
+          show: true
+        },
+        //方式1：在创建地球前的参数中配置
+        basemaps: [
+          {
+            name: '天地图影像(EPSG:3857)',
+            icon: 'img/basemaps/tdt_img.png',
+            type: 'tdt',
+            layer: 'img_d',
+            key: mars3d.Token.tiandituArr,
+            show: true
+          },
+          {
+            name: '天地图电子(EPSG:3857)',
+            icon: 'img/basemaps/tdt_vec.png',
+            type: 'group',
+            layers: [
+              { name: '底图', type: 'tdt', layer: 'vec_d', key: mars3d.Token.tiandituArr },
+              { name: '注记', type: 'tdt', layer: 'vec_z', key: mars3d.Token.tiandituArr }
+            ]
+          },
+          {
+            name: '天地图地形(EPSG:3857)',
+            icon: 'img/basemaps/tdt_ter.png',
+            type: 'group',
+            layers: [
+              { name: '底图', type: 'tdt', layer: 'ter_d', key: mars3d.Token.tiandituArr },
+              { name: '注记', type: 'tdt', layer: 'ter_z', key: mars3d.Token.tiandituArr }
+            ]
+          },
+          {
+            name: '天地图影像(EPSG:4326)',
+            icon: 'img/basemaps/tdt_img.png',
+            type: 'group',
+            layers: [
+              {
+                name: '底图',
+                type: 'tdt',
+                layer: 'img_d',
+                crs: 'EPSG4326',
+                key: mars3d.Token.tiandituArr
+              },
+              {
+                name: '注记',
+                type: 'tdt',
+                layer: 'img_z',
+                crs: 'EPSG4326',
+                key: mars3d.Token.tiandituArr
+              }
+            ]
+          },
+          {
+            name: '天地图电子(EPSG:4326)',
+            icon: 'img/basemaps/tdt_vec.png',
+            type: 'group',
+            layers: [
+              {
+                name: '底图',
+                type: 'tdt',
+                layer: 'vec_d',
+                crs: 'EPSG4326',
+                key: mars3d.Token.tiandituArr
+              },
+              {
+                name: '注记',
+                type: 'tdt',
+                layer: 'vec_z',
+                crs: 'EPSG4326',
+                key: mars3d.Token.tiandituArr
+              }
+            ]
+          },
+          {
+            name: '天地图地形(EPSG:4326)',
+            icon: 'img/basemaps/tdt_ter.png',
+            type: 'group',
+            layers: [
+              {
+                name: '底图',
+                type: 'tdt',
+                layer: 'ter_d',
+                crs: 'EPSG4326',
+                key: mars3d.Token.tiandituArr
+              },
+              {
+                name: '注记',
+                type: 'tdt',
+                layer: 'ter_z',
+                crs: 'EPSG4326',
+                key: mars3d.Token.tiandituArr
+              }
+            ]
+          }
+        ]
+      })
+    }
+
+    //叠加的图层
+    var tileLayer
+
+    function addLayer() {
+      removeLayer()
+
+      //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+      tileLayer = new mars3d.layer.TdtLayer({
+        name: '天地图卫星注记',
+        layer: 'img_z',
+        key: mars3d.Token.tiandituArr
+      })
+      map.addLayer(tileLayer)
+    }
+    function removeLayer() {
+      if (tileLayer) {
+        map.removeLayer(tileLayer, true)
+        tileLayer = null
+      }
+    }
+  </script>
+</body>
+
+</html>

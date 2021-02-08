@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>扩散墙 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+  include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+
+
+  <div class="infoview">
+    <div>
+      图层状态：
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkPopup" class="styled" type="checkbox" checked>
+        <label for="chkPopup">
+          Popup绑定
+        </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkTooltip" class="styled" type="checkbox">
+        <label for="chkTooltip">
+          Tooltip绑定
+        </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkContextMenu" class="styled" type="checkbox" checked>
+        <label for="chkContextMenu">
+          右键菜单绑定
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 图层管理相关处理js -->
+  <script type="text/javascript" src="./js/graphicManager.js"></script>
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        scene: {
+          center: { y: 31.285106, x: 121.506331, z: 4790.57, heading: 201.1, pitch: -43.9, roll: 359.9 }
+        }
+      })
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+      map.basemap = 2017
+
+      var tiles3dLayer = new mars3d.layer.TilesetLayer({
+        name: '上海市区',
+        url: 'http://data.marsgis.cn/3dtiles/jzw-shanghai/tileset.json', //定义在 config\marsUrl.js
+        maximumScreenSpaceError: 8,
+        maximumMemoryUsage: 1024,
+        marsJzwStyle: true,
+        style: {
+          color: {
+            conditions: [['true', 'rgb(3, 104, 255)']]
+          }
+        }
+      })
+      map.addLayer(tiles3dLayer)
+
+      //创建Graphic图层
+      var graphicLayer = new mars3d.layer.GraphicLayer()
+      map.addLayer(graphicLayer)
+
+      //图层管理的相关处理，代码在\js\graphicManager.js
+      initLayerManager(graphicLayer)
+
+      //加一些演示数据
+
+      //立体围墙扩散效果,面状
+      var diffuseWallGlow = new mars3d.graphic.DiffuseWall({
+        positions: [
+          [121.475616, 31.255374, 5.87],
+          [121.482578, 31.248681, 10.85],
+          [121.479447, 31.240235, 14.25],
+          [121.470002, 31.240496, 12.92],
+          [121.46538, 31.249206, 9.53],
+          [121.475616, 31.255374, 5.87]
+        ],
+        style: {
+          diffHeight: 2000, //高度
+          speed: 100 //速度
+        }
+      })
+      graphicLayer.addGraphic(diffuseWallGlow)
+
+      //立体围墙扩散效果,圆状
+      var circleDiffuseWallGlow = new mars3d.graphic.DiffuseWall({
+        position: Cesium.Cartesian3.fromDegrees(121.504242, 31.23805, 27.88), //圆中心点
+        style: {
+          radius: 600, //半径
+          color: Cesium.Color.fromCssColorString('#ff0000'),
+          diffHeight: 2000, //高度
+          speed: 100 //速度
+        }
+      })
+      graphicLayer.addGraphic(circleDiffuseWallGlow)
+    }
+  </script>
+</body>
+
+</html>

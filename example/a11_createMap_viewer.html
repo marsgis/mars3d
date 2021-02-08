@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn ">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>原生Cesium来创建地球(可与第3方SDK结合使用) |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <!--第三方lib-->
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    $(document).ready(function() {
+      if (!mars3d.util.webglreport()) {
+        mars3d.util.webglerror()
+        return
+      }
+      initMap()
+    })
+
+    function initMap() {
+      //与超图结合示例：      https://github.com/marsgis/mars3d-link-supermap
+      //与earthsdk结合示例：  https://github.com/marsgis/mars3d-link-earthsdk
+
+      //构造地球（可以使用原生Cesium或第3方SDK方式去构造Viewer）
+      var viewer = new Cesium.Viewer('mars3dContainer', {
+        animation: false,
+        timeline: false,
+        baseLayerPicker: false, //是否显示图层选择控件
+        imageryProvider: new Cesium.TileMapServiceImageryProvider({
+          url: Cesium.buildModuleUrl('Assets/Textures/NaturalEarthII')
+        })
+      })
+
+      //mars3d.Map也可以直接传入外部已经构造好的viewer, 支持config.json所有参数
+      var map = new mars3d.Map(viewer, {
+        scene: {
+          center: { lat: 30.054604, lng: 108.885436, alt: 17036414, heading: 0, pitch: -90 },
+          fxaa: true
+        },
+        control: {
+          baseLayerPicker: true, //basemaps底图切换按钮
+          homeButton: true, //视角复位按钮
+          sceneModePicker: true, //二三维切换按钮
+          navigationHelpButton: true, //帮助按钮
+          fullscreenButton: true, //全屏按钮
+          contextmenu: true //右键菜单
+        }
+      })
+
+      //cesium对应的原始地球对象
+      // var viewer = map.viewer
+    }
+  </script>
+</body>
+
+</html>

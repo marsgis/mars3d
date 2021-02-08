@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn ">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>三维地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <!--第三方lib-->
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,jquery.range,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+  <div class="infoview">
+    <span style="color: #cad1d1;">建议：顺着水流方向选点，直线时多采集点</span>
+
+    <table class="mars-table">
+      <tr>
+        <td class="nametd">河宽度：</td>
+        <td>
+          <input type="number" class="form-control " id="txtWidth" value="200">
+        </td>
+      </tr>
+
+      <tr>
+        <td class="nametd">河高度：</td>
+        <td>
+          <input type="number" class="form-control " id="txtHeight" value="20">
+        </td>
+      </tr>
+      <tr>
+        <td class="nametd">水流速：</td>
+        <td>
+          <input id="txtSpeed" type="range" min="0" max="50" step="1" value="10">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input id="btnDrawLine" type="button" class="btn btn-primary" value="绘制河流" />
+
+          <input id="btnAddHeight" type="button" class="btn btn-primary" value="升高15米动画" />
+          <input id="btnLowerHeight" type="button" class="btn btn-primary" value="降低15米动画" />
+          <input id="btnClear" type="button" class="btn btn-danger" value="清除" />
+        </td>
+      </tr>
+
+    </table>
+  </div>
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        scene: {
+          center: {
+            y: 30.428812,
+            x: 115.877765,
+            z: 1949.39,
+            heading: 41.4,
+            pitch: -37.9,
+            roll: 0.4
+          },
+          globe: {
+            depthTestAgainstTerrain: true
+          }
+        }
+      })
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //创建Graphic图层
+      var graphicLayer = new mars3d.layer.GraphicLayer()
+      map.addLayer(graphicLayer)
+
+      //2.在layer上绑定监听事件
+      graphicLayer.on(mars3d.EventType.click, function(event) {
+        console.log('监听layer，单击了矢量对象', event)
+      })
+      graphicLayer.on(mars3d.EventType.mouseOver, function(event) {
+        console.log('监听layer，鼠标移入了矢量对象', event)
+      })
+      graphicLayer.on(mars3d.EventType.mouseOut, function(event) {
+        console.log('监听layer，鼠标移出了矢量对象', event)
+      })
+
+      //可在图层上绑定popup,对所有加到这个图层的矢量数据都生效
+      graphicLayer.bindPopup('我是layer上绑定的Popup', {
+        anchor: [0, -10]
+      })
+
+      //可在图层上绑定tooltip,对所有加到这个图层的矢量数据都生效
+      // graphicLayer.bindTooltip('我是layer上绑定的Tooltip')
+
+      //可在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
+      graphicLayer.bindContextMenu([
+        {
+          text: '删除对象',
+          iconCls: 'fa fa-trash-o',
+          callback: function(e) {
+            var primitive = e.graphic
+            if (primitive) {
+              graphicLayer.removeGraphic(primitive)
+            }
+          }
+        }
+      ])
+
+      //加一些演示数据
+
+      var dynamicRiver = new mars3d.graphic.DynamicRiver({
+        positions: [
+          [115.907543, 30.441563, 541.47],
+          [115.904337, 30.439412, 491.79],
+          [115.900612, 30.438483, 449.11],
+          [115.896375, 30.439377, 388.29],
+          [115.890586, 30.442215, 345.94],
+          [115.876946, 30.444641, 292.73]
+        ],
+        style: {
+          image: './img/textures/movingRiver.png',
+          width: 200,
+          height: 20,
+          speed: 10
+        }
+      })
+      graphicLayer.addGraphic(dynamicRiver)
+
+      //属性动态更新
+      $('#txtWidth').change(function(e) {
+        if (!dynamicRiver) {
+          return
+        }
+
+        var value = Number($(this).val())
+        dynamicRiver.width = value
+      })
+      $('#txtHeight').change(function(e) {
+        if (!dynamicRiver) {
+          return
+        }
+        var value = Number($(this).val())
+        dynamicRiver.height = value
+      })
+
+      $('#txtSpeed').range({
+        onChange: function(value, bfb) {
+          if (!dynamicRiver) {
+            return
+          }
+          dynamicRiver.speed = value
+        }
+      })
+
+      //清除
+      $('#btnClear').click(function(e) {
+        graphicLayer.clear()
+        dynamicRiver = null
+      })
+
+      $('#btnAddHeight').click(function(e) {
+        if (!dynamicRiver) {
+          return
+        }
+        dynamicRiver.offsetHeight(15, 5) //5秒内抬高15米
+      })
+      $('#btnLowerHeight').click(function(e) {
+        if (!dynamicRiver) {
+          return
+        }
+        dynamicRiver.offsetHeight(-15, 5) //5秒内降低15米
+      })
+
+      $('#btnDrawLine').click(function(e) {
+        map.graphicLayer.startDraw({
+          type: 'polyline',
+          style: {
+            color: '#55ff33',
+            width: 3
+          },
+          success: (graphic) => {
+            var points = graphic.points
+
+            graphic.remove() //删除绘制的线
+
+            var width = Number($('#txtWidth').val())
+            var height = Number($('#txtHeight').val())
+            var speed = Number($('#txtSpeed').val())
+
+            var dynamicRiver = new mars3d.graphic.DynamicRiver({
+              positions: points,
+              style: {
+                image: './img/textures/movingRiver.png',
+                width: width,
+                height: height,
+                speed: speed
+              }
+            })
+            graphicLayer.addGraphic(dynamicRiver)
+          }
+        })
+      })
+    }
+  </script>
+</body>
+
+</html>

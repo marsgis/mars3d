@@ -1,0 +1,150 @@
+<!-- 2017-12-7 14:56:03 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>OGC WFS图层 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        scene: {
+          center: { y: 31.815668, x: 117.216449, z: 818, heading: 31, pitch: -29, roll: 0 }
+        },
+
+        layers: [
+          {
+            name: '合肥教育点',
+            type: 'wfs',
+            url: 'http://data.marsgis.cn/geoserver/mars/wfs',
+            layer: 'mars:hfjy',
+            parameters: {
+              //支持所有wfs的参数
+              maxFeatures: 500
+            },
+            minimumLevel: 13,
+            debuggerTileInfo: false,
+            symbol: {
+              styleOptions: {
+                image: 'img/marker/mark1.png',
+                scale: 1,
+                scaleByDistance: true,
+                scaleByDistance_far: 20000,
+                scaleByDistance_farValue: 0.5,
+                scaleByDistance_near: 1000,
+                scaleByDistance_nearValue: 1,
+                label: {
+                  text: '{项目名称}',
+                  font_size: 15,
+                  color: '#ffffff',
+                  border: true,
+                  border_color: '#000000',
+                  pixelOffset: [0, -50],
+                  distanceDisplayCondition: true,
+                  distanceDisplayCondition_far: 2000,
+                  distanceDisplayCondition_near: 0
+                }
+              }
+            },
+            clustering: {
+              //点的聚合配置
+              enabled: true,
+              pixelRange: 20,
+              color: '#0000ff',
+              pixelSize: 48
+            },
+            popup: 'all',
+            show: true
+          }
+        ]
+      })
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      var changeLevel = 15
+
+      //瓦片图，参考用
+      var tileLayer = new mars3d.layer.WmsLayer({
+        name: '建筑物面',
+        type: 'wms',
+        url: 'http://data.marsgis.cn/geoserver/mars/wms',
+        layers: 'mars:hfjzw',
+        crs: 'EPSG:4326',
+        parameters: {
+          transparent: 'true',
+          format: 'image/png'
+        },
+        maximumLevel: changeLevel - 1,
+        maximumTerrainLevel: changeLevel - 1,
+        popup: '名称：{NAME}<br />层数：{floor}',
+        show: true
+      })
+      map.addLayer(tileLayer)
+
+      var wfsLayer = new mars3d.layer.WfsLayer({
+        name: '建筑物面',
+        url: 'http://data.marsgis.cn/geoserver/mars/wfs',
+        layer: 'mars:hfjzw',
+        parameters: {
+          //支持所有wfs的参数
+          maxFeatures: 210
+        },
+        minimumLevel: changeLevel,
+        symbol: {
+          styleOptions: {
+            color: '#00469c',
+            outline: false,
+            opacity: 1
+          }
+        },
+        buildings: {
+          cloumn: 'floor'
+        },
+        debuggerTileInfo: false,
+        popup: '名称：{NAME}<br />层数：{floor}',
+        show: true
+      })
+      map.addLayer(wfsLayer)
+
+      //绑定事件
+      wfsLayer.on(mars3d.EventType.click, function(event) {
+        console.log('单击了图层', event)
+      })
+    }
+  </script>
+</body>
+
+</html>

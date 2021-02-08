@@ -1,0 +1,81 @@
+<!-- 2017-12-4 14:24:10 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>OpenStreetMap（OSM） |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    $(document).ready(function() {
+      if (!mars3d.util.webglreport()) {
+        mars3d.util.webglerror()
+        return
+      }
+      initMap()
+    })
+
+    function initMap() {
+      //创建三维地球场景
+      var map = new mars3d.Map('mars3dContainer', {
+        scene: {
+          center: {
+            y: 25.816726,
+            x: 114.165359,
+            z: 3339609.8,
+            heading: 355.7,
+            pitch: -81.2,
+            roll: 0
+          },
+          highDynamicRange: false
+        },
+        control: {
+          baseLayerPicker: true, //basemaps底图切换按钮
+          homeButton: true, //视角复位按钮
+          sceneModePicker: true, //二三维切换按钮
+          contextmenu: true //右键菜单
+        },
+        terrain: {
+          url: 'http://data.marsgis.cn/terrain',
+          show: true
+        },
+        //方式1：在创建地球前的参数中配置
+        basemaps: [
+          {
+            name: 'OSM开源地图',
+            icon: 'img/basemaps/osm.png',
+            type: 'osm',
+            show: true
+          }
+        ]
+      })
+    }
+  </script>
+</body>
+
+</html>

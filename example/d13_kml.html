@@ -1,0 +1,340 @@
+<!-- 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>KML图层 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,ztree,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+  <div id="viewSL" class="infoview">
+    示例：
+    <input type="button" class="btn btn-primary" value="高速公路线" onclick="showGaosuluDemo()" />
+    <input type="button" class="btn btn-primary" value="高压电线" onclick="showDianxianDemo()" />
+    <input type="button" class="btn btn-primary" value="气象等值面" onclick="showQixiangDemo()" />
+
+    <input type="button" class="btn btn-primary" value="国家GDP数据" onclick="showGuojiaDemo()" />
+    <input type="button" class="btn btn-primary" value="海上安全通告" onclick="showAnquanDemo()" />
+
+
+  </div>
+
+
+  <div class="infoview" style="overflow:auto;right:5px;left:auto; top:50px;max-height:90%;">
+    <ul id="treeOverlays" class="ztree"></ul>
+  </div>
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        scene: {
+          center: { lat: 19.248984, lng: 109.596224, alt: 28737, heading: 308, pitch: -53 }
+        },
+        layers: [
+          {
+            name: '国境线',
+            type: 'kml',
+            url: 'http://data.marsgis.cn/file/kml/countryboundary.kml',
+            symbol: {
+              styleOptions: {
+                color: '#FED976',
+                width: 2
+              }
+            },
+            popup: 'all',
+            show: true
+          },
+          {
+            name: '省界线',
+            type: 'kml',
+            url: 'http://data.marsgis.cn/file/kml/province.kml',
+            symbol: {
+              styleOptions: {
+                color: '#00FF00',
+                width: 2
+              }
+            },
+            popup: 'all',
+            show: true
+          }
+        ]
+      })
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      showGaosuluDemo()
+    }
+
+    var kmlLayer
+
+    function removeLayer() {
+      map.trackedEntity = null
+      if (kmlLayer) {
+        map.removeLayer(kmlLayer, true)
+        kmlLayer = null
+      }
+    }
+
+    //示例：
+    function showGaosuluDemo() {
+      removeLayer()
+
+      kmlLayer = new mars3d.layer.KmlLayer({
+        name: '路线',
+        url: 'http://data.marsgis.cn/file/kml/bslx.kmz',
+        symbol: {
+          styleOptions: {
+            font_family: '楷体',
+            arcType: Cesium.ArcType.GEODESIC,
+            clampToGround: true
+          }
+        },
+        popup: 'all',
+        flyTo: true
+      })
+      map.addLayer(kmlLayer)
+
+      //绑定事件
+      kmlLayer.on(mars3d.EventType.load, function(event) {
+        console.log('数据加载完成', event)
+        initTree(event.graphics)
+      })
+      kmlLayer.on(mars3d.EventType.click, function(event) {
+        console.log('单击了图层', event)
+      })
+    }
+
+    //示例：
+    function showDianxianDemo() {
+      removeLayer()
+
+      kmlLayer = new mars3d.layer.KmlLayer({
+        name: '35kV线',
+        url: 'http://data.marsgis.cn/file/kml/35kVshiyiquxian.kml',
+        popup: 'all',
+        symbol: {
+          styleOptions: {
+            lineType: 'solid',
+            color: '#ff0000',
+            arcType: Cesium.ArcType.GEODESIC,
+            clampToGround: true,
+            width: 2,
+            opacity: 0.8,
+            label: {
+              //标记文字
+              text: '{name}',
+              opacity: 1,
+              font_size: 30,
+              color: '#ffffff',
+
+              font_family: '楷体',
+              border: true,
+              border_color: '#000000',
+              border_width: 3,
+
+              scaleByDistance: true,
+              scaleByDistance_far: 200000,
+              scaleByDistance_farValue: 0.1,
+              scaleByDistance_near: 1000,
+              scaleByDistance_nearValue: 1
+            }
+          }
+        },
+        center: { y: 41.115222, x: 83.800636, z: 20112.39, heading: 359, pitch: -79.8, roll: 0.1 },
+
+        flyTo: true
+      })
+      map.addLayer(kmlLayer)
+
+      //绑定事件
+      kmlLayer.on(mars3d.EventType.load, function(event) {
+        console.log('数据加载完成', event)
+        initTree(event.graphics)
+      })
+      kmlLayer.on(mars3d.EventType.click, function(event) {
+        console.log('单击了图层', event)
+      })
+    }
+
+    //示例：
+    function showAnquanDemo() {
+      removeLayer()
+
+      kmlLayer = new mars3d.layer.KmlLayer({
+        name: '海上安全警告',
+        url: 'http://data.marsgis.cn/file/kml/NAVWARN.kmz',
+        popup: '{description}',
+        center: { y: 7.084013, x: 109.599602, z: 2065692, heading: 7, pitch: -74, roll: 0 },
+        flyTo: true
+      })
+      map.addLayer(kmlLayer)
+
+      //绑定事件
+      kmlLayer.on(mars3d.EventType.load, function(event) {
+        console.log('数据加载完成', event)
+        initTree(event.graphics)
+      })
+      kmlLayer.on(mars3d.EventType.click, function(event) {
+        console.log('单击了图层', event)
+      })
+    }
+
+    //示例：
+    function showQixiangDemo() {
+      removeLayer()
+
+      kmlLayer = new mars3d.layer.KmlLayer({
+        name: '气象数据',
+        url: 'http://data.marsgis.cn/file/kml/dg8.kml',
+        opacity: 0.7,
+        popup: 'all',
+        flyTo: true
+      })
+      map.addLayer(kmlLayer)
+
+      //绑定事件
+      kmlLayer.on(mars3d.EventType.load, function(event) {
+        console.log('数据加载完成', event)
+        initTree(event.graphics)
+      })
+      kmlLayer.on(mars3d.EventType.click, function(event) {
+        console.log('单击了图层', event)
+      })
+    }
+
+    //示例：
+    function showGuojiaDemo() {
+      removeLayer()
+
+      kmlLayer = new mars3d.layer.KmlLayer({
+        name: '全球各国GDP',
+        url: 'http://data.marsgis.cn/file/kml/gdpPerCapita2008.kmz',
+        center: { y: 12.46821, x: 91.404177, z: 18969935, heading: 359, pitch: -87, roll: 0 },
+        popup: 'all',
+        flyTo: true
+      })
+      map.addLayer(kmlLayer)
+
+      //绑定事件
+      kmlLayer.on(mars3d.EventType.load, function(event) {
+        console.log('数据加载完成', event)
+        initTree(event.graphics)
+      })
+      kmlLayer.on(mars3d.EventType.click, function(event) {
+        console.log('单击了图层', event)
+      })
+    }
+
+    //===========================树控件处理============================
+    var layersObj = {}
+
+    function initTree(arr) {
+      //初始化树
+      var setting = {
+        check: {
+          enable: true
+        },
+        data: {
+          simpleData: {
+            enable: true
+          }
+        },
+        callback: {
+          onCheck: treeOverlays_onCheck,
+          onClick: treeOverlays_onClick
+        }
+      }
+
+      var zNodes = []
+      var pnode = {
+        id: -1,
+        name: '全部',
+        type: 'group',
+        open: false,
+        checked: true,
+        icon: '../lib/jquery/ztree/css/mars/images/folder.png'
+      }
+      zNodes.push(pnode)
+
+      for (var i = 0, len = arr.length; i < len; i++) {
+        var item = arr[i]
+        var name = item?.label?.text?._value || item.name || item.id || '未命名'
+
+        var node = {
+          id: i,
+          pId: pnode.id,
+          name: name,
+          checked: true,
+          icon: '../lib/jquery/ztree/css/mars/images/layer.png'
+        }
+        zNodes.push(node)
+
+        layersObj[i] = item
+      }
+
+      $.fn.zTree.destroy()
+      $.fn.zTree.init($('#treeOverlays'), setting, zNodes)
+    }
+
+    function treeOverlays_onCheck(e, treeId) {
+      var zTree = $.fn.zTree.getZTreeObj(treeId)
+
+      //获得所有改变check状态的节点
+      var changedNodes = zTree.getChangeCheckedNodes()
+      for (var i = 0; i < changedNodes.length; i++) {
+        var treeNode = changedNodes[i]
+        treeNode.checkedOld = treeNode.checked
+        var entity = layersObj[treeNode.id]
+        if (entity == null) {
+          continue
+        }
+
+        //处理图层显示隐藏
+        entity.show = treeNode.checked
+      }
+    }
+
+    function treeOverlays_onClick(event, treeId, treeNode) {
+      var entity = layersObj[treeNode.id]
+      if (entity == null) {
+        return
+      }
+
+      map.flyTo(entity)
+    }
+  </script>
+</body>
+
+</html>

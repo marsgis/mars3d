@@ -1,0 +1,142 @@
+<!-- 2017-12-4 14:24:10 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>百度 demo |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+  <div class="infoview">
+    <input id="btnAddLayer" type="button" class="btn btn-primary" value="叠加图层" onclick="addLayer()" />
+    <input id="btnRemoveLayer" type="button" class="btn btn-primary" value="移除图层" onclick="removeLayer()" />
+  </div>
+
+  <div class="infoview info-tips">
+    已知问题提示：<br />
+    1.当前加载的拾取坐标非百度坐标，所以仅供展示。
+  </div>
+
+
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    $(document).ready(function() {
+      if (!mars3d.util.webglreport()) {
+        mars3d.util.webglerror()
+        return
+      }
+      initMap()
+    })
+
+    var map
+    function initMap() {
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', {
+        scene: {
+          center: {
+            y: 25.816726,
+            x: 114.165359,
+            z: 3339609.8,
+            heading: 355.7,
+            pitch: -81.2,
+            roll: 0
+          },
+          highDynamicRange: false
+        },
+        control: {
+          baseLayerPicker: true, //basemaps底图切换按钮
+          homeButton: true, //视角复位按钮
+          sceneModePicker: true, //二三维切换按钮
+          contextmenu: true //右键菜单
+        },
+        terrain: {
+          url: 'http://data.marsgis.cn/terrain',
+          show: true
+        },
+        //方式1：在创建地球前的参数中配置
+        basemaps: [
+          {
+            name: '百度电子',
+            icon: 'img/basemaps/gaode_vec.png',
+            type: 'baidu',
+            layer: 'vec',
+            show: true
+          },
+          {
+            name: '百度影像',
+            icon: 'img/basemaps/gaode_img.png',
+            type: 'group',
+            layers: [
+              { name: '底图', type: 'baidu', layer: 'img_d' },
+              { name: '注记', type: 'baidu', layer: 'img_z' }
+            ]
+          },
+          {
+            name: '百度深蓝色',
+            icon: 'img/basemaps/bd-c-midnight.png',
+            type: 'baidu',
+            layer: 'custom',
+            style: 'midnight'
+          },
+          {
+            name: '百度黑色',
+            icon: 'img/basemaps/bd-c-dark.png',
+            type: 'baidu',
+            layer: 'custom',
+            style: 'dark'
+          },
+          {
+            name: '离线百度瓦片(示例)',
+            icon: 'img/basemaps/arcgis.png',
+            type: 'baidu',
+            url: 'http://data.marsgis.cn/maptile/baidu_vec/{z}/{x}/{y}.jpg'
+          }
+        ]
+      })
+    }
+
+    //叠加的图层
+    var tileLayer
+
+    function addLayer() {
+      removeLayer()
+
+      //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+      tileLayer = new mars3d.layer.BaiduLayer({
+        layer: 'time'
+      })
+      map.addLayer(tileLayer)
+    }
+    function removeLayer() {
+      if (tileLayer) {
+        map.removeLayer(tileLayer, true)
+        tileLayer = null
+      }
+    }
+  </script>
+</body>
+
+</html>

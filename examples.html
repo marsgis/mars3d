@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- 移动设备 viewport -->
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui">
+    <meta name="author" content="火星科技 http://mars3d.cn ">
+    <!-- 360浏览器默认使用Webkit内核 -->
+    <meta name="renderer" content="webkit">
+    <!-- Chrome浏览器添加桌面快捷方式（安卓） -->
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Safari浏览器添加到主屏幕（IOS） -->
+    <link rel="icon" sizes="192x192" href="http://mars3d.cn/docs/img/favicon/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="火星科技MarsGIS">
+    <!-- Win8标题栏及ICON图标 -->
+    <link rel="apple-touch-icon-precomposed" href="http://mars3d.cn/docs/img/favicon/apple-touch-icon.png">
+    <meta name="msapplication-TileImage" content="http://mars3d.cn/docs/img/favicon/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#62a8ea">
+
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords"
+        content="火星科技|合肥火星|合肥火星科技|合肥火星科技有限公司|leafvar|leafvar框架|leafvar开发|cesium|cesium开发|cesium框架|gis|marsgis|地图离线|地图开发|地图框架|地图外包" />
+    <meta name="description"
+        content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leafvar leafvar框架 leafvar开发 cesium cesium开发 cesium框架 gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+
+    <title>功能示例 - Mars3D三维地球平台 | MarsGIS for Cesium |三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+    <script type="text/javascript" src="./lib/include-lib.js?time=20210105"
+        include="jquery,bootstrap,admin-lte,haoutil,jquery.scrollTo,lazyload,mars3d" libpath="./lib/"></script>
+
+    <link rel="stylesheet" href="http://mars3d.cn/docs/css/common.css?time=20210105">
+    <link rel="stylesheet" href="http://mars3d.cn/docs/css/header.css?time=20210105">
+    <link rel="stylesheet" href="http://mars3d.cn/docs/css/sideBar.css?time=20210105">
+    <link rel="stylesheet" href="http://mars3d.cn/docs/css/examples.css?time=20210105">
+    <style>
+        .main-sidebar,
+        .left-side {
+            padding-top: 0px;
+        }
+
+        .category {
+            padding-top: 0px;
+        }
+    </style>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini " data-spy="scroll" data-target="#scrollSpy">
+
+    <div class="wrapper">
+        <!-- 侧边栏 -->
+        <aside class="sidebar-wrapper main-sidebar" id="scrollSpy">
+            <section class="sidebar" id="sidebar">
+                <ul class=" sidebar-menu nav  nav-stacked " id="sidebar-menu"></ul>
+            </section>
+        </aside>
+        <!-- 内容区 -->
+        <div class="content-wrapper examples-container" id="main">
+            <ul id="charts-list">
+                <li class="category" style="margin-bottom: -10px;">
+                    <h3 class="category-title"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;说明</h3>
+                    <div class="category-content">
+                        <div class="box box-default color-pavarte-box">
+                            1.当前版本为<b>v3内测版本</b>，可能存在很多bug问题，欢迎随时反馈bug及建议给我们。<br />
+                            2.如果缺少您想要的示例或有好的建议，可以整理需求发送邮件至 <a href="mailto:wh@marsgis.cn"
+                                rel="nofollow">wh@marsgis.cn</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div style="position:absolute;right: 10px;top: 10px;">
+            <a href="javascript:haoutil.file.downloadFile('功能清单.txt', getAllName());">下载功能清单txt</a>
+            <a href="javascript:haoutil.file.downloadFile('版本差异.csv',getVerDiff('0.0.0'))">下载功能清单csv</a>
+        </div>
+
+        <!-- footer -->
+        <footer class="main-footer">
+            <div class="iclient-copyright" id="iclient-footer">
+                版权所有 © 2017-2021 <a href="http://www.marsgis.cn" target="_blank">火星科技</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        var examplePath = 'example/' //示例功能所在目录
+        var exampleImgPath ='http://mars3d.cn/example/'
+        var autoShowCode = true
+    </script>
+    <script src="example/nav/config.js?time=20210105"></script>
+    <script src="http://mars3d.cn/docs/js/sidebar.js?time=20210105"></script>
+    <script src="http://mars3d.cn/docs/js/example.js?time=20210105"></script>
+
+</body>
+
+</html>

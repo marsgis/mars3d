@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn ">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>特效 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <!--第三方lib-->
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+  <!-- 面板 -->
+  <div class="infoview">
+    <table class="mars-table">
+      <tr>
+        <td>状态</td>
+        <td>
+          <div class="checkbox checkbox-primary checkbox-inline">
+            <input id="chkShowEffect" class="styled" type="checkbox" checked>
+            <label for="chkShowEffect">
+              开启效果
+            </label>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>对比度</td>
+        <td>
+          <input id="txt_contrast"  type="range" min="-255.0" max="255.0" step="0.01" value="128">
+        </td>
+      </tr>
+      <tr>
+        <td>亮度</td>
+        <td>
+          <input id="txt_brightness"  type="range" min="-1.0" max="3.0" step="0.01" value="-0.3" >
+        </td>
+      </tr>
+      <tr>
+        <td>增量</td>
+        <td>
+          <input id="txt_delta"  type="range" min="1" max="5" step="0.01" value="1.0" >
+        </td>
+      </tr>
+      <tr>
+        <td>步长</td>
+        <td>
+          <input id="txt_stepSize"  type="range" min="0" max="7" step="0.01" value="5.0">
+        </td>
+      </tr>
+      <tr>
+        <td>Sigma</td>
+        <td>
+          <input id="txt_sigma"  type="range" min="1" max="10" step="0.01" value="3.78">
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        scene: {
+          center: { lat: 30.641408, lng: 104.061745, alt: 980, heading: 17, pitch: -30 }
+        },
+        layers: [
+          {
+            type: 'geojson',
+            name: '道路线',
+            url: 'http://data.marsgis.cn/file/geojson/chendu-daolu.json',
+            symbol: {
+              styleOptions: {
+                lineType: 'glow',
+                glowPower: 0.1,
+                color: '#FF4500',
+                width: 15,
+                opacity: 0.9,
+                clampToGround: true
+              }
+            },
+            show: true
+          },
+          {
+            type: 'water',
+            name: '河流(面状)特效',
+            url: 'http://data.marsgis.cn/file/geojson/chendu-heliu.json',
+            symbol: {
+              styleOptions: {
+                normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
+                frequency: 5000.0, // 控制波数的数字。
+                animationSpeed: 0.05, // 控制水的动画速度的数字。
+                amplitude: 9.0, // 控制水波振幅的数字。
+                specularIntensity: 0.8, // 控制镜面反射强度的数字。
+                baseWaterColor: '#00baff', // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
+                blendColor: '#00baff', // 从水中混合到非水域时使用的rgba颜色对象。
+                clampToGround: true
+              }
+            },
+            show: true
+          }
+        ]
+      })
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      map.basemap = 2017 //切换至蓝色底图
+
+      //添加参考三维模型
+      var tiles3dLayer = new mars3d.layer.TilesetLayer({
+        name: '成都市建筑物',
+        url: 'http://data.marsgis.cn/3dtiles/jzw-chengdu-gcj/tileset.json',
+        marsJzwStyle: true,
+        showClickFeature: true,
+        popup: [
+          { field: 'objectid', name: '编号' },
+          { field: 'height', name: '楼高', unit: '米' },
+          { field: 'xzqh_name', name: '辖区' }
+        ]
+      })
+      map.addLayer(tiles3dLayer)
+
+      //构造效果
+      var bloomEffect = new mars3d.effect.BloomEffect()
+      map.addEffect(bloomEffect)
+
+      $('#chkShowEffect').change(function() {
+        var val = $(this).is(':checked')
+
+        bloomEffect.show = val
+      })
+
+      $('#txt_contrast').range({
+        onChange: function(value, bfb) {
+          bloomEffect.contrast = value
+        }
+      })
+      $('#txt_brightness').range({
+        onChange: function(value, bfb) {
+          bloomEffect.brightness = value
+        }
+      })
+      $('#txt_delta').range({
+        onChange: function(value, bfb) {
+          bloomEffect.delta = value
+        }
+      })
+      $('#txt_sigma').range({
+        onChange: function(value, bfb) {
+          bloomEffect.sigma = value
+        }
+      })
+      $('#txt_stepSize').range({
+        onChange: function(value, bfb) {
+          bloomEffect.stepSize = value
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>Ellipsoid 球、半球、椭球 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+
+  <div class="infoview">
+    <div>
+      图层状态：
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkPopup" class="styled" type="checkbox" checked>
+        <label for="chkPopup">
+          Popup绑定
+        </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkTooltip" class="styled" type="checkbox">
+        <label for="chkTooltip">
+          Tooltip绑定
+        </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkContextMenu" class="styled" type="checkbox" checked>
+        <label for="chkContextMenu">
+          右键菜单绑定
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 图层管理相关处理js -->
+  <script type="text/javascript" src="./js/graphicManager.js"></script>
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {})
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //创建Graphic图层
+      var graphicLayer = new mars3d.layer.GraphicLayer()
+      map.addLayer(graphicLayer)
+
+      //图层管理的相关处理，代码在\js\graphicManager.js
+      initLayerManager(graphicLayer)
+
+      //加一些演示数据
+      addGraphic_a1(graphicLayer)
+      addGraphic_a2(graphicLayer)
+      addGraphic_a3(graphicLayer)
+      addGraphic_a4(graphicLayer)
+      addGraphic_a5(graphicLayer)
+    }
+
+    //取区域内的随机图标
+    function randomPoint() {
+      var jd = haoutil.math.random(116.11 * 1000, 116.21 * 1000) / 1000
+      var wd = haoutil.math.random(30.88 * 1000, 30.98 * 1000) / 1000
+      var height = haoutil.math.random(700, 4000)
+      return new mars3d.LatLngPoint(jd, wd, height)
+    }
+
+    /**
+     style 支持的参数说明：
+     "style": {
+
+     }
+    */
+
+    function addGraphic_a1(graphicLayer) {
+      var primitive = new mars3d.graphic.EllipsoidPrimitive({
+        position: [116.282587, 30.859197, 544.31],
+        style: {
+          radii: new Cesium.Cartesian3(1000.0, 1000.0, 1500.0),
+          material: Cesium.Material.fromType('Color', {
+            color: Cesium.Color.YELLOW
+          })
+        }
+      })
+      graphicLayer.addGraphic(primitive)
+      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+
+      //演示个性化处理graphic，代码在\js\graphicManager.js
+      initGraphicManager(primitive)
+
+      //entity转geojson
+      var geojson = primitive.toGeoJSON()
+      console.log(geojson)
+    }
+
+    function addGraphic_a2(graphicLayer) {
+      var primitive = new mars3d.graphic.EllipsoidPrimitive({
+        position: new mars3d.LatLngPoint(116.329199, 30.881595, 390.3),
+        style: {
+          radii: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
+          material: Cesium.Material.fromType('Color', {
+            color: Cesium.Color.YELLOW
+          })
+        }
+      })
+      graphicLayer.addGraphic(primitive)
+      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    function addGraphic_a3(graphicLayer) {
+      var primitive = new mars3d.graphic.EllipsoidPrimitive({
+        position: new mars3d.LatLngPoint(116.35588, 30.936575, 851.48),
+        style: {
+          radii: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
+          color: Cesium.Color.RED
+        }
+      })
+      graphicLayer.addGraphic(primitive)
+      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    function addGraphic_a4(graphicLayer) {
+      var outerRadius = 5000.0
+      var innerRadius = 1000
+
+      var primitive = new mars3d.graphic.EllipsoidPrimitive({
+        position: [116.354348, 30.846041, 378.67],
+        style: {
+          radii: new Cesium.Cartesian3(outerRadius, outerRadius, outerRadius),
+          innerRadii: new Cesium.Cartesian3(innerRadius, innerRadius, innerRadius),
+          minimumClock: Cesium.Math.toRadians(-20.0),
+          maximumClock: Cesium.Math.toRadians(20.0),
+          minimumCone: Cesium.Math.toRadians(90),
+          maximumCone: Cesium.Math.toRadians(90),
+          color: Cesium.Color.fromCssColorString('#ffff00').withAlpha(0.5),
+          outline: true
+        }
+      })
+      graphicLayer.addGraphic(primitive)
+      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    function addGraphic_a5(graphicLayer) {
+      var primitive = new mars3d.graphic.EllipsoidPrimitive({
+        position: [116.244399, 30.920459, 573.6],
+        style: {
+          radii: new Cesium.Cartesian3(2500.0, 2500.0, 2500.0),
+          innerRadii: new Cesium.Cartesian3(10.0, 10.0, 10.0),
+          minimumClock: Cesium.Math.toRadians(-15.0),
+          maximumClock: Cesium.Math.toRadians(15.0),
+          minimumCone: Cesium.Math.toRadians(75.0),
+          maximumCone: Cesium.Math.toRadians(105.0),
+          pitch: Cesium.Math.toRadians(30),
+          color: Cesium.Color.fromCssColorString('#f33349').withAlpha(0.3),
+          outline: true,
+          label: {
+            text: '我是原始的',
+            font_size: 18,
+            color: '#ffffff',
+            pixelOffset: [0, -10],
+            distanceDisplayCondition: true,
+            distanceDisplayCondition_far: 500000,
+            distanceDisplayCondition_near: 0
+          }
+        }
+      })
+      graphicLayer.addGraphic(primitive)
+      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+  </script>
+</body>
+
+</html>

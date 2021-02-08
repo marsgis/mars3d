@@ -1,0 +1,225 @@
+﻿{
+
+    "map3d": {
+        "scene":{
+            "center": {"lat":30.526361,"lng":116.335987,"alt":45187,"heading":0,"pitch":-45},
+            "shadows":false,
+            "removeDblClick":true,
+            "sceneMode": 3,
+            "showSun":true,
+            "showMoon":true,
+            "showSkyBox":true,
+            "showSkyAtmosphere":true,
+            "fog":true,
+            "fxaa":true,
+            "globe": {
+                "depthTestAgainstTerrain":false,
+                "baseColor":"#546a53",
+                "showGroundAtmosphere":true,
+                "enableLighting":false
+            },
+            "cameraController":{
+                "zoomFactor":3.0,
+                "minimumZoomDistance": 1,
+                "maximumZoomDistance": 50000000,
+                "enableRotate": true,
+                "enableTranslate": true,
+                "enableTilt": true,
+                "enableZoom": true,
+                "enableCollisionDetection":true
+            }
+        },
+        "control":{
+            "homeButton": true,
+            "baseLayerPicker": true,
+            "sceneModePicker": true,
+            "vrButton": true,
+            "fullscreenButton": true,
+            "navigationHelpButton": true,
+            "animation": false,
+            "timeline": false,
+            "infoBox": false,
+            "geocoder": true,
+            "geocoderConfig": { "key":[ "ae29a37307840c7ae4a785ac905927e0" ], "citycode": "" },
+
+            "contextmenu":true,
+            "mouseDownView": true,
+            "location": {
+                "fps":true,
+                "format":"<div>经度:{x}</div> <div>纬度:{y}</div> <div>海拔：{z}米</div> <div>层级：{level}</div> <div>方向：{heading}度</div>"
+            },
+            "navigation": {
+              "legend": { "left": "100px", "bottom": "-1px" },
+              "compass": { "top": "10px", "right": "5px" }
+            }
+        },
+        "terrain": {
+            "url": "http://data.marsgis.cn/terrain",
+            "show": true
+        },
+        "basemaps": [
+            {
+                "id": 10,
+                "name": "地图底图",
+                "type": "group"
+            },
+            {
+                "name": "谷歌卫星",
+                "icon": "http://mars3d.cn/example/img/basemaps/google_img.png",
+                "type": "google",
+                "layer": "img_d"
+            },
+            {
+                "name": "ArcGIS卫星",
+                "icon": "http://mars3d.cn/example/img/basemaps/esriWorldImagery.png",
+                "type": "arcgis",
+                "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
+                "enablePickFeatures": false
+            },
+            {
+                "name": "微软卫星",
+                "icon": "http://mars3d.cn/example/img/basemaps/bingAerial.png",
+                "type": "bing",
+                "key":"AuKhM0WRkjhX8E4y1OM0TukYycaw_4Vh3eSfXONDf7OARls-WEB3K_Rfx89bWxof",
+                "layer": "Aerial"
+            },
+            {
+                "id": 2020,
+                "name": "天地图卫星",
+                "icon": "http://mars3d.cn/example/img/basemaps/tdt_img.png",
+                "type": "tdt",
+                "layer": "img_d",
+                "key": ["9ae78c51a0a28f06444d541148496e36"],
+                "show": true
+            },
+            {
+                "name": "天地图电子",
+                "icon": "http://mars3d.cn/example/img/basemaps/tdt_vec.png",
+                "type": "group",
+                "layers": [
+                    { "name": "底图", "type": "tdt", "layer": "vec_d", "key": ["9ae78c51a0a28f06444d541148496e36" ] },
+                    { "name": "注记", "type": "tdt", "layer": "vec_z", "key": ["9ae78c51a0a28f06444d541148496e36" ] }
+                ]
+            },
+            {
+                "name": "OSM地图",
+                "type": "xyz",
+                "icon": "http://mars3d.cn/example/img/basemaps/osm.png",
+                "url": "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                "subdomains": "abc"
+            },
+            {
+                "name": "黑色底图",
+                "icon": "http://mars3d.cn/example/img/basemaps/bd-c-dark.png",
+                "type": "mapbox",
+                "username": "marsgis",
+                "styleId": "cki0a2mtc2vyo1bqu76p8ks8m",
+                "scaleFactor": true
+            },
+            {
+                "name": "灰色底图",
+                "icon": "http://mars3d.cn/example/img/basemaps/bd-c-grayscale.png",
+                "type": "mapbox",
+                "username": "marsgis",
+                "styleId": "cki0a92b123qo1aluk0e5v7sb",
+                "scaleFactor": true
+            },
+
+            {
+                "id": 2017,
+                "name": "蓝色底图(GCJ02偏移)",
+                "icon": "http://mars3d.cn/example/img/basemaps/bd-c-midnight.png",
+                "crs": "gcj",
+                "type": "arcgis",
+                "url": "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer",
+                "enablePickFeatures": false
+            },
+
+            {
+                "name": "谷歌卫星(GCJ02偏移)",
+                "type": "group",
+                "crs": "gcj",
+                "icon": "http://mars3d.cn/example/img/basemaps/google_img.png",
+                "layers": [
+                    { "name": "底图", "type": "google", "layer": "img_d", "crs": "gcj"  },
+                    { "name": "注记", "type": "google", "layer": "img_z", "crs": "gcj"  }
+                ]
+            },
+            {
+                "name": "高德卫星(GCJ02偏移)",
+                "type": "group",
+                "icon": "http://mars3d.cn/example/img/basemaps/gaode_img.png",
+                "crs": "gcj",
+                "layers": [
+                    { "name": "底图", "type": "gaode", "layer": "img_d" },
+                    { "name": "注记", "type": "gaode", "layer": "img_z" }
+                ]
+            },
+            {
+                "name": "高德电子(GCJ02偏移)",
+                "type": "group",
+                "icon": "http://mars3d.cn/example/img/basemaps/gaode_vec.png",
+                "crs": "gcj",
+                "layers": [
+                    { "name": "底图", "type": "gaode", "layer": "vec_d" },
+                    { "name": "注记", "type": "gaode", "layer": "vec_z" }
+                ]
+            },
+            {
+                "name": "百度卫星 (BD偏移)",
+                "type": "group",
+                "icon": "http://mars3d.cn/example/img/basemaps/bd-img.png",
+                "crs": "baidu",
+                "layers": [
+                    { "name": "底图", "type": "baidu", "layer": "img_d" },
+                    { "name": "注记", "type": "baidu", "layer": "img_z" }
+                ]
+            },
+            {
+                "name": "百度电子 (BD偏移)",
+                "icon": "http://mars3d.cn/example/img/basemaps/bd-vec.png",
+                "crs": "baidu",
+                "type": "baidu",
+                "layer": "vec"
+            },
+            {
+                "name": "离线地图  (供参考)",
+                "type": "xyz",
+                "icon": "http://mars3d.cn/example/img/basemaps/mapboxSatellite.png",
+                "url": "http://data.marsgis.cn/maptile/wgs3857img/{z}/{x}/{y}.jpg",
+                "minimumLevel": 1,
+                "maximumLevel": 18,
+                "minimumTerrainLevel": 1,
+                "maximumTerrainLevel": 18,
+                "rectangle": { "xmin": -180, "xmax": 180, "ymin": -85, "ymax": 85 }
+            },
+            {
+                "name": "单张图片  (本地离线)",
+                "icon": "http://mars3d.cn/example/img/basemaps/offline.png",
+                "type": "image",
+                "url": "http://mars3d.cn/example/img/tietu/world.jpg"
+            }
+        ],
+        "layers": [
+            {
+                "name": "行政区划界线",
+                "type": "xyz",
+                "url": "https://t{s}.tianditu.gov.cn/DataServer?T=ibo_w&x={x}&y={y}&l={z}&tk=9ae78c51a0a28f06444d541148496e36",
+                "subdomains": "01234567",
+                "maximumLevel": 10,
+                "show": true
+            },
+            {
+                "name": "天地图注记",
+                "type": "tdt",
+                "layer": "img_z",
+                "key": ["9ae78c51a0a28f06444d541148496e36"],
+                "show": false
+            }
+        ]
+    }
+
+
+
+
+}

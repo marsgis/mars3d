@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>Ellipsoid 球、半球、椭球 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+  <div class="infoview">
+    <div>
+      图层状态：
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkShow" class="styled" type="checkbox" checked>
+        <label for="chkShow">
+          显示隐藏
+        </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkPopup" class="styled" type="checkbox" checked>
+        <label for="chkPopup">
+          Popup绑定
+        </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkTooltip" class="styled" type="checkbox">
+        <label for="chkTooltip">
+          Tooltip绑定
+        </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkContextMenu" class="styled" type="checkbox" checked>
+        <label for="chkContextMenu">
+          右键菜单绑定
+        </label>
+      </div>
+    </div>
+    <div>
+      数据维护：
+      <input id="btnStartDraw" type="button" class="btn btn-primary" value="图上标绘" title="在图上绘制新增一个矢量数据" />
+
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkHasEdit" class="styled" type="checkbox">
+        <label for="chkHasEdit">
+          是否编辑
+        </label>
+      </div>
+    </div>
+    <div>
+      数据管理：
+      <input id="btnClear" type="button" class="btn btn-danger" value="清除" />
+      <input id="btnExpFile" type="button" class="btn btn-primary" value="保存GeoJSON" title="保存为GeoJSON文件" />
+      <input id="btnImpFile" type="button" class="btn btn-primary" value="打开GeoJSON" title="打开之前保存的GeoJSON文件" />
+
+      <input id="input_draw_file" type="file" accept=".json" style="display:none;" />
+    </div>
+  </div>
+
+  <!-- 切换视角到模型或地形（山区）的快捷按钮 -->
+  <script type="text/javascript" src="js/center_terrain_3dtiles.js"></script>
+
+  <!-- 图层管理相关处理js -->
+  <script type="text/javascript" src="./js/graphicManager.js"></script>
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        scene: {
+          center: { y: 30.606438, x: 116.329605, z: 53280, heading: 0, pitch: -60, roll: 0 }
+        }
+      })
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //创建矢量数据图层
+      var graphicLayer = new mars3d.layer.GraphicLayer()
+      map.addLayer(graphicLayer)
+
+      //图层管理的相关处理，代码在\js\graphicManager.js
+      initLayerManager(graphicLayer)
+
+      //新增绘制
+      $('#btnStartDraw').click(function() {
+        //开始绘制
+        graphicLayer.startDraw({
+          type: 'ellipsoid',
+          style: {
+            fill: true,
+            color: '#00ff00',
+            opacity: 0.6
+          }
+        })
+      })
+
+      //加一些演示数据
+      addGraphic_01(graphicLayer)
+      addGraphic_02(graphicLayer)
+      addGraphic_03(graphicLayer)
+      addGraphic_04(graphicLayer)
+      addGraphic_05(graphicLayer)
+      addGraphic_06(graphicLayer)
+      addGraphic_07(graphicLayer)
+      addGraphic_08(graphicLayer)
+      addGraphic_09(graphicLayer)
+      addGraphic_10(graphicLayer)
+      addGraphic_11(graphicLayer)
+      addGraphic_12(graphicLayer)
+      addGraphic_13(graphicLayer)
+      addGraphic_14(graphicLayer)
+    }
+
+    /**
+     style 支持的参数说明：
+     "style": {
+        支持 Cesium.EllipsoidGraphics.ConstructorOptions 中所有属性（Cesium原生的属性）
+
+        "extentRadii": 100,      //长半径
+        "widthRadii": 100,      //宽半径
+        "heightRadii": 100,      //高半径
+        "fill": true,      //是否填充
+        "fillType": "color",      //填充类型 ,可选项：color(纯色),grid(网格),stripe(条纹),checkerboard(棋盘),
+        "grid_lineCount": 8,      //网格数量
+        "grid_lineThickness": 2,      //网格宽度
+        "grid_cellAlpha": 0.1,      //填充透明度
+        "stripe_oddcolor": "#ffffff",      //条纹衬色
+        "stripe_repeat": 6,      //条纹数量
+        "checkerboard_oddcolor": "#ffffff",      //棋盘衬色
+        "checkerboard_repeat": 4,      //棋盘格数
+        "color": "#00FF00",      //颜色
+        "opacity": 0.6,      //透明度
+        "outline": true,      //是否边框
+        "outlineWidth": 1,      //边框宽度
+        "outlineColor": "#ffffff",      //边框颜色
+        "outlineOpacity": 0.6,      //边框透明度
+     }
+    */
+
+    //
+    function addGraphic_01(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidEntity({
+        position: [116.1, 31.0, 1000],
+        style: {
+          radii: new Cesium.Cartesian3(1000.0, 1000.0, 1500.0),
+          color: '#00ff00',
+          opacity: 0.9
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+
+      //演示个性化处理graphic，代码在\js\graphicManager.js
+      initGraphicManager(graphic)
+    }
+
+    //
+    function addGraphic_02(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidEntity({
+        position: new mars3d.LatLngPoint(116.2, 31.0, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
+          material: Cesium.Color.RED.withAlpha(0.5),
+          outline: true,
+          outlineColor: Cesium.Color.BLACK
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //
+    function addGraphic_03(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidEntity({
+        position: new mars3d.LatLngPoint(116.3, 31.0, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
+          fill: false,
+          outline: true,
+          outlineColor: Cesium.Color.YELLOW,
+          slicePartitions: 24,
+          stackPartitions: 36,
+          heading: 45,
+          roll: 45,
+          pitch: 0
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //
+    function addGraphic_04(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidEntity({
+        position: [116.4, 31.0, 1000],
+        style: {
+          radii: new Cesium.Cartesian3(2500.0, 2500.0, 2500.0),
+          innerRadii: new Cesium.Cartesian3(10.0, 10.0, 10.0),
+          minimumClock: -15.0,
+          maximumClock: 15.0,
+          minimumCone: 75.0,
+          maximumCone: 105.0,
+          pitch: 30,
+          material: Cesium.Color.fromCssColorString('#f33349').withAlpha(0.3),
+          outline: true,
+          label: {
+            text: '我是原始的',
+            font_size: 18,
+            color: '#ffffff',
+            pixelOffset: [0, -10],
+            distanceDisplayCondition: true,
+            distanceDisplayCondition_far: 500000,
+            distanceDisplayCondition_near: 0
+          }
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+
+      //entity转geojson
+      var geojson = graphic.toGeoJSON()
+      console.log(geojson)
+
+      //geojson转entity
+      var graphic1Copy = mars3d.graphic.EllipsoidEntity.fromGeoJSON(geojson)
+      graphic1Copy.position = [116.5, 31.0, 1000]
+      graphic1Copy.label.text = '我是转换后生成的'
+      graphicLayer.addGraphic(graphic1Copy)
+      console.log(graphic1Copy)
+      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //2圈平面扇形
+    function addGraphic_05(graphicLayer) {
+      var outerRadius = 5000.0
+      var innerRadius = 1000
+
+      var graphic = new mars3d.graphic.EllipsoidEntity({
+        position: [116.1, 30.9, 1000],
+        style: {
+          radii: new Cesium.Cartesian3(outerRadius, outerRadius, outerRadius),
+          innerRadii: new Cesium.Cartesian3(innerRadius, innerRadius, innerRadius),
+          minimumClock: -20.0,
+          maximumClock: 20.0,
+          minimumCone: 90,
+          maximumCone: 90,
+          material: Cesium.Color.fromCssColorString('#ffff00').withAlpha(0.5),
+          outline: true
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //半圆顶球体
+    function addGraphic_06(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidEntity({
+        position: new mars3d.LatLngPoint(116.2, 30.9, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
+          maximumCone: 90,
+          material: Cesium.Color.BLUE.withAlpha(0.3),
+          outline: true
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //含内半径 半圆顶球体
+    function addGraphic_07(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidEntity({
+        position: new mars3d.LatLngPoint(116.3, 30.9, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(2500.0, 2000.0, 1500.0),
+          innerRadii: new Cesium.Cartesian3(1000.0, 800.0, 600.0),
+          maximumCone: 90,
+          material: Cesium.Color.RED.withAlpha(0.3),
+          outline: true
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //被切开的含内半径 半圆顶球体
+    function addGraphic_08(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidEntity({
+        position: new mars3d.LatLngPoint(116.4, 30.9, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
+          innerRadii: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
+          minimumCone: 20.0,
+          maximumCone: 90,
+          material: Cesium.Color.YELLOW.withAlpha(0.3),
+          outline: true
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //顶部和底部切出的桶形体
+    function addGraphic_09(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidEntity({
+        position: new mars3d.LatLngPoint(116.5, 30.9, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
+          innerRadii: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
+          minimumCone: 60.0,
+          maximumCone: 140.0,
+          material: Cesium.Color.DARKCYAN.withAlpha(0.3),
+          outline: true
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+      // graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //碗行体
+    function addGraphic_10(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidEntity({
+        position: new mars3d.LatLngPoint(116.1, 30.8, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
+          innerRadii: new Cesium.Cartesian3(1800.0, 1800.0, 1800.0),
+          minimumCone: 110.0,
+          material: Cesium.Color.fromCssColorString('#1ffee6').withAlpha(0.3),
+          outline: true
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+      // graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //时钟开孔
+    function addGraphic_11(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidEntity({
+        position: new mars3d.LatLngPoint(116.2, 30.8, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
+          innerRadii: new Cesium.Cartesian3(1500.0, 1500.0, 1500.0),
+          minimumClock: -90.0,
+          maximumClock: 180.0,
+          minimumCone: 20.0,
+          maximumCone: 70.0,
+          material: Cesium.Color.fromCssColorString('#95e40c').withAlpha(0.3),
+          outline: true
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+      // graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //局部圆顶
+    function addGraphic_12(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidEntity({
+        position: new mars3d.LatLngPoint(116.3, 30.8, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
+          minimumClock: -90.0,
+          maximumClock: 180.0,
+          maximumCone: 90.0,
+          material: Cesium.Color.fromCssColorString('#f2fa19').withAlpha(0.3),
+          outline: true
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+      // graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //部分椭圆体
+    function addGraphic_13(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidEntity({
+        position: new mars3d.LatLngPoint(116.4, 30.8, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(3000.0, 3000.0, 3000.0),
+          innerRadii: new Cesium.Cartesian3(700.0, 700.0, 700.0),
+          minimumClock: 180.0,
+          maximumClock: 400.0,
+          maximumCone: 90.0,
+          material: Cesium.Color.fromCssColorString('#f79a2c').withAlpha(0.3),
+          outline: true
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+      // graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //土星综合对象
+    function addGraphic_14(graphicLayer) {
+      var position = new mars3d.LatLngPoint(116.5, 30.8, 1000)
+      var graphic = new mars3d.graphic.EllipsoidEntity({
+        name: '土星',
+        position: position,
+        style: {
+          radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
+          material: new Cesium.Color(0.95, 0.82, 0.49)
+        }
+      })
+      graphicLayer.addGraphic(graphic)
+
+      var graphicNei = new mars3d.graphic.EllipsoidEntity({
+        name: '土星的内圈',
+        position: position,
+        style: {
+          radii: new Cesium.Cartesian3(4000.0, 4000.0, 4000.0),
+          innerRadii: new Cesium.Cartesian3(3000.0, 3000.0, 3000.0),
+          minimumCone: 89.8,
+          maximumCone: 90.2,
+          material: new Cesium.Color(0.95, 0.82, 0.49, 0.5),
+          heading: 30,
+          pitch: 30
+        }
+      })
+      graphicLayer.addGraphic(graphicNei)
+
+      var graphicWai = new mars3d.graphic.EllipsoidEntity({
+        name: '土星外圈',
+        position: position,
+        style: {
+          radii: new Cesium.Cartesian3(4600.0, 4600.0, 4600.0),
+          innerRadii: new Cesium.Cartesian3(4150.0, 4150.0, 4150.0),
+          minimumCone: 89.8,
+          maximumCone: 90.2,
+          material: new Cesium.Color(0.95, 0.82, 0.49, 0.5),
+          heading: 30,
+          pitch: 30
+        }
+      })
+      graphicLayer.addGraphic(graphicWai)
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,139 @@
+﻿@charset "utf-8";
+/* widget view公共css 
+*  2019-6-3 09:02:24 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ）
+*/
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+*:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    overflow: hidden;
+    font-family: "Helvetica Neue", Helvetica, Tahoma, Arial, "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
+    font-size: 14px;
+    background-color:transparent!important; 
+} 
+body {
+    padding:1px;
+}
+input, button, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+a {  color: #62a8ea;text-decoration: none;} 
+
+a:hover, a:focus {
+    color: #89bceb;
+    text-decoration: underline;
+}
+
+a:focus {
+    outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline: none;
+    outline-offset: -2px;
+}
+ul, li {list-style: none;}
+
+
+
+.dark { color: #ffffff; } 
+.dark a{color:#ffffff;text-decoration: none;}
+.dark a:hover {color:#CC3300;text-decoration:underline;}  
+.dark .content{
+	overflow: auto;
+	position: relative;
+	background: transparent;
+	height: 400px;
+	-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;
+} 
+.dark .form-control,.dark .input-group-addon,.dark .btn-default,.dark input ,.dark .dropdown-menu {
+    color: #ffffff;
+    background-color: rgba(63, 72, 84, 0.6);
+}
+
+.input-group{
+    width:100%;
+}
+
+
+
+.dark .btn-primary {
+    background-color: rgba(32, 160, 255, 0.2);
+}
+.dark .btn-danger { 
+    background-color: rgba(255, 109, 109, 0.2); 
+}
+.dark .btn-warning {
+    background-color: rgba(196, 188, 181, 0.2);
+}
+.dark .table-hover > tbody > tr:hover {
+    background-color: rgba(63, 72, 84, 1);
+}
+.dark .dropdown-menu > li > a {
+    color: #ffffff;
+}
+.dark .dropdown-menu > li > a:hover,.dark .dropdown-menu > li > a:focus { 
+    background-color: #4db3ff;
+}
+
+/*滚动条*/
+body, html {
+	scrollbar-base-color:#f4f7fc;
+	scrollbar-track-color:#f4f7fc;
+	scrollbar-face-color:#797979;
+	scrollbar-arrow-color:#f4f7fc;
+	scrollbar-shadow-color:#f4f7fc;
+	scrollbar-3dlight-color:#f4f7fc;
+	scrollbar-highlight-color:#f4f7fc;
+	scrollbar-darkshadow-color:#f4f7fc;
+}
+::-webkit-scrollbar-button {
+ height: 0;
+ width: 0;
+ display: none
+}
+::-webkit-scrollbar-track {
+ background: transparent
+}
+::-webkit-scrollbar-track, ::-webkit-scrollbar-thumb {
+ border: 0
+}
+::-webkit-scrollbar {
+ height: 10px;
+ width: 10px;
+ background: transparent;
+ border-radius: 5px
+}
+::-webkit-scrollbar-thumb {
+ padding-top: 100px;
+ -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1), inset -1px -1px 0 rgba(0, 0, 0, .07);
+ background-color: #797979;
+ min-height: 28px;
+ border-radius: 4px;
+ background-clip:
+ padding-box
+}
+::-webkit-scrollbar-track, ::-webkit-scrollbar-thumb {
+ border: 0
+}
+::-webkit-scrollbar-thumb:hover {
+ -webkit-box-shadow:inset 1px 1px 1px rgba(0, 0, 0, .25);
+ background-color:rgba(0, 0, 0, .4)
+}
+::-webkit-scrollbar-thumb:active {
+ -webkit-box-shadow:inset 1px 1px 3px rgba(0, 0, 0, .35);
+ background-color:rgba(0, 0, 0, .5)
+}

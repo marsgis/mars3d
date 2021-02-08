@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn ">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>场景参数 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <!--第三方lib-->
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    $(document).ready(function() {
+      if (!mars3d.util.webglreport()) {
+        mars3d.util.webglerror()
+        return
+      }
+      initMap()
+    })
+
+    function initMap() {
+      //在创建地球前的传参中配置basemaps参数
+      var map = new mars3d.Map('mars3dContainer', {
+        scene: {
+          //默认视角参数
+          center: { lat: 30.715648, lng: 116.300527, alt: 10727, heading: 3, pitch: -25 },
+          shadows: false, //是否启用日照阴影
+          removeDblClick: true, //是否移除Cesium默认的双击事件
+
+          //以下是Cesium.Viewer所支持的options【控件相关的写在另外的control属性中】
+          sceneMode: 3, //3等价于Cesium.SceneMode.SCENE3D,
+
+          //以下是Cesium.Scene对象相关参数
+          showSun: true, //是否显示太阳
+          showMoon: true, //是否显示月亮
+          showSkyBox: true, //是否显示天空盒
+          showSkyAtmosphere: true, //是否显示地球大气层外光圈
+          fog: true, //是否启用雾化效果
+          fxaa: true, //是否启用抗锯齿
+
+          //以下是Cesium.Globe对象相关参数
+          globe: {
+            depthTestAgainstTerrain: false, //是否启用深度监测
+            baseColor: '#546a53', //地球默认背景色
+            showGroundAtmosphere: true, //是否在地球上绘制的地面大气
+            enableLighting: false //是否显示昼夜区域
+          },
+          //以下是Cesium.ScreenSpaceCameraController对象相关参数
+          cameraController: {
+            zoomFactor: 3.0, //鼠标滚轮放大的步长参数
+            minimumZoomDistance: 1, //地球放大的最小值（以米为单位）
+            maximumZoomDistance: 50000000, //地球缩小的最大值（以米为单位）
+            enableRotate: true, //2D和3D视图下，是否允许用户旋转相机
+            enableTranslate: true, //2D和哥伦布视图下，是否允许用户平移地图
+            enableTilt: true, // 3D和哥伦布视图下，是否允许用户倾斜相机
+            enableZoom: true, // 是否允许 用户放大和缩小视图
+            enableCollisionDetection: true //是否允许 地形相机的碰撞检测
+          }
+        },
+        control: {
+          baseLayerPicker: true, //basemaps底图切换按钮
+          homeButton: true, //视角复位按钮
+          sceneModePicker: true, //二三维切换按钮
+          navigationHelpButton: true, //帮助按钮
+          fullscreenButton: true, //全屏按钮
+          contextmenu: true //右键菜单
+        },
+        basemaps: [
+          {
+            name: '天地图卫星',
+            icon: 'img/basemaps/tdt_img.png',
+            type: 'tdt',
+            layer: 'img_d',
+            key: ['9ae78c51a0a28f06444d541148496e36'],
+            show: true
+          },
+          {
+            name: '离线地图',
+            icon: 'img/basemaps/mapboxSatellite.png',
+            type: 'xyz',
+            url: 'http://data.marsgis.cn/maptile/wgs3857img/{z}/{x}/{y}.jpg',
+            maximumLevel: 12
+          },
+          {
+            name: '单张图片',
+            icon: 'img/basemaps/offline.png',
+            type: 'image',
+            url: 'img/tietu/world.jpg'
+          }
+        ]
+      })
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn ">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>快速创建地球 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <!--第三方lib-->
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    $(document).ready(function() {
+      if (!mars3d.util.webglreport()) {
+        mars3d.util.webglerror()
+        return
+      }
+      initMap()
+    })
+
+    function initMap() {
+      //创建三维地球场景
+      var map = new mars3d.Map('mars3dContainer', {
+        scene: {
+          center: { lat: 30.054604, lng: 108.885436, alt: 17036414, heading: 0, pitch: -90 },
+          showSun: true,
+          showMoon: true,
+          showSkyBox: true,
+          showSkyAtmosphere: true,
+          fog: true,
+          fxaa: true,
+          globe: {
+            depthTestAgainstTerrain: false,
+            baseColor: '#546a53'
+          },
+          cameraController: {
+            zoomFactor: 3.0,
+            minimumZoomDistance: 1,
+            maximumZoomDistance: 50000000,
+            enableRotate: true,
+            enableZoom: true
+          }
+        },
+        control: {
+          baseLayerPicker: true, //basemaps底图切换按钮
+          homeButton: true, //视角复位按钮
+          sceneModePicker: true, //二三维切换按钮
+          navigationHelpButton: true, //帮助按钮
+          fullscreenButton: true, //全屏按钮
+          contextmenu: true //右键菜单
+        },
+        terrain: {
+          url: 'http://data.marsgis.cn/terrain',
+          show: true
+        },
+        basemaps: [
+          {
+            name: '天地图卫星',
+            icon: 'img/basemaps/tdt_img.png',
+            type: 'tdt',
+            layer: 'img_d',
+            key: ['9ae78c51a0a28f06444d541148496e36'],
+            show: true
+          }
+        ]
+      })
+
+      //cesium对应的原始地球对象
+      var viewer = map.viewer
+    }
+  </script>
+</body>
+
+</html>
