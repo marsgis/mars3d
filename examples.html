@@ -46,7 +46,7 @@
     <link rel="stylesheet" href="http://mars3d.cn/docs/css/examples.css?time=20210105" />
     <style>
       /*无头部菜单时*/
-      .noHeader .main-sidebar,
+      .main-sidebar,
       .left-side {
         padding-top: 0px;
       }
@@ -58,18 +58,7 @@
 
   <body class="hold-transition skin-blue sidebar-mini" data-spy="scroll" data-target="#scrollSpy">
     <div class="wrapper">
-      <!--顶部导航-->
-      <header class="header-wrapper main-header"></header>
-      <script>
-        var isOnline = window.location.hostname.indexOf('mars') !== -1
-        if (isOnline) {
-          var identification = { name: '示例' }
-          $('.main-header').load('docs/section/header.html?time=20210105')
-        } else {
-          document.getElementsByTagName('body')[0].className += 'noHeader'
-        }
-      </script>
-
+ 
       <!-- 侧边栏 -->
       <aside class="sidebar-wrapper main-sidebar" id="scrollSpy">
         <!-- sidebar: style can be found in sidebar.less -->
@@ -97,10 +86,8 @@
                   </a>
                 </span>
                 <br /><br />
-                <!-- 1.以下示例是从<b>技术角度</b>进行分类的，非研发人员建议浏览<a href="examples.html" rel="nofollow">功能示例</a>。<br /> -->
                 1. 名称内有 demo 的属于存在已知问题的示例，此处仅做演示。<br />
-                2. 当前版本为<b>非公开内测版本</b>，可能存在很多bug问题，欢迎随时反馈bug及建议给我们。<br />
-                3. 如果缺少您想要的示例或有好的建议，可以整理需求发送邮件至 <a href="mailto:wh@marsgis.cn" rel="nofollow">wh@marsgis.cn</a>
+                2. 如果缺少您想要的示例或有好的建议，可以整理需求发送邮件至 <a href="mailto:wh@marsgis.cn" rel="nofollow">wh@marsgis.cn</a>
               </div>
             </div>
           </li>
@@ -115,11 +102,7 @@
       <!-- footer -->
       <footer class="main-footer">
         <div class="iclient-copyright" id="iclient-footer">
-          版权所有 © 2017-2021 <a href="http://www.marsgis.cn" target="_blank">火星科技</a>&nbsp;&nbsp;<a
-            href="http://www.beian.miit.gov.cn"
-            target=" _blank"
-            >皖ICP备17025519-2号</a
-          >
+          版权所有 © 2017-2021 <a href="http://www.marsgis.cn" target="_blank">火星科技</a> 
         </div>
       </footer>
     </div>
@@ -129,6 +112,7 @@
         var exampleImgPath ='http://mars3d.cn/example/'
         var autoShowCode = true
     </script>
+    
     <script src="example/nav/config.js?time=20210105"></script>
     <script src="http://mars3d.cn/docs/js/sidebar.js?time=20210105"></script>
     <script src="http://mars3d.cn/docs/js/example.js?time=20210105"></script>

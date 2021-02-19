@@ -1,3 +1,4 @@
 /node_modules/
 lib/CesiumUnminified/
 lib/mars3d/*
+.vscode/*
