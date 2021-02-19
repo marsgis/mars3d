@@ -16,8 +16,9 @@
 
 
 > 介绍资料：[http://mars3d.cn](http://mars3d.cn)  
-> 功能示例：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d) `本仓库内`
- 
+> 功能示例：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d)    
+> 功能示例（国内）：[ https://gitee.com/marsgis/mars3d]( https://gitee.com/marsgis/mars3d)
+
 
 
 ## **本仓库说明** 
