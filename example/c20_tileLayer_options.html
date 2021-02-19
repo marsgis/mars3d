@@ -13,6 +13,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>瓦片底图的参数 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -114,10 +118,10 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.util.merge(options, {
         scene: {
-          center: { y: 24.320547, x: 108.947183, z: 15013946.99, heading: 357.2, pitch: -89.6, roll: 0 }
+          center: { y: 24.320547, x: 108.947183, z: 15013946.99, heading: 357.2, pitch: -89.6, roll: 0 },
         },
         control: {
-          baseLayerPicker: false
+          baseLayerPicker: false,
         },
         basemaps: [],
         layers: [
@@ -126,9 +130,9 @@
             icon: 'img/basemaps/bingmap.png',
             type: 'image',
             url: 'img/tietu/world.jpg',
-            show: true
-          }
-        ]
+            show: true,
+          },
+        ],
       })
 
       //创建三维地球场景
@@ -147,7 +151,7 @@
         rectangle: { xmin: -180, xmax: 180, ymin: -85, ymax: 85 },
         queryParameters: {
           //可以传自定义url参数，如token等
-          token: 'mars3d'
+          token: 'mars3d',
         },
         enablePickFeatures: false,
         order: 99, //层级顺序（默认按添加的顺序）
@@ -157,7 +161,7 @@
         hue: 0, //色彩
         saturation: 1, //饱和度
         gamma: 1, //伽马值
-        opacity: 1 //透明度
+        opacity: 1, //透明度
       })
       map.addLayer(tileLayer)
 
@@ -168,7 +172,7 @@
         hue: 0, //色彩
         saturation: 1, //饱和度
         gamma: 1, //伽马值
-        opacity: 1 //透明度
+        opacity: 1, //透明度
       }
       viewModel.brightness = tileLayer.brightness
       viewModel.contrast = tileLayer.contrast
@@ -186,7 +190,7 @@
 
       // Make the active imagery layer a subscriber of the viewModel.
       function subscribeLayerParameter(name) {
-        Cesium.knockout.getObservable(viewModel, name).subscribe(function(newValue) {
+        Cesium.knockout.getObservable(viewModel, name).subscribe(function (newValue) {
           tileLayer[name] = newValue
         })
       }

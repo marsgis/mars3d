@@ -12,6 +12,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>Polyline 线 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -97,8 +101,8 @@
       //合并属性参数，可覆盖config.json中的对应配置
       let mapOptions = mars3d.util.merge(options, {
         scene: {
-          center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 }
-        }
+          center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 },
+        },
       })
 
       //创建三维地球场景
@@ -112,7 +116,7 @@
       initLayerManager(graphicLayer)
 
       //新增绘制
-      $('#btnStartDraw').click(function() {
+      $('#btnStartDraw').click(function () {
         //开始绘制
         graphicLayer.startDraw({
           type: 'curve',
@@ -120,8 +124,8 @@
           style: {
             color: '#55ff33',
             width: 3,
-            clampToGround: false
-          }
+            clampToGround: false,
+          },
         })
       })
 
@@ -166,12 +170,12 @@
           [117.223096, 31.818342, 29.8],
           [117.249686, 31.818964, 40.1],
           [117.286308, 31.804112, 29.2],
-          [117.28621, 31.801059, 24.6]
+          [117.28621, 31.801059, 24.6],
         ],
         style: {
           width: 5,
-          color: '#3388ff'
-        }
+          color: '#3388ff',
+        },
       })
       graphicLayer.addGraphic(graphic)
       //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -186,14 +190,14 @@
         positions: [
           [117.172852, 31.862736, 33.69],
           [117.211204, 31.876064, 31.9],
-          [117.251461, 31.856011, 26.44]
+          [117.251461, 31.856011, 26.44],
         ],
         style: {
           width: 6,
           material: new Cesium.PolylineOutlineMaterialProperty({
             color: Cesium.Color.ORANGE,
             outlineWidth: 2,
-            outlineColor: Cesium.Color.BLACK
+            outlineColor: Cesium.Color.BLACK,
           }),
           label: {
             text: '我是原始线',
@@ -201,9 +205,9 @@
             color: '#ffffff',
             distanceDisplayCondition: true,
             distanceDisplayCondition_far: 500000,
-            distanceDisplayCondition_near: 0
-          }
-        }
+            distanceDisplayCondition_near: 0,
+          },
+        },
       })
       graphicLayer.addGraphic(graphic)
       //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -217,7 +221,7 @@
       graphicCopy.positions = [
         [117.172852, 31.872736, 33.69],
         [117.21087, 31.891337, 28.7],
-        [117.251461, 31.866011, 26.44]
+        [117.251461, 31.866011, 26.44],
       ]
       graphicCopy.label.text = '我是转换后生成的线'
       graphicLayer.addGraphic(graphicCopy)
@@ -230,12 +234,12 @@
         positions: [
           [117.169646, 31.769171],
           [117.164564, 31.789748],
-          [117.194579, 31.806466]
+          [117.194579, 31.806466],
         ],
         style: {
           width: 5,
-          color: '#ff0000'
-        }
+          color: '#ff0000',
+        },
       })
       graphicLayer.addGraphic(graphic)
       //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -247,16 +251,16 @@
         positions: [
           [117.348938, 31.805369, 7.63],
           [117.391807, 31.836325, 10],
-          [117.429496, 31.786715, 8.41]
+          [117.429496, 31.786715, 8.41],
         ],
         style: {
           width: 5,
           clampToGround: true,
           material: new Cesium.PolylineDashMaterialProperty({
             color: Cesium.Color.CYAN,
-            dashLength: 8.0
-          })
-        }
+            dashLength: 8.0,
+          }),
+        },
       })
       graphicLayer.addGraphic(graphic)
       //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -269,16 +273,16 @@
           [117.313682, 31.7416, 10.85],
           [117.287836, 31.760026, 17],
           [117.312816, 31.780792, 10.6],
-          [117.305473, 31.800304, 23.86]
+          [117.305473, 31.800304, 23.86],
         ],
         style: {
           width: 5,
           material: new Cesium.PolylineDashMaterialProperty({
             color: Cesium.Color.BLUE,
             gapColor: Cesium.Color.YELLOW,
-            dashPattern: parseInt('1111000000', 2)
-          })
-        }
+            dashPattern: parseInt('1111000000', 2),
+          }),
+        },
       })
       graphicLayer.addGraphic(graphic)
       //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样

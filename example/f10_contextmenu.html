@@ -12,6 +12,10 @@
   <meta name="format-detection" content="telephone=no">
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>右键菜单 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -64,43 +68,43 @@
         {
           text: '显示此处经纬度',
           iconCls: 'fa fa-info-circle',
-          show: function(e) {
+          show: function (e) {
             return Cesium.defined(e.cartesian)
           },
-          callback: function(e) {
+          callback: function (e) {
             var mpt = mars3d.point.formatPosition(e.position)
 
             var inhtml = '经度：' + mpt.x + ' , 纬度：' + mpt.y + '<br/>高程：' + mpt.z
             haoutil.alert(inhtml, '位置信息')
-          }
+          },
         },
         {
           text: '查看当前视角',
           iconCls: 'fa fa-camera-retro',
-          callback: function(e) {
+          callback: function (e) {
             let mpt = JSON.stringify(map.getCameraView())
             haoutil.alert(mpt, '当前视角信息')
-          }
+          },
         },
         {
           text: '开启深度监测',
           iconCls: 'fa fa-eye-slash',
-          show: function() {
+          show: function () {
             return !map.scene.globe.depthTestAgainstTerrain
           },
-          callback: function(e) {
+          callback: function (e) {
             map.scene.globe.depthTestAgainstTerrain = true
-          }
+          },
         },
         {
           text: '关闭深度监测',
           iconCls: 'fa fa-eye',
-          show: function() {
+          show: function () {
             return map.scene.globe.depthTestAgainstTerrain
           },
-          callback: function(e) {
+          callback: function (e) {
             map.scene.globe.depthTestAgainstTerrain = false
-          }
+          },
         },
         {
           text: '视角切换',
@@ -109,41 +113,41 @@
             {
               text: '绕此处环绕飞行',
               iconCls: 'fa fa-retweet',
-              show: function(e) {
+              show: function (e) {
                 return e.cartesian && !mars3d.point.windingPoint.isStart
               },
-              callback: function(e) {
+              callback: function (e) {
                 mars3d.point.windingPoint.start(map, e.cartesian)
-              }
+              },
             },
             {
               text: '关闭环绕飞行',
               iconCls: 'fa fa-remove',
-              show: function(e) {
+              show: function (e) {
                 return mars3d.point.windingPoint.isStart
               },
-              callback: function(e) {
+              callback: function (e) {
                 mars3d.point.windingPoint.stop()
-              }
+              },
             },
 
             {
               text: '移动到此处',
               iconCls: 'fa fa-send-o',
-              show: function(e) {
+              show: function (e) {
                 return Cesium.defined(e.cartesian)
               },
-              callback: function(e) {
+              callback: function (e) {
                 let cameraDistance = Cesium.Cartesian3.distance(e.cartesian, map.camera.positionWC) * 0.1
 
                 map.centerPoint(e.cartesian, {
                   radius: cameraDistance, //距离目标点的距离
-                  maximumHeight: map.camera.positionCartographic.height
+                  maximumHeight: map.camera.positionCartographic.height,
                 })
-              }
-            }
-          ]
-        }
+              },
+            },
+          ],
+        },
       ]
       map.bindContextMenu(mapContextmenuItems)
     }
@@ -153,7 +157,7 @@
       var graphicLayer = new mars3d.layer.DrawLayer({
         name: '标绘示例数据',
         type: 'geojson-draw',
-        url: 'http://data.marsgis.cn/file/geojson/draw-demo.json'
+        url: 'http://data.marsgis.cn/file/geojson/draw-demo.json',
       })
       map.addLayer(graphicLayer)
 
@@ -162,17 +166,17 @@
         {
           text: '删除对象',
           iconCls: 'fa fa-trash-o',
-          callback: function(e) {
+          callback: function (e) {
             let graphic = e.graphic
             if (graphic) {
               graphicLayer.removeGraphic(graphic)
             }
-          }
+          },
         },
         {
           text: '计算长度',
           iconCls: 'fa fa-medium',
-          show: function(e) {
+          show: function (e) {
             let graphic = e.graphic
             return (
               graphic.type === 'polyline' ||
@@ -182,38 +186,38 @@
               graphic.type === 'wall'
             )
           },
-          callback: function(e) {
+          callback: function (e) {
             let graphic = e.graphic
             let strDis = mars3d.util.formatLength(graphic.distance)
             haoutil.alert('该对象的长度为:' + strDis)
-          }
+          },
         },
         {
           text: '计算周长',
           iconCls: 'fa fa-medium',
-          show: function(e) {
+          show: function (e) {
             let graphic = e.graphic
             return graphic.type === 'circle' || graphic.type === 'rectangle' || graphic.type === 'polygon'
           },
-          callback: function(e) {
+          callback: function (e) {
             let graphic = e.graphic
             let strDis = mars3d.util.formatLength(graphic.distance)
             haoutil.alert('该对象的周长为:' + strDis)
-          }
+          },
         },
         {
           text: '计算面积',
           iconCls: 'fa fa-reorder',
-          show: function(e) {
+          show: function (e) {
             let graphic = e.graphic
             return graphic.type === 'circle' || graphic.type === 'rectangle' || graphic.type === 'polygon'
           },
-          callback: function(e) {
+          callback: function (e) {
             let graphic = e.graphic
             let strArea = mars3d.util.formatArea(graphic.area)
             haoutil.alert('该对象的面积为:' + strArea)
-          }
-        }
+          },
+        },
       ])
     }
 
@@ -238,9 +242,9 @@
             outlineColor: Cesium.Color.fromCssColorString('#bfbfbf'),
             outlineWidth: 2,
             horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-            verticalOrigin: Cesium.VerticalOrigin.BOTTOM
-          }
-        }
+            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+          },
+        },
       })
 
       graphicLayer.addGraphic(graphic)
@@ -250,13 +254,13 @@
         {
           text: '删除对象[graphic绑定的]',
           iconCls: 'fa fa-trash-o',
-          callback: function(e) {
+          callback: function (e) {
             let graphic = e.graphic
             if (graphic) {
               graphic.remove()
             }
-          }
-        }
+          },
+        },
       ])
     }
   </script>

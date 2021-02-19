@@ -14,6 +14,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>高德POI图层 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -42,9 +46,9 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.util.merge(options, {
         scene: {
-          center: { y: 31.787488, x: 117.222228, z: 2249.1, heading: 361, pitch: -28.6, roll: 361 }
+          center: { y: 31.787488, x: 117.222228, z: 2249.1, heading: 361, pitch: -28.6, roll: 361 },
         },
-        terrain: false
+        terrain: false,
       })
 
       //创建三维地球场景
@@ -57,7 +61,7 @@
         key: mars3d.Token.gaodeArr, //请在实际项目中将下面高德KEY换为自己申请的，因为该key不保证长期有效。
         height: 5,
         filter: {
-          types: '120000|130000|190000'
+          types: '120000|130000|190000',
         },
         symbol: {
           styleOptions: {
@@ -76,17 +80,17 @@
               pixelOffset: [0, -50],
               distanceDisplayCondition: true,
               distanceDisplayCondition_far: 5000,
-              distanceDisplayCondition_near: 0
-            }
-          }
+              distanceDisplayCondition_near: 0,
+            },
+          },
         },
         clustering: {
           //点的聚合配置
           enabled: true,
           pixelRange: 20,
           color: '#0000ff',
-          pixelSize: 48
-        }
+          pixelSize: 48,
+        },
       })
       map.addLayer(layer)
     }

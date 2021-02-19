@@ -12,6 +12,10 @@
   <meta name="format-detection" content="telephone=no">
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>三维地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -195,9 +199,9 @@
             z: 274.56,
             heading: 1.4,
             pitch: -12.5,
-            roll: 0
-          }
-        }
+            roll: 0,
+          },
+        },
       })
 
       //创建三维地球场景
@@ -208,19 +212,19 @@
       map.addLayer(graphicLayer)
 
       //2.在layer上绑定监听事件
-      graphicLayer.on(mars3d.EventType.click, function(event) {
+      graphicLayer.on(mars3d.EventType.click, function (event) {
         console.log('监听layer，单击了矢量对象', event)
       })
-      graphicLayer.on(mars3d.EventType.mouseOver, function(event) {
+      graphicLayer.on(mars3d.EventType.mouseOver, function (event) {
         console.log('监听layer，鼠标移入了矢量对象', event)
       })
-      graphicLayer.on(mars3d.EventType.mouseOut, function(event) {
+      graphicLayer.on(mars3d.EventType.mouseOut, function (event) {
         console.log('监听layer，鼠标移出了矢量对象', event)
       })
 
       //可在图层上绑定popup,对所有加到这个图层的矢量数据都生效
       graphicLayer.bindPopup('我是layer上绑定的Popup', {
-        anchor: [0, -10]
+        anchor: [0, -10],
       })
 
       //可在图层上绑定tooltip,对所有加到这个图层的矢量数据都生效
@@ -231,11 +235,13 @@
         {
           text: '删除对象',
           iconCls: 'fa fa-trash-o',
-          callback: function(e) {
+          callback: function (e) {
             var primitive = e.graphic
-            if (primitive) graphicLayer.removeGraphic(primitive)
-          }
-        }
+            if (primitive) {
+              graphicLayer.removeGraphic(primitive)
+            }
+          },
+        },
       ])
 
       //绑定UI处理
@@ -260,31 +266,33 @@
           // minimumSpeed: 1.0,  //粒子初速度的最小界限，超过该最小界限，随机选择粒子的实际速度。（单位：米/秒） ？？？
           // maximumSpeed: 2.0,  //粒子初速度的最大界限，超过该最大界限，随机选择粒子的实际速度。（单位：米/秒）
 
-          emissionRate: 200 //粒子发射器的发射速率 （单位：次/秒）
+          emissionRate: 200, //粒子发射器的发射速率 （单位：次/秒）
           // lifetime: 5, //粒子的一个生命周期长度（单位：秒） ？？？
         },
         gravity: -11, //重力因子，会修改速度矢量以改变方向或速度（基于物理的效果）
         target: new Cesium.Cartesian3(-0.151, 0.294, 0.225), // 粒子的方向
-        maxHeight: 5000 //超出该高度后不显示粒子效果
+        maxHeight: 5000, //超出该高度后不显示粒子效果
       })
       graphicLayer.addGraphic(particleSystemEx)
 
-      $('#txtTargetHeight').change(function(e) {
-        if (targetPosition) updateTarget(targetPosition)
+      $('#txtTargetHeight').change(function (e) {
+        if (targetPosition) {
+          updateTarget(targetPosition)
+    }
       })
       $('#btnSelectMB').click(drawPint)
 
-      $('#btnSelectWZ').click(function(e) {
-        map.draw.startDraw({
+      $('#btnSelectWZ').click(function (e) {
+        map.graphicLayer.startDraw({
           type: 'point',
-          success: function(entity) {
+          success: function (graphic) {
             //绘制成功后回调
-            var positions = map.draw.getPositions(entity)
+            var positions = graphic.positionsShow
             particlePosition = positions[0]
-            map.draw.deleteAll()
+            map.graphicLayer.clear()
 
             particleSystemEx.position = particlePosition
-          }
+          },
         })
       })
     }
@@ -300,7 +308,7 @@
         maximumParticleLife: 3.2,
         minimumSpeed: 1.0,
         maximumSpeed: 4.0,
-        gravity: -11.0
+        gravity: -11.0,
       }
 
       Cesium.knockout.track(viewModel)
@@ -308,40 +316,40 @@
       Cesium.knockout.applyBindings(viewModel, toolbar)
 
       //绑定事件
-      Cesium.knockout.getObservable(viewModel, 'emissionRate').subscribe(function(newValue) {
+      Cesium.knockout.getObservable(viewModel, 'emissionRate').subscribe(function (newValue) {
         particleSystemEx.particleSystem.emissionRate = parseFloat(newValue)
       })
 
-      Cesium.knockout.getObservable(viewModel, 'minimumParticleLife').subscribe(function(newValue) {
+      Cesium.knockout.getObservable(viewModel, 'minimumParticleLife').subscribe(function (newValue) {
         particleSystemEx.particleSystem.minimumParticleLife = parseFloat(newValue)
       })
 
-      Cesium.knockout.getObservable(viewModel, 'maximumParticleLife').subscribe(function(newValue) {
+      Cesium.knockout.getObservable(viewModel, 'maximumParticleLife').subscribe(function (newValue) {
         particleSystemEx.particleSystem.maximumParticleLife = parseFloat(newValue)
       })
 
-      Cesium.knockout.getObservable(viewModel, 'minimumSpeed').subscribe(function(newValue) {
+      Cesium.knockout.getObservable(viewModel, 'minimumSpeed').subscribe(function (newValue) {
         particleSystemEx.particleSystem.minimumSpeed = parseFloat(newValue)
       })
 
-      Cesium.knockout.getObservable(viewModel, 'maximumSpeed').subscribe(function(newValue) {
+      Cesium.knockout.getObservable(viewModel, 'maximumSpeed').subscribe(function (newValue) {
         particleSystemEx.particleSystem.maximumSpeed = parseFloat(newValue)
       })
 
-      Cesium.knockout.getObservable(viewModel, 'startScale').subscribe(function(newValue) {
+      Cesium.knockout.getObservable(viewModel, 'startScale').subscribe(function (newValue) {
         particleSystemEx.particleSystem.startScale = parseFloat(newValue)
       })
 
-      Cesium.knockout.getObservable(viewModel, 'endScale').subscribe(function(newValue) {
+      Cesium.knockout.getObservable(viewModel, 'endScale').subscribe(function (newValue) {
         particleSystemEx.particleSystem.endScale = parseFloat(newValue)
       })
 
-      Cesium.knockout.getObservable(viewModel, 'particleSize').subscribe(function(newValue) {
+      Cesium.knockout.getObservable(viewModel, 'particleSize').subscribe(function (newValue) {
         var particleSize = parseFloat(newValue)
         particleSystemEx.particleSize = particleSize
       })
 
-      Cesium.knockout.getObservable(viewModel, 'gravity').subscribe(function(newValue) {
+      Cesium.knockout.getObservable(viewModel, 'gravity').subscribe(function (newValue) {
         var gravity = parseFloat(newValue)
         particleSystemEx.gravity = gravity
       })
@@ -350,16 +358,16 @@
     var targetPosition
 
     function drawPint() {
-      map.draw.startDraw({
+      map.graphicLayer.startDraw({
         type: 'point',
-        success: function(entity) {
+        success: function (graphic) {
           //绘制成功后回调
-          var positions = map.draw.getPositions(entity)
+          var positions = graphic.positionsShow
           targetPosition = positions[0]
-          map.draw.deleteAll()
+          map.graphicLayer.clear()
 
           updateTarget(targetPosition)
-        }
+        },
       })
     }
 

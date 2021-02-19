@@ -12,6 +12,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>PolylineVolume 管道线 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -98,8 +102,8 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.util.merge(options, {
         scene: {
-          center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 }
-        }
+          center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 },
+        },
       })
 
       //创建三维地球场景
@@ -113,7 +117,7 @@
       initLayerManager(graphicLayer)
 
       //新增绘制
-      $('#btnStartDraw').click(function() {
+      $('#btnStartDraw').click(function () {
         //开始绘制
         graphicLayer.startDraw({
           type: 'polylineVolume',
@@ -122,8 +126,8 @@
             shape: 'pipeline',
             radius: 80,
             color: '#00ffff',
-            opacity: 0.9
-          }
+            opacity: 0.9,
+          },
         })
       })
 
@@ -165,14 +169,14 @@
           [117.278695, 31.816107, 35.5],
           [117.279826, 31.804185, 34.5],
           [117.286308, 31.804112, 29.2],
-          [117.28621, 31.801059, 24.6]
+          [117.28621, 31.801059, 24.6],
         ],
         style: {
           shape: 'pipeline',
           radius: 80,
           color: '#3388ff',
-          opacity: 0.9
-        }
+          opacity: 0.9,
+        },
       })
       graphicLayer.addGraphic(graphic)
       //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -185,7 +189,7 @@
       var graphic = new mars3d.graphic.PolylineVolumeEntity({
         positions: [
           [117.172852, 31.862736, 33.69],
-          [117.251461, 31.856011, 26.44]
+          [117.251461, 31.856011, 26.44],
         ],
         style: {
           shape: 'pipeline',
@@ -198,9 +202,9 @@
             color: '#ffffff',
             distanceDisplayCondition: true,
             distanceDisplayCondition_far: 500000,
-            distanceDisplayCondition_near: 0
-          }
-        }
+            distanceDisplayCondition_near: 0,
+          },
+        },
       })
       graphicLayer.addGraphic(graphic)
       //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -213,7 +217,7 @@
       var graphicCopy = mars3d.graphic.PolylineVolumeEntity.fromGeoJSON(geojson)
       graphicCopy.positions = [
         [117.172852, 31.872736, 33.69],
-        [117.251461, 31.866011, 26.44]
+        [117.251461, 31.866011, 26.44],
       ]
       graphicCopy.label.text = '我是转换后生成的线'
       graphicLayer.addGraphic(graphicCopy)
@@ -225,15 +229,15 @@
       var graphic = new mars3d.graphic.PolylineVolumeEntity({
         positions: [
           [117.358187, 31.838662, 12.23],
-          [117.4384, 31.819405, 11.78]
+          [117.4384, 31.819405, 11.78],
         ],
         style: {
           shape: 'circle',
           radius: 80,
           cornerType: Cesium.CornerType.BEVELED,
           color: '#ff0000',
-          opacity: 0.9
-        }
+          opacity: 0.9,
+        },
       })
       graphicLayer.addGraphic(graphic)
       //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -243,15 +247,15 @@
       var graphic = new mars3d.graphic.PolylineVolumeEntity({
         positions: [
           [117.348938, 31.805369, 7.63],
-          [117.429496, 31.786715, 8.41]
+          [117.429496, 31.786715, 8.41],
         ],
         style: {
           shape: 'star',
           radius: 80,
           cornerType: Cesium.CornerType.MITERED,
           color: '#ffff00',
-          opacity: 0.9
-        }
+          opacity: 0.9,
+        },
       })
       graphicLayer.addGraphic(graphic)
       //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -262,14 +266,14 @@
         positions: [
           [117.313682, 31.7416, 10.85],
           [117.311934, 31.774753, 19.71],
-          [117.305473, 31.800304, 23.86]
+          [117.305473, 31.800304, 23.86],
         ],
         style: {
           shape: 'pipeline',
           radius: 80,
           color: '#0000ff',
-          opacity: 0.9
-        }
+          opacity: 0.9,
+        },
       })
       graphicLayer.addGraphic(graphic)
       //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样

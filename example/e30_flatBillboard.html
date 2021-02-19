@@ -12,6 +12,10 @@
   <meta name="format-detection" content="telephone=no">
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>三维地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -63,14 +67,14 @@
             z: 767909.44,
             heading: 1.1,
             pitch: -78,
-            roll: 0
+            roll: 0,
           },
           globe: {
-            baseColor: '#a3b3c2'
-          }
+            baseColor: '#a3b3c2',
+          },
         },
         control: {
-          infoBox: false
+          infoBox: false,
         },
         terrain: false,
         layers: [
@@ -86,12 +90,12 @@
                 outline: true,
                 outlineWidth: 2,
                 outlineColor: '#cccccc',
-                outlineOpacity: 0.9
-              }
+                outlineOpacity: 0.9,
+              },
             },
-            show: true
-          }
-        ]
+            show: true,
+          },
+        ],
       })
 
       //创建三维地球场景
@@ -109,25 +113,25 @@
       map.addLayer(graphicLayer)
 
       //在layer上绑定监听事件
-      graphicLayer.on(mars3d.EventType.click, function(event) {
+      graphicLayer.on(mars3d.EventType.click, function (event) {
         console.log('监听layer，单击了矢量对象', event)
       })
 
       //可在图层上绑定popup,对所有加到这个图层的矢量数据都生效
       graphicLayer.bindPopup('我是layer上绑定的Popup', {
-        anchor: [0, -10]
+        anchor: [0, -10],
       })
 
       flatBillboard = new mars3d.graphic.FlatBillboard({
         // data: [], //也可以后面通过属性传入
         style: {
           width: 30, //单位：像素
-          height: 60
-        }
+          height: 60,
+        },
       })
       graphicLayer.addGraphic(flatBillboard)
 
-      $('#btnShowData1').click(function() {
+      $('#btnShowData1').click(function () {
         clearData()
 
         haoutil.loading.show()
@@ -138,7 +142,7 @@
         // 创建等值线区域
         var extent = [112.287256, 27.408204, 120.695453, 34.659583]
         var pointGrid = turf.pointGrid(extent, numPoints, {
-          units: 'miles'
+          units: 'miles',
         })
 
         var arr = []
@@ -152,7 +156,7 @@
           arr.push({
             position: position,
             angle: angle,
-            image: getImageBySpeed(speed)
+            image: getImageBySpeed(speed),
           })
         }
 
@@ -167,11 +171,11 @@
         haoutil.msg('共耗时' + usedTime.toFixed(2) + '秒')
       })
 
-      $('#btnClearData').click(function() {
+      $('#btnClearData').click(function () {
         clearData()
       })
 
-      $('#btnLoadDemo').click(function() {
+      $('#btnLoadDemo').click(function () {
         loadDemo()
       })
 
@@ -194,13 +198,13 @@
         $.ajax({
           type: 'GET',
           url: 'http://data.marsgis.cn/file/apidemo/windpoint.json',
-          success: function(res) {
+          success: function (res) {
             arrWind = res.data
             showWindPoint(arrWind)
           },
-          error: function(err) {
+          error: function (err) {
             haoutil.msg('实时查询气象信息失败，请稍候再试')
-          }
+          },
         })
       }
     }
@@ -215,7 +219,7 @@
         arrPoint.push({
           position: Cesium.Cartesian3.fromDegrees(item.x, item.y, 1000),
           angle: 360 - item.dir, //方向
-          image: getImageBySpeed(item.speed) //速度 ，使用不同图片
+          image: getImageBySpeed(item.speed), //速度 ，使用不同图片
         })
       }
       flatBillboard.data = arrPoint

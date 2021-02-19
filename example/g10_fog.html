@@ -13,6 +13,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>雾场景 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -82,9 +86,9 @@
             z: 1729.97,
             heading: 110.7,
             pitch: -25,
-            roll: 0.2
-          }
-        }
+            roll: 0.2,
+          },
+        },
       })
 
       //创建三维地球场景
@@ -97,7 +101,7 @@
         style: { scale: 520, heading: 215 }, //style同标绘的model类型
         position: [121.507762, 31.233975, 200],
         center: { lat: 31.251138, lng: 121.463588, alt: 1729.97, heading: 110.7, pitch: -25, roll: 0.2 },
-        flyTo: true
+        flyTo: true,
       })
       map.addLayer(gltfLayer)
 
@@ -105,41 +109,41 @@
       var fogEffect = new mars3d.effect.FogEffect({
         maxHeight: 20000, //大于此高度后不显示
         fogByDistance: new Cesium.Cartesian4(100, 0.0, 9000, 0.9),
-        color: Cesium.Color.WHITE
+        color: Cesium.Color.WHITE,
       })
       map.addEffect(fogEffect)
 
-      $('#chkShowEffect').change(function() {
+      $('#chkShowEffect').change(function () {
         var val = $(this).is(':checked')
 
-        fogEffect.show = val
+        fogEffect.enabled = val
       })
 
       $('#fogByDistanceX').range({
-        onChange: function(value, bfb) {
+        onChange: function (value, bfb) {
           if (value > fogEffect.fogByDistance.z) {
             haoutil.msg('近距离不能大于远距离')
             return
           }
           fogEffect.fogByDistance.x = value
-        }
+        },
       })
       $('#fogByDistanceZ').range({
-        onChange: function(value, bfb) {
+        onChange: function (value, bfb) {
           if (value < fogEffect.fogByDistance.x) {
             haoutil.msg('远距离 不能小于 近距离')
             return
           }
           fogEffect.fogByDistance.z = value
-        }
+        },
       })
 
       $('#txtColor').minicolors({
         position: 'bottom left',
         control: 'saturation',
-        change: function(color, opacity) {
+        change: function (color, opacity) {
           fogEffect.color = Cesium.Color.fromCssColorString(color)
-        }
+        },
       })
     }
   </script>

@@ -12,6 +12,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>Box 盒子 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -72,8 +76,8 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.util.merge(options, {
         scene: {
-          center: { y: 30.835133, x: 116.300677, z: 20973, heading: 7, pitch: -72, roll: 0 }
-        }
+          center: { y: 30.835133, x: 116.300677, z: 20973, heading: 7, pitch: -72, roll: 0 },
+        },
       })
 
       //创建三维地球场景
@@ -106,8 +110,8 @@
         position: [116.282587, 30.859197, 544.31],
         style: {
           dimensions: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
-          color: Cesium.Color.fromCssColorString('#00ff00').withAlpha(0.9)
-        }
+          color: Cesium.Color.fromCssColorString('#00ff00').withAlpha(0.9),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -125,8 +129,8 @@
         position: new mars3d.LatLngPoint(116.329199, 30.881595, 390.3),
         style: {
           dimensions: new Cesium.Cartesian3(900.0, 600.0, 900.0),
-          color: Cesium.Color.fromCssColorString('#ff0000').withAlpha(0.4)
-        }
+          color: Cesium.Color.fromCssColorString('#ff0000').withAlpha(0.4),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -137,8 +141,8 @@
         position: [116.244399, 30.920459, 573.6],
         style: {
           dimensions: new Cesium.Cartesian3(800.0, 600.0, 1000.0),
-          color: Cesium.Color.fromCssColorString('#00FFFF').withAlpha(0.4)
-        }
+          color: Cesium.Color.fromCssColorString('#00FFFF').withAlpha(0.4),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -149,8 +153,8 @@
         position: new mars3d.LatLngPoint(116.392526, 30.903729, 933.55),
         style: {
           dimensions: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
-          color: Cesium.Color.fromCssColorString('#ffff00').withAlpha(0.6)
-        }
+          color: Cesium.Color.fromCssColorString('#ffff00').withAlpha(0.6),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -169,9 +173,9 @@
             pixelOffset: [0, -10],
             distanceDisplayCondition: true,
             distanceDisplayCondition_far: 500000,
-            distanceDisplayCondition_near: 0
-          }
-        }
+            distanceDisplayCondition_near: 0,
+          },
+        },
       })
       graphicLayer.addGraphic(primitive)
     }

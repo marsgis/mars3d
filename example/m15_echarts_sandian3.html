@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>散点图 态势| Echarts扩展支持 | 三维地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d,mars3d-echarts"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
+
+      var map
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.util.merge(options, {
+          scene: {
+            center: { lat: 13.592196, lng: 118.364148, alt: 4653691, heading: 4, pitch: -70 },
+          },
+        })
+
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+
+        //创建Echarts图层
+        createEchartsLayer()
+      }
+
+      function createEchartsLayer() {
+        var options = getEchartsOption()
+        options.clampToGround = true //计算贴地高度
+        var echartsLayer = new mars3d.layer.EchartsLayer(options)
+        map.addLayer(echartsLayer)
+      }
+
+      function getEchartsOption() {
+        var data = [
+          {
+            name: '上海',
+            value: 19780,
+          },
+          {
+            name: '珠海',
+            value: 2186,
+          },
+          {
+            name: '三亚',
+            value: 1135,
+          },
+          {
+            name: '惠州',
+            value: 1973,
+          },
+          {
+            name: '海口',
+            value: 2568,
+          },
+          {
+            name: '合肥',
+            value: 4039,
+          },
+          {
+            name: '南京',
+            value: 6959,
+          },
+          {
+            name: '杭州',
+            value: 5632,
+          },
+          {
+            name: '苏州',
+            value: 6707,
+          },
+          {
+            name: '无锡',
+            value: 3393,
+          },
+          {
+            name: '昆山',
+            value: 1894,
+          },
+          {
+            name: '广州',
+            value: 15769,
+          },
+          {
+            name: '深圳',
+            value: 8259,
+          },
+          {
+            name: '佛山',
+            value: 5741,
+          },
+          {
+            name: '东莞',
+            value: 3030,
+          },
+          {
+            name: '福州',
+            value: 4542,
+          },
+          {
+            name: '厦门',
+            value: 3329,
+          },
+          {
+            name: '南宁',
+            value: 3157,
+          },
+          {
+            name: '郑州',
+            value: 6690,
+          },
+          {
+            name: '武汉',
+            value: 8678,
+          },
+          {
+            name: '长沙',
+            value: 5303,
+          },
+          {
+            name: '南昌',
+            value: 3025,
+          },
+          {
+            name: '北京',
+            value: 20259,
+          },
+          {
+            name: '长春',
+            value: 3016,
+          },
+          {
+            name: '大连',
+            value: 3202,
+          },
+          {
+            name: '沈阳',
+            value: 4540,
+          },
+          {
+            name: '哈尔滨',
+            value: 3141,
+          },
+          {
+            name: '天津',
+            value: 8626,
+          },
+          {
+            name: '济南',
+            value: 4361,
+          },
+          {
+            name: '青岛',
+            value: 6667,
+          },
+          {
+            name: '太原',
+            value: 4080,
+          },
+          {
+            name: '石家庄',
+            value: 6137,
+          },
+          {
+            name: '西安',
+            value: 6991,
+          },
+          {
+            name: '成都',
+            value: 13873,
+          },
+          {
+            name: '重庆',
+            value: 13283,
+          },
+          {
+            name: '昆明',
+            value: 4633,
+          },
+        ]
+
+        var geoCoordMap = {
+          上海: [121.48, 31.22],
+          珠海: [113.52, 22.3],
+          三亚: [109.31, 18.14],
+          惠州: [114.4, 23.09],
+          海口: [110.35, 20.02],
+          合肥: [117.27, 31.86],
+          南京: [118.78, 32.04],
+          杭州: [120.19, 30.26],
+          苏州: [120.62, 31.32],
+          无锡: [120.29, 31.59],
+          昆山: [120.95, 31.39],
+          广州: [113.23, 23.16],
+          深圳: [114.07, 22.62],
+          佛山: [113.11, 23.05],
+          东莞: [113.75, 23.04],
+          福州: [119.3, 26.08],
+          厦门: [118.1, 24.46],
+          南宁: [108.33, 22.84],
+          郑州: [113.65, 34.76],
+          武汉: [114.31, 30.52],
+          长沙: [113, 28.21],
+          南昌: [115.89, 28.68],
+          北京: [116.46, 39.92],
+          长春: [125.35, 43.88],
+          大连: [121.62, 38.92],
+          沈阳: [123.38, 41.8],
+          哈尔滨: [126.63, 45.75],
+          天津: [117.2, 39.13],
+          济南: [117, 36.65],
+          青岛: [120.33, 36.07],
+          太原: [112.53, 37.87],
+          石家庄: [114.48, 38.03],
+          西安: [108.95, 34.27],
+          成都: [104.06, 30.67],
+          重庆: [106.54, 29.59],
+          昆明: [102.73, 25.04],
+        }
+
+        var convertData = function (data) {
+          var res = []
+          for (var i = 0; i < data.length; i++) {
+            var geoCoord = geoCoordMap[data[i].name]
+            if (geoCoord) {
+              res.push({
+                name: data[i].name,
+                value: geoCoord.concat(data[i].value),
+              })
+            }
+          }
+          return res
+        }
+
+        var convertedData = [
+          convertData(data),
+          convertData(
+            data
+              .sort(function (a, b) {
+                return b.value - a.value
+              })
+              .slice(0, 6)
+          ),
+        ]
+        data.sort(function (a, b) {
+          return a.value - b.value
+        })
+
+        var selectedItems = []
+        var categoryData = []
+        var barData = []
+        //   var maxBar = 30;
+        var sum = 0
+        var count = data.length
+        for (var i = 0; i < data.length; i++) {
+          categoryData.push(data[i].name)
+          barData.push(data[i].value)
+          sum += data[i].value
+        }
+        //console.log(categoryData);
+        //console.log(sum + "   " + count)
+
+        var option = {
+          animation: false,
+          backgroundColor: 'rgba(17, 19, 42, 0.3)',
+          title: [
+            {
+              text: '散点图态势',
+              subtext: 'san dian tu taishi',
+              left: 'center',
+              textStyle: {
+                color: '#fff',
+              },
+            },
+            {
+              id: 'statistic',
+              text: count ? '平均: ' + parseInt((sum / count).toFixed(4)) : '',
+              right: 120,
+              top: 40,
+              width: 100,
+              textStyle: {
+                color: '#fff',
+                fontSize: 16,
+              },
+            },
+          ],
+          GLMap: {},
+          tooltip: {
+            trigger: 'item',
+          },
+          grid: {
+            right: 40,
+            top: 100,
+            bottom: 40,
+            width: '30%',
+          },
+          xAxis: {
+            type: 'value',
+            scale: true,
+            position: 'top',
+            boundaryGap: false,
+            splitLine: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false,
+            },
+            axisLabel: {
+              margin: 2,
+              textStyle: {
+                color: '#aaa',
+              },
+            },
+          },
+          yAxis: {
+            type: 'category',
+            nameGap: 16,
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: '#ddd',
+              },
+            },
+            axisTick: {
+              show: false,
+              lineStyle: {
+                color: '#ddd',
+              },
+            },
+            axisLabel: {
+              interval: 0,
+              textStyle: {
+                color: '#ddd',
+              },
+            },
+            data: categoryData,
+          },
+          series: [
+            {
+              type: 'scatter',
+              coordinateSystem: 'GLMap',
+              data: convertedData[0],
+              symbolSize: function (val) {
+                var size = (val[2] / 500) * 1.5
+                return Math.max(size, 8)
+              },
+              label: {
+                normal: {
+                  formatter: '{b}',
+                  position: 'right',
+                  show: false,
+                },
+                emphasis: {
+                  show: true,
+                },
+              },
+              itemStyle: {
+                normal: {
+                  color: '#FF8C00',
+                  position: 'right',
+                  show: true,
+                },
+              },
+            },
+            {
+              type: 'effectScatter',
+              coordinateSystem: 'GLMap',
+              data: convertedData[0],
+              symbolSize: function (val) {
+                var size = val[2] / 500
+                return Math.max(size, 8)
+              },
+              showEffectOn: 'render',
+              rippleEffect: {
+                brushType: 'stroke',
+              },
+              hoverAnimation: true,
+              label: {
+                normal: {
+                  formatter: '{b}',
+                  position: 'right',
+                  show: true,
+                },
+              },
+              itemStyle: {
+                normal: {
+                  color: '#f4e925',
+                  shadowBlur: 50,
+                  shadowColor: '#EE0000',
+                },
+              },
+              zlevel: 1,
+            },
+            {
+              id: 'bar',
+              zlevel: 2,
+              type: 'bar',
+              symbol: 'none',
+              itemStyle: {
+                normal: {
+                  color: '#ddb926',
+                },
+              },
+              data: data,
+            },
+          ],
+        }
+
+        return option
+      }
+    </script>
+  </body>
+</html>

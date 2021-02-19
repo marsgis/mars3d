@@ -12,6 +12,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>扩散墙 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -70,8 +74,8 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.util.merge(options, {
         scene: {
-          center: { y: 31.285106, x: 121.506331, z: 4790.57, heading: 201.1, pitch: -43.9, roll: 359.9 }
-        }
+          center: { y: 31.285106, x: 121.506331, z: 4790.57, heading: 201.1, pitch: -43.9, roll: 359.9 },
+        },
       })
 
       //创建三维地球场景
@@ -86,9 +90,9 @@
         marsJzwStyle: true,
         style: {
           color: {
-            conditions: [['true', 'rgb(3, 104, 255)']]
-          }
-        }
+            conditions: [['true', 'rgb(3, 104, 255)']],
+          },
+        },
       })
       map.addLayer(tiles3dLayer)
 
@@ -109,12 +113,12 @@
           [121.479447, 31.240235, 14.25],
           [121.470002, 31.240496, 12.92],
           [121.46538, 31.249206, 9.53],
-          [121.475616, 31.255374, 5.87]
+          [121.475616, 31.255374, 5.87],
         ],
         style: {
           diffHeight: 2000, //高度
-          speed: 100 //速度
-        }
+          speed: 100, //速度
+        },
       })
       graphicLayer.addGraphic(diffuseWallGlow)
 
@@ -125,8 +129,8 @@
           radius: 600, //半径
           color: Cesium.Color.fromCssColorString('#ff0000'),
           diffHeight: 2000, //高度
-          speed: 100 //速度
-        }
+          speed: 100, //速度
+        },
       })
       graphicLayer.addGraphic(circleDiffuseWallGlow)
     }

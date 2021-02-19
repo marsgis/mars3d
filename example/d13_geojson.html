@@ -13,6 +13,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>GeoJson图层 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -62,8 +66,8 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.util.merge(options, {
         scene: {
-          center: { y: 31.588498, x: 120.714274, z: 492.53, heading: 13.6, pitch: -55.3, roll: 0.1 }
-        }
+          center: { y: 31.588498, x: 120.714274, z: 492.53, heading: 13.6, pitch: -55.3, roll: 0.1 },
+        },
       })
 
       //创建三维地球场景
@@ -111,9 +115,9 @@
               scaleByDistance_nearValue: 1,
               distanceDisplayCondition: true,
               distanceDisplayCondition_far: 80000,
-              distanceDisplayCondition_near: 0
-            }
-          }
+              distanceDisplayCondition_near: 0,
+            },
+          },
         },
         popup: [
           { field: '项目名称', name: '项目名称' },
@@ -139,18 +143,18 @@
           { field: '项目推进主', name: '项目推进主体' },
           { field: '项目进度', name: '项目进度' },
           { field: '项目来源', name: '项目来源' },
-          { field: '备注', name: '备注' }
+          { field: '备注', name: '备注' },
         ],
-        flyTo: true
+        flyTo: true,
       })
       map.addLayer(geoJsonLayer)
 
       //绑定事件
-      geoJsonLayer.on(mars3d.EventType.load, function(event) {
+      geoJsonLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
         initTree(event.graphics)
       })
-      geoJsonLayer.on(mars3d.EventType.click, function(event) {
+      geoJsonLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
       })
     }
@@ -182,16 +186,16 @@
               scaleByDistance_nearValue: 1,
               distanceDisplayCondition: true,
               distanceDisplayCondition_far: 12000000,
-              distanceDisplayCondition_near: 0
-            }
-          }
+              distanceDisplayCondition_near: 0,
+            },
+          },
         },
-        flyTo: true
+        flyTo: true,
       })
       map.addLayer(geoJsonLayer)
 
       //绑定事件
-      geoJsonLayer.on(mars3d.EventType.load, function(event) {
+      geoJsonLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
         initTree(event.graphics)
       })
@@ -210,7 +214,7 @@
             opacity: 0.6,
             color: '#0000FF',
             width: 3,
-            clampToGround: true
+            clampToGround: true,
           },
           styleField: '类型',
           styleFieldOptions: {
@@ -237,16 +241,16 @@
             防护绿地: { color: '#007F00' },
             河流水域: { color: '#7FFFFF' },
             配建停车场: { color: '#ffffff' },
-            道路用地: { color: '#ffffff' }
-          }
+            道路用地: { color: '#ffffff' },
+          },
         },
         popup: '类型:{类型}',
-        flyTo: true
+        flyTo: true,
       })
       map.addLayer(geoJsonLayer)
 
       //绑定事件
-      geoJsonLayer.on(mars3d.EventType.load, function(event) {
+      geoJsonLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
         initTree(event.graphics)
       })
@@ -254,7 +258,7 @@
       //下面代码演示如果再config.json中配置的图层，如何绑定额外事件方法
       // 绑定config.json中对应图层配置的"id"值图层的单击事件（比如下面是id:1987对应图层）
       var layerTest = map.getLayer(1987, 'id')
-      layerTest.on(mars3d.EventType.click, function(event) {
+      layerTest.on(mars3d.EventType.click, function (event) {
         //单击事件
         console.log('单击了图层', event)
       })
@@ -271,22 +275,22 @@
           styleOptions: {
             color: '#0d3685',
             outlineColor: '#0d3685',
-            opacity: 0.8
-          }
+            opacity: 0.8,
+          },
         },
         //buildings 标识为建筑物数据，内部特殊处理
         buildings: {
           cloumn: 'floors',
-          height: 'flo_height'
+          height: 'flo_height',
         },
         center: { y: 31.932537, x: 120.419919, z: 368, heading: 331, pitch: -41, roll: 0 },
         popup: 'all',
-        flyTo: true
+        flyTo: true,
       })
       map.addLayer(geoJsonLayer)
 
       //绑定事件
-      geoJsonLayer.on(mars3d.EventType.load, function(event) {
+      geoJsonLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
         initTree(event.graphics)
       })
@@ -303,13 +307,13 @@
         dth: {
           buffer: 3,
           color: '#ffff00',
-          opacity: 0.5
+          opacity: 0.5,
         },
         popup: [
           { field: 'name', name: '房屋名称' },
           { field: 'jznf', name: '建造年份' },
           { field: 'ssdw', name: '所属单位' },
-          { field: 'remark', name: '备注信息' }
+          { field: 'remark', name: '备注信息' },
         ],
         center: {
           y: 33.589536,
@@ -317,14 +321,14 @@
           z: 145.08,
           heading: 3.1,
           pitch: -22.9,
-          roll: 0
+          roll: 0,
         },
-        flyTo: true
+        flyTo: true,
       })
       map.addLayer(geoJsonLayer)
 
       //绑定事件
-      geoJsonLayer.on(mars3d.EventType.load, function(event) {
+      geoJsonLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
         initTree(event.graphics)
       })
@@ -346,7 +350,7 @@
             outlineStyle: {
               color: '#FED976',
               width: 3,
-              opacity: 1
+              opacity: 1,
             },
             label: {
               //面中心点，显示文字的配置
@@ -376,22 +380,22 @@
               distanceDisplayCondition: false,
               distanceDisplayCondition_far: 10000,
               distanceDisplayCondition_near: 0,
-              visibleDepth: false
-            }
-          }
+              visibleDepth: false,
+            },
+          },
         },
         popup: '{name}',
         // "tooltip": "{name}",
-        flyTo: true
+        flyTo: true,
       })
       map.addLayer(geoJsonLayer)
 
       //绑定事件
-      geoJsonLayer.on(mars3d.EventType.load, function(event) {
+      geoJsonLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
         initTree(event.graphics)
       })
-      geoJsonLayer.on(mars3d.EventType.click, function(event) {
+      geoJsonLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
       })
 
@@ -424,7 +428,7 @@
       }
 
       //绑定事件
-      geoJsonLayer.on(mars3d.EventType.mouseOver, function(event) {
+      geoJsonLayer.on(mars3d.EventType.mouseOver, function (event) {
         console.log('鼠标移入图层', event)
 
         var entity = event.czmObject
@@ -432,7 +436,7 @@
           highlightedEntity(entity)
         }
       })
-      geoJsonLayer.on(mars3d.EventType.mouseOut, function(event) {
+      geoJsonLayer.on(mars3d.EventType.mouseOut, function (event) {
         console.log('鼠标移出图层', event)
 
         var entity = event.czmObject
@@ -449,17 +453,17 @@
       //初始化树
       var setting = {
         check: {
-          enable: true
+          enable: true,
         },
         data: {
           simpleData: {
-            enable: true
-          }
+            enable: true,
+          },
         },
         callback: {
           onCheck: treeOverlays_onCheck,
-          onClick: treeOverlays_onClick
-        }
+          onClick: treeOverlays_onClick,
+        },
       }
 
       var zNodes = []
@@ -469,7 +473,7 @@
         type: 'group',
         open: false,
         checked: true,
-        icon: '../lib/jquery/ztree/css/mars/images/folder.png'
+        icon: '../lib/jquery/ztree/css/mars/images/folder.png',
       }
       zNodes.push(pnode)
 
@@ -482,7 +486,7 @@
           pId: pnode.id,
           name: name,
           checked: true,
-          icon: '../lib/jquery/ztree/css/mars/images/layer.png'
+          icon: '../lib/jquery/ztree/css/mars/images/layer.png',
         }
         zNodes.push(node)
 

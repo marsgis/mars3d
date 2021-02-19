@@ -1,6 +1,6 @@
 'use script' //开发环境建议开启严格模式
 
-$(document).ready(function() {
+$(document).ready(function () {
   let inhtml = `
             <div class="infoview rightbottom">
                 <input type="button" class="btn btn-primary" value="定位至山区" onclick="centerAtTerrain()" />
@@ -10,25 +10,12 @@ $(document).ready(function() {
 })
 
 function centerAtTerrain() {
-  map.centerAt({
-    y: 30.715648,
-    x: 116.300527,
-    z: 10727.2,
-    heading: 2.9,
-    pitch: -24.6,
-    roll: 0
-  })
+  map.centerAt({ lat: 30.859414, lng: 116.28709, alt: 8617, heading: 18, pitch: -28 })
 }
+
 let modelTest
 function centerAtModel() {
-  map.centerAt({
-    y: 33.589536,
-    x: 119.032216,
-    z: 145.08,
-    heading: 3.1,
-    pitch: -22.9,
-    roll: 0
-  })
+  map.centerAt({ lat: 33.590452, lng: 119.032184, alt: 185, heading: 359, pitch: -34 })
 
   //三维模型
   if (!modelTest) {
@@ -37,7 +24,7 @@ function centerAtModel() {
       maximumScreenSpaceError: 1,
       maximumMemoryUsage: 1024,
       offset: { z: 81.5 },
-      flyTo: true
+      flyTo: true,
     })
     map.addLayer(modelTest)
   }

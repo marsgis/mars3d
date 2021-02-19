@@ -12,6 +12,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>Polyline 线 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -79,8 +83,8 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.util.merge(options, {
         scene: {
-          center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 }
-        }
+          center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 },
+        },
       })
 
       //创建三维地球场景
@@ -93,7 +97,7 @@
       //图层管理的相关处理，代码在\js\graphicManager.js
       initLayerManager(graphicLayer)
 
-      $('#btnAddData').click(function() {
+      $('#btnAddData').click(function () {
         graphicLayer.clear()
 
         haoutil.loading.show()
@@ -110,10 +114,10 @@
             style: {
               width: 4,
               material: Cesium.Material.fromType('Color', {
-                color: Cesium.Color.fromRandom().withAlpha(0.9)
-              })
+                color: Cesium.Color.fromRandom().withAlpha(0.9),
+              }),
             },
-            tooltip: '第' + j + '个'
+            tooltip: '第' + j + '个',
           })
           graphicLayer.addGraphic(primitive)
         }
@@ -165,14 +169,14 @@
           [117.278695, 31.816107, 35.5],
           [117.279826, 31.804185, 34.5],
           [117.286308, 31.804112, 29.2],
-          [117.28621, 31.801059, 24.6]
+          [117.28621, 31.801059, 24.6],
         ],
         style: {
           width: 4,
           material: Cesium.Material.fromType('Color', {
-            color: Cesium.Color.YELLOW
-          })
-        }
+            color: Cesium.Color.YELLOW,
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -185,14 +189,14 @@
       var primitive = new mars3d.graphic.PolylinePrimitive({
         positions: [
           [117.172852, 31.862736, 33.69],
-          [117.251461, 31.856011, 26.44]
+          [117.251461, 31.856011, 26.44],
         ],
         style: {
           width: 6,
           material: Cesium.Material.fromType('PolylineDash', {
             color: Cesium.Color.WHITE,
             gapColor: Cesium.Color.RED,
-            dashLength: 20
+            dashLength: 20,
             // dashPattern: parseInt('110000001111', 2)
           }),
           label: {
@@ -201,9 +205,9 @@
             color: '#ffffff',
             distanceDisplayCondition: true,
             distanceDisplayCondition_far: 500000,
-            distanceDisplayCondition_near: 0
-          }
-        }
+            distanceDisplayCondition_near: 0,
+          },
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -217,7 +221,7 @@
       var primitive = new mars3d.graphic.PolylinePrimitive({
         positions: [
           [117.358187, 31.838662, 12.23],
-          [117.4384, 31.819405, 11.78]
+          [117.4384, 31.819405, 11.78],
         ],
         style: {
           width: 5,
@@ -228,10 +232,10 @@
             time: new Cesium.Cartesian2(0.0, 0.0),
             fadeDirection: {
               x: true,
-              y: false
-            }
-          })
-        }
+              y: false,
+            },
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -241,16 +245,16 @@
       var primitive = new mars3d.graphic.PolylinePrimitive({
         positions: [
           [117.348938, 31.805369, 7.63],
-          [117.429496, 31.786715, 8.41]
+          [117.429496, 31.786715, 8.41],
         ],
         style: {
           width: 5,
           material: Cesium.Material.fromType(mars3d.material.LineFlowType, {
             color: Cesium.Color.fromCssColorString('#1a9850'),
             image: 'img/textures/ArrowOpacity.png',
-            speed: 20 //速度，建议取值范围1-100
-          })
-        }
+            speed: 20, //速度，建议取值范围1-100
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -261,7 +265,7 @@
         positions: [
           [117.313682, 31.7416, 10.85],
           [117.311934, 31.774753, 19.71],
-          [117.305473, 31.800304, 23.86]
+          [117.305473, 31.800304, 23.86],
         ],
         style: {
           width: 5,
@@ -270,9 +274,9 @@
             axisY: false,
             repeat: new Cesium.Cartesian2(20.0, 1.0),
             color: Cesium.Color.fromCssColorString('#ffff00'),
-            speed: 60 //速度，建议取值范围1-100
-          })
-        }
+            speed: 60, //速度，建议取值范围1-100
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -282,16 +286,16 @@
       var primitive = new mars3d.graphic.PolylinePrimitive({
         positions: [
           [117.169646, 31.769171],
-          [117.194579, 31.806466]
+          [117.194579, 31.806466],
         ],
         style: {
           width: 3,
           material: Cesium.Material.fromType(mars3d.material.ODLineType, {
             color: Cesium.Color.fromCssColorString('#FF0000'),
             speed: 5 + 1.0 * Math.random(),
-            startTime: Math.random()
-          })
-        }
+            startTime: Math.random(),
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -309,9 +313,9 @@
           material: Cesium.Material.fromType(mars3d.material.LineFlowType, {
             color: Cesium.Color.CHARTREUSE,
             image: 'img/textures/lineClr.png',
-            speed: 25 //速度，建议取值范围1-100
-          })
-        }
+            speed: 25, //速度，建议取值范围1-100
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样

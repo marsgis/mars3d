@@ -13,6 +13,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>CZML图层 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -58,8 +62,8 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.util.merge(options, {
         scene: {
-          center: { y: 31.588498, x: 120.714274, z: 492.53, heading: 13.6, pitch: -55.3, roll: 0.1 }
-        }
+          center: { y: 31.588498, x: 120.714274, z: 492.53, heading: 13.6, pitch: -55.3, roll: 0.1 },
+        },
       })
 
       //创建三维地球场景
@@ -86,16 +90,16 @@
         name: '飞行编队',
         url: 'http://data.marsgis.cn/file/czml/flight.czml',
         popup: 'all',
-        flyTo: true
+        flyTo: true,
       })
       map.addLayer(czmlLayer)
 
       //绑定事件
-      czmlLayer.on(mars3d.EventType.load, function(event) {
+      czmlLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
         initTree(event.graphics)
       })
-      czmlLayer.on(mars3d.EventType.click, function(event) {
+      czmlLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
       })
     }
@@ -107,16 +111,16 @@
       czmlLayer = new mars3d.layer.CzmlLayer({
         name: '汽车',
         url: 'http://data.marsgis.cn/file/czml/car.czml',
-        flyTo: true
+        flyTo: true,
       })
       map.addLayer(czmlLayer)
 
       //绑定事件
-      czmlLayer.on(mars3d.EventType.load, function(event) {
+      czmlLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
         initTree(event.graphics)
       })
-      czmlLayer.on(mars3d.EventType.click, function(event) {
+      czmlLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
       })
     }
@@ -129,16 +133,16 @@
         name: '船舶编队',
         url: 'http://data.marsgis.cn/file/czml/ship.czml',
         popup: 'all',
-        flyTo: true
+        flyTo: true,
       })
       map.addLayer(czmlLayer)
 
       //绑定事件
-      czmlLayer.on(mars3d.EventType.load, function(event) {
+      czmlLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
         initTree(event.graphics)
       })
-      czmlLayer.on(mars3d.EventType.click, function(event) {
+      czmlLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
       })
     }
@@ -151,26 +155,26 @@
       map.setOptions({
         scene: {
           cameraController: {
-            maximumZoomDistance: 300000000
-          }
-        }
+            maximumZoomDistance: 300000000,
+          },
+        },
       })
 
       czmlLayer = new mars3d.layer.CzmlLayer({
         name: '卫星',
         url: 'http://data.marsgis.cn/file/czml/satellite.czml',
         center: { y: 10, x: 111.833884, z: 150000000, heading: 0, pitch: -90, roll: 0 },
-        flyTo: true
+        flyTo: true,
       })
       map.addLayer(czmlLayer)
 
       //绑定事件
-      czmlLayer.on(mars3d.EventType.load, function(event) {
+      czmlLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
 
         initTree(event.graphics)
       })
-      czmlLayer.on(mars3d.EventType.click, function(event) {
+      czmlLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
       })
     }
@@ -182,12 +186,12 @@
       czmlLayer = new mars3d.layer.CzmlLayer({
         name: '火箭发射',
         url: 'http://data.marsgis.cn/file/czml/space.czml',
-        flyTo: true
+        flyTo: true,
       })
       map.addLayer(czmlLayer)
 
       //绑定事件
-      czmlLayer.on(mars3d.EventType.load, function(event) {
+      czmlLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
 
         //火星发射时，锁定火箭模型对象
@@ -195,7 +199,7 @@
 
         initTree(event.graphics)
       })
-      czmlLayer.on(mars3d.EventType.click, function(event) {
+      czmlLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
       })
     }
@@ -208,17 +212,17 @@
 
       czmlLayer = new mars3d.layer.CzmlLayer({
         name: '消防演练',
-        url: 'http://data.marsgis.cn/file/czml/firedrill.czml'
+        url: 'http://data.marsgis.cn/file/czml/firedrill.czml',
         // flyTo: true
       })
       map.addLayer(czmlLayer)
 
       //绑定事件
-      czmlLayer.on(mars3d.EventType.load, function(event) {
+      czmlLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
         initTree(event.graphics)
       })
-      czmlLayer.on(mars3d.EventType.click, function(event) {
+      czmlLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
       })
     }
@@ -227,23 +231,23 @@
     var layersObj = {}
 
     function initTree(arr) {
-      $('#btnNoCheck').click(function() {
+      $('#btnNoCheck').click(function () {
         map.trackedEntity = null
       })
       //初始化树
       var setting = {
         check: {
-          enable: true
+          enable: true,
         },
         data: {
           simpleData: {
-            enable: true
-          }
+            enable: true,
+          },
         },
         callback: {
           onCheck: treeOverlays_onCheck,
-          onClick: treeOverlays_onClick
-        }
+          onClick: treeOverlays_onClick,
+        },
       }
 
       var zNodes = []
@@ -253,7 +257,7 @@
         type: 'group',
         open: false,
         checked: true,
-        icon: '../lib/jquery/ztree/css/mars/images/folder.png'
+        icon: '../lib/jquery/ztree/css/mars/images/folder.png',
       }
       zNodes.push(pnode)
 
@@ -266,7 +270,7 @@
           pId: pnode.id,
           name: name,
           checked: true,
-          icon: '../lib/jquery/ztree/css/mars/images/layer.png'
+          icon: '../lib/jquery/ztree/css/mars/images/layer.png',
         }
         zNodes.push(node)
 

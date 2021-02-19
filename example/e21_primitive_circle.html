@@ -12,6 +12,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>Circle 圆、椭圆、圆柱 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -70,8 +74,8 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.util.merge(options, {
         scene: {
-          center: { y: 30.835133, x: 116.300677, z: 20973, heading: 7, pitch: -72, roll: 0 }
-        }
+          center: { y: 30.835133, x: 116.300677, z: 20973, heading: 7, pitch: -72, roll: 0 },
+        },
       })
 
       //创建三维地球场景
@@ -105,9 +109,9 @@
         style: {
           radius: 2000.0,
           material: Cesium.Material.fromType('Color', {
-            color: Cesium.Color.fromCssColorString('#00FFFF').withAlpha(0.4)
-          })
-        }
+            color: Cesium.Color.fromCssColorString('#00FFFF').withAlpha(0.4),
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -129,11 +133,11 @@
             fabric: {
               type: 'Image',
               uniforms: {
-                image: 'img/textures/excavate_bottom_min.jpg'
-              }
-            }
-          })
-        }
+                image: 'img/textures/excavate_bottom_min.jpg',
+              },
+            },
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -147,9 +151,9 @@
           material: Cesium.Material.fromType(mars3d.material.CircleWaveType, {
             color: Cesium.Color.fromCssColorString('#FF0000'),
             count: 1, //圆圈数量
-            speed: 20 //速度，建议取值范围1-100
-          })
-        }
+            speed: 20, //速度，建议取值范围1-100
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -162,9 +166,9 @@
           radius: 3000,
           material: Cesium.Material.fromType(mars3d.material.ScanLineType, {
             color: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
-            speed: 10
-          })
-        }
+            speed: 10,
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -179,9 +183,9 @@
             color: Cesium.Color.fromCssColorString('#ffff00'),
             count: 3, //圆圈数量
             speed: 20, //速度，建议取值范围1-100
-            gradient: 0.1
-          })
-        }
+            gradient: 0.1,
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样

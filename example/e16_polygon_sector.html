@@ -12,6 +12,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>扇形 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -99,8 +103,8 @@
       //合并属性参数，可覆盖config.json中的对应配置
       let mapOptions = mars3d.util.merge(options, {
         scene: {
-          center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 }
-        }
+          center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 },
+        },
       })
 
       //创建三维地球场景
@@ -114,7 +118,7 @@
       initLayerManager(graphicLayer)
 
       //新增绘制
-      $('#btnStartDraw').click(function() {
+      $('#btnStartDraw').click(function () {
         //开始绘制
         graphicLayer.startDraw({
           type: 'sector',
@@ -131,20 +135,20 @@
               color: '#ffffff',
               distanceDisplayCondition: true,
               distanceDisplayCondition_far: 500000,
-              distanceDisplayCondition_near: 0
-            }
-          }
+              distanceDisplayCondition_near: 0,
+            },
+          },
         })
       })
-      $('#btnStartDrawExtruded').click(function() {
+      $('#btnStartDrawExtruded').click(function () {
         //开始绘制
         graphicLayer.startDraw({
           type: 'sector',
           style: {
             color: '#00ff00',
             opacity: 0.5,
-            diffHeight: 300
-          }
+            diffHeight: 300,
+          },
         })
       })
 
@@ -191,7 +195,7 @@
         positions: [
           [117.151322, 31.863556, 34.3],
           [117.18186, 31.869359, 29.8],
-          [117.17505, 31.84342, 105.7]
+          [117.17505, 31.84342, 105.7],
         ],
         style: {
           border: 3, //多边形边数量
@@ -206,9 +210,9 @@
             color: '#ffffff',
             distanceDisplayCondition: true,
             distanceDisplayCondition_far: 500000,
-            distanceDisplayCondition_near: 0
-          }
-        }
+            distanceDisplayCondition_near: 0,
+          },
+        },
       })
       graphicLayer.addGraphic(graphic)
       //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -222,7 +226,7 @@
         positions: [
           [117.257699, 31.861722, 24.8],
           [117.29788, 31.848922, 15.1],
-          [117.291172, 31.89522, 25.8]
+          [117.291172, 31.89522, 25.8],
         ],
         style: {
           border: 4, //多边形边数量
@@ -230,9 +234,9 @@
           material: new Cesium.ImageMaterialProperty({
             //图片材质
             image: 'img/textures/excavate_bottom_min.jpg',
-            color: Cesium.Color.fromCssColorString('#FFFFFF').withAlpha(0.8) //透明度处理
-          })
-        }
+            color: Cesium.Color.fromCssColorString('#FFFFFF').withAlpha(0.8), //透明度处理
+          }),
+        },
       })
       graphicLayer.addGraphic(graphic)
       //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -243,7 +247,7 @@
         positions: [
           [117.152749, 31.77278, 24.1],
           [117.188968, 31.771299, 28.4],
-          [117.135557, 31.79767, 30.9]
+          [117.135557, 31.79767, 30.9],
         ],
         style: {
           border: 5, //多边形边数量
@@ -255,9 +259,9 @@
             amplitude: 5.0, // 控制水波振幅的数字。
             specularIntensity: 0.8, // 控制镜面反射强度的数字。
             baseWaterColor: Cesium.Color.fromCssColorString('#006ab4'), // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
-            blendColor: Cesium.Color.fromCssColorString('#006ab4') // 从水中混合到非水域时使用的rgba颜色对象。
-          })
-        }
+            blendColor: Cesium.Color.fromCssColorString('#006ab4'), // 从水中混合到非水域时使用的rgba颜色对象。
+          }),
+        },
       })
       graphicLayer.addGraphic(graphic)
       //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -268,15 +272,15 @@
         positions: [
           [117.272405, 31.798676, 21.2],
           [117.30149, 31.790685, 14.3],
-          [117.251609, 31.780963, 25.1]
+          [117.251609, 31.780963, 25.1],
         ],
         style: {
           border: 6, //多边形边数量
           extrudedHeight: 2000.0,
           material: Cesium.Color.YELLOW,
           closeTop: false,
-          closeBottom: false
-        }
+          closeBottom: false,
+        },
       })
       graphicLayer.addGraphic(graphic)
       //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样

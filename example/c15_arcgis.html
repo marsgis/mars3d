@@ -13,6 +13,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>ArcGIS Server服务(含瓦片和动态) |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -39,7 +43,7 @@
   <script type="text/javascript">
     'use script' //开发环境建议开启严格模式
 
-    $(document).ready(function() {
+    $(document).ready(function () {
       if (!mars3d.util.webglreport()) {
         mars3d.util.webglerror()
         return
@@ -52,17 +56,17 @@
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', {
         scene: {
-          center: { y: 31.026852, x: 117.164195, z: 154181.14, heading: 0, pitch: -63.5, roll: 0 }
+          center: { y: 31.026852, x: 117.164195, z: 154181.14, heading: 0, pitch: -63.5, roll: 0 },
         },
         control: {
           baseLayerPicker: true, //basemaps底图切换按钮
           homeButton: true, //视角复位按钮
           sceneModePicker: true, //二三维切换按钮
-          contextmenu: true //右键菜单
+          defaultContextMenu: true, //右键菜单
         },
         terrain: {
           url: 'http://data.marsgis.cn/terrain',
-          show: true
+          show: true,
         },
         //方式1：在创建地球前的参数中配置
         basemaps: [
@@ -71,35 +75,35 @@
             icon: 'img/basemaps/esriWorldImagery.png',
             type: 'arcgis',
             url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
-            show: true
+            show: true,
           },
           {
             name: 'ArcGIS电子街道',
             icon: 'img/basemaps/google_vec.png',
             type: 'arcgis',
-            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer'
+            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer',
           },
           {
             name: 'ArcGIS NatGeo',
             icon: 'img/basemaps/esriWorldStreetMap.png',
             type: 'arcgis',
-            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer'
+            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer',
           },
           {
             name: '蓝色底图(GCJ02)',
             icon: 'img/basemaps/bd-c-midnight.png',
             type: 'arcgis',
             url: 'http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer',
-            enablePickFeatures: false
+            enablePickFeatures: false,
           },
           {
             name: '灰色底图(GCJ02)',
             icon: 'img/basemaps/bd-c-grayscale.png',
             type: 'arcgis',
             url: 'http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetGray/MapServer',
-            enablePickFeatures: false
-          }
-        ]
+            enablePickFeatures: false,
+          },
+        ],
       })
     }
 
@@ -122,14 +126,14 @@
           outline: true,
           outlineWidth: 3,
           outlineColor: '#e000d9',
-          outlineOpacity: 1.0
+          outlineOpacity: 1.0,
         },
-        popup: 'all'
+        popup: 'all',
       })
       map.addLayer(tileLayer)
 
       //单击事件
-      tileLayer.on(mars3d.EventType.click, function(event) {
+      tileLayer.on(mars3d.EventType.click, function (event) {
         //单击事件
         console.log('单击了矢量数据，共' + event.features.length + '条', event)
       })

@@ -12,6 +12,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>Point 点|Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -107,7 +111,7 @@
       //图层管理的相关处理，代码在\js\graphicManager.js
       initLayerManager(graphicLayer)
 
-      $('#btnStartDraw').click(function() {
+      $('#btnStartDraw').click(function () {
         graphicLayer.startDraw({
           type: 'div',
           style: {
@@ -117,8 +121,8 @@
                         </div >`,
             horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
             verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-            heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
-          }
+            heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+          },
         })
       })
 
@@ -128,6 +132,7 @@
       addGraphic_03(graphicLayer)
       addGraphic_04(graphicLayer)
       addGraphic_05(graphicLayer)
+      addGraphic_06(graphicLayer)
     }
 
     /**
@@ -143,8 +148,8 @@
         position: [116.325461, 30.933429, 543.67],
         style: {
           html: '<div class="mars3d-animation-point" style="color:#f33349;"><p></p></div>',
-          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000) //按视距距离显示
-        }
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), //按视距距离显示
+        },
       })
       graphicLayer.addGraphic(graphic)
     }
@@ -157,15 +162,30 @@
           html: '<img src="img/marker/tf.gif" style="width:100px;height:100px;" ></img>',
           distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), //按视距距离显示
           horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-          verticalOrigin: Cesium.VerticalOrigin.CENTER
+          verticalOrigin: Cesium.VerticalOrigin.CENTER,
         },
-        pointerEvents: false //false时不允许拾取和触发任意鼠标事件，但可以穿透div缩放地球
+        pointerEvents: false, //false时不允许拾取和触发任意鼠标事件，但可以穿透div缩放地球
+      })
+      graphicLayer.addGraphic(graphic)
+    }
+
+    //添加GIF图标，DIV方式
+    function addGraphic_03(graphicLayer) {
+      var graphic = new mars3d.graphic.DivGraphic({
+        position: [116.561124, 30.959874, 268.2],
+        style: {
+          html: '<img src="img/marker/emergency.gif" style="width:100px;height:100px;" ></img>',
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), //按视距距离显示
+          horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+          verticalOrigin: Cesium.VerticalOrigin.CENTER,
+        },
+        pointerEvents: false, //false时不允许拾取和触发任意鼠标事件，但可以穿透div缩放地球
       })
       graphicLayer.addGraphic(graphic)
     }
 
     //类似toolitp的自定义html
-    function addGraphic_03(graphicLayer) {
+    function addGraphic_04(graphicLayer) {
       var graphic = new mars3d.graphic.DivGraphic({
         position: [116.239443, 30.862119, 506.6],
         style: {
@@ -177,14 +197,14 @@
               <div class="mars3d-popup-tip-container"><div class="mars3d-popup-tip divpoint-background"></div></div>`,
           horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000) //按视距距离显示
-        }
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), //按视距距离显示
+        },
       })
       graphicLayer.addGraphic(graphic)
     }
 
     //自定义的面板
-    function addGraphic_04(graphicLayer) {
+    function addGraphic_05(graphicLayer) {
       var graphic = new mars3d.graphic.DivGraphic({
         position: Cesium.Cartesian3.fromDegrees(116.174302, 31.00681, 751.6),
         style: {
@@ -233,9 +253,9 @@
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           distanceDisplayCondition: new Cesium.DistanceDisplayCondition(1000, 200000), //按视距距离显示
           scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 100000, 0.1),
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
         },
-        pointerEvents: false //false时不允许拾取和触发任意鼠标事件，但可以穿透div缩放地球
+        pointerEvents: false, //false时不允许拾取和触发任意鼠标事件，但可以穿透div缩放地球
       })
       graphicLayer.addGraphic(graphic)
 
@@ -243,7 +263,7 @@
     }
 
     //自定义的面板
-    function addGraphic_05(graphicLayer) {
+    function addGraphic_06(graphicLayer) {
       var graphic = new mars3d.graphic.DivGraphic({
         position: Cesium.Cartesian3.fromDegrees(116.406756, 30.835499, 396.93),
         style: {
@@ -284,8 +304,8 @@
             </div>`,
           horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(1000, 200000) //按视距距离显示
-        }
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(1000, 200000), //按视距距离显示
+        },
       })
       graphicLayer.addGraphic(graphic)
 

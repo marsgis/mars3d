@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>流出线 | Echarts扩展支持|三维地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d,mars3d-echarts"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
+
+      var map
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.util.merge(options, {
+          scene: {
+            center: {
+              y: 26.197302,
+              x: 112.783136,
+              z: 5933910.9,
+              heading: 355.6,
+              pitch: -80.3,
+            },
+          },
+        })
+
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+
+        //创建Echarts图层
+        createEchartsLayer()
+      }
+
+      function createEchartsLayer() {
+        var options = getEchartsOption()
+        var echartsLayer = new mars3d.layer.EchartsLayer(options)
+        map.addLayer(echartsLayer)
+      }
+
+      function getEchartsOption() {
+        var geoCoordMap = {
+          安徽省: [117.17, 31.52],
+          北京市: [116.24, 39.55],
+          重庆市: [106.54, 29.59],
+          福建省: [119.18, 26.05],
+          甘肃省: [103.51, 36.04],
+          广东省: [113.14, 23.08],
+          广西壮族自治区: [108.19, 22.48],
+          贵州省: [106.42, 26.35],
+          海南省: [110.2, 20.02],
+          河北省: [114.3, 38.02],
+          河南省: [113.4, 34.46],
+          黑龙江省: [128.36, 45.44],
+          湖北省: [112.27, 30.15],
+          湖南省: [112.59, 28.12],
+          吉林省: [125.19, 43.54],
+          江苏省: [118.46, 32.03],
+          江西省: [115.55, 28.4],
+          辽宁省: [123.25, 41.48],
+          内蒙古: [108.41, 40.48],
+          宁夏回族自治区: [106.16, 38.27],
+          青海省: [101.48, 36.38],
+          山东省: [118.0, 36.4],
+          山西省: [112.33, 37.54],
+          陕西省: [108.57, 34.17],
+          上海市: [121.29, 31.14],
+          海南: [108.77, 19.1],
+          四川省: [104.04, 30.4],
+          天津市: [117.12, 39.02],
+          西藏自治区: [91.08, 29.39],
+          新疆维吾尔自治区: [87.36, 43.45],
+          云南省: [102.42, 25.04],
+          浙江省: [120.1, 30.16],
+          澳门: [115.07, 21.33],
+          台湾省: [121.21, 23.53],
+        }
+
+        var BJData = [
+          [
+            {
+              name: '北京市',
+            },
+            {
+              name: '上海市',
+              value: 195,
+            },
+          ],
+          [
+            {
+              name: '北京市',
+            },
+            {
+              name: '广东省',
+              value: 90,
+            },
+          ],
+          [
+            {
+              name: '北京市',
+            },
+            {
+              name: '辽宁省',
+              value: 80,
+            },
+          ],
+          [
+            {
+              name: '北京市',
+            },
+            {
+              name: '湖北省',
+              value: 70,
+            },
+          ],
+          [
+            {
+              name: '北京市',
+            },
+            {
+              name: '内蒙古',
+              value: 70,
+            },
+          ],
+          [
+            {
+              name: '北京市',
+            },
+            {
+              name: '江苏省',
+              value: 60,
+            },
+          ],
+          [
+            {
+              name: '北京市',
+            },
+            {
+              name: '新疆维吾尔自治区',
+              value: 70,
+            },
+          ],
+          [
+            {
+              name: '北京市',
+            },
+            {
+              name: '四川省',
+              value: 40,
+            },
+          ],
+          [
+            {
+              name: '北京市',
+            },
+            {
+              name: '云南省',
+              value: 130,
+            },
+          ],
+          [
+            {
+              name: '北京市',
+            },
+            {
+              name: '黑龙江省',
+              value: 130,
+            },
+          ],
+          [
+            {
+              name: '北京市',
+            },
+            {
+              name: '甘肃省',
+              value: 200,
+            },
+          ],
+          [
+            {
+              name: '北京市',
+            },
+            {
+              name: '西藏自治区',
+              value: 60,
+            },
+          ],
+        ]
+
+        //var planePath =  "path://M917.965523 917.331585c0 22.469758-17.891486 40.699957-39.913035 40.699957-22.058388 0-39.913035-18.2302-39.913035-40.699957l-0.075725-0.490164-1.087774 0c-18.945491-157.665903-148.177807-280.296871-306.821991-285.4748-3.412726 0.151449-6.751774 0.562818-10.240225 0.562818-3.450589 0-6.789637-0.410346-10.202363-0.524956-158.606321 5.139044-287.839661 127.806851-306.784128 285.436938l-1.014096 0 0.075725 0.490164c0 22.469758-17.854647 40.699957-39.913035 40.699957s-39.915082-18.2302-39.915082-40.699957l-0.373507-3.789303c0-6.751774 2.026146-12.903891 4.91494-18.531052 21.082154-140.712789 111.075795-258.241552 235.432057-312.784796C288.420387 530.831904 239.989351 444.515003 239.989351 346.604042c0-157.591201 125.33352-285.361213 279.924387-285.361213 154.62873 0 279.960203 127.770012 279.960203 285.361213 0 97.873098-48.391127 184.15316-122.103966 235.545644 124.843356 54.732555 215.099986 172.863023 235.808634 314.211285 2.437515 5.290493 4.01443 10.992355 4.01443 17.181311L917.965523 917.331585zM719.822744 346.679767c0-112.576985-89.544409-203.808826-199.983707-203.808826-110.402459 0-199.944821 91.232864-199.944821 203.808826s89.542362 203.808826 199.944821 203.808826C630.278335 550.488593 719.822744 459.256752 719.822744 346.679767z";
+
+        var convertData = function (data) {
+          var res = []
+          for (var i = 0; i < data.length; i++) {
+            var dataItem = data[i]
+            var fromCoord = geoCoordMap[dataItem[0].name]
+            var toCoord = geoCoordMap[dataItem[1].name]
+            if (fromCoord && toCoord) {
+              res.push({
+                fromName: dataItem[0].name,
+                toName: dataItem[1].name,
+                coords: [fromCoord, toCoord],
+              })
+            }
+          }
+          return res
+        }
+
+        var color = ['#a6c84c', '#ffa022', '#46bee9']
+        var mySeries = []
+        ;[['', BJData]].forEach(function (item, i) {
+          mySeries.push(
+            {
+              //线
+              name: item[0],
+              type: 'lines',
+              coordinateSystem: 'GLMap',
+              zlevel: 1,
+              effect: {
+                show: true,
+                period: 6,
+                trailLength: 0.7,
+                color: '#fff',
+                symbolSize: 3,
+              },
+              lineStyle: {
+                normal: {
+                  color: color[0],
+                  width: 0,
+                  curveness: 0.2,
+                },
+              },
+              data: convertData(item[1]),
+            },
+            {
+              //移动 点
+              name: item[0],
+              type: 'lines',
+              coordinateSystem: 'GLMap',
+              zlevel: 2,
+              //effect: {
+              //    show: true,
+              //    period: 6,
+              //    trailLength: 0,
+              //    symbol: planePath,
+              //    symbolSize: 15
+              //},
+              effect: {
+                show: true,
+                period: 6,
+                trailLength: 0.1,
+                //            symbol: planePath,
+                symbol: 'arrow',
+                symbolSize: 5,
+              },
+              lineStyle: {
+                normal: {
+                  color: color[1],
+                  width: 1,
+                  opacity: 0.4,
+                  curveness: 0.2,
+                },
+              },
+              data: convertData(item[1]),
+            },
+            {
+              //省份圆点
+              name: item[0],
+              //                      name: item[0] + ' Top10',
+              type: 'effectScatter',
+              coordinateSystem: 'GLMap',
+              zlevel: 2,
+              rippleEffect: {
+                brushType: 'stroke',
+              },
+              label: {
+                normal: {
+                  show: true,
+                  position: 'right',
+                  formatter: '{b}',
+                },
+              },
+              symbolSize: function (val) {
+                return val[2] / 6
+              },
+              itemStyle: {
+                normal: {
+                  color: function (params) {
+                    var tmp = params.data.value[2]
+                    if (tmp < 100) {
+                      return 'green'
+                    } else if (tmp > 150) {
+                      return 'red'
+                    } else {
+                      return 'yellow'
+                    }
+                  },
+                },
+              },
+              data: item[1].map(function (dataItem) {
+                return {
+                  name: dataItem[1].name,
+                  value: geoCoordMap[dataItem[1].name].concat([dataItem[1].value]),
+                }
+              }),
+            }
+          )
+        })
+
+        var option = {
+          animation: false,
+          //backgroundColor: '#404a59',
+          backgroundColor: 'rgba(116, 112, 124, 0.2)',
+          title: {
+            text: '北京病人就诊流向图',
+            subtext: '(1月份统计结果)',
+            left: 'center',
+            textStyle: {
+              color: '#fff',
+            },
+            subtextStyle: {
+              color: 'yellow',
+              fontWeight: 'bold',
+            },
+          },
+          tooltip: {
+            trigger: 'item',
+            formatter: function (params) {
+              if (params.seriesIndex === 2 || params.seriesIndex === 5 || params.seriesIndex === 8) {
+                return params.name + ' ' + params.seriesName + ' ' + params.data.value[2] + ' 人次'
+              } else if (params.seriesIndex === 1 || params.seriesIndex === 4 || params.seriesIndex === 7) {
+                return params.data.fromName + '→' + params.data.toName
+              }
+            },
+          },
+          legend: {
+            orient: 'vertical',
+            top: '6%',
+            left: 'center',
+            data: ['北京市'],
+            textStyle: {
+              color: '#fff',
+            },
+            selectedMode: 'single',
+          },
+          GLMap: {},
+          series: mySeries,
+        }
+
+        return option
+      }
+    </script>
+  </body>
+</html>

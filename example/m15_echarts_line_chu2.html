@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>流入线 | Echarts扩展支持|三维地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d,mars3d-echarts"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
+
+      var map
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.util.merge(options, {
+          scene: {
+            center: {
+              y: 26.197302,
+              x: 112.783136,
+              z: 5933910.9,
+              heading: 355.6,
+              pitch: -80.3,
+              roll: 0,
+            },
+          },
+        })
+
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+
+        //创建Echarts图层
+        createEchartsLayer()
+      }
+
+      function createEchartsLayer() {
+        var options = getEchartsOption()
+        var echartsLayer = new mars3d.layer.EchartsLayer(options)
+        map.addLayer(echartsLayer)
+      }
+
+      function getEchartsOption() {
+        var items = [
+          {
+            level: 1,
+            name: '北京',
+            label: 'beijing',
+            value: [116.407395, 39.904211],
+            symbol: '',
+            symbolSize: [30, 30],
+          },
+          {
+            level: 1,
+            symbol: '',
+            name: '沈阳',
+            label: 'langfang',
+            category: 0,
+            active: true,
+            speed: 6,
+            value: [122.904763, 41.689105],
+            belong: '北京',
+          },
+          {
+            level: 1,
+            symbol: '',
+            name: '西宁',
+            category: 0,
+            active: true,
+            speed: 6,
+            value: [101.4038, 36.8207],
+            belong: '北京',
+          },
+          {
+            level: 1,
+            symbol: '',
+            name: '兰州',
+            category: 0,
+            active: true,
+            speed: 6,
+            value: [103.5901, 36.3043],
+            belong: '北京',
+          },
+          {
+            level: 1,
+            symbol: '',
+            name: '杭州',
+            category: 0,
+            active: true,
+            speed: 6,
+            value: [119.5313, 29.8773],
+            belong: '北京',
+          },
+          {
+            level: 1,
+            symbol: '',
+            name: '四川',
+            category: 0,
+            active: true,
+            speed: 6,
+            value: [103.9526, 30.7617],
+            belong: '北京',
+          },
+          {
+            level: 2,
+            symbol: '',
+            name: '重庆',
+            category: 0,
+            active: true,
+            speed: 6,
+            value: [107.7539, 30.1904],
+            belong: '四川',
+          },
+          {
+            level: 1,
+            symbol: '',
+            name: '乌鲁木齐',
+            category: 0,
+            active: true,
+            speed: 6,
+            value: [85.865421, 43.452051],
+            belong: '北京',
+          },
+          {
+            level: 1,
+            symbol: '',
+            name: '喀什',
+            category: 0,
+            active: true,
+            speed: 6,
+            value: [84.693786, 36.353336],
+            belong: '北京',
+          },
+          {
+            level: 1,
+            symbol: '',
+            name: '温州',
+            category: 0,
+            active: true,
+            speed: 6,
+            value: [120.647069, 28.01946],
+            belong: '杭州',
+          },
+          {
+            level: 2,
+            symbol: '',
+            name: '舟山',
+            category: 0,
+            active: true,
+            speed: 6,
+            value: [122.2559, 30.2234],
+            belong: '杭州',
+          },
+        ]
+
+        var lineColor = ['#fff', '#f6fb05', '#00fcff']
+
+        //城市点位图标
+        var symbolList = ['image://img/marker/symbol1.png', 'image://img/marker/symbol2.png']
+
+        //线上的动态运动点图标
+        var pointSymbol = ['image://img/marker/linePoint1.png', 'image://img/marker/linePoint2.png']
+
+        items.forEach((el) => {
+          el.symbol = symbolList[el.level - 1]
+        })
+
+        const curveness = -0.2
+        var dataArr = [[], [], []]
+        items.forEach((el) => {
+          if (el.belong) {
+            items.forEach((element) => {
+              if (el.belong === element.name) {
+                dataArr[el.level - 1].push([
+                  {
+                    coord: element.value,
+                  },
+                  {
+                    coord: el.value,
+                  },
+                ])
+              }
+            })
+          }
+        })
+
+        var seriesOne = [
+          {
+            type: 'effectScatter',
+            layout: 'none',
+            // coordinateSystem: "cartesian2d",
+            coordinateSystem: 'GLMap',
+            symbolSize: [20, 20],
+            symbolOffset: [0, -10],
+            zlevel: 3,
+            circular: {
+              rotateLabel: true,
+            },
+            label: {
+              normal: {
+                show: true,
+                position: 'bottom',
+                formatter: '{b}',
+                fontSize: 24,
+                color: '#fff',
+                textBorderColor: '#2aa4e8',
+                offset: [0, 20],
+              },
+            },
+            itemStyle: {
+              normal: {
+                shadowColor: 'none',
+              },
+            },
+            data: items,
+          },
+        ]
+        var lineSeries = []
+        dataArr.forEach((el, index) => {
+          lineSeries.push({
+            name: '',
+            type: 'lines',
+            // coordinateSystem: "cartesian2d",
+            coordinateSystem: 'GLMap',
+            zlevel: 1,
+            effect: {
+              show: true,
+              smooth: false,
+              trailLength: 0,
+              symbol: pointSymbol[index],
+              symbolSize: [10, 30],
+              period: 4,
+            },
+
+            lineStyle: {
+              width: 2,
+              color: lineColor[index],
+              curveness: curveness,
+            },
+            data: el,
+          })
+        })
+        var seriesData = seriesOne.concat(lineSeries)
+        var option = {
+          animation: false,
+          // backgroundColor: '#000',
+          GLMap: {},
+          series: seriesData,
+        }
+        return option
+      }
+    </script>
+  </body>
+</html>

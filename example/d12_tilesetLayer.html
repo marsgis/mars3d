@@ -1,90 +1,95 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>3D Tiles 三维模型 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>3D Tiles 三维模型 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+    ></script>
 
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-<body class="dark">
-  <!--加载前进行操作提示，优化用户体验-->
-  <div id="mask" class="signmask" onclick="removeMask()"></div>
+    <div id="viewSL" class="infoview">
+      3D Tiles 示例：
+      <input type="button" class="btn btn-primary" value="倾斜摄影(某县城)" onclick="showQxShequDemo()" />
+      <input type="button" class="btn btn-primary" value="城市白膜(成都市区)" onclick="showJzwHefeiDemo()" />
+      <input type="button" class="btn btn-primary" value="人工建模(石化工厂)" onclick="showMaxShihuaDemo()" />
+      <input type="button" class="btn btn-primary" value="BIM(桥梁)" onclick="showBimQiaoliangDemo()" />
+    </div>
 
-  <div id="mars3dContainer" class="mars3d-container"></div>
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
 
+      let map
 
-  <div id="viewSL" class="infoview">
-    3D Tiles 示例：
-    <input type="button" class="btn btn-primary" value="倾斜摄影(某县城)" onclick="showQxShequDemo()" />
-    <input type="button" class="btn btn-primary" value="城市白膜(成都市区)" onclick="showJzwHefeiDemo()" />
-    <input type="button" class="btn btn-primary" value="人工建模(石化工厂)" onclick="showMaxShihuaDemo()" />
-    <input type="button" class="btn btn-primary" value="BIM(桥梁)" onclick="showBimQiaoliangDemo()" />
-  </div>
-
-
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
-
-    let map
-
-    function initMap(options) {
-      //合并属性参数，可覆盖config.json中的对应配置
-      let mapOptions = mars3d.util.merge(options, {
-        scene: {
-          center: {
-            y: 28.440864,
-            x: 119.486477,
-            z: 588.23,
-            heading: 268.6,
-            pitch: -37.8,
-            roll: 359.8
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        let mapOptions = mars3d.util.merge(options, {
+          scene: {
+            center: {
+              y: 28.440864,
+              x: 119.486477,
+              z: 588.23,
+              heading: 268.6,
+              pitch: -37.8,
+              roll: 359.8,
+            },
+            fxaa: true,
           },
-          fxaa: true
-        },
-        layers: []
-      })
+          layers: [],
+        })
 
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
 
-      //固定光照，避免3dtiles模型随时间存在亮度不一致。
-      map.scene.light = new Cesium.DirectionalLight({
-        direction: new Cesium.Cartesian3(0.35492591601301104, -0.8909182691839401, -0.2833588392420772)
-      })
+        //固定光照，避免3dtiles模型随时间存在亮度不一致。
+        map.scene.light = new Cesium.DirectionalLight({
+          direction: new Cesium.Cartesian3(0.35492591601301104, -0.8909182691839401, -0.2833588392420772),
+        })
 
-      showQxShequDemo()
-    }
-
-    let tiles3dLayer
-
-    function removeLayer() {
-      if (tiles3dLayer) {
-        map.basemap = 2020 //切换到默认卫星底图
-
-        map.removeLayer(tiles3dLayer, true)
-        tiles3dLayer = null
+        showQxShequDemo()
       }
-    }
 
-    /**
+      let tiles3dLayer
+
+      function removeLayer() {
+        if (tiles3dLayer) {
+          map.basemap = 2020 //切换到默认卫星底图
+
+          map.removeLayer(tiles3dLayer, true)
+          tiles3dLayer = null
+        }
+      }
+
+      /**
         maximumMemoryUsage 参数详细解释：这个参数默认是512，也即是当几何体和纹理资源大于512MB的时候，Cesium就会淘汰掉当前帧中没有visited的所有块，这个值其实很小，也是cesium为了避免资源占用过高的一个保障，不过上述我们也估算过最差情况下，没有做纹理crn压缩的情况下，这个值很容易被超过，导致很多人误以为cesium的淘汰没有效果。
 
         这个值如果设置的过小，导致cesium几乎每帧都在尝试淘汰数据，增加了遍历的时间，也同时增加了崩溃的风险。
@@ -93,150 +98,149 @@
         这个值应该处于最差视角下资源占用 和 显存最大量之间。结论：这个参数要根据当前显卡显存来配置，如果我们场景只显示这一个倾斜数据，这个可以设置到显存的50 % 左右，比如我的显存是6G，这个可以设置到3000左右。那么既保证不超过显存限制，又可以最大利用显存缓存，配合crn压缩之后，这个几乎可以保证你第二次查看倾斜同一位置的时候，看不到加载过程，非常棒。
      */
 
-    //示例：倾斜摄影 县城社区
-    function showQxShequDemo() {
-      removeLayer()
+      //示例：倾斜摄影 县城社区
+      function showQxShequDemo() {
+        removeLayer()
 
-      tiles3dLayer = new mars3d.layer.TilesetLayer({
-        name: '县城社区',
-        url: 'http://data.marsgis.cn/3dtiles/qx-shequ/tileset.json',
-        maximumScreenSpaceError: 1,
-        maximumMemoryUsage: 1024,
-        dynamicScreenSpaceError: true,
-        cullWithChildrenBounds: false,
-        skipLevelOfDetail: true,
-        preferLeaves: true,
+        tiles3dLayer = new mars3d.layer.TilesetLayer({
+          name: '县城社区',
+          url: 'http://data.marsgis.cn/3dtiles/qx-shequ/tileset.json',
+          maximumScreenSpaceError: 1,
+          maximumMemoryUsage: 1024,
+          dynamicScreenSpaceError: true,
+          cullWithChildrenBounds: false,
+          skipLevelOfDetail: true,
+          preferLeaves: true,
 
-        offset: { z: 3 },
-        center: {
-          y: 28.440864,
-          x: 119.486477,
-          z: 588.23,
-          heading: 268.6,
-          pitch: -37.8,
-          roll: 359.8
-        },
-        flyTo: true
-      })
-      map.addLayer(tiles3dLayer)
+          offset: { z: 3 },
+          center: {
+            y: 28.440864,
+            x: 119.486477,
+            z: 588.23,
+            heading: 268.6,
+            pitch: -37.8,
+            roll: 359.8,
+          },
+          flyTo: true,
+        })
+        map.addLayer(tiles3dLayer)
 
-      //加载的事件 只执行一次
-      tiles3dLayer.on(mars3d.EventType.initialTilesLoaded, function(event) {
-        console.log('触发initialTilesLoaded事件', event)
-      })
+        //加载的事件 只执行一次
+        tiles3dLayer.on(mars3d.EventType.initialTilesLoaded, function (event) {
+          console.log('触发initialTilesLoaded事件', event)
+        })
 
-      //会执行多次，重新加载一次完成后都会回调
-      tiles3dLayer.on(mars3d.EventType.allTilesLoaded, function(event) {
-        console.log('触发allTilesLoaded事件', event)
-      })
-    }
+        //会执行多次，重新加载一次完成后都会回调
+        tiles3dLayer.on(mars3d.EventType.allTilesLoaded, function (event) {
+          console.log('触发allTilesLoaded事件', event)
+        })
+      }
 
-    //示例：城市白膜建筑物 合肥市区
-    function showJzwHefeiDemo() {
-      removeLayer()
+      //示例：城市白膜建筑物 合肥市区
+      function showJzwHefeiDemo() {
+        removeLayer()
 
-      map.basemap = 2017 //切换到蓝色底图
+        map.basemap = 2017 //切换到蓝色底图
 
-      tiles3dLayer = new mars3d.layer.TilesetLayer({
-        name: '成都市建筑物',
-        url: 'http://data.marsgis.cn/3dtiles/jzw-chengdu-gcj/tileset.json',
-        marsJzwStyle: true, //打开建筑物特效（内置Shader代码）
-        showClickFeature: true,
-        popup: [
-          { field: 'objectid', name: '编号' },
-          { field: 'height', name: '楼高', unit: '米' },
-          { field: 'xzqh_name', name: '辖区' }
-        ],
-        center: { lat: 30.627689, lng: 104.068076, alt: 2040, heading: 4, pitch: -29 },
-        flyTo: true
-      })
-      map.addLayer(tiles3dLayer)
+        tiles3dLayer = new mars3d.layer.TilesetLayer({
+          name: '成都市建筑物',
+          url: 'http://data.marsgis.cn/3dtiles/jzw-chengdu-gcj/tileset.json',
+          marsJzwStyle: true, //打开建筑物特效（内置Shader代码）
+          showClickFeature: true,
+          popup: [
+            { field: 'objectid', name: '编号' },
+            { field: 'height', name: '楼高', unit: '米' },
+            { field: 'xzqh_name', name: '辖区' },
+          ],
+          center: { lat: 30.627689, lng: 104.068076, alt: 2040, heading: 4, pitch: -29 },
+          flyTo: true,
+        })
+        map.addLayer(tiles3dLayer)
 
-      //单击事件
-      tiles3dLayer.on(mars3d.EventType.click, function(event) {
-        console.log('单击了3dtiles图层', event)
-      })
-    }
+        //单击事件
+        tiles3dLayer.on(mars3d.EventType.click, function (event) {
+          console.log('单击了3dtiles图层', event)
+        })
+      }
 
-    //示例：人工建模 石化工厂
-    function showMaxShihuaDemo() {
-      removeLayer()
+      //示例：人工建模 石化工厂
+      function showMaxShihuaDemo() {
+        removeLayer()
 
-      tiles3dLayer = new mars3d.layer.TilesetLayer({
-        name: '石化工厂',
-        url: 'http://data.marsgis.cn/3dtiles/max-shihua/tileset.json',
-        maximumScreenSpaceError: 1,
-        maximumMemoryUsage: 1024,
-        offset: {
-          x: 117.077158,
-          y: 31.659116,
-          z: 93,
-          transform: true
-        },
-        showClickFeature: true,
-        popup: 'all',
-        center: {
-          y: 31.654436,
-          x: 117.083883,
-          z: 758.53,
-          heading: 316.4,
-          pitch: -50.1,
-          roll: 359.8
-        },
-        flyTo: true
-      })
-      map.addLayer(tiles3dLayer)
+        tiles3dLayer = new mars3d.layer.TilesetLayer({
+          name: '石化工厂',
+          url: 'http://data.marsgis.cn/3dtiles/max-shihua/tileset.json',
+          maximumScreenSpaceError: 1,
+          maximumMemoryUsage: 1024,
+          offset: {
+            x: 117.077158,
+            y: 31.659116,
+            z: 93,
+            transform: true,
+          },
+          showClickFeature: true,
+          popup: 'all',
+          center: {
+            y: 31.654436,
+            x: 117.083883,
+            z: 758.53,
+            heading: 316.4,
+            pitch: -50.1,
+            roll: 359.8,
+          },
+          flyTo: true,
+        })
+        map.addLayer(tiles3dLayer)
 
-      //单击事件
-      tiles3dLayer.on(mars3d.EventType.click, function(event) {
-        console.log('单击了3dtiles图层', event)
-      })
-    }
+        //单击事件
+        tiles3dLayer.on(mars3d.EventType.click, function (event) {
+          console.log('单击了3dtiles图层', event)
+        })
+      }
 
-    //示例：BIM 桥梁
-    function showBimQiaoliangDemo() {
-      removeLayer()
+      //示例：BIM 桥梁
+      function showBimQiaoliangDemo() {
+        removeLayer()
 
-      tiles3dLayer = new mars3d.layer.TilesetLayer({
-        name: '桥梁',
-        url: 'http://data.marsgis.cn/3dtiles/bim-qiaoliang/tileset.json',
+        tiles3dLayer = new mars3d.layer.TilesetLayer({
+          name: '桥梁',
+          url: 'http://data.marsgis.cn/3dtiles/bim-qiaoliang/tileset.json',
 
-        //以下参数可以参考用于3dtiles总数据大，清晰度过高情况下进行性能优化。这不是一个通用的解决方案，但可以以此为参考。
-        maximumScreenSpaceError: 16, // 【重要】数值加大，能让最终成像变模糊
-        maximumMemoryUsage: 512, // 【重要】内存建议显存大小的50%左右，内存分配变小有利于倾斜摄影数据回收，提升性能体验
-        skipLevelOfDetail: true, //是Cesium在1.5x 引入的一个优化参数，这个参数在金字塔数据加载中，可以跳过一些级别，这样整体的效率会高一些，数据占用也会小一些。但是带来的异常是：1） 加载过程中闪烁，看起来像是透过去了，数据载入完成后正常。2，有些异常的面片，这个还是因为两级LOD之间数据差异较大，导致的。当这个参数设置false，两级之间的变化更平滑，不会跳跃穿透，但是清晰的数据需要更长，而且还有个致命问题，一旦某一个tile数据无法请求到或者失败，导致一直不清晰。所以我们建议：对于网络条件好，并且数据总量较小的情况下，可以设置false，提升数据显示质量。
-        loadSiblings: true, // 如果为true则不会在已加载完模型后，自动从中心开始超清化模型
-        cullRequestsWhileMoving: true,
-        cullRequestsWhileMovingMultiplier: 10, //【重要】 值越小能够更快的剔除
-        preferLeaves: true, //【重要】这个参数默认是false，同等条件下，叶子节点会优先加载。但是Cesium的tile加载优先级有很多考虑条件，这个只是其中之一，如果skipLevelOfDetail=false，这个参数几乎无意义。所以要配合skipLevelOfDetail=true来使用，此时设置preferLeaves=true。这样我们就能最快的看见符合当前视觉精度的块，对于提升大数据以及网络环境不好的前提下有一点点改善意义。                 progressiveResolutionHeightFraction: 0.5,  //【重要】 数值偏于0能够让初始加载变得模糊
-        dynamicScreenSpaceError: true, // true时会在真正的全屏加载完之后才清晰化模型
-        preloadWhenHidden: true, //tileset.show是false时，也去预加载数据
-        //以上为优化的参数
+          //以下参数可以参考用于3dtiles总数据大，清晰度过高情况下进行性能优化。这不是一个通用的解决方案，但可以以此为参考。
+          maximumScreenSpaceError: 16, // 【重要】数值加大，能让最终成像变模糊
+          maximumMemoryUsage: 512, // 【重要】内存建议显存大小的50%左右，内存分配变小有利于倾斜摄影数据回收，提升性能体验
+          skipLevelOfDetail: true, //是Cesium在1.5x 引入的一个优化参数，这个参数在金字塔数据加载中，可以跳过一些级别，这样整体的效率会高一些，数据占用也会小一些。但是带来的异常是：1） 加载过程中闪烁，看起来像是透过去了，数据载入完成后正常。2，有些异常的面片，这个还是因为两级LOD之间数据差异较大，导致的。当这个参数设置false，两级之间的变化更平滑，不会跳跃穿透，但是清晰的数据需要更长，而且还有个致命问题，一旦某一个tile数据无法请求到或者失败，导致一直不清晰。所以我们建议：对于网络条件好，并且数据总量较小的情况下，可以设置false，提升数据显示质量。
+          loadSiblings: true, // 如果为true则不会在已加载完模型后，自动从中心开始超清化模型
+          cullRequestsWhileMoving: true,
+          cullRequestsWhileMovingMultiplier: 10, //【重要】 值越小能够更快的剔除
+          preferLeaves: true, //【重要】这个参数默认是false，同等条件下，叶子节点会优先加载。但是Cesium的tile加载优先级有很多考虑条件，这个只是其中之一，如果skipLevelOfDetail=false，这个参数几乎无意义。所以要配合skipLevelOfDetail=true来使用，此时设置preferLeaves=true。这样我们就能最快的看见符合当前视觉精度的块，对于提升大数据以及网络环境不好的前提下有一点点改善意义。                 progressiveResolutionHeightFraction: 0.5,  //【重要】 数值偏于0能够让初始加载变得模糊
+          dynamicScreenSpaceError: true, // true时会在真正的全屏加载完之后才清晰化模型
+          preloadWhenHidden: true, //tileset.show是false时，也去预加载数据
+          //以上为优化的参数
 
-        offset: { x: 117.096906, y: 31.851564, z: 45 },
-        rotation: { z: 342.5 },
-        showClickFeature: true,
-        pickFeatureStyle: {
-          color: '#00FF00'
-        },
-        // popup: 'all',
-        center: { y: 31.8503, x: 117.101008, z: 307.73, heading: 291, pitch: -30, roll: 0 },
-        flyTo: true
-      })
-      map.addLayer(tiles3dLayer)
+          offset: { x: 117.096906, y: 31.851564, z: 45 },
+          rotation: { z: 342.5 },
+          showClickFeature: true,
+          pickFeatureStyle: {
+            color: '#00FF00',
+          },
+          // popup: 'all',
+          center: { y: 31.8503, x: 117.101008, z: 307.73, heading: 291, pitch: -30, roll: 0 },
+          flyTo: true,
+        })
+        map.addLayer(tiles3dLayer)
 
-      //可以绑定Popup弹窗，回调方法中任意处理
-      tiles3dLayer.bindPopup(function(event) {
-        var attr = event.graphic.attr
-        return mars3d.util.getPopup('all', attr, '桥梁')
-      })
+        //可以绑定Popup弹窗，回调方法中任意处理
+        tiles3dLayer.bindPopup(function (event) {
+          var attr = event.graphic.attr
+          return mars3d.util.getPopup('all', attr, '桥梁')
+        })
 
-      //单击事件
-      tiles3dLayer.on(mars3d.EventType.click, function(event) {
-        console.log('单击了3dtiles图层', event)
-      })
-    }
-  </script>
-</body>
-
+        //单击事件
+        tiles3dLayer.on(mars3d.EventType.click, function (event) {
+          console.log('单击了3dtiles图层', event)
+        })
+      }
+    </script>
+  </body>
 </html>

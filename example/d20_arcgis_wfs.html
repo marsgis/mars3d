@@ -13,6 +13,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>arcgis featureserver 矢量服务加载 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -49,8 +53,8 @@
             z: 1038.28,
             heading: 13.2,
             pitch: -30.4,
-            roll: 0.1
-          }
+            roll: 0.1,
+          },
         },
         //方式1：在创建地球前的参数中配置
         layers: [
@@ -72,22 +76,22 @@
                   border: true,
                   border_color: '#000000',
                   pixelOffset: [0, -50],
-                  heightReference: 'NONE'
-                }
-              }
+                  heightReference: 'NONE',
+                },
+              },
             },
             //点的聚合配置
             clustering: {
               enabled: true,
               pixelRange: 20,
               color: '#0000ff',
-              pixelSize: 48
+              pixelSize: 48,
             },
             popup: '名称：{NAME}<br />地址：{address}',
-            show: true
-          }
+            show: true,
+          },
         ],
-        terrain: false
+        terrain: false,
       })
 
       //创建三维地球场景
@@ -108,7 +112,7 @@
         layers: '37',
         popup: '名称：{NAME}<br />层数：{floor}',
         maximumLevel: changeLevel - 1,
-        maximumTerrainLevel: changeLevel - 1
+        maximumTerrainLevel: changeLevel - 1,
       })
       map.addLayer(tileLayer)
 
@@ -122,23 +126,23 @@
           styleOptions: {
             color: '#FED976',
             outline: false,
-            opacity: 1
-          }
+            opacity: 1,
+          },
         },
         buildings: {
-          cloumn: 'floor'
+          cloumn: 'floor',
         },
         debuggerTileInfo: false,
-        popup: '名称：{NAME}<br />层数：{floor}'
+        popup: '名称：{NAME}<br />层数：{floor}',
       })
       map.addLayer(wfsLayer)
 
       //绑定事件
-      wfsLayer.on(mars3d.EventType.click, function(event) {
+      wfsLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
       })
 
-      setTimeout(function() {
+      setTimeout(function () {
         //测试更换条件
         wfsLayer.setWhere(' 1=1 ')
       }, 10000)

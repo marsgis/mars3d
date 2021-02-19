@@ -13,6 +13,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>glTF 小模型 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -50,8 +54,8 @@
       var mapOptions = mars3d.util.merge(options, {
         scene: {
           center: { lat: 31.799033, lng: 117.177563, alt: 4324.03, heading: 0, pitch: -45, roll: 0 },
-          fxaa: true
-        }
+          fxaa: true,
+        },
       })
 
       //创建三维地球场景
@@ -59,7 +63,7 @@
 
       //固定光照，避免gltf模型随时间存在亮度不一致。
       var directionalLight = new Cesium.DirectionalLight({
-        direction: new Cesium.Cartesian3(0.35492591601301104, -0.8909182691839401, -0.2833588392420772)
+        direction: new Cesium.Cartesian3(0.35492591601301104, -0.8909182691839401, -0.2833588392420772),
       })
       map.scene.light = directionalLight
 
@@ -91,12 +95,12 @@
 
         center: { lat: 31.251138, lng: 121.463588, alt: 1729.97, heading: 110.7, pitch: -25, roll: 0.2 },
         popup: '上海浦东模型',
-        flyTo: true
+        flyTo: true,
       })
       map.addLayer(gltfLayer)
 
       //绑定事件
-      gltfLayer.on(mars3d.EventType.click, function(event) {
+      gltfLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
       })
     }
@@ -113,25 +117,25 @@
           {
             url: 'http://data.marsgis.cn/gltf/mars/fengche.gltf',
             position: [117.170624, 31.840666, 278.66],
-            style: { scale: 200, heading: 270 } //style同标绘的model类型
+            style: { scale: 200, heading: 270 }, //style同标绘的model类型
           },
           {
             url: 'http://data.marsgis.cn/gltf/mars/firedrill/xiaofangyuan-run.gltf',
             position: [117.184442, 31.842172, 33.92],
-            style: { scale: 300 } //style同标绘的model类型
-          }
+            style: { scale: 300 }, //style同标绘的model类型
+          },
         ],
         center: { lat: 31.817737, lng: 117.179117, alt: 1810, heading: 356, pitch: -30, roll: 0 },
         flyTo: true,
-        show: true
+        show: true,
       })
       map.addLayer(gltfLayer)
 
       //绑定事件
-      gltfLayer.on(mars3d.EventType.load, function(event) {
+      gltfLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
       })
-      gltfLayer.on(mars3d.EventType.click, function(event) {
+      gltfLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
       })
     }
@@ -164,7 +168,7 @@
         { lng: 112.225573092, lat: 39.0307660108, alt: 2015 },
         { lng: 112.220069655, lat: 39.0323883292, alt: 2022 },
         { lng: 112.217448043999, lat: 39.0310627231, alt: 2021 },
-        { lng: 112.230322327, lat: 39.0281575923999, alt: 1965 }
+        { lng: 112.230322327, lat: 39.0281575923999, alt: 1965 },
       ]
 
       //创建gltf模型
@@ -178,12 +182,12 @@
 
         center: { lat: 39.066518, lng: 112.245269, alt: 2913, heading: 226, pitch: -21, roll: 0 },
         flyTo: true,
-        show: true
+        show: true,
       })
       map.addLayer(gltfLayer)
 
       //绑定事件
-      gltfLayer.on(mars3d.EventType.click, function(event) {
+      gltfLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
       })
     }
@@ -217,7 +221,7 @@
         arrData.push({
           url: 'http://data.marsgis.cn/gltf/mars/taiyang/taiyang.gltf',
           style: { scale: 1, heading: heading, minimumPixelSize: 30, clampToGround: true }, //style同标绘的model类型
-          position: point
+          position: point,
         })
       }
 
@@ -227,12 +231,12 @@
         data: arrData,
         center: { lat: 42.786315, lng: 93.105225, alt: 2095, heading: 57, pitch: -44 },
         flyTo: true,
-        show: true
+        show: true,
       })
       map.addLayer(gltfLayer)
 
       //绑定事件
-      gltfLayer.on(mars3d.EventType.click, function(event) {
+      gltfLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
       })
     }

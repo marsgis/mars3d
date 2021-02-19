@@ -14,6 +14,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>相控阵雷达范围 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -95,32 +99,32 @@
       <tr>
         <td class="nametd">方向（heading）</td>
         <td>
-          <input id="model_heading" type="range" min="0" max="360" step="1.0" value="90" title="方向">
+          <input id="model_heading" type="range" min="0" max="360" step="0.01" value="90" title="方向">
         </td>
       </tr>
       <tr>
         <td class="nametd">仰角（pitch）</td>
         <td>
-          <input id="model_pitch" type="range" min="0" max="360" step="1.0" value="0" title="倾角pitch">
+          <input id="model_pitch" type="range" min="0" max="360" step="0.01" value="0" title="倾角pitch">
         </td>
       </tr>
       <tr>
         <td class="nametd">左右（roll）</td>
         <td>
-          <input id="model_roll" type="range" min="0" max="360" step="1.0" value="0" title="滚动角roll">
+          <input id="model_roll" type="range" min="0" max="360" step="0.01" value="0" title="滚动角roll">
         </td>
       </tr>
 
       <tr>
         <td class="nametd">上下夹角(X轴)</td>
         <td>
-          <input id="model_angle1" type="range" min="0" max="89" step="1.0" value="50">
+          <input id="model_angle1" type="range" min="0" max="89" step="0.01" value="50">
         </td>
       </tr>
       <tr>
         <td class="nametd">左右夹角(Y轴)</td>
         <td>
-          <input id="model_angle2" type="range" min="0" max="89" step="1.0" value="50">
+          <input id="model_angle2" type="range" min="0" max="89" step="0.01" value="50">
         </td>
       </tr>
       <tr>
@@ -165,15 +169,15 @@
             z: 306583,
             heading: 313,
             pitch: -58,
-            roll: 359
-          }
+            roll: 359,
+          },
         },
         cameraController: {
-          constrainedAxis: false
+          constrainedAxis: false,
         },
         control: {
-          sceneModePicker: false
-        }
+          sceneModePicker: false,
+        },
       })
 
       //创建三维地球场景
@@ -186,7 +190,7 @@
       //图层管理的相关处理，代码在\js\graphicManager.js
       initLayerManager(graphicLayer)
 
-      $('#btnStartDraw').click(function() {
+      $('#btnStartDraw').click(function () {
         //参数
         var heading = Number($('#model_heading').val())
         var pitch = Number($('#model_pitch').val())
@@ -215,8 +219,8 @@
             scanPlaneColor: new Cesium.Color(0.0, 1.0, 1.0, 1.0), //扫描面颜色
             scanPlaneMode: 'vertical', // 扫描面模式 垂直vertical/水平horizontal
             scanPlaneRate: 3, //扫描速率,
-            showThroughEllipsoid: false //此参数控制深度检测，为false启用深度检测，可以解决雷达一半在地球背面时显示的问题
-          }
+            showThroughEllipsoid: false, //此参数控制深度检测，为false启用深度检测，可以解决雷达一半在地球背面时显示的问题
+          },
         })
       })
 
@@ -252,7 +256,7 @@
           scanPlaneColor: new Cesium.Color(0.0, 1.0, 1.0, 1.0), //扫描面颜色
           scanPlaneMode: 'vertical', // 扫描面模式 垂直vertical/水平horizontal
           scanPlaneRate: 3, //扫描速率,
-          showThroughEllipsoid: false //此参数控制深度检测，为false启用深度检测，可以解决雷达一半在地球背面时显示的问题
+          showThroughEllipsoid: false, //此参数控制深度检测，为false启用深度检测，可以解决雷达一半在地球背面时显示的问题
 
           // slice: 32, // 切分程度 ，默认值 32
           // showSectorLines: true, // 是否显示扇面的线 ，默认值 true
@@ -265,43 +269,43 @@
           // showIntersection: true, //是否显示与地球相交的线 ，默认值true
           // intersectionColor: Cesium.Color.WHITE, //与地球相交的线的颜色 ，默认值Color.WHITE
           // intersectionWidth: 5.0 //与地球相交的线的宽度（像素） ，默认值5.0
-        }
+        },
       })
       graphicLayer.addGraphic(rectangularSensor)
 
       //===========绑定一些事件更新属性================
       //滑动条
       $('#model_heading').range({
-        onChange: function(value, bfb) {
+        onChange: function (value, bfb) {
           rectangularSensor.heading = value
-        }
+        },
       })
       $('#model_pitch').range({
-        onChange: function(value, bfb) {
+        onChange: function (value, bfb) {
           rectangularSensor.pitch = value
-        }
+        },
       })
       $('#model_roll').range({
-        onChange: function(value, bfb) {
+        onChange: function (value, bfb) {
           rectangularSensor.roll = value
-        }
+        },
       })
 
-      $('#model_radius').change(function() {
+      $('#model_radius').change(function () {
         rectangularSensor.radius = Number($(this).val())
       })
 
       $('#model_angle1').range({
-        onChange: function(value, bfb) {
+        onChange: function (value, bfb) {
           rectangularSensor.setStyle({ xHalfAngle: Cesium.Math.toRadians(value) }) //传感器水平半角
-        }
+        },
       })
       $('#model_angle2').range({
-        onChange: function(value, bfb) {
+        onChange: function (value, bfb) {
           rectangularSensor.setStyle({ yHalfAngle: Cesium.Math.toRadians(value) }) //传感器垂直半角
-        }
+        },
       })
-      $('#chkShowScanPlane').change(function() {
+      $('#chkShowScanPlane').change(function () {
         var showScanPlane = $('#chkShowScanPlane').is(':checked')
         rectangularSensor.setStyle({ showScanPlane: showScanPlane }) //是否显示扫描面
       })

@@ -42,7 +42,7 @@
             "geocoder": true,
             "geocoderConfig": { "key":[ "ae29a37307840c7ae4a785ac905927e0" ], "citycode": "" },
 
-            "contextmenu":true,
+            "defaultContextMenu":true,
             "mouseDownView": true,
             "location": {
                 "fps":true,

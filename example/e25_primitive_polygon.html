@@ -12,6 +12,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>Polygon 面 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -80,8 +84,8 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.util.merge(options, {
         scene: {
-          center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 }
-        }
+          center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 },
+        },
       })
 
       //创建三维地球场景
@@ -94,7 +98,7 @@
       //图层管理的相关处理，代码在\js\graphicManager.js
       initLayerManager(graphicLayer)
 
-      $('#btnAddData').click(function() {
+      $('#btnAddData').click(function () {
         graphicLayer.clear()
 
         haoutil.loading.show()
@@ -114,10 +118,10 @@
             style: {
               height: haoutil.math.random(30, 4000),
               material: Cesium.Material.fromType('Color', {
-                color: Cesium.Color.fromRandom().withAlpha(0.7)
-              })
+                color: Cesium.Color.fromRandom().withAlpha(0.7),
+              }),
             },
-            tooltip: '第' + j + '个'
+            tooltip: '第' + j + '个',
           })
           graphicLayer.addGraphic(primitive)
         }
@@ -163,11 +167,11 @@
           [117.227836, 31.800388, 32.98],
           [117.229831, 31.792927, 37.91],
           [117.222571, 31.791298, 37.04],
-          [117.216327, 31.79375, 37.49]
+          [117.216327, 31.79375, 37.49],
         ],
         style: {
           material: Cesium.Material.fromType('Color', {
-            color: Cesium.Color.CYAN.withAlpha(0.4)
+            color: Cesium.Color.CYAN.withAlpha(0.4),
           }),
           label: {
             text: '我是火星科技',
@@ -175,9 +179,9 @@
             color: '#ffffff',
             distanceDisplayCondition: true,
             distanceDisplayCondition_far: 500000,
-            distanceDisplayCondition_near: 0
-          }
-        }
+            distanceDisplayCondition_near: 0,
+          },
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -194,18 +198,18 @@
           [117.195377, 31.82418, 43.36],
           [117.204541, 31.818933, 37.06],
           [117.19775, 31.809539, 36.59],
-          [117.183832, 31.814237, 38.76]
+          [117.183832, 31.814237, 38.76],
         ],
         style: {
           material: new Cesium.Material({
             fabric: {
               type: 'Image',
               uniforms: {
-                image: 'img/textures/excavate_bottom_min.jpg'
-              }
-            }
-          })
-        }
+                image: 'img/textures/excavate_bottom_min.jpg',
+              },
+            },
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -224,15 +228,15 @@
           [117.22681, 31.810739, 28.55],
           [117.212868, 31.811302, 34.4],
           [117.212538, 31.81424, 31.87],
-          [117.214681, 31.81402, 32.97]
+          [117.214681, 31.81402, 32.97],
         ],
         style: {
           material: Cesium.Material.fromType(mars3d.material.PolyBlobType, {
             lightColor: new Cesium.Color(1.0, 1.0, 1.0, 0.5),
             darkColor: new Cesium.Color(0.0, 0.0, 1.0, 0.5),
-            frequency: 30.0 //次数
-          })
-        }
+            frequency: 30.0, //次数
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -246,15 +250,15 @@
           [117.330034, 31.835286, 11.07],
           [117.330576, 31.823452, 11.01],
           [117.311457, 31.821023, 17.11],
-          [117.308954, 31.828975, 16.29]
+          [117.308954, 31.828975, 16.29],
         ],
         style: {
           material: Cesium.Material.fromType(mars3d.material.PolyGrassType, {
             grassColor: new Cesium.Color(0.25, 0.4, 0.1, 1.0),
             dirtColor: new Cesium.Color(0.1, 0.1, 0.1, 1.0),
-            patchiness: 1.5 //斑驳
-          })
-        }
+            patchiness: 1.5, //斑驳
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -268,7 +272,7 @@
           [117.290605, 31.871517, 19.47],
           [117.302056, 31.858145, 16.27],
           [117.299439, 31.847545, 14.77],
-          [117.267705, 31.8491, 22.11]
+          [117.267705, 31.8491, 22.11],
         ],
         style: {
           material: Cesium.Material.fromType(mars3d.material.PolyWoodType, {
@@ -276,9 +280,9 @@
             darkWoodColor: new Cesium.Color(0.4, 0.2, 0.07, 1.0),
             ringFrequency: 10.0, //环 频率
             noiseScale: new Cesium.Cartesian2(0.7, 0.5),
-            grainFrequency: 27.0 //波纹 频率
-          })
-        }
+            grainFrequency: 27.0, //波纹 频率
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -300,15 +304,15 @@
           [117.151994, 31.839036],
           [117.150691, 31.8416],
           [117.151215, 31.844734],
-          [117.154815, 31.853495]
+          [117.154815, 31.853495],
         ],
         style: {
           material: Cesium.Material.fromType(mars3d.material.PolyBlobType, {
             lightColor: new Cesium.Color(1.0, 1.0, 1.0, 0.5),
             darkColor: new Cesium.Color(0.0, 0.0, 1.0, 0.5),
-            frequency: 30.0 //次数
-          })
-        }
+            frequency: 30.0, //次数
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -322,15 +326,15 @@
           [117.234234, 31.858263],
           [117.234261, 31.833317],
           [117.207414, 31.834541],
-          [117.208302, 31.85757]
+          [117.208302, 31.85757],
         ],
         style: {
           material: Cesium.Material.fromType(mars3d.material.PolyAsphaltType, {
             asphaltColor: new Cesium.Color(0.15, 0.15, 0.15, 1.0),
             bumpSize: 0.005, //凹凸大小
-            roughness: 0.2 //粗糙
-          })
-        }
+            roughness: 0.2, //粗糙
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -344,16 +348,16 @@
           [117.282362, 31.827581, 34.28],
           [117.275399, 31.813784, 30.59],
           [117.256533, 31.817975, 31.95],
-          [117.254811, 31.830772, 35.99]
+          [117.254811, 31.830772, 35.99],
         ],
         style: {
           width: 5,
           material: Cesium.Material.fromType(mars3d.material.PolyFacetType, {
             lightColor: new Cesium.Color(0.25, 0.25, 0.25, 0.75),
             darkColor: new Cesium.Color(0.75, 0.75, 0.75, 0.75),
-            frequency: 50.0 //次数
-          })
-        }
+            frequency: 50.0, //次数
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样

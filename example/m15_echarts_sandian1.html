@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>散点图 全省经济指标| Echarts扩展支持 | 三维地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d,mars3d-echarts"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
+
+      var map
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.util.merge(options, {
+          scene: {
+            center: { lat: 28.348014, lng: 118.789746, alt: 840941, heading: 350, pitch: -66 },
+          },
+        })
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+
+        //创建Echarts图层
+        var data = [
+          {
+            name: '六安市',
+            value: 112,
+            location: [116.3123, 31.8329],
+          },
+          {
+            name: '安庆市',
+            value: 424,
+            location: [116.7517, 30.5255],
+          },
+          {
+            name: '滁州市',
+            value: 76,
+            location: [118.1909, 32.536],
+          },
+          {
+            name: '宣城市',
+            value: 45,
+            location: [118.8062, 30.6244],
+          },
+          {
+            name: '阜阳市',
+            value: 234,
+            location: [115.7629, 32.9919],
+          },
+          {
+            name: '宿州市',
+            value: 110,
+            location: [117.5208, 33.6841],
+          },
+          {
+            name: '黄山市',
+            value: 98,
+            location: [118.0481, 29.9542],
+          },
+          {
+            name: '巢湖市',
+            value: 71,
+            location: [117.7734, 31.4978],
+          },
+          {
+            name: '亳州市',
+            value: 165,
+            location: [116.1914, 33.4698],
+          },
+          {
+            name: '池州市',
+            value: 12,
+            location: [117.3889, 30.2014],
+          },
+          {
+            name: '合肥市',
+            value: 232,
+            location: [117.29, 32.0581],
+          },
+          {
+            name: '蚌埠市',
+            value: 123,
+            location: [117.4109, 33.1073],
+          },
+          {
+            name: '芜湖市',
+            value: 73,
+            location: [118.3557, 31.0858],
+          },
+          {
+            name: '淮北市',
+            value: 16,
+            location: [116.6968, 33.6896],
+          },
+          {
+            name: '淮南市',
+            value: 75,
+            location: [116.7847, 32.7722],
+          },
+          {
+            name: '马鞍山市',
+            value: 45,
+            location: [118.6304, 31.5363],
+          },
+          {
+            name: '铜陵市',
+            value: 93,
+            location: [117.9382, 30.9375],
+          },
+        ]
+
+        createEchartsLayer(data)
+      }
+
+      function createEchartsLayer(data) {
+        var options = getEchartsOption(data)
+        options.clampToGround = true //计算贴地高度
+
+        var echartsLayer = new mars3d.layer.EchartsLayer(options)
+        map.addLayer(echartsLayer)
+      }
+
+      function getEchartsOption(data) {
+        var brcolor = '#ffff00'
+
+        //纬度做偏移处理,避免重叠
+        if (data.length > 1) {
+          data.sort(function (a, b) {
+            return b.location[1] - a.location[1]
+          })
+          for (let i = 1; i < data.length; i++) {
+            let thisItem = data[i].location
+
+            let ispy = false
+            for (let j = 0; j < i; j++) {
+              let lastItem = data[j].location
+              let offX = Math.abs(lastItem[0] - thisItem[0])
+              let offY = Math.abs(lastItem[1] - thisItem[1])
+              if (offX < 0.025 && offY < 0.005) {
+                ispy = true
+                break
+              }
+            }
+
+            if (ispy) {
+              thisItem[1] -= 0.006 //偏移纬度
+            }
+
+            //console.log(data[i].name +','+thisItem.join(",")+','+ispy+','+offX+','+offY);
+          }
+        }
+
+        var sum = 0
+        var dataVals = []
+        for (let i = 0; i < data.length; i++) {
+          sum += data[i].value
+
+          dataVals.push({
+            name: data[i].name,
+            value: data[i].location.concat(data[i].value),
+          })
+        }
+
+        var option = {
+          animation: false,
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+
+          GLMap: {},
+          tooltip: {
+            trigger: 'item',
+          },
+          series: [
+            {
+              type: 'effectScatter',
+              coordinateSystem: 'GLMap',
+              data: dataVals,
+              symbolSize: function (val) {
+                if (sum === 0) {
+                  return 8
+                }
+
+                var num = (val[2] / sum) * 150
+                return Math.max(num, 8)
+              },
+              showEffectOn: 'render',
+              rippleEffect: {
+                brushType: 'stroke',
+              },
+              hoverAnimation: true,
+              label: {
+                normal: {
+                  formatter: '{b}',
+                  position: 'right',
+                  show: true,
+                },
+              },
+              tooltip: {
+                formatter: function (params, ticket, callback) {
+                  if (params.value[2] <= 0) {
+                    return params.name
+                  } else {
+                    return params.name + ' ： ' + params.value[2]
+                  }
+                },
+              },
+              itemStyle: {
+                normal: {
+                  color: brcolor,
+                  shadowBlur: 60,
+                  shadowColor: '#cccccc',
+                },
+              },
+              zlevel: 1,
+            },
+          ],
+        }
+        return option
+      }
+    </script>
+  </body>
+</html>

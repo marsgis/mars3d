@@ -3,7 +3,7 @@
 //在图层级处理一些事物
 function initLayerManager(graphicLayer) {
   //在layer上绑定监听事件
-  graphicLayer.on(mars3d.EventType.click, function(event) {
+  graphicLayer.on(mars3d.EventType.click, function (event) {
     console.log('监听layer，单击了矢量对象', event)
   })
   // graphicLayer.on(mars3d.EventType.mouseOver, function(event) {
@@ -15,7 +15,7 @@ function initLayerManager(graphicLayer) {
 
   //可在图层上绑定popup,对所有加到这个图层的矢量数据都生效
   bindLayerPopup(graphicLayer)
-  $('#chkPopup').change(function() {
+  $('#chkPopup').change(function () {
     let val = $(this).is(':checked')
 
     if (val) {
@@ -26,7 +26,7 @@ function initLayerManager(graphicLayer) {
   })
 
   //可在图层上绑定tooltip,对所有加到这个图层的矢量数据都生效
-  $('#chkTooltip').change(function() {
+  $('#chkTooltip').change(function () {
     let val = $(this).is(':checked')
 
     if (val) {
@@ -38,7 +38,7 @@ function initLayerManager(graphicLayer) {
 
   //可在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
   bindLayerContextMenu(graphicLayer)
-  $('#chkContextMenu').change(function() {
+  $('#chkContextMenu').change(function () {
     let val = $(this).is(':checked')
 
     if (val) {
@@ -48,36 +48,36 @@ function initLayerManager(graphicLayer) {
     }
   })
 
-  $('#chkHasEdit').change(function() {
+  $('#chkHasEdit').change(function () {
     let val = $(this).is(':checked')
 
     graphicLayer.hasEdit = val //启用编辑
   })
 
-  $('#chkShow').change(function() {
+  $('#chkShow').change(function () {
     let val = $(this).is(':checked')
 
     graphicLayer.show = val //显示隐藏
   })
 
-  $('#btnClear').click(function() {
+  $('#btnClear').click(function () {
     graphicLayer.clear()
   })
 
-  $('#btnExpFile').click(function() {
+  $('#btnExpFile').click(function () {
     window.layer.msg('该功能在开发完善中……')
     return
 
-    if (graphicLayer.length === 0) {
-      window.layer.msg('当前没有标注任何数据，无需保存！')
-      return
-    }
+    // if (graphicLayer.length === 0) {
+    //   window.layer.msg('当前没有标注任何数据，无需保存！')
+    //   return
+    // }
 
-    let geojson = graphicLayer.toGeoJSON()
-    haoutil.file.downloadFile('我的标注.json', JSON.stringify(geojson))
+    // let geojson = graphicLayer.toGeoJSON()
+    // haoutil.file.downloadFile('我的标注.json', JSON.stringify(geojson))
   })
 
-  $('#btnImpFile').click(function() {
+  $('#btnImpFile').click(function () {
     $('#input_draw_file').click()
   })
   function clearSelectFile() {
@@ -87,7 +87,7 @@ function initLayerManager(graphicLayer) {
       document.getElementById('input_draw_file').value = '' //FF
     }
   }
-  $('#input_draw_file').change(function(e) {
+  $('#input_draw_file').change(function (e) {
     let file = this.files[0]
 
     let fileName = file.name
@@ -101,7 +101,7 @@ function initLayerManager(graphicLayer) {
     if (window.FileReader) {
       let reader = new FileReader()
       reader.readAsText(file, 'UTF-8')
-      reader.onloadend = function(e) {
+      reader.onloadend = function (e) {
         let json = this.result
         graphicLayer.loadGeoJSON(json)
 
@@ -113,7 +113,7 @@ function initLayerManager(graphicLayer) {
 
 function bindLayerPopup(graphicLayer) {
   graphicLayer.bindPopup('我是layer上绑定的Popup', {
-    anchor: [0, -10]
+    anchor: [0, -10],
   })
 }
 
@@ -122,17 +122,17 @@ function bindLayerContextMenu(graphicLayer) {
     {
       text: '删除对象',
       iconCls: 'fa fa-trash-o',
-      callback: function(e) {
+      callback: function (e) {
         let graphic = e.graphic
         if (graphic) {
           graphicLayer.removeGraphic(graphic)
         }
-      }
+      },
     },
     {
       text: '计算长度',
       iconCls: 'fa fa-medium',
-      show: function(e) {
+      show: function (e) {
         let graphic = e.graphic
         return (
           graphic.type === 'polyline' ||
@@ -147,16 +147,16 @@ function bindLayerContextMenu(graphicLayer) {
           graphic.type === 'wallP'
         )
       },
-      callback: function(e) {
+      callback: function (e) {
         let graphic = e.graphic
         let strDis = mars3d.util.formatLength(graphic.distance)
         haoutil.alert('该对象的长度为:' + strDis)
-      }
+      },
     },
     {
       text: '计算周长',
       iconCls: 'fa fa-medium',
-      show: function(e) {
+      show: function (e) {
         let graphic = e.graphic
         return (
           graphic.type === 'circle' ||
@@ -167,16 +167,16 @@ function bindLayerContextMenu(graphicLayer) {
           graphic.type === 'polygonP'
         )
       },
-      callback: function(e) {
+      callback: function (e) {
         let graphic = e.graphic
         let strDis = mars3d.util.formatLength(graphic.distance)
         haoutil.alert('该对象的周长为:' + strDis)
-      }
+      },
     },
     {
       text: '计算面积',
       iconCls: 'fa fa-reorder',
-      show: function(e) {
+      show: function (e) {
         let graphic = e.graphic
         return (
           graphic.type === 'circle' ||
@@ -189,12 +189,12 @@ function bindLayerContextMenu(graphicLayer) {
           graphic.type === 'water'
         )
       },
-      callback: function(e) {
+      callback: function (e) {
         let graphic = e.graphic
         let strArea = mars3d.util.formatArea(graphic.area)
         haoutil.alert('该对象的面积为:' + strArea)
-      }
-    }
+      },
+    },
   ])
 }
 
@@ -217,7 +217,7 @@ function initGraphicManager(graphic) {
   //绑定Popup
   graphic
     .bindPopup('我是graphic上绑定的Popup', {
-      anchor: [0, -10]
+      anchor: [0, -10],
     })
     .openPopup()
 
@@ -226,13 +226,13 @@ function initGraphicManager(graphic) {
     {
       text: '删除对象[graphic绑定的]',
       iconCls: 'fa fa-trash-o',
-      callback: function(e) {
+      callback: function (e) {
         let graphic = e.graphic
         if (graphic) {
           graphic.remove()
         }
-      }
-    }
+      },
+    },
   ])
 
   //测试 颜色闪烁
@@ -241,9 +241,9 @@ function initGraphicManager(graphic) {
       time: 20, //闪烁时长（秒）
       maxAlpha: 0.5,
       color: Cesium.Color.RED,
-      onEnd: function() {
+      onEnd: function () {
         //结束后回调
-      }
+      },
     })
   }
 }

@@ -1,0 +1,331 @@
+<!-- 2017-12-7 14:56:03 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>地面漫游 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,jquery.range,layer,haoutil,turf,mars3d"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+    <style>
+      .mp_table {
+        width: 100%;
+        border: #cde1de 1px solid;
+        font-size: 12px;
+        border-collapse: collapse;
+        border-spacing: 0;
+      }
+
+      .mp_table tr td {
+        padding: 5px 5px;
+        text-align: left;
+        border: #cde1de 1px solid;
+      }
+
+      .mp_table tr td:first-child {
+        border-left: none;
+      }
+
+      .nametd {
+        width: 40%;
+      }
+
+      .mp_head2 {
+        width: 100%;
+        height: 45px;
+        line-height: 45px;
+        text-align: center;
+      }
+
+      .dark .progress {
+        margin: 0;
+        background-color: #0b2931;
+      }
+    </style>
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <!-- 信息 面板 -->
+    <div class="infoview rightbottom" style="min-width: 200px">
+      <table class="mp_table">
+        <tr>
+          <td class="nametd">总长度</td>
+          <td id="td_alllength"></td>
+        </tr>
+        <tr>
+          <td class="nametd">已漫游长度</td>
+          <td id="td_length"></td>
+        </tr>
+        <tr>
+          <td class="nametd">总时长</td>
+          <td id="td_alltimes"></td>
+        </tr>
+        <tr>
+          <td class="nametd">已漫游时间</td>
+          <td id="td_times"></td>
+        </tr>
+
+        <tr>
+          <td class="nametd">经度</td>
+          <td id="td_jd"></td>
+        </tr>
+        <tr>
+          <td class="nametd">经度</td>
+          <td id="td_wd"></td>
+        </tr>
+        <tr>
+          <td class="nametd">漫游高程</td>
+          <td id="td_gd"></td>
+        </tr>
+        <tr>
+          <td class="nametd">地面高程</td>
+          <td id="td_dmhb"></td>
+        </tr>
+        <tr id="tr_ldgd">
+          <td class="nametd">离地距离</td>
+          <td id="td_ldgd"></td>
+        </tr>
+
+        <tr>
+          <td colspan="2" style="width: 100%; text-align: center">
+            <div class="progress">
+              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
+
+      var map
+      var roamLine
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.util.merge(options, {
+          scene: {
+            //此处参数会覆盖config.json中的对应配置
+            center: {
+              y: 40.414276,
+              x: 115.458072,
+              z: 1235,
+              heading: 194.6,
+              pitch: -48.8,
+              roll: 359.9,
+            },
+          },
+          control: {
+            animation: true, //是否创建动画小器件，左下角仪表
+            timeline: true, //是否显示时间线控件
+          },
+        })
+
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+
+        var tilesetLayer = new mars3d.layer.TilesetLayer({
+          name: '厂房',
+          url: 'http://data.marsgis.cn/3dtiles/qx-changfang/tileset.json',
+          maximumScreenSpaceError: 1,
+          maximumMemoryUsage: 1024,
+          offset: {
+            z: 90,
+          },
+          flyTo: true,
+        })
+        map.addLayer(tilesetLayer)
+
+        //创建矢量数据图层
+        var graphicLayer = new mars3d.layer.GraphicLayer()
+        map.addLayer(graphicLayer)
+
+        //该数据可以从 基础项目 飞行漫游功能界面操作后单个路线的 保存JSON
+        var flydata = {
+          name: '贴模型表面漫游',
+          speed: 100,
+          points: [
+            [115.45983, 40.407136, 614],
+            [115.460034, 40.407992, 614],
+            [115.460309, 40.409162, 614],
+            [115.459229, 40.409395, 614],
+            [115.459395, 40.40983, 614],
+            [115.454293, 40.410869, 614],
+          ],
+          model: {
+            show: true,
+            uri: 'http://data.marsgis.cn/gltf/mars/qiche.gltf',
+            scale: 0.1,
+            minimumPixelSize: 20,
+          },
+          camera: {
+            type: 'gs',
+            heading: 0,
+            distance: 200,
+          },
+          clockLoop: false,
+          clampToGround: true,
+          has3dtiles: true, //区别在has3dtiles标识，true时贴模型表面
+        }
+
+        roamLine = new mars3d.graphic.RoamLine(flydata)
+        graphicLayer.addGraphic(roamLine)
+
+        roamLine.bindPopup(
+          function (event) {
+            var params = event?.target?.info
+            if (!params) {
+              return '即将开始漫游'
+            }
+            let roamLine = event.target
+
+            var html =
+              '<div style="width:200px;">' +
+              '总距离：' +
+              haoutil.str.formatLength(roamLine.alllen) +
+              '<br/>' +
+              '总时间：' +
+              haoutil.str.formatTime(roamLine.alltimes / map.clock.multiplier) +
+              '<br/>' +
+              '开始时间：' +
+              Cesium.JulianDate.toDate(roamLine.startTime).format('yyyy-M-d HH:mm:ss') +
+              '<br/>' +
+              '剩余时间：' +
+              haoutil.str.formatTime((roamLine.alltimes - params.time) / map.clock.multiplier) +
+              '<br/>' +
+              '剩余距离：' +
+              haoutil.str.formatLength(roamLine.alllen - params.len) +
+              ' <br/>' +
+              '</div>'
+            return html
+          },
+          {
+            anchor: [0, -20], //左右、上下的偏移像素值。
+            timeRender: true, //实时更新html
+          }
+        )
+
+        //不贴地时，直接开始
+        // startFly()
+
+        //贴地时，异步计算完成后开始
+        roamLine.clampToGround(function () {
+          //异步计算完成贴地后再启动
+          startFly()
+        })
+      }
+
+      function startFly() {
+        //启动漫游
+        roamLine.start()
+
+        //显示popup
+        roamLine.openPopup()
+
+        //显示基本信息，名称、总长、总时间
+        $('#td_alltimes').html(haoutil.str.formatTime(roamLine.alltimes))
+        $('#td_alllength').html(haoutil.str.formatLength(roamLine.alllen))
+
+        //定时更新面板
+        setInterval(function () {
+          showRealTimeInfo(roamLine.info)
+        }, 200)
+
+        addParticleSystem(roamLine)
+      }
+
+      //显示实时坐标和时间
+      function showRealTimeInfo(params) {
+        if (params == null) {
+          return
+        }
+
+        var val = Math.ceil((params.time * 100) / roamLine.alltimes)
+        if (val < 1) {
+          val = 1
+        }
+        if (val > 100) {
+          val = 100
+        }
+
+        $('.progress-bar')
+          .css('width', val + '%')
+          .attr('aria-valuenow', val)
+          .html(val + '%')
+
+        $('#td_jd').html(params.x)
+        $('#td_wd').html(params.y)
+        $('#td_gd').html(haoutil.str.formatLength(params.z))
+
+        $('#td_times').html(haoutil.str.formatTime(params.time))
+        $('#td_length').html(haoutil.str.formatLength(params.len))
+
+        if (params.hbgd) {
+          $('#td_dmhb').html(haoutil.str.formatLength(params.hbgd))
+        } else {
+          $('#td_dmhb').html('未知')
+        }
+
+        if (params.ldgd) {
+          $('#td_ldgd').html(haoutil.str.formatLength(params.ldgd))
+        } else {
+          $('#td_ldgd').html('未知')
+        }
+      }
+
+      //添加尾气粒子效果
+      function addParticleSystem(target) {
+        var particleSystem = new mars3d.graphic.ParticleSystem({
+          modelMatrix: (time) => {
+            return target.matrix
+          },
+          style: {
+            image: './img/particle/smoke.png',
+            startColor: Cesium.Color.GREY.withAlpha(0.7), //粒子出生时的颜色
+            endColor: Cesium.Color.WHITE.withAlpha(0.0), //当粒子死亡时的颜色
+            startScale: 1.0, //粒子出生时的比例，相对于原始大小
+            endScale: 5.0, //粒子在死亡时的比例
+            minimumParticleLife: 1.2, //设置粒子寿命的可能持续时间的最小界限（以秒为单位），粒子的实际寿命将随机生成
+            maximumParticleLife: 1.2, //设置粒子寿命的可能持续时间的最大界限（以秒为单位），粒子的实际寿命将随机生成
+            minimumSpeed: 1.0, //设置以米/秒为单位的最小界限，超过该最小界限，随机选择粒子的实际速度。
+            maximumSpeed: 4.0, //设置以米/秒为单位的最大界限，超过该最大界限，随机选择粒子的实际速度。
+            emissionRate: 20.0, //每秒要发射的粒子数。
+            lifetime: 16.0, //粒子的生命周期为（以秒为单位）。
+          },
+          transX: -4.0,
+          transZ: 1.4,
+          maxHeight: 1000, //超出该高度后不显示粒子效果
+        })
+        map.graphicLayer.addGraphic(particleSystem)
+      }
+    </script>
+  </body>
+</html>

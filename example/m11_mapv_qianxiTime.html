@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>MapV与Cesium融合 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d,mars3d-mapv"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
+
+      var map
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.util.merge(options, {
+          scene: {
+            center: {
+              x: 110.597446,
+              y: 29.808307,
+              z: 7852845.8,
+              heading: 352.7,
+              pitch: -86.3,
+            },
+          },
+        })
+
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+
+        $.ajax({
+          url: 'http://data.marsgis.cn/file/apidemo/qianxi-time.txt',
+          type: 'GET',
+          dataType: 'text',
+          success: function (rs) {
+            //创建mapv图层
+            createMapvLayer(rs)
+          },
+        })
+      }
+
+      function createMapvLayer(rs) {
+        var data = []
+        var timeData = []
+
+        function curive(fromPoint, endPoint, n) {
+          var delLng = (endPoint.lng - fromPoint.lng) / n
+          var delLat = (endPoint.lat - fromPoint.lat) / n
+
+          for (var i = 0; i < n; i++) {
+            var pointNLng = fromPoint.lng + delLng * i
+            var pointNLat = fromPoint.lat + delLat * i
+            timeData.push({
+              geometry: {
+                type: 'Point',
+                coordinates: [pointNLng, pointNLat],
+              },
+              count: 1,
+              time: i,
+            })
+          }
+        }
+
+        var items = rs.split('|')
+        for (var i = 0; i < items.length; i++) {
+          var itemArr = items[i].split(/\n/)
+          for (var k = 0; k < itemArr.length; k++) {
+            if (itemArr[k]) {
+              var item = itemArr[k].split(/\t/)
+              if (item[0] === '起点城市' || item[0] === '迁出城市') {
+                var cityBegin = item[1]
+              }
+              if (item[0] !== '起点城市' || (item[0] !== '迁出城市' && item.length > 1)) {
+                var cityCenter1 = mapv.utilCityCenter.getCenterByCityName(item[0].replace(/市|省/, ''))
+                var cityCenter2 = mapv.utilCityCenter.getCenterByCityName(cityBegin.replace(/市|省/, '').trim())
+                if (cityCenter1) {
+                  if (Math.random() > 0.7) {
+                    curive(cityCenter2, cityCenter1, 50)
+                  }
+                  data.push({
+                    geometry: {
+                      type: 'LineString',
+                      coordinates: [
+                        [cityCenter1.lng, cityCenter1.lat],
+                        [cityCenter2.lng, cityCenter2.lat],
+                      ],
+                    },
+                    count: 100 * Math.random(),
+                  })
+                }
+              }
+            }
+          }
+        }
+
+        var options1 = {
+          strokeStyle: 'rgba(55, 50, 250, 0.3)',
+          globalCompositeOperation: 'lighter',
+          shadowColor: 'rgba(55, 50, 250, 0.5)',
+          gradient: {
+            0: 'rgba(55, 50, 250, 0)',
+            1: 'rgba(55, 50, 250, 1)',
+          },
+          lineWidth: 0.2,
+          draw: 'intensity',
+        }
+        var dataSet1 = new mapv.DataSet(data)
+        //线图层
+        var mapVLayer = new mars3d.layer.MapVLayer(options1, dataSet1)
+        map.addLayer(mapVLayer)
+
+        var options2 = {
+          fillStyle: 'rgba(255, 250, 250, 0.9)',
+          size: 0.5,
+          animation: {
+            type: 'time',
+            stepsRange: {
+              start: 0,
+              end: 50,
+            },
+            trails: 1,
+            duration: 5,
+          },
+          draw: 'simple',
+        }
+        var dataSet2 = new mapv.DataSet(timeData)
+        //创建MapV图层 动画图层
+        var mapVLayer2 = new mars3d.layer.MapVLayer(options2, dataSet2)
+        map.addLayer(mapVLayer2)
+      }
+    </script>
+  </body>
+</html>

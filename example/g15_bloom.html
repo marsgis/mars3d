@@ -12,6 +12,10 @@
   <meta name="format-detection" content="telephone=no">
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>特效 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -92,7 +96,7 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.util.merge(options, {
         scene: {
-          center: { lat: 30.641408, lng: 104.061745, alt: 980, heading: 17, pitch: -30 }
+          center: { lat: 30.641408, lng: 104.061745, alt: 980, heading: 17, pitch: -30 },
         },
         layers: [
           {
@@ -106,10 +110,10 @@
                 color: '#FF4500',
                 width: 15,
                 opacity: 0.9,
-                clampToGround: true
-              }
+                clampToGround: true,
+              },
             },
-            show: true
+            show: true,
           },
           {
             type: 'water',
@@ -124,12 +128,12 @@
                 specularIntensity: 0.8, // 控制镜面反射强度的数字。
                 baseWaterColor: '#00baff', // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
                 blendColor: '#00baff', // 从水中混合到非水域时使用的rgba颜色对象。
-                clampToGround: true
-              }
+                clampToGround: true,
+              },
             },
-            show: true
-          }
-        ]
+            show: true,
+          },
+        ],
       })
 
       //创建三维地球场景
@@ -146,8 +150,8 @@
         popup: [
           { field: 'objectid', name: '编号' },
           { field: 'height', name: '楼高', unit: '米' },
-          { field: 'xzqh_name', name: '辖区' }
-        ]
+          { field: 'xzqh_name', name: '辖区' },
+        ],
       })
       map.addLayer(tiles3dLayer)
 
@@ -155,36 +159,36 @@
       var bloomEffect = new mars3d.effect.BloomEffect()
       map.addEffect(bloomEffect)
 
-      $('#chkShowEffect').change(function() {
+      $('#chkShowEffect').change(function () {
         var val = $(this).is(':checked')
 
-        bloomEffect.show = val
+        bloomEffect.enabled = val
       })
 
       $('#txt_contrast').range({
-        onChange: function(value, bfb) {
+        onChange: function (value, bfb) {
           bloomEffect.contrast = value
-        }
+        },
       })
       $('#txt_brightness').range({
-        onChange: function(value, bfb) {
+        onChange: function (value, bfb) {
           bloomEffect.brightness = value
-        }
+        },
       })
       $('#txt_delta').range({
-        onChange: function(value, bfb) {
+        onChange: function (value, bfb) {
           bloomEffect.delta = value
-        }
+        },
       })
       $('#txt_sigma').range({
-        onChange: function(value, bfb) {
+        onChange: function (value, bfb) {
           bloomEffect.sigma = value
-        }
+        },
       })
       $('#txt_stepSize').range({
-        onChange: function(value, bfb) {
+        onChange: function (value, bfb) {
           bloomEffect.stepSize = value
-        }
+        },
       })
     }
   </script>

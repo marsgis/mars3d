@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>| Echarts扩展支持 | 三维地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d,mars3d-echarts"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <script type="text/javascript" src="../lib/mars3d/plugins/esri/mars3d-esri.js"></script>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
+
+      var map
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.util.merge(options, {
+          scene: {
+            //此处参数会覆盖config.json中的对应配置
+            center: {
+              y: 31.323317,
+              x: 117.36754,
+              z: 72386.61,
+              heading: 357,
+              pitch: -51.4,
+              roll: 360,
+            },
+          },
+        })
+
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+
+        //请求数据
+        var query = mars3d.L.esri.query({
+          url: 'http://data.marsgis.cn/arcgis/rest/services/mars/hefei/MapServer/33',
+        })
+        query.run(function (error, featureCollection, response) {
+          if (error != null && error.code > 0) {
+            haoutil.alert(error.message, '服务访问出错')
+            return
+          }
+          if (featureCollection === undefined || featureCollection == null || featureCollection.features.length === 0) {
+            haoutil.msg('未找到符合查询条件的要素！')
+            return
+          } else {
+            var busLines = []
+            for (let i = 0; i < featureCollection.features.length; i++) {
+              var feature = featureCollection.features[i]
+              if (feature == null || feature.geometry == null || feature.geometry.coordinates == null || feature.geometry.coordinates.length == 0) {
+                continue
+              }
+
+              var hStep = 1 / feature.geometry.coordinates.length
+              //console.log(i + ',' + hStep);
+              busLines.push({
+                coords: feature.geometry.coordinates,
+                lineStyle: {
+                  normal: {
+                    color: echarts.color.modifyHSL('#5A94DF', Math.round(hStep * i)),
+                  },
+                },
+              })
+            }
+            //创建Echarts图层
+            createEchartsLayer(busLines)
+          }
+        })
+      }
+
+      function createEchartsLayer(busLines) {
+        var options = getEchartsOption(busLines)
+        var echartsLayer = new mars3d.layer.EchartsLayer(options)
+        map.addLayer(echartsLayer)
+      }
+
+      function getEchartsOption(busLines) {
+        var option = {
+          animation: false,
+          backgroundColor: 'rgba(17, 19, 42, 0.5)',
+          GLMap: {},
+          series: [
+            {
+              type: 'lines',
+              coordinateSystem: 'GLMap',
+              polyline: true,
+              data: busLines,
+              silent: true,
+              lineStyle: {
+                normal: {
+                  // color: '#c23531',
+                  // color: 'rgb(200, 35, 45)',
+                  opacity: 0.2,
+                  width: 8,
+                },
+              },
+              progressiveThreshold: 500,
+              progressive: 200,
+            },
+            {
+              type: 'lines',
+              coordinateSystem: 'GLMap',
+              polyline: true,
+              data: busLines,
+              lineStyle: {
+                normal: {
+                  width: 0,
+                },
+              },
+              effect: {
+                constantSpeed: 20,
+                show: true,
+                trailLength: 0.1,
+                symbolSize: 5.5,
+              },
+              zlevel: 1,
+            },
+          ],
+        }
+        return option
+      }
+    </script>
+  </body>
+</html>

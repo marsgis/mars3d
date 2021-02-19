@@ -12,6 +12,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>Point 点 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -89,7 +93,7 @@
       //图层管理的相关处理，代码在\js\graphicManager.js
       initLayerManager(graphicLayer)
 
-      $('#btnAddData').click(function() {
+      $('#btnAddData').click(function () {
         graphicLayer.clear()
 
         haoutil.loading.show()
@@ -104,7 +108,7 @@
             minimumRed: 0.75,
             minimumGreen: 0.75,
             minimumBlue: 0.75,
-            alpha: 1.0
+            alpha: 1.0,
           })
 
           var primitive = new mars3d.graphic.PointPrimitive({
@@ -113,9 +117,9 @@
               color: color,
               pixelSize: 5,
               outlineColor: Cesium.Color.fromCssColorString('#000000'),
-              outlineWidth: 1
+              outlineWidth: 1,
             },
-            tooltip: '第' + j + '个'
+            tooltip: '第' + j + '个',
           })
           graphicLayer.addGraphic(primitive)
         }
@@ -156,9 +160,9 @@
             pixelOffset: [0, -10],
             distanceDisplayCondition: true,
             distanceDisplayCondition_far: 500000,
-            distanceDisplayCondition_near: 0
-          }
-        }
+            distanceDisplayCondition_near: 0,
+          },
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -184,8 +188,8 @@
         style: {
           pixelSize: 9,
           color: Cesium.Color.fromCssColorString('#ff0000'),
-          clampToGround: true
-        }
+          clampToGround: true,
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -196,8 +200,8 @@
         position: [116.340443, 30.882935, 389.88],
         style: {
           pixelSize: 10,
-          color: Cesium.Color.YELLOW
-        }
+          color: Cesium.Color.YELLOW,
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -211,8 +215,8 @@
           pixelSize: 20,
           outlineColor: Cesium.Color.fromCssColorString('#ffffff'),
           outlineWidth: 2,
-          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 100000)
-        }
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 100000),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样

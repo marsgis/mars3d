@@ -12,6 +12,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>Rectangle 矩形 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -72,8 +76,8 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.util.merge(options, {
         scene: {
-          center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 }
-        }
+          center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 },
+        },
       })
 
       //创建三维地球场景
@@ -103,11 +107,11 @@
       var primitive = new mars3d.graphic.RectanglePrimitive({
         positions: [
           [117.220337, 31.786107],
-          [117.278695, 31.832987]
+          [117.278695, 31.832987],
         ],
         style: {
           material: Cesium.Material.fromType('Color', {
-            color: Cesium.Color.CYAN.withAlpha(0.4)
+            color: Cesium.Color.CYAN.withAlpha(0.4),
           }),
           label: {
             text: '我是火星科技',
@@ -115,9 +119,9 @@
             color: '#ffffff',
             distanceDisplayCondition: true,
             distanceDisplayCondition_far: 500000,
-            distanceDisplayCondition_near: 0
-          }
-        }
+            distanceDisplayCondition_near: 0,
+          },
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -131,18 +135,18 @@
       var primitive = new mars3d.graphic.RectanglePrimitive({
         positions: [
           [117.337109, 31.881802],
-          [117.377109, 31.941802]
+          [117.377109, 31.941802],
         ],
         style: {
           material: new Cesium.Material({
             fabric: {
               type: 'Image',
               uniforms: {
-                image: 'img/tietu/gugong.jpg'
-              }
-            }
-          })
-        }
+                image: 'img/tietu/gugong.jpg',
+              },
+            },
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
@@ -156,14 +160,14 @@
       var primitive = new mars3d.graphic.RectanglePrimitive({
         positions: [
           [117.172852, 31.872736, 33.69],
-          [117.251461, 31.956011, 26.44]
+          [117.251461, 31.956011, 26.44],
         ],
         style: {
           height: 1000,
           material: Cesium.Material.fromType('Color', {
-            color: Cesium.Color.CYAN.withAlpha(0.4)
-          })
-        }
+            color: Cesium.Color.CYAN.withAlpha(0.4),
+          }),
+        },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样

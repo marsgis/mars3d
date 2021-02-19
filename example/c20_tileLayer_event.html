@@ -12,6 +12,10 @@
   <meta name="format-detection" content="telephone=no">
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>瓦片加载事件 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -49,14 +53,14 @@
             z: 1175444.01,
             heading: 0,
             pitch: -69.5,
-            roll: 0
-          }
+            roll: 0,
+          },
         },
         control: {
-          baseLayerPicker: false
+          baseLayerPicker: false,
         },
         basemaps: [],
-        layers: [{ type: 'tileinfo', name: '瓦片信息', order: 2, show: true }]
+        layers: [{ type: 'tileinfo', name: '瓦片信息', order: 2, show: true }],
       })
 
       //创建三维地球场景
@@ -66,22 +70,22 @@
       var tileLayer = new mars3d.layer.TdtLayer({
         name: '天地图卫星',
         layer: 'img_d',
-        order: 1
+        order: 1,
       })
       map.addLayer(tileLayer)
 
       var count = 0
-      tileLayer.on(mars3d.EventType.loadTileStart, function(event) {
+      tileLayer.on(mars3d.EventType.loadTileStart, function (event) {
         count++
         console.log(`${count},开始请求加载瓦片: L:${event.imagery.level},X:${event.imagery.x},Y:${event.imagery.y}`)
       })
 
-      tileLayer.on(mars3d.EventType.loadTileEnd, function(event) {
+      tileLayer.on(mars3d.EventType.loadTileEnd, function (event) {
         count--
         console.log(`${count},开始请求加载瓦片: L:${event.imagery.level},X:${event.imagery.x},Y:${event.imagery.y}`)
       })
 
-      tileLayer.on(mars3d.EventType.loadTileError, function(event) {
+      tileLayer.on(mars3d.EventType.loadTileError, function (event) {
         count--
         console.log(`${count},开始请求加载瓦片: L:${event.imagery.level},X:${event.imagery.x},Y:${event.imagery.y}`)
       })
@@ -93,17 +97,17 @@
         crs: 'EPSG:4326',
         parameters: {
           transparent: 'true',
-          format: 'image/png'
+          format: 'image/png',
         },
         getFeatureInfoParameters: {
-          feature_count: 10
+          feature_count: 10,
         },
-        popup: 'all'
+        popup: 'all',
       })
       map.addLayer(wmsLayer)
 
       //单击事件
-      wmsLayer.on(mars3d.EventType.click, function(event) {
+      wmsLayer.on(mars3d.EventType.click, function (event) {
         //单击事件
         console.log('单击了矢量数据，共' + event.features.length + '条', event)
       })

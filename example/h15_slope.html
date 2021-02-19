@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn ">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>三维地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <!--第三方lib-->
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+  <div class="infoview">
+    <div>
+      插值数:
+      <input id="txtSplitNum" type="number" value="10" step="1" min="1" max="9999" class="form-control"
+        style="width: 100px;" />
+
+      <button type="button" id="btnDrawPolygon" class="btn btn-default">绘制区域</button>
+      <button type="button" id="btnDrawPoint" class="btn btn-default">绘制点</button>
+      <button type="button" id="btnClear" class="btn btn-default">清除</button>
+    </div>
+    <div style="margin-top: 10px;">
+      地表渲染：
+      <div class="radio radio-info radio-inline">
+        <input type="radio" id="shadingMaterials1" name="shadingMaterials" value="none" checked>
+        <label for="shadingMaterials1">无阴影 </label>
+      </div>
+      <div class="radio radio-info radio-inline">
+        <input type="radio" id="shadingMaterials3" name="shadingMaterials" value="slope">
+        <label for="shadingMaterials3">坡度 </label>
+      </div>
+      <div class="radio radio-info radio-inline">
+        <input type="radio" id="shadingMaterials4" name="shadingMaterials" value="aspect">
+        <label for="shadingMaterials4">坡向 </label>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+    var slope
+    var contourLine
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {})
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //剖度坡向
+      slope = new mars3d.thing.Slope({
+        point: {
+          show: true,
+          pixelSize: 9,
+          color: Cesium.Color.RED.withAlpha(0.5),
+          //disableDepthTestDistance: Number.POSITIVE_INFINITY,
+        },
+        arrow: {
+          show: true,
+          scale: 0.3, //箭头长度的比例（范围0.1-0.9）
+          width: 15, //箭头宽度
+          color: Cesium.Color.YELLOW,
+        },
+        tooltip: function (event) {
+          //自定义显示内容
+          var attr = event.czmObject.attr
+          return `坡度: ${attr.slopeStr1}  (${attr.slopeStr2})<br />坡向: ${attr.direction}°`
+        },
+      })
+      map.addThing(slope)
+
+      slope.on(mars3d.EventType.end, function (event) {
+        console.log('分析完成', event)
+        // event.data[0] 数组内返回值说明： {
+        //     position:position,  //坐标位置
+        //     slope: slopeValDou, //度数法值，α(坡度)=arc tan (高程差/水平距离)
+        //     slopeStr1: text1,   //度数法值字符串
+        //     slopeStr2: text2,   //百分比法值字符串，坡度 = (高程差/水平距离)x100%
+        //     direction: slopeAngle //坡向值（0-360度）
+        // }
+      })
+
+      //渲染效果
+      contourLine = new mars3d.thing.ContourLine({
+        enabled: false, //是否显示等高线
+        shadingType: 'none', //地表渲染效果类型:无nono, 高程 elevation, 坡度slope, 坡向aspect
+      })
+      map.addThing(contourLine)
+
+      $('input[type=radio][name=shadingMaterials]').change(function () {
+        contourLine.shadingType = this.value
+      })
+
+      $('#btnDrawPolygon').click(function () {
+        clearAll()
+        map.graphicLayer.startDraw({
+          type: 'polygon',
+          style: {
+            color: '#29cf34',
+            opacity: 0.3,
+            outline: true,
+            outlineColor: '#ffffff',
+            clampToGround: true,
+          },
+          success: function (graphic) {
+            //绘制成功后回调
+            var positions = graphic.positionsShow
+            map.graphicLayer.clear()
+
+            contourLine.positions = positions
+
+            console.log(JSON.stringify(mars3d.transform.cartesians2lonlats(positions))) //打印下边界
+
+            var splitNum = Number($('#txtSplitNum').val())
+
+            slope.add(positions, {
+              splitNum: splitNum, //splitNum插值分割的个数
+              radius: 1, //缓冲半径（影响坡度坡向的精度）
+              count: 4, //缓冲的数量（影响坡度坡向的精度）会求周边(count*4)个点
+            })
+          },
+        })
+      })
+
+      $('#btnDrawPoint').click(function () {
+        clearAll()
+        map.graphicLayer.startDraw({
+          type: 'point',
+          style: {
+            color: '#ffff00',
+          },
+          success: function (graphic) {
+            var positions = graphic.positionsShow
+            map.graphicLayer.clear()
+
+            slope.add(positions)
+          },
+        })
+      })
+
+      $('#btnClear').click(function () {
+        clearAll()
+      })
+    }
+
+    function clearAll() {
+      slope.clear()
+      contourLine.clear()
+    }
+  </script>
+</body>
+
+</html>

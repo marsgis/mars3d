@@ -13,6 +13,10 @@
   <meta name="x5-fullscreen" content="true">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>标绘 绘制 矢量数据-绘制文字、点、线、面、模型、管道等 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -161,9 +165,9 @@
             z: 12364.89,
             heading: 0,
             pitch: -80,
-            roll: 0
-          }
-        }
+            roll: 0,
+          },
+        },
       })
 
       //创建三维地球场景
@@ -171,7 +175,7 @@
 
       graphicLayer = new mars3d.layer.GraphicLayer({
         hasEdit: true,
-        isAutoEditing: true //绘制完成后是否自动激活编辑
+        isAutoEditing: true, //绘制完成后是否自动激活编辑
       })
       map.addLayer(graphicLayer)
 
@@ -179,39 +183,39 @@
       initLayerManager(graphicLayer)
 
       //绑定标绘相关事件监听(可以自行加相关代码实现业务需求，此处主要做示例)
-      graphicLayer.on(mars3d.EventType.drawStart, function(e) {
+      graphicLayer.on(mars3d.EventType.drawStart, function (e) {
         console.log('开始绘制', e)
       })
-      graphicLayer.on(mars3d.EventType.drawAddPoint, function(e) {
+      graphicLayer.on(mars3d.EventType.drawAddPoint, function (e) {
         console.log('绘制过程中增加了点', e)
       })
-      graphicLayer.on(mars3d.EventType.drawRemovePoint, function(e) {
+      graphicLayer.on(mars3d.EventType.drawRemovePoint, function (e) {
         console.log('绘制过程中删除了点', e)
       })
 
-      graphicLayer.on(mars3d.EventType.drawCreated, function(e) {
+      graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
         console.log('创建完成', e)
       })
-      graphicLayer.on(mars3d.EventType.editStart, function(e) {
+      graphicLayer.on(mars3d.EventType.editStart, function (e) {
         console.log('开始编辑', e)
 
         startEditing(e.graphic)
       })
-      graphicLayer.on(mars3d.EventType.editMovePoint, function(e) {
+      graphicLayer.on(mars3d.EventType.editMovePoint, function (e) {
         console.log('编辑修改了点', e)
         startEditing(e.graphic)
       })
-      graphicLayer.on(mars3d.EventType.editRemovePoint, function(e) {
+      graphicLayer.on(mars3d.EventType.editRemovePoint, function (e) {
         console.log('编辑删除了点', e)
 
         startEditing(e.graphic)
       })
-      graphicLayer.on(mars3d.EventType.editStop, function(e) {
+      graphicLayer.on(mars3d.EventType.editStop, function (e) {
         console.log('停止编辑', e)
 
         stopEditing()
       })
-      graphicLayer.on(mars3d.EventType.delete, function(e) {
+      graphicLayer.on(mars3d.EventType.delete, function (e) {
         console.log('删除了对象', e)
 
         stopEditing()
@@ -240,7 +244,7 @@
       // mars3d.graphic.edit.tooltip.del.def = '<br/>右击 删除该点'
       // mars3d.graphic.edit.tooltip.del.min = '无法删除，点数量不能少于'
 
-      $('#btnSaveKML').click(function() {
+      $('#btnSaveKML').click(function () {
         if (graphicLayer.length === 0) {
           window.layer.msg('当前没有标注任何数据，无需保存！')
           return
@@ -249,7 +253,7 @@
         haoutil.file.downloadFile('我的标注.kml', strResult)
       })
 
-      $('#btnSaveWKT').click(function() {
+      $('#btnSaveWKT').click(function () {
         if (graphicLayer.length === 0) {
           window.layer.msg('当前没有标注任何数据，无需保存！')
           return
@@ -260,7 +264,7 @@
 
       //加载历史演示数据
       if (location.hostname !== '127.0.0.1' && location.hostname !== 'localhost') {
-        $.getJSON('http://data.marsgis.cn/file/geojson/draw-demo.json', function(result) {
+        $.getJSON('http://data.marsgis.cn/file/geojson/draw-demo.json', function (result) {
           graphicLayer.loadJson(result, { clear: true, flyTo: true })
         })
       }
@@ -279,9 +283,9 @@
             color: '#ffffff',
             border: true,
             border_color: '#000000',
-            pixelOffset: [0, -15]
-          }
-        }
+            pixelOffset: [0, -15],
+          },
+        },
       })
     }
 
@@ -297,9 +301,9 @@
             color: '#ffffff',
             border: true,
             border_color: '#000000',
-            pixelOffset: [0, -50]
-          }
-        }
+            pixelOffset: [0, -50],
+          },
+        },
       })
     }
 
@@ -312,8 +316,8 @@
           font_size: 50,
           border: true,
           border_color: '#ffffff',
-          border_width: 2
-        }
+          border_width: 2,
+        },
       })
     }
 
@@ -322,20 +326,20 @@
         type: 'model',
         style: {
           scale: 10,
-          modelUrl: 'http://data.marsgis.cn/gltf/mars/firedrill/xiaofangche.gltf'
-        }
+          modelUrl: 'http://data.marsgis.cn/gltf/mars/firedrill/xiaofangche.gltf',
+        },
       })
     }
 
     function drawPolyline(clampToGround) {
       graphicLayer.startDraw({
         type: 'polyline',
-        // config: { maxPointNum: 2 },  //限定最大点数，可以绘制2个点的线，自动结束
+        // maxPointNum: 2,  //限定最大点数，可以绘制2个点的线，自动结束
         style: {
           color: '#55ff33',
           width: 3,
-          clampToGround: clampToGround
-        }
+          clampToGround: clampToGround,
+        },
       })
     }
 
@@ -347,8 +351,8 @@
           opacity: 0.5,
           outline: true,
           outlineWidth: 2.0,
-          clampToGround: clampToGround
-        }
+          clampToGround: clampToGround,
+        },
       })
     }
 
@@ -358,8 +362,8 @@
         style: {
           color: '#55ff33',
           width: 3,
-          clampToGround: clampToGround
-        }
+          clampToGround: clampToGround,
+        },
       })
     }
 
@@ -369,8 +373,8 @@
         style: {
           color: '#55ff33',
           width: 500,
-          clampToGround: clampToGround
-        }
+          clampToGround: clampToGround,
+        },
       })
     }
 
@@ -380,8 +384,8 @@
         style: {
           color: '#ffff00',
           opacity: 0.6,
-          clampToGround: clampToGround
-        }
+          clampToGround: clampToGround,
+        },
       })
     }
 
@@ -391,8 +395,8 @@
         style: {
           color: '#ffff00',
           opacity: 0.6,
-          clampToGround: clampToGround
-        }
+          clampToGround: clampToGround,
+        },
       })
     }
 
@@ -404,8 +408,8 @@
           opacity: 0.8,
           plane_normal: 'x',
           dimensionsX: 1000.0,
-          dimensionsY: 1000.0
-        }
+          dimensionsY: 1000.0,
+        },
       })
     }
 
@@ -416,8 +420,8 @@
           color: '#00ff00',
           opacity: 0.8,
           diffHeight: 400,
-          closure: closure //是否闭合
-        }
+          closure: closure, //是否闭合
+        },
       })
     }
 
@@ -429,8 +433,8 @@
           opacity: 0.6,
           dimensionsX: 1000.0,
           dimensionsY: 1000.0,
-          dimensionsZ: 1000.0
-        }
+          dimensionsZ: 1000.0,
+        },
       })
     }
 
@@ -441,8 +445,8 @@
           fill: true,
           color: '#00ff00',
           opacity: 0.6,
-          diffHeight: 1000
-        }
+          diffHeight: 1000,
+        },
       })
     }
 
@@ -452,8 +456,8 @@
         style: {
           fill: true,
           color: '#00ff00',
-          opacity: 0.6
-        }
+          opacity: 0.6,
+        },
       })
     }
 
@@ -464,8 +468,8 @@
         style: {
           color: '#00ff00',
           opacity: 0.6,
-          diffHeight: 300
-        }
+          diffHeight: 300,
+        },
       })
     }
 
@@ -476,8 +480,8 @@
         style: {
           color: '#00ff00',
           opacity: 0.6,
-          diffHeight: 300
-        }
+          diffHeight: 300,
+        },
       })
     }
 
@@ -488,8 +492,8 @@
         style: {
           color: '#00ff00',
           opacity: 0.6,
-          diffHeight: 300
-        }
+          diffHeight: 300,
+        },
       })
     }
     function toKML() {
@@ -517,7 +521,7 @@
           'stroke-opacity': Cesium.defaultValue(style.outlineOpacity, style.opacity),
 
           fill: style.color,
-          'fill-opacity': style.opacity
+          'fill-opacity': style.opacity,
         }
       })
 
@@ -525,7 +529,7 @@
         name: 'MarsGIS标绘数据',
         documentName: 'MarsGIS标绘数据',
         documentDescription: 'MarsGIS标绘数据 by marsgis',
-        simplestyle: true
+        simplestyle: true,
       })
 
       return kml
@@ -550,7 +554,7 @@
           name: attr.name || '',
           remark: attr.remark || '',
           style: style,
-          wkt: wkt
+          wkt: wkt,
         })
       })
       return arrWKT
@@ -571,13 +575,13 @@
           uri: 'widgets/plotAttr/widget.js',
           name: '属性编辑',
           graphic: graphic,
-          lonlats: graphic.coordinates
+          lonlats: graphic.coordinates,
         })
       }
     }
 
     function stopEditing() {
-      timeTik = setTimeout(function() {
+      timeTik = setTimeout(function () {
         mars3d.widget.disable('widgets/plotAttr/widget.js')
       }, 200)
     }
