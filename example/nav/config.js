@@ -534,13 +534,13 @@ var exampleConfig = {
             thumbnail: 'e30_gaode_poi.jpg',
             fileName: 'e30_gaode_poi',
           },
-          {
-            name: '三维地名服务',
-            version: '2.0.5',
-            thumbnail: 'e30_tdtDmLayer.jpg',
-            fileName: 'e30_tdtDmLayer',
-            plugins: 'tdt',
-          },
+          // {
+          //   name: '三维地名服务',
+          //   version: '2.0.5',
+          //   thumbnail: 'e30_tdtDmLayer.jpg',
+          //   fileName: 'e30_tdtDmLayer',
+          //   plugins: 'tdt',
+          // },
           {
             name: '经纬网图层',
             version: '3.0',
@@ -1745,19 +1745,20 @@ var exampleConfig = {
             fileName: 'k20_tilesetClip',
             // plugins: 'tileset',
           },
-          {
-            name: '模型淹没分析',
-            version: '2.0.1',
-            thumbnail: 'k20_tilesetFlood.jpg',
-            fileName: 'k20_tilesetFlood',
-            // plugins: 'tileset',
-          },
           // {
-          //   name: '模型热力图',
-          //   version: '2.2.0',
-          //   thumbnail: 'k20_tiles_heatmap.jpg',
-          //   fileName: 'k20_tiles_heatmap',
+          //   name: '模型淹没分析',
+          //   version: '2.0.1',
+          //   thumbnail: 'k20_tilesetFlood.jpg',
+          //   fileName: 'k20_tilesetFlood',
+          //   // plugins: 'tileset',
           // },
+          {
+            name: '模型热力图',
+            version: '2.2.0',
+            thumbnail: 'k20_heatLayer_3dtiles.jpg',
+            fileName: 'k20_heatLayer_3dtiles',
+            plugins: 'heatmap',
+          },
         ],
       },
       'analysi-data': {
@@ -1779,18 +1780,27 @@ var exampleConfig = {
       heat: {
         name: '普通可视化',
         content: [
-          // {
-          //   name: '热力图',
-          //   version: '1.6.9',
-          //   thumbnail: '51_heatmap.jpg',
-          //   fileName: '51_heatmap',
-          // },
-          // {
-          //   name: '热力图(几何对象)',
-          //   version: '1.8.9',
-          //   thumbnail: '51_heatmap_rectangle.jpg',
-          //   fileName: '51_heatmap_rectangle',
-          // },
+          {
+            name: '贴地热力图',
+            version: '1.6.9',
+            thumbnail: 'm10_heatLayer.jpg',
+            fileName: 'm10_heatLayer',
+            plugins: 'heatmap',
+          },
+          {
+            name: '高度热力图',
+            version: '3.0',
+            thumbnail: 'm10_heatLayer_height.jpg',
+            fileName: 'm10_heatLayer_height',
+            plugins: 'heatmap',
+          },
+          {
+            name: '立体曲面热力图',
+            version: '2.0',
+            thumbnail: 'm10_heatLayer_arc.jpg',
+            fileName: 'm10_heatLayer_arc',
+            plugins: 'heatmap',
+          },
           {
             name: '全国温度图',
             version: '1.9.1',
