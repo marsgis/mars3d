@@ -75,6 +75,7 @@
             icon: 'img/basemaps/esriWorldImagery.png',
             type: 'arcgis',
             url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
+            enablePickFeatures: false,
             show: true,
           },
           {
@@ -82,12 +83,14 @@
             icon: 'img/basemaps/google_vec.png',
             type: 'arcgis',
             url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer',
+            enablePickFeatures: false,
           },
           {
             name: 'ArcGIS NatGeo',
             icon: 'img/basemaps/esriWorldStreetMap.png',
             type: 'arcgis',
             url: 'https://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer',
+            enablePickFeatures: false,
           },
           {
             name: '蓝色底图(GCJ02)',
@@ -116,27 +119,9 @@
       //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
       tileLayer = new mars3d.layer.ArcGisLayer({
         url: 'http://data.marsgis.cn/arcgis/rest/services/mars/guihua/MapServer',
-        showClickFeature: true,
-        pickFeatureStyle: {
-          //选择的要素样式，同Draw类样式
-          clampToGround: true,
-          fill: true,
-          color: '#2deaf7',
-          opacity: 0.6,
-          outline: true,
-          outlineWidth: 3,
-          outlineColor: '#e000d9',
-          outlineOpacity: 1.0,
-        },
-        popup: 'all',
+        enablePickFeatures: false,
       })
       map.addLayer(tileLayer)
-
-      //单击事件
-      tileLayer.on(mars3d.EventType.click, function (event) {
-        //单击事件
-        console.log('单击了矢量数据，共' + event.features.length + '条', event)
-      })
     }
     function removeLayer() {
       if (tileLayer) {

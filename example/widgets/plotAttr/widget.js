@@ -1,4 +1,4 @@
-;(function(window, mars3d) {
+;(function (window, mars3d) {
   //创建widget类，需要继承BaseWidget
   class MyWidget extends mars3d.widget.BaseWidget {
     //弹窗配置
@@ -13,16 +13,16 @@
           position: {
             top: 10,
             right: 5,
-            bottom: 30
-          }
-        }
+            bottom: 30,
+          },
+        },
       }
     }
 
     //初始化[仅执行1次]
     create() {
       let that = this
-      $.getJSON(this.path + 'config/attr.json', function(data) {
+      $.getJSON(this.path + 'config/attr.json', function (data) {
         that.attrConfig = data
 
         // that.getDefaultVal();//测试用
@@ -70,7 +70,7 @@
           let strData = ''
           if (item.type === 'combobox') {
             strData = ',可选项：'
-            item.data.forEach(function(comb) {
+            item.data.forEach(function (comb) {
               strData += `${comb.value}(${comb.text}),`
             })
           }
@@ -115,7 +115,7 @@ ${strAPIItem}
       return [
         { name: 'id', label: '主键', type: 'label', defval: '' },
         { name: 'name', label: '名称', type: 'text', defval: '' },
-        { name: 'remark', label: '备注', type: 'textarea', defval: '' }
+        { name: 'remark', label: '备注', type: 'textarea', defval: '' },
       ]
     }
     getAttrList() {

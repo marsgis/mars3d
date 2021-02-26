@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn ">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="x5-fullscreen" content="true">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta name="description" content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+    <title>三维地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+    <!--第三方lib-->
+    <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+    <style>
+      .infoview div {
+            margin-bottom: 5px;
+        }
+    </style>
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+    <!-- demo面板 -->
+    <div class="infoview">
+      <div>
+        <span style="color: #cad1d1;">提示：插值数大时分析略慢，请耐心等待。</span>
+      </div>
+      <div>
+        插值数:
+        <input id="txtSplitNum" type="number" value="8" step="1" min="1" max="9999" class="form-control" style="width: 100px;" />
+
+        <input type="button" class="btn btn-primary" value="绘制面" onclick="drawPolygon()" />
+        <input type="button" class="btn btn-primary" value="绘制线" onclick="drawPolyline()" />
+        <input type="button" class="btn btn-info" value="清除" onclick="removeAll()" />
+      </div>
+    </div>
+
+    <!-- 切换视角到模型或地形（山区）的快捷按钮 -->
+    <script type="text/javascript" src="js/center_terrain_3dtiles.js"></script>
+
+    <script src="js/showPolygonInter.js"></script>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
+
+      var map
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.util.merge(options, {
+          scene: {
+            //此处参数会覆盖config.json中的对应配置
+            center: {
+              y: 30.841762,
+              x: 116.26537,
+              z: 3280.67,
+              heading: 38.7,
+              pitch: -62.8,
+              roll: 0.2,
+            },
+          },
+        })
+
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+      }
+
+      function removeAll() {
+        map.graphicLayer.clear()
+        clearInterResult() //在js/showPolygonInter.js
+      }
+
+      function drawPolygon() {
+        map.graphicLayer.startDraw({
+          type: 'polygon',
+          style: {
+            color: '#29cf34',
+            opacity: 0.3,
+            outline: true,
+            outlineColor: '#ffffff',
+            clampToGround: true,
+          },
+          success: function (graphic) {
+            var positions = graphic.positionsShow
+            map.graphicLayer.clear()
+
+            var splitNum = Number($('#txtSplitNum').val())
+            var resultInter = mars3d.polygon.interPolygon({
+              scene: map.scene,
+              positions: positions,
+              splitNum: splitNum, //splitNum插值分割的个数
+            })
+
+            showInterResult(resultInter.list) //在js/showPolygonInter.js
+          },
+        })
+      }
+
+      function drawPolyline(clampToGround) {
+        map.graphicLayer.startDraw({
+          type: 'polyline',
+          style: {
+            color: '#55ff33',
+            width: 3,
+            clampToGround: true,
+          },
+          success: function (graphic) {
+            var positions = graphic.positionsShow
+            map.graphicLayer.clear()
+
+            var splitNum = Number($('#txtSplitNum').val())
+            var arrLine = mars3d.polyline.interPolyline({
+              scene: map.scene,
+              positions: positions,
+              splitNum: splitNum, // 插值分割的个数
+            })
+
+            showInterLineResult(arrLine) //在js/showPolygonInter.js
+          },
+        })
+      }
+    </script>
+  </body>
+
+</html>

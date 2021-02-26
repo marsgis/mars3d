@@ -1,0 +1,316 @@
+<!-- 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>CZML图层 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,ztree,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+  <div id="viewSL" class="infoview">
+    示例：
+    <input type="button" class="btn btn-primary" value="飞机" onclick="showFeijiDemo()" />
+    <input type="button" class="btn btn-primary" value="船舶" onclick="showChuanboDemo()" />
+    <input type="button" class="btn btn-primary" value="汽车" onclick="showQicheDemo()" />
+    <input type="button" class="btn btn-primary" value="卫星" onclick="showWeixinDemo()" />
+    <input type="button" class="btn btn-primary" value="火箭发射" onclick="showHuojianDemo()" />
+    <input type="button" class="btn btn-primary" value="消防演练" onclick="showXiaofangDemo()" />
+  </div>
+
+
+  <div class="infoview" style="overflow:auto;right:5px;left:auto; top:50px;max-height:90%;">
+    <button id="btnNoCheck" class="btn btn-primary" style=" margin: 5px 20px;display:none;">取消锁定</button>
+    <ul id="treeOverlays" class="ztree"></ul>
+  </div>
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        scene: {
+          center: { y: 31.588498, x: 120.714274, z: 492.53, heading: 13.6, pitch: -55.3, roll: 0.1 },
+        },
+      })
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      showFeijiDemo()
+    }
+
+    var czmlLayer
+
+    function removeLayer() {
+      map.trackedEntity = null
+      if (czmlLayer) {
+        map.removeLayer(czmlLayer, true)
+        czmlLayer = null
+      }
+    }
+
+    //示例：
+    function showFeijiDemo() {
+      removeLayer()
+
+      czmlLayer = new mars3d.layer.CzmlLayer({
+        name: '飞行编队',
+        url: 'http://data.marsgis.cn/file/czml/flight.czml',
+        popup: 'all',
+        flyTo: true,
+      })
+      map.addLayer(czmlLayer)
+
+      //绑定事件
+      czmlLayer.on(mars3d.EventType.load, function (event) {
+        console.log('数据加载完成', event)
+        initTree(event.graphics)
+      })
+      czmlLayer.on(mars3d.EventType.click, function (event) {
+        console.log('单击了图层', event)
+      })
+    }
+
+    //示例：
+    function showQicheDemo() {
+      removeLayer()
+
+      czmlLayer = new mars3d.layer.CzmlLayer({
+        name: '汽车',
+        url: 'http://data.marsgis.cn/file/czml/car.czml',
+        flyTo: true,
+      })
+      map.addLayer(czmlLayer)
+
+      //绑定事件
+      czmlLayer.on(mars3d.EventType.load, function (event) {
+        console.log('数据加载完成', event)
+        initTree(event.graphics)
+      })
+      czmlLayer.on(mars3d.EventType.click, function (event) {
+        console.log('单击了图层', event)
+      })
+    }
+
+    //示例：
+    function showChuanboDemo() {
+      removeLayer()
+
+      czmlLayer = new mars3d.layer.CzmlLayer({
+        name: '船舶编队',
+        url: 'http://data.marsgis.cn/file/czml/ship.czml',
+        popup: 'all',
+        flyTo: true,
+      })
+      map.addLayer(czmlLayer)
+
+      //绑定事件
+      czmlLayer.on(mars3d.EventType.load, function (event) {
+        console.log('数据加载完成', event)
+        initTree(event.graphics)
+      })
+      czmlLayer.on(mars3d.EventType.click, function (event) {
+        console.log('单击了图层', event)
+      })
+    }
+
+    //示例：
+    function showWeixinDemo() {
+      removeLayer()
+
+      //更新地球参数
+      map.setSceneOptions({
+        scene: {
+          cameraController: {
+            maximumZoomDistance: 300000000,
+          },
+        },
+      })
+
+      czmlLayer = new mars3d.layer.CzmlLayer({
+        name: '卫星',
+        url: 'http://data.marsgis.cn/file/czml/satellite.czml',
+        center: { y: 10, x: 111.833884, z: 150000000, heading: 0, pitch: -90, roll: 0 },
+        flyTo: true,
+      })
+      map.addLayer(czmlLayer)
+
+      //绑定事件
+      czmlLayer.on(mars3d.EventType.load, function (event) {
+        console.log('数据加载完成', event)
+
+        initTree(event.graphics)
+      })
+      czmlLayer.on(mars3d.EventType.click, function (event) {
+        console.log('单击了图层', event)
+      })
+    }
+
+    //示例：
+    function showHuojianDemo() {
+      removeLayer()
+
+      czmlLayer = new mars3d.layer.CzmlLayer({
+        name: '火箭发射',
+        url: 'http://data.marsgis.cn/file/czml/space.czml',
+        flyTo: true,
+      })
+      map.addLayer(czmlLayer)
+
+      //绑定事件
+      czmlLayer.on(mars3d.EventType.load, function (event) {
+        console.log('数据加载完成', event)
+
+        //火星发射时，锁定火箭模型对象
+        map.trackedEntity = event.dataSource.entities.getById('Vulcan')
+
+        initTree(event.graphics)
+      })
+      czmlLayer.on(mars3d.EventType.click, function (event) {
+        console.log('单击了图层', event)
+      })
+    }
+
+    //示例：
+    function showXiaofangDemo() {
+      removeLayer()
+
+      map.centerAt({ lat: 32.891559, lng: 117.360875, alt: 378, heading: 18, pitch: -62 })
+
+      czmlLayer = new mars3d.layer.CzmlLayer({
+        name: '消防演练',
+        url: 'http://data.marsgis.cn/file/czml/firedrill.czml',
+        // flyTo: true
+      })
+      map.addLayer(czmlLayer)
+
+      //绑定事件
+      czmlLayer.on(mars3d.EventType.load, function (event) {
+        console.log('数据加载完成', event)
+        initTree(event.graphics)
+      })
+      czmlLayer.on(mars3d.EventType.click, function (event) {
+        console.log('单击了图层', event)
+      })
+    }
+
+    //===========================树控件处理============================
+    var layersObj = {}
+
+    function initTree(arr) {
+      $('#btnNoCheck').click(function () {
+        map.trackedEntity = null
+      })
+      //初始化树
+      var setting = {
+        check: {
+          enable: true,
+        },
+        data: {
+          simpleData: {
+            enable: true,
+          },
+        },
+        callback: {
+          onCheck: treeOverlays_onCheck,
+          onClick: treeOverlays_onClick,
+        },
+      }
+
+      var zNodes = []
+      var pnode = {
+        id: -1,
+        name: '全部',
+        type: 'group',
+        open: false,
+        checked: true,
+        icon: '../lib/jquery/ztree/css/mars/images/folder.png',
+      }
+      zNodes.push(pnode)
+
+      for (var i = 0, len = arr.length; i < len; i++) {
+        var item = arr[i]
+        var name = item?.label?.text?._value || item.name || item.id || '未命名'
+
+        var node = {
+          id: i,
+          pId: pnode.id,
+          name: name,
+          checked: true,
+          icon: '../lib/jquery/ztree/css/mars/images/layer.png',
+        }
+        zNodes.push(node)
+
+        layersObj[i] = item
+      }
+
+      $.fn.zTree.destroy()
+      $.fn.zTree.init($('#treeOverlays'), setting, zNodes)
+    }
+
+    function treeOverlays_onCheck(e, treeId) {
+      var zTree = $.fn.zTree.getZTreeObj(treeId)
+
+      //获得所有改变check状态的节点
+      var changedNodes = zTree.getChangeCheckedNodes()
+      for (var i = 0; i < changedNodes.length; i++) {
+        var treeNode = changedNodes[i]
+        treeNode.checkedOld = treeNode.checked
+        var entity = layersObj[treeNode.id]
+        if (entity == null) {
+          continue
+        }
+
+        //处理图层显示隐藏
+        entity.show = treeNode.checked
+      }
+    }
+
+    function treeOverlays_onClick(event, treeId, treeNode) {
+      var entity = layersObj[treeNode.id]
+      if (entity == null) {
+        return
+      }
+
+      // map.flyTo(entity)
+      map.trackedEntity = entity
+
+      $('#btnNoCheck').show()
+    }
+  </script>
+</body>
+
+</html>

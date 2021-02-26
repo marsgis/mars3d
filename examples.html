@@ -12,26 +12,26 @@
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
     <meta name="mobile-web-app-capable" content="yes" />
     <!-- Safari浏览器添加到主屏幕（IOS） -->
-    <link rel="icon" sizes="192x192" href="http://mars3d.cn/docs/img/favicon/apple-touch-icon.png" />
+    <link rel="icon" sizes="192x192" href="http://mars3d.cn/img/favicon/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-title" content="火星科技MarsGIS" />
     <!-- Win8标题栏及ICON图标 -->
-    <link rel="apple-touch-icon-precomposed" href="http://mars3d.cn/docs/img/favicon/apple-touch-icon.png" />
-    <meta name="msapplication-TileImage" content="http://mars3d.cn/docs/img/favicon/app-icon72x72@2x.png" />
+    <link rel="apple-touch-icon-precomposed" href="http://mars3d.cn/img/favicon/apple-touch-icon.png" />
+    <meta name="msapplication-TileImage" content="http://mars3d.cn/img/favicon/app-icon72x72@2x.png" />
     <meta name="msapplication-TileColor" content="#62a8ea" />
 
     <!-- 标题及搜索关键字 -->
     <meta
       name="keywords"
-      content="火星科技|合肥火星|合肥火星科技|合肥火星科技有限公司|leafvar|leafvar框架|leafvar开发|cesium|cesium开发|cesium框架|gis|marsgis|地图离线|地图开发|地图框架|地图外包"
+      content="火星科技|合肥火星|合肥火星科技|合肥火星科技有限公司|leaflet|leaflet框架|leaflet开发|cesium|cesium开发|cesium框架|gis|marsgis|地图离线|地图开发|地图框架|地图外包"
     />
     <meta
       name="description"
-      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leafvar leafvar框架 leafvar开发 cesium cesium开发 cesium框架 gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
     />
 
-    <title>功能示例 - Mars3D三维地球平台 | MarsGIS for Cesium |三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+    <title>功能示例 - Mars3D | Mars3D三维地球平台 |三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
 
     <script
       type="text/javascript"
@@ -40,41 +40,38 @@
       libpath="./lib/"
     ></script>
 
-    <link rel="stylesheet" href="http://mars3d.cn/docs/css/common.css?time=20210105" />
-    <link rel="stylesheet" href="http://mars3d.cn/docs/css/header.css?time=20210105" />
-    <link rel="stylesheet" href="http://mars3d.cn/docs/css/sideBar.css?time=20210105" />
-    <link rel="stylesheet" href="http://mars3d.cn/docs/css/examples.css?time=20210105" />
+    <link rel="stylesheet" href="http://mars3d.cn/css/common.css?time=20210105" />
+    <link rel="stylesheet" href="http://mars3d.cn/css/header.css?time=20210105" />
+    <link rel="stylesheet" href="http://mars3d.cn/css/sideBar.css?time=20210105" />
+    <link rel="stylesheet" href="http://mars3d.cn/css/examples.css?time=20210105" />
     <style>
       /*无头部菜单时*/
-      .main-sidebar,
-      .left-side {
+      .noHeader .main-sidebar, .left-side {
         padding-top: 0px;
       }
-      .category {
+
+      .noHeader .category {
         padding-top: 10px;
       }
     </style>
   </head>
 
-  <body class="hold-transition skin-blue sidebar-mini" data-spy="scroll" data-target="#scrollSpy">
+  <body class="hold-transition skin-blue sidebar-mini noHeader" data-spy="scroll" data-target="#scrollSpy">
     <div class="wrapper">
  
       <!-- 侧边栏 -->
       <aside class="sidebar-wrapper main-sidebar" id="scrollSpy">
-        <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar" id="sidebar">
-          <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu nav nav-stacked" id="sidebar-menu"></ul>
         </section>
-        <!-- /.sidebar -->
       </aside>
       <!-- 内容区 -->
       <div class="content-wrapper examples-container" id="main">
         <ul id="charts-list">
-          <li class="category" style="margin-bottom: -10px">
+          <li class="category" >
             <h3 class="category-title"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;说明</h3>
             <div class="category-content">
-              <div class="box box-default color-pavarte-box" style="margin-bottom: -10px;">
+              <div class="box box-default color-pavarte-box" >
                 <span>
                   <a target="_black" href="https://www.npmjs.com/package/mars3d">
                     <img alt="Npm version" src="https://img.shields.io/npm/v/mars3d.svg?style=flat&logo=npm&label=version"/>
@@ -88,7 +85,8 @@
                 </span>
                 <br /><br />
                 1. 名称内有 demo 的属于存在已知问题的示例，此处仅做演示。<br />
-                2. 如果缺少您想要的示例或有好的建议，可以整理需求发送邮件至 <a href="mailto:wh@marsgis.cn" rel="nofollow">wh@marsgis.cn</a>
+                2. 如果您访问体验当中发现bug问题或有好的建议，欢迎随时反馈给<a href="http://marsgis.cn/weixin.html" target="_blank" >我们</a>。<br />
+                3. 如果缺少您想要的示例，可以整理需求发送邮件至 <a href="mailto:wh@marsgis.cn" rel="nofollow">wh@marsgis.cn</a>
               </div>
             </div>
           </li>
@@ -115,7 +113,7 @@
     </script>
     
     <script src="example/nav/config.js?time=20210105"></script>
-    <script src="http://mars3d.cn/docs/js/sidebar.js?time=20210105"></script>
-    <script src="http://mars3d.cn/docs/js/example.js?time=20210105"></script>
+    <script src="http://mars3d.cn/js/sidebar.js?time=20210105"></script>
+    <script src="http://mars3d.cn/js/example.js?time=20210105"></script>
   </body>
 </html>

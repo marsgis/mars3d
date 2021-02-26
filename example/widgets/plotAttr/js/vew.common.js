@@ -1,26 +1,16 @@
-$(function() {
+$(function () {
   $(window).resize(refHeight)
   refHeight()
 
   // 切换选项卡
-  $('.mp_tab_tit li').click(function() {
+  $('.mp_tab_tit li').click(function () {
     if ($(this).hasClass('cur') || $(this).hasClass('disabled')) {
       return false
     } else {
       var that = $(this),
         index = that.index()
-      that
-        .addClass('cur')
-        .siblings('li')
-        .removeClass('cur')
-      that
-        .parent()
-        .siblings('.mp_tab_con')
-        .children()
-        .eq(index)
-        .addClass('cur')
-        .siblings()
-        .removeClass('cur')
+      that.addClass('cur').siblings('li').removeClass('cur')
+      that.parent().siblings('.mp_tab_con').children().eq(index).addClass('cur').siblings().removeClass('cur')
 
       var _id = $(this).attr('id')
       haoutil.storage.add(cookieName, _id)
@@ -46,8 +36,11 @@ function tab2attr() {
   // if ($("#tab_plot").hasClass('cur'))
 
   var last_attr_tab = haoutil.storage.get(cookieName) //读取localStorage值
-  if (last_attr_tab != null) $('#' + last_attr_tab).click()
-  else $('#tab_attr').click()
+  if (last_attr_tab != null) {
+    $('#' + last_attr_tab).click()
+  } else {
+    $('#tab_attr').click()
+  }
 }
 
 function changeOpenShowHide() {
@@ -67,19 +60,19 @@ function refHeight() {
   $('.mp_mark').height($('.mp_tab_card').height() - 80)
 }
 
-;(function($) {
+;(function ($) {
   //下拉菜单默认参数
   var defaluts = {
     select: 'mp_select',
     select_text: 'mp_select_text',
-    select_ul: 'mp_select_ul'
+    select_ul: 'mp_select_ul',
   }
 
   $.fn.extend({
     // 下拉菜单
-    select: function(options) {
+    select: function (options) {
       var opts = $.extend({}, defaluts, options)
-      return this.each(function() {
+      return this.each(function () {
         var that = $(this)
         //模拟下拉列表
         if (that.data('value') !== undefined && that.data('value') !== '') {
@@ -89,7 +82,7 @@ function refHeight() {
         _html.push('<div class="' + that.attr('class') + '">')
         _html.push('<div class="' + opts.select_text + '">' + that.find(':selected').text() + '</div>')
         _html.push('<ul class="' + opts.select_ul + '">')
-        that.children('option').each(function() {
+        that.children('option').each(function () {
           var option = $(this)
           if (that.data('value') == option.val()) {
             _html.push('<li data-value="' + option.val() + '">' + option.text() + '</li>')
@@ -105,7 +98,7 @@ function refHeight() {
         that.after(select)
         that.hide()
         //下拉列表操作
-        select.click(function(event) {
+        select.click(function (event) {
           $(this).toggleClass('mp_selected')
           $(this)
             .find('.' + opts.select_ul)
@@ -116,18 +109,12 @@ function refHeight() {
             .slideUp()
           event.stopPropagation()
         })
-        $('body').click(function() {
+        $('body').click(function () {
           select_ul.slideUp()
         })
-        select_ul.on('click', 'li', function() {
+        select_ul.on('click', 'li', function () {
           var li = $(this)
-          var val = li
-            .addClass('selecton')
-            .siblings('li')
-            .removeClass('selecton')
-            .end()
-            .data('value')
-            .toString()
+          var val = li.addClass('selecton').siblings('li').removeClass('selecton').end().data('value').toString()
           if (val !== that.attr('data-value')) {
             select_text.text(li.text())
             that.attr('data-value', val)
@@ -137,8 +124,8 @@ function refHeight() {
       })
     },
     // 复选框
-    checkbox: function() {
-      return this.each(function() {
+    checkbox: function () {
+      return this.each(function () {
         var that = $(this)
         var $input = that.siblings('input')
         if ($input.prop('disabled') == true) {
@@ -148,7 +135,7 @@ function refHeight() {
         } else {
           that.removeClass('pnui-checked')
         }
-        that.on('click', function() {
+        that.on('click', function () {
           if ($input.prop('disabled') == true) {
             return false
           } else if (that.hasClass('pnui-checked')) {
@@ -159,12 +146,12 @@ function refHeight() {
             that.addClass('pnui-checked')
           }
         })
-        $('.checkall').click(function() {
+        $('.checkall').click(function () {
           var that = $(this)
           var $checkallbox = that.parents('.checkallbox')
           var $checkchild = $checkallbox.find('.pnui-chkbox')
           that.toggleClass('pnui-checked')
-          $checkchild.each(function() {
+          $checkchild.each(function () {
             $(this).toggleClass('pnui-checked')
           })
           if (that.hasClass('pnui-checked')) {
@@ -178,59 +165,32 @@ function refHeight() {
       })
     },
     // 单选框
-    radio: function() {
-      return this.each(function() {
+    radio: function () {
+      return this.each(function () {
         var that = $(this)
         if (that.children('input').prop('disabled') == true) {
-          that
-            .children('.pnui-rdobox')
-            .removeClass()
-            .addClass('pnui-rdobox pnui-radio-disbaled')
+          that.children('.pnui-rdobox').removeClass().addClass('pnui-rdobox pnui-radio-disbaled')
         } else if (that.children('input').prop('checked') == true) {
-          that
-            .siblings()
-            .children('input')
-            .removeAttr('checked')
-          that
-            .siblings()
-            .children('.pnui-rdobox')
-            .removeClass('pnui-checked')
+          that.siblings().children('input').removeAttr('checked')
+          that.siblings().children('.pnui-rdobox').removeClass('pnui-checked')
           that.children('.pnui-rdobox').addClass('pnui-checked')
         } else {
-          that
-            .siblings()
-            .children('input')
-            .prop('checked', 'checked')
-          that
-            .siblings()
-            .children('.pnui-rdobox')
-            .addClass('pnui-checked')
+          that.siblings().children('input').prop('checked', 'checked')
+          that.siblings().children('.pnui-rdobox').addClass('pnui-checked')
           that.children('.pnui-rdobox').removeClass('pnui-checked')
         }
-        that.on('click', function() {
+        that.on('click', function () {
           var that = $(this)
           if (that.children('input').prop('disabled') == true) {
             return false
           } else if (that.children('input').prop('checked') == true) {
-            that
-              .siblings()
-              .children('input')
-              .prop('checked', 'checked')
-            that
-              .siblings()
-              .children('.pnui-rdobox')
-              .addClass('pnui-checked')
+            that.siblings().children('input').prop('checked', 'checked')
+            that.siblings().children('.pnui-rdobox').addClass('pnui-checked')
             that.children('input').removeAttr('checked')
             that.children('.pnui-rdobox').removeClass('pnui-checked')
           } else {
-            that
-              .siblings()
-              .children('input')
-              .removeAttr('checked')
-            that
-              .siblings()
-              .children('.pnui-rdobox')
-              .removeClass('pnui-checked')
+            that.siblings().children('input').removeAttr('checked')
+            that.siblings().children('.pnui-rdobox').removeClass('pnui-checked')
             that.children('input').prop('checked', 'checked')
             that.children('.pnui-rdobox').addClass('pnui-checked')
           }
@@ -238,15 +198,15 @@ function refHeight() {
       })
     },
     //滑动条
-    progress: function(max) {
+    progress: function (max) {
       var opts = {
         progress: 'puiprogress',
         progress_bg: 'puiprogress_bg',
         progress_btn: 'puiprogress_btn',
         progress_bar: 'puiprogress_bar',
-        progress_text: 'puiprogress_text'
+        progress_text: 'puiprogress_text',
       }
-      return this.each(function() {
+      return this.each(function () {
         var that = $(this)
         //模拟进度条
         var _html = []
@@ -277,14 +237,14 @@ function refHeight() {
         progress_bar.width(left)
         progress_text.html(parseInt(_val) + '%')
 
-        progress_btn.mousedown(function(e) {
+        progress_btn.mousedown(function (e) {
           ox = e.pageX - left
           tag = true
         })
-        $(document).mouseup(function() {
+        $(document).mouseup(function () {
           tag = false
         })
-        pro.mousemove(function(e) {
+        pro.mousemove(function (e) {
           //鼠标移动
           if (tag) {
             left = e.pageX - ox
@@ -302,7 +262,7 @@ function refHeight() {
             that.change()
           }
         })
-        progress_bg.click(function(e) {
+        progress_bg.click(function (e) {
           //鼠标点击
           if (!tag) {
             bgleft = progress_bg.offset().left
@@ -321,6 +281,6 @@ function refHeight() {
           }
         })
       })
-    }
+    },
   })
 })(window.jQuery)

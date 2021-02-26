@@ -1,0 +1,311 @@
+<!-- 2017-12-4 14:24:12 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>图上选点 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,web-icons,bootstrap,formvalidation,layer,haoutil,admui,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+  <style>
+    .title {
+      text-align: center;
+    }
+
+    .form-horizontal {
+      width: 200px;
+    }
+  </style>
+
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+  <!-- 面板 -->
+  <div class="infoview">
+    <h4 class="title">拾取位置</h4>
+    <form id="jwdForm" class="form-horizontal" autocomplete="off">
+      <div class="form-group">
+        <label class="col-sm-4 control-label">经度</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control input-width " name="point_jd" id="point_jd" step="0.000001" data-fv-between="true"
+            data-fv-between-min="-180" data-fv-between-max="180"  data-fv-between-message="请输入-180至180之间的数字">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">纬度</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control input-width" name="point_wd" id="point_wd" step="0.000001" data-fv-between="true"
+            data-fv-between-min="-90" data-fv-between-max="90" data-fv-between-message="请输入-90至90之间的数字">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">高程</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control input-width" name="point_height" id="point_height" step="0.1" >
+        </div>
+      </div>
+      <div class="text-center">
+        <button type="button" class="btn btn-primary" id="btnOK">提交</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- 切换视角到模型或地形（山区）的快捷按钮 -->
+  <script type="text/javascript" src="js/center_terrain_3dtiles.js"></script>
+
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {})
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      var jd = 0
+      var wd = 0
+      var height = 0
+      var param = haoutil.system.getRequest()
+
+      if (param && param.view == 'false') {
+        $('#info').hide()
+      }
+
+      if (param && param.x && param.y) {
+        jd = Number(param.x)
+        wd = Number(param.y)
+        height = Number(param.z || 0)
+
+        if (jd > 180) {
+          jd = jd % 180
+        }
+        if (wd > 90) {
+          wd = wd % 90
+        }
+
+        $('#point_jd').val(jd)
+        $('#point_wd').val(wd)
+        $('#point_height').val(height)
+      }
+
+      if (param.edit == 'false') {
+        $('#point_jd').attr('disabled', 'disabled')
+        $('#point_wd').attr('disabled', 'disabled')
+        $('#point_height').attr('disabled', 'disabled')
+        $('#btnOK').hide()
+      } else {
+        $('#point_jd').bind('input propertychange', updateJwd2Map)
+        $('#point_wd').bind('input propertychange', updateJwd2Map)
+        $('#point_height').bind('input propertychange', updateJwd2Map)
+        $('#btnOK').show()
+        bindMourseClick()
+      }
+
+      if (jd > 0 && wd > 0) {
+        var val = {
+          x: jd,
+          y: wd,
+          z: height,
+        }
+        updateMarker(val, true)
+      }
+
+      $('#jwdForm').formValidation(
+        $.po('formValidation', {
+          verbose: true, //代表验证按顺序验证。验证成功才会下一个
+          fields: {
+            point_jd: {
+              validators: {
+                notEmpty: {
+                  message: '请填写经度',
+                },
+                numeric: {
+                  message: '请输入数字',
+                },
+              },
+            },
+            point_wd: {
+              validators: {
+                notEmpty: {
+                  message: '请填写纬度',
+                },
+                numeric: {
+                  message: '请输入数字',
+                },
+              },
+            },
+            point_height: {
+              validators: {
+                notEmpty: {
+                  message: '请填写高程',
+                },
+                numeric: {
+                  message: '请输入数字',
+                },
+              },
+            },
+          },
+        })
+      )
+      $('#btnOK').click(selectSite)
+    }
+
+    function bindMourseClick() {
+      $('body').addClass('cur-measure')
+
+      //单击地图事件
+      map.setCursor(true)
+      map.on(mars3d.EventType.click, function (event) {
+        var cartesian = event.cartesian
+        if (cartesian) {
+          var point = mars3d.LatLngPoint.fromCartesian(cartesian)
+          point.format()
+
+          var jd = point.lng
+          var wd = point.lat
+          var height = point.alt
+
+          if (height == 0) {
+            var _oldheight = $('#point_height').val()
+            if (_oldheight.length == 0) {
+              height = 0
+            } else {
+              height = Number(_oldheight)
+            }
+          }
+
+          var val = {
+            x: jd,
+            y: wd,
+            z: height,
+          }
+          updateMarker(val)
+
+          $('#point_jd').val(jd)
+          $('#point_wd').val(wd)
+          $('#point_height').val(height)
+
+          var $formValidation = $('#jwdForm').data('formValidation')
+          $formValidation.updateStatus('point_jd')
+          $formValidation.updateStatus('point_wd')
+          $formValidation.updateStatus('point_height')
+
+          $formValidation.validate()
+        }
+      })
+    }
+
+    var pointEntity
+
+    function updateMarker(val, iscenter) {
+      var position = Cesium.Cartesian3.fromDegrees(val.x, val.y, val.z)
+
+      if (pointEntity == null) {
+        pointEntity = new mars3d.graphic.PointEntity({
+          position: position,
+          style: {
+            color: '#3388ff',
+            pixelSize: 10,
+            outlineColor: '#ffffff',
+            outlineWidth: 2,
+          },
+        })
+        map.graphicLayer.addGraphic(pointEntity)
+      } else {
+        pointEntity.position = position
+      }
+
+      if (iscenter) {
+        map.centerPoint(position, {
+          radius: 5000, //距离目标点的距离
+        })
+      }
+    }
+
+    function updateJwd2Map() {
+      var jd = Number($('#point_jd').val())
+      var wd = Number($('#point_wd').val())
+      var height = Number($('#point_height').val())
+
+      if (isNaN(jd) || isNaN(wd) || isNaN(height) || jd == 0 || wd == 0) {
+        return
+      }
+
+      if (jd.length == 0 || wd.length == 0) {
+        return
+      }
+
+      if (height.length == 0) {
+        height = 0
+      }
+
+      var val = {
+        x: Number(jd),
+        y: Number(wd),
+        z: Number(height),
+      }
+      updateMarker(val, true)
+    }
+
+    function selectSite() {
+      var $formValidation = $('#jwdForm').data('formValidation')
+      $formValidation.validate()
+      if (!$formValidation.isValid()) {
+        return
+      }
+
+      var jd = $('#point_jd').val()
+      var wd = $('#point_wd').val()
+      var height = $('#point_height').val()
+
+      if (jd.length == 0 || wd.length == 0) {
+        return
+      }
+      if (height.length == 0) {
+        height = 0
+      }
+      var val = {
+        x: Number(jd),
+        y: Number(wd),
+        z: Number(height),
+      }
+
+      console.log(JSON.stringify(val))
+
+      //在父页面定义updatePointLatlng(x,y)方法;
+      //parent.updatePointLatlng(jd, wd);
+    }
+  </script>
+</body>
+
+</html>

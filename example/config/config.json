@@ -146,6 +146,7 @@
                 ]
             },
             {
+                "id": 2021,
                 "name": "高德卫星(GCJ02偏移)",
                 "type": "group",
                 "icon": "http://mars3d.cn/example/img/basemaps/gaode_img.png",

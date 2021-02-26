@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn ">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="x5-fullscreen" content="true">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta name="description" content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+    <title>三维地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+    <!--第三方lib-->
+    <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d,mars3d-space"></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+    <!-- 信息 面板 -->
+    <div class="infoview">
+      <input id="btnCenter" type="button" class="btn btn-primary" value="定位至卫星" />
+      <table class="mars-table tb-border">
+        <tr>
+          <td class="nametd">名称</td>
+          <td id="td_name"> </td>
+        </tr>
+        <tr>
+          <td class="nametd">TLE1</td>
+          <td id="td_tle1"> </td>
+        </tr>
+        <tr>
+          <td class="nametd">TLE2</td>
+          <td id="td_tle2"> </td>
+        </tr>
+        <tr>
+          <td class="nametd">时间</td>
+          <td id="td_time"> </td>
+        </tr>
+
+        <tr>
+          <td class="nametd">经度</td>
+          <td id="td_jd"> </td>
+        </tr>
+        <tr>
+          <td class="nametd">经度</td>
+          <td id="td_wd"> </td>
+        </tr>
+        <tr>
+          <td class="nametd">高程</td>
+          <td id="td_gd"> </td>
+        </tr>
+        <tr>
+          <td class="nametd">参考系轴</td>
+          <td>
+            <div class="checkbox checkbox-primary checkbox-inline">
+              <input id="chkShowModelMatrix" class="styled" type="checkbox">
+              <label for="chkShowModelMatrix">
+                显示/隐藏
+              </label>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
+
+      var map
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.util.merge(options, {
+          scene: {
+            //此处参数会覆盖config.json中的对应配置
+            center: {
+              y: 12.845055,
+              x: 112.931363,
+              z: 24286797.17,
+              heading: 3.4,
+              pitch: -89.6,
+              roll: 0,
+            },
+            cameraController: {
+              zoomFactor: 3.0,
+              minimumZoomDistance: 1000,
+              maximumZoomDistance: 300000000,
+              constrainedAxis: false, //解除在南北极区域鼠标操作限制
+            },
+          },
+          control: {
+            animation: true, //是否创建动画小器件，左下角仪表
+            timeline: true, //是否显示时间线控件
+          },
+        })
+
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+
+        map.clock.shouldAnimate = true
+        map.clock.multiplier = 1 //速度
+
+        //创建矢量数据图层
+        var graphicLayer = new mars3d.layer.GraphicLayer()
+        map.addLayer(graphicLayer)
+
+        graphicLayer.on(mars3d.EventType.click, function (event) {
+          console.log('单击了卫星', event)
+        })
+
+        var weixin = new mars3d.graphic.Satellite({
+          name: 'BEIDOU M6',
+          tle1: '1 38775U 12050B   19233.58396017  .00000002  00000-0  00000+0 0  9996',
+          tle2: '2 38775  54.9682 146.4459 0022572 250.3518 274.6095  1.86232229 47268',
+          fixedFrameTransform: Cesium.Transforms.localFrameToFixedFrameGenerator('east', 'south'),
+          model: {
+            uri: 'http://data.marsgis.cn/gltf/mars/weixin.gltf',
+            autoHeading: false,
+            show: true,
+          },
+          path: {
+            color: '#36d9ec',
+            show: true,
+          },
+          cone: {
+            sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
+            reverse: false,
+            rayEllipsoid: true,
+            show: true,
+            list: [
+              {
+                name: '高分相机A',
+                angle1: 4.03, //视场张角1(度)
+                angle2: 4.03, //视场张角2(度)
+                pitchOffset: 3.7, //安装偏转角(度)
+                color: '#ff0000',
+                show: true,
+              },
+              {
+                name: '高分相机B',
+                angle1: 3.1, //视场张角1(度)
+                angle2: 3.1, //视场张角2(度)
+                pitchOffset: -3.7, //安装偏转角(度)
+                color: '#0000ff',
+                show: true,
+              },
+              {
+                name: '多光谱相机A',
+                angle1: 4.5, //视场张角1(度)
+                angle2: 4.5, //视场张角2(度)
+                pitchOffset: 4.35, //安装偏转角(度)
+                color: '#ffff00',
+                show: true,
+              },
+              {
+                name: '多光谱相机B',
+                angle1: 4.5, //视场张角1(度)
+                angle2: 4.5, //视场张角2(度)
+                pitchOffset: -4.35, //安装偏转角(度)
+                color: '#00ffff',
+                show: true,
+              },
+            ],
+          },
+        })
+        graphicLayer.addGraphic(weixin)
+
+        //显示 坐标系参考轴
+        $('#chkShowModelMatrix').change(function () {
+          var val = $(this).is(':checked')
+          weixin.debugAxis = val
+        })
+
+        $('#btnCenter').click(function () {
+          weixin.flyTo()
+        })
+
+        $('#td_name').html(weixin.name)
+        $('#td_tle1').html(weixin.options.tle1)
+        $('#td_tle2').html(weixin.options.tle2)
+
+        //定时更新面板
+        setInterval(function () {
+          showRealTimeInfo(weixin)
+        }, 200)
+      }
+
+      //显示实时坐标和时间
+      function showRealTimeInfo(weixin) {
+        $('#td_time').html(Cesium.JulianDate.toDate(map.clock.currentTime).format('yyyy-M-d HH:mm:ss'))
+
+        if (weixin.position) {
+          var point = mars3d.point.formatPosition(weixin.position)
+          $('#td_jd').html(point.x)
+          $('#td_wd').html(point.y)
+          $('#td_gd').html(haoutil.str.formatLength(point.z))
+        }
+      }
+    </script>
+  </body>
+
+</html>

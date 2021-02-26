@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn ">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+        content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>三维地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <!--第三方lib-->
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+    var material
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {
+        scene: {
+          center: {
+            y: 29.792193,
+            x: 121.48008,
+            z: 122.23,
+            heading: 198,
+            pitch: -53.6,
+            roll: 0,
+          },
+        },
+      })
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //加个模型
+      var tiles3dLayer = new mars3d.layer.TilesetLayer({
+        name: '整体模型',
+        url: 'http://data.marsgis.cn/3dtiles/max-fsdzm/tileset.json',
+        offset: {
+          z: 11.3,
+        },
+        maximumScreenSpaceError: 1,
+        maximumMemoryUsage: 1024,
+      })
+      map.addLayer(tiles3dLayer)
+
+      //创建矢量数据图层
+      var graphicLayer = new mars3d.layer.GraphicLayer({
+        hasEdit: true,
+      })
+      map.addLayer(graphicLayer)
+
+      //加一些演示数据
+      addGraphic_01(graphicLayer)
+      addGraphic_02(graphicLayer)
+      addGraphic_03(graphicLayer)
+      addGraphic_04(graphicLayer)
+    }
+
+    //  wall文字  primitive方式添加
+    function addGraphic_01(graphicLayer) {
+      var primitive = new mars3d.graphic.WallPrimitive({
+        positions: [
+          [121.479914, 29.791249, 18],
+          [121.479694, 29.791303, 18],
+        ],
+        style: {
+          diffHeight: 5,
+          material: new mars3d.material.TextMaterial({
+            text: '水利闸门',
+            textStyles: {
+              font: '60px 楷体',
+              fill: true,
+              fillColor: Cesium.Color.WHITE,
+              backgroundColor: new Cesium.Color(0.0, 0.0, 0.0, 0.5),
+              textBaseline: 'middle',
+              padding: 10,
+            },
+          }),
+        },
+      })
+      graphicLayer.addGraphic(primitive)
+    }
+
+    //  wall文字  primitive方式添加
+    function addGraphic_02(graphicLayer) {
+      var primitive = new mars3d.graphic.WallPrimitive({
+        positions: [
+          [121.479343, 29.791419, 25],
+          [121.479197, 29.791474, 25],
+        ],
+        style: {
+          diffHeight: 5,
+          material: new mars3d.material.TextMaterial({
+            text: '火星科技',
+            textStyles: {
+              font: '60px 楷体',
+              fill: true,
+              fillColor: Cesium.Color.YELLOW,
+              backgroundColor: new Cesium.Color(0.0, 0.0, 0.0, 0.0),
+              textBaseline: 'middle',
+              padding: 10,
+            },
+          }),
+        },
+      })
+      graphicLayer.addGraphic(primitive)
+    }
+
+    //rectangle贴地矩形  3dtiles路面文字
+    function addGraphic_03(graphicLayer) {
+      var rectanglePrimitive = new mars3d.graphic.RectanglePrimitive({
+        name: '路面文字',
+        positions: [
+          [121.479989, 29.791162],
+          [121.480114, 29.791201],
+        ],
+        style: {
+          material: new mars3d.material.TextMaterial({
+            text: '火星路',
+            textStyles: {
+              font: '50px 楷体',
+              fill: true,
+              fillColor: Cesium.Color.DARKGREEN,
+              stroke: true,
+              strokeWidth: 3,
+              strokeColor: Cesium.Color.WHITE,
+              backgroundColor: new Cesium.Color(0.0, 0.0, 0.0, 0),
+            },
+          }),
+          rotation: Cesium.Math.toRadians(163),
+          stRotation: Cesium.Math.toRadians(163),
+          clampToGround: true,
+        },
+      })
+      graphicLayer.addGraphic(rectanglePrimitive)
+    }
+
+    function addGraphic_04(graphicLayer) {
+      var rectanglePrimitive = new mars3d.graphic.RectanglePrimitive({
+        positions: [
+          [121.479593, 29.791632],
+          [121.480136, 29.79169],
+        ],
+        style: {
+          material: new mars3d.material.TextMaterial({
+            text: 'Mars3D三维地球平台软件',
+            textStyles: {
+              font: '50px 楷体',
+              fill: true,
+              fillColor: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
+              stroke: true,
+              strokeWidth: 2,
+              strokeColor: new Cesium.Color(1.0, 1.0, 1.0, 0.8),
+              backgroundColor: new Cesium.Color(0.0, 0.0, 0.0, 0),
+            },
+          }),
+          rotation: Cesium.Math.toRadians(163),
+          stRotation: Cesium.Math.toRadians(163),
+          clampToGround: true,
+        },
+      })
+      graphicLayer.addGraphic(rectanglePrimitive)
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>图标点 Entity矢量数据加载 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <div class="infoview">
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkClustering" class="styled" type="checkbox" checked />
+        <label for="chkClustering"> 是否聚合 </label>
+      </div>
+      &nbsp; &nbsp; &nbsp;
+
+      <button id="btn_start" type="button" class="btn btn-primary" title="贴地属性性能较低，建议异步计算后将高度值存放数据库内，后期直接加载此高度值">
+        演示异步计算贴地高度
+      </button>
+    </div>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
+
+      var map
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.util.merge(options, {
+          scene: {
+            center: {
+              y: 24.688611,
+              x: 119.260277,
+              z: 1673758.75,
+              heading: 347.8,
+              pitch: -69,
+              roll: 359.9,
+            },
+          },
+        })
+
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+
+        //创建矢量数据图层
+        var graphicLayer = new mars3d.layer.GraphicLayer()
+        map.addLayer(graphicLayer)
+
+        var arrData
+        $.getJSON('http://data.marsgis.cn/file/apidemo/mudi.json', function (result) {
+          arrData = result.data
+          addFeature(graphicLayer, arrData)
+        })
+
+        $('#chkClustering').change(function () {
+          var val = $(this).prop('checked')
+
+          graphicLayer.dataSource.clustering.enabled = val
+        })
+
+        $('#btn_start').click(function () {
+          getDataSurfaceHeight(arrData)
+        })
+      }
+
+      function addFeature(graphicLayer, arr) {
+        graphicLayer.bindPopup(function (event) {
+          let item = event.graphic.attr
+          var inthtml =
+            '<table style="width: auto;"><tr>' +
+            '<th scope="col" colspan="4"  style="text-align:center;font-size:15px;">' +
+            item.text +
+            '</th></tr><tr>' +
+            '<td >省：</td><td >' +
+            item.province +
+            '</td></tr><tr>' +
+            '<td >市：</td><td >' +
+            item.city +
+            '</td></tr><tr>' +
+            '<td >县/区：</td><td >' +
+            item.district +
+            '</td></tr><tr>' +
+            '<td >地址：</td><td >' +
+            item.address +
+            '</td></tr><tr>' +
+            '<td colspan="4" style="text-align:right;"></td></tr></table>'
+          return inthtml
+        })
+
+        //单击事件
+        graphicLayer.on(mars3d.EventType.click, function (event) {
+          console.log('你单击了', event)
+
+          if (map.camera.positionCartographic.height > 90000) {
+            graphicLayer.closePopup()
+
+            var graphic = event.graphic
+            var position = graphic.positionShow
+            map.centerPoint(position, {
+              radius: 5000, //距离目标点的距离
+              duration: 4,
+              complete: function (e) {
+                //飞行完成回调方法
+                graphicLayer.openPopup(graphic)
+              },
+            })
+          }
+        })
+
+        for (var i = 0, len = arr.length; i < len; i++) {
+          var item = arr[i]
+
+          var graphic = new mars3d.graphic.BillboardEntity({
+            position: new mars3d.LatLngPoint(item.lng, item.lat, item.z || 0),
+            style: {
+              image: 'img/marker/mark3.png',
+              horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+              verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+              scaleByDistance: new Cesium.NearFarScalar(1000, 0.7, 5000000, 0.3),
+              label: {
+                text: item.text,
+                font_size: 19,
+                style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+                fillColor: Cesium.Color.AZURE,
+                outlineColor: Cesium.Color.BLACK,
+                outlineWidth: 2,
+                horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+                verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                pixelOffset: new Cesium.Cartesian2(10, 0), //偏移量
+                distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 80000),
+              },
+            },
+            attr: item,
+          })
+
+          //如果用point，可以切换到下面注释的PointEntity方式
+          // var graphic = new mars3d.graphic.PointEntity({
+          //   position: new mars3d.LatLngPoint(item.lng, item.lat, item.z || 0),
+          //   style: {
+          //     color: Cesium.Color.fromCssColorString('#3388ff'),
+          //     pixelSize: 10,
+          //     outlineColor: Cesium.Color.fromCssColorString('#ffffff'),
+          //     outlineWidth: 2,
+          //     heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+          //     scaleByDistance: new Cesium.NearFarScalar(1.5e2, 1.0, 8.0e6, 0.2),
+          //     label: {
+          //       text: item.text,
+          //       font_size: 17,
+          //       style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+          //       fillColor: Cesium.Color.AZURE,
+          //       outlineColor: Cesium.Color.BLACK,
+          //       outlineWidth: 2,
+          //       horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+          //       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+          //       pixelOffset: new Cesium.Cartesian2(10, 0), //偏移量
+          //       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 80000),
+          //     },
+          //   },
+          //   attr: item,
+          // })
+
+          graphicLayer.addGraphic(graphic)
+        }
+
+        //========聚合 start==========
+        var clustering = graphicLayer.dataSource.clustering
+        var timeTik = setInterval(function () {
+          if (clustering._cluster) {
+            clustering._cluster()
+          }
+        }, 800)
+        clustering.clusterEvent.addEventListener(function (clusteredEntities, cluster) {
+          if (timeTik) {
+            clearInterval(timeTik)
+            timeTik = null
+          }
+          cluster.label.show = false
+
+          cluster.billboard.show = true
+          cluster.billboard.id = cluster.label.id
+          // cluster.billboard.verticalOrigin = Cesium.VerticalOrigin.BOTTOM;
+          // cluster.billboard.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;  //贴地
+
+          cluster.billboard.scale = 0.5 //必须，解决数字文本锯齿
+          cluster.billboard.image = clustering.getCircleImage(clusteredEntities.length) //getCircleImage方法未mars3d扩展的
+        })
+        clustering.pixelRange = 20 //多少像素矩形范围内聚合
+        clustering.enabled = true
+        //========聚合 end==========
+      }
+
+      //计算贴地高度示例代码，可以将获取到的高度更新到数据库内，后续不用重复计算。
+      function getDataSurfaceHeight(arrData) {
+        if (!arrData) {
+          haoutil.msg('数据尚未加载成功！')
+          return
+        }
+
+        var lonCol = 'lng',
+          latCol = 'lat',
+          heightCol = 'z'
+
+        var positions = []
+        for (var i = 0, len = arrData.length; i < len; i++) {
+          var item = arrData[i]
+
+          //所在经纬度坐标及海拔高度
+          var longitude = Number(item[lonCol])
+          var latitude = Number(item[latCol])
+          var height = Number(item[heightCol] || 0)
+
+          var position = Cesium.Cartesian3.fromDegrees(longitude, latitude)
+          positions.push(position)
+        }
+
+        haoutil.loading.show()
+
+        mars3d.polyline.computeSurfacePoints({
+          map: map,
+          positions: positions,
+          callback: function (raisedPositions, noHeight) {
+            haoutil.loading.hide()
+            if (noHeight) {
+              console.log('部分数据未获取到高度值，贴地高度计算存在误差')
+            }
+
+            for (var i = 0, len = arrData.length; i < len; i++) {
+              var item = arrData[i]
+              var point = mars3d.point.formatPosition(raisedPositions[i])
+
+              item[lonCol] = point.x
+              item[latCol] = point.y
+              item[heightCol] = point.z //得到计算的高度值
+            }
+
+            haoutil.file.downloadFile('point.json', JSON.stringify({ data: arrData }))
+          },
+        })
+      }
+    </script>
+  </body>
+</html>

@@ -149,7 +149,7 @@ function bindLayerContextMenu(graphicLayer) {
       },
       callback: function (e) {
         let graphic = e.graphic
-        let strDis = mars3d.util.formatLength(graphic.distance)
+        let strDis = mars3d.util.formatDistance(graphic.distance)
         haoutil.alert('该对象的长度为:' + strDis)
       },
     },
@@ -169,7 +169,7 @@ function bindLayerContextMenu(graphicLayer) {
       },
       callback: function (e) {
         let graphic = e.graphic
-        let strDis = mars3d.util.formatLength(graphic.distance)
+        let strDis = mars3d.util.formatDistance(graphic.distance)
         haoutil.alert('该对象的周长为:' + strDis)
       },
     },

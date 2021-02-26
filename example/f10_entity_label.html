@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>Label 文字 |Mars3D ( MarsGIS for Cesium )|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+  <div class="infoview">
+    <div>
+      图层状态：
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkShow" class="styled" type="checkbox" checked>
+        <label for="chkShow">
+          显示隐藏
+        </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkPopup" class="styled" type="checkbox" checked>
+        <label for="chkPopup">
+          Popup绑定
+        </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkTooltip" class="styled" type="checkbox">
+        <label for="chkTooltip">
+          Tooltip绑定
+        </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkContextMenu" class="styled" type="checkbox" checked>
+        <label for="chkContextMenu">
+          右键菜单绑定
+        </label>
+      </div>
+    </div>
+    <div>
+      数据维护：
+      <input id="btnStartDraw" type="button" class="btn btn-primary" value="图上标绘" title="在图上绘制矢量数据" />
+
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkHasEdit" class="styled" type="checkbox">
+        <label for="chkHasEdit">
+          是否编辑
+        </label>
+      </div>
+    </div>
+    <div>
+      数据管理：
+      <input id="btnClear" type="button" class="btn btn-danger" value="清除" />
+      <input id="btnExpFile" type="button" class="btn btn-primary" value="保存GeoJSON" title="保存为GeoJSON文件" />
+      <input id="btnImpFile" type="button" class="btn btn-primary" value="打开GeoJSON" title="打开之前保存的GeoJSON文件" />
+
+      <input id="input_draw_file" type="file" accept=".json" style="display:none;" />
+    </div>
+  </div>
+
+  <!-- 切换视角到模型或地形（山区）的快捷按钮 -->
+  <script type="text/javascript" src="js/center_terrain_3dtiles.js"></script>
+
+  <!-- 图层管理相关处理js -->
+  <script type="text/javascript" src="./js/graphicManager.js"></script>
+
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+    var graphicLayer
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.util.merge(options, {})
+
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //创建矢量数据图层
+      graphicLayer = new mars3d.layer.GraphicLayer()
+      map.addLayer(graphicLayer)
+
+      //图层管理的相关处理，代码在\js\graphicManager.js
+      initLayerManager(graphicLayer)
+
+      //新增绘制
+      $('#btnStartDraw').click(function () {
+        //开始绘制
+        graphicLayer.startDraw({
+          type: 'label',
+          style: {
+            text: 'Mars3D三维地球平台软件',
+            color: '#0081c2',
+            font_size: 27,
+            border: true,
+            border_color: '#ffffff',
+            border_width: 2,
+          },
+        })
+      })
+
+      //加一些演示数据
+      addGraphic_01(graphicLayer)
+      addGraphic_02(graphicLayer)
+      addGraphic_03(graphicLayer)
+      addGraphic_04(graphicLayer)
+    }
+
+    /**
+     style 支持的参数说明：
+     "style": {
+        支持 Cesium.LabelGraphics.ConstructorOptions 中所有属性（Cesium原生的属性）
+
+        "text": "文字",      //内容
+        "color": "#ffffff",      //颜色
+        "opacity": 1,      //透明度
+        "font_family": "楷体",      //字体 ,可选项：微软雅黑,宋体,楷体,隶书,黑体,
+        "font_size": 30,      //字体大小
+        "border": true,      //是否衬色
+        "border_color": "#000000",      //衬色颜色
+        "border_width": 3,      //衬色宽度
+        "background": false,      //是否背景
+        "background_color": "#000000",      //背景颜色
+        "background_opacity": 0.5,      //背景透明度
+        "font_weight": "normal",      //是否加粗 ,可选项：bold(是),normal(否),
+        "font_style": "normal",      //是否斜体 ,可选项：italic(是),normal(否),
+        "pixelOffsetX": 0,      //横向偏移像素
+        "pixelOffsetY": 0,      //纵向偏移像素
+        "scaleByDistance": false,      //是否按视距缩放
+        "scaleByDistance_far": 1000000,      //上限
+        "scaleByDistance_farValue": 0.1,      //比例值
+        "scaleByDistance_near": 1000,      //下限
+        "scaleByDistance_nearValue": 1,      //比例值
+        "distanceDisplayCondition": false,      //是否按视距显示
+        "distanceDisplayCondition_far": 100000,      //最大距离
+        "distanceDisplayCondition_near": 0,      //最小距离
+        "clampToGround": false,      //是否贴地
+        "visibleDepth": true,      //是否被遮挡
+     }
+    */
+
+    function addGraphic_01(graphicLayer) {
+      var graphic = new mars3d.graphic.LabelEntity({
+        position: new mars3d.LatLngPoint(116.308659, 30.914005, 429.94),
+        style: {
+          text: '合肥火星科技有限公司',
+          font_size: 25,
+          font_family: '楷体',
+          style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+          fillColor: Cesium.Color.fromCssColorString('#003da6'),
+          outlineColor: Cesium.Color.fromCssColorString('#bfbfbf'),
+          outlineWidth: 2,
+          horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+          disableDepthTestDistance: Number.POSITIVE_INFINITY, //一直显示，不被地形等遮挡(会穿过地球被透视)
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+
+      //entity转geojson
+      var geojson = graphic.toGeoJSON()
+      console.log(geojson)
+
+      //geojson转entity
+      var graphic1Copy = mars3d.graphic.LabelEntity.fromGeoJSON(geojson)
+      graphic1Copy.position = [116.18869, 30.95041, 525.84]
+      graphic1Copy.text = '火星科技 - 我是copy的点'
+      graphicLayer.addGraphic(graphic1Copy)
+      console.log(graphic1Copy)
+    }
+
+    function addGraphic_02(graphicLayer) {
+      var graphic = new mars3d.graphic.LabelEntity({
+        name: '贴地文字',
+        position: new mars3d.LatLngPoint(116.241728, 30.879732),
+        style: {
+          text: 'Mars3D',
+          fillColor: Cesium.Color.YELLOW,
+          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+    }
+
+    function addGraphic_03(graphicLayer) {
+      var graphic = new mars3d.graphic.LabelEntity({
+        name: '根据视距缩放文字',
+        position: new mars3d.LatLngPoint(116.340026, 30.873948, 383.31),
+        style: {
+          text: '中国安徽合肥',
+          fillColor: Cesium.Color.LIME,
+          horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+          scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 500000, 0.1),
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+    }
+
+    function addGraphic_04(graphicLayer) {
+      var graphic = new mars3d.graphic.LabelEntity({
+        name: '根据视距显示文字',
+        position: new mars3d.LatLngPoint(116.329102, 30.977955, 1548.6),
+        style: {
+          text: 'Mars3D三维地球平台软件',
+          font_size: 25,
+          font_family: '楷体',
+          style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+          fillColor: Cesium.Color.BLUE,
+          outlineColor: Cesium.Color.LIME,
+          outlineWidth: 2,
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 100000),
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+    }
+  </script>
+</body>
+
+</html>

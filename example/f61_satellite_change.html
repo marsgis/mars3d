@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>三维地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d,mars3d-space"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+    <style>
+      .videoWrap {
+        position: absolute;
+        bottom: 45px;
+        left: 2px;
+        border: 1px solid gray;
+        z-index: 9;
+        background-color: #3f4854;
+        padding: 4px 8px;
+      }
+
+      .closeAction {
+        position: absolute;
+        top: -25px;
+        left: 0;
+        background-color: #3f4854;
+        padding: 2px 6px;
+        cursor: pointer;
+      }
+
+      .closeAction:after {
+        content: '';
+        position: absolute;
+        right: -28px;
+        top: 0;
+        border-left: 14px solid #3f4854;
+        border-right: 14px solid transparent;
+        border-bottom: 14px solid #3f4854;
+        border-top: 14px solid transparent;
+      }
+
+      .videoWrap .title {
+        margin-bottom: 8px;
+      }
+
+      /* 视频的收缩展开状态 */
+      .videoWrap .openPanel {
+        display: block;
+      }
+
+      .videoWrap .closePanel {
+        display: block;
+        cursor: pointer;
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <!-- 视频 面板 -->
+    <div id="videoView" class="videoWrap" style="display: none">
+      <div class="openPanel">
+        <div class="closeAction">&lt; 收缩</div>
+        <video id="trailer" class="video" width="420" muted="muted" autoplay="autoplay">
+          <source src="http://data.marsgis.cn/video/lukou.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="closePanel">
+        <i class="fa fa-play"></i>
+        查看视频&nbsp;&gt;
+      </div>
+    </div>
+
+    <!-- 信息 面板 -->
+    <div class="infoview">
+      <input type="button" class="btn btn-primary" value="框选" id="drawRectangle" />
+      <input type="button" class="btn btn-primary" value="圆形" id="drawCircle" />
+      <input type="button" class="btn btn-primary" value="多边形" id="drawPolygon" />
+      <input type="button" class="btn btn-primary" value="清除" id="drawClear" />
+    </div>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
+
+      var map
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.util.merge(options, {
+          scene: {
+            center: {
+              y: 12.845055,
+              x: 112.931363,
+              z: 24286797.17,
+              heading: 3.4,
+              pitch: -89.6,
+              roll: 0,
+            },
+            cameraController: {
+              zoomFactor: 3.0,
+              minimumZoomDistance: 1,
+              maximumZoomDistance: 300000000,
+              constrainedAxis: false, //解除在南北极区域鼠标操作限制
+            },
+            clock: {
+              multiplier: 10, //速度
+            },
+          },
+          control: {
+            animation: true, //是否创建动画小器件，左下角仪表
+            timeline: true, //是否显示时间线控件
+          },
+        })
+
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+
+        //创建矢量数据图层
+        var graphicLayer = new mars3d.layer.GraphicLayer()
+        map.addLayer(graphicLayer)
+
+        graphicLayer.on(mars3d.EventType.click, function (event) {
+          console.log('单击了卫星', event)
+        })
+        graphicLayer.on(mars3d.EventType.change, function (event) {
+          //位置变化事件
+          processInArea(event.graphic)
+        })
+
+        var weixin = new mars3d.graphic.Satellite({
+          name: 'LINGQIAO VIDEO A',
+          tle1: '1 40959U 15057B   19351.71151453  .00000032  00000-0  12595-4 0  9992',
+          tle2: '2 40959  97.8800  56.1991 0018668  22.3644 337.8374 14.73279049225631',
+          model: {
+            uri: 'http://data.marsgis.cn/gltf/mars/weixin.gltf',
+            show: true,
+          },
+          cone: {
+            angle1: 40,
+            show: false,
+          },
+          label: {
+            font_family: '楷体',
+            font_size: 30,
+            show: true,
+          },
+          path: {
+            closure: true,
+            show: true,
+          },
+        })
+        graphicLayer.addGraphic(weixin)
+
+        weixin._lastInPoly = false
+
+        setTimeout(() => {
+          var position = weixin.position
+          if (position) {
+            map.centerPoint(position, {
+              radius: 900000, //距离目标点的距离
+              pitch: -60, //相机方向
+            })
+          }
+        }, 3000)
+
+        $('.closePanel').click(function () {
+          $(this).hide(300)
+          $('.openPanel').show(300)
+        })
+
+        $('.closeAction').click(function () {
+          $('.openPanel').hide(300)
+          $('.closePanel').show()
+        })
+
+        //框选查询 矩形
+        $('#drawRectangle').click(function () {
+          map.graphicLayer.startDraw({
+            type: 'rectangle',
+            style: {
+              color: '#ffff00',
+              opacity: 0.2,
+              outline: true,
+              outlineColor: '#ffffff',
+              outlineWidth: 2,
+            },
+            success: function (graphic) {
+              drawGraphic = graphic
+            },
+          })
+        })
+        //框选查询   多边
+        $('#drawPolygon').click(function () {
+          map.graphicLayer.startDraw({
+            type: 'polygon',
+            style: {
+              color: '#ffff00',
+              opacity: 0.2,
+              outline: true,
+              outlineColor: '#ffffff',
+              outlineWidth: 2,
+            },
+            success: function (graphic) {
+              drawGraphic = graphic
+            },
+          })
+        })
+        //框选查询   圆
+        $('#drawCircle').click(function () {
+          map.graphicLayer.startDraw({
+            type: 'circle',
+            style: {
+              color: '#ffff00',
+              opacity: 0.2,
+              outline: true,
+              outlineColor: '#ffffff',
+              outlineWidth: 2,
+            },
+            success: function (graphic) {
+              drawGraphic = graphic
+            },
+          })
+        })
+
+        $('#drawClear').click(function () {
+          map.graphicLayer.clear()
+          drawGraphic = null
+        })
+      }
+
+      var drawGraphic
+
+      //判断卫星是否在面内
+      function processInArea(weixin) {
+        if (!drawGraphic) {
+          weixin._lastInPoly = false
+          weixin.coneShow = false //关闭视锥体
+          $('#videoView').hide() //关闭视频面板
+          return
+        }
+
+        var position = weixin.position
+        if (!position) {
+          return
+        }
+
+        var thisIsInPoly = drawGraphic.isInPoly(position)
+        if (thisIsInPoly !== weixin._lastInPoly) {
+          if (thisIsInPoly) {
+            //开始进入区域内
+            console.log(weixin.name + '开始进入区域内')
+
+            weixin.coneShow = true //打开视锥体
+            $('#videoView').show() //打开视频面板
+          } else {
+            //离开区域
+            console.log(weixin.name + '离开区域')
+
+            weixin.coneShow = false //关闭视锥体
+            $('#videoView').hide() //关闭视频面板
+          }
+
+          weixin._lastInPoly = thisIsInPoly
+        }
+      }
+    </script>
+  </body>
+</html>
