@@ -226,7 +226,7 @@
           var position = graphic.positionShow
           poiLayer.closePopup()
 
-          map.centerPoint(position, {
+          map.flyToPoint(position, {
             radius: 2000, //距离目标点的距离
             pitch: -50, //相机方向
             duration: 3,

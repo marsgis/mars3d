@@ -54,7 +54,7 @@
         </td>
 
         <td>
-          <input type="button" class="btn btn-primary" value="视角复位" onclick="centerAt()" />
+          <input type="button" class="btn btn-primary" value="视角复位" onclick="flyTo()" />
         </td>
       </tr>
     </table>
@@ -145,8 +145,8 @@
       })
     }
 
-    function centerAt() {
-      tiles3dLayer.centerAt()
+    function flyTo() {
+      tiles3dLayer.flyTo()
     }
   </script>
 </body>

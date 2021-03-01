@@ -183,7 +183,7 @@
         setTimeout(() => {
           var position = weixin.position
           if (position) {
-            map.centerPoint(position, {
+            map.flyToPoint(position, {
               radius: 900000, //距离目标点的距离
               pitch: -60, //相机方向
             })

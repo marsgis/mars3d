@@ -103,7 +103,7 @@
 
       graphicLayer.bindPopup(function (event) {
         var data = event.graphic.attr
-        return mars3d.util.getPopup('all', data, '楼层')
+        return mars3d.util.getTemplateHtml({ title: '楼层', template: 'all', attr: data })
       })
 
       graphicLayer.on(mars3d.EventType.mouseOver, function (event) {

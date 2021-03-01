@@ -135,7 +135,7 @@
     //“变化屏”mapChange变化，将“被更新屏”mapUpdate同步更新
     function updateView(mapChange, mapUpdate) {
       var view = mapChange.getCameraView()
-      mapUpdate.centerAt(view, { duration: 0 })
+      mapUpdate.setCameraView(view, { duration: 0 })
     }
   </script>
 </body>

@@ -73,7 +73,7 @@
       map.on(mars3d.EventType.morphComplete, function (event) {
         //切换场景后事件
         setTimeout(function () {
-          map.centerAt(lastCameraView)
+          map.setCameraView(lastCameraView)
         }, 100)
       })
 

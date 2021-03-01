@@ -288,7 +288,7 @@
           $('#txt_rotation_z').val(item.rotation.z || 0)
 
           if (item.center) {
-            map.centerAt(item.center)
+            map.setCameraView(item.center)
           }
         }
       }
@@ -505,7 +505,7 @@
           offset: new Cesium.HeadingPitchRange(map.camera.heading, map.camera.pitch, tiles3dLayer.tileset.boundingSphere.radius * 2),
         })
       } else {
-        map.centerPoint(tiles3dLayer.tileset.mars.position, {
+        map.flyToPoint(tiles3dLayer.tileset.mars.position, {
           radius: tiles3dLayer.tileset.boundingSphere.radius * 2,
         })
       }

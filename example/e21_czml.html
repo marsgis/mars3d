@@ -208,7 +208,7 @@
     function showXiaofangDemo() {
       removeLayer()
 
-      map.centerAt({ lat: 32.891559, lng: 117.360875, alt: 378, heading: 18, pitch: -62 })
+      map.setCameraView({ lat: 32.891559, lng: 117.360875, alt: 378, heading: 18, pitch: -62 })
 
       czmlLayer = new mars3d.layer.CzmlLayer({
         name: '消防演练',

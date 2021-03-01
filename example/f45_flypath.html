@@ -88,7 +88,7 @@
           let hpr = mars3d.matrix.getHeadingPitchRollByOrientation(position, orientation)
           var heading = Cesium.Math.toDegrees(hpr.heading) + 90
 
-          map.centerPoint(position, {
+          map.flyToPoint(position, {
             radius: 500, //距离目标点的距离
             heading: heading,
             pitch: -50,

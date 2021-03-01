@@ -157,7 +157,7 @@
     var earthWindData
 
     function loadEarthData() {
-      map.centerAtHome()
+      map.flyHome()
 
       canvasWindLayer.speedRate = 50
       canvasWindLayer.reverseY = false //false时表示 纬度顺序从大到小
@@ -184,7 +184,7 @@
     var dongnanWindData
 
     function loadDongnanData() {
-      map.centerAt({
+      map.setCameraView({
         y: 30.484229,
         x: 116.627601,
         z: 1719951,

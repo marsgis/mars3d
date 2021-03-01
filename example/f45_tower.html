@@ -174,8 +174,9 @@
           polylines5 = polylines5.concat(positions)
         }
 
-        var html = mars3d.util.getPopup(
-          [
+        var html = mars3d.util.getTemplateHtml({
+          title: '塔杆',
+          template: [
             { field: 'roadName', name: '所属线路' },
             { field: 'towerId', name: '杆塔编号' },
             { field: '杆塔型号', name: '杆塔型号' },
@@ -187,9 +188,8 @@
             { field: '施工单位', name: '施工单位' },
             { field: 'height', name: '海拔高度' },
           ],
-          item,
-          '塔杆'
-        )
+          attr: item,
+        })
 
         drawWireTowerModel(position, degree, html)
       }

@@ -112,7 +112,7 @@
       $('#btnAddData').click(function () {
         graphicLayer.clear()
 
-        map.centerAt({ lat: 30.648084, lng: 116.747173, alt: 29041, heading: 317, pitch: -32 })
+        map.setCameraView({ lat: 30.648084, lng: 116.747173, alt: 29041, heading: 317, pitch: -32 })
 
         haoutil.loading.show()
         var startTime = new Date().getTime()

@@ -119,7 +119,7 @@
               callback: function (e) {
                 let cameraDistance = Cesium.Cartesian3.distance(e.cartesian, map.camera.positionWC) * 0.1
 
-                map.centerPoint(e.cartesian, {
+                map.flyToPoint(e.cartesian, {
                   radius: cameraDistance, //距离目标点的距离
                   maximumHeight: map.camera.positionCartographic.height,
                 })

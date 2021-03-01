@@ -94,7 +94,7 @@
     function addLayer() {
       removeLayer()
 
-      map.centerAt({ lat: 31.429187, lng: 117.239534, alt: 166122, heading: 2, pitch: -74 })
+      map.setCameraView({ lat: 31.429187, lng: 117.239534, alt: 166122, heading: 2, pitch: -74 })
 
       //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
       tileLayer = new mars3d.layer.WmtsLayer({

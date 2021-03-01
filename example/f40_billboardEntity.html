@@ -128,7 +128,7 @@
 
             var graphic = event.graphic
             var position = graphic.positionShow
-            map.centerPoint(position, {
+            map.flyToPoint(position, {
               radius: 5000, //距离目标点的距离
               duration: 4,
               complete: function (e) {

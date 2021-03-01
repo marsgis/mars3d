@@ -106,7 +106,7 @@
 
     var map
     var measure
-    var measureVolumn
+    var measureVolume
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
@@ -151,7 +151,7 @@
       map.addThing(measure)
 
       //直接传入坐标分析
-      measureVolumn = measure.volume({
+      measureVolume = measure.volume({
         positions: mars3d.transform.lonlats2cartesians([
           [116.191817, 30.864845, 309.3],
           [116.192869, 30.8757, 521.81],
@@ -191,7 +191,7 @@
 
       $('#measure').click(function () {
         //手动绘制的方式分析
-        measureVolumn = measure.volume({
+        measureVolume = measure.volume({
           splitNum: 6, //面内插值次数，控制精度[注意精度越大，分析时间越长]
           // minHeight: 50  //可以设置一个固定的最低高度
         })
@@ -204,47 +204,47 @@
 
       $('#txtHeight').change(function () {
         var num = Number($(this).val())
-        measureVolumn.height = num
+        measureVolume.height = num
         showHeightVal()
       })
 
       $('#txtMinHeight').change(function () {
         var num = Number($(this).val())
-        if (num > measureVolumn.height) {
+        if (num > measureVolume.height) {
           haoutil.msg('墙底部高度不能高于基准面高')
-          $('#txtMinHeight').val(measureVolumn.minHeight.toFixed(1))
+          $('#txtMinHeight').val(measureVolume.minHeight.toFixed(1))
           return
         }
-        measureVolumn.minHeight = num
+        measureVolume.minHeight = num
       })
 
       $('#txtMaxHeight').change(function () {
         var num = Number($(this).val())
 
-        var maxHeight = getFixedNum(measureVolumn.polygonMaxHeight)
+        var maxHeight = getFixedNum(measureVolume.polygonMaxHeight)
         if (num < maxHeight) {
           haoutil.msg('墙顶部高度不能低于区域内的地表高' + maxHeight)
           $('#txtMaxHeight').val(maxHeight)
-          measureVolumn.maxHeight = Number(maxHeight)
+          measureVolume.maxHeight = Number(maxHeight)
           return
         }
-        if (num < measureVolumn.height) {
+        if (num < measureVolume.height) {
           haoutil.msg('墙顶部高度不能低于基准面高')
-          $('#txtMaxHeight').val(measureVolumn.maxHeight.toFixed(1))
+          $('#txtMaxHeight').val(measureVolume.maxHeight.toFixed(1))
           return
         }
-        measureVolumn.maxHeight = num
+        measureVolume.maxHeight = num
       })
 
       $('#selHeight').click(function () {
-        measureVolumn.selecteHeight(showHeightVal)
+        measureVolume.selecteHeight(showHeightVal)
       })
 
       $('#chkShowPolygonInter').change(function () {
         var showResult = $(this).is(':checked')
 
         if (showResult) {
-          showInterResult(measureVolumn.interPolygonObj.list)
+          showInterResult(measureVolume.interPolygonObj.list)
         } else {
           clearInterResult()
         }
@@ -252,9 +252,9 @@
     }
 
     function showHeightVal() {
-      $('#txtHeight').val(measureVolumn.height.toFixed(1))
-      $('#txtMinHeight').val(measureVolumn.minHeight.toFixed(1))
-      $('#txtMaxHeight').val(getFixedNum(measureVolumn.maxHeight))
+      $('#txtHeight').val(measureVolume.height.toFixed(1))
+      $('#txtMinHeight').val(measureVolume.minHeight.toFixed(1))
+      $('#txtMaxHeight').val(getFixedNum(measureVolume.maxHeight))
     }
 
     function getFixedNum(val) {
