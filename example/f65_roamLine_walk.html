@@ -131,7 +131,7 @@
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.util.merge(options, {
+        var mapOptions = mars3d.Util.merge(options, {
           control: {
             animation: true, //是否创建动画小器件，左下角仪表
             timeline: true, //是否显示时间线控件
@@ -199,6 +199,11 @@
           console.log('漫游结束', event)
         })
 
+        roamLine.on(mars3d.EventType.change, (event) => {
+          //面板显示相关信息
+          showRealTimeInfo(event)
+        })
+
         roamLine.bindPopup(
           function (event) {
             var params = event?.target?.info
@@ -253,11 +258,6 @@
         //显示基本信息，名称、总长、总时间
         $('#td_alltimes').html(haoutil.str.formatTime(roamLine.alltimes))
         $('#td_alllength').html(haoutil.str.formatLength(roamLine.alllen))
-
-        //定时更新面板
-        setInterval(function () {
-          showRealTimeInfo(roamLine.info)
-        }, 200)
       }
 
       //显示实时坐标和时间
@@ -279,9 +279,9 @@
           .attr('aria-valuenow', val)
           .html(val + '%')
 
-        $('#td_jd').html(params.x)
-        $('#td_wd').html(params.y)
-        $('#td_gd').html(haoutil.str.formatLength(params.z))
+        $('#td_jd').html(params.lng)
+        $('#td_wd').html(params.lat)
+        $('#td_gd').html(haoutil.str.formatLength(params.alt))
 
         $('#td_times').html(haoutil.str.formatTime(params.time))
         $('#td_length').html(haoutil.str.formatLength(params.len))

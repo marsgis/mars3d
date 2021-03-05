@@ -116,7 +116,7 @@
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.util.merge(options, {
+        var mapOptions = mars3d.Util.merge(options, {
           scene: {
             //此处参数会覆盖config.json中的对应配置
             center: {
@@ -220,14 +220,14 @@
               Cesium.Math.toRadians(weixin.pitch),
               Cesium.Math.toRadians(weixin.roll + angle1)
             )
-            var ptLeft = mars3d.matrix.getRayEarthPosition(pt1, hdr, true)
+            var ptLeft = mars3d.PointUtil.getRayEarthPosition(pt1, hdr, true)
 
             var hdr2 = new Cesium.HeadingPitchRoll(
               Cesium.Math.toRadians(weixin.heading),
               Cesium.Math.toRadians(weixin.pitch),
               Cesium.Math.toRadians(weixin.roll - angle1)
             )
-            var ptRight = mars3d.matrix.getRayEarthPosition(pt1, hdr2, true)
+            var ptRight = mars3d.PointUtil.getRayEarthPosition(pt1, hdr2, true)
 
             if (!ptRight || !ptLeft) {
               return []
@@ -280,10 +280,10 @@
         $('#td_time').html(Cesium.JulianDate.toDate(map.clock.currentTime).format('yyyy-M-d HH:mm:ss'))
 
         if (weixin.position) {
-          var point = mars3d.point.formatPosition(weixin.position)
-          $('#td_jd').html(point.x)
-          $('#td_wd').html(point.y)
-          $('#td_gd').html(haoutil.str.formatLength(point.z))
+          var point = mars3d.LatLngPoint.fromCartesian(weixin.position)
+          $('#td_jd').html(point.lng)
+          $('#td_wd').html(point.lat)
+          $('#td_gd').html(haoutil.str.formatLength(point.alt))
         }
       }
     </script>

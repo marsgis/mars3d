@@ -41,7 +41,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: { lat: 31.035511, lng: 132.621161, alt: 20649893, heading: 0, pitch: -90 },
           mapMode2D: Cesium.MapMode2D.ROTATE, //二三维场景切换黑影

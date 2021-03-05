@@ -61,7 +61,7 @@
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.util.merge(options, {
+        var mapOptions = mars3d.Util.merge(options, {
           scene: {
             center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 },
           },
@@ -145,7 +145,7 @@
 
       function addGraphic_a3(graphicLayer) {
         //圆形时
-        var positions = mars3d.polygon.getEllipseOuterPositions({
+        var positions = mars3d.PolyUtil.getEllipseOuterPositions({
           position: Cesium.Cartesian3.fromDegrees(117.276257, 31.866351, 19.57),
           radius: 1200, //半径
           count: 50, //共返回(count*4)个点

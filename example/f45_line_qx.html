@@ -44,7 +44,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: {
             y: 27.390195,
@@ -107,7 +107,7 @@
       for (var i = 0; i < cities.length; i++) {
         var item = cities[i]
         var thisPoint = Cesium.Cartesian3.fromDegrees(item.lon, item.lat, 1)
-        var positions = mars3d.polyline.getLinkedPointList(center, thisPoint, 40000, 100) //计算曲线点
+        var positions = mars3d.PolyUtil.getLinkedPointList(center, thisPoint, 40000, 100) //计算曲线点
 
         var primitive = new mars3d.graphic.PolylinePrimitive({
           positions: positions,

@@ -132,7 +132,7 @@
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.util.merge(options, {})
+        var mapOptions = mars3d.Util.merge(options, {})
 
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', mapOptions)
@@ -169,10 +169,10 @@
         $('#td_alltimes').html(haoutil.str.formatTime(roamLine.alltimes))
         $('#td_alllength').html(haoutil.str.formatLength(roamLine.alllen))
 
-        //面板显示相关信息
-        setInterval(function () {
-          showRealTimeInfo(roamLine.info, roamLine.alltimes)
-        }, 200)
+        roamLine.on(mars3d.EventType.change, (event) => {
+          //面板显示相关信息
+          showRealTimeInfo(event, roamLine.alltimes)
+        })
       }
 
       //显示实时坐标和时间
@@ -194,9 +194,9 @@
           .attr('aria-valuenow', val)
           .html(val + '%')
 
-        $('#td_jd').html(params.x)
-        $('#td_wd').html(params.y)
-        $('#td_gd').html(haoutil.str.formatLength(params.z))
+        $('#td_jd').html(params.lng)
+        $('#td_wd').html(params.lat)
+        $('#td_gd').html(haoutil.str.formatLength(params.alt))
 
         $('#td_times').html(haoutil.str.formatTime(params.time))
         $('#td_length').html(haoutil.str.formatLength(params.len))

@@ -161,7 +161,7 @@
       var map
 
       var satelliteSensor
-      var modelEntity
+      var modelGraphic
 
       var reverse = true //z轴方向，true朝向空中，false朝向地心
       var converter = Cesium.Transforms.eastNorthUpToFixedFrame
@@ -169,7 +169,7 @@
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.util.merge(options, {
+        var mapOptions = mars3d.Util.merge(options, {
           scene: {
             center: { y: 15.938584, x: 117.523776, z: 3813636.09, heading: 342.9, pitch: -66.4, roll: 359.9 },
           },
@@ -212,7 +212,7 @@
         var position = Cesium.Cartesian3.fromDegrees(x, y, z)
 
         //加个模型
-        modelEntity = new mars3d.graphic.ModelEntity({
+        modelGraphic = new mars3d.graphic.ModelEntity({
           name: '卫星模型',
           position: position,
           style: {
@@ -224,10 +224,10 @@
             roll: roll,
           },
         })
-        graphicLayer.addGraphic(modelEntity)
+        graphicLayer.addGraphic(modelGraphic)
 
         //打开3个轴进行显示对比
-        modelEntity.debugAxis = true
+        modelGraphic.debugAxis = true
 
         //视锥体
         satelliteSensor = new mars3d.graphic.SatelliteSensor({
@@ -248,11 +248,11 @@
 
         $('#chkShowModelMatrix').change(function () {
           var val = $(this).is(':checked')
-          modelEntity.debugAxis = val
+          modelGraphic.debugAxis = val
         })
         $('#modelMatrixLength').change(function () {
           var value = Number($(this).val())
-          modelEntity.debugAxisLength = value * 1000
+          modelGraphic.debugAxisLength = value * 1000
         })
 
         $('#chkShowCone').change(function () {
@@ -275,7 +275,7 @@
           onChange: function (value, bfb) {
             $('#model_heading_2').val(value)
 
-            modelEntity.heading = value
+            modelGraphic.heading = value
             satelliteSensor.heading = Cesium.Math.toRadians(value) //角度使用的是弧度
           },
         })
@@ -283,7 +283,7 @@
           var value = Number($(this).val())
           $('#model_heading').val(value)
 
-          modelEntity.heading = value
+          modelGraphic.heading = value
           satelliteSensor.heading = Cesium.Math.toRadians(value) //角度使用的是弧度
         })
 
@@ -291,7 +291,7 @@
           onChange: function (value, bfb) {
             $('#model_pitch_2').val(value)
 
-            modelEntity.pitch = value
+            modelGraphic.pitch = value
             satelliteSensor.pitch = Cesium.Math.toRadians(value)
           },
         })
@@ -299,7 +299,7 @@
           var value = Number($(this).val())
           $('#model_pitch').val(value)
 
-          modelEntity.pitch = value
+          modelGraphic.pitch = value
           satelliteSensor.pitch = Cesium.Math.toRadians(value)
         })
 
@@ -307,7 +307,7 @@
           onChange: function (value, bfb) {
             $('#model_roll_2').val(value)
 
-            modelEntity.roll = value
+            modelGraphic.roll = value
             satelliteSensor.roll = Cesium.Math.toRadians(value)
           },
         })
@@ -315,7 +315,7 @@
           var value = Number($(this).val())
           $('#model_roll').val(value)
 
-          modelEntity.roll = value
+          modelGraphic.roll = value
           satelliteSensor.roll = Cesium.Math.toRadians(value)
         })
 
@@ -413,8 +413,8 @@
           })
           map.graphicLayer.addGraphic(primitive)
 
-          var point = mars3d.point.formatPosition(groundPosition)
-          haoutil.alert(JSON.stringify(point))
+          var point = mars3d.LatLngPoint.fromCartesian(groundPosition)
+          haoutil.alert(point.toString())
         })
       }
 
@@ -424,12 +424,12 @@
         var z = Number($('#model_z').val())
         var position = Cesium.Cartesian3.fromDegrees(x, y, z)
 
-        modelEntity.position = position
+        modelGraphic.position = position
         satelliteSensor.position = position
       }
 
       function locate() {
-        map.flyTo(modelEntity)
+        map.flyToGraphic(modelGraphic)
       }
     </script>
   </body>

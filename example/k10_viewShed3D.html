@@ -105,7 +105,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: { y: 28.440942, x: 119.482189, z: 191.32, heading: 227.4, pitch: -27.6, roll: 359.9 },
           fxaa: true, //不开启抗锯齿，可视域会闪烁
@@ -126,7 +126,7 @@
         dynamicScreenSpaceError: true,
         cullWithChildrenBounds: false,
         luminanceAtZenith: 0.6,
-        offset: { z: 3 },
+        position: { alt: 3 },
       })
       map.addLayer(tiles3dLayer)
 

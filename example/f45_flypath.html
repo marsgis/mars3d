@@ -49,7 +49,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           //此处参数会覆盖config.json中的对应配置
           center: {
@@ -85,7 +85,7 @@
           var position = Cesium.Property.getValueOrUndefined(entity.position, time, new Cesium.Cartesian3())
           let orientation = Cesium.Property.getValueOrUndefined(entity.orientation, time, new Cesium.Quaternion())
 
-          let hpr = mars3d.matrix.getHeadingPitchRollByOrientation(position, orientation)
+          let hpr = mars3d.PointUtil.getHeadingPitchRollByOrientation(position, orientation)
           var heading = Cesium.Math.toDegrees(hpr.heading) + 90
 
           map.flyToPoint(position, {

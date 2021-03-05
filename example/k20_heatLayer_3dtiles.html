@@ -58,7 +58,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: {
             y: 31.654436,
@@ -84,11 +84,10 @@
         url: 'http://data.marsgis.cn/3dtiles/max-shihua/tileset.json',
         maximumScreenSpaceError: 1,
         maximumMemoryUsage: 1024,
-        offset: {
-          x: 117.077158,
-          y: 31.659116,
-          z: 93,
-          transform: true,
+        position: {
+          lng: 117.077158,
+          lat: 31.659116,
+          alt: 93,
         },
         center: {
           y: 31.654436,

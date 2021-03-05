@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d,mars3d-tileset"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -96,7 +96,7 @@
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.util.merge(options, {
+        var mapOptions = mars3d.Util.merge(options, {
           scene: {
             //此处参数会覆盖config.json中的对应配置
             center: {
@@ -118,9 +118,7 @@
           url: 'http://data.marsgis.cn/3dtiles/qx-shuiwu/tileset.json',
           maximumScreenSpaceError: 2,
           maximumMemoryUsage: 1024,
-          offset: {
-            z: -100,
-          },
+          position: { alt: -100 },
           center: {
             y: 36.534035,
             x: 101.494838,

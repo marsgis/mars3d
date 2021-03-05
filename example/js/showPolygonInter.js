@@ -41,11 +41,11 @@ function showInterResult(list) {
       })
       interGraphicLayer.addGraphic(primitive)
 
-      primitive.bindTooltip('点高度:' + mars3d.util.formatDistance(pt.height))
+      primitive.bindTooltip('点高度:' + mars3d.MeasureUtil.formatDistance(pt.height))
     }
 
     //横截面面积
-    item.area = item.area || mars3d.measure.getTriangleArea(pt1, pt2, pt3)
+    item.area = item.area || mars3d.MeasureUtil.getTriangleArea(pt1, pt2, pt3)
 
     //三角网及边线
     var positions = [pt1, pt2, pt3, pt1]
@@ -60,7 +60,7 @@ function showInterResult(list) {
       },
     })
     interGraphicLayer.addGraphic(primitivePoly)
-    primitivePoly.bindTooltip('三角面积:' + mars3d.util.formatArea(item.area) + '(第' + i + '个)')
+    primitivePoly.bindTooltip('三角面积:' + mars3d.MeasureUtil.formatArea(item.area) + '(第' + i + '个)')
 
     //三角网边线
     var primitiveLine = new mars3d.graphic.PolylinePrimitive({
@@ -97,6 +97,6 @@ function showInterLineResult(list) {
       },
     })
     interGraphicLayer.addGraphic(graphic)
-    graphic.bindTooltip('长度:' + mars3d.util.formatDistance(Cesium.Cartesian3.distance(pt1, pt2)) + '(第' + i + '段)')
+    graphic.bindTooltip('长度:' + mars3d.MeasureUtil.formatDistance(Cesium.Cartesian3.distance(pt1, pt2)) + '(第' + i + '段)')
   }
 }

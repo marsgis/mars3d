@@ -1,8 +1,8 @@
 'use script' //开发环境建议开启严格模式
 
 //判断webgl支持
-if (!mars3d.util.webglreport()) {
-  mars3d.util.webglerror()
+if (!mars3d.Util.webglreport()) {
+  mars3d.Util.webglerror()
 }
 
 //读取 config.json 配置文件

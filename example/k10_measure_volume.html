@@ -110,7 +110,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           globe: { depthTestAgainstTerrain: true },
           center: {
@@ -152,7 +152,7 @@
 
       //直接传入坐标分析
       measureVolume = measure.volume({
-        positions: mars3d.transform.lonlats2cartesians([
+        positions: mars3d.PointTrans.lonlats2cartesians([
           [116.191817, 30.864845, 309.3],
           [116.192869, 30.8757, 521.81],
           [116.190478, 30.886266, 672.79],
@@ -173,7 +173,7 @@
         haoutil.loading.show()
 
         //打印下边界，测试用
-        var coords = mars3d.transform.cartesians2lonlats(event.positions)
+        var coords = mars3d.PointTrans.cartesians2lonlats(event.positions)
         console.log(JSON.stringify(coords))
       })
       measure.on(mars3d.EventType.end, function (event) {

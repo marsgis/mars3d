@@ -3,8 +3,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
   <meta name="author" content="火星科技 http://mars3d.cn ">
   <meta name="apple-touch-fullscreen" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +15,7 @@
   <!-- 标题及搜索关键字 -->
   <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
   <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+        content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>3dtiles模型编辑 旋转 拖动 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -24,7 +23,7 @@
 
   <!--第三方lib-->
   <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,web-icons,bootstrap,bootstrap-select,bootstrap-checkbox,toastr,jquery.range,jstree,layer,haoutil,turf,mars3d"></script>
+          include="jquery,font-awesome,web-icons,bootstrap,bootstrap-select,bootstrap-checkbox,toastr,jquery.range,jstree,layer,haoutil,turf,mars3d"></script>
 
   <link href="css/style.css" rel="stylesheet" />
 </head>
@@ -42,8 +41,7 @@
       <tr>
         <td>模型URL：</td>
         <td colspan="4">
-          <input id="txtModel" type="text" value="http://data.marsgis.cn/3dtiles/max-fsdzm/tileset.json"
-            class="form-control" style="width: 100%;" />
+          <input id="txtModel" type="text" value="http://data.marsgis.cn/3dtiles/max-fsdzm/tileset.json" class="form-control" style="width: 100%;" />
         <td>
           <div class="checkbox checkbox-primary checkbox-inline" title="解决跨域问题">
             <input id="chkProxy" class="styled" type="checkbox">
@@ -58,18 +56,15 @@
       <tr>
         <td class="transform">经度：</td>
         <td class="transform">
-          <input id="txt_x" class="form-control" type="number" step="0.000001" style="width:120px;" value="0"
-            onchange="updateModel()">
+          <input id="txt_x" class="form-control" type="number" step="0.000001" style="width:120px;" value="0" onchange="updateModel()">
         </td>
         <td class="transform">纬度：</td>
         <td class="transform">
-          <input id="txt_y" class="form-control" type="number" step="0.000001" style="width:110px;" value="0"
-            onchange="updateModel()">
+          <input id="txt_y" class="form-control" type="number" step="0.000001" style="width:110px;" value="0" onchange="updateModel()">
         </td>
         <td>高度：</td>
         <td>
-          <input id="txt_z" class="form-control" type="number" step="0.1" style="width:100px;" value="0"
-            onchange="updateModel()">
+          <input id="txt_z" class="form-control" type="number" step="0.1" style="width:100px;" value="0" onchange="updateModel()">
           <div class="checkbox checkbox-primary checkbox-inline">
             <input id="chkTestTerrain" class="styled" type="checkbox">
             <label for="chkTestTerrain">
@@ -82,20 +77,17 @@
       <tr class="transform">
         <td>方向Z(四周)：</td>
         <td title="绕z轴旋转模型">
-          <input id="txt_rotation_z" class="form-control" type="number" style="width:120px;" step="0.1" value="0"
-            onchange="updateModel()">
+          <input id="txt_rotation_z" class="form-control" type="number" style="width:120px;" step="0.1" value="0" onchange="updateModel()">
         </td>
 
         <td>方向X：</td>
         <td title="绕x轴旋转模型">
-          <input id="txt_rotation_x" class="form-control" type="number" style="width:110px;" step="0.1" value="0"
-            onchange="updateModel()">
+          <input id="txt_rotation_x" class="form-control" type="number" style="width:110px;" step="0.1" value="0" onchange="updateModel()">
         </td>
 
         <td>方向Y：</td>
         <td title="绕y轴旋转模型">
-          <input id="txt_rotation_y" class="form-control" type="number" style="width:100px;" step="0.1" value="0"
-            onchange="updateModel()">
+          <input id="txt_rotation_y" class="form-control" type="number" style="width:100px;" step="0.1" value="0" onchange="updateModel()">
         </td>
       </tr>
 
@@ -103,8 +95,7 @@
 
         <td>缩放比例：</td>
         <td>
-          <input id="txt_scale" class="form-control" type="number" style="width:110px;" step="0.1" value="1"
-            onchange="updateModel()">
+          <input id="txt_scale" class="form-control" type="number" style="width:110px;" step="0.1" value="1" onchange="updateModel()">
         </td>
         <td>变换垂直轴</td>
         <td>
@@ -150,6 +141,7 @@
     </table>
 
     <input type="button" class="btn btn-primary" value="视角定位至模型" onclick="locate()" />
+    <input type="button" class="btn btn-primary transform" value="查看构件" onclick="updateSceneTree()" />
 
     <input type="button" class="btn btn-primary" value="保存参数" onclick="saveBookmark()" />
 
@@ -157,8 +149,7 @@
 
 
 
-  <div id="viewReset" class="infoview"
-    style="overflow:auto;left: 10px; top: 280px;height:calc(100% - 300px);display:none;">
+  <div id="viewReset" class="infoview" style="overflow:auto;left: 10px; top: 280px;height:calc(100% - 300px);display:none;">
     <button id="btn_close" class="btn btn-default" style=" margin: 5px 20px;">关闭</button>
     <button id="btn_back" class="btn btn-primary" style=" margin: 5px 20px;display:none;">取消选中</button>
     <ul id="treeOverlays" style="padding:0"></ul>
@@ -179,7 +170,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {})
+      var mapOptions = mars3d.Util.merge(options, {})
 
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
@@ -199,19 +190,20 @@
         if (Cesium.defined(event.position)) {
           var pos = event.position
           var thisZ = Number($('#txt_z').val())
-          var position = mars3d.point.setPositionsHeight(pos, thisZ)
+          var position = mars3d.PointUtil.setPositionsHeight(pos, thisZ)
 
           tilesEditor.position = position
-          tiles3dLayer.tileset.mars.position = position
 
-          var point = mars3d.point.formatPosition(position)
-          $('#txt_x').val(point.x)
-          $('#txt_y').val(point.y)
-          $('#txt_z').val(point.z)
+          tiles3dLayer.center = position
+
+          var point = mars3d.LatLngPoint.fromCartesian(position)
+          $('#txt_x').val(point.lng)
+          $('#txt_y').val(point.lat)
+          $('#txt_z').val(point.alt)
 
           getConfig()
         } else if (Cesium.defined(event.heading)) {
-          tiles3dLayer.tileset.mars.rotation_z = event.heading
+          tiles3dLayer.rotation_z = event.heading
 
           $('#txt_rotation_z').val(event.heading.toFixed(1))
 
@@ -251,7 +243,7 @@
       $('#txt_opacity').range({
         onChange: function (value, bfb) {
           if (tiles3dLayer?.tileset) {
-            tiles3dLayer.tileset.mars.opacity = value
+            tiles3dLayer.opacity = value
           }
         },
       })
@@ -277,10 +269,10 @@
           $('#txt_scale').val(item.scale || 1)
           $('#txt_axis').selectpicker('val', item.axis || '')
 
-          item.offset = item.offset || {}
-          $('#txt_x').val(item.offset.x || 0)
-          $('#txt_y').val(item.offset.y || 0)
-          $('#txt_z').val(item.offset.z || 0)
+          item.position = item.position || {}
+          $('#txt_x').val(item.position.lng || 0)
+          $('#txt_y').val(item.position.lat || 0)
+          $('#txt_z').val(item.position.alt || 0)
 
           item.rotation = item.rotation || {}
           $('#txt_rotation_x').val(item.rotation.x || 0)
@@ -331,52 +323,49 @@
         let tileset = event.tileset
 
         //取模型中心点信息
-        var locParams = tileset.mars.offset
-        if (locParams.z < -1000 || locParams.z > 10000) {
-          locParams.z = 0 //高度异常数据，自动赋值高度为0
+        var locParams = tiles3dLayer.center
+        if (locParams.alt < -1000 || locParams.alt > 10000) {
+          locParams.alt = 0 //高度异常数据，自动赋值高度为0
         }
 
-        $('#txt_x').val(locParams.x.toFixed(6))
-        $('#txt_y').val(locParams.y.toFixed(6))
-        $('#txt_z').val(locParams.z.toFixed(1))
+        $('#txt_x').val(locParams.lng.toFixed(6))
+        $('#txt_y').val(locParams.lat.toFixed(6))
+        $('#txt_z').val(locParams.alt.toFixed(1))
 
         $('#txt_luminanceAtZenith').val(tileset.luminanceAtZenith).change()
         $('#txt_maximumScreenSpaceError').val(tileset.maximumScreenSpaceError).change()
 
-        if (tileset.mars.transform) {
+        if (tiles3dLayer.transform) {
           $('.transform').show()
-          $('#txt_rotation_x').val(tileset.mars.rotation_x.toFixed(1))
-          $('#txt_rotation_y').val(tileset.mars.rotation_y.toFixed(1))
-          $('#txt_rotation_z').val(tileset.mars.rotation_z.toFixed(1)) //旋转角度
-          $('#txt_scale').val(tileset.mars.scale || 1)
-          $('#txt_axis').selectpicker('val', tileset.mars.axis || '')
+          $('#txt_rotation_x').val(tiles3dLayer.rotation_x.toFixed(1))
+          $('#txt_rotation_y').val(tiles3dLayer.rotation_y.toFixed(1))
+          $('#txt_rotation_z').val(tiles3dLayer.rotation_z.toFixed(1)) //旋转角度
+          $('#txt_scale').val(tiles3dLayer.scale || 1)
+          $('#txt_axis').selectpicker('val', tiles3dLayer.axis)
 
           tilesEditor.range = tileset.boundingSphere.radius * 0.9
-          tilesEditor.heading = tileset.mars.rotation_z
-          tilesEditor.position = tileset.mars.position
-
-          //加载构件树
-          updateSceneTree(params.url)
+          tilesEditor.heading = tiles3dLayer.rotation_z
+          tilesEditor.position = tiles3dLayer.position
         } else {
           $('.transform').hide()
           tilesEditor.enabled = false
 
           //求地面海拔 (异步)
-          if (Cesium.defined(params.offset) && Cesium.defined(params.offset.z)) {
+          if (Cesium.defined(params.position) && Cesium.defined(params.position.alt)) {
             //存在历史设置的高度时不用处理
           } else {
-            mars3d.point.getSurfaceTerrainHeight(map.scene, tileset.mars.orginPosition, {
+            mars3d.PointUtil.getSurfaceTerrainHeight(map.scene, tiles3dLayer.orginCenterPosition, {
               asyn: true, //是否异步求准确高度
               callback: function (newHeight, cartOld) {
                 if (newHeight == null) {
                   return
                 }
 
-                var offsetZ = Math.ceil(newHeight - tileset.mars.orginCenter.z + 1)
+                var offsetZ = Math.ceil(newHeight - tiles3dLayer.orginCenterPoint.alt + 1)
                 console.log('地面海拔：' + newHeight.toFixed(2) + ',需要偏移' + offsetZ)
 
                 $('#txt_z').val(offsetZ)
-                tileset.mars.height = offsetZ
+                tiles3dLayer.height = offsetZ
               },
             })
           }
@@ -387,21 +376,22 @@
     function updateModel() {
       //获取参数
       var params = getConfig()
+      params.rotation = params.rotation || {}
+      params.rotation.x = params.rotation.x || 0
+      params.rotation.y = params.rotation.y || 0
+      params.rotation.z = params.rotation.z || 0
 
-      if (tiles3dLayer.tileset.mars.transform) {
-        tiles3dLayer.tileset.mars.updateStyle(params)
-
-        tilesEditor.heading = tiles3dLayer.tileset.mars.rotation_z
-        tilesEditor.position = tiles3dLayer.tileset.mars.position
-      } else {
-        tiles3dLayer.tileset.mars.offset = params.offset
+      if (tiles3dLayer.transform) {
+        tilesEditor.heading = tiles3dLayer.rotation_z
+        tilesEditor.position = tiles3dLayer.position
       }
+      tiles3dLayer.setOptions(params)
     }
 
     //获取所有参数配置
     function getConfig() {
       var url = $('#txtModel').val()
-      var maximumScreenSpaceError = mars3d.point.formatNum($('#txt_maximumScreenSpaceError').val(), 1)
+      var maximumScreenSpaceError = mars3d.Util.formatNum($('#txt_maximumScreenSpaceError').val(), 1)
 
       var params = {
         name: '模型名称',
@@ -413,48 +403,48 @@
         show: true,
       }
 
-      var x = mars3d.point.formatNum($('#txt_x').val(), 6)
+      var x = mars3d.Util.formatNum($('#txt_x').val(), 6)
       if (x) {
-        params.offset = params.offset || {}
-        params.offset.x = x
+        params.position = params.position || {}
+        params.position.lng = x
       }
 
-      var y = mars3d.point.formatNum($('#txt_y').val(), 6)
+      var y = mars3d.Util.formatNum($('#txt_y').val(), 6)
       if (y) {
-        params.offset = params.offset || {}
-        params.offset.y = y
+        params.position = params.position || {}
+        params.position.lat = y
       }
 
-      var z = mars3d.point.formatNum($('#txt_z').val(), 6)
+      var z = mars3d.Util.formatNum($('#txt_z').val(), 6)
       if (z) {
-        params.offset = params.offset || {}
-        params.offset.z = z
+        params.position = params.position || {}
+        params.position.alt = z
       }
 
-      var rotation_x = mars3d.point.formatNum($('#txt_rotation_x').val(), 1)
+      var rotation_x = mars3d.Util.formatNum($('#txt_rotation_x').val(), 1)
       if (rotation_x) {
         params.rotation = params.rotation || {}
         params.rotation.x = rotation_x
       }
 
-      var rotation_y = mars3d.point.formatNum($('#txt_rotation_y').val(), 1)
+      var rotation_y = mars3d.Util.formatNum($('#txt_rotation_y').val(), 1)
       if (rotation_y) {
         params.rotation = params.rotation || {}
         params.rotation.y = rotation_y
       }
 
-      var rotation_z = mars3d.point.formatNum($('#txt_rotation_z').val(), 1)
+      var rotation_z = mars3d.Util.formatNum($('#txt_rotation_z').val(), 1)
       if (rotation_z) {
         params.rotation = params.rotation || {}
         params.rotation.z = rotation_z
       }
 
-      var luminanceAtZenith = mars3d.point.formatNum($('#txt_luminanceAtZenith').val(), 1)
+      var luminanceAtZenith = mars3d.Util.formatNum($('#txt_luminanceAtZenith').val(), 1)
       if (luminanceAtZenith != 0.2) {
         params.luminanceAtZenith = luminanceAtZenith
       }
 
-      var scale = mars3d.point.formatNum(Number($('#txt_scale').val()) || 1, 1)
+      var scale = mars3d.Util.formatNum(Number($('#txt_scale').val()) || 1, 1)
       if (scale > 0 && scale != 1) {
         params.scale = scale
       }
@@ -505,7 +495,7 @@
           offset: new Cesium.HeadingPitchRange(map.camera.heading, map.camera.pitch, tiles3dLayer.tileset.boundingSphere.radius * 2),
         })
       } else {
-        map.flyToPoint(tiles3dLayer.tileset.mars.position, {
+        map.flyToPoint(tiles3dLayer.position, {
           radius: tiles3dLayer.tileset.boundingSphere.radius * 2,
         })
       }
@@ -530,8 +520,10 @@
       })
     }
 
-    function updateSceneTree(url) {
+    function updateSceneTree() {
       $('#viewReset').hide()
+
+      var url = $('#txtModel').val()
 
       var scenetree = url.substring(0, url.lastIndexOf('/') + 1) + 'scenetree.json'
       $.ajax({
@@ -594,7 +586,7 @@
       var center = new Cesium.Cartesian3(nodesphere[0], nodesphere[1], nodesphere[2])
 
       //获取构件节点位置，现对于原始矩阵变化后的新位置
-      center = tiles3dLayer.tileset.mars.getPositionByOrginMatrix(center)
+      center = tiles3dLayer.getPositionByOrginMatrix(center)
 
       //飞行过去
       var sphere = new Cesium.BoundingSphere(center, nodesphere[3])

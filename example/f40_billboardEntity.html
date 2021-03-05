@@ -58,7 +58,7 @@
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.util.merge(options, {
+        var mapOptions = mars3d.Util.merge(options, {
           scene: {
             center: {
               y: 24.688611,
@@ -214,7 +214,7 @@
           // cluster.billboard.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;  //贴地
 
           cluster.billboard.scale = 0.5 //必须，解决数字文本锯齿
-          cluster.billboard.image = clustering.getCircleImage(clusteredEntities.length) //getCircleImage方法未mars3d扩展的
+          cluster.billboard.image = mars3d.Util.getCircleImage(clusteredEntities.length, { radius: 28 })
         })
         clustering.pixelRange = 20 //多少像素矩形范围内聚合
         clustering.enabled = true
@@ -247,7 +247,7 @@
 
         haoutil.loading.show()
 
-        mars3d.polyline.computeSurfacePoints({
+        mars3d.PolyUtil.computeSurfacePoints({
           map: map,
           positions: positions,
           callback: function (raisedPositions, noHeight) {
@@ -258,11 +258,11 @@
 
             for (var i = 0, len = arrData.length; i < len; i++) {
               var item = arrData[i]
-              var point = mars3d.point.formatPosition(raisedPositions[i])
+              var point = mars3d.LatLngPoint.fromCartesian(raisedPositions[i])
 
-              item[lonCol] = point.x
-              item[latCol] = point.y
-              item[heightCol] = point.z //得到计算的高度值
+              item[lonCol] = point.lng
+              item[latCol] = point.lat
+              item[heightCol] = point.alt //得到计算的高度值
             }
 
             haoutil.file.downloadFile('point.json', JSON.stringify({ data: arrData }))

@@ -77,8 +77,6 @@
         border-color: #3374e0 !important;
       }
 
-
-
       .mp_head2 {
         width: 100%;
         height: 45px;
@@ -211,7 +209,6 @@
       </table>
     </div>
 
-
     <script src="./js/common.js"></script>
     <script type="text/javascript">
       'use script' //开发环境建议开启严格模式
@@ -221,7 +218,7 @@
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.util.merge(options, {
+        var mapOptions = mars3d.Util.merge(options, {
           scene: {
             //此处参数会覆盖config.json中的对应配置
             center: {
@@ -304,9 +301,10 @@
           alltime: roamLine.alltimes,
         })
 
-        setInterval(function () {
-          showRealTimeInfo(roamLine.info)
-        }, 200)
+        roamLine.on(mars3d.EventType.change, (event) => {
+          //面板显示相关信息
+          showRealTimeInfo(event)
+        })
       }
 
       function initUI() {
@@ -432,9 +430,9 @@
           .attr('aria-valuenow', val)
           .html(val + '%')
 
-        $('#td_jd').html(params.x)
-        $('#td_wd').html(params.y)
-        $('#td_gd').html(haoutil.str.formatLength(params.z))
+        $('#td_jd').html(params.lng)
+        $('#td_wd').html(params.lat)
+        $('#td_gd').html(haoutil.str.formatLength(params.alt))
 
         $('#td_times').html(haoutil.str.formatTime(params.time))
         $('#td_length').html(haoutil.str.formatLength(params.len))
@@ -452,6 +450,5 @@
         }
       }
     </script>
-
   </body>
 </html>

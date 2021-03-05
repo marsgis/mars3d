@@ -83,7 +83,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           //此处参数会覆盖config.json中的对应配置
           center: {
@@ -106,9 +106,7 @@
         url: 'http://data.marsgis.cn/3dtiles/qx-shequ/tileset.json',
         maximumScreenSpaceError: 2,
         maximumMemoryUsage: 1024,
-        offset: {
-          z: 3,
-        },
+        position: { alt: 3 },
       })
       map.addLayer(tiles3dLayer)
 

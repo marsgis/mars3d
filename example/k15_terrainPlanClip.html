@@ -86,7 +86,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: { y: 31.840106, x: 117.216768, z: 554.36, heading: 0, pitch: -59.3, roll: 0 },
           globe: {
@@ -104,8 +104,12 @@
         url: 'http://data.marsgis.cn/3dtiles/max-piping-hf/tileset.json',
         maximumScreenSpaceError: 2,
         maximumMemoryUsage: 1024,
-        offset: { x: 117.215457, y: 31.843363, z: 5, transform: true },
-        rotation: { z: 23.3 },
+        position: {
+          lng: 117.215457,
+          lat: 31.843363,
+          alt: 5,
+        },
+        rotation: { z: 336.7 },
         center: { y: 31.840525, x: 117.217024, z: 495.12, heading: 0, pitch: -59.3, roll: 0 },
         showClickFeature: true,
         popup: 'all',
@@ -167,7 +171,7 @@
             var positions = graphic.positionsShow
             map.graphicLayer.clear()
 
-            console.log(JSON.stringify(mars3d.transform.cartesians2lonlats(positions))) //打印下边界
+            console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
 
             //挖地区域
             terrainPlanClip.positions = positions
@@ -191,7 +195,7 @@
             var positions = graphic.getOutlinePositions(true)
             map.graphicLayer.clear()
 
-            console.log(JSON.stringify(mars3d.transform.cartesians2lonlats(positions))) //打印下边界
+            console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
 
             //挖地区域
             terrainPlanClip.positions = positions

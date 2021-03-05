@@ -50,7 +50,7 @@
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.util.merge(options, {
+        var mapOptions = mars3d.Util.merge(options, {
           scene: {
             //此处参数会覆盖config.json中的对应配置
             center: { y: 31.816168, x: 117.222162, z: 169, heading: 110, pitch: -24, roll: 0 },

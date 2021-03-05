@@ -54,7 +54,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: { lat: 30.383648, lng: 116.275216, alt: 51293, heading: 3, pitch: -42 },
         },
@@ -209,8 +209,8 @@
       zNodes.push(pnode)
 
       for (var i = 0, len = arr.length; i < len; i++) {
-        var item = arr[i]
-        var name = item?.label?.text || item.name || item.id || '未命名'
+        var graphic = arr[i]
+        var name = graphic.attr?.name || graphic.name || '未命名'
 
         var node = {
           id: i,
@@ -221,7 +221,7 @@
         }
         zNodes.push(node)
 
-        layersObj[i] = item
+        layersObj[i] = graphic
       }
 
       $.fn.zTree.destroy()
@@ -236,23 +236,22 @@
       for (var i = 0; i < changedNodes.length; i++) {
         var treeNode = changedNodes[i]
         treeNode.checkedOld = treeNode.checked
-        var entity = layersObj[treeNode.id]
-        if (entity == null) {
+        var graphic = layersObj[treeNode.id]
+        if (graphic == null) {
           continue
         }
 
         //处理图层显示隐藏
-        entity.show = treeNode.checked
+        graphic.show = treeNode.checked
       }
     }
 
     function treeOverlays_onClick(event, treeId, treeNode) {
-      var entity = layersObj[treeNode.id]
-      if (entity == null) {
+      var graphic = layersObj[treeNode.id]
+      if (graphic == null) {
         return
       }
-
-      map.flyTo(entity)
+      map.flyToGraphic(graphic)
     }
   </script>
 </body>

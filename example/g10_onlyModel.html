@@ -75,7 +75,7 @@
       var color = $('#txtColor').val()
 
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: { lat: 40.415179, lng: 115.459959, alt: 653, heading: 0, pitch: -60 },
           showSun: false,
@@ -164,13 +164,11 @@
       tiles3dLayer.on(mars3d.EventType.load, function (event) {
         console.log('模型加载完成', event)
 
-        var layer = event.target
-
         //限定缩放级别
-        map.scene.screenSpaceCameraController.maximumZoomDistance = layer.boundingSphere.radius * 5
+        map.scene.screenSpaceCameraController.maximumZoomDistance = tiles3dLayer.boundingSphere.radius * 5
 
         //自动贴地处理
-        layer.tileset.mars.clampToGround(map, 10)
+        tiles3dLayer.clampToGround(10)
       })
     }
 

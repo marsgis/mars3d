@@ -43,7 +43,7 @@
     var map
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: {
             y: 31.838348,
@@ -51,8 +51,8 @@
             z: 751.75,
             heading: 358.8,
             pitch: -53.5,
-            roll: 0
-          }
+            roll: 0,
+          },
         },
         layers: [
           {
@@ -61,10 +61,10 @@
             url: 'http://data.marsgis.cn/3dtiles/qx-hfdxy/tileset.json',
             maximumScreenSpaceError: 1,
             maximumMemoryUsage: 1024,
-            offset: {
-              z: 50
+            position: {
+              alt: 50,
             },
-            show: true
+            show: true,
           },
           {
             id: 87,
@@ -85,14 +85,14 @@
                   border: true,
                   border_color: '#000000',
                   pixelOffset: [0, -50],
-                  heightReference: 'NONE'
-                }
-              }
+                  heightReference: 'NONE',
+                },
+              },
             },
             popup: '名称：{NAME}<br />地址：{address}',
-            show: true
-          }
-        ]
+            show: true,
+          },
+        ],
       })
 
       //创建三维地球场景
@@ -114,7 +114,7 @@
 
       //点贴模型测试
       var position = entity.position.getValue()
-      position = mars3d.point.getSurfaceHeight(map.scene, position, {
+      position = mars3d.PointUtil.getSurfaceHeight(map.scene, position, {
         asyn: true, //是否异步求准确高度
         has3dtiles: true, //是否先求贴模型上（无模型时改为false，提高效率）
         callback: function (newHeight, cartOld) {
@@ -122,7 +122,7 @@
 
           var positionNew = Cesium.Cartesian3.fromRadians(cartOld.longitude, cartOld.latitude, newHeight)
           entity.position.setValue(positionNew)
-        }
+        },
       })
     }
   </script>

@@ -63,7 +63,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           fxaa: true,
           center: { lat: 33.595369, lng: 119.031319, alt: 300, heading: 180, pitch: -43 },
@@ -78,7 +78,7 @@
         url: 'http://data.marsgis.cn/3dtiles/qx-simiao/tileset.json',
         maximumScreenSpaceError: 0.5,
         maximumMemoryUsage: 1024,
-        offset: { z: 81.5 },
+        position: { alt: 81.5 },
       })
       map.addLayer(tilesetLayer)
 

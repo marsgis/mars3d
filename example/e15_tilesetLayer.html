@@ -85,12 +85,12 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      let mapOptions = mars3d.util.merge(options, {
+      let mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: {
-            y: 28.440864,
-            x: 119.486477,
-            z: 588.23,
+            lat: 28.440864,
+            lng: 119.486477,
+            alt: 588.23,
             heading: 268.6,
             pitch: -37.8,
             roll: 359.8,
@@ -208,12 +208,11 @@
         cullWithChildrenBounds: false,
         skipLevelOfDetail: true,
         preferLeaves: true,
-
-        offset: { z: 3 },
+        position: { alt: 3 },
         center: {
-          y: 28.440864,
-          x: 119.486477,
-          z: 588.23,
+          lat: 28.440864,
+          lng: 119.486477,
+          alt: 588.23,
           heading: 268.6,
           pitch: -37.8,
           roll: 359.8,
@@ -242,13 +241,11 @@
         url: 'http://data.marsgis.cn/3dtiles/qx-simiao/tileset.json',
         maximumScreenSpaceError: 1,
         maximumMemoryUsage: 1024,
-        offset: {
-          z: 81.5,
-        },
+        position: { alt: 81.5 },
         center: {
-          y: 33.589536,
-          x: 119.032216,
-          z: 145.08,
+          lat: 33.589536,
+          lng: 119.032216,
+          alt: 145.08,
           heading: 3.1,
           pitch: -22.9,
           roll: 0,
@@ -315,13 +312,13 @@
         preloadWhenHidden: true,
         //以上为优化的参数
 
-        offset: { x: 117.077158, y: 31.659116, z: 93, transform: true },
+        position: { lng: 117.077158, lat: 31.659116, alt: 93 },
         showClickFeature: true,
         popup: 'all',
         center: {
-          y: 31.654436,
-          x: 117.083883,
-          z: 758.53,
+          lat: 31.654436,
+          lng: 117.083883,
+          alt: 758.53,
           heading: 316.4,
           pitch: -50.1,
           roll: 359.8,
@@ -357,14 +354,14 @@
         preloadWhenHidden: true, //tileset.show是false时，也去预加载数据
         //以上为优化的参数
 
-        offset: { x: 117.096906, y: 31.851564, z: 45 },
-        rotation: { z: 342.5 },
+        position: { lng: 117.096906, lat: 31.851564, alt: 45 },
+        rotation: { z: 17.5 },
         showClickFeature: true,
         pickFeatureStyle: {
           color: '#00FF00',
         },
         // popup: 'all',
-        center: { y: 31.8503, x: 117.101008, z: 307.73, heading: 291, pitch: -30, roll: 0 },
+        center: { lat: 31.8503, lng: 117.101008, alt: 307.73, heading: 291, pitch: -30, roll: 0 },
         flyTo: true,
       })
       map.addLayer(tiles3dLayer)
@@ -372,7 +369,7 @@
       //可以绑定Popup弹窗，回调方法中任意处理
       tiles3dLayer.bindPopup(function (event) {
         var attr = event.graphic.attr
-        return mars3d.util.getTemplateHtml({ title: '桥梁', template: 'all', attr: attr })
+        return mars3d.Util.getTemplateHtml({ title: '桥梁', template: 'all', attr: attr })
       })
 
       //单击事件

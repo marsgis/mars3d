@@ -77,7 +77,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: {
             y: 31.840106,
@@ -127,15 +127,12 @@
         url: 'http://data.marsgis.cn/3dtiles/max-piping-hf/tileset.json',
         maximumScreenSpaceError: 2,
         maximumMemoryUsage: 1024,
-        offset: {
-          x: 117.215457,
-          y: 31.843363,
-          z: 5,
-          transform: true,
+        position: {
+          lng: 117.215457,
+          lat: 31.843363,
+          alt: 5,
         },
-        rotation: {
-          z: 23.3,
-        },
+        rotation: { z: 336.7 },
         center: {
           y: 31.840525,
           x: 117.217024,

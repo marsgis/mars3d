@@ -43,7 +43,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           //此处参数会覆盖config.json中的对应配置
           center: {
@@ -67,9 +67,7 @@
         url: 'http://data.marsgis.cn/3dtiles/qx-xiaolou/tileset.json',
         maximumScreenSpaceError: 1,
         maximumMemoryUsage: 1024,
-        offset: {
-          z: 1.5,
-        },
+        position: { alt: 1.5 },
         show: true,
       })
       map.addLayer(tilesetLayer)
@@ -103,7 +101,7 @@
 
       graphicLayer.bindPopup(function (event) {
         var data = event.graphic.attr
-        return mars3d.util.getTemplateHtml({ title: '楼层', template: 'all', attr: data })
+        return mars3d.Util.getTemplateHtml({ title: '楼层', template: 'all', attr: data })
       })
 
       graphicLayer.on(mars3d.EventType.mouseOver, function (event) {

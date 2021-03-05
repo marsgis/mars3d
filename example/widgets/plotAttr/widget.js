@@ -1,3 +1,4 @@
+'use script' //开发环境建议开启严格模式
 ;(function (window, mars3d) {
   //创建widget类，需要继承BaseWidget
   class MyWidget extends mars3d.widget.BaseWidget {
@@ -165,7 +166,7 @@ ${strAPIItem}
     }
     centerCurrentEntity() {
       let graphic = this.config.graphic
-      this.map.flyTo(graphic)
+      graphic.flyTo()
     }
     deleteEntity() {
       let graphic = this.config.graphic

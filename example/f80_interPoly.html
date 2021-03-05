@@ -66,7 +66,7 @@
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.util.merge(options, {
+        var mapOptions = mars3d.Util.merge(options, {
           scene: {
             //此处参数会覆盖config.json中的对应配置
             center: {
@@ -104,7 +104,7 @@
             map.graphicLayer.clear()
 
             var splitNum = Number($('#txtSplitNum').val())
-            var resultInter = mars3d.polygon.interPolygon({
+            var resultInter = mars3d.PolyUtil.interPolygon({
               scene: map.scene,
               positions: positions,
               splitNum: splitNum, //splitNum插值分割的个数
@@ -128,7 +128,7 @@
             map.graphicLayer.clear()
 
             var splitNum = Number($('#txtSplitNum').val())
-            var arrLine = mars3d.polyline.interPolyline({
+            var arrLine = mars3d.PolyUtil.interPolyline({
               scene: map.scene,
               positions: positions,
               splitNum: splitNum, // 插值分割的个数

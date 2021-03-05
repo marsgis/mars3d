@@ -64,7 +64,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: { y: 31.588498, x: 120.714274, z: 492.53, heading: 13.6, pitch: -55.3, roll: 0.1 },
         },
@@ -135,7 +135,7 @@
           { field: '所在区县', name: '所在区县' },
           { field: '具体位置', name: '具体位置' },
           { field: '建设内容（', name: '建设内容' },
-          { field: '用地面积（', name: '用地面积', format: 'mars3d.util.formatArea' },
+          { field: '用地面积（', name: '用地面积', format: 'mars3d.MeasureUtil.formatArea' },
           { field: '设施规模（', name: '设施规模' },
           { field: '举办者类型', name: '举办者类型' },
           { field: '开工时间', name: '开工时间' },
@@ -152,7 +152,7 @@
       //绑定事件
       geoJsonLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
-        initTree(event.graphics)
+        initTree(event.list, '项目名称')
       })
       geoJsonLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
@@ -197,7 +197,7 @@
       //绑定事件
       geoJsonLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
-        initTree(event.graphics)
+        initTree(event.list)
       })
     }
 
@@ -252,7 +252,7 @@
       //绑定事件
       geoJsonLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
-        initTree(event.graphics)
+        initTree(event.list, '类型')
       })
 
       //下面代码演示如果再config.json中配置的图层，如何绑定额外事件方法
@@ -292,7 +292,7 @@
       //绑定事件
       geoJsonLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
-        initTree(event.graphics)
+        initTree(event.list)
       })
     }
 
@@ -330,7 +330,7 @@
       //绑定事件
       geoJsonLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
-        initTree(event.graphics)
+        initTree(event.list, '房屋名称')
       })
     }
 
@@ -393,7 +393,7 @@
       //绑定事件
       geoJsonLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
-        initTree(event.graphics)
+        initTree(event.list)
       })
       geoJsonLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
@@ -449,7 +449,7 @@
     //===========================树控件处理============================
     var layersObj = {}
 
-    function initTree(arr) {
+    function initTree(arr, nameColum = 'name') {
       //初始化树
       var setting = {
         check: {
@@ -479,7 +479,7 @@
 
       for (var i = 0, len = arr.length; i < len; i++) {
         var item = arr[i]
-        var name = item?.label?.text?._value || item.name || item.id || '未命名'
+        var name = item[nameColum] || '未命名'
 
         var node = {
           id: i,
@@ -490,7 +490,7 @@
         }
         zNodes.push(node)
 
-        layersObj[i] = item
+        layersObj[i] = item._entity
       }
 
       $.fn.zTree.destroy()
@@ -509,9 +509,12 @@
         if (entity == null) {
           continue
         }
-
+        let show = treeNode.checked
         //处理图层显示隐藏
-        entity.show = treeNode.checked
+        entity.show = show
+        if (entity._labelEx) {
+          entity._labelEx.show = show
+        }
       }
     }
 

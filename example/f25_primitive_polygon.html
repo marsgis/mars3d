@@ -82,7 +82,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 },
         },
@@ -108,10 +108,10 @@
 
         for (var j = 0; j < count; ++j) {
           var position = randomPoint()
-          var pt1 = mars3d.matrix.getPositionByDirectionAndLen(position, 45, 500)
-          var pt2 = mars3d.matrix.getPositionByDirectionAndLen(position, 135, 500)
-          var pt3 = mars3d.matrix.getPositionByDirectionAndLen(position, 225, 500)
-          var pt4 = mars3d.matrix.getPositionByDirectionAndLen(position, 315, 500)
+          var pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 45, 500)
+          var pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 135, 500)
+          var pt3 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 225, 500)
+          var pt4 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 315, 500)
 
           var primitive = new mars3d.graphic.PolygonPrimitive({
             positions: [pt1, pt2, pt3, pt4, pt1],

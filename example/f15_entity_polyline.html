@@ -86,7 +86,7 @@
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        let mapOptions = mars3d.util.merge(options, {
+        let mapOptions = mars3d.Util.merge(options, {
           scene: {
             center: { lat: 31.471758, lng: 117.20494, alt: 47660, heading: 4, pitch: -45 },
           },
@@ -328,7 +328,7 @@
       function addGraphic_a7(graphicLayer) {
         let startPoint = Cesium.Cartesian3.fromDegrees(117.025419, 32.00651, 51.2)
         let endPoint = Cesium.Cartesian3.fromDegrees(117.323963, 32.050384, 33.8)
-        let positions = mars3d.polyline.getLinkedPointList(startPoint, endPoint, 20000, 50) //计算曲线点
+        let positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 20000, 50) //计算曲线点
 
         let graphic = new mars3d.graphic.PolylineEntity({
           positions: positions,
@@ -350,7 +350,7 @@
       function addGraphic_a8(graphicLayer) {
         let startPoint = Cesium.Cartesian3.fromDegrees(117.128446, 31.943352, 42.31)
         let endPoint = Cesium.Cartesian3.fromDegrees(117.410216, 31.975375, 37.53)
-        let positions = mars3d.polyline.getLinkedPointList(startPoint, endPoint, 20000, 50) //计算曲线点
+        let positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 20000, 50) //计算曲线点
 
         let graphic = new mars3d.graphic.PolylineEntity({
           positions: positions,
@@ -372,7 +372,7 @@
       function addGraphic_a9(graphicLayer) {
         let startPoint = Cesium.Cartesian3.fromDegrees(117.281455, 31.896386, 22.64)
         let endPoint = Cesium.Cartesian3.fromDegrees(117.528249, 31.921552, 43.3)
-        let positions = mars3d.polyline.getLinkedPointList(startPoint, endPoint, 20000, 50) //计算曲线点
+        let positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 20000, 50) //计算曲线点
 
         let _color1 = Cesium.Color.fromCssColorString('#ff0000').withAlpha(0.2)
         let _color2 = Cesium.Color.fromCssColorString('#ff0000').withAlpha(0.9)
@@ -399,7 +399,7 @@
       function addGraphic_a10(graphicLayer) {
         let startPoint = Cesium.Cartesian3.fromDegrees(116.96385, 32.089068, 38.1)
         let endPoint = Cesium.Cartesian3.fromDegrees(117.299257, 32.137552, 40)
-        let positions = mars3d.polyline.getLinkedPointList(startPoint, endPoint, 20000, 50) //计算曲线点
+        let positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 20000, 50) //计算曲线点
 
         let graphic = new mars3d.graphic.PolylineEntity({
           positions: positions,

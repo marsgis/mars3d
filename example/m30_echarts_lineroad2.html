@@ -45,7 +45,7 @@
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.util.merge(options, {
+        var mapOptions = mars3d.Util.merge(options, {
           scene: {
             center: { y: 39.290787, x: 116.392459, z: 138820.7, heading: 359.9, pitch: -63.2, roll: 0 },
           },
@@ -85,7 +85,7 @@
               var wd = pt[1] / 1e4
 
               //百度坐标转高德坐标
-              var point = mars3d.transform.bd2gcj([jd, wd])
+              var point = mars3d.PointTrans.bd2gcj([jd, wd])
               jd = point[0]
               wd = point[1]
 

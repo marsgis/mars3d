@@ -133,7 +133,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           //此处参数会覆盖config.json中的对应配置
           center: {
@@ -158,9 +158,7 @@
       var tiles3dLayer = new mars3d.layer.TilesetLayer({
         name: '合肥国家大学科技园',
         url: 'http://data.marsgis.cn/3dtiles/qx-hfdxy/tileset.json',
-        offset: {
-          z: -19,
-        },
+        position: { alt: -19 },
         maximumScreenSpaceError: 2,
         maximumMemoryUsage: 8192,
         dynamicScreenSpaceError: true,

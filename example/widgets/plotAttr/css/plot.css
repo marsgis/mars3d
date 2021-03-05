@@ -1,11 +1,11 @@
 /* 2017-7-20 21:21:23 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） */
- 
+
 /*init*/
 html, body, div, ol, ul, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, input, button, textarea, p, span, table, th, td, from {
 	margin:0;
 	padding:0
 }
-body, input, button, select, textarea { 
+body, input, button, select, textarea {
 	font:14px/22px "Microsoft Yahei", "Helvetica Neue";
 	-webkit-font-smoothing:antialiased;
 	-moz-osx-font-smoothing:grayscale;
@@ -140,9 +140,9 @@ textarea {
 }
 .center {
 	text-align: center !important
-} 
+}
 
- 
+
 /*mp_box*/
 .mp_box {
 	position: absolute;
@@ -470,7 +470,7 @@ textarea {
 
 
 /*dark*/
-.dark .mp_head ul li i{ 
+.dark .mp_head ul li i{
     background-color: rgba(63, 72, 84, 0.6);
     border: #dedede 1px solid;
     color: #ffffff;
@@ -481,7 +481,7 @@ textarea {
 .dark .mp_select_ul {
     color: #ffffff;
     background-color: rgba(63, 72, 84, 0.8);
-} 
+}
 .dark .mp_select_ul li:hover {
     background-color: rgba(63, 72, 84, 1);
 }
@@ -494,8 +494,8 @@ textarea {
     background: #1c3b3a;
 }
 
-.dark .tree_icon {  
-    color: #ffffff; 
+.dark .tree_icon {
+    color: #ffffff;
 }
 .dark .mp_input {
     background-color: rgba(63, 72, 84, 0.6);

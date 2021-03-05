@@ -44,7 +44,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: {
             y: 29.851048,
@@ -92,8 +92,8 @@
         var position = Cesium.Cartesian3.fromDegrees(item.x, item.y, 0)
         var angle = 180 - item.dir
 
-        var pt1 = mars3d.matrix.getPositionByDirectionAndLen(position, angle, radius)
-        pt1 = mars3d.point.setPositionsHeight(pt1, 0)
+        var pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, angle, radius)
+        pt1 = mars3d.PointUtil.setPositionsHeight(pt1, 0)
 
         var primitive = new mars3d.graphic.PolylinePrimitive({
           positions: [position, pt1],

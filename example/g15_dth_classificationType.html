@@ -45,7 +45,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: {
             y: 31.561722,
@@ -67,7 +67,7 @@
         url: 'http://data.marsgis.cn/3dtiles/qx-xiaolou/tileset.json',
         maximumScreenSpaceError: 1,
         maximumMemoryUsage: 1024,
-        offset: { z: 1.5 },
+        position: { alt: 1.5 },
       })
       map.addLayer(tiles3dLayer)
 
@@ -76,7 +76,7 @@
         url: 'http://data.marsgis.cn/3dtiles/qx-xiaolou-dth/tileset.json',
         maximumScreenSpaceError: 1,
         maximumMemoryUsage: 1024,
-        offset: { z: 1.5 },
+        position: { alt: 1.5 },
         classificationType: Cesium.ClassificationType.CESIUM_3D_TILE,
         style: {
           color: 'rgba(255, 255, 255, 0.01)',

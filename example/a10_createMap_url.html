@@ -39,8 +39,8 @@
     'use script' //开发环境建议开启严格模式
 
     $(document).ready(function () {
-      if (!mars3d.util.webglreport()) {
-        mars3d.util.webglerror()
+      if (!mars3d.Util.webglreport()) {
+        mars3d.Util.webglerror()
         return
       }
 
@@ -62,7 +62,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: { lat: 25.37169, lng: 119.094153, alt: 1182971, heading: 346, pitch: -60 },
         },

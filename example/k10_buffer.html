@@ -58,7 +58,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {})
+      var mapOptions = mars3d.Util.merge(options, {})
 
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
@@ -151,7 +151,7 @@
         geojson.properties = {}
         // console.log('geojson', geojson)
 
-        buffere = mars3d.util.buffer(geojson, width)
+        buffere = mars3d.PolyUtil.buffer(geojson, width)
 
         lastgeojson = geojson
       } catch (e) {

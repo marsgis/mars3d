@@ -38,8 +38,8 @@
     'use script' //开发环境建议开启严格模式
 
     $(document).ready(function () {
-      if (!mars3d.util.webglreport()) {
-        mars3d.util.webglerror()
+      if (!mars3d.Util.webglreport()) {
+        mars3d.Util.webglerror()
         return
       }
       initMap()

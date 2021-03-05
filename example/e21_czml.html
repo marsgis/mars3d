@@ -60,7 +60,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: { y: 31.588498, x: 120.714274, z: 492.53, heading: 13.6, pitch: -55.3, roll: 0.1 },
         },
@@ -97,7 +97,7 @@
       //绑定事件
       czmlLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
-        initTree(event.graphics)
+        initTree(event.list)
       })
       czmlLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
@@ -118,7 +118,7 @@
       //绑定事件
       czmlLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
-        initTree(event.graphics)
+        initTree(event.list)
       })
       czmlLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
@@ -140,7 +140,7 @@
       //绑定事件
       czmlLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
-        initTree(event.graphics)
+        initTree(event.list)
       })
       czmlLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
@@ -172,7 +172,7 @@
       czmlLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
 
-        initTree(event.graphics)
+        initTree(event.list)
       })
       czmlLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
@@ -197,7 +197,7 @@
         //火星发射时，锁定火箭模型对象
         map.trackedEntity = event.dataSource.entities.getById('Vulcan')
 
-        initTree(event.graphics)
+        initTree(event.list)
       })
       czmlLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
@@ -220,7 +220,7 @@
       //绑定事件
       czmlLayer.on(mars3d.EventType.load, function (event) {
         console.log('数据加载完成', event)
-        initTree(event.graphics)
+        initTree(event.list)
       })
       czmlLayer.on(mars3d.EventType.click, function (event) {
         console.log('单击了图层', event)
@@ -230,10 +230,7 @@
     //===========================树控件处理============================
     var layersObj = {}
 
-    function initTree(arr) {
-      $('#btnNoCheck').click(function () {
-        map.trackedEntity = null
-      })
+    function initTree(arr, nameColum = 'name') {
       //初始化树
       var setting = {
         check: {
@@ -263,7 +260,7 @@
 
       for (var i = 0, len = arr.length; i < len; i++) {
         var item = arr[i]
-        var name = item?.label?.text?._value || item.name || item.id || '未命名'
+        var name = item[nameColum] || '未命名'
 
         var node = {
           id: i,
@@ -274,7 +271,7 @@
         }
         zNodes.push(node)
 
-        layersObj[i] = item
+        layersObj[i] = item._entity
       }
 
       $.fn.zTree.destroy()
@@ -293,9 +290,12 @@
         if (entity == null) {
           continue
         }
-
+        let show = treeNode.checked
         //处理图层显示隐藏
-        entity.show = treeNode.checked
+        entity.show = show
+        if (entity._labelEx) {
+          entity._labelEx.show = show
+        }
       }
     }
 
@@ -305,10 +305,7 @@
         return
       }
 
-      // map.flyTo(entity)
-      map.trackedEntity = entity
-
-      $('#btnNoCheck').show()
+      map.flyTo(entity)
     }
   </script>
 </body>

@@ -97,7 +97,7 @@
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.util.merge(options, {})
+        var mapOptions = mars3d.Util.merge(options, {})
 
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', mapOptions)
@@ -137,7 +137,7 @@
 
               floodByMaterial.positions = positions
 
-              var result = mars3d.polygon.getHeightRange(positions, map.scene)
+              var result = mars3d.PolyUtil.getHeightRange(positions, map.scene)
               $('#minHeight').val(Math.ceil(result.minHeight))
               $('#maxHeight').val(Math.floor(result.maxHeight))
 

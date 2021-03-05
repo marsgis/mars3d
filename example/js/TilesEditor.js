@@ -23,7 +23,7 @@ class TilesEditor extends mars3d.BaseClass {
 
     //用来平移位置的指示器
     this.movep = this.billboards.add({
-      position: this._position,
+      position: this.position,
       color: Cesium.Color.fromCssColorString('#FFFF00'),
       image: options.moveImg,
       show: false,
@@ -31,7 +31,7 @@ class TilesEditor extends mars3d.BaseClass {
     })
     //用来旋转的指示器
     this.rotatep = this.billboards.add({
-      position: this._position ? this.rotationPos() : null,
+      position: this.rotationPosition,
       color: Cesium.Color.fromCssColorString('#FFFF00'),
       image: options.rotateImg,
       show: false,
@@ -83,8 +83,11 @@ class TilesEditor extends mars3d.BaseClass {
 
   //旋转方向的图标位置(依据位置和朝向计算)
   get rotationPosition() {
-    var rotpos = mars3d.matrix.getPositionByDirectionAndLen(this._position, this._heading, this._range)
-    return rotpos
+    if (this._position) {
+      return mars3d.PointUtil.getPositionByDirectionAndLen(this._position, this._heading, this._range)
+    } else {
+      return null
+    }
   }
 
   get heading() {
@@ -145,27 +148,7 @@ class TilesEditor extends mars3d.BaseClass {
     } else if (this.rotating) {
       this.rotatep.position = position
       this._range = Cesium.Cartesian3.distance(this._position, position)
-
-      //获取该位置的默认矩阵
-      var mat = Cesium.Transforms.eastNorthUpToFixedFrame(this._position)
-      mat = Cesium.Matrix4.getMatrix3(mat, new Cesium.Matrix3())
-
-      var xaxis = Cesium.Matrix3.getColumn(mat, 0, new Cesium.Cartesian3())
-      var yaxis = Cesium.Matrix3.getColumn(mat, 1, new Cesium.Cartesian3())
-      var zaxis = Cesium.Matrix3.getColumn(mat, 2, new Cesium.Cartesian3())
-      //计算该位置 和  position 的 角度值
-      var dir = Cesium.Cartesian3.subtract(position, this._position, new Cesium.Cartesian3())
-      //z crosss (dirx cross z) 得到在 xy平面的向量
-      dir = Cesium.Cartesian3.cross(dir, zaxis, dir)
-      dir = Cesium.Cartesian3.cross(zaxis, dir, dir)
-      dir = Cesium.Cartesian3.normalize(dir, dir)
-
-      var heading = Cesium.Cartesian3.angleBetween(xaxis, dir)
-      var ay = Cesium.Cartesian3.angleBetween(yaxis, dir)
-      if (ay > Math.PI * 0.5) {
-        heading = 2 * Math.PI - heading
-      }
-      this._heading = Cesium.Math.toDegrees(heading)
+      this._heading = mars3d.MeasureUtil.getAngle(this._position, position) //模型是正东为0
 
       this.fire(mars3d.EventType.change, {
         heading: this._heading,

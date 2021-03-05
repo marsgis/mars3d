@@ -23,7 +23,7 @@ function centerAtModel() {
       url: 'http://data.marsgis.cn/3dtiles/qx-simiao/tileset.json',
       maximumScreenSpaceError: 1,
       maximumMemoryUsage: 1024,
-      offset: { z: 81.5 },
+      position: { alt: 81.5 },
       flyTo: true,
     })
     map.addLayer(modelTest)

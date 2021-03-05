@@ -87,7 +87,7 @@
     var graphicLayer
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           fxaa: true,
           center: { y: 30.857606, x: 116.345359, z: 886, heading: 33, pitch: -34, roll: 0 },

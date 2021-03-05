@@ -64,7 +64,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: {
             y: 30.715648,
@@ -102,14 +102,14 @@
           //绘制成功后回调
 
           var center = graphic.positionShow
-          center = mars3d.point.addPositionsHeight(center, 1.5) //加人的身高等因素，略微抬高一些
+          center = mars3d.PointUtil.addPositionsHeight(center, 1.5) //加人的身高等因素，略微抬高一些
 
           var targetPoints = graphic.getOutlinePositions(true, 45)
 
           var targetArr = []
           for (var i = 0; i < targetPoints.length; i++) {
             var targetPoint = targetPoints[i]
-            targetPoint = mars3d.point.setPositionSurfaceHeight(map.scene, targetPoint)
+            targetPoint = mars3d.PointUtil.setPositionSurfaceHeight(map.scene, targetPoint)
             sightline.add(center, targetPoint)
           }
 

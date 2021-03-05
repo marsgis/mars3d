@@ -72,7 +72,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: {
             y: 30.941223,
@@ -142,7 +142,7 @@
             var positions = graphic.positionsShow
             map.graphicLayer.clear()
 
-            console.log(JSON.stringify(mars3d.transform.cartesians2lonlats(positions))) //打印下边界
+            console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
 
             terrainClip.positions = positions
           },

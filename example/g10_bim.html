@@ -107,7 +107,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: { y: 31.8503, x: 117.101008, z: 307.73, heading: 291, pitch: -30.4, roll: 359.8 },
           baseColor: 'rgba(0,0,0.0,0.5)',
@@ -131,8 +131,8 @@
         cullWithChildrenBounds: false,
         luminanceAtZenith: 0.6,
 
-        offset: { x: 117.096906, y: 31.851564, z: 45 },
-        rotation: { z: 342.5 },
+        position: { lng: 117.096906, lat: 31.851564, alt: 45 },
+        rotation: { z: 17.5 },
         showClickFeature: true,
         pickFeatureStyle: {
           color: '#00FF00',
@@ -223,7 +223,7 @@
             var positions = graphic.positionsShow
             map.graphicLayer.clear()
 
-            console.log(JSON.stringify(mars3d.transform.cartesians2lonlats(positions))) //打印下边界
+            console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
 
             //挖地区域
             terrainPlanClip.positions = positions
@@ -246,7 +246,7 @@
             var positions = graphic.getOutlinePositions(true)
             map.graphicLayer.clear()
 
-            console.log(JSON.stringify(mars3d.transform.cartesians2lonlats(positions))) //打印下边界
+            console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
 
             //挖地区域
             terrainPlanClip.positions = positions

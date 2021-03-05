@@ -13,7 +13,7 @@ $(function () {
       that.parent().siblings('.mp_tab_con').children().eq(index).addClass('cur').siblings().removeClass('cur')
 
       var _id = $(this).attr('id')
-      haoutil.storage.add(cookieName, _id)
+      haoutil.storage.add(storageName, _id)
     }
   })
 
@@ -27,7 +27,7 @@ $(function () {
 //     $("#tab_plot").click();
 // }
 
-var cookieName = 'muyao1987_plotAttr'
+var storageName = 'mars3d_plotAttr'
 
 function tab2attr() {
   // $("#tab_attr").removeClass('disabled');
@@ -35,7 +35,7 @@ function tab2attr() {
 
   // if ($("#tab_plot").hasClass('cur'))
 
-  var last_attr_tab = haoutil.storage.get(cookieName) //读取localStorage值
+  var last_attr_tab = haoutil.storage.get(storageName) //读取localStorage值
   if (last_attr_tab != null) {
     $('#' + last_attr_tab).click()
   } else {

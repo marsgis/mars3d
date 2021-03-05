@@ -44,7 +44,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {})
+      var mapOptions = mars3d.Util.merge(options, {})
 
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
@@ -72,10 +72,8 @@
             return Cesium.defined(e.cartesian)
           },
           callback: function (e) {
-            var mpt = mars3d.point.formatPosition(e.position)
-
-            var inhtml = '经度：' + mpt.x + ' , 纬度：' + mpt.y + '<br/>高程：' + mpt.z
-            haoutil.alert(inhtml, '位置信息')
+            var mpt = mars3d.LatLngPoint.fromCartesian(e.cartesian)
+            haoutil.alert(mpt.toString(), '位置信息')
           },
         },
         {
@@ -167,7 +165,7 @@
           },
           callback: function (e) {
             let graphic = e.graphic
-            let strDis = mars3d.util.formatDistance(graphic.distance)
+            let strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
             haoutil.alert('该对象的长度为:' + strDis)
           },
         },
@@ -180,7 +178,7 @@
           },
           callback: function (e) {
             let graphic = e.graphic
-            let strDis = mars3d.util.formatDistance(graphic.distance)
+            let strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
             haoutil.alert('该对象的周长为:' + strDis)
           },
         },
@@ -193,7 +191,7 @@
           },
           callback: function (e) {
             let graphic = e.graphic
-            let strArea = mars3d.util.formatArea(graphic.area)
+            let strArea = mars3d.MeasureUtil.formatArea(graphic.area)
             haoutil.alert('该对象的面积为:' + strArea)
           },
         },

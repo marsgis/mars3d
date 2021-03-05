@@ -131,7 +131,7 @@
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.util.merge(options, {
+        var mapOptions = mars3d.Util.merge(options, {
           scene: {
             //此处参数会覆盖config.json中的对应配置
             center: {
@@ -157,9 +157,7 @@
           url: 'http://data.marsgis.cn/3dtiles/qx-changfang/tileset.json',
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
-          offset: {
-            z: 90,
-          },
+          position: { alt: 90 },
           flyTo: true,
         })
         map.addLayer(tilesetLayer)
@@ -254,10 +252,10 @@
         $('#td_alltimes').html(haoutil.str.formatTime(roamLine.alltimes))
         $('#td_alllength').html(haoutil.str.formatLength(roamLine.alllen))
 
-        //定时更新面板
-        setInterval(function () {
-          showRealTimeInfo(roamLine.info)
-        }, 200)
+        roamLine.on(mars3d.EventType.change, (event) => {
+          //面板显示相关信息
+          showRealTimeInfo(event)
+        })
 
         addParticleSystem(roamLine)
       }
@@ -281,9 +279,9 @@
           .attr('aria-valuenow', val)
           .html(val + '%')
 
-        $('#td_jd').html(params.x)
-        $('#td_wd').html(params.y)
-        $('#td_gd').html(haoutil.str.formatLength(params.z))
+        $('#td_jd').html(params.lng)
+        $('#td_wd').html(params.lat)
+        $('#td_gd').html(haoutil.str.formatLength(params.alt))
 
         $('#td_times').html(haoutil.str.formatTime(params.time))
         $('#td_length').html(haoutil.str.formatLength(params.len))

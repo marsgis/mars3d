@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d,mars3d-tileset"
+      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -110,7 +110,7 @@
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.util.merge(options, {
+        var mapOptions = mars3d.Util.merge(options, {
           scene: {
             center: {
               y: 36.534035,
@@ -131,9 +131,7 @@
           url: 'http://data.marsgis.cn/3dtiles/qx-shuiwu/tileset.json',
           maximumScreenSpaceError: 2,
           maximumMemoryUsage: 1024,
-          offset: {
-            z: -100,
-          },
+          position: { alt: -100 },
           center: {
             y: 36.534035,
             x: 101.494838,
@@ -195,7 +193,7 @@
               var positions = graphic.positionsShow
               tilesetFlood.positions = positions
 
-              // var result = mars3d.polygon.getHeightRange(positions, map.scene)
+              // var result = mars3d.PolyUtil.getHeightRange(positions, map.scene)
               // $('#minHeight').val(Math.ceil(result.minHeight))
               // $('#maxHeight').val(Math.floor(result.maxHeight))
 

@@ -70,7 +70,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: {
             y: 31.842655,
@@ -90,11 +90,10 @@
             name: '教学楼',
             type: '3dtiles',
             url: 'http://data.marsgis.cn/3dtiles/bim-daxue/tileset.json',
-            offset: {
-              x: 117.251229,
-              y: 31.844015,
-              z: 36.2,
-              transform: true,
+            position: {
+              lng: 117.251229,
+              lat: 31.844015,
+              alt: 36.2,
             },
             center: {
               y: 31.842655,

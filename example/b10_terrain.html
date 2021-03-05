@@ -71,7 +71,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         //方式1：在创建地球前的传参中配置 terrain 参数[目前1个球只支持1个地形服务]
         terrain: {
           url: 'http://data.marsgis.cn/terrain',

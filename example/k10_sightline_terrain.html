@@ -99,7 +99,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           //此处参数会覆盖config.json中的对应配置
           center: { y: 30.841574, x: 116.18792, z: 6828.32, heading: 215.3, pitch: -28.1, roll: 359.9 },
@@ -257,7 +257,7 @@
           },
           success: function (graphic) {
             positionSXT = graphic.positionShow
-            positionSXT = mars3d.point.addPositionsHeight(positionSXT, 5.0) //增加杆子高度
+            positionSXT = mars3d.PointUtil.addPositionsHeight(positionSXT, 5.0) //增加杆子高度
 
             updateModel()
           },
@@ -284,11 +284,11 @@
       var roll = Cesium.Math.toRadians(Number($('#model_roll').val()))
 
       var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll)
-      positionDM = mars3d.matrix.getRayEarthPosition(positionSXT, hpr, true, map.scene.globe.ellipsoid)
+      positionDM = mars3d.PointUtil.getRayEarthPosition(positionSXT, hpr, true, map.scene.globe.ellipsoid)
 
       if (!positionDM) {
         //与地面无交点时
-        positionDM = mars3d.matrix.getPositionByHprAndLen(positionSXT, hpr, 5000)
+        positionDM = mars3d.PointUtil.getPositionByHprAndLen(positionSXT, hpr, 5000)
       }
 
       sightline.clear()

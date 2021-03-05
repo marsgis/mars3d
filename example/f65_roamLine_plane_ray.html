@@ -300,7 +300,7 @@
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.util.merge(options, {
+        var mapOptions = mars3d.Util.merge(options, {
           scene: {
             center: {
               y: 31.344715,
@@ -378,9 +378,10 @@
         $('#td_alltimes').html(haoutil.str.formatTime(roamLine.alltimes))
         $('#td_alllength').html(haoutil.str.formatLength(roamLine.alllen))
 
-        setInterval(function () {
-          showRealTimeInfo(roamLine.info)
-        }, 200)
+        roamLine.on(mars3d.EventType.change, (event) => {
+          //面板显示相关信息
+          showRealTimeInfo(event)
+        })
       }
 
       function initUI() {
@@ -440,9 +441,9 @@
           .attr('aria-valuenow', val)
           .html(val + '%')
 
-        $('#td_jd').html(params.x)
-        $('#td_wd').html(params.y)
-        $('#td_gd').html(haoutil.str.formatLength(params.z))
+        $('#td_jd').html(params.lng)
+        $('#td_wd').html(params.lat)
+        $('#td_gd').html(haoutil.str.formatLength(params.alt))
 
         $('#td_times').html(haoutil.str.formatTime(params.time))
         $('#td_length').html(haoutil.str.formatLength(params.len))
@@ -536,30 +537,30 @@
         var pitch = Cesium.defaultValue(opts.pitch, roamLine.pitch)
         var roll = Cesium.defaultValue(opts.heading, roamLine.roll)
 
-        // var ptLeft1 = mars3d.matrix.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch, roll + angle1), true, ellipsoid);
-        // var ptRight1 = mars3d.matrix.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch, roll - angle1), true, ellipsoid);
+        // var ptLeft1 = mars3d.PointUtil.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch, roll + angle1), true, ellipsoid);
+        // var ptRight1 = mars3d.PointUtil.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch, roll - angle1), true, ellipsoid);
         // if (!ptLeft1 || !ptRight1) return
         // thisPositions = [ptLeft1, ptRight1]
 
         //张角
         var angle2 = Cesium.Math.toRadians(opts.angle2) / 2
 
-        var ptLeft1 = mars3d.matrix.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch + angle2, roll + angle1), true, ellipsoid)
+        var ptLeft1 = mars3d.PointUtil.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch + angle2, roll + angle1), true, ellipsoid)
         if (!ptLeft1) {
           return
         }
 
-        var ptRight1 = mars3d.matrix.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch + angle2, roll - angle1), true, ellipsoid)
+        var ptRight1 = mars3d.PointUtil.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch + angle2, roll - angle1), true, ellipsoid)
         if (!ptRight1) {
           return
         }
 
-        var ptRight2 = mars3d.matrix.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch - angle2, roll - angle1), true, ellipsoid)
+        var ptRight2 = mars3d.PointUtil.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch - angle2, roll - angle1), true, ellipsoid)
         if (!ptRight2) {
           return
         }
 
-        var ptLeft2 = mars3d.matrix.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch - angle2, roll + angle1), true, ellipsoid)
+        var ptLeft2 = mars3d.PointUtil.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch - angle2, roll + angle1), true, ellipsoid)
         if (!ptLeft2) {
           return
         }

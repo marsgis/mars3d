@@ -190,7 +190,7 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.util.merge(options, {
+      var mapOptions = mars3d.Util.merge(options, {
         scene: {
           //此处参数会覆盖config.json中的对应配置
           center: {
@@ -373,7 +373,7 @@
 
     function updateTarget(position) {
       var addHeight = Number($('#txtTargetHeight').val())
-      position = mars3d.point.addPositionsHeight(position, addHeight)
+      position = mars3d.PointUtil.addPositionsHeight(position, addHeight)
 
       var target = Cesium.Cartesian3.subtract(position, particlePosition, new Cesium.Cartesian3())
       Cesium.Cartesian3.multiplyByScalar(target, 0.01, target)

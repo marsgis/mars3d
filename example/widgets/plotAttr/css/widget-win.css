@@ -1,7 +1,7 @@
-﻿@charset "utf-8";
-/* widget view公共css 
-*  2019-6-3 09:02:24 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ）
+﻿/*
+* widget模块的公共css
 */
+
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -22,8 +22,8 @@ html, body {
     overflow: hidden;
     font-family: "Helvetica Neue", Helvetica, Tahoma, Arial, "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
     font-size: 14px;
-    background-color:transparent!important; 
-} 
+    background-color:transparent!important;
+}
 body {
     padding:1px;
 }
@@ -32,7 +32,7 @@ input, button, select, textarea {
     font-size: inherit;
     line-height: inherit;
 }
-a {  color: #62a8ea;text-decoration: none;} 
+a {  color: #62a8ea;text-decoration: none;}
 
 a:hover, a:focus {
     color: #89bceb;
@@ -49,16 +49,16 @@ ul, li {list-style: none;}
 
 
 
-.dark { color: #ffffff; } 
+.dark { color: #ffffff; }
 .dark a{color:#ffffff;text-decoration: none;}
-.dark a:hover {color:#CC3300;text-decoration:underline;}  
+.dark a:hover {color:#CC3300;text-decoration:underline;}
 .dark .content{
 	overflow: auto;
 	position: relative;
 	background: transparent;
 	height: 400px;
 	-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;
-} 
+}
 .dark .form-control,.dark .input-group-addon,.dark .btn-default,.dark input ,.dark .dropdown-menu {
     color: #ffffff;
     background-color: rgba(63, 72, 84, 0.6);
@@ -73,8 +73,8 @@ ul, li {list-style: none;}
 .dark .btn-primary {
     background-color: rgba(32, 160, 255, 0.2);
 }
-.dark .btn-danger { 
-    background-color: rgba(255, 109, 109, 0.2); 
+.dark .btn-danger {
+    background-color: rgba(255, 109, 109, 0.2);
 }
 .dark .btn-warning {
     background-color: rgba(196, 188, 181, 0.2);
@@ -85,7 +85,7 @@ ul, li {list-style: none;}
 .dark .dropdown-menu > li > a {
     color: #ffffff;
 }
-.dark .dropdown-menu > li > a:hover,.dark .dropdown-menu > li > a:focus { 
+.dark .dropdown-menu > li > a:hover,.dark .dropdown-menu > li > a:focus {
     background-color: #4db3ff;
 }
 
