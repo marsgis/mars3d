@@ -1006,7 +1006,7 @@ export class BoundingRectangle {
      * Determines if two rectangles intersect.
      * @param left - A rectangle to check for intersection.
      * @param right - The other rectangle to check for intersection.
-     * @returns <code>Intersect.INTESECTING</code> if the rectangles intersect, <code>Intersect.OUTSIDE</code> otherwise.
+     * @returns <code>Intersect.INTERSECTING</code> if the rectangles intersect, <code>Intersect.OUTSIDE</code> otherwise.
      */
     static intersect(left: BoundingRectangle, right: BoundingRectangle): Intersect;
     /**
@@ -1026,7 +1026,7 @@ export class BoundingRectangle {
     /**
      * Determines if this rectangle intersects with another.
      * @param right - A rectangle to check for intersection.
-     * @returns <code>Intersect.INTESECTING</code> if the rectangles intersect, <code>Intersect.OUTSIDE</code> otherwise.
+     * @returns <code>Intersect.INTERSECTING</code> if the rectangles intersect, <code>Intersect.OUTSIDE</code> otherwise.
      */
     intersect(right: BoundingRectangle): Intersect;
     /**
@@ -1504,7 +1504,7 @@ export class BoxOutlineGeometry {
 /**
  * Given a relative URL under the Cesium base URL, returns an absolute URL.
  * @example
- * var viewer = new Cesium.Viewer("mars3dContainer", {
+ * var viewer = new Cesium.Viewer("cesiumContainer", {
   imageryProvider: new Cesium.TileMapServiceImageryProvider({
   url: Cesium.buildModuleUrl("Assets/Textures/NaturalEarthII"),
   }),
@@ -1692,6 +1692,13 @@ export class Cartesian2 {
      * @returns The dot product.
      */
     static dot(left: Cartesian2, right: Cartesian2): number;
+    /**
+     * Computes the magnitude of the cross product that would result from implicitly setting the Z coordinate of the input vectors to 0
+     * @param left - The first Cartesian.
+     * @param right - The second Cartesian.
+     * @returns The cross product.
+     */
+    static cross(left: Cartesian2, right: Cartesian2): number;
     /**
      * Computes the componentwise product of two Cartesians.
      * @param left - The first Cartesian.
@@ -2797,7 +2804,7 @@ export class CatmullRomSpline {
  * A {@link TerrainProvider} that accesses terrain data in a Cesium terrain format.
  * @example
  * // Create Arctic DEM terrain with normals.
-var viewer = new Cesium.Viewer('mars3dContainer', {
+var viewer = new Cesium.Viewer('cesiumContainer', {
     terrainProvider : new Cesium.CesiumTerrainProvider({
         url : Cesium.IonResource.fromAssetId(3956),
         requestVertexNormals : true
@@ -4743,12 +4750,12 @@ export function createGuid(): string;
  * Creates a {@link CesiumTerrainProvider} instance for the {@link https://cesium.com/content/#cesium-world-terrain|Cesium World Terrain}.
  * @example
  * // Create Cesium World Terrain with default settings
-var viewer = new Cesium.Viewer('mars3dContainer', {
+var viewer = new Cesium.Viewer('cesiumContainer', {
     terrainProvider : Cesium.createWorldTerrain();
 });
  * @example
  * // Create Cesium World Terrain with water and normals.
-var viewer = new Cesium.Viewer('mars3dContainer', {
+var viewer = new Cesium.Viewer('cesiumContainer', {
     terrainProvider : Cesium.createWorldTerrain({
         requestWaterMask : true,
         requestVertexNormals : true
@@ -5312,18 +5319,6 @@ export namespace EasingFunction {
      */
     const BOUNCE_IN_OUT: EasingFunction.Callback;
     /**
-     * Quadratic in.
-     */
-    const QUADRACTIC_IN: EasingFunction.Callback;
-    /**
-     * Quadratic out.
-     */
-    const QUADRACTIC_OUT: EasingFunction.Callback;
-    /**
-     * Quadratic in then out.
-     */
-    const QUADRACTIC_IN_OUT: EasingFunction.Callback;
-    /**
      * Function interface for implementing a custom easing function.
      * @example
      * function quadraticIn(time) {
@@ -5597,7 +5592,7 @@ export class Ellipsoid {
      * Computes the normal of the plane tangent to the surface of the ellipsoid at the provided position.
      * @param cartesian - The Cartesian position for which to to determine the surface normal.
      * @param [result] - The object onto which to store the result.
-     * @returns The modified result parameter or a new Cartesian3 instance if none was provided.
+     * @returns The modified result parameter or a new Cartesian3 instance if none was provided, or undefined if a normal cannot be found.
      */
     geodeticSurfaceNormal(cartesian: Cartesian3, result?: Cartesian3): Cartesian3;
     /**
@@ -9388,23 +9383,35 @@ export namespace Math {
      */
     function incrementWrap(n?: number, maximumValue?: number, minimumValue?: number): number;
     /**
-     * Determines if a positive integer is a power of two.
+     * Determines if a non-negative integer is a power of two.
+    The maximum allowed input is (2^32)-1 due to 32-bit bitwise operator limitation in Javascript.
      * @example
      * var t = Cesium.Math.isPowerOfTwo(16); // true
     var f = Cesium.Math.isPowerOfTwo(20); // false
-     * @param n - The positive integer to test.
+     * @param n - The integer to test in the range [0, (2^32)-1].
      * @returns <code>true</code> if the number if a power of two; otherwise, <code>false</code>.
      */
     function isPowerOfTwo(n: number): boolean;
     /**
-     * Computes the next power-of-two integer greater than or equal to the provided positive integer.
+     * Computes the next power-of-two integer greater than or equal to the provided non-negative integer.
+    The maximum allowed input is 2^31 due to 32-bit bitwise operator limitation in Javascript.
      * @example
      * var n = Cesium.Math.nextPowerOfTwo(29); // 32
     var m = Cesium.Math.nextPowerOfTwo(32); // 32
-     * @param n - The positive integer to test.
+     * @param n - The integer to test in the range [0, 2^31].
      * @returns The next power-of-two integer.
      */
     function nextPowerOfTwo(n: number): number;
+    /**
+     * Computes the previous power-of-two integer less than or equal to the provided non-negative integer.
+    The maximum allowed input is (2^32)-1 due to 32-bit bitwise operator limitation in Javascript.
+     * @example
+     * var n = Cesium.Math.previousPowerOfTwo(29); // 16
+    var m = Cesium.Math.previousPowerOfTwo(32); // 32
+     * @param n - The integer to test in the range [0, (2^32)-1].
+     * @returns The previous power-of-two integer.
+     */
+    function previousPowerOfTwo(n: number): number;
     /**
      * Constraint a value to lie between two values.
      * @param value - The value to constrain.
@@ -11337,7 +11344,7 @@ export class Occluder {
  * Provides geocoding via a {@link https://opencagedata.com/|OpenCage} server.
  * @example
  * // Configure a Viewer to use the OpenCage Geocoder
-var viewer = new Cesium.Viewer('mars3dContainer', {
+var viewer = new Cesium.Viewer('cesiumContainer', {
   geocoder: new Cesium.OpenCageGeocoderService('https://api.opencagedata.com/geocode/v1/', '<API key>')
 });
  * @param url - The endpoint to the OpenCage server.
@@ -11840,7 +11847,7 @@ export namespace PackableForInterpolation {
  * Provides geocoding via a {@link https://pelias.io/|Pelias} server.
  * @example
  * // Configure a Viewer to use the Pelias server hosted by https://geocode.earth/
-var viewer = new Cesium.Viewer('mars3dContainer', {
+var viewer = new Cesium.Viewer('cesiumContainer', {
   geocoder: new Cesium.PeliasGeocoderService(new Cesium.Resource({
     url: 'https://api.geocode.earth/v1/',
       queryParameters: {
@@ -12875,7 +12882,7 @@ var volume = new Cesium.PolylineVolumeGeometry({
   shapePositions : computeCircle(100000.0)
 });
  * @param options - Object with the following properties:
- * @param options.polylinePositions - An array of {@link Cartesain3} positions that define the center of the polyline volume.
+ * @param options.polylinePositions - An array of {@link Cartesian3} positions that define the center of the polyline volume.
  * @param options.shapePositions - An array of {@link Cartesian2} positions that define the shape to be extruded along the polyline
  * @param [options.ellipsoid = Ellipsoid.WGS84] - The ellipsoid to be used as a reference.
  * @param [options.granularity = Math.RADIANS_PER_DEGREE] - The distance, in radians, between each latitude and longitude. Determines the number of positions in the buffer.
@@ -15775,21 +15782,20 @@ export function subdivideArray(array: any[], numberOfArrays: number): void;
 returning results asynchronously via a promise.
 
 The Worker is not constructed until a task is scheduled.
- * @param workerName - The name of the worker.  This is expected to be a script
-                           in the Workers folder.
- * @param [maximumActiveTasks = 5] - The maximum number of active tasks.  Once exceeded,
+ * @param workerPath - The Url to the worker. This can either be an absolute path or relative to the Cesium Workers folder.
+ * @param [maximumActiveTasks = Number.POSITIVE_INFINITY] - The maximum number of active tasks.  Once exceeded,
                                        scheduleTask will not queue any more tasks, allowing
                                        work to be rescheduled in future frames.
  */
 export class TaskProcessor {
-    constructor(workerName: string, maximumActiveTasks?: number);
+    constructor(workerPath: string, maximumActiveTasks?: number);
     /**
      * Schedule a task to be processed by the web worker asynchronously.  If there are currently more
     tasks active than the maximum set by the constructor, will immediately return undefined.
     Otherwise, returns a promise that will resolve to the result posted back by the worker when
     finished.
      * @example
-     * var taskProcessor = new Cesium.TaskProcessor('myWorkerName');
+     * var taskProcessor = new Cesium.TaskProcessor('myWorkerPath');
     var promise = taskProcessor.scheduleTask({
         someParameter : true,
         another : 'hello'
@@ -20157,6 +20163,7 @@ export class Entity {
  * @param [options.clusterBillboards = true] - Whether or not to cluster the billboards of an entity.
  * @param [options.clusterLabels = true] - Whether or not to cluster the labels of an entity.
  * @param [options.clusterPoints = true] - Whether or not to cluster the points of an entity.
+ * @param [options.show = true] - Determines if the entities in the cluster will be shown.
  */
 export class EntityCluster {
     constructor(options?: {
@@ -20166,7 +20173,12 @@ export class EntityCluster {
         clusterBillboards?: boolean;
         clusterLabels?: boolean;
         clusterPoints?: boolean;
+        show?: boolean;
     });
+    /**
+     * Determines if entities in this collection will be shown.
+     */
+    show: boolean;
     /**
      * Gets or sets whether clustering is enabled.
      */
@@ -20473,7 +20485,7 @@ export namespace GeoJsonDataSource {
 {@link https://github.com/mapbox/simplestyle-spec|simplestyle-spec} properties will also be used if they
 are present.
  * @example
- * var viewer = new Cesium.Viewer('mars3dContainer');
+ * var viewer = new Cesium.Viewer('cesiumContainer');
 viewer.dataSources.add(Cesium.GeoJsonDataSource.load('../../SampleData/ne_10m_us_states.topojson', {
   stroke: Cesium.Color.HOTPINK,
   fill: Cesium.Color.PINK,
@@ -20975,7 +20987,7 @@ is exposed via an instance of {@link KmlFeatureData}, which is added to each {@l
 under the <code>kml</code> property.
 </p>
  * @example
- * var viewer = new Cesium.Viewer('mars3dContainer');
+ * var viewer = new Cesium.Viewer('cesiumContainer');
 viewer.dataSources.add(Cesium.KmlDataSource.load('../../SampleData/facilities.kmz',
      {
           camera: viewer.scene.camera,
@@ -25008,6 +25020,7 @@ billboards.add({
  * @param [options.blendOption = BlendOption.OPAQUE_AND_TRANSLUCENT] - The billboard blending option. The default
 is used for rendering both opaque and translucent billboards. However, if either all of the billboards are completely opaque or all are completely translucent,
 setting the technique to BlendOption.OPAQUE or BlendOption.TRANSLUCENT can improve performance by up to 2x.
+ * @param [options.show = true] - Determines if the billboards in the collection will be shown.
  */
 export class BillboardCollection {
     constructor(options?: {
@@ -25015,7 +25028,12 @@ export class BillboardCollection {
         debugShowBoundingVolume?: boolean;
         scene?: Scene;
         blendOption?: BlendOption;
+        show?: boolean;
     });
+    /**
+     * Determines if billboards in this collection will be shown.
+     */
+    show: boolean;
     /**
      * The 4x4 transformation matrix that transforms each billboard in this collection from model to world coordinates.
     When this is the identity matrix, the billboards are drawn in world coordinates, i.e., Earth's WGS84 coordinates.
@@ -26948,6 +26966,7 @@ var tileset = scene.primitives.add(new Cesium.Cesium3DTileset({
  * @param [options.specularEnvironmentMaps] - A URL to a KTX file that contains a cube map of the specular lighting and the convoluted specular mipmaps.
  * @param [options.backFaceCulling = true] - Whether to cull back-facing geometry. When true, back face culling is determined by the glTF material's doubleSided property; when false, back face culling is disabled.
  * @param [options.debugHeatmapTilePropertyName] - The tile variable to colorize as a heatmap. All rendered tiles will be colorized relative to each other's specified variable value.
+ * @param [options.pickPrimitive] - The primitive to be rendered during the pick pass instead of the tileset.
  * @param [options.debugFreezeFrame = false] - For debugging only. Determines if only the tiles from last frame should be used for rendering.
  * @param [options.debugColorizeTiles = false] - For debugging only. When true, assigns a random color to each tile.
  * @param [options.debugWireframe = false] - For debugging only. When true, render's each tile's content as a wireframe.
@@ -27000,6 +27019,7 @@ export class Cesium3DTileset {
         specularEnvironmentMaps?: string;
         backFaceCulling?: boolean;
         debugHeatmapTilePropertyName?: string;
+        pickPrimitive?: any;
         debugFreezeFrame?: boolean;
         debugColorizeTiles?: boolean;
         debugWireframe?: boolean;
@@ -27333,6 +27353,10 @@ export class Cesium3DTileset {
      */
     backFaceCulling: boolean;
     /**
+     * The primitive to be rendered during the pick pass instead of the tileset.
+     */
+    pickPrimitive: any;
+    /**
      * This property is for debugging only; it is not optimized for production use.
     <p>
     Determines if only the tiles from last frame should be used for rendering.  This
@@ -27464,9 +27488,9 @@ export class Cesium3DTileset {
      */
     readonly tilesLoaded: boolean;
     /**
-     * The url to a tileset JSON file.
+     * The resource used to fetch the tileset JSON file
      */
-    readonly url: string;
+    readonly resource: Resource;
     /**
      * The base path that non-absolute paths in tileset JSON file are relative to.
      */
@@ -28902,7 +28926,7 @@ export function createElevationBandMaterial(options: {
 tileset.
  * @example
  * // Create Cesium OSM Buildings with default styling
-var viewer = new Cesium.Viewer('mars3dContainer');
+var viewer = new Cesium.Viewer('cesiumContainer');
 viewer.scene.primitives.add(Cesium.createOsmBuildings());
  * @example
  * // Create Cesium OSM Buildings with a custom style highlighting
@@ -28959,12 +28983,12 @@ export function createTangentSpaceDebugPrimitive(options: {
  * Creates an {@link IonImageryProvider} instance for ion's default global base imagery layer, currently Bing Maps.
  * @example
  * // Create Cesium World Terrain with default settings
-var viewer = new Cesium.Viewer('mars3dContainer', {
+var viewer = new Cesium.Viewer('cesiumContainer', {
     imageryProvider : Cesium.createWorldImagery();
 });
  * @example
  * // Create Cesium World Terrain with water and normals.
-var viewer = new Cesium.Viewer('mars3dContainer', {
+var viewer = new Cesium.Viewer('cesiumContainer', {
     imageryProvider : Cesium.createWorldImagery({
         style: Cesium.IonWorldImageryStyle.AERIAL_WITH_LABELS
     })
@@ -32310,6 +32334,7 @@ labels.add({
  * @param [options.blendOption = BlendOption.OPAQUE_AND_TRANSLUCENT] - The label blending option. The default
 is used for rendering both opaque and translucent labels. However, if either all of the labels are completely opaque or all are completely translucent,
 setting the technique to BlendOption.OPAQUE or BlendOption.TRANSLUCENT can improve performance by up to 2x.
+ * @param [options.show = true] - Determines if the labels in the collection will be shown.
  */
 export class LabelCollection {
     constructor(options?: {
@@ -32317,7 +32342,12 @@ export class LabelCollection {
         debugShowBoundingVolume?: boolean;
         scene?: Scene;
         blendOption?: BlendOption;
+        show?: boolean;
     });
+    /**
+     * Determines if labels in this collection will be shown.
+     */
+    show: boolean;
     /**
      * The 4x4 transformation matrix that transforms each label in this collection from model to world coordinates.
     When this is the identity matrix, the labels are drawn in world coordinates, i.e., Earth's WGS84 coordinates.
@@ -35150,13 +35180,19 @@ points.add({
  * @param [options.blendOption = BlendOption.OPAQUE_AND_TRANSLUCENT] - The point blending option. The default
 is used for rendering both opaque and translucent points. However, if either all of the points are completely opaque or all are completely translucent,
 setting the technique to BlendOption.OPAQUE or BlendOption.TRANSLUCENT can improve performance by up to 2x.
+ * @param [options.show = true] - Determines if the primitives in the collection will be shown.
  */
 export class PointPrimitiveCollection {
     constructor(options?: {
         modelMatrix?: Matrix4;
         debugShowBoundingVolume?: boolean;
         blendOption?: BlendOption;
+        show?: boolean;
     });
+    /**
+     * Determines if primitives in this collection will be shown.
+     */
+    show: boolean;
     /**
      * The 4x4 transformation matrix that transforms each point in this collection from model to world coordinates.
     When this is the identity matrix, the pointPrimitives are drawn in world coordinates, i.e., Earth's WGS84 coordinates.
@@ -35380,12 +35416,18 @@ polylines.add({
  * @param [options] - Object with the following properties:
  * @param [options.modelMatrix = Matrix4.IDENTITY] - The 4x4 transformation matrix that transforms each polyline from model to world coordinates.
  * @param [options.debugShowBoundingVolume = false] - For debugging only. Determines if this primitive's commands' bounding spheres are shown.
+ * @param [options.show = true] - Determines if the polylines in the collection will be shown.
  */
 export class PolylineCollection {
     constructor(options?: {
         modelMatrix?: Matrix4;
         debugShowBoundingVolume?: boolean;
+        show?: boolean;
     });
+    /**
+     * Determines if polylines in this collection will be shown.
+     */
+    show: boolean;
     /**
      * The 4x4 transformation matrix that transforms each polyline in this collection from model to world coordinates.
     When this is the identity matrix, the polylines are drawn in world coordinates, i.e., Earth's WGS84 coordinates.
@@ -39904,7 +39946,7 @@ in this global view of the Earth at night as seen by NASA/NOAA\'s Suomi NPP sate
  }));
 
 //Create a CesiumWidget without imagery, if you haven't already done so.
-var cesiumWidget = new Cesium.CesiumWidget('mars3dContainer', { imageryProvider: false });
+var cesiumWidget = new Cesium.CesiumWidget('cesiumContainer', { imageryProvider: false });
 
 //Finally, create the baseLayerPicker widget using our view models.
 var layers = cesiumWidget.imageryLayers;
@@ -40616,13 +40658,13 @@ export class CesiumInspectorViewModel {
  * A widget containing a Cesium scene.
  * @example
  * // For each example, include a link to CesiumWidget.css stylesheet in HTML head,
-// and in the body, include: <div id="mars3dContainer"></div>
+// and in the body, include: <div id="cesiumContainer"></div>
 
 //Widget with no terrain and default Bing Maps imagery provider.
-var widget = new Cesium.CesiumWidget('mars3dContainer');
+var widget = new Cesium.CesiumWidget('cesiumContainer');
 
 //Widget with ion imagery and Cesium World Terrain.
-var widget = new Cesium.CesiumWidget('mars3dContainer', {
+var widget = new Cesium.CesiumWidget('cesiumContainer', {
     imageryProvider : Cesium.createWorldImagery(),
     terrainProvider : Cesium.createWorldTerrain(),
     skyBox : new Cesium.SkyBox({
@@ -41856,7 +41898,7 @@ export namespace Viewer {
 The widget can always be extended by using mixins, which add functionality useful for a variety of applications.
  * @example
  * //Initialize the viewer widget with several custom options and mixins.
-var viewer = new Cesium.Viewer('mars3dContainer', {
+var viewer = new Cesium.Viewer('cesiumContainer', {
     //Start in Columbus Viewer
     sceneMode : Cesium.SceneMode.COLUMBUS_VIEW,
     //Use Cesium World Terrain
@@ -42169,7 +42211,7 @@ export class Viewer {
 Rather than being called directly, this function is normally passed as
 a parameter to {@link Viewer#extend}, as shown in the example below.
  * @example
- * var viewer = new Cesium.Viewer('mars3dContainer');
+ * var viewer = new Cesium.Viewer('cesiumContainer');
 viewer.extend(Cesium.viewerCesium3DTilesInspectorMixin);
  * @param viewer - The viewer instance.
  */
@@ -42180,7 +42222,7 @@ export function viewerCesium3DTilesInspectorMixin(viewer: Viewer): void;
 Rather than being called directly, this function is normally passed as
 a parameter to {@link Viewer#extend}, as shown in the example below.
  * @example
- * var viewer = new Cesium.Viewer('mars3dContainer');
+ * var viewer = new Cesium.Viewer('cesiumContainer');
 viewer.extend(Cesium.viewerCesiumInspectorMixin);
  * @param viewer - The viewer instance.
  */
@@ -42192,7 +42234,7 @@ Rather than being called directly, this function is normally passed as
 a parameter to {@link Viewer#extend}, as shown in the example below.
  * @example
  * // Add basic drag and drop support and pop up an alert window on error.
-var viewer = new Cesium.Viewer('mars3dContainer');
+var viewer = new Cesium.Viewer('cesiumContainer');
 viewer.extend(Cesium.viewerDragDropMixin);
 viewer.dropError.addEventListener(function(viewerArg, source, error) {
     window.alert('Error processing ' + source + ':' + error);
@@ -42218,7 +42260,7 @@ export function viewerDragDropMixin(viewer: Viewer, options?: {
 Rather than being called directly, this function is normally passed as
 a parameter to {@link Viewer#extend}, as shown in the example below.
  * @example
- * var viewer = new Cesium.Viewer('mars3dContainer');
+ * var viewer = new Cesium.Viewer('cesiumContainer');
 viewer.extend(Cesium.viewerPerformanceWatchdogMixin, {
     lowFrameRateMessage : 'Why is this going so <em>slowly</em>?'
 });

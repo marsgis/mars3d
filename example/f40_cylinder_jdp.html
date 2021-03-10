@@ -1,262 +1,208 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="author" content="火星科技 http://mars3d.cn ">
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-        content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>三维地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>三维地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+    ></script>
 
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
-  <!--第三方lib-->
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-<body class="dark">
-  <!--加载前进行操作提示，优化用户体验-->
-  <div id="mask" class="signmask" onclick="removeMask()"></div>
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
 
-  <div id="mars3dContainer" class="mars3d-container"></div>
+      var map
+      var graphicLayer
+      var barColors = ['#00fdcf', '#63AEFF', '#FFB861', '#FF6D5D']
 
-
-
-
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
-
-    var map
-    var graphicLayer
-    var barColors = ['#00fdcf', '#63AEFF', '#FFB861', '#FF6D5D']
-
-    function initMap(options) {
-      //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {
-        scene: {
-          center: { lat: 30.286465, lng: 117.620524, alt: 510892, heading: 358, pitch: -50 },
-        },
-        layers: [
-          {
-            type: 'geojson',
-            name: '淮海经济区11市',
-            url: 'http://data.marsgis.cn/file/geojson/huaihai.json',
-            symbol: {
-              styleOptions: {
-                opacity: 0.5,
-                outline: false,
-              },
-              styleField: 'Name',
-              styleFieldOptions: {
-                济宁市: {
-                  color: '#D4AACE',
-                },
-                临沂市: {
-                  color: '#8DC763',
-                },
-                菏泽市: {
-                  color: '#F7F39A',
-                },
-                枣庄市: {
-                  color: '#F7F39A',
-                },
-                徐州市: {
-                  color: '#96F0F1',
-                },
-                宿迁市: {
-                  color: '#EAC9A8',
-                },
-                连云港市: {
-                  color: '#F7F39A',
-                },
-                商丘市: {
-                  color: '#D4AACE',
-                },
-                宿州市: {
-                  color: '#8DC763',
-                },
-                亳州市: {
-                  color: '#96F0F1',
-                },
-                淮北市: {
-                  color: '#EAC9A8',
-                },
-              },
-            },
-            popup: '{Name}',
-            show: true,
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 30.286465, lng: 117.620524, alt: 510892, heading: 358, pitch: -50 },
           },
-        ],
-      })
+          layers: [
+            {
+              type: 'geojson',
+              name: '淮海经济区11市',
+              url: 'http://data.marsgis.cn/file/geojson/huaihai.json',
+              symbol: {
+                styleOptions: {
+                  opacity: 0.5,
+                  outline: false,
+                },
+                styleField: 'Name',
+                styleFieldOptions: {
+                  济宁市: { color: '#D4AACE' },
+                  临沂市: { color: '#8DC763' },
+                  菏泽市: { color: '#F7F39A' },
+                  枣庄市: { color: '#F7F39A' },
+                  徐州市: { color: '#96F0F1' },
+                  宿迁市: { color: '#EAC9A8' },
+                  连云港市: { color: '#F7F39A' },
+                  商丘市: { color: '#D4AACE' },
+                  宿州市: { color: '#8DC763' },
+                  亳州市: { color: '#96F0F1' },
+                  淮北市: { color: '#EAC9A8' },
+                },
+              },
+              popup: '{Name}',
+              show: true,
+            },
+          ],
+        })
 
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
 
-      map.basemap = 2017 //蓝色底图
+        map.basemap = 2017 //蓝色底图
 
-      //创建Graphic图层
-      graphicLayer = new mars3d.layer.GraphicLayer()
-      map.addLayer(graphicLayer)
+        //创建Graphic图层
+        graphicLayer = new mars3d.layer.GraphicLayer()
+        map.addLayer(graphicLayer)
 
-      //加载数据
-      $.ajax({
-        type: 'GET',
-        url: 'http://data.marsgis.cn/file/apidemo/huaihai-jj.json',
-        success: function (res) {
-          showCityEconomyData(res.data)
-        },
-        error: function (err) {
-          haoutil.msg('获取信息失败，请稍候再试')
-        },
-      })
-    }
-
-    function showCityEconomyData(data) {
-      const yearArr = Object.keys(data)
-      showYearZT(data[yearArr[0]])
-    }
-
-    /**
-     * 展示某年的椎体
-     */
-    function showYearZT(arr) {
-      for (let i = 0; i < arr.length; i += 1) {
-        const attr = arr[i]
-        const jwd = getJWDByName(attr['name'])
-
-        const num1 = attr['第一产业']
-        const num2 = attr['第二产业']
-        const num3 = attr['第三产业']
-        const numall = Number(num1 + num2 + num3).toFixed(2)
-        const html = `${attr['name']}<br/>第一产业：${num1}<br/>第二产业：${num2}<br/>第三产业：${num3}`
-
-        var height1 = Math.floor(num1 * 10)
-        var height2 = Math.floor(num2 * 10)
-        var height3 = Math.floor(num3 * 10)
-
-        var p1 = Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height3 / 2)
-        var p2 = Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height3 + height2 / 2)
-        var p3 = Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height3 + height2 + height1 / 2)
-
-        // 添加柱体
-        createZT(p1, height3, Cesium.Color.fromCssColorString('#63AEFF'), html)
-        createZT(p2, height2, Cesium.Color.fromCssColorString('#FFB861'), html)
-        createZT(p3, height1, Cesium.Color.fromCssColorString('#FF6D5D'), html)
-
-        // 添加文字
-        var primitive = new mars3d.graphic.LabelPrimitive({
-          position: Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height1 + height2 + height3),
-          style: {
-            text: numall,
-            font_size: 18,
-            font_family: '楷体',
-            style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-            fillColor: Cesium.Color.fromCssColorString('#00ff00'),
-            outlineColor: Cesium.Color.BLACK,
-            outlineWidth: 1,
-            horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-            pixelOffset: new Cesium.Cartesian2(0, -20),
+        //加载数据
+        $.ajax({
+          type: 'GET',
+          url: 'http://data.marsgis.cn/file/apidemo/huaihai-jj.json',
+          success: function (res) {
+            showCityEconomyData(res.data)
+          },
+          error: function (err) {
+            haoutil.msg('获取信息失败，请稍候再试')
           },
         })
-        graphicLayer.addGraphic(primitive)
-        primitive.bindTooltip(html)
       }
-    }
 
-    /**  创建柱体 */
-    function createZT(position, len, color, html) {
-      var graphic = new mars3d.graphic.CylinderEntity({
-        position: position,
-        style: {
-          length: len,
-          topRadius: 6000.0,
-          bottomRadius: 6000.0,
-          material: color,
-        },
-      })
-      graphicLayer.addGraphic(graphic)
+      function showCityEconomyData(data) {
+        const yearArr = Object.keys(data)
+        showYearZT(data[yearArr[0]])
+      }
 
-      graphic.bindTooltip(html)
+      /**
+       * 展示某年的椎体
+       */
+      function showYearZT(arr) {
+        for (let i = 0; i < arr.length; i += 1) {
+          const attr = arr[i]
+          const jwd = getJWDByName(attr['name'])
 
-      // graphic._position_show = position
-      // graphic._length_show = len
-      return graphic
-    }
+          const num1 = attr['第一产业']
+          const num2 = attr['第二产业']
+          const num3 = attr['第三产业']
+          const numall = Number(num1 + num2 + num3).toFixed(2)
+          const html = `${attr['name']}<br/>第一产业：${num1}<br/>第二产业：${num2}<br/>第三产业：${num3}`
 
-    var cityPosition = [
-      {
-        name: '亳州',
-        jwd: [116.203602, 33.496075],
-      },
-      {
-        name: '商丘',
-        jwd: [115.871509, 34.297084],
-      },
-      {
-        name: '淮北',
-        jwd: [116.688413, 33.689214],
-      },
-      {
-        name: '宿州',
-        jwd: [117.234682, 33.740035],
-      },
-      {
-        name: '徐州',
-        jwd: [117.70509, 34.350708],
-      },
-      {
-        name: '宿迁',
-        jwd: [118.559349, 33.807355],
-      },
-      {
-        name: '连云港',
-        jwd: [118.875445, 34.619808],
-      },
-      {
-        name: '临沂',
-        jwd: [118.026908, 35.262767],
-      },
-      {
-        name: '枣庄',
-        jwd: [117.320268, 35.072555],
-      },
-      {
-        name: '济宁',
-        jwd: [116.856599, 35.500232],
-      },
-      {
-        name: '菏泽',
-        jwd: [115.716086, 35.05629],
-      },
-    ]
-    /**
-     * 根据名称获取坐标
-     */
-    function getJWDByName(name) {
-      for (let i = 0; i < cityPosition.length; i += 1) {
-        const item = cityPosition[i]
-        if (item.name === name) {
-          return item.jwd
+          var height1 = Math.floor(num1 * 10)
+          var height2 = Math.floor(num2 * 10)
+          var height3 = Math.floor(num3 * 10)
+
+          var p1 = Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height3 / 2)
+          var p2 = Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height3 + height2 / 2)
+          var p3 = Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height3 + height2 + height1 / 2)
+
+          // 添加柱体
+          createZT(p1, height3, Cesium.Color.fromCssColorString('#63AEFF'), html)
+          createZT(p2, height2, Cesium.Color.fromCssColorString('#FFB861'), html)
+          createZT(p3, height1, Cesium.Color.fromCssColorString('#FF6D5D'), html)
+
+          // 添加文字
+          var primitive = new mars3d.graphic.LabelPrimitive({
+            position: Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height1 + height2 + height3),
+            style: {
+              text: numall,
+              font_size: 18,
+              font_family: '楷体',
+              style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+              fillColor: Cesium.Color.fromCssColorString('#00ff00'),
+              outlineColor: Cesium.Color.BLACK,
+              outlineWidth: 1,
+              horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+              verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+              pixelOffset: new Cesium.Cartesian2(0, -20),
+            },
+          })
+          graphicLayer.addGraphic(primitive)
+          primitive.bindTooltip(html)
         }
       }
-      return []
-    }
- </script>
-</body>
 
+      /**  创建柱体 */
+      function createZT(position, len, color, html) {
+        var graphic = new mars3d.graphic.CylinderEntity({
+          position: position,
+          style: {
+            length: len,
+            topRadius: 6000.0,
+            bottomRadius: 6000.0,
+            material: color,
+          },
+        })
+        graphicLayer.addGraphic(graphic)
+
+        graphic.bindTooltip(html)
+
+        // graphic._position_show = position
+        // graphic._length_show = len
+        return graphic
+      }
+
+      var cityPosition = [
+        { name: '亳州', jwd: [116.203602, 33.496075] },
+        { name: '商丘', jwd: [115.871509, 34.297084] },
+        { name: '淮北', jwd: [116.688413, 33.689214] },
+        { name: '宿州', jwd: [117.234682, 33.740035] },
+        { name: '徐州', jwd: [117.70509, 34.350708] },
+        { name: '宿迁', jwd: [118.559349, 33.807355] },
+        { name: '连云港', jwd: [118.875445, 34.619808] },
+        { name: '临沂', jwd: [118.026908, 35.262767] },
+        { name: '枣庄', jwd: [117.320268, 35.072555] },
+        { name: '济宁', jwd: [116.856599, 35.500232] },
+        { name: '菏泽', jwd: [115.716086, 35.05629] },
+      ]
+
+      /**
+       * 根据名称获取坐标
+       */
+      function getJWDByName(name) {
+        for (let i = 0; i < cityPosition.length; i += 1) {
+          const item = cityPosition[i]
+          if (item.name === name) {
+            return item.jwd
+          }
+        }
+        return []
+      }
+    </script>
+  </body>
 </html>

@@ -228,7 +228,6 @@
 
           map.flyToPoint(position, {
             radius: 2000, //距离目标点的距离
-            pitch: -50, //相机方向
             duration: 3,
             complete: function (e) {
               //飞行完成回调方法
@@ -271,6 +270,7 @@
             loadData({
               page: 1,
               city: dnnm,
+              citylimit: true,
             })
             break
           case '2': //当前视角范围
@@ -391,7 +391,7 @@
           } else {
             $('#loadMore').show()
           }
-          addGraphic(data)
+          addGraphics(data)
           haoutil.loading.close()
         },
         error: function (msg, error) {
@@ -417,7 +417,7 @@
       map.graphicLayer.clear()
     }
 
-    function addGraphic(arr) {
+    function addGraphics(arr) {
       console.log('查询数据结果', arr)
 
       for (var i = 0; i < arr.length; i++) {

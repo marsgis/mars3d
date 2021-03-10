@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d,mars3d-mapv"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d,mars3d-esri,mars3d-mapv"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -37,7 +37,6 @@
 
     <div id="mars3dContainer" class="mars3d-container"></div>
 
-    <script type="text/javascript" src="../lib/mars3d/plugins/esri/mars3d-esri.js"></script>
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
@@ -78,7 +77,7 @@
         rs = rs.split('\n')
         var maxLength = 0
         //leaflet只识别经纬度坐标，需要将数据中的米坐标转成经纬度坐标
-        var projection = L.CRS.EPSG3857.projection
+        var projection = mars3d.L.CRS.EPSG3857.projection
 
         var ggPoints
         for (let i = 0; i < rs.length; i++) {
@@ -92,7 +91,7 @@
           }
           for (let j = 0; j < item.length; j += 2) {
             //需要将数据中的米坐标转成经纬度坐标
-            var latLng = projection.unproject(L.point([item[j], item[j + 1]]))
+            var latLng = projection.unproject(mars3d.L.point([item[j], item[j + 1]]))
             coordinates.push([latLng.lng, latLng.lat])
             timeData.push({
               geometry: {

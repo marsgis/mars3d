@@ -39,7 +39,7 @@
     <input type="button" class="btn btn-primary" value="圆形通视分析" onclick="drawCircle()" />
     <input type="button" class="btn btn-primary" value="清除" onclick="clearAll()" />
 
-    <a href="editor.html#h11_sightline_terrain" target="_blank" class="btn btn-default">地形精确分析示例</a>
+    <a href="editor.html#k10_sightline_terrain" target="_blank" class="btn btn-default">地形精确分析示例</a>
   </div>
 
 
@@ -109,7 +109,7 @@
           var targetArr = []
           for (var i = 0; i < targetPoints.length; i++) {
             var targetPoint = targetPoints[i]
-            targetPoint = mars3d.PointUtil.setPositionSurfaceHeight(map.scene, targetPoint)
+            targetPoint = mars3d.PointUtil.getSurfacePosition(map.scene, targetPoint)
             sightline.add(center, targetPoint)
           }
 

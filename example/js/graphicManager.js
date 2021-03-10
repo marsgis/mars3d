@@ -65,16 +65,16 @@ function initLayerManager(graphicLayer) {
   })
 
   $('#btnExpFile').click(function () {
-    window.layer.msg('该功能在开发完善中……')
-    return
+    // window.layer.msg('该功能在开发完善中……')
+    // return
 
-    // if (graphicLayer.length === 0) {
-    //   window.layer.msg('当前没有标注任何数据，无需保存！')
-    //   return
-    // }
+    if (graphicLayer.length === 0) {
+      window.layer.msg('当前没有标注任何数据，无需保存！')
+      return
+    }
 
-    // let geojson = graphicLayer.toGeoJSON()
-    // haoutil.file.downloadFile('我的标注.json', JSON.stringify(geojson))
+    let geojson = graphicLayer.toGeoJSON()
+    haoutil.file.downloadFile('我的标注.json', JSON.stringify(geojson))
   })
 
   $('#btnImpFile').click(function () {
