@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>三维动画教学讲解 碎部点-地貌特征点 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,bootstrap,bootstrap-checkbox,font-awesome,web-icons,jstree,layer,haoutil,nprogress,toastr,admui,turf,mars3d"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+    <style>
+      .viewResult {
+        top: 50px;
+        right: 10px;
+        bottom: auto;
+        left: auto;
+        max-width: 500px;
+        overflow: auto;
+        font-size: 28px;
+      }
+
+      .divpoint1 {
+        position: relative;
+        width: 200px;
+        height: 134px;
+        background: rgba(42, 42, 42, 0.8);
+        border-radius: 4px;
+
+        background: url('./img/marker/div1.png');
+        background-size: 100%;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+
+        -webkit-animation: mymove 5s infinite;
+        animation: mymove 5s infinite;
+        animation-duration: 5s;
+        animation-timing-function: ease;
+        animation-delay: 0s;
+        animation-iteration-count: infinite;
+        animation-direction: normal;
+        animation-fill-mode: none;
+        animation-play-state: running;
+        animation-name: mymove;
+      }
+
+      .divpoint1 .title {
+        position: relative;
+        top: 20px;
+        left: 70px;
+        font-size: 15px;
+        text-align: left;
+        color: rgba(255, 255, 255, 1);
+        text-shadow: 0px 0px 9px rgba(0, 0, 0, 0.75);
+      }
+
+      .contentUl {
+        padding: 0;
+        text-align: left;
+        font-size: 20px;
+      }
+
+      .btn i {
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <div id="viewReset" class="infoview" style="overflow: auto; left: 10px; top: 10px">
+      <div class="btn-group">
+        <button id="btn_start" type="button" class="btn btn-primary"><i class="fa fa-play-circle-o"></i>开始</button>
+        <button id="btn_pause" type="button" class="btn btn-primary" style="display: none"><i class="fa fa-pause-circle-o"></i>暂停</button>
+        <button id="btn_proceed" type="button" class="btn btn-primary" style="display: none"><i class="fa fa-play-circle-o"></i>继续</button>
+        <button id="btn_stop" type="button" class="btn btn-primary" style="display: none"><i class="fa fa-stop-circle-o"></i>停止</button>
+      </div>
+
+      <ul id="treeOverlays" style="padding: 0"></ul>
+      <br />
+      总时长: <span id="alltimes">0s</span> &nbsp;&nbsp;
+      <br />
+      当前:&nbsp;&nbsp;<span id="thisStep">无</span> &nbsp;&nbsp;
+      <span id="thistimes"></span>
+    </div>
+
+    <script type="text/javascript" src="js/dhjb/globe.js"></script>
+    <script type="text/javascript" src="js/dhjb/work.js"></script>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
+
+      var map
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: {
+              y: 36.045934,
+              x: 113.942816,
+              z: 1663.41,
+              heading: 2.4,
+              pitch: -24.8,
+              roll: 0,
+            },
+          },
+        })
+
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+
+        initUI()
+        initEditorJS()
+      }
+
+      //UI界面相关
+      function initUI() {
+        $('#btn_start').click(function () {
+          dataWork.start()
+        })
+
+        $('#btn_pause').click(function () {
+          dataWork.pause()
+        })
+
+        $('#btn_proceed').click(function () {
+          dataWork.proceed()
+        })
+
+        $('#btn_stop').click(function () {
+          dataWork.stop()
+        })
+
+        map.on(
+          mars3d.EventType.keydown,
+          (event) => {
+            switch (event.keyCode) {
+              default:
+                break
+              case '1'.charCodeAt(0): //播放、暂停切换
+                if (dataWork._isStart) {
+                  $('#btn_pause').click()
+                } else {
+                  $('#btn_proceed').click()
+                }
+                break
+              case '2'.charCodeAt(0): //停止
+                $('#btn_stop').click()
+                break
+              case '3'.charCodeAt(0): //绑定和解绑键盘(控制器)控制
+                map.keyboardRoam.enabled = !map.keyboardRoam.enabled
+                if (map.keyboardRoam.enabled) {
+                  haoutil.msg('已开启键盘控制')
+                } else {
+                  haoutil.msg('已关闭键盘控制，您可以鼠标进行操作了！')
+                }
+                break
+            }
+          },
+          this
+        )
+      }
+    </script>
+  </body>
+</html>

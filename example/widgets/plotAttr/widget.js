@@ -96,7 +96,7 @@ ${strAPIItem}
     //释放插件
     disable() {}
     getDefStyle(type) {
-      return mars3d.graphic.edit.getDefStyle(type)
+      return mars3d.graphic.DefStyleUtil.getDefStyle(type)
     }
     getMinPointNum() {
       let graphic = this.config.graphic

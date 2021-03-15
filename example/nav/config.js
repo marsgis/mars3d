@@ -1992,7 +1992,17 @@ var exampleConfig = {
           },
         ],
       },
-    
+      xunifangzhen: {
+        name: '虚拟仿真',
+        content: [
+          {
+            name: '动画脚本演示',
+            version: '3.0',
+            thumbnail: 'm35_dhjb.jpg',
+            fileName: 'm35_dhjb',
+          },
+        ],
+      },
     },
   },
 }

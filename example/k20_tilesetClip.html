@@ -42,15 +42,6 @@
       <input type="button" class="btn btn-primary" value="绘制矩形" id="btnDrawExtent" />
       <input type="button" class="btn btn-primary" value="绘制剪裁区" id="btnDraw" />
       <input type="button" class="btn btn-primary" value="清除" id="clearWJ" />
-
-      <div class="radio radio-info radio-inline">
-        <input type="radio" id="rdoClipType1" name="rdoClipType" value="0" checked />
-        <label for="rdoClipType1">内裁剪</label>
-      </div>
-      <div class="radio radio-info radio-inline">
-        <input type="radio" id="rdoClipType2" name="rdoClipType" value="1" />
-        <label for="rdoClipType2">外裁剪 </label>
-      </div>
     </div>
 
     <div class="infoview info-tips">
@@ -87,18 +78,11 @@
 
         //加模型
         var tilesetLayer = new mars3d.layer.TilesetLayer({
-          url: 'http://data.marsgis.cn/3dtiles/qx-shuiwu/tileset.json',
-          maximumScreenSpaceError: 2,
+          url: 'http://data.marsgis.cn/3dtiles-test/qx-xiaoqu/tileset.json',
+          maximumScreenSpaceError: 10,
           maximumMemoryUsage: 1024,
-          position: { alt: -100 },
-          center: {
-            y: 36.534035,
-            x: 101.494838,
-            z: 2871.39,
-            heading: 196.6,
-            pitch: -43.5,
-            roll: 359.9,
-          },
+          center: { lat: 25.078322, lng: 102.653514, alt: 3006, heading: 29, pitch: -45 },
+          position: { lng: 102.658438, lat: 25.087756, alt: 33.4 },
           flyTo: true,
         })
         map.addLayer(tilesetLayer)
@@ -112,82 +96,59 @@
         tilesetClip = new mars3d.thing.TilesetClip({
           layer: tilesetLayer,
           positions: [
-            [101.494598, 36.531232, 2575.68],
-            [101.493713, 36.531463, 2575.83],
-            [101.493934, 36.532096, 2576.18],
-            [101.494881, 36.531865, 2575.58],
+            [102.656385, 25.087349, 1897.78],
+            [102.660091, 25.085633, 1896.88],
+            [102.658175, 25.081644, 1894.54],
+            [102.654452, 25.084029, 1896.07],
           ],
-          outline: true, //显示边线
         })
         map.addThing(tilesetClip)
 
-        $('input:radio[name="rdoClipType"]').change(function () {
-          if ($(this).val() === '1') {
-            tilesetClip.clipOutSide = true
-          } else {
-            tilesetClip.clipOutSide = false
-          }
-        })
-
         $('#clearWJ').click(function () {
-          graphicLayer.clear()
+          map.graphicLayer.clear()
           tilesetClip.clear()
         })
 
-        var graphicLayer = new mars3d.layer.GraphicLayer({
-          hasEdit: true,
-          isAutoEditing: true, //绘制完成后是否自动激活编辑
-        })
-        map.addLayer(graphicLayer)
-
-        graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
-          startEditing(e.graphic)
-        })
-        graphicLayer.on(mars3d.EventType.editMovePoint, function (e) {
-          startEditing(e.graphic)
-        })
-        graphicLayer.on(mars3d.EventType.editRemovePoint, function (e) {
-          startEditing(e.graphic)
-        })
-        graphicLayer.on(mars3d.EventType.editStop, function (e) {
-          startEditing(e.graphic)
-        })
-
         $('#btnDraw').click(function () {
-          graphicLayer.clear()
-          graphicLayer.startDraw({
+          map.graphicLayer.clear()
+          map.graphicLayer.startDraw({
             type: 'polygon',
             style: {
               color: '#007be6',
               opacity: 0.2,
               outline: false,
             },
+            success: function (graphic) {
+              //绘制成功后回调
+              var positions = graphic.positionsShow
+              map.graphicLayer.clear()
+
+              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
+
+              tilesetClip.addArea(positions)
+            },
           })
         })
         $('#btnDrawExtent').click(function () {
-          graphicLayer.clear()
-          graphicLayer.startDraw({
+          map.graphicLayer.clear()
+          map.graphicLayer.startDraw({
             type: 'rectangle',
             style: {
               color: '#007be6',
               opacity: 0.2,
               outline: false,
             },
+            success: function (graphic) {
+              //绘制成功后回调
+              var positions = graphic.getOutlinePositions(true)
+              map.graphicLayer.clear()
+
+              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
+
+              tilesetClip.addArea(positions)
+            },
           })
         })
-      }
-
-      function startEditing(graphic) {
-        var positions = graphic.positionsShow
-        if (graphic.getOutlinePositions) {
-          //rectangle时
-          positions = graphic.getOutlinePositions(true)
-        }
-
-        //赋值绘制的边界坐标
-        tilesetClip.positions = positions
-
-        console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
       }
     </script>
   </body>

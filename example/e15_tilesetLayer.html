@@ -349,7 +349,8 @@
         loadSiblings: true, // 如果为true则不会在已加载完模型后，自动从中心开始超清化模型
         cullRequestsWhileMoving: true,
         cullRequestsWhileMovingMultiplier: 10, //【重要】 值越小能够更快的剔除
-        preferLeaves: true, //【重要】这个参数默认是false，同等条件下，叶子节点会优先加载。但是Cesium的tile加载优先级有很多考虑条件，这个只是其中之一，如果skipLevelOfDetail=false，这个参数几乎无意义。所以要配合skipLevelOfDetail=true来使用，此时设置preferLeaves=true。这样我们就能最快的看见符合当前视觉精度的块，对于提升大数据以及网络环境不好的前提下有一点点改善意义。                 progressiveResolutionHeightFraction: 0.5,  //【重要】 数值偏于0能够让初始加载变得模糊
+        preferLeaves: true, //【重要】这个参数默认是false，同等条件下，叶子节点会优先加载。但是Cesium的tile加载优先级有很多考虑条件，这个只是其中之一，如果skipLevelOfDetail=false，这个参数几乎无意义。所以要配合skipLevelOfDetail=true来使用，此时设置preferLeaves=true。这样我们就能最快的看见符合当前视觉精度的块，对于提升大数据以及网络环境不好的前提下有一点点改善意义。
+        progressiveResolutionHeightFraction: 0.5, //【重要】 数值偏于0能够让初始加载变得模糊
         dynamicScreenSpaceError: true, // true时会在真正的全屏加载完之后才清晰化模型
         preloadWhenHidden: true, //tileset.show是false时，也去预加载数据
         //以上为优化的参数

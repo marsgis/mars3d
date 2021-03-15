@@ -39,7 +39,8 @@
       <input id="txtSplitNum" type="number" value="10" step="1" min="1" max="9999" class="form-control"
         style="width: 100px;" />
 
-      <button type="button" id="btnDrawPolygon" class="btn btn-default">绘制区域</button>
+      <button type="button" id="btnDrawExtent" class="btn btn-default">绘制矩形</button>
+      <button type="button" id="btnDrawPolygon" class="btn btn-default">绘制多边形</button>
       <button type="button" id="btnDrawPoint" class="btn btn-default">绘制点</button>
       <button type="button" id="btnClear" class="btn btn-default">清除</button>
     </div>
@@ -107,7 +108,7 @@
         //     slopeStr2: text2,   //百分比法值字符串，坡度 = (高程差/水平距离)x100%
         //     direction: slopeAngle //坡向值（0-360度）
         // }
-      })
+  })
 
       //渲染效果
       contourLine = new mars3d.thing.ContourLine({
@@ -118,6 +119,34 @@
 
       $('input[type=radio][name=shadingMaterials]').change(function () {
         contourLine.shadingType = this.value
+      })
+
+      $('#btnDrawExtent').click(function () {
+        clearAll()
+        map.graphicLayer.startDraw({
+          type: 'rectangle',
+          style: {
+            color: '#007be6',
+            opacity: 0.8,
+            outline: false,
+          },
+          success: function (graphic) {
+            //绘制成功后回调
+            var positions = graphic.getOutlinePositions(true)
+            map.graphicLayer.clear()
+
+            console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
+
+            contourLine.positions = positions
+
+            var splitNum = Number($('#txtSplitNum').val())
+            slope.add(positions, {
+              splitNum: splitNum, //splitNum插值分割的个数
+              radius: 1, //缓冲半径（影响坡度坡向的精度）
+              count: 4, //缓冲的数量（影响坡度坡向的精度）会求周边(count*4)个点
+            })
+          },
+        })
       })
 
       $('#btnDrawPolygon').click(function () {
@@ -136,12 +165,11 @@
             var positions = graphic.positionsShow
             map.graphicLayer.clear()
 
-            contourLine.positions = positions
-
             console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
 
-            var splitNum = Number($('#txtSplitNum').val())
+            contourLine.positions = positions
 
+            var splitNum = Number($('#txtSplitNum').val())
             slope.add(positions, {
               splitNum: splitNum, //splitNum插值分割的个数
               radius: 1, //缓冲半径（影响坡度坡向的精度）

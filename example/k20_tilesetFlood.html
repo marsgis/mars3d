@@ -62,13 +62,13 @@
         <tr>
           <td class="nametd">最低海拔(米)</td>
           <td>
-            <input id="minHeight" value="2570" type="number" class="form-control" />
+            <input id="minHeight" value="1894" type="number" class="form-control" />
           </td>
         </tr>
         <tr>
           <td class="nametd">最高海拔(米)</td>
           <td>
-            <input id="maxHeight" value="2600" type="number" class="form-control" />
+            <input id="maxHeight" value="2000" type="number" class="form-control" />
           </td>
         </tr>
         <tr>
@@ -91,7 +91,7 @@
         </div>
         <div class="rowview clearfix"><span>当前高度:</span><span id="lbl_nowHeight"></span></div>
 
-        <input id="btn_start" type="button" class="btn btn-primary" value="播放" />
+        <input id="btn_start" type="button" class="btn btn-primary" value="开始播放" />
         <button type="button" id="clearWJ" class="btn btn-danger">返回</button>
       </div>
     </div>
@@ -128,18 +128,11 @@
 
         //加模型
         var tilesetLayer = new mars3d.layer.TilesetLayer({
-          url: 'http://data.marsgis.cn/3dtiles/qx-shuiwu/tileset.json',
-          maximumScreenSpaceError: 2,
+          url: 'http://data.marsgis.cn/3dtiles-test/qx-xiaoqu/tileset.json',
+          maximumScreenSpaceError: 10,
           maximumMemoryUsage: 1024,
-          position: { alt: -100 },
-          center: {
-            y: 36.534035,
-            x: 101.494838,
-            z: 2871.39,
-            heading: 196.6,
-            pitch: -43.5,
-            roll: 359.9,
-          },
+          center: { lat: 25.078322, lng: 102.653514, alt: 3006, heading: 29, pitch: -45 },
+          position: { lng: 102.658438, lat: 25.087756, alt: 33.4 },
           flyTo: true,
         })
         map.addLayer(tilesetLayer)
@@ -191,11 +184,11 @@
 
               //绘制成功后回调
               var positions = graphic.positionsShow
-              tilesetFlood.positions = positions
+              tilesetFlood.addArea(positions)
 
               // var result = mars3d.PolyUtil.getHeightRange(positions, map.scene)
               // $('#minHeight').val(Math.ceil(result.minHeight))
-              // $('#maxHeight').val(Math.floor(result.maxHeight))
+              // $('#maxHeight').val(Math.floor(result.maxHeight + 1))
 
               haoutil.loading.hide()
             },
@@ -203,7 +196,7 @@
         })
 
         $('#begin').click(function () {
-          if (!tilesetFlood.floodAll && tilesetFlood.positions == null) {
+          if (!tilesetFlood.floodAll && tilesetFlood.length == 0) {
             haoutil.msg('请首先绘制分析区域！')
             return
           }
@@ -233,14 +226,14 @@
             tilesetFlood.height = value
             $('#lbl_nowHeight').html('当前高度：' + value.toFixed(1))
 
-            $('#btn_start').val('播放')
+            $('#btn_start').val('开始播放')
           },
         })
 
         $('#btn_start').click(function () {
           if (tilesetFlood.isStart) {
             tilesetFlood.stop()
-            $('#btn_start').val('播放')
+            $('#btn_start').val('开始播放')
           } else {
             tilesetFlood.start()
             $('#btn_start').val('暂停')

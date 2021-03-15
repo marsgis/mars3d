@@ -42,7 +42,7 @@
       <tr>
         <td>限定区域</td>
         <td colspan="3">
-
+          <input type="button" class="btn btn-primary" value="绘制矩形" id="btnDrawExtent" />
           <input type="button" class="btn btn-primary" value="绘制区域" id="btnDraw" />
           <input type="button" class="btn btn-primary" value="清除" id="clearWJ" />
         </td>
@@ -186,13 +186,35 @@
           style: {
             color: '#007be6',
             opacity: 0.5,
-            perPositionHeight: true,
             outline: false,
           },
           success: function (graphic) {
             //绘制成功后回调
             var positions = graphic.positionsShow
             map.graphicLayer.clear()
+
+            console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
+
+            contourLine.positions = positions
+          },
+        })
+      })
+
+      $('#btnDrawExtent').click(function () {
+        contourLine.clear()
+        map.graphicLayer.startDraw({
+          type: 'rectangle',
+          style: {
+            color: '#007be6',
+            opacity: 0.8,
+            outline: false,
+          },
+          success: function (graphic) {
+            //绘制成功后回调
+            var positions = graphic.getOutlinePositions(true)
+            map.graphicLayer.clear()
+
+            console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
 
             contourLine.positions = positions
           },
