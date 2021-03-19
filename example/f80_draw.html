@@ -221,10 +221,10 @@
       })
 
       ////编辑时拖拽点颜色（修改内部默认值）
-      // mars3d.graphic.edit.PointColor.Control = Cesium.Color.fromCssColorString('#1c197d') //位置控制拖拽点
-      // mars3d.graphic.edit.PointColor.MoveHeight = Cesium.Color.fromCssColorString('#9500eb') //上下移动高度的拖拽点
-      // mars3d.graphic.edit.PointColor.EditAttr = Cesium.Color.fromCssColorString('#f73163') //辅助修改属性（如半径）的拖拽点
-      // mars3d.graphic.edit.PointColor.AddMidPoint = Cesium.Color.fromCssColorString('#04c2c9').withAlpha(0.3) //增加新点，辅助拖拽点
+      // mars3d.graphic.DrawUtil.PointColor.Control = Cesium.Color.fromCssColorString('#1c197d') //位置控制拖拽点
+      // mars3d.graphic.DrawUtil.PointColor.MoveHeight = Cesium.Color.fromCssColorString('#9500eb') //上下移动高度的拖拽点
+      // mars3d.graphic.DrawUtil.PointColor.EditAttr = Cesium.Color.fromCssColorString('#f73163') //辅助修改属性（如半径）的拖拽点
+      // mars3d.graphic.DrawUtil.PointColor.AddMidPoint = Cesium.Color.fromCssColorString('#04c2c9').withAlpha(0.3) //增加新点，辅助拖拽点
 
       ////标绘时的tooltip（修改内部默认值）
       // mars3d.graphic.DrawUtil.message.draw.point.start = '单击 完成绘制'
@@ -348,7 +348,7 @@
         style: {
           color: '#29cf34',
           opacity: 0.5,
-          outline: true,
+          outline: false,
           outlineWidth: 2.0,
           clampToGround: clampToGround,
         },
@@ -463,7 +463,6 @@
     function drawExtrudedPolygon() {
       graphicLayer.startDraw({
         type: 'polygon',
-        edittype: 'extrudedPolygon', //该参数非必须，是属性编辑widget使用的
         style: {
           color: '#00ff00',
           opacity: 0.6,
@@ -475,7 +474,6 @@
     function drawExtrudedRectangle() {
       graphicLayer.startDraw({
         type: 'rectangle',
-        edittype: 'extrudedRectangle', //该参数非必须，是属性编辑widget使用的
         style: {
           color: '#00ff00',
           opacity: 0.6,
@@ -487,7 +485,6 @@
     function drawExtrudedCircle() {
       graphicLayer.startDraw({
         type: 'circle',
-        edittype: 'extrudedCircle', //该参数非必须，是属性编辑widget使用的
         style: {
           color: '#00ff00',
           opacity: 0.6,

@@ -28,7 +28,7 @@
   <link href="css/style.css" rel="stylesheet" />
   <style>
     .mars3d-container {
-      background-image: url(img/backGroundImg.jpg);
+      background-image: url(img/tietu/backGroundImg.jpg);
       background-repeat: no-repeat;
       background-size: 100% 100%;
     }
@@ -41,6 +41,18 @@
 
   <div id="mars3dContainer" class="mars3d-container"></div>
 
+
+
+  <div class="infoview">
+    <div>
+      <div class="btn-group" role="group">
+        <input type="button" class="btn btn-primary" value="无" id="bntShow0" />
+        <input type="button" class="btn btn-primary active" value="背景1" id="bntShow1" />
+        <input type="button" class="btn btn-primary" value="背景2" id="bntShow2" />
+        <input type="button" class="btn btn-primary" value="背景3" id="bntShow3" />
+      </div>
+    </div>
+  </div>
 
   <script src="./js/common.js"></script>
   <script type="text/javascript">
@@ -77,6 +89,42 @@
 
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      $('#bntShow0').click(function () {
+        $('.active').removeClass('active')
+        $(this).addClass('active')
+
+        $('.mars3d-container').css({
+          'background-image': 'none',
+        })
+      })
+
+      $('#bntShow1').click(function () {
+        $('.active').removeClass('active')
+        $(this).addClass('active')
+
+        $('.mars3d-container').css({
+          'background-image': 'url(img/tietu/backGroundImg.jpg)',
+        })
+      })
+
+      $('#bntShow2').click(function () {
+        $('.active').removeClass('active')
+        $(this).addClass('active')
+
+        $('.mars3d-container').css({
+          'background-image': 'url(img/tietu/world.jpg)',
+        })
+      })
+
+      $('#bntShow3').click(function () {
+        $('.active').removeClass('active')
+        $(this).addClass('active')
+
+        $('.mars3d-container').css({
+          'background-image': 'url(img/tietu/bg4.jpg)',
+        })
+      })
     }
   </script>
 </body>

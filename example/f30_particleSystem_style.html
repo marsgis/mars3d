@@ -185,7 +185,7 @@
     'use script' //开发环境建议开启严格模式
 
     var map
-    var particleSystemEx
+    var particleGraphic
     var particlePosition
 
     function initMap(options) {
@@ -249,7 +249,7 @@
 
       particlePosition = Cesium.Cartesian3.fromDegrees(117.221844, 31.813857, 28.5)
 
-      particleSystemEx = new mars3d.graphic.ParticleSystem({
+      particleGraphic = new mars3d.graphic.ParticleSystem({
         position: particlePosition, //位置
         style: {
           image: './img/particle/smoke.png',
@@ -273,7 +273,7 @@
         target: new Cesium.Cartesian3(-0.151, 0.294, 0.225), // 粒子的方向
         maxHeight: 5000, //超出该高度后不显示粒子效果
       })
-      graphicLayer.addGraphic(particleSystemEx)
+      graphicLayer.addGraphic(particleGraphic)
 
       $('#txtTargetHeight').change(function (e) {
         if (targetPosition) {
@@ -291,7 +291,7 @@
             particlePosition = positions[0]
             map.graphicLayer.clear()
 
-            particleSystemEx.position = particlePosition
+            particleGraphic.position = particlePosition
           },
         })
       })
@@ -317,41 +317,41 @@
 
       //绑定事件
       Cesium.knockout.getObservable(viewModel, 'emissionRate').subscribe(function (newValue) {
-        particleSystemEx.particleSystem.emissionRate = parseFloat(newValue)
+        particleGraphic.czmObject.emissionRate = parseFloat(newValue)
       })
 
       Cesium.knockout.getObservable(viewModel, 'minimumParticleLife').subscribe(function (newValue) {
-        particleSystemEx.particleSystem.minimumParticleLife = parseFloat(newValue)
+        particleGraphic.czmObject.minimumParticleLife = parseFloat(newValue)
       })
 
       Cesium.knockout.getObservable(viewModel, 'maximumParticleLife').subscribe(function (newValue) {
-        particleSystemEx.particleSystem.maximumParticleLife = parseFloat(newValue)
+        particleGraphic.czmObject.maximumParticleLife = parseFloat(newValue)
       })
 
       Cesium.knockout.getObservable(viewModel, 'minimumSpeed').subscribe(function (newValue) {
-        particleSystemEx.particleSystem.minimumSpeed = parseFloat(newValue)
+        particleGraphic.czmObject.minimumSpeed = parseFloat(newValue)
       })
 
       Cesium.knockout.getObservable(viewModel, 'maximumSpeed').subscribe(function (newValue) {
-        particleSystemEx.particleSystem.maximumSpeed = parseFloat(newValue)
+        particleGraphic.czmObject.maximumSpeed = parseFloat(newValue)
       })
 
       Cesium.knockout.getObservable(viewModel, 'startScale').subscribe(function (newValue) {
-        particleSystemEx.particleSystem.startScale = parseFloat(newValue)
+        particleGraphic.czmObject.startScale = parseFloat(newValue)
       })
 
       Cesium.knockout.getObservable(viewModel, 'endScale').subscribe(function (newValue) {
-        particleSystemEx.particleSystem.endScale = parseFloat(newValue)
+        particleGraphic.czmObject.endScale = parseFloat(newValue)
       })
 
       Cesium.knockout.getObservable(viewModel, 'particleSize').subscribe(function (newValue) {
         var particleSize = parseFloat(newValue)
-        particleSystemEx.particleSize = particleSize
+        particleGraphic.particleSize = particleSize
       })
 
       Cesium.knockout.getObservable(viewModel, 'gravity').subscribe(function (newValue) {
         var gravity = parseFloat(newValue)
-        particleSystemEx.gravity = gravity
+        particleGraphic.gravity = gravity
       })
     }
 
@@ -379,7 +379,7 @@
       Cesium.Cartesian3.multiplyByScalar(target, 0.01, target)
 
       console.log(`${target.x},${target.y},${target.z}`)
-      particleSystemEx.target = target
+      particleGraphic.target = target
     }
   </script>
 </body>

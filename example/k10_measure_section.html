@@ -104,6 +104,17 @@
             setEchartsData(e)
           }
         })
+
+        measureObj.on(mars3d.EventType.click, function (e) {
+          let result = e.graphic?.measureResult
+          if (result && result.mtype === 'section') {
+            setEchartsData(result)
+          }
+        })
+
+        map.on(mars3d.EventType.click, function (e) {
+          hideTipMarker()
+        })
       }
 
       function removeAll() {

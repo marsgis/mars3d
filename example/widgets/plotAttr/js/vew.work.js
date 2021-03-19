@@ -106,9 +106,34 @@ var plotEdit = {
         if (edit.type == 'hidden') {
           continue
         }
-
         let attrName = edit.name
         let attrVal = attr.style[attrName] || edit.defval
+
+        //贴地对象
+        if (attr.style['clampToGround']) {
+          if (
+            attrName == 'fill' || //不能取消填充。
+            attrName == 'height' || //没有高度
+            attrName == 'distanceDisplayCondition' ||
+            attrName == 'distanceDisplayCondition_far' ||
+            attrName == 'distanceDisplayCondition_near' ||
+            attrName == 'outline' ||
+            attrName == 'outlineWidth' ||
+            attrName == 'outlineColor' ||
+            attrName == 'outlineOpacity' ||
+            attrName == 'hasShadows' ||
+            attrName == 'diffHeight'
+          ) {
+            continue
+          }
+        }
+
+        //三维立体对象
+        if (attr.style['diffHeight'] > 0) {
+          if (attrName == 'clampToGround' || attrName == 'outlineWidth') {
+            continue
+          }
+        }
 
         let input = this.getAttrInput(parname, attrName, attrVal, edit)
         if (input.fun) {

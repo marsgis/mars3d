@@ -110,10 +110,7 @@
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
         //固定光照，避免gltf模型随时间存在亮度不一致。
-        var directionalLight = new Cesium.DirectionalLight({
-          direction: new Cesium.Cartesian3(0.35492591601301104, -0.8909182691839401, -0.2833588392420772),
-        })
-        map.scene.light = directionalLight
+        map.fixedLight = true
 
         //创建矢量数据图层
         var graphicLayer = new mars3d.layer.GraphicLayer()
@@ -160,10 +157,10 @@
           modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.ZR
         })
         $('#btnClipping3').click(function () {
-          modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.X
+          modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.XR
         })
         $('#btnClipping4').click(function () {
-          modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.XR
+          modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.X
         })
         $('#btnClipping5').click(function () {
           modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.Y

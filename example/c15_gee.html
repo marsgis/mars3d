@@ -34,6 +34,10 @@
   <div id="mars3dContainer" class="mars3d-container"></div>
 
 
+  <div id="tipView" class="info-tips">
+    (1) 需要自行部署自己的谷歌地球企业版服务后，修改url才能体验。
+  </div>
+
   <script type="text/javascript">
     'use script' //开发环境建议开启严格模式
 
@@ -76,6 +80,21 @@
           },
         ],
       })
+    }
+
+    function openTipView(content, title) {
+      window.layer.open({
+        type: 1,
+        title: title || '功能 和 已知问题 提示',
+        offset: 'rt',
+        shade: false,
+        skin: 'layer-mars-dialog animation-scale-up',
+        content: content,
+      })
+    }
+
+    if ($('#tipView').length > 0) {
+      openTipView($('#tipView'))
     }
   </script>
 </body>

@@ -119,7 +119,6 @@
             fill: true,
             color: '#00ff00',
             opacity: 0.6,
-            diffHeight: 5000,
           },
         })
       })
@@ -138,7 +137,7 @@
 
         "topRadius": 0,      //顶部半径
         "bottomRadius": 100,      //底部半径
-        "diffHeight": 100,      //高度
+        "length": 100,      //高度
         "fill": true,      //是否填充
         "fillType": "color",      //填充类型 ,可选项：color(纯色),animationCircle(动画),
         "animationDuration": 1000,      //速度
@@ -247,7 +246,7 @@
       graphicLayer.addGraphic(graphicModel)
 
       //效果1
-      var pointQY = point.copy()
+      var pointQY = point.clone()
       pointQY.alt = pointQY.alt / 2
 
       var graphic = new mars3d.graphic.CylinderEntity({

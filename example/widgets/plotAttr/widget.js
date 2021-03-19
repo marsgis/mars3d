@@ -27,7 +27,7 @@
         that.attrConfig = data
 
         // that.getDefaultVal();//测试用
-        // that.getReadmeTxt(); //测试用
+        //that.getReadmeTxt() //测试用
 
         that.attrConfig['curve'] = that.attrConfig['polyline']
         that.attrConfig['model-p'] = that.attrConfig['model']
@@ -72,18 +72,37 @@
           if (item.type === 'combobox') {
             strData = ',可选项：'
             item.data.forEach(function (comb) {
-              strData += `${comb.value}(${comb.text}),`
+              if (comb.value == comb.text) {
+                strData += `${comb.value},`
+              } else {
+                strData += `${comb.value} (解释：${comb.text}),`
+              }
             })
           }
-          strAPIItem += `        "${item.name}": ${item.defval},      //${item.label} ${strData}  \n`
+          let type
+          switch (item.type) {
+            case 'slider':
+            case 'number':
+              type = 'Number'
+              break
+            case 'radio':
+              type = 'Boolean'
+              break
+            default:
+              type = 'String'
+              break
+          }
+
+          strAPIItem += ` * @property {${type}} [${item.name} = ${item.defval}] ${item.label} ${strData} \n`
         }
-        strAPI += `{
-    "type": "${i}",
-    "style": {
-${strAPIItem}
-    }
-}
-`
+        strAPI += `
+  /**
+  * ${data[i].name} 支持的样式信息
+  *
+  * @typedef {Object} ${i}.StyleOptions
+  *
+  ${strAPIItem}*
+  */\n\n`
       }
       haoutil.file.downloadFile('标绘属性配置.txt', strAPI)
     }

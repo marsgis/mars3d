@@ -297,17 +297,17 @@
 
       $('#model_angle1').range({
         onChange: function (value, bfb) {
-          rectangularSensor.setStyle({ xHalfAngle: Cesium.Math.toRadians(value) }) //传感器水平半角
+          rectangularSensor.style = { xHalfAngle: Cesium.Math.toRadians(value) } //传感器水平半角
         },
       })
       $('#model_angle2').range({
         onChange: function (value, bfb) {
-          rectangularSensor.setStyle({ yHalfAngle: Cesium.Math.toRadians(value) }) //传感器垂直半角
+          rectangularSensor.style = { yHalfAngle: Cesium.Math.toRadians(value) } //传感器垂直半角
         },
       })
       $('#chkShowScanPlane').change(function () {
         var showScanPlane = $('#chkShowScanPlane').is(':checked')
-        rectangularSensor.setStyle({ showScanPlane: showScanPlane }) //是否显示扫描面
+        rectangularSensor.style = { showScanPlane: showScanPlane } //是否显示扫描面
       })
     }
   </script>

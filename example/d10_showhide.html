@@ -161,11 +161,11 @@
         map.viewer.animation.container.style.display = show ? 'block' : 'none'
 
         if (show) {
-          map.location.css({
+          map.controls.location.css({
             left: '170px',
           })
         } else {
-          map.location.css({
+          map.controls.location.css({
             left: '0px',
           })
         }
@@ -177,11 +177,11 @@
         map.viewer.timeline.container.style.display = show ? 'block' : 'none'
 
         if (show) {
-          map.location.css({
+          map.controls.location.css({
             bottom: '25px',
           })
         } else {
-          map.location.css({
+          map.controls.location.css({
             bottom: '0px',
           })
         }
@@ -190,7 +190,7 @@
       //位置信息状态栏
       $('#showLocation').change(function () {
         var show = $(this).is(':checked')
-        map.location.show = show
+        map.controls.location.show = show
       })
 
       //导航球

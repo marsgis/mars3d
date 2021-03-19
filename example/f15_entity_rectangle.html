@@ -158,6 +158,7 @@
       addGraphic_01(graphicLayer)
       addGraphic_02(graphicLayer)
       addGraphic_03(graphicLayer)
+      addGraphic_04(graphicLayer)
     }
 
     /**
@@ -265,6 +266,30 @@
       })
       graphicLayer.addGraphic(graphic)
       //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    function addGraphic_04(graphicLayer) {
+      // let tileLayer = new mars3d.layer.ImageLayer({
+      //   url: 'img/tietu/hangpai.png',
+      //   rectangle: { xmin: 112.577227713512, xmax: 112.580763278004, ymin: 37.9962695328675, ymax: 37.9987875232216 },
+      // })
+      // map.addLayer(tileLayer)
+
+      var graphicZP = new mars3d.graphic.RectangleEntity({
+        positions: [
+          [112.577227713512, 37.9962695328675, 0],
+          [112.580763278004, 37.9987875232216, 0],
+        ],
+        style: {
+          material: new Cesium.ImageMaterialProperty({
+            image: 'img/tietu/hangpai.png',
+          }),
+        },
+      })
+      graphicLayer.addGraphic(graphicZP)
+
+      // map.flyToGraphic([112.580763278004, 37.9987875232216, 800])
+      // graphicZP.flyTo({ minHeight: 1000, scale: 2 })
     }
   </script>
 </body>

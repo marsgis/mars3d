@@ -124,6 +124,9 @@ function bindLayerContextMenu(graphicLayer) {
       iconCls: 'fa fa-trash-o',
       callback: function (e) {
         let graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
         if (graphic) {
           graphicLayer.removeGraphic(graphic)
         }
@@ -134,6 +137,9 @@ function bindLayerContextMenu(graphicLayer) {
       iconCls: 'fa fa-medium',
       show: function (e) {
         let graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
         return (
           graphic.type === 'polyline' ||
           graphic.type === 'polylineP' ||
@@ -158,6 +164,9 @@ function bindLayerContextMenu(graphicLayer) {
       iconCls: 'fa fa-medium',
       show: function (e) {
         let graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
         return (
           graphic.type === 'circle' ||
           graphic.type === 'circleP' ||
@@ -178,6 +187,9 @@ function bindLayerContextMenu(graphicLayer) {
       iconCls: 'fa fa-reorder',
       show: function (e) {
         let graphic = e.graphic
+        if (!graphic) {
+          return false
+        }
         return (
           graphic.type === 'circle' ||
           graphic.type === 'circleP' ||

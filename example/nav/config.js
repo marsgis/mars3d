@@ -614,7 +614,7 @@ var exampleConfig = {
             fileName: 'f10_entity_ellipse',
           },
           {
-            name: 'Cylinder 圆锥、圆柱',
+            name: 'Cylinder 圆锥',
             version: '1.5',
             thumbnail: 'f10_entity_cylinder.jpg',
             fileName: 'f10_entity_cylinder',
@@ -890,8 +890,8 @@ var exampleConfig = {
           {
             name: '统计柱状图',
             version: '1.7',
-            thumbnail: 'f40_cylinder_jdp.jpg',
-            fileName: 'f40_cylinder_jdp',
+            thumbnail: 'f40_cylinder_gdp.jpg',
+            fileName: 'f40_cylinder_gdp',
           },
           {
             name: '水闸放水效果',
@@ -1555,7 +1555,7 @@ var exampleConfig = {
             fileName: 'h30_snow',
           },
           {
-            name: '水面倒影',
+            name: '水面倒影 demo',
             version: '1.9',
             thumbnail: 'h30_daoying.jpg',
             fileName: 'h30_daoying',
@@ -1667,16 +1667,16 @@ var exampleConfig = {
         name: '地形相关',
         content: [
           {
+            name: '地形开挖',
+            version: '1.8',
+            thumbnail: 'k15_terrainClip.jpg',
+            fileName: 'k15_terrainClip',
+          },
+          {
             name: '地形开挖(planes)',
             version: '1.6',
             thumbnail: 'k15_terrainPlanClip.jpg',
             fileName: 'k15_terrainPlanClip',
-          },
-          {
-            name: '地形开挖(globe材质)',
-            version: '1.8',
-            thumbnail: 'k15_terrainClip.jpg',
-            fileName: 'k15_terrainClip',
           },
           {
             name: '等高线',
@@ -2054,7 +2054,7 @@ function getAllName() {
         var len = examples && examples.length ? examples.length : 0
         for (var i = 0; i < len; i++) {
           var item = examples[i]
-          if (item.plugins || item.name.indexOf('demo') !== -1) {
+          if (item.name.indexOf('demo') !== -1) {
             continue
           }
 

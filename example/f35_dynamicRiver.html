@@ -71,6 +71,7 @@
   </div>
 
 
+
   <script src="./js/common.js"></script>
   <script type="text/javascript">
     'use script' //开发环境建议开启严格模式
@@ -136,7 +137,6 @@
       ])
 
       //加一些演示数据
-
       var dynamicRiver = new mars3d.graphic.DynamicRiver({
         positions: [
           [115.907543, 30.441563, 541.47],
@@ -216,7 +216,7 @@
             var height = Number($('#txtHeight').val())
             var speed = Number($('#txtSpeed').val())
 
-            var dynamicRiver = new mars3d.graphic.DynamicRiver({
+            dynamicRiver = new mars3d.graphic.DynamicRiver({
               positions: points,
               style: {
                 image: './img/textures/movingRiver.png',

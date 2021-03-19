@@ -54,7 +54,7 @@
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
-        var lodEntityLayer = new mars3d.layer.LodEntityLayer({
+        var lodGraphicLayer = new mars3d.layer.LodGraphicLayer({
           IdName: 'id', //数据的唯一主键 字段名称
           minimumLevel: 11, //限定层级，只加载该层级下的数据。[与效率相关的重要参数]
           debuggerTileInfo: true,
@@ -73,7 +73,7 @@
               type: 'get',
               dataType: 'json',
               success: function (data) {
-                callback(data)
+                callback(opts, data)
               },
               error: function (data) {
                 console.log('ajax请求出错', data)
@@ -84,7 +84,7 @@
             //根据数据创造entity
 
             //添加实体
-            var entity = lodEntityLayer.dataSource.entities.add({
+            var entity = lodGraphicLayer.dataSource.entities.add({
               name: attributes.name,
               position: Cesium.Cartesian3.fromDegrees(attributes.x, attributes.y, 0),
               billboard: {
@@ -100,12 +100,12 @@
             return entity
           },
           removeGraphic: (enetity) => {
-            lodEntityLayer.dataSource.entities.remove(enetity)
+            lodGraphicLayer.dataSource.entities.remove(enetity)
           },
         })
-        map.addLayer(lodEntityLayer)
+        map.addLayer(lodGraphicLayer)
 
-        lodEntityLayer.on(mars3d.EventType.click, (event) => {
+        lodGraphicLayer.on(mars3d.EventType.click, (event) => {
           console.log('你单击了对象', event)
         })
       }

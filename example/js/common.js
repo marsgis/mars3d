@@ -24,3 +24,18 @@ mars3d.Resource.fetchJson({ url: configUrl })
 function removeMask() {
   $('#mask').remove()
 }
+
+function openTipView(content, title) {
+  window.layer.open({
+    type: 1,
+    title: title || '功能 和 已知问题 提示',
+    offset: 'rt',
+    shade: false,
+    skin: 'layer-mars-dialog animation-scale-up',
+    content: content,
+  })
+}
+
+if ($('#tipView').length > 0) {
+  openTipView($('#tipView'))
+}

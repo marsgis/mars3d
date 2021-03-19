@@ -44,6 +44,13 @@
         <label for="chkClippingPlanes"> 是否挖地 </label>
       </div>
 
+      <!-- <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkUnionClippingRegions" class="styled" type="checkbox">
+        <label for="chkUnionClippingRegions">
+          是否外切割
+        </label>
+      </div> -->
+
       <div class="checkbox checkbox-primary checkbox-inline">
         <input id="chkTestTerrain" class="styled" type="checkbox" checked />
         <label for="chkTestTerrain"> 深度检测 </label>
@@ -108,6 +115,10 @@
         $('#chkClippingPlanes').change(function () {
           var val = $(this).is(':checked')
           terrainClip.enabled = val
+        })
+        $('#chkUnionClippingRegions').change(function () {
+          var val = $(this).is(':checked')
+          terrainClip.clipOutSide = val
         })
 
         $('#txtHeight').change(function () {

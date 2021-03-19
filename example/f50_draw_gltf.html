@@ -107,6 +107,9 @@
             pitch: -51.9,
             roll: 0,
           },
+          clock: {
+            currentTime: '2021-01-01 22:00:00',
+          },
         },
       })
 
@@ -114,12 +117,9 @@
       map = new mars3d.Map('mars3dContainer', mapOptions)
 
       //固定光照，避免gltf模型随时间存在亮度不一致。
-      var directionalLight = new Cesium.DirectionalLight({
-        direction: new Cesium.Cartesian3(0.35492591601301104, -0.8909182691839401, -0.2833588392420772),
-      })
-      map.scene.light = directionalLight
+      map.fixedLight = true
 
-      graphicLayer = new mars3d.layer.GraphicLayer({
+      this.graphicLayer = new mars3d.layer.GraphicLayer({
         hasEdit: true,
         isAutoEditing: true, //绘制完成后是否自动激活编辑
       })

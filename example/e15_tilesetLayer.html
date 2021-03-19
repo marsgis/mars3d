@@ -39,6 +39,9 @@
       <input type="button" class="btn btn-primary" value="人工建模(石化工厂)" onclick="showMaxShihuaDemo()" />
       <input type="button" class="btn btn-primary" value="BIM(桥梁)" onclick="showBimQiaoliangDemo()" />
     </div>
+
+
+
     <div>
       相关控制：
       <div class="checkbox checkbox-primary checkbox-inline">
@@ -70,6 +73,11 @@
           键盘漫游
         </label>
       </div>
+
+      &nbsp;&nbsp;
+      &nbsp;&nbsp;
+
+    <a href="editor.html#g20_3dtiles_edit" target="_blank" class="btn btn-default">3dtilees参数调试</a>
     </div>
   </div>
 
@@ -103,10 +111,8 @@
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
 
-      //固定光照，避免3dtiles模型随时间存在亮度不一致。
-      map.scene.light = new Cesium.DirectionalLight({
-        direction: new Cesium.Cartesian3(0.35492591601301104, -0.8909182691839401, -0.2833588392420772),
-      })
+      //固定光照，避免gltf模型随时间存在亮度不一致。
+      map.fixedLight = true
 
       //针对不同终端的优化配置
       if (haoutil.system.isPCBroswer()) {
@@ -178,6 +184,9 @@
     let tiles3dLayer
 
     function removeLayer() {
+      $('#chkWireframe').prop('checked', false)
+      $('#chkBoundbox').prop('checked', false)
+
       if (tiles3dLayer) {
         map.basemap = 2020 //切换到默认卫星底图
 

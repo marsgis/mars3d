@@ -73,12 +73,12 @@
       </div>
       <div class="rowview clearfix"><span>当前高度:</span><span id="lbl_nowHeight"></span></div>
 
-      <input id="btn_start" type="button" class="btn btn-primary" value="播放" />
+      <input id="btn_start" type="button" class="btn btn-primary" value="自动播放" />
       <button type="button" id="clear" class="btn btn-danger">返回</button>
 
       <div class="checkbox checkbox-info checkbox-inline">
         <input type="checkbox" id="showElse" value="this" name="jiaodu" checked />
-        <label for="showElse">不显示区域外地图</label>
+        <label for="showElse">显示淹没区域外地图</label>
       </div>
     </div>
   </div>
@@ -92,7 +92,19 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {})
+      var mapOptions = mars3d.Util.merge(options, {
+        scene: {
+          showSun: false,
+          showMoon: false,
+          showSkyBox: false,
+          showSkyAtmosphere: false,
+          fog: false,
+          globe: {
+            showGroundAtmosphere: false,
+            enableLighting: false,
+          },
+        },
+      })
 
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
@@ -192,6 +204,7 @@
 
         $('#paramView').hide()
         $('#resultView').show()
+        $('#btn_start').click() //自动启动
       })
 
       //滑动条
@@ -200,14 +213,14 @@
           floodByMaterial.height = value
           $('#lbl_nowHeight').html('当前高度：' + value.toFixed(1))
 
-          $('#btn_start').val('播放')
+          $('#btn_start').val('自动播放')
         },
       })
 
       $('#btn_start').click(function () {
         if (floodByMaterial.isStart) {
           floodByMaterial.stop()
-          $('#btn_start').val('播放')
+          $('#btn_start').val('自动播放')
         } else {
           floodByMaterial.start()
           $('#btn_start').val('暂停')
@@ -217,6 +230,7 @@
       $('#clear').click(function () {
         $('#resultView').hide()
         $('#paramView').show()
+        $('#btn_start').val('自动播放')
 
         floodByMaterial.clear()
         map.graphicLayer.clear()

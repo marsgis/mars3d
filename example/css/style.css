@@ -340,6 +340,10 @@ li {
     box-shadow: 0 3px 14px rgba(128, 128, 128, 0.5);
     z-index: 999;
 }
+.infoview-right{
+  left: auto;
+  right: 10px;
+}
 
 .infoview input,
 .infoview select,
@@ -356,11 +360,10 @@ li {
 
 
 .info-tips {
-    top: auto;
-    bottom: 70px;
-    left: 2px;
-    color: #cad1d1;
+  margin: 5px 10px 20px 10px;
 }
+
+
 
 .rightbottom {
     top: auto;

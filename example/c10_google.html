@@ -38,6 +38,9 @@
     <input id="btnRemoveLayer" type="button" class="btn btn-primary" value="移除图层" onclick="removeLayer()" />
   </div>
 
+  <div id="tipView" class="info-tips">
+    (1) 按国家测绘主管部门的通知，目前国家相关部门对未经审核批准的谷歌等地图做了封锁及下架，目前谷歌地图服务暂不可用。
+  </div>
 
   <script type="text/javascript">
     'use script' //开发环境建议开启严格模式
@@ -122,6 +125,21 @@
         map.removeLayer(tileLayer, true)
         tileLayer = null
       }
+    }
+
+    function openTipView(content, title) {
+      window.layer.open({
+        type: 1,
+        title: title || '功能 和 已知问题 提示',
+        offset: 'rt',
+        shade: false,
+        skin: 'layer-mars-dialog animation-scale-up',
+        content: content,
+      })
+    }
+
+    if ($('#tipView').length > 0) {
+      openTipView($('#tipView'))
     }
   </script>
 </body>

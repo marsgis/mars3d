@@ -47,7 +47,7 @@
     </div>
 
 
-    <div id="tipView">
+    <div id="czsmView">
       操作说明：<br />
       1、右键拖拽，以相机视角为中心进行旋转。<br />
       2、中键拖拽，可以升高或降低相机高度。<br />
@@ -89,10 +89,10 @@
       $('input:radio[name="shadingMaterials"]').change(function () {
         if ($(this).val() === '1') {
           streetView.enabled = true
-          $('#tipView').show()
+          $('#czsmView').show()
         } else {
           streetView.enabled = false
-          $('#tipView').hide()
+          $('#czsmView').hide()
         }
       })
     }

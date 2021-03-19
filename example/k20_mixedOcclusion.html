@@ -1,127 +1,130 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-    <meta name="author" content="火星科技 http://mars3d.cn " />
-    <meta name="apple-touch-fullscreen" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="x5-fullscreen" content="true" />
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
-    <!-- 标题及搜索关键字 -->
-    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-    <meta
-      name="description"
-      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
-    />
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn " />
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="x5-fullscreen" content="true" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
-    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>三维模型 3dtiles 倾斜摄影 人工模型 3dmax bim 地下管网 城市白膜 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+        content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
-    <!--第三方lib-->
-    <script
-      type="text/javascript"
-      src="../lib/include-lib.js"
-      libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
-    ></script>
-    <link href="css/style.css" rel="stylesheet" />
-  </head>
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+  <title>三维模型 3dtiles 倾斜摄影 人工模型 3dmax bim 地下管网 城市白膜 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
 
-  <body class="dark">
-    <!--加载前进行操作提示，优化用户体验-->
-    <div id="mask" class="signmask" onclick="removeMask()"></div>
+  <!--第三方lib-->
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/" include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+  <link href="css/style.css" rel="stylesheet" />
+</head>
 
-    <div id="mars3dContainer" class="mars3d-container"></div>
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-    <div class="infoview">
-      <table class="mars-table">
-        <tr>
-          <td>状态</td>
-          <td>
-            <div class="checkbox checkbox-primary checkbox-inline">
-              <input id="chkUnderground" class="styled" type="checkbox" checked />
-              <label for="chkUnderground"> 开启遮挡模式 </label>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>透明度</td>
-          <td>
-            <input id="alpha" type="range" min="0.0" max="1.0" step="0.05" value="0.6" />
-          </td>
-        </tr>
-      </table>
-    </div>
+  <div id="mars3dContainer" class="mars3d-container"></div>
 
-    <script src="./js/common.js"></script>
-    <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+  <div class="infoview">
+    <table class="mars-table">
+      <tr>
+        <td>状态</td>
+        <td>
+          <div class="checkbox checkbox-primary checkbox-inline">
+            <input id="chkUnderground" class="styled" type="checkbox" checked />
+            <label for="chkUnderground"> 开启遮挡模式 </label>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>透明度</td>
+        <td>
+          <input id="alpha" type="range" min="0.0" max="1.0" step="0.05" value="0.6" />
+        </td>
+      </tr>
+    </table>
+  </div>
 
-      var map
 
-      function initMap(options) {
-        //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.Util.merge(options, {
-          scene: {
-            center: {
-              y: 31.217826,
-              x: 121.449346,
-              z: 1429.64,
-              heading: 43.5,
-              pitch: -20.8,
-              roll: 0,
-            },
-            resolutionScale: 1.0,
-            globe: {
-              depthTestAgainstTerrain: false,
-            },
+  <div id="tipView" class="info-tips">
+    建筑物混合遮挡:<br />
+    (1) 楼块不遮挡道路、水系、绿地等地图元素；<br />
+    (2) 楼块之间，需要实现不透明的实际遮挡效果。
+  </div>
+
+
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
+
+    var map
+
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.Util.merge(options, {
+        scene: {
+          center: {
+            y: 31.217826,
+            x: 121.449346,
+            z: 1429.64,
+            heading: 43.5,
+            pitch: -20.8,
+            roll: 0,
           },
-        })
-
-        //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
-
-        map.basemap = '天地图电子'
-
-        //模型
-        var tilesetLayer = new mars3d.layer.TilesetLayer({
-          name: '上海市区',
-          url: 'http://data.marsgis.cn/3dtiles/jzw-shanghai/tileset.json',
-          style: {
-            color: {
-              conditions: [
-                ['true', 'rgb(0, 255, 255)'], //设置建筑物颜色
-              ],
-            },
+          resolutionScale: 1.0,
+          globe: {
+            depthTestAgainstTerrain: false,
           },
-          maximumScreenSpaceError: 8,
-          maximumMemoryUsage: 1024,
-          showClickFeature: true,
-          popup: 'all',
-        })
-        map.addLayer(tilesetLayer)
+        },
+      })
 
-        //建筑物混合遮挡
-        var mixedOcclusion = new mars3d.thing.MixedOcclusion({
-          alpha: 0.5,
-        })
-        map.addThing(mixedOcclusion)
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
 
-        $('#alpha').range({
-          onChange: function (value, bfb) {
-            mixedOcclusion.alpha = value
+      map.basemap = '天地图电子'
+
+      //模型
+      var tilesetLayer = new mars3d.layer.TilesetLayer({
+        name: '上海市区',
+        url: 'http://data.marsgis.cn/3dtiles/jzw-shanghai/tileset.json',
+        style: {
+          color: {
+            conditions: [
+              ['true', 'rgb(0, 255, 255)'], //设置建筑物颜色
+            ],
           },
-        })
+        },
+        maximumScreenSpaceError: 8,
+        maximumMemoryUsage: 1024,
+        showClickFeature: true,
+        popup: 'all',
+      })
+      map.addLayer(tilesetLayer)
 
-        $('#chkUnderground').change(function () {
-          var val = $(this).is(':checked')
-          mixedOcclusion.enabled = val
-        })
-      }
-    </script>
-  </body>
+      //建筑物混合遮挡
+      var mixedOcclusion = new mars3d.thing.MixedOcclusion({
+        alpha: 0.5,
+      })
+      map.addThing(mixedOcclusion)
+
+      $('#alpha').range({
+        onChange: function (value, bfb) {
+          mixedOcclusion.alpha = value
+        },
+      })
+
+      $('#chkUnderground').change(function () {
+        var val = $(this).is(':checked')
+        mixedOcclusion.enabled = val
+      })
+    }
+  </script>
+</body>
+
 </html>
