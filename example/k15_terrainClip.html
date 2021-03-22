@@ -44,12 +44,12 @@
         <label for="chkClippingPlanes"> 是否挖地 </label>
       </div>
 
-      <!-- <div class="checkbox checkbox-primary checkbox-inline">
+      <div class="checkbox checkbox-primary checkbox-inline">
         <input id="chkUnionClippingRegions" class="styled" type="checkbox">
         <label for="chkUnionClippingRegions">
           是否外切割
         </label>
-      </div> -->
+      </div>
 
       <div class="checkbox checkbox-primary checkbox-inline">
         <input id="chkTestTerrain" class="styled" type="checkbox" checked />
@@ -128,6 +128,9 @@
 
         $('#clearWJ').click(function () {
           terrainClip.clear() //清除挖地区域
+
+          $('#chkUnionClippingRegions').prop('checked', false)
+          $('#chkClippingPlanes').prop('checked', true)
         })
 
         $('#btnDraw').click(function () {
@@ -165,7 +168,7 @@
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.getOutlinePositions(true)
+              var positions = graphic.getOutlinePositions(false)
               map.graphicLayer.clear()
 
               console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界

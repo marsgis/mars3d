@@ -4,8 +4,6 @@
         "style": [
             { "name": "text", "label": "内容", "type": "textarea", "defval": "文字" },
 
-            { "name": "color", "label": "颜色", "type": "color", "defval": "#ffffff" },
-            { "name": "opacity", "label": "透明度", "type": "slider", "defval": 1.0 },
             {
                 "name": "font_family",
                 "label": "字体",
@@ -20,34 +18,40 @@
                 ]
             },
             { "name": "font_size", "label": "字体大小", "type": "number", "defval": 30.0 },
-
-            { "name": "border", "label": "是否衬色", "type": "radio", "defval": true, "impact": [ "border_color", "border_width", "border_style" ] },
-            { "name": "border_color", "label": "衬色颜色", "type": "color", "defval": "#000000" },
-            { "name": "border_width", "label": "衬色宽度", "type": "number", "defval": 3.0 },
-
-            { "name": "background", "label": "是否背景", "type": "radio", "defval": false, "impact": [ "background_color", "background_opacity" ] },
-            { "name": "background_color", "label": "背景颜色", "type": "color", "defval": "#000000" },
-            { "name": "background_opacity", "label": "背景透明度", "type": "slider", "defval": 0.5 },
             {
-                "name": "font_weight",
-                "label": "是否加粗",
-                "type": "combobox",
-                "defval": "normal",
-                "data": [
-                    { "text": "是", "value": "bold" },
-                    { "text": "否", "value": "normal" }
-                ]
-            },
-            {
-                "name": "font_style",
-                "label": "是否斜体",
-                "type": "combobox",
-                "defval": "normal",
-                "data": [
-                    { "text": "是", "value": "italic" },
-                    { "text": "否", "value": "normal" }
-                ]
-            },
+              "name": "font_weight",
+              "label": "是否加粗",
+              "type": "combobox",
+              "defval": "normal",
+              "data": [
+                  { "text": "是", "value": "bold" },
+                  { "text": "否", "value": "normal" }
+              ]
+          },
+          {
+              "name": "font_style",
+              "label": "是否斜体",
+              "type": "combobox",
+              "defval": "normal",
+              "data": [
+                  { "text": "是", "value": "italic" },
+                  { "text": "否", "value": "normal" }
+              ]
+          },
+
+            { "name": "color", "label": "颜色", "type": "color", "defval": "#ffffff" },
+            { "name": "opacity", "label": "透明度", "type": "slider", "defval": 1.0 },
+
+            { "name": "outline", "label": "是否衬色", "type": "radio", "defval": true, "impact": [ "outlineColor", "outlineOpacity", "outlineWidth" ] },
+            { "name": "outlineColor", "label": "衬色颜色", "type": "color", "defval": "#000000" },
+            { "name": "outlineOpacity", "label": "衬色透明度", "type": "slider", "defval": 0.6 },
+            { "name": "outlineWidth", "label": "衬色宽度", "type": "number", "defval": 3.0 },
+
+            { "name": "background", "label": "是否背景", "type": "radio", "defval": false, "impact": [ "backgroundColor", "backgroundOpacity" ] },
+            { "name": "backgroundColor", "label": "背景颜色", "type": "color", "defval": "#000000" },
+            { "name": "backgroundOpacity", "label": "背景透明度", "type": "slider", "defval": 0.5 },
+            { "name": "backgroundPadding", "label": "背景内边距", "type": "number", "defval": 5 },
+
             { "name": "pixelOffsetX", "label": "横向偏移像素", "type": "number", "defval": 0.0 },
             { "name": "pixelOffsetY", "label": "纵向偏移像素", "type": "number", "defval": 0.0 },
 
@@ -60,6 +64,7 @@
             { "name": "distanceDisplayCondition", "label": "是否按视距显示", "type": "radio", "defval": false, "impact": [ "distanceDisplayCondition_far", "distanceDisplayCondition_near" ] },
             { "name": "distanceDisplayCondition_far", "label": "最大距离", "type": "number", "defval": 100000.0 },
             { "name": "distanceDisplayCondition_near", "label": "最小距离", "type": "number", "defval": 0.0 },
+
             { "name": "clampToGround", "label": "是否贴地", "type": "radio", "defval": false },
             { "name":"visibleDepth", "label": "是否被遮挡", "type": "radio", "defval": true}
         ]
@@ -71,7 +76,8 @@
             { "name": "pixelSize", "label": "像素大小", "type": "number", "defval": 10.0 },
             { "name": "color", "label": "颜色", "type": "color", "defval": "#3388ff" },
             { "name": "opacity", "label": "透明度", "type": "slider", "defval": 1.0 },
-            { "name": "outline", "label": "是否边框", "type": "radio", "defval": true, "impact": [ "outlineColor", "outlineOpacity", "outlineWidth" ] },
+
+            { "name": "outline", "label": "是否边框", "type": "radio", "defval": false, "impact": [ "outlineColor", "outlineOpacity", "outlineWidth" ] },
             { "name": "outlineColor", "label": "边框颜色", "type": "color", "defval": "#ffffff" },
             { "name": "outlineOpacity", "label": "边框透明度", "type": "slider", "defval": 0.6 },
             { "name": "outlineWidth", "label": "边框宽度", "type": "number", "defval": 2.0 },
@@ -85,6 +91,7 @@
             { "name": "distanceDisplayCondition", "label": "是否按视距显示", "type": "radio", "defval": false, "impact": [ "distanceDisplayCondition_far", "distanceDisplayCondition_near" ] },
             { "name": "distanceDisplayCondition_far", "label": "最大距离", "type": "number", "defval": 10000.0 },
             { "name": "distanceDisplayCondition_near", "label": "最小距离", "type": "number", "defval": 0.0 },
+
             { "name": "clampToGround", "label": "是否贴地", "type": "radio", "defval": false },
             { "name":"visibleDepth", "label": "是否被遮挡", "type": "radio", "defval": true}
         ]
@@ -96,7 +103,7 @@
             { "name": "image", "label": "图标", "type": "label", "defval": "" },
             { "name": "opacity", "label": "透明度", "type": "slider", "defval": 1.0 },
             { "name": "scale", "label": "大小比例", "type": "number", "defval": 1.0 },
-            { "name": "rotation", "label": "旋转角度", "type": "number", "defval": 0.0 },
+            { "name": "rotationDegree", "label": "旋转角度", "type": "number", "defval": 0.0 },
 
 
             {
@@ -213,7 +220,7 @@
                 ]
             },
 
-            { "name": "rotation", "label": "旋转角度", "type": "number", "defval": 0.0 },
+            { "name": "rotationDegree", "label": "旋转角度", "type": "number", "defval": 0.0 },
 
             { "name": "scaleByDistance", "label": "是否按视距缩放", "type": "radio", "defval": false, "impact": [ "scaleByDistance_far", "scaleByDistance_farValue", "scaleByDistance_near", "scaleByDistance_nearValue" ] },
             { "name": "scaleByDistance_far", "label": "上限", "type": "number", "defval": 1000000.0 },
@@ -234,15 +241,18 @@
     "model": {
         "name": "gltf模型",
         "style": [
-            { "name": "modelUrl", "label": "路径", "type": "label", "defval": "" },
+            { "name": "url", "label": "路径", "type": "label", "defval": "" },
             { "name": "scale", "label": "比例", "type": "number", "defval": 1.0 },
             { "name": "heading", "label": "方向角", "type": "number", "defval": 0.0 },
             { "name": "pitch", "label": "俯仰角", "type": "number", "defval": 0.0 },
             { "name": "roll", "label": "翻滚角", "type": "number", "defval": 0.0 },
 
+            { "name": "minimumPixelSize", "label": "最小像素大小", "type": "number", "defval": 0.0 },
+
             { "name": "fill", "label": "是否填充", "type": "radio", "defval": false, "impact": [ "color" ] },
             { "name": "color", "label": "颜色", "type": "color", "defval": "#3388ff" },
             { "name": "opacity", "label": "透明度", "type": "slider", "defval": 1.0 },
+
             { "name": "silhouette", "label": "是否轮廓", "type": "radio", "defval": false, "impact": [ "silhouetteColor", "silhouetteSize", "silhouetteAlpha" ] },
             { "name": "silhouetteColor", "label": "轮廓颜色", "type": "color", "defval": "#ffffff" },
             { "name": "silhouetteSize", "label": "轮廓宽度", "type": "number", "defval": 2.0 },
@@ -252,6 +262,7 @@
             { "name": "distanceDisplayCondition_far", "label": "最大距离", "type": "number", "defval": 100000.0 },
             { "name": "distanceDisplayCondition_near", "label": "最小距离", "type": "number", "defval": 0.0 },
 
+            { "name": "runAnimations", "label": "是否动画", "type": "radio",  "defval": true},
 
             { "name": "hasShadows", "label": "是否阴影", "type": "radio", "defval": true},
             { "name": "clampToGround", "label": "是否贴地", "type": "radio", "defval": false }
@@ -307,6 +318,7 @@
         "name": "管道线",
         "style": [
             { "name": "color", "label": "颜色", "type": "color", "defval": "#00FF00" },
+            { "name": "opacity", "label": "透明度", "type": "slider", "defval": 1.0 },
             { "name": "radius", "label": "半径", "type": "number", "defval": 10.0 },
             {
                 "name": "shape",
@@ -319,14 +331,16 @@
                     { "text": "星状管", "value": "star" }
                 ]
             },
-            { "name": "outline", "label": "是否衬色", "type": "radio", "defval": false, "impact": [ "outlineColor" ] },
-            { "name": "outlineColor", "label": "衬色颜色", "type": "color", "defval": "#ffffff" },
-            { "name": "opacity", "label": "透明度", "type": "slider", "defval": 1.0 },
+            { "name": "outline", "label": "是否边框", "type": "radio", "defval": false, "impact": [ "outlineColor","outlineOpacity" ] },
+            { "name": "outlineColor", "label": "边框颜色", "type": "color", "defval": "#ffffff" },
+            { "name": "outlineOpacity", "label": "边框透明度", "type": "slider", "defval": 0.6 },
 
             { "name": "distanceDisplayCondition", "label": "是否按视距显示", "type": "radio", "defval": false, "impact": [ "distanceDisplayCondition_far", "distanceDisplayCondition_near" ] },
             { "name": "distanceDisplayCondition_far", "label": "最大距离", "type": "number", "defval": 100000.0 },
-            { "name": "distanceDisplayCondition_near", "label": "最小距离", "type": "number", "defval": 0.0 }
-        ]
+            { "name": "distanceDisplayCondition_near", "label": "最小距离", "type": "number", "defval": 0.0 },
+
+            { "name": "hasShadows", "label": "是否阴影", "type": "radio", "defval": false}
+          ]
     },
 
     "wall": {
@@ -365,7 +379,8 @@
             { "name": "opacity", "label": "透明度", "type": "slider", "defval": 0.6 },
 
             { "name": "closure", "label": "是否闭合", "type": "radio", "defval": false },
-            { "name": "outline", "label": "是否边框", "type": "radio", "defval": true, "impact": [ "outlineWidth", "outlineColor", "outlineOpacity" ] },
+
+            { "name": "outline", "label": "是否边框", "type": "radio", "defval": false, "impact": [ "outlineWidth", "outlineColor", "outlineOpacity" ] },
             { "name": "outlineWidth", "label": "边框宽度", "type": "hidden", "defval": 1.0 },
             { "name": "outlineColor", "label": "边框颜色", "type": "color", "defval": "#ffffff" },
             { "name": "outlineOpacity", "label": "边框透明度", "type": "slider", "defval": 0.6 },
@@ -422,6 +437,7 @@
             { "name": "distanceDisplayCondition_far", "label": "最大距离", "type": "number", "defval": 100000.0 },
             { "name": "distanceDisplayCondition_near", "label": "最小距离", "type": "number", "defval": 0.0 },
 
+            { "name": "hasShadows", "label": "是否阴影", "type": "radio", "defval": false},
             { "name": "clampToGround", "label": "是否贴地", "type": "hidden", "defval": false },
             { "name": "zIndex", "label": "层级顺序", "type": "number", "defval": 0.0 }
         ]
@@ -444,7 +460,8 @@
                     { "text": "纯色", "value": "color" },
                     { "text": "网格", "value": "grid", "impact": [ "grid_cellAlpha", "grid_lineCount", "grid_lineThickness" ] },
                     { "text": "条纹", "value": "stripe", "impact": [ "stripe_repeat", "stripe_oddcolor" ] },
-                    { "text": "棋盘", "value": "checkerboard", "impact": [ "checkerboard_repeat", "checkerboard_oddcolor" ] }
+                    { "text": "棋盘", "value": "checkerboard", "impact": [ "checkerboard_repeat", "checkerboard_oddcolor" ] },
+                    { "text": "图片", "value": "image", "impact": [ "image" ] }
                 ]
             },
             { "name": "grid_lineCount", "label": "网格数量", "type": "number", "defval": 8.0 },
@@ -454,11 +471,12 @@
             { "name": "stripe_repeat", "label": "条纹数量", "type": "number", "defval": 6 },
             { "name": "checkerboard_oddcolor", "label": "棋盘衬色", "type": "color", "defval": "#ffffff" },
             { "name": "checkerboard_repeat", "label": "棋盘格数", "type": "number", "defval": 4 },
+            { "name": "image", "label": "图片", "type": "label", "defval": "" },
 
 
             { "name": "color", "label": "颜色", "type": "color", "defval": "#3388ff" },
             { "name": "opacity", "label": "透明度", "type": "slider", "defval": 0.6 },
-            { "name": "stRotation", "label": "填充方向", "type": "number", "defval": 0.0 },
+            { "name": "stRotationDegree", "label": "填充方向", "type": "number", "defval": 0.0 },
 
 
             { "name": "outline", "label": "是否边框", "type": "radio", "defval": false, "impact": [ "outlineWidth", "outlineColor", "outlineOpacity" ] },
@@ -496,7 +514,8 @@
                     { "text": "纯色", "value": "color" },
                     { "text": "网格", "value": "grid", "impact": [ "grid_cellAlpha", "grid_lineCount", "grid_lineThickness" ] },
                     { "text": "条纹", "value": "stripe", "impact": [ "stripe_repeat", "stripe_oddcolor" ] },
-                    { "text": "棋盘", "value": "checkerboard", "impact": [ "checkerboard_repeat", "checkerboard_oddcolor" ] }
+                    { "text": "棋盘", "value": "checkerboard", "impact": [ "checkerboard_repeat", "checkerboard_oddcolor" ] },
+                    { "text": "图片", "value": "image", "impact": [ "image" ] }
                 ]
             },
             { "name": "grid_lineCount", "label": "网格数量", "type": "number", "defval": 8.0 },
@@ -506,6 +525,7 @@
             { "name": "stripe_repeat", "label": "条纹数量", "type": "number", "defval": 6 },
             { "name": "checkerboard_oddcolor", "label": "棋盘衬色", "type": "color", "defval": "#ffffff" },
             { "name": "checkerboard_repeat", "label": "棋盘格数", "type": "number", "defval": 4 },
+            { "name": "image", "label": "图片", "type": "label", "defval": "" },
 
             { "name": "color", "label": "颜色", "type": "color", "defval": "#3388ff" },
             { "name": "opacity", "label": "透明度", "type": "slider", "defval": 0.6 },
@@ -515,8 +535,8 @@
             { "name": "outlineColor", "label": "边框颜色", "type": "color", "defval": "#ffffff" },
             { "name": "outlineOpacity", "label": "边框透明度", "type": "slider", "defval": 0.6 },
 
-            { "name": "rotation", "label": "旋转角度", "type": "number", "defval": 0.0 },
-            { "name": "stRotation", "label": "材质角度", "type": "number", "defval": 0.0 },
+            { "name": "rotationDegree", "label": "旋转角度", "type": "number", "defval": 0.0 },
+            { "name": "stRotationDegree", "label": "材质角度", "type": "number", "defval": 0.0 },
 
 
             { "name": "distanceDisplayCondition", "label": "是否按视距显示", "type": "radio", "defval": false, "impact": [ "distanceDisplayCondition_far", "distanceDisplayCondition_near" ] },
@@ -528,21 +548,7 @@
             { "name": "zIndex", "label": "层级顺序", "type": "number", "defval": 0.0 }
         ]
     },
-    "rectangleImg": {
-        "name": "图片",
-        "points": {
-            "height": false
-        },
-        "style": [
-            { "name": "image", "label": "图片", "type": "label", "defval": "" },
-            { "name": "opacity", "label": "透明度", "type": "slider", "defval": 1.0 },
 
-            { "name": "rotation", "label": "旋转角度", "type": "number", "defval": 0.0 },
-
-            { "name": "clampToGround", "label": "是否贴地", "type": "hidden", "defval": true },
-            { "name": "zIndex", "label": "层级顺序", "type": "number", "defval": 0.0 }
-        ]
-    },
 
 
     "circle": {
@@ -555,6 +561,7 @@
             { "name": "height", "label": "高程", "type": "number", "defval": 0.0 },
             { "name": "diffHeight", "label": "立体高度", "type": "number", "defval": 0.0 },
 
+
             { "name": "fill", "label": "是否填充", "type": "radio", "defval": true, "impact": [ "fillType","color", "opacity" ] },
              {
                 "name": "fillType",
@@ -566,7 +573,8 @@
                     { "text": "动画", "value": "animationCircle", "impact": ["animationDuration", "animationCount", "animationGradient" ] },
                     { "text": "网格", "value": "grid", "impact": [ "grid_cellAlpha", "grid_lineCount", "grid_lineThickness" ] },
                     { "text": "条纹", "value": "stripe", "impact": [ "stripe_repeat", "stripe_oddcolor" ] },
-                    { "text": "棋盘", "value": "checkerboard", "impact": [ "checkerboard_repeat", "checkerboard_oddcolor" ] }
+                    { "text": "棋盘", "value": "checkerboard", "impact": [ "checkerboard_repeat", "checkerboard_oddcolor" ] },
+                    { "text": "图片", "value": "image", "impact": [ "image" ] }
                 ]
             },
             { "name": "animationDuration", "label": "速度", "type": "number", "defval": 1000.0 },
@@ -580,10 +588,11 @@
             { "name": "stripe_repeat", "label": "条纹数量", "type": "number", "defval": 6 },
             { "name": "checkerboard_oddcolor", "label": "棋盘衬色", "type": "color", "defval": "#ffffff" },
             { "name": "checkerboard_repeat", "label": "棋盘格数", "type": "number", "defval": 4 },
+            { "name": "image", "label": "图片", "type": "label", "defval": "" },
 
             { "name": "color", "label": "填充颜色", "type": "color", "defval": "#3388ff" },
             { "name": "opacity", "label": "透明度", "type": "slider", "defval": 0.6 },
-            { "name": "stRotation", "label": "填充方向", "type": "number", "defval": 0.0 },
+            { "name": "stRotationDegree", "label": "填充方向", "type": "number", "defval": 0.0 },
 
 
             { "name": "outline", "label": "是否边框", "type": "radio", "defval": false, "impact": [ "outlineWidth", "outlineColor", "outlineOpacity" ] },
@@ -591,15 +600,15 @@
             { "name": "outlineColor", "label": "边框颜色", "type": "color", "defval": "#ffffff" },
             { "name": "outlineOpacity", "label": "边框透明度", "type": "slider", "defval": 0.6 },
 
-            { "name": "rotation", "label": "旋转角度", "type": "number", "defval": 0.0 },
+            { "name": "rotationDegree", "label": "旋转角度", "type": "number", "defval": 0.0 },
 
 
             { "name": "distanceDisplayCondition", "label": "是否按视距显示", "type": "radio", "defval": false, "impact": [ "distanceDisplayCondition_far", "distanceDisplayCondition_near" ] },
             { "name": "distanceDisplayCondition_far", "label": "最大距离", "type": "number", "defval": 100000.0 },
             { "name": "distanceDisplayCondition_near", "label": "最小距离", "type": "number", "defval": 0.0 },
 
-            { "name": "clampToGround", "label": "是否贴地", "type": "hidden", "defval": false },
             { "name": "hasShadows", "label": "是否阴影", "type": "radio", "defval": false},
+            { "name": "clampToGround", "label": "是否贴地", "type": "hidden", "defval": false },
             { "name": "zIndex", "label": "层级顺序", "type": "number", "defval": 0.0 }
         ]
     },
@@ -627,7 +636,8 @@
                     { "text": "动画", "value": "animationCircle", "impact": ["animationDuration", "animationCount", "animationGradient" ] },
                     { "text": "网格", "value": "grid", "impact": [ "grid_cellAlpha", "grid_lineCount", "grid_lineThickness" ] },
                     { "text": "条纹", "value": "stripe", "impact": [ "stripe_repeat", "stripe_oddcolor" ] },
-                    { "text": "棋盘", "value": "checkerboard", "impact": [ "checkerboard_repeat", "checkerboard_oddcolor" ] }
+                    { "text": "棋盘", "value": "checkerboard", "impact": [ "checkerboard_repeat", "checkerboard_oddcolor" ] },
+                    { "text": "图片", "value": "image", "impact": [ "image" ] }
                 ]
             },
             { "name": "animationDuration", "label": "速度", "type": "number", "defval": 1000.0 },
@@ -640,25 +650,26 @@
             { "name": "stripe_repeat", "label": "条纹数量", "type": "number", "defval": 6 },
             { "name": "checkerboard_oddcolor", "label": "棋盘衬色", "type": "color", "defval": "#ffffff" },
             { "name": "checkerboard_repeat", "label": "棋盘格数", "type": "number", "defval": 4 },
+            { "name": "image", "label": "图片", "type": "label", "defval": "" },
 
             { "name": "color", "label": "填充颜色", "type": "color", "defval": "#3388ff" },
             { "name": "opacity", "label": "透明度", "type": "slider", "defval": 0.6 },
-            { "name": "stRotation", "label": "填充方向", "type": "number", "defval": 0.0 },
+            { "name": "stRotationDegree", "label": "填充方向", "type": "number", "defval": 0.0 },
 
             { "name": "outline", "label": "是否边框", "type": "radio", "defval": false, "impact": [ "outlineWidth", "outlineColor", "outlineOpacity" ] },
             { "name": "outlineWidth", "label": "边框宽度", "type": "number", "defval": 1 },
             { "name": "outlineColor", "label": "边框颜色", "type": "color", "defval": "#ffffff" },
             { "name": "outlineOpacity", "label": "边框透明度", "type": "slider", "defval": 0.6 },
 
-            { "name": "rotation", "label": "旋转角度", "type": "number", "defval": 0.0 },
+            { "name": "rotationDegree", "label": "旋转角度", "type": "number", "defval": 0.0 },
 
 
             { "name": "distanceDisplayCondition", "label": "是否按视距显示", "type": "radio", "defval": false, "impact": [ "distanceDisplayCondition_far", "distanceDisplayCondition_near" ] },
             { "name": "distanceDisplayCondition_far", "label": "最大距离", "type": "number", "defval": 100000.0 },
             { "name": "distanceDisplayCondition_near", "label": "最小距离", "type": "number", "defval": 0.0 },
 
-            { "name": "clampToGround", "label": "是否贴地", "type": "hidden", "defval": false },
             { "name": "hasShadows", "label": "是否阴影", "type": "radio", "defval": false},
+            { "name": "clampToGround", "label": "是否贴地", "type": "hidden", "defval": false },
             { "name": "zIndex", "label": "层级顺序", "type": "number", "defval": 0.0 }
         ]
     },
@@ -670,6 +681,11 @@
             { "name": "topRadius", "label": "顶部半径", "type": "number", "defval": 0.0 },
             { "name": "bottomRadius", "label": "底部半径", "type": "number", "defval": 100.0 },
             { "name": "length", "label": "高度", "type": "number", "defval": 100.0 },
+
+
+            { "name": "heading", "label": "方向角", "type": "number", "defval": 0.0 },
+            { "name": "pitch", "label": "俯仰角", "type": "number", "defval": 0.0 },
+            { "name": "roll", "label": "翻滚角", "type": "number", "defval": 0.0 },
 
             { "name": "fill", "label": "是否填充", "type": "radio", "defval": true, "impact": [ "color", "opacity" ] },
              {
@@ -694,6 +710,7 @@
             { "name": "outlineColor", "label": "边框颜色", "type": "color", "defval": "#ffffff" },
             { "name": "outlineOpacity", "label": "边框透明度", "type": "slider", "defval": 0.6 },
 
+            { "name": "numberOfVerticalLines", "label": "边线边数", "type": "number", "defval": 16.0 },
 
             { "name": "distanceDisplayCondition", "label": "是否按视距显示", "type": "radio", "defval": false, "impact": [ "distanceDisplayCondition_far", "distanceDisplayCondition_near" ] },
             { "name": "distanceDisplayCondition_far", "label": "最大距离", "type": "number", "defval": 100000.0 },
@@ -714,10 +731,14 @@
             { "name": "innerRadii_y", "label": "内部Y半径", "type": "number", "defval": 0.0 },
             { "name": "innerRadii_z", "label": "内部Z半径", "type": "number", "defval": 0.0 },
 
-            { "name": "minimumClock", "label": "最小时钟角度", "type": "number", "defval": 0.0 },
-            { "name": "maximumClock", "label": "最大时钟角度", "type": "number", "defval": 360.0 },
-            { "name": "minimumCone", "label": "最小锥角", "type": "number", "defval": 0.0 },
-            { "name": "maximumCone", "label": "最大圆锥角", "type": "number", "defval": 180.0 },
+            { "name": "minimumClockDegree", "label": "最小时钟角度", "type": "number", "defval": 0.0 },
+            { "name": "maximumClockDegree", "label": "最大时钟角度", "type": "number", "defval": 360.0 },
+            { "name": "minimumConeDegree", "label": "最小锥角", "type": "number", "defval": 0.0 },
+            { "name": "maximumConeDegree", "label": "最大圆锥角", "type": "number", "defval": 180.0 },
+
+            { "name": "heading", "label": "方向角", "type": "number", "defval": 0.0 },
+            { "name": "pitch", "label": "俯仰角", "type": "number", "defval": 0.0 },
+            { "name": "roll", "label": "翻滚角", "type": "number", "defval": 0.0 },
 
             { "name": "fill", "label": "是否填充", "type": "radio", "defval": true, "impact": [ "color", "opacity" ] },
             {
@@ -743,11 +764,20 @@
             { "name": "color", "label": "颜色", "type": "color", "defval": "#00FF00" },
             { "name": "opacity", "label": "透明度", "type": "slider", "defval": 0.6 },
 
-            { "name": "outline", "label": "是否边框", "type": "radio", "defval": true, "impact": [ "outlineWidth", "outlineColor", "outlineOpacity" ] },
+            { "name": "outline", "label": "是否边框", "type": "radio", "defval": false, "impact": [ "outlineWidth", "outlineColor", "outlineOpacity" ] },
             { "name": "outlineWidth", "label": "边框宽度", "type": "hidden", "defval": 1.0 },
             { "name": "outlineColor", "label": "边框颜色", "type": "color", "defval": "#ffffff" },
-            { "name": "outlineOpacity", "label": "边框透明度", "type": "slider", "defval": 0.6 }
-        ]
+            { "name": "outlineOpacity", "label": "边框透明度", "type": "slider", "defval": 0.6 },
+
+            { "name": "stackPartitions", "label": "竖向划分", "type": "number", "defval": 64.0 },
+            { "name": "slicePartitions", "label": "横向划分", "type": "number", "defval": 64.0 },
+
+            { "name": "distanceDisplayCondition", "label": "是否按视距显示", "type": "radio", "defval": false, "impact": [ "distanceDisplayCondition_far", "distanceDisplayCondition_near" ] },
+            { "name": "distanceDisplayCondition_far", "label": "最大距离", "type": "number", "defval": 100000.0 },
+            { "name": "distanceDisplayCondition_near", "label": "最小距离", "type": "number", "defval": 0.0 },
+
+            { "name": "hasShadows", "label": "是否阴影", "type": "radio", "defval": false}
+          ]
     },
 
     "plane": {
@@ -769,6 +799,9 @@
             },
             { "name": "plane_distance", "label": "偏移距离", "type": "number", "defval": 0.0 },
 
+            { "name": "heading", "label": "方向角", "type": "number", "defval": 0.0 },
+            { "name": "pitch", "label": "俯仰角", "type": "number", "defval": 0.0 },
+            { "name": "roll", "label": "翻滚角", "type": "number", "defval": 0.0 },
 
             { "name": "fill", "label": "是否填充", "type": "radio", "defval": true, "impact": [ "color", "opacity" ] },
             {
@@ -794,7 +827,7 @@
             { "name": "color", "label": "颜色", "type": "color", "defval": "#00FF00" },
             { "name": "opacity", "label": "透明度", "type": "slider", "defval": 0.6 },
 
-            { "name": "outline", "label": "是否边框", "type": "radio", "defval": true, "impact": [ "outlineWidth", "outlineColor", "outlineOpacity" ] },
+            { "name": "outline", "label": "是否边框", "type": "radio", "defval": false, "impact": [ "outlineWidth", "outlineColor", "outlineOpacity" ] },
             { "name": "outlineWidth", "label": "边框宽度", "type": "hidden", "defval": 1.0 },
             { "name": "outlineColor", "label": "边框颜色", "type": "color", "defval": "#ffffff" },
             { "name": "outlineOpacity", "label": "边框透明度", "type": "slider", "defval": 0.6 },
@@ -814,6 +847,10 @@
             { "name": "dimensionsY", "label": "盒子宽度", "type": "number", "defval": 100.0 },
             { "name": "dimensionsZ", "label": "盒子高度", "type": "number", "defval": 100.0 },
 
+            { "name": "heading", "label": "方向角", "type": "number", "defval": 0.0 },
+            { "name": "pitch", "label": "俯仰角", "type": "number", "defval": 0.0 },
+            { "name": "roll", "label": "翻滚角", "type": "number", "defval": 0.0 },
+
             { "name": "fill", "label": "是否填充", "type": "radio", "defval": true, "impact": [ "color", "opacity" ] },
             {
                 "name": "fillType",
@@ -838,7 +875,7 @@
             { "name": "color", "label": "颜色", "type": "color", "defval": "#00FF00" },
             { "name": "opacity", "label": "透明度", "type": "slider", "defval": 0.6 },
 
-            { "name": "outline", "label": "是否边框", "type": "radio", "defval": true, "impact": [ "outlineWidth", "outlineColor", "outlineOpacity" ] },
+            { "name": "outline", "label": "是否边框", "type": "radio", "defval": false, "impact": [ "outlineWidth", "outlineColor", "outlineOpacity" ] },
             { "name": "outlineWidth", "label": "边框宽度", "type": "hidden", "defval": 1.0 },
             { "name": "outlineColor", "label": "边框颜色", "type": "color", "defval": "#ffffff" },
             { "name": "outlineOpacity", "label": "边框透明度", "type": "slider", "defval": 0.6 },
@@ -847,6 +884,7 @@
             { "name": "distanceDisplayCondition_far", "label": "最大距离", "type": "number", "defval": 100000.0 },
             { "name": "distanceDisplayCondition_near", "label": "最小距离", "type": "number", "defval": 0.0 },
 
+            { "name": "hasShadows", "label": "是否阴影", "type": "radio", "defval": false},
             { "name": "clampToGround", "label": "是否贴地", "type": "radio", "defval": false }
         ]
     }

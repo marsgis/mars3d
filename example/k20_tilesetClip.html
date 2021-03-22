@@ -45,8 +45,7 @@
     </div>
 
     <div id="tipView" class="info-tips">
-      (1) 对3dtiles数据有要求，仅适用于无自带着色器的模型<br />
-      (2) 部分模型裁剪会不完全，请自测<br />
+      (1) 对3dtiles数据有要求，仅适用于无自带着色器的模型
     </div>
 
     <script src="./js/common.js"></script>
@@ -141,7 +140,7 @@
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.getOutlinePositions(true)
+              var positions = graphic.getOutlinePositions(false)
               map.graphicLayer.clear()
 
               console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界

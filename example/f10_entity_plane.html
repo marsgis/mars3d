@@ -132,44 +132,14 @@
       addGraphic_04(graphicLayer)
     }
 
-    /**
-     style 支持的参数说明：
-     "style": {
-        支持 Cesium.PlaneGraphics.ConstructorOptions 中所有属性（Cesium原生的属性）
-
-        "dimensionsX": 100,      //长度
-        "dimensionsY": 100,      //宽度
-        "plane_normal": "z",      //方向 ,可选项：x(X轴),y(Y轴),z(Z轴),
-        "plane_distance": 0,      //偏移距离
-        "fill": true,      //是否填充
-        "fillType": "color",      //填充类型 ,可选项：color(纯色),grid(网格),stripe(条纹),checkerboard(棋盘),
-        "grid_lineCount": 8,      //网格数量
-        "grid_lineThickness": 2,      //网格宽度
-        "grid_cellAlpha": 0.1,      //填充透明度
-        "stripe_oddcolor": "#ffffff",      //条纹衬色
-        "stripe_repeat": 6,      //条纹数量
-        "checkerboard_oddcolor": "#ffffff",      //棋盘衬色
-        "checkerboard_repeat": 4,      //棋盘格数
-        "color": "#00FF00",      //颜色
-        "opacity": 0.6,      //透明度
-        "outline": true,      //是否边框
-        "outlineWidth": 1,      //边框宽度
-        "outlineColor": "#ffffff",      //边框颜色
-        "outlineOpacity": 0.6,      //边框透明度
-        "distanceDisplayCondition": false,      //是否按视距显示
-        "distanceDisplayCondition_far": 100000,      //最大距离
-        "distanceDisplayCondition_near": 0,      //最小距离
-        "hasShadows": false,      //是否阴影
-     }
-    */
-
     //
     function addGraphic_01(graphicLayer) {
       var graphic = new mars3d.graphic.PlaneEntity({
         position: [116.282587, 30.859197, 544.31],
         style: {
           plane: new Cesium.Plane(Cesium.Cartesian3.UNIT_Y, 0.0),
-          dimensions: new Cesium.Cartesian2(2000.0, 1000.0),
+          dimensionsX: 2000.0,
+          dimensionsY: 1000.0,
           color: '#00ff00',
           opacity: 0.9,
         },
@@ -235,7 +205,7 @@
             text: '我是原始的',
             font_size: 18,
             color: '#ffffff',
-            pixelOffset: [0, -10],
+            pixelOffsetY: -10,
             distanceDisplayCondition: true,
             distanceDisplayCondition_far: 500000,
             distanceDisplayCondition_near: 0,

@@ -129,9 +129,9 @@
               text: '可以同时支持文字',
               font_size: 20,
               color: '#ffffff',
-              border: true,
-              border_color: '#000000',
-              pixelOffset: [0, -15],
+              outline: true,
+              outlineColor: '#000000',
+              pixelOffsetY: -20,
             },
           },
         })
@@ -142,31 +142,6 @@
       addGraphic_02(graphicLayer)
       addGraphic_03(graphicLayer)
     }
-
-    /**
-     style 支持的参数说明：
-     "style": {
-        支持 Cesium.ModelGraphics.ConstructorOptions 中所有属性（Cesium原生的属性）
-
-        "url": "data/test.gltf",      //路径
-        "scale": 1,      //比例
-        "heading": 0,      //方向角
-        "pitch": 0,      //俯仰角
-        "roll": 0,      //翻滚角
-        "fill": false,      //是否填充
-        "color": "#3388ff",      //颜色
-        "opacity": 1,      //透明度
-        "silhouette": false,      //是否轮廓
-        "silhouetteColor": "#ffffff",      //轮廓颜色
-        "silhouetteSize": 2,      //轮廓宽度
-        "silhouetteAlpha": 0.8,      //轮廓透明度
-        "distanceDisplayCondition": false,      //是否按视距显示
-        "distanceDisplayCondition_far": 100000,      //最大距离
-        "distanceDisplayCondition_near": 0,      //最小距离
-        "hasShadows": true,      //是否阴影
-        "clampToGround": false,      //是否贴地
-     }
-    */
 
     function addGraphic_01(graphicLayer) {
       var graphic = new mars3d.graphic.ModelEntity({
@@ -180,7 +155,7 @@
             text: '我是原始模型',
             font_size: 18,
             color: '#ffffff',
-            pixelOffset: [0, -50],
+            pixelOffsetY: -50,
             distanceDisplayCondition: true,
             distanceDisplayCondition_far: 500000,
             distanceDisplayCondition_near: 0,

@@ -209,17 +209,19 @@
             roll: roll,
 
             radius: radius, //传感器的半径
-            xHalfAngle: Cesium.Math.toRadians(xHalfAngle), //传感器水平半角
-            yHalfAngle: Cesium.Math.toRadians(yHalfAngle), //传感器垂直半角
+            xHalfAngleDegree: xHalfAngle, //传感器水平半角
+            yHalfAngleDegree: yHalfAngle, //传感器垂直半角
 
-            material: new Cesium.Color(0.0, 1.0, 1.0, 0.4), //目前用的统一材质
-            lineColor: new Cesium.Color(0.0, 1.0, 1.0, 1.0), //线的颜色
+            color: '#00ffff',
+            opacity: 0.4,
+            lineColor: '#ffffff', //线的颜色
 
-            showScanPlane: showScanPlane, //是否显示扫描面
-            scanPlaneColor: new Cesium.Color(0.0, 1.0, 1.0, 1.0), //扫描面颜色
+            showScanPlane: true, //是否显示扫描面
+            scanPlaneColor: '#00ffff',
+            scanPlaneOpacity: 0.9,
             scanPlaneMode: 'vertical', // 扫描面模式 垂直vertical/水平horizontal
             scanPlaneRate: 3, //扫描速率,
-            showThroughEllipsoid: false, //此参数控制深度检测，为false启用深度检测，可以解决雷达一半在地球背面时显示的问题
+            depthTest: true,
           },
         })
       })
@@ -246,29 +248,19 @@
           roll: roll,
 
           radius: radius, //传感器的半径
-          xHalfAngle: Cesium.Math.toRadians(xHalfAngle), //传感器水平半角
-          yHalfAngle: Cesium.Math.toRadians(yHalfAngle), //传感器垂直半角
+          xHalfAngleDegree: xHalfAngle, //传感器水平半角
+          yHalfAngleDegree: yHalfAngle, //传感器垂直半角
 
-          material: new Cesium.Color(0.0, 1.0, 1.0, 0.4), //目前用的统一材质
-          lineColor: new Cesium.Color(0.0, 1.0, 1.0, 1.0), //线的颜色
+          color: '#00ffff',
+          opacity: 0.4,
+          lineColor: '#ffffff', //线的颜色
 
-          showScanPlane: showScanPlane, //是否显示扫描面
-          scanPlaneColor: new Cesium.Color(0.0, 1.0, 1.0, 1.0), //扫描面颜色
+          showScanPlane: true, //是否显示扫描面
+          scanPlaneColor: '#00ffff',
+          scanPlaneOpacity: 0.9,
           scanPlaneMode: 'vertical', // 扫描面模式 垂直vertical/水平horizontal
           scanPlaneRate: 3, //扫描速率,
-          showThroughEllipsoid: false, //此参数控制深度检测，为false启用深度检测，可以解决雷达一半在地球背面时显示的问题
-
-          // slice: 32, // 切分程度 ，默认值 32
-          // showSectorLines: true, // 是否显示扇面的线 ，默认值 true
-          // showSectorSegmentLines: true, // 是否显示扇面和圆顶面连接的线 ，默认值true
-          // showLateralSurfaces: true, //是否显示侧面 ，默认值true
-          // lateralSurfaceMaterial: undefined, //侧面材质(Material)  ，默认值undefined
-          // showDomeSurfaces: true, //是否显示圆顶表面 ，默认值true
-          // domeSurfaceMaterial: undefined, //圆顶表面材质(Material) ，默认值undefined
-          // showDomeLines: true, // 是否显示圆顶面线 ，默认值true
-          // showIntersection: true, //是否显示与地球相交的线 ，默认值true
-          // intersectionColor: Cesium.Color.WHITE, //与地球相交的线的颜色 ，默认值Color.WHITE
-          // intersectionWidth: 5.0 //与地球相交的线的宽度（像素） ，默认值5.0
+          depthTest: true,
         },
       })
       graphicLayer.addGraphic(rectangularSensor)
@@ -297,12 +289,12 @@
 
       $('#model_angle1').range({
         onChange: function (value, bfb) {
-          rectangularSensor.style = { xHalfAngle: Cesium.Math.toRadians(value) } //传感器水平半角
+          rectangularSensor.style = { xHalfAngleDegree: value } //传感器水平半角
         },
       })
       $('#model_angle2').range({
         onChange: function (value, bfb) {
-          rectangularSensor.style = { yHalfAngle: Cesium.Math.toRadians(value) } //传感器垂直半角
+          rectangularSensor.style = { yHalfAngleDegree: value } //传感器垂直半角
         },
       })
       $('#chkShowScanPlane').change(function () {

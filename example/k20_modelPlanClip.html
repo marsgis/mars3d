@@ -180,7 +180,7 @@
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.getOutlinePositions(true)
+              var positions = graphic.getOutlinePositions(false)
               map.graphicLayer.clear()
 
               modelPlanClip.positions = positions

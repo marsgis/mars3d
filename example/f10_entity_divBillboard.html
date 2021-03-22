@@ -135,27 +135,6 @@
       addGraphic_a3(graphicLayer)
     }
 
-    //除 Cesium.BillboardGraphics.ConstructorOptions 所有属性外，并支持下面的属性
-    //参数清单：
-    //   "style": {
-    //     "image": "img/marker.png",      //图标
-    //     "opacity": 1,      //透明度
-    //     "scale": 1,      //大小比例
-    //     "rotation": 0,      //旋转角度
-    //     "horizontalOrigin": "CENTER",      //横向对齐 ,可选项：LEFT(左边),CENTER(居中),RIGHT(右边),
-    //     "verticalOrigin": "BOTTOM",      //垂直对齐 ,可选项：TOP(顶部),CENTER(居中),BOTTOM(底部),
-    //     "scaleByDistance": false,      //是否按视距缩放
-    //     "scaleByDistance_far": 1000000,      //上限
-    //     "scaleByDistance_farValue": 0.1,      //比例值
-    //     "scaleByDistance_near": 1000,      //下限
-    //     "scaleByDistance_nearValue": 1,      //比例值
-    //     "distanceDisplayCondition": false,      //是否按视距显示
-    //     "distanceDisplayCondition_far": 10000,      //最大距离
-    //     "distanceDisplayCondition_near": 0,      //最小距离
-    //     "clampToGround": false,      //是否贴地
-    //     "visibleDepth": true,      //是否被遮挡
-    // }
-
     function addGraphic_a1(graphicLayer) {
       var graphic = new mars3d.graphic.DivBillboardEntity({
         position: new mars3d.LatLngPoint(116.301798, 30.835848, 915),

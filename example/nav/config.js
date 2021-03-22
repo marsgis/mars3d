@@ -2036,6 +2036,7 @@ function getVerDiff(oldver) {
 function getAllName() {
   var arrNew = ''
   var index = 0
+  var index2 = 0
   for (var key in exampleConfig) {
     var config = exampleConfig[key]
     if (!config.content) {
@@ -2043,12 +2044,13 @@ function getAllName() {
     }
 
     index++
-    arrNew += `\n\n${index}.${config.name}`
-
+    arrNew += `\n\n2.${index}  ${config.name}`
+    index2 = 1
     for (var key2 in config.content) {
       var configItem = config.content[key2]
       if (configItem.content) {
-        arrNew += `\n${configItem.name}:`
+        arrNew += `\n2.${index}.${index2}  ${configItem.name}\n`
+        index2++
 
         var examples = configItem.content
         var len = examples && examples.length ? examples.length : 0
@@ -2064,6 +2066,7 @@ function getAllName() {
             arrNew += `,${item.name}`
           }
         }
+        arrNew += `\n`
       }
     }
   }

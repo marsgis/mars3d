@@ -120,9 +120,9 @@
             text: 'Mars3D三维地球平台软件',
             color: '#0081c2',
             font_size: 27,
-            border: true,
-            border_color: '#ffffff',
-            border_width: 2,
+            outline: true,
+            outlineColor: '#ffffff',
+            outlineWidth: 2,
           },
         })
       })
@@ -134,39 +134,6 @@
       addGraphic_04(graphicLayer)
     }
 
-    /**
-     style 支持的参数说明：
-     "style": {
-        支持 Cesium.LabelGraphics.ConstructorOptions 中所有属性（Cesium原生的属性）
-
-        "text": "文字",      //内容
-        "color": "#ffffff",      //颜色
-        "opacity": 1,      //透明度
-        "font_family": "楷体",      //字体 ,可选项：微软雅黑,宋体,楷体,隶书,黑体,
-        "font_size": 30,      //字体大小
-        "border": true,      //是否衬色
-        "border_color": "#000000",      //衬色颜色
-        "border_width": 3,      //衬色宽度
-        "background": false,      //是否背景
-        "background_color": "#000000",      //背景颜色
-        "background_opacity": 0.5,      //背景透明度
-        "font_weight": "normal",      //是否加粗 ,可选项：bold(是),normal(否),
-        "font_style": "normal",      //是否斜体 ,可选项：italic(是),normal(否),
-        "pixelOffsetX": 0,      //横向偏移像素
-        "pixelOffsetY": 0,      //纵向偏移像素
-        "scaleByDistance": false,      //是否按视距缩放
-        "scaleByDistance_far": 1000000,      //上限
-        "scaleByDistance_farValue": 0.1,      //比例值
-        "scaleByDistance_near": 1000,      //下限
-        "scaleByDistance_nearValue": 1,      //比例值
-        "distanceDisplayCondition": false,      //是否按视距显示
-        "distanceDisplayCondition_far": 100000,      //最大距离
-        "distanceDisplayCondition_near": 0,      //最小距离
-        "clampToGround": false,      //是否贴地
-        "visibleDepth": true,      //是否被遮挡
-     }
-    */
-
     function addGraphic_01(graphicLayer) {
       var graphic = new mars3d.graphic.LabelEntity({
         position: new mars3d.LatLngPoint(116.308659, 30.914005, 429.94),
@@ -174,13 +141,13 @@
           text: '合肥火星科技有限公司',
           font_size: 25,
           font_family: '楷体',
-          style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-          fillColor: Cesium.Color.fromCssColorString('#003da6'),
-          outlineColor: Cesium.Color.fromCssColorString('#bfbfbf'),
+          color: '#003da6',
+          outline: true,
+          outlineColor: '#bfbfbf',
           outlineWidth: 2,
           horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-          disableDepthTestDistance: Number.POSITIVE_INFINITY, //一直显示，不被地形等遮挡(会穿过地球被透视)
+          visibleDepth: false,
         },
       })
       graphicLayer.addGraphic(graphic)
@@ -194,7 +161,6 @@
       graphic1Copy.position = [116.18869, 30.95041, 525.84]
       graphic1Copy.text = '火星科技 - 我是copy的点'
       graphicLayer.addGraphic(graphic1Copy)
-      console.log(graphic1Copy)
     }
 
     function addGraphic_02(graphicLayer) {
@@ -203,8 +169,9 @@
         position: new mars3d.LatLngPoint(116.241728, 30.879732),
         style: {
           text: 'Mars3D',
-          fillColor: Cesium.Color.YELLOW,
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+          font_size: 25,
+          color: '#ffff00',
+          clampToGround: true,
         },
       })
       graphicLayer.addGraphic(graphic)
@@ -216,7 +183,7 @@
         position: new mars3d.LatLngPoint(116.340026, 30.873948, 383.31),
         style: {
           text: '中国安徽合肥',
-          fillColor: Cesium.Color.LIME,
+          color: '#00ff00',
           horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
           scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 500000, 0.1),
         },
@@ -232,9 +199,9 @@
           text: 'Mars3D三维地球平台软件',
           font_size: 25,
           font_family: '楷体',
-          style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-          fillColor: Cesium.Color.BLUE,
-          outlineColor: Cesium.Color.LIME,
+          color: '#0081c2',
+          outline: true,
+          outlineColor: '#ffffff',
           outlineWidth: 2,
           distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 100000),
         },

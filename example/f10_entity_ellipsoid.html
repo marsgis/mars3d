@@ -143,32 +143,6 @@
       addGraphic_14(graphicLayer)
     }
 
-    /**
-     style 支持的参数说明：
-     "style": {
-        支持 Cesium.EllipsoidGraphics.ConstructorOptions 中所有属性（Cesium原生的属性）
-
-        "extentRadii": 100,      //长半径
-        "widthRadii": 100,      //宽半径
-        "heightRadii": 100,      //高半径
-        "fill": true,      //是否填充
-        "fillType": "color",      //填充类型 ,可选项：color(纯色),grid(网格),stripe(条纹),checkerboard(棋盘),
-        "grid_lineCount": 8,      //网格数量
-        "grid_lineThickness": 2,      //网格宽度
-        "grid_cellAlpha": 0.1,      //填充透明度
-        "stripe_oddcolor": "#ffffff",      //条纹衬色
-        "stripe_repeat": 6,      //条纹数量
-        "checkerboard_oddcolor": "#ffffff",      //棋盘衬色
-        "checkerboard_repeat": 4,      //棋盘格数
-        "color": "#00FF00",      //颜色
-        "opacity": 0.6,      //透明度
-        "outline": true,      //是否边框
-        "outlineWidth": 1,      //边框宽度
-        "outlineColor": "#ffffff",      //边框颜色
-        "outlineOpacity": 0.6,      //边框透明度
-     }
-    */
-
     //
     function addGraphic_01(graphicLayer) {
       var graphic = new mars3d.graphic.EllipsoidEntity({
@@ -239,7 +213,7 @@
             text: '我是原始的',
             font_size: 18,
             color: '#ffffff',
-            pixelOffset: [0, -10],
+            pixelOffsetY: -10,
             distanceDisplayCondition: true,
             distanceDisplayCondition_far: 500000,
             distanceDisplayCondition_near: 0,
@@ -271,10 +245,10 @@
         style: {
           radii: new Cesium.Cartesian3(outerRadius, outerRadius, outerRadius),
           innerRadii: new Cesium.Cartesian3(innerRadius, innerRadius, innerRadius),
-          minimumClock: -20.0,
-          maximumClock: 20.0,
-          minimumCone: 90,
-          maximumCone: 90,
+          minimumClockDegree: -20.0,
+          maximumClockDegree: 20.0,
+          minimumConeDegree: 90,
+          maximumConeDegree: 90,
           material: Cesium.Color.fromCssColorString('#ffff00').withAlpha(0.5),
           outline: true,
         },
@@ -289,7 +263,7 @@
         position: new mars3d.LatLngPoint(116.2, 30.9, 1000),
         style: {
           radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
-          maximumCone: 90,
+          maximumConeDegree: 90,
           material: Cesium.Color.BLUE.withAlpha(0.3),
           outline: true,
         },
@@ -305,7 +279,7 @@
         style: {
           radii: new Cesium.Cartesian3(2500.0, 2000.0, 1500.0),
           innerRadii: new Cesium.Cartesian3(1000.0, 800.0, 600.0),
-          maximumCone: 90,
+          maximumConeDegree: 90,
           material: Cesium.Color.RED.withAlpha(0.3),
           outline: true,
         },
@@ -321,8 +295,8 @@
         style: {
           radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
           innerRadii: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
-          minimumCone: 20.0,
-          maximumCone: 90,
+          minimumConeDegree: 20.0,
+          maximumConeDegree: 90,
           material: Cesium.Color.YELLOW.withAlpha(0.3),
           outline: true,
         },
@@ -338,8 +312,8 @@
         style: {
           radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
           innerRadii: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
-          minimumCone: 60.0,
-          maximumCone: 140.0,
+          minimumConeDegree: 60.0,
+          maximumConeDegree: 140.0,
           material: Cesium.Color.DARKCYAN.withAlpha(0.3),
           outline: true,
         },
@@ -355,7 +329,7 @@
         style: {
           radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
           innerRadii: new Cesium.Cartesian3(1800.0, 1800.0, 1800.0),
-          minimumCone: 110.0,
+          minimumConeDegree: 110.0,
           material: Cesium.Color.fromCssColorString('#1ffee6').withAlpha(0.3),
           outline: true,
         },
@@ -371,10 +345,10 @@
         style: {
           radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
           innerRadii: new Cesium.Cartesian3(1500.0, 1500.0, 1500.0),
-          minimumClock: -90.0,
-          maximumClock: 180.0,
-          minimumCone: 20.0,
-          maximumCone: 70.0,
+          minimumClockDegree: -90.0,
+          maximumClockDegree: 180.0,
+          minimumConeDegree: 20.0,
+          maximumConeDegree: 70.0,
           material: Cesium.Color.fromCssColorString('#95e40c').withAlpha(0.3),
           outline: true,
         },
@@ -389,9 +363,9 @@
         position: new mars3d.LatLngPoint(116.3, 30.8, 1000),
         style: {
           radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
-          minimumClock: -90.0,
-          maximumClock: 180.0,
-          maximumCone: 90.0,
+          minimumClockDegree: -90.0,
+          maximumClockDegree: 180.0,
+          maximumConeDegree: 90.0,
           material: Cesium.Color.fromCssColorString('#f2fa19').withAlpha(0.3),
           outline: true,
         },
@@ -407,9 +381,9 @@
         style: {
           radii: new Cesium.Cartesian3(3000.0, 3000.0, 3000.0),
           innerRadii: new Cesium.Cartesian3(700.0, 700.0, 700.0),
-          minimumClock: 180.0,
-          maximumClock: 400.0,
-          maximumCone: 90.0,
+          minimumClockDegree: 180.0,
+          maximumClockDegree: 400.0,
+          maximumConeDegree: 90.0,
           material: Cesium.Color.fromCssColorString('#f79a2c').withAlpha(0.3),
           outline: true,
         },
@@ -437,8 +411,8 @@
         style: {
           radii: new Cesium.Cartesian3(4000.0, 4000.0, 4000.0),
           innerRadii: new Cesium.Cartesian3(3000.0, 3000.0, 3000.0),
-          minimumCone: 89.8,
-          maximumCone: 90.2,
+          minimumConeDegree: 89.8,
+          maximumConeDegree: 90.2,
           material: new Cesium.Color(0.95, 0.82, 0.49, 0.5),
           heading: 30,
           pitch: 30,
@@ -452,8 +426,8 @@
         style: {
           radii: new Cesium.Cartesian3(4600.0, 4600.0, 4600.0),
           innerRadii: new Cesium.Cartesian3(4150.0, 4150.0, 4150.0),
-          minimumCone: 89.8,
-          maximumCone: 90.2,
+          minimumConeDegree: 89.8,
+          maximumConeDegree: 90.2,
           material: new Cesium.Color(0.95, 0.82, 0.49, 0.5),
           heading: 30,
           pitch: 30,

@@ -56,7 +56,8 @@
         <tr id="viewJBFX">
           <td class="nametd">分析区域</td>
           <td>
-            <input type="button" class="btn btn-primary" value="绘制区域" id="btnDraw" />
+            <input type="button" class="btn btn-primary" value="绘制矩形" id="btnDrawExtent" />
+            <input type="button" class="btn btn-primary" value="绘制多边形" id="btnDraw" />
           </td>
         </tr>
         <tr>
@@ -74,7 +75,7 @@
         <tr>
           <td class="nametd">淹没速度(米/秒)</td>
           <td>
-            <input id="speed" value="5" type="number" class="form-control" />
+            <input id="speed" value="10" type="number" class="form-control" />
           </td>
         </tr>
         <tr>
@@ -181,17 +182,30 @@
               outline: false,
             },
             success: function (graphic) {
-              haoutil.loading.show()
-
               //绘制成功后回调
               var positions = graphic.positionsShow
               tilesetFlood.addArea(positions)
 
+              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
               // var result = mars3d.PolyUtil.getHeightRange(positions, map.scene)
               // $('#minHeight').val(Math.ceil(result.minHeight))
               // $('#maxHeight').val(Math.floor(result.maxHeight + 1))
-
-              haoutil.loading.hide()
+            },
+          })
+        })
+        $('#btnDrawExtent').click(function () {
+          map.graphicLayer.clear()
+          map.graphicLayer.startDraw({
+            type: 'rectangle',
+            style: {
+              color: '#007be6',
+              opacity: 0.2,
+              outline: false,
+            },
+            success: function (graphic) {
+              //绘制成功后回调
+              var positions = graphic.getOutlinePositions(false)
+              tilesetFlood.addArea(positions)
             },
           })
         })
@@ -220,7 +234,9 @@
           $('#paramView').hide()
           $('#resultView').show()
 
-          $('#btn_start').click() //自动启动
+          setTimeout(() => {
+            $('#btn_start').click() //自动启动
+          }, 500)
         })
 
         //滑动条

@@ -156,43 +156,6 @@
       addGraphic_06(graphicLayer)
     }
 
-    /**
-     style 支持的参数说明：
-     "style": {
-        支持 Cesium.EllipseGraphics.ConstructorOptions 中所有属性（Cesium原生的属性）
-
-        "radius": 100,      //半径
-        "height": 0,      //高程
-        "fill": true,      //是否填充
-        "fillType": "color",      //填充类型 ,可选项：color(纯色),animationCircle(动画),grid(网格),stripe(条纹),checkerboard(棋盘),
-        "animationDuration": 1000,      //速度
-        "animationCount": 1,      //圈数
-        "animationGradient": 0.1,      //圈间系数
-        "grid_lineCount": 8,      //网格数量
-        "grid_lineThickness": 2,      //网格宽度
-        "grid_cellAlpha": 0.1,      //填充透明度
-        "stripe_oddcolor": "#ffffff",      //条纹衬色
-        "stripe_repeat": 6,      //条纹数量
-        "checkerboard_oddcolor": "#ffffff",      //棋盘衬色
-        "checkerboard_repeat": 4,      //棋盘格数
-        "color": "#3388ff",      //填充颜色
-        "opacity": 0.6,      //透明度
-        "stRotation": 0,      //填充方向
-        "outline": true,      //是否边框
-        "outlineWidth": 1,      //边框宽度
-        "outlineColor": "#ffffff",      //边框颜色
-        "outlineOpacity": 0.6,      //边框透明度
-        "rotation": 0,      //旋转角度
-        "distanceDisplayCondition": false,      //是否按视距显示
-        "distanceDisplayCondition_far": 100000,      //最大距离
-        "distanceDisplayCondition_near": 0,      //最小距离
-        "clampToGround": false,      //是否贴地
-        "zIndex": 0,      //层级顺序
-
-        "extrudedHeight": 100,      //拉伸高度 （立体拉伸时传入）
-     }
-    */
-
     //
     function addGraphic_01(graphicLayer) {
       var graphic = new mars3d.graphic.CircleEntity({
@@ -270,7 +233,7 @@
             text: '我是原始的',
             font_size: 18,
             color: '#ffffff',
-            pixelOffset: [0, -10],
+            pixelOffsetY: -10,
             distanceDisplayCondition: true,
             distanceDisplayCondition_far: 500000,
             distanceDisplayCondition_near: 0,
@@ -300,7 +263,7 @@
           extrudedHeight: 1000.0,
           color: '#00ff00',
           opacity: 0.3,
-          rotation: 45,
+          rotationDegree: 45,
         },
       })
       graphicLayer.addGraphic(graphic)

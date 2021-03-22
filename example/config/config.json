@@ -38,7 +38,7 @@
             "navigationHelpButton": true,
             "animation": false,
             "timeline": false,
-            "infoBox": false,
+            "infoBox": true,
             "geocoder": true,
             "geocoderConfig": { "key":[ "ae29a37307840c7ae4a785ac905927e0" ], "citycode": "" },
 

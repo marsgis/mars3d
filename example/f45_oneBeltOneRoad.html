@@ -241,7 +241,7 @@
         }
       }
 
-      var positions = mars3d.graphic.util.PolylineEntity.line2curve(arrPosition)
+      var positions = mars3d.PolyUtil.getBezierCurve(arrPosition)
       positions.push(arrPosition[arrPosition.length - 1])
 
       var primitive = new mars3d.graphic.PolylinePrimitive({

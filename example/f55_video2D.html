@@ -3,8 +3,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
   <meta name="author" content="火星科技 http://mars3d.cn ">
   <meta name="apple-touch-fullscreen" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -17,7 +16,7 @@
   <!-- 标题及搜索关键字 -->
   <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
   <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+        content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>视频投放 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -25,8 +24,7 @@
 
 
   <!--第三方lib-->
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/" include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
 
   <link href="css/style.css" rel="stylesheet" />
   <style>
@@ -94,8 +92,7 @@
         <tr>
           <td>键盘微调:</td>
           <td>
-            步长<input id="adjustDeg" type="number" value="0.05" min="0.001" max="2" class="form-control"
-              style="width: 90px;" />度
+            步长<input id="adjustDeg" type="number" value="0.05" min="0.001" max="2" class="form-control" style="width: 90px;" />度
           </td>
 
           <td>
@@ -116,8 +113,7 @@
           <td>视椎框线:</td>
           <td>
             <div class="checkbox checkbox-info checkbox-inline">
-              <input id="showFrustum" checked type="checkbox" class="checkbox checkbox-info checkbox-inline"
-                value="true" />
+              <input id="showFrustum" checked type="checkbox" class="checkbox checkbox-info checkbox-inline" value="true" />
               <label for="showFrustum">是否显示</label>
             </div>
           </td>
@@ -244,27 +240,15 @@
         dom: videoElement,
         position: [117.205459, 31.842988, 69.3],
         style: {
-          stRotation: 0,
-          fov: 0.9075712110370514,
-          dis: 70,
-          aspectRatio: 3,
           camera: {
-            direction: {
-              x: -0.20300781957546601,
-              y: 0.3881445982693198,
-              z: -0.8989613985180693,
-            },
-            up: {
-              x: -0.41112481743883666,
-              y: 0.7994469141644973,
-              z: 0.43801942413407347,
-            },
-            right: {
-              x: 0.8886867894129509,
-              y: 0.4585067090754624,
-              z: -0.0027180978075245542,
-            },
+            direction: { x: -0.20300781957546601, y: 0.3881445982693198, z: -0.8989613985180693 },
+            up: { x: -0.41112481743883666, y: 0.7994469141644973, z: 0.43801942413407347 },
+            right: { x: 0.8886867894129509, y: 0.4585067090754624, z: -0.0027180978075245542 },
           },
+          dis: 70,
+          fovDegree: 52,
+          aspectRatio: 3,
+          stRotationDegree: 0,
         },
         showFrustum: true,
       })
