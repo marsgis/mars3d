@@ -44,7 +44,9 @@
 
 2. 最简项目(本地版)[https://github.com/marsgis/mars3d-vue-template-local](https://github.com/marsgis/mars3d-vue-template-local)    `mars3d库非npm引入`
 
-3. CS桌面程序项目 [https://github.com/marsgis/mars3d-vue-electron](https://github.com/marsgis/mars3d-vue-electron)
+3. 基础项目(widget模式)[https://github.com/marsgis/mars3d-vue-widget](https://github.com/marsgis/mars3d-vue-widget)
+
+4. CS桌面程序项目 [https://github.com/marsgis/mars3d-vue-electron](https://github.com/marsgis/mars3d-vue-electron)
 
 
 ### React技术栈
@@ -65,11 +67,17 @@
 ## 运行效果  
  功能示例：
  ![image](http://mars3d.cn/img/example.jpg)
- 基础项目：
+ 
+ 基础项目：[在线体验](http://mars3d.cn/project/jcxm/index.html)
+
  ![image](http://mars3d.cn/img/jcxm.jpg)
- 电子沙盘项目：
+ 
+ 电子沙盘项目：[在线体验](http://mars3d.cn/project/dzsp/login.html)
+
  ![image](http://mars3d.cn/img/dzsp.jpg)
- 综合态势项目：
+ 
+ 综合态势项目：[在线体验](http://mars3d.cn/project/zhts/index.html)
+
  ![image](http://mars3d.cn/img/zhts.jpg)
 
 
