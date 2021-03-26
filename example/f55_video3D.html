@@ -190,9 +190,9 @@
         position: [117.20551, 31.842824, 46.4],
         cameraPosition: [117.205457, 31.842984, 68.9],
         style: {
-          fov: 84.3,
+          fovDegree: 84.3,
           aspectRatio: 2.6,
-          alpha: 0.8,
+          opacity: 0.8,
           camera: {
             direction: {
               x: 0.07331987934745406,
@@ -227,7 +227,7 @@
       }
 
       var showFrustum = $('#chkDebugFrustum').is(':checked')
-      var alpha = Number($('#txtMixNum').val())
+      var opacity = Number($('#txtMixNum').val())
       var cameraPosition = Cesium.clone(map.scene.camera.position)
 
       //构造投射体
@@ -237,7 +237,7 @@
         position: cartesian,
         cameraPosition: cameraPosition,
         style: {
-          alpha: alpha,
+          opacity: opacity,
         },
         showFrustum: showFrustum,
       })
@@ -255,7 +255,7 @@
       }
 
       var showFrustum = $('#chkDebugFrustum').is(':checked')
-      var alpha = Number($('#txtMixNum').val())
+      var opacity = Number($('#txtMixNum').val())
       var cameraPosition = Cesium.clone(map.scene.camera.position)
 
       //构造投射体
@@ -265,7 +265,7 @@
         position: cartesian,
         cameraPosition: cameraPosition,
         style: {
-          alpha: alpha,
+          opacity: opacity,
         },
         showFrustum: showFrustum,
       })
@@ -282,7 +282,7 @@
       }
 
       var showFrustum = $('#chkDebugFrustum').is(':checked')
-      var alpha = Number($('#txtMixNum').val())
+      var opacity = Number($('#txtMixNum').val())
       var cameraPosition = Cesium.clone(map.scene.camera.position)
 
       //构造投射体
@@ -292,7 +292,7 @@
         position: cartesian,
         cameraPosition: cameraPosition,
         style: {
-          alpha: alpha,
+          opacity: opacity,
           textStyles: {
             font: '50px 楷体',
             fill: true,
@@ -322,7 +322,7 @@
       var cameraPosition = Cesium.clone(map.scene.camera.position)
 
       var showFrustum = $('#chkDebugFrustum').is(':checked')
-      var alpha = Number($('#txtMixNum').val())
+      var opacity = Number($('#txtMixNum').val())
 
       //构造投射体
       var video3D = new mars3d.graphic.Video3D({
@@ -331,7 +331,7 @@
         position: cartesian,
         cameraPosition: cameraPosition,
         style: {
-          alpha: alpha,
+          opacity: opacity,
         },
         showFrustum: showFrustum,
       })
@@ -363,7 +363,7 @@
           if (!selectedView) {
             return
           }
-          selectedView.alpha = value
+          selectedView.opacity = value
         },
       })
 
@@ -440,7 +440,7 @@
           return
         }
 
-        selectedView.videoPlay = !selectedView.videoPlay
+        selectedView.play = !selectedView.play
       })
 
       document.addEventListener(

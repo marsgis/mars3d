@@ -98,19 +98,13 @@
       addGraphic_a5(graphicLayer)
     }
 
-    /**
-     style 支持的参数说明：
-     "style": {
-
-     }
-    */
-
     function addGraphic_a1(graphicLayer) {
       var primitive = new mars3d.graphic.BoxPrimitive({
         position: [116.282587, 30.859197, 544.31],
         style: {
           dimensions: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
-          color: Cesium.Color.fromCssColorString('#00ff00').withAlpha(0.9),
+          color: '#00ffff',
+          opacity: 0.8,
         },
       })
       graphicLayer.addGraphic(primitive)
@@ -129,7 +123,8 @@
         position: new mars3d.LatLngPoint(116.329199, 30.881595, 390.3),
         style: {
           dimensions: new Cesium.Cartesian3(900.0, 600.0, 900.0),
-          color: Cesium.Color.fromCssColorString('#ff0000').withAlpha(0.4),
+          color: '#ff0000',
+          opacity: 0.4,
         },
       })
       graphicLayer.addGraphic(primitive)
@@ -141,7 +136,8 @@
         position: [116.244399, 30.920459, 573.6],
         style: {
           dimensions: new Cesium.Cartesian3(800.0, 600.0, 1000.0),
-          color: Cesium.Color.fromCssColorString('#00FFFF').withAlpha(0.4),
+          color: '#00FFFF',
+          opacity: 0.4,
         },
       })
       graphicLayer.addGraphic(primitive)
@@ -153,7 +149,8 @@
         position: new mars3d.LatLngPoint(116.392526, 30.903729, 933.55),
         style: {
           dimensions: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
-          color: Cesium.Color.fromCssColorString('#ffff00').withAlpha(0.6),
+          color: '#ffff00',
+          opacity: 0.6,
         },
       })
       graphicLayer.addGraphic(primitive)
@@ -165,7 +162,8 @@
         position: [116.318792, 30.934805, 524.71],
         style: {
           dimensions: new Cesium.Cartesian3(800.0, 600.0, 1000.0),
-          color: Cesium.Color.fromCssColorString('#0000ff').withAlpha(0.4),
+          color: '#0000ff',
+          opacity: 0.4,
           label: {
             text: '我是原始的',
             font_size: 18,

@@ -42,8 +42,8 @@
       <tr>
         <td>限定区域</td>
         <td colspan="3">
-          <input type="button" class="btn btn-primary" value="绘制矩形" id="btnDrawExtent" />
-          <input type="button" class="btn btn-primary" value="绘制区域" id="btnDraw" />
+          <input type="button" class="btn btn-primary" value="添加矩形" id="btnDrawExtent" />
+          <input type="button" class="btn btn-primary" value="添加多边形" id="btnDraw" />
           <input type="button" class="btn btn-primary" value="清除" id="clearWJ" />
         </td>
       </tr>
@@ -138,17 +138,34 @@
       map = new mars3d.Map('mars3dContainer', mapOptions)
 
       var contourLine = new mars3d.thing.ContourLine({
-        positions: [
-          [116.003125, 30.948354, 1103.66],
-          [116.23964, 30.946376, 563.02],
-          [116.223677, 30.802558, 522.04],
-          [115.997891, 30.807484, 440.83],
-        ],
         spacing: 100,
         width: 1.5,
         color: Cesium.Color.RED,
+        //地表渲染的配色方案
+        colorScheme: {
+          elevation: {
+            step: [0.0, 0.045, 0.1, 0.15, 0.37, 0.54, 1.0],
+            color: ['#000000', '#2747E0', '#D33B7D', '#D33038', '#FF9742', '#FF9742', '#ffd700', '#ffffff'],
+          },
+          slope: {
+            step: [0.0, 0.29, 0.5, Math.sqrt(2) / 2, 0.87, 0.91, 1.0],
+            color: ['#000000', '#2747E0', '#D33B7D', '#D33038', '#FF9742', '#FF9742', '#ffd700', '#ffffff'],
+          },
+          aspect: {
+            step: [0.0, 0.2, 0.4, 0.6, 0.8, 0.9, 1.0],
+            color: ['#000000', '#2747E0', '#D33B7D', '#D33038', '#FF9742', '#FF9742', '#ffd700', '#ffffff'],
+          },
+        },
       })
       map.addThing(contourLine)
+
+      //演示的示例区域
+      contourLine.addArea([
+        [116.003125, 30.948354, 1103.66],
+        [116.23964, 30.946376, 563.02],
+        [116.223677, 30.802558, 522.04],
+        [115.997891, 30.807484, 440.83],
+      ])
 
       $('#chkEnabled').change(function () {
         var val = $(this).is(':checked')
@@ -179,8 +196,6 @@
       })
 
       $('#btnDraw').click(function () {
-        contourLine.clear()
-
         map.graphicLayer.startDraw({
           type: 'polygon',
           style: {
@@ -195,13 +210,12 @@
 
             console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
 
-            contourLine.positions = positions
+            contourLine.addArea(positions)
           },
         })
       })
 
       $('#btnDrawExtent').click(function () {
-        contourLine.clear()
         map.graphicLayer.startDraw({
           type: 'rectangle',
           style: {
@@ -216,7 +230,7 @@
 
             console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
 
-            contourLine.positions = positions
+            contourLine.addArea(positions)
           },
         })
       })

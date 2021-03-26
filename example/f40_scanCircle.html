@@ -93,7 +93,7 @@
           ],
           style: {
             diffHeight: 2000, //高度
-            speed: 100, //速度
+            speed: 60, //速度
           },
         })
         graphicLayer.addGraphic(diffuseWallGlow)
@@ -107,7 +107,7 @@
             radius: 600, //半径
             color: Cesium.Color.fromCssColorString('#ff0000'),
             diffHeight: 2000, //高度
-            speed: 100, //速度
+            speed: 50, //速度
           },
         })
         graphicLayer.addGraphic(circleDiffuseWallGlow)
@@ -136,7 +136,7 @@
             radius: 1500.0,
             //扫描材质
             material: new mars3d.material.CircleScanMaterialProperty({
-              url: 'img/textures/circleScan.png',
+              image: 'img/textures/circleScan.png',
               color: Cesium.Color.fromCssColorString('#00ff00'),
             }),
             stRotation: new Cesium.CallbackProperty(function (e) {
@@ -158,7 +158,7 @@
             radius: 700.0,
             material: new mars3d.material.CircleScanMaterialProperty({
               //扫描材质
-              url: 'img/textures/circle_bg.png',
+              image: 'img/textures/circle_bg.png',
               color: Cesium.Color.fromCssColorString('#5fc4ee'),
             }),
             stRotation: new Cesium.CallbackProperty(function (e) {

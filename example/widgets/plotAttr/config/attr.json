@@ -77,7 +77,7 @@
             { "name": "color", "label": "颜色", "type": "color", "defval": "#3388ff" },
             { "name": "opacity", "label": "透明度", "type": "slider", "defval": 1.0 },
 
-            { "name": "outline", "label": "是否边框", "type": "radio", "defval": false, "impact": [ "outlineColor", "outlineOpacity", "outlineWidth" ] },
+            { "name": "outline", "label": "是否边框", "type": "radio", "defval": true, "impact": [ "outlineColor", "outlineOpacity", "outlineWidth" ] },
             { "name": "outlineColor", "label": "边框颜色", "type": "color", "defval": "#ffffff" },
             { "name": "outlineOpacity", "label": "边框透明度", "type": "slider", "defval": 0.6 },
             { "name": "outlineWidth", "label": "边框宽度", "type": "number", "defval": 2.0 },
@@ -181,10 +181,7 @@
             { "name": "distanceDisplayCondition", "label": "是否按视距显示", "type": "radio", "defval": false, "impact": [ "distanceDisplayCondition_far", "distanceDisplayCondition_near" ] },
             { "name": "distanceDisplayCondition_far", "label": "最大距离", "type": "number", "defval": 10000.0 },
             { "name": "distanceDisplayCondition_near", "label": "最小距离", "type": "number", "defval": 0.0 },
-            { "name": "clampToGround", "label": "是否贴地", "type": "radio", "defval": false },
-            { "name":"depthTest", "label": "是否被遮挡", "type": "radio", "defval": true}
-
-
+            { "name": "clampToGround", "label": "是否贴地", "type": "radio", "defval": false }
         ]
     },
 
@@ -346,7 +343,7 @@
     "wall": {
         "name": "墙体",
         "style": [
-            { "name": "diffHeight", "label": "墙高", "type": "number", "defval": 0.0 },
+            { "name": "diffHeight", "label": "墙高", "type": "number", "defval": 100.0 },
 
             { "name": "fill", "label": "是否填充", "type": "radio", "defval": true, "impact": ["fillType","color", "opacity" ] },
             {
@@ -557,7 +554,7 @@
             "height": false
         },
         "style": [
-            { "name": "radius", "label": "半径", "type": "number", "defval": 100.0 },
+            { "name": "radius", "label": "半径", "type": "number", "defval": 0.0 },
             { "name": "height", "label": "高程", "type": "number", "defval": 0.0 },
             { "name": "diffHeight", "label": "立体高度", "type": "number", "defval": 0.0 },
 
@@ -731,10 +728,10 @@
             { "name": "innerRadii_y", "label": "内部Y半径", "type": "number", "defval": 0.0 },
             { "name": "innerRadii_z", "label": "内部Z半径", "type": "number", "defval": 0.0 },
 
-            { "name": "minimumClockDegree", "label": "最小时钟角度", "type": "number", "defval": 0.0 },
-            { "name": "maximumClockDegree", "label": "最大时钟角度", "type": "number", "defval": 360.0 },
-            { "name": "minimumConeDegree", "label": "最小锥角", "type": "number", "defval": 0.0 },
-            { "name": "maximumConeDegree", "label": "最大圆锥角", "type": "number", "defval": 180.0 },
+            { "name": "minimumClockDegree", "label": "最小时钟角度", "type": "hidden", "defval": 0.0 },
+            { "name": "maximumClockDegree", "label": "最大时钟角度", "type": "hidden", "defval": 360.0 },
+            { "name": "minimumConeDegree", "label": "最小锥角", "type": "hidden", "defval": 0.0 },
+            { "name": "maximumConeDegree", "label": "最大圆锥角", "type": "hidden", "defval": 180.0 },
 
             { "name": "heading", "label": "方向角", "type": "number", "defval": 0.0 },
             { "name": "pitch", "label": "俯仰角", "type": "number", "defval": 0.0 },

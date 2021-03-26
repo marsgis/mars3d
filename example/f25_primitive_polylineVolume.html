@@ -94,13 +94,6 @@
       addGraphic_a3(graphicLayer)
     }
 
-    /**
-     style 支持的参数说明：
-     "style": {
-
-     }
-    */
-
     function addGraphic_a1(graphicLayer) {
       var primitive = new mars3d.graphic.PolylineVolumePrimitive({
         positions: [
@@ -118,9 +111,8 @@
         ],
         style: {
           radius: 80,
-          material: Cesium.Material.fromType('Color', {
-            color: Cesium.Color.YELLOW,
-          }),
+          shape: 'pipeline',
+          color: Cesium.Color.YELLOW,
           label: {
             text: '我是管道',
             font_size: 18,
@@ -145,8 +137,10 @@
           [117.251461, 31.856011, 26.44],
         ],
         style: {
+          shape: 'pipeline',
           radius: 80,
           color: Cesium.Color.YELLOW,
+          closed: false,
         },
       })
       graphicLayer.addGraphic(primitive)
@@ -164,9 +158,10 @@
           [117.4384, 31.819405, 11.78],
         ],
         style: {
+          shape: 'circle',
           radius: 80,
-          cornerType: Cesium.CornerType.BEVELED,
           color: Cesium.Color.RED,
+          cornerType: Cesium.CornerType.BEVELED,
         },
       })
       graphicLayer.addGraphic(primitive)

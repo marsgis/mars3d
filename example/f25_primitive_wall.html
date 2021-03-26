@@ -88,13 +88,6 @@
         addGraphic_a8(graphicLayer)
       }
 
-      /**
-     style 支持的参数说明：
-     "style": {
-
-     }
-    */
-
       function addGraphic_a1(graphicLayer) {
         var primitive = new mars3d.graphic.WallPrimitive({
           positions: [
@@ -104,9 +97,7 @@
           ],
           style: {
             diffHeight: 200,
-            material: Cesium.Material.fromType('Color', {
-              color: Cesium.Color.YELLOW,
-            }),
+            color: Cesium.Color.YELLOW,
           },
         })
         graphicLayer.addGraphic(primitive)
@@ -241,14 +232,7 @@
           ],
           style: {
             diffHeight: 400,
-            material: new Cesium.Material({
-              fabric: {
-                type: 'Image',
-                uniforms: {
-                  image: 'img/textures/excavate_side_min.jpg',
-                },
-              },
-            }),
+            image: 'img/textures/movingRiver.png',
           },
         })
         graphicLayer.addGraphic(primitive)

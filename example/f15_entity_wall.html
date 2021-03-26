@@ -138,38 +138,6 @@
         addGraphic_a8(graphicLayer)
       }
 
-      /**
-     style 支持的参数说明：
-     "style": {
-        支持 Cesium.WallGraphics.ConstructorOptions 中所有属性（Cesium原生的属性）
-
-        "diffHeight": 50,      //墙高
-        "fill": true,      //是否填充
-        "fillType": "color",      //填充类型 ,可选项：color(纯色),animationLine(动画),grid(网格),stripe(条纹),checkerboard(棋盘),
-        "animationDuration": 1000,      //速度
-        "animationImage": "img/textures/fence.png",      //图片
-        "animationRepeatX": 1,      //重复数量
-        "animationAxisY": false,      //竖直方向
-        "grid_lineCount": 8,      //网格数量
-        "grid_lineThickness": 2,      //网格宽度
-        "grid_cellAlpha": 0.1,      //填充透明度
-        "stripe_oddcolor": "#ffffff",      //条纹衬色
-        "stripe_repeat": 6,      //条纹数量
-        "checkerboard_oddcolor": "#ffffff",      //棋盘衬色
-        "checkerboard_repeat": 4,      //棋盘格数
-        "color": "#00FF00",      //颜色
-        "opacity": 0.6,      //透明度
-        "outline": true,      //是否边框
-        "outlineWidth": 1,      //边框宽度
-        "outlineColor": "#ffffff",      //边框颜色
-        "outlineOpacity": 0.6,      //边框透明度
-        "distanceDisplayCondition": false,      //是否按视距显示
-        "distanceDisplayCondition_far": 100000,      //最大距离
-        "distanceDisplayCondition_near": 0,      //最小距离
-        "hasShadows": false,      //是否阴影
-     }
-    */
-
       function addGraphic_a1(graphicLayer) {
         var graphic = new mars3d.graphic.WallEntity({
           positions: [

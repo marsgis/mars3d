@@ -502,7 +502,7 @@
 
       var index = 0
       geojsonObject.features.forEach((feature) => {
-        var attr = feature.properties.attr
+        var attr = feature.properties
         var style = feature.properties.style
         feature.properties = {
           id: ++index,
@@ -541,7 +541,7 @@
       var arrWKT = []
       var index = 0
       geojsonObject.features.forEach((feature) => {
-        var attr = feature.properties.attr
+        var attr = feature.properties
         var style = feature.properties.style
 
         var wkt = Terraformer.WKT.convert(feature.geometry) //geojson转换WKT格式 ,terraformer库

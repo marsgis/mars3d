@@ -94,13 +94,6 @@
       addGraphic_a3(graphicLayer)
     }
 
-    /**
-     style 支持的参数说明：
-     "style": {
-
-     }
-    */
-
     function addGraphic_a1(graphicLayer) {
       var primitive = new mars3d.graphic.CorridorPrimitive({
         positions: [
@@ -110,9 +103,8 @@
         ],
         style: {
           width: 500,
-          material: Cesium.Material.fromType('Color', {
-            color: Cesium.Color.YELLOW,
-          }),
+          color: '#ffff00',
+          opacity: 0.6,
           label: {
             text: '我是条带',
             font_size: 18,
@@ -140,7 +132,7 @@
         style: {
           width: 300.0,
           height: 200.0,
-          extrudedHeight: 600,
+          diffHeight: 600,
           cornerType: Cesium.CornerType.MITERED,
           color: Cesium.Color.BLUE.withAlpha(0.5),
         },

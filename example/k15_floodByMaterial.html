@@ -37,8 +37,9 @@
       <tr>
         <td class="nametd">分析区域</td>
         <td>
-          <button type="button" id="btnDrawExtent" class="btn btn-default">绘制矩形</button>
-          <button type="button" id="btnDraw" class="btn btn-default">绘制多边形</button>
+          <button type="button" id="btnDrawExtent" class="btn btn-default">添加矩形</button>
+          <button type="button" id="btnDraw" class="btn btn-default">添加多边形</button>
+          <button type="button" id="clearDraw" class="btn btn-default">清除</button>
         </td>
       </tr>
       <tr>
@@ -74,7 +75,7 @@
       <div class="rowview clearfix"><span>当前高度:</span><span id="lbl_nowHeight"></span></div>
 
       <input id="btn_start" type="button" class="btn btn-primary" value="自动播放" />
-      <button type="button" id="clear" class="btn btn-danger">返回</button>
+      <button type="button" id="clear" class="btn btn-primary">返回</button>
 
       <div class="checkbox checkbox-info checkbox-inline">
         <input type="checkbox" id="showElse" value="this" name="jiaodu" checked />
@@ -128,7 +129,6 @@
       })
 
       $('#btnDraw').click(function () {
-        map.graphicLayer.clear()
         map.graphicLayer.startDraw({
           type: 'polygon',
           style: {
@@ -139,7 +139,7 @@
           success: function (graphic) {
             var positions = graphic.positionsShow
 
-            floodByMaterial.positions = positions
+            floodByMaterial.addArea(positions)
 
             //求最大、最小高度值
             haoutil.loading.show()
@@ -153,7 +153,6 @@
       })
 
       $('#btnDrawExtent').click(function () {
-        map.graphicLayer.clear()
         map.graphicLayer.startDraw({
           type: 'rectangle',
           style: {
@@ -166,7 +165,7 @@
             var positions = graphic.getOutlinePositions(false)
 
             //区域
-            floodByMaterial.positions = positions
+            floodByMaterial.addArea(positions)
 
             //求最大、最小高度值
             haoutil.loading.show()
@@ -178,9 +177,13 @@
           },
         })
       })
+      $('#clearDraw').click(function () {
+        floodByMaterial.clear()
+        map.graphicLayer.clear()
+      })
 
       $('#begin').click(function () {
-        if (floodByMaterial.positions == null) {
+        if (floodByMaterial.length == 0) {
           haoutil.msg('请首先绘制分析区域！')
           return
         }

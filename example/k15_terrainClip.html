@@ -45,10 +45,8 @@
       </div>
 
       <div class="checkbox checkbox-primary checkbox-inline">
-        <input id="chkUnionClippingRegions" class="styled" type="checkbox">
-        <label for="chkUnionClippingRegions">
-          是否外切割
-        </label>
+        <input id="chkUnionClippingRegions" class="styled" type="checkbox" />
+        <label for="chkUnionClippingRegions"> 是否外切割 </label>
       </div>
 
       <div class="checkbox checkbox-primary checkbox-inline">
@@ -56,14 +54,20 @@
         <label for="chkTestTerrain"> 深度检测 </label>
       </div>
 
-      <div>
-        开挖深度：
-        <input id="txtHeight" type="number" value="30" min="-500" step="1" max="999" class="form-control" style="width: 100px" />（米）
-
-        <input type="button" class="btn btn-primary" value="绘制矩形" id="btnDrawExtent" />
-        <input type="button" class="btn btn-primary" value="绘制区域" id="btnDraw" />
-        <input type="button" class="btn btn-primary" value="清除" id="clearWJ" />
-      </div>
+      <table id="paramView" class="mars-table">
+        <tr>
+          <td class="nametd">开挖区域</td>
+          <td>
+            <input type="button" class="btn btn-primary" value="添加矩形" id="btnDrawExtent" />
+            <input type="button" class="btn btn-primary" value="添加多边形" id="btnDraw" />
+            <input type="button" class="btn btn-primary" value="清除" id="clearWJ" />
+          </td>
+        </tr>
+        <tr>
+          <td class="nametd">开挖深度</td>
+          <td><input id="txtHeight" type="number" value="30" min="-500" step="1" max="999" class="form-control" style="width: 100px" />（米）</td>
+        </tr>
+      </table>
     </div>
 
     <script src="./js/common.js"></script>
@@ -76,14 +80,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 30.941223,
-              x: 116.400103,
-              z: 8927.27,
-              heading: 13.1,
-              pitch: -58.8,
-              roll: 0.1,
-            },
+            center: { lat: 30.840979, lng: 116.408404, alt: 16937, heading: 0, pitch: -56 },
             highDynamicRange: true,
           },
         })
@@ -94,18 +91,32 @@
         var height = Number($('#txtHeight').val())
 
         var terrainClip = new mars3d.thing.TerrainClip({
-          positions: [
-            [116.392789, 30.970042, 1177.28],
-            [116.418955, 30.970042, 1177.28],
-            [116.418955, 30.994493, 1177.28],
-            [116.392789, 30.994493, 1177.28],
-          ],
           height: height,
           splitNum: 50, //wall边界插值数
           wallImg: './img/textures/excavate_side_min.jpg',
           bottomImg: './img/textures/excavate_bottom_min.jpg',
         })
         map.addThing(terrainClip)
+
+        terrainClip.addArea([
+          [116.352168, 30.925791, 910.62],
+          [116.377382, 30.925791, 910.62],
+          [116.377382, 30.957703, 910.62],
+          [116.352168, 30.957703, 910.62],
+        ])
+
+        terrainClip.addArea([
+          [116.414726, 30.943524, 0],
+          [116.42838, 30.961374, 0],
+          [116.430476, 30.940687, 0],
+          [116.444213, 30.931443, 0],
+          [116.428655, 30.930703, 0],
+          [116.430593, 30.914075, 0],
+          [116.416428, 30.926085, 0],
+          [116.398136, 30.921783, 0],
+          [116.411863, 30.934634, 0],
+          [116.393439, 30.948229, 0],
+        ])
 
         $('#chkTestTerrain').change(function () {
           var val = $(this).is(':checked')
@@ -134,8 +145,6 @@
         })
 
         $('#btnDraw').click(function () {
-          terrainClip.clear() //清除挖地区域
-
           map.graphicLayer.startDraw({
             type: 'polygon',
             style: {
@@ -151,14 +160,12 @@
 
               console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
 
-              terrainClip.positions = positions
+              terrainClip.addArea(positions)
             },
           })
         })
 
         $('#btnDrawExtent').click(function () {
-          terrainClip.clear() //清除挖地区域
-
           map.graphicLayer.startDraw({
             type: 'rectangle',
             style: {
@@ -174,7 +181,7 @@
               console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
 
               //挖地区域
-              terrainClip.positions = positions
+              terrainClip.addArea(positions)
             },
           })
         })

@@ -74,7 +74,7 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
-          center: { y: 30.835133, x: 116.300677, z: 20973, heading: 7, pitch: -72, roll: 0 },
+          center: { lat: 30.63693, lng: 116.271312, alt: 25226, heading: 350, pitch: -38 },
         },
       })
 
@@ -93,23 +93,18 @@
       addGraphic_a2(graphicLayer)
       addGraphic_a3(graphicLayer)
       addGraphic_a4(graphicLayer)
+      addGraphic_a5(graphicLayer)
     }
-
-    /**
-     style 支持的参数说明：
-     "style": {
-
-     }
-    */
 
     function addGraphic_a1(graphicLayer) {
       var primitive = new mars3d.graphic.CylinderPrimitive({
-        position: [116.282587, 30.859197, 544.31],
+        position: [116.282587, 30.859197, 1544.31],
         style: {
           length: 2000.0,
           topRadius: 0.0,
           bottomRadius: 1000.0,
-          color: Cesium.Color.fromCssColorString('#00ff00').withAlpha(0.9),
+          color: '#ff0000',
+          opacity: 0.7,
         },
       })
       graphicLayer.addGraphic(primitive)
@@ -130,7 +125,8 @@
           length: 2000.0,
           topRadius: 0.0,
           bottomRadius: 1000.0,
-          color: Cesium.Color.fromCssColorString('#ff0000').withAlpha(0.4),
+          color: '#ff0000',
+          opacity: 0.4,
           heading: 45,
           roll: 45,
           pitch: 0,
@@ -147,7 +143,8 @@
           length: 2000.0,
           topRadius: 1000.0,
           bottomRadius: 1000.0,
-          color: Cesium.Color.fromCssColorString('#00FFFF').withAlpha(0.4),
+          color: '#00FFFF',
+          opacity: 0.4,
         },
       })
       graphicLayer.addGraphic(primitive)
@@ -172,6 +169,41 @@
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    function addGraphic_a5(graphicLayer) {
+      //添加卫星1
+      var point = new mars3d.LatLngPoint(116.148832, 30.920609, 9000)
+
+      //添加模型
+      var graphicModel = new mars3d.graphic.ModelPrimitive({
+        position: point,
+        style: {
+          url: 'http://data.marsgis.cn/gltf/mars/zhanji.glb',
+          scale: 1,
+          minimumPixelSize: 50,
+        },
+      })
+      graphicLayer.addGraphic(graphicModel)
+
+      //效果1
+      var pointQY = point.clone()
+      pointQY.alt = pointQY.alt / 2
+
+      var graphic = new mars3d.graphic.CylinderPrimitive({
+        position: pointQY,
+        style: {
+          length: point.alt,
+          topRadius: 0.0,
+          bottomRadius: 3000,
+          material: Cesium.Material.fromType(mars3d.material.CircleWaveType, {
+            duration: 2000,
+            color: Cesium.Color.fromCssColorString('#02ff00'),
+          }),
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
     }
   </script>
 </body>

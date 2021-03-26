@@ -142,7 +142,7 @@
           lastClickCar = car
 
           //视角定位下
-          map.flyTo(car.entity)
+          car.flyToPoint({ radius: 1000 })
         })
 
         var lastClickCar

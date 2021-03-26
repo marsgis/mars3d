@@ -137,32 +137,6 @@
       addGraphic_a5(graphicLayer)
     }
 
-    /**
-     style 支持的参数说明：
-     "style": {
-        支持 Cesium.PolylineGraphics.ConstructorOptions 中所有属性（Cesium原生的属性）
-
-        "lineType": "solid",      //线型 ,可选项：solid(实线),dash(虚线),glow(光晕),arrow(箭头),animation(动画),
-        "animationDuration": 1000,      //速度
-        "animationImage": "img/textures/lineClr.png",      //图片
-        "color": "#3388ff",      //颜色
-        "width": 4,      //线宽
-        "clampToGround": false,      //是否贴地
-        "dashLength": 16,      //虚线长度
-        "outline": false,      //是否衬色
-        "outlineColor": "#ffffff",      //衬色颜色
-        "outlineWidth": 2,      //衬色宽度
-        "depthFail": false,      //是否显示遮挡
-        "depthFailColor": "#ff0000",      //遮挡处颜色
-        "depthFailOpacity": 0.2,      //遮挡处透明度
-        "opacity": 1,      //透明度
-        "distanceDisplayCondition": false,      //是否按视距显示
-        "distanceDisplayCondition_far": 100000,      //最大距离
-        "distanceDisplayCondition_near": 0,      //最小距离
-        "zIndex": 0,      //层级顺序
-     }
-    */
-
     function addGraphic_a1(graphicLayer) {
       let graphic = new mars3d.graphic.CurveEntity({
         positions: [

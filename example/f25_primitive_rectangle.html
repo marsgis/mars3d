@@ -96,13 +96,6 @@
       addGraphic_a3(graphicLayer)
     }
 
-    /**
-     style 支持的参数说明：
-     "style": {
-
-     }
-    */
-
     function addGraphic_a1(graphicLayer) {
       var primitive = new mars3d.graphic.RectanglePrimitive({
         positions: [
@@ -110,9 +103,7 @@
           [117.278695, 31.832987],
         ],
         style: {
-          material: Cesium.Material.fromType('Color', {
-            color: Cesium.Color.CYAN.withAlpha(0.4),
-          }),
+          color: Cesium.Color.CYAN.withAlpha(0.4),
           label: {
             text: '我是火星科技',
             font_size: 18,
@@ -138,14 +129,7 @@
           [117.377109, 31.941802],
         ],
         style: {
-          material: new Cesium.Material({
-            fabric: {
-              type: 'Image',
-              uniforms: {
-                image: 'img/tietu/gugong.jpg',
-              },
-            },
-          }),
+          image: 'img/tietu/gugong.jpg',
         },
       })
       graphicLayer.addGraphic(primitive)
@@ -164,9 +148,7 @@
         ],
         style: {
           height: 1000,
-          material: Cesium.Material.fromType('Color', {
-            color: Cesium.Color.CYAN.withAlpha(0.4),
-          }),
+          color: Cesium.Color.CYAN.withAlpha(0.4),
         },
       })
       graphicLayer.addGraphic(primitive)

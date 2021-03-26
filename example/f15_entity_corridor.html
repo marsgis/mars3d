@@ -135,29 +135,6 @@
       addGraphic_a3(graphicLayer)
     }
 
-    /**
-     style 支持的参数说明：
-     "style": {
-        支持 Cesium.CorridorGraphics.ConstructorOptions 中所有属性（Cesium原生的属性）
-
-        "height": 0,      //高程
-        "extrudedHeight": 50,      //高度
-        "width": 100,      //走廊宽度
-        "cornerType": "ROUNDED",      //顶点样式 ,可选项：ROUNDED(圆滑),MITERED(斜接),BEVELED(斜切),
-        "fillType": "color",      //填充类型 ,可选项：color(纯色),grid(网格),
-        "grid_lineCount": 8,      //网格数量
-        "grid_lineThickness": 2,      //网格宽度
-        "grid_cellAlpha": 0.1,      //填充透明度
-        "color": "#00FF00",      //颜色
-        "opacity": 0.6,      //透明度
-        "distanceDisplayCondition": false,      //是否按视距显示
-        "distanceDisplayCondition_far": 100000,      //最大距离
-        "distanceDisplayCondition_near": 0,      //最小距离
-        "clampToGround": false,      //是否贴地
-        "zIndex": 0,      //层级顺序
-     }
-    */
-
     function addGraphic_a1(graphicLayer) {
       var graphic = new mars3d.graphic.CorridorEntity({
         positions: [
@@ -168,6 +145,7 @@
         style: {
           width: 500,
           color: '#3388ff',
+          opacity: 0.7,
         },
       })
       graphicLayer.addGraphic(graphic)
@@ -228,7 +206,7 @@
         ],
         style: {
           height: 200.0,
-          extrudedHeight: 600.0,
+          diffHeight: 600.0,
           width: 200.0,
           cornerType: Cesium.CornerType.BEVELED,
           material: Cesium.Color.BLUE.withAlpha(0.5),

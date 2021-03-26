@@ -96,21 +96,14 @@
       addGraphic_a5(graphicLayer)
     }
 
-    /**
-     style 支持的参数说明：
-     "style": {
-
-     }
-    */
-
     function addGraphic_a1(graphicLayer) {
       var primitive = new mars3d.graphic.CirclePrimitive({
         position: [116.282587, 30.859197, 544.31],
         style: {
           radius: 2000.0,
-          material: Cesium.Material.fromType('Color', {
-            color: Cesium.Color.fromCssColorString('#00FFFF').withAlpha(0.4),
-          }),
+          color: '#00FFFF',
+          opacity: 0.4,
+          clampToGround: true,
         },
       })
       graphicLayer.addGraphic(primitive)
@@ -129,14 +122,7 @@
         position: new mars3d.LatLngPoint(116.329199, 30.881595, 390.3),
         style: {
           radius: 1500.0,
-          material: new Cesium.Material({
-            fabric: {
-              type: 'Image',
-              uniforms: {
-                image: 'img/textures/excavate_bottom_min.jpg',
-              },
-            },
-          }),
+          image: 'img/textures/excavate_bottom_min.jpg',
         },
       })
       graphicLayer.addGraphic(primitive)

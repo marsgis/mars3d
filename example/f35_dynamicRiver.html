@@ -3,8 +3,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
   <meta name="author" content="火星科技 http://mars3d.cn ">
   <meta name="apple-touch-fullscreen" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,15 +14,14 @@
   <!-- 标题及搜索关键字 -->
   <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
   <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+        content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>三维地图 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
 
 
   <!--第三方lib-->
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,jquery.range,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/" include="jquery,jquery.range,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
 
   <link href="css/style.css" rel="stylesheet" />
 </head>
@@ -41,14 +39,14 @@
       <tr>
         <td class="nametd">河宽度：</td>
         <td>
-          <input type="number" class="form-control " id="txtWidth" value="200">
+          <input type="number" class="form-control " id="txtWidth" value="280">
         </td>
       </tr>
 
       <tr>
         <td class="nametd">河高度：</td>
         <td>
-          <input type="number" class="form-control " id="txtHeight" value="20">
+          <input type="number" class="form-control " id="txtHeight" value="30">
         </td>
       </tr>
       <tr>
@@ -61,8 +59,8 @@
         <td colspan="2">
           <input id="btnDrawLine" type="button" class="btn btn-primary" value="绘制河流" />
 
-          <input id="btnAddHeight" type="button" class="btn btn-primary" value="升高15米动画" />
-          <input id="btnLowerHeight" type="button" class="btn btn-primary" value="降低15米动画" />
+          <input id="btnAddHeight" type="button" class="btn btn-primary" value="升高30米动画" />
+          <input id="btnLowerHeight" type="button" class="btn btn-primary" value="降低30米动画" />
           <input id="btnClear" type="button" class="btn btn-danger" value="清除" />
         </td>
       </tr>
@@ -82,14 +80,7 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
-          center: {
-            y: 30.428812,
-            x: 115.877765,
-            z: 1949.39,
-            heading: 41.4,
-            pitch: -37.9,
-            roll: 0.4,
-          },
+          center: { lat: 30.430312, lng: 115.83644, alt: 2434, heading: 67, pitch: -32 },
           globe: {
             depthTestAgainstTerrain: true,
           },
@@ -139,17 +130,18 @@
       //加一些演示数据
       var dynamicRiver = new mars3d.graphic.DynamicRiver({
         positions: [
-          [115.907543, 30.441563, 541.47],
-          [115.904337, 30.439412, 491.79],
-          [115.900612, 30.438483, 449.11],
-          [115.896375, 30.439377, 388.29],
-          [115.890586, 30.442215, 345.94],
-          [115.876946, 30.444641, 292.73],
+          [115.906607, 30.441582, 555.9],
+          [115.899964, 30.438543, 467.3],
+          [115.893105, 30.440714, 374.6],
+          [115.88362, 30.443924, 340.7],
+          [115.873948, 30.444827, 299],
+          [115.864003, 30.442111, 292.2],
+          [115.850741, 30.438108, 189.9],
         ],
         style: {
           image: './img/textures/movingRiver.png',
-          width: 200,
-          height: 20,
+          width: 280,
+          height: 30,
           speed: 10,
         },
       })
@@ -191,13 +183,13 @@
         if (!dynamicRiver) {
           return
         }
-        dynamicRiver.offsetHeight(15, 5) //5秒内抬高15米
+        dynamicRiver.offsetHeight(30, 5) //5秒内抬高30米
       })
       $('#btnLowerHeight').click(function (e) {
         if (!dynamicRiver) {
           return
         }
-        dynamicRiver.offsetHeight(-15, 5) //5秒内降低15米
+        dynamicRiver.offsetHeight(-30, 5) //5秒内降低30米
       })
 
       $('#btnDrawLine').click(function (e) {
@@ -209,6 +201,8 @@
           },
           success: (graphic) => {
             var points = graphic.points
+
+            console.log(JSON.stringify(graphic.coordinates)) //打印下边界
 
             graphic.remove() //删除绘制的线
 

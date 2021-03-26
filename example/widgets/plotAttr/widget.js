@@ -26,7 +26,7 @@
       $.getJSON(this.path + 'config/attr.json', function (data) {
         that.attrConfig = data
 
-        // that.getDefaultVal();//测试用
+        // that.getDefaultVal() //测试用
         //that.getReadmeTxt() //测试用
 
         that.attrConfig['curve'] = that.attrConfig['polyline']
@@ -44,9 +44,12 @@
         let defstyle = {}
         for (let idx = 0; idx < data[i].style.length; idx++) {
           let item = data[i].style[idx]
-          if (item.defval === '') {
+          if (item.defval === '' || item.defval === 0 || item.defval === false) {
             continue
           }
+          // if (item.name == 'radius' ||item.name == 'diffHeight' )&& item.defval === 0) {
+          //   continue
+          // }
           defstyle[item.name] = item.defval
         }
         attrDefConfig[i] = defstyle

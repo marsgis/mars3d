@@ -94,20 +94,14 @@
       addGraphic_a3(graphicLayer)
     }
 
-    /**
-     style 支持的参数说明：
-     "style": {
-
-     }
-    */
-
     function addGraphic_a1(graphicLayer) {
       var primitive = new mars3d.graphic.PlanePrimitive({
         position: [116.236158, 30.891965, 856.12],
         style: {
-          normal: Cesium.Cartesian3.UNIT_X,
+          plane_normal: Cesium.Cartesian3.UNIT_X,
           dimensions: new Cesium.Cartesian2(2000.0, 1000.0),
-          color: Cesium.Color.fromCssColorString('#ff0000').withAlpha(0.7),
+          color: '#ff0000',
+          opacity: 0.7,
         },
       })
       graphicLayer.addGraphic(primitive)
@@ -125,23 +119,26 @@
       var primitive = new mars3d.graphic.PlanePrimitive({
         position: new mars3d.LatLngPoint(116.294498, 30.892548, 432.93),
         style: {
-          normal: Cesium.Cartesian3.UNIT_Y,
-          dimensions: new Cesium.Cartesian2(2000.0, 1000.0),
-          color: Cesium.Color.fromCssColorString('#0000ff').withAlpha(0.8),
+          plane_normal: Cesium.Cartesian3.UNIT_Y,
+          dimensionsX: 2000.0,
+          dimensionsY: 1000.0,
+          color: '#0000ff',
+          opacity: 0.7,
         },
       })
       graphicLayer.addGraphic(primitive)
       //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
     }
 
-    //箭头线
     function addGraphic_a3(graphicLayer) {
       var primitive = new mars3d.graphic.PlanePrimitive({
         position: [116.355196, 30.889309, 437.02],
         style: {
-          normal: Cesium.Cartesian3.UNIT_Z,
-          dimensions: new Cesium.Cartesian2(2000.0, 1000.0),
-          color: Cesium.Color.fromCssColorString('#00ff00').withAlpha(0.6),
+          plane_normal: Cesium.Cartesian3.UNIT_Z,
+          dimensionsX: 2000.0,
+          dimensionsY: 1000.0,
+          color: '#00ff00',
+          opacity: 0.6,
         },
       })
       graphicLayer.addGraphic(primitive)

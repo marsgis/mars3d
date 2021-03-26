@@ -139,23 +139,6 @@
       addGraphic_a5(graphicLayer)
     }
 
-    /**
-     style 支持的参数说明：
-     "style": {
-        支持 Cesium.PolylineVolumeGraphics.ConstructorOptions 中所有属性（Cesium原生的属性）
-
-        "color": "#00FF00",      //颜色
-        "radius": 10,      //半径
-        "shape": "pipeline",      //形状 ,可选项：pipeline(空心管),circle(实心管),star(星状管),
-        "outline": false,      //是否衬色
-        "outlineColor": "#ffffff",      //衬色颜色
-        "opacity": 1,      //透明度
-        "distanceDisplayCondition": false,      //是否按视距显示
-        "distanceDisplayCondition_far": 100000,      //最大距离
-        "distanceDisplayCondition_near": 0,      //最小距离
-     }
-    */
-
     function addGraphic_a1(graphicLayer) {
       var graphic = new mars3d.graphic.PolylineVolumeEntity({
         positions: [

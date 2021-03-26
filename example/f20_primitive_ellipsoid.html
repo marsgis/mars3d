@@ -84,109 +84,90 @@
       initLayerManager(graphicLayer)
 
       //加一些演示数据
-      addGraphic_a1(graphicLayer)
-      addGraphic_a2(graphicLayer)
-      addGraphic_a3(graphicLayer)
-      addGraphic_a4(graphicLayer)
-      addGraphic_a5(graphicLayer)
+      addGraphic_01(graphicLayer)
+      addGraphic_02(graphicLayer)
+      addGraphic_03(graphicLayer)
+      addGraphic_04(graphicLayer)
+      addGraphic_05(graphicLayer)
+      addGraphic_06(graphicLayer)
+      addGraphic_07(graphicLayer)
+      addGraphic_08(graphicLayer)
+      addGraphic_09(graphicLayer)
+      addGraphic_10(graphicLayer)
+      addGraphic_11(graphicLayer)
+      addGraphic_12(graphicLayer)
+      addGraphic_13(graphicLayer)
+      addGraphic_14(graphicLayer)
     }
 
-    //取区域内的随机图标
-    function randomPoint() {
-      var jd = haoutil.math.random(116.11 * 1000, 116.21 * 1000) / 1000
-      var wd = haoutil.math.random(30.88 * 1000, 30.98 * 1000) / 1000
-      var height = haoutil.math.random(700, 4000)
-      return new mars3d.LatLngPoint(jd, wd, height)
-    }
-
-    /**
-     style 支持的参数说明：
-     "style": {
-
-     }
-    */
-
-    function addGraphic_a1(graphicLayer) {
-      var primitive = new mars3d.graphic.EllipsoidPrimitive({
-        position: [116.282587, 30.859197, 544.31],
+    //
+    function addGraphic_01(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidPrimitive({
+        position: [116.1, 31.0, 1000],
         style: {
           radii: new Cesium.Cartesian3(1000.0, 1000.0, 1500.0),
-          material: Cesium.Material.fromType('Color', {
-            color: Cesium.Color.YELLOW,
-          }),
+          color: '#00ff00',
+          opacity: 0.9,
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic)
+      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
 
       //演示个性化处理graphic，代码在\js\graphicManager.js
-      initGraphicManager(primitive)
-
-      //entity转geojson
-      var geojson = primitive.toGeoJSON()
-      console.log(geojson)
+      initGraphicManager(graphic)
     }
 
-    function addGraphic_a2(graphicLayer) {
-      var primitive = new mars3d.graphic.EllipsoidPrimitive({
-        position: new mars3d.LatLngPoint(116.329199, 30.881595, 390.3),
+    //
+    function addGraphic_02(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidPrimitive({
+        position: new mars3d.LatLngPoint(116.2, 31.0, 1000),
         style: {
           radii: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
-          material: Cesium.Material.fromType('Color', {
-            color: Cesium.Color.YELLOW,
-          }),
-        },
-      })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
-    }
-
-    function addGraphic_a3(graphicLayer) {
-      var primitive = new mars3d.graphic.EllipsoidPrimitive({
-        position: new mars3d.LatLngPoint(116.35588, 30.936575, 851.48),
-        style: {
-          radii: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
-          color: Cesium.Color.RED,
-        },
-      })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
-    }
-
-    function addGraphic_a4(graphicLayer) {
-      var outerRadius = 5000.0
-      var innerRadius = 1000
-
-      var primitive = new mars3d.graphic.EllipsoidPrimitive({
-        position: [116.354348, 30.846041, 378.67],
-        style: {
-          radii: new Cesium.Cartesian3(outerRadius, outerRadius, outerRadius),
-          innerRadii: new Cesium.Cartesian3(innerRadius, innerRadius, innerRadius),
-          minimumClock: Cesium.Math.toRadians(-20.0),
-          maximumClock: Cesium.Math.toRadians(20.0),
-          minimumCone: Cesium.Math.toRadians(90),
-          maximumCone: Cesium.Math.toRadians(90),
-          color: Cesium.Color.fromCssColorString('#ffff00').withAlpha(0.5),
+          color: Cesium.Color.RED.withAlpha(0.5),
           outline: true,
+          outlineColor: Cesium.Color.BLACK,
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic)
+      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
     }
 
-    function addGraphic_a5(graphicLayer) {
-      var primitive = new mars3d.graphic.EllipsoidPrimitive({
-        position: [116.244399, 30.920459, 573.6],
+    //
+    function addGraphic_03(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidPrimitive({
+        position: new mars3d.LatLngPoint(116.3, 31.0, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
+          fill: false,
+          outline: true,
+          outlineColor: Cesium.Color.YELLOW,
+          slicePartitions: 24,
+          stackPartitions: 36,
+          heading: 45,
+          roll: 45,
+          pitch: 0,
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //
+    function addGraphic_04(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidPrimitive({
+        position: [116.4, 31.0, 1000],
         style: {
           radii: new Cesium.Cartesian3(2500.0, 2500.0, 2500.0),
           innerRadii: new Cesium.Cartesian3(10.0, 10.0, 10.0),
-          minimumClock: Cesium.Math.toRadians(-15.0),
-          maximumClock: Cesium.Math.toRadians(15.0),
-          minimumCone: Cesium.Math.toRadians(75.0),
-          maximumCone: Cesium.Math.toRadians(105.0),
-          pitch: Cesium.Math.toRadians(30),
-          color: Cesium.Color.fromCssColorString('#f33349').withAlpha(0.3),
+          minimumClockDegree: -15.0,
+          maximumClockDegree: 15.0,
+          minimumConeDegree: 75.0,
+          maximumConeDegree: 105.0,
+          pitch: 30,
+          color: '#f33349',
+          opacity: 0.9,
           outline: true,
+          outlineColor: '#ffffff',
           label: {
             text: '我是原始的',
             font_size: 18,
@@ -198,8 +179,220 @@
           },
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic)
+
+      //entity转geojson
+      var geojson = graphic.toGeoJSON()
+      console.log(geojson)
+
+      //geojson转entity
+      var graphic1Copy = mars3d.graphic.EllipsoidPrimitive.fromGeoJSON(geojson)
+      graphic1Copy.position = [116.5, 31.0, 1000]
+      graphic1Copy.label.text = '我是转换后生成的'
+      graphicLayer.addGraphic(graphic1Copy)
+      console.log(graphic1Copy)
+      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //2圈平面扇形
+    function addGraphic_05(graphicLayer) {
+      var outerRadius = 5000.0
+      var innerRadius = 1000
+
+      var graphic = new mars3d.graphic.EllipsoidPrimitive({
+        position: [116.1, 30.9, 1000],
+        style: {
+          radii: new Cesium.Cartesian3(outerRadius, outerRadius, outerRadius),
+          innerRadii: new Cesium.Cartesian3(innerRadius, innerRadius, innerRadius),
+          minimumClockDegree: -20.0,
+          maximumClockDegree: 20.0,
+          minimumConeDegree: 90,
+          maximumConeDegree: 90,
+          color: Cesium.Color.fromCssColorString('#ffff00').withAlpha(0.5),
+          outline: true,
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //半圆顶球体
+    function addGraphic_06(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidPrimitive({
+        position: new mars3d.LatLngPoint(116.2, 30.9, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
+          maximumConeDegree: 90,
+          color: Cesium.Color.BLUE.withAlpha(0.3),
+          outline: true,
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //含内半径 半圆顶球体
+    function addGraphic_07(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidPrimitive({
+        position: new mars3d.LatLngPoint(116.3, 30.9, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(2500.0, 2000.0, 1500.0),
+          innerRadii: new Cesium.Cartesian3(1000.0, 800.0, 600.0),
+          maximumConeDegree: 90,
+          color: Cesium.Color.RED.withAlpha(0.3),
+          outline: true,
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //被切开的含内半径 半圆顶球体
+    function addGraphic_08(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidPrimitive({
+        position: new mars3d.LatLngPoint(116.4, 30.9, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
+          innerRadii: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
+          minimumConeDegree: 20.0,
+          maximumConeDegree: 90,
+          color: Cesium.Color.YELLOW.withAlpha(0.3),
+          outline: true,
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //顶部和底部切出的桶形体
+    function addGraphic_09(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidPrimitive({
+        position: new mars3d.LatLngPoint(116.5, 30.9, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
+          innerRadii: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
+          minimumConeDegree: 60.0,
+          maximumConeDegree: 140.0,
+          color: Cesium.Color.DARKCYAN.withAlpha(0.3),
+          outline: true,
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+      // graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //碗行体
+    function addGraphic_10(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidPrimitive({
+        position: new mars3d.LatLngPoint(116.1, 30.8, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
+          innerRadii: new Cesium.Cartesian3(1800.0, 1800.0, 1800.0),
+          minimumConeDegree: 110.0,
+          color: Cesium.Color.fromCssColorString('#1ffee6').withAlpha(0.3),
+          outline: true,
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+      // graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //时钟开孔
+    function addGraphic_11(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidPrimitive({
+        position: new mars3d.LatLngPoint(116.2, 30.8, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
+          innerRadii: new Cesium.Cartesian3(1500.0, 1500.0, 1500.0),
+          minimumClockDegree: -90.0,
+          maximumClockDegree: 180.0,
+          minimumConeDegree: 20.0,
+          maximumConeDegree: 70.0,
+          color: Cesium.Color.fromCssColorString('#95e40c').withAlpha(0.3),
+          outline: true,
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+      // graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //局部圆顶
+    function addGraphic_12(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidPrimitive({
+        position: new mars3d.LatLngPoint(116.3, 30.8, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
+          minimumClockDegree: -90.0,
+          maximumClockDegree: 180.0,
+          maximumConeDegree: 90.0,
+          color: Cesium.Color.fromCssColorString('#f2fa19').withAlpha(0.3),
+          outline: true,
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+      // graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //部分椭圆体
+    function addGraphic_13(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidPrimitive({
+        position: new mars3d.LatLngPoint(116.4, 30.8, 1000),
+        style: {
+          radii: new Cesium.Cartesian3(3000.0, 3000.0, 3000.0),
+          innerRadii: new Cesium.Cartesian3(700.0, 700.0, 700.0),
+          minimumClockDegree: 180.0,
+          maximumClockDegree: 400.0,
+          maximumConeDegree: 90.0,
+          color: Cesium.Color.fromCssColorString('#f79a2c').withAlpha(0.3),
+          outline: true,
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+      // graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+    }
+
+    //土星综合对象
+    function addGraphic_14(graphicLayer) {
+      var position = new mars3d.LatLngPoint(116.5, 30.8, 1000)
+      var graphic = new mars3d.graphic.EllipsoidPrimitive({
+        name: '土星',
+        position: position,
+        style: {
+          radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
+          color: new Cesium.Color(0.95, 0.82, 0.49),
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+
+      var graphicNei = new mars3d.graphic.EllipsoidPrimitive({
+        name: '土星的内圈',
+        position: position,
+        style: {
+          radii: new Cesium.Cartesian3(4000.0, 4000.0, 4000.0),
+          innerRadii: new Cesium.Cartesian3(3000.0, 3000.0, 3000.0),
+          minimumConeDegree: 89.8,
+          maximumConeDegree: 90.2,
+          color: new Cesium.Color(0.95, 0.82, 0.49, 0.5),
+          heading: 30,
+          pitch: 30,
+        },
+      })
+      graphicLayer.addGraphic(graphicNei)
+
+      var graphicWai = new mars3d.graphic.EllipsoidPrimitive({
+        name: '土星外圈',
+        position: position,
+        style: {
+          radii: new Cesium.Cartesian3(4600.0, 4600.0, 4600.0),
+          innerRadii: new Cesium.Cartesian3(4150.0, 4150.0, 4150.0),
+          minimumConeDegree: 89.8,
+          maximumConeDegree: 90.2,
+          color: new Cesium.Color(0.95, 0.82, 0.49, 0.5),
+          heading: 30,
+          pitch: 30,
+        },
+      })
+      graphicLayer.addGraphic(graphicWai)
     }
   </script>
 </body>

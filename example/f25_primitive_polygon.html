@@ -117,9 +117,7 @@
             positions: [pt1, pt2, pt3, pt4, pt1],
             style: {
               height: haoutil.math.random(30, 4000),
-              material: Cesium.Material.fromType('Color', {
-                color: Cesium.Color.fromRandom().withAlpha(0.7),
-              }),
+              color: Cesium.Color.fromRandom().withAlpha(0.7),
             },
             tooltip: '第' + j + '个',
           })
@@ -153,13 +151,6 @@
       return Cesium.Cartesian3.fromDegrees(jd, wd)
     }
 
-    /**
-     style 支持的参数说明：
-     "style": {
-
-     }
-    */
-
     function addGraphic_a1(graphicLayer) {
       var primitive = new mars3d.graphic.PolygonPrimitive({
         positions: [
@@ -170,9 +161,7 @@
           [117.216327, 31.79375, 37.49],
         ],
         style: {
-          material: Cesium.Material.fromType('Color', {
-            color: Cesium.Color.CYAN.withAlpha(0.4),
-          }),
+          color: Cesium.Color.CYAN.withAlpha(0.4),
           label: {
             text: '我是火星科技',
             font_size: 18,
@@ -201,14 +190,7 @@
           [117.183832, 31.814237, 38.76],
         ],
         style: {
-          material: new Cesium.Material({
-            fabric: {
-              type: 'Image',
-              uniforms: {
-                image: 'img/textures/excavate_bottom_min.jpg',
-              },
-            },
-          }),
+          image: 'img/textures/excavate_bottom_min.jpg',
         },
       })
       graphicLayer.addGraphic(primitive)

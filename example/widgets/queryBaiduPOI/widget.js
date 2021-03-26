@@ -380,8 +380,8 @@
         var graphic = new mars3d.graphic.PointEntity({
           position: Cesium.Cartesian3.fromDegrees(jd, wd),
           style: {
-            color: '#3388ff',
             pixelSize: 10,
+            color: '#3388ff',
             outline: true,
             outlineColor: '#ffffff',
             outlineWidth: 2,
@@ -391,14 +391,13 @@
             label: {
               text: item.name,
               font_size: 20,
-              color: '#ffffff',
-              style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-              fillColor: Cesium.Color.AZURE,
-              outlineColor: Cesium.Color.BLACK,
+              color: 'rgb(240,255,255)',
+              outline: true,
               outlineWidth: 2,
+              outlineColor: Cesium.Color.BLACK,
               horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
               verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-              pixelOffset: new Cesium.Cartesian2(0, -10), //偏移量
+              pixelOffsetY: -10, //偏移量
               distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 200000),
               clampToGround: true, //贴地
               visibleDepth: false, //是否被遮挡
