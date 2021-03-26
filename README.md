@@ -38,6 +38,8 @@
 
 ### 传统技术栈(原生JS)
 1. 最简项目[https://github.com/marsgis/mars3d-es5-template](https://github.com/marsgis/mars3d-es5-template)
+2. 基础项目(widget模式)[https://github.com/marsgis/mars3d-es5-widget](https://github.com/marsgis/mars3d-es5-widget)
+
 
 ### Vue技术栈
 1. 最简项目[https://github.com/marsgis/mars3d-vue-template](https://github.com/marsgis/mars3d-vue-template)
