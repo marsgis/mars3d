@@ -141,7 +141,7 @@
         var item = arr[i]
         var norad = item.norad
         if (norad == null || norad === undefined) {
-          norad = mars3d.space.util.getPeriod(item.tle2)
+          norad = mars3d.SpaceUtil.getPeriod(item.tle2)
         }
 
         //属性处理

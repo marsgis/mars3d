@@ -766,9 +766,6 @@
             { "name": "outlineColor", "label": "边框颜色", "type": "color", "defval": "#ffffff" },
             { "name": "outlineOpacity", "label": "边框透明度", "type": "slider", "defval": 0.6 },
 
-            { "name": "stackPartitions", "label": "竖向划分", "type": "number", "defval": 64.0 },
-            { "name": "slicePartitions", "label": "横向划分", "type": "number", "defval": 64.0 },
-
             { "name": "distanceDisplayCondition", "label": "是否按视距显示", "type": "radio", "defval": false, "impact": [ "distanceDisplayCondition_far", "distanceDisplayCondition_near" ] },
             { "name": "distanceDisplayCondition_far", "label": "最大距离", "type": "number", "defval": 100000.0 },
             { "name": "distanceDisplayCondition_near", "label": "最小距离", "type": "number", "defval": 0.0 },

@@ -93,7 +93,7 @@
           ],
           style: {
             diffHeight: 2000, //高度
-            speed: 60, //速度
+            speed: 10, //速度
           },
         })
         graphicLayer.addGraphic(diffuseWallGlow)
@@ -104,10 +104,10 @@
         var circleDiffuseWallGlow = new mars3d.graphic.DiffuseWall({
           position: new mars3d.LatLngPoint(121.481165, 31.278668, 44.3), //圆中心点
           style: {
-            radius: 600, //半径
-            color: Cesium.Color.fromCssColorString('#ff0000'),
             diffHeight: 2000, //高度
-            speed: 50, //速度
+            radius: 600, //半径
+            color: '#ff0000',
+            speed: 10, //速度
           },
         })
         graphicLayer.addGraphic(circleDiffuseWallGlow)

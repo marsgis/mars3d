@@ -72,7 +72,7 @@
         <tr>
           <td class="nametd">夹角(半场角)</td>
           <td>
-            <input id="model_angle1" type="range" min="1" max="89" step="0.01" value="5" />
+            <input id="model_angle1" type="range" min="0.1" max="89.9" step="0.01" value="5" />
           </td>
         </tr>
         <tr>
@@ -160,7 +160,8 @@
             pitch: Cesium.Math.toRadians(pitch),
             roll: Cesium.Math.toRadians(roll),
             color: Cesium.Color.fromCssColorString('#ff0000').withAlpha(0.4),
-            lineColor: Cesium.Color.fromCssColorString('#ffffff').withAlpha(0.9),
+            outline: true,
+            outlineColor: Cesium.Color.fromCssColorString('#ffffff').withAlpha(0.9),
           },
         })
         graphicLayer.addGraphic(conicSensor)

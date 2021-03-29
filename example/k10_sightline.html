@@ -134,7 +134,7 @@
 
           var center = positions[0]
           var targetPoint = positions[1]
-          sightline.add(center, targetPoint, 1.5) //1.5是加人的身高等因素，略微抬高一些
+          sightline.add(center, targetPoint, { offsetHeight: 1.5 }) //1.5是加人的身高等因素，略微抬高一些
 
           createPoint(center, true)
           createPoint(targetPoint, false)

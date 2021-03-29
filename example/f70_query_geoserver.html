@@ -99,11 +99,8 @@
 
       queryMapserver = new mars3d.query.QueryGeoServer({
         url: 'http://data.marsgis.cn/geoserver/mars/wfs',
-        parameters: {
-          typeName: 'mars:hfjy',
-          maxFeatures: 200,
-        },
-        popup: 'all',
+        layer: 'mars:hfjy',
+        maxFeatures: 200,
       })
 
       //用于显示查询结果（geojson）的图层

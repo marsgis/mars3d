@@ -91,7 +91,7 @@
 
       graphicLayer.bindPopup(function (event) {
         var item = event.graphic.attr
-        var period = mars3d.space.util.getPeriod(item.tle2)
+        var period = mars3d.SpaceUtil.getPeriod(item.tle2)
         return '名称：' + item.name + '<br />编码：' + item.intldes + '<br />类型：' + item.type + '<br />周时：' + period + ' 分钟'
       })
 
@@ -102,7 +102,7 @@
         var item = arr[i]
 
         //计算卫星位置
-        let pos = mars3d.space.util.getSatellitePosition(item.tle1, item.tle2, currentTime)
+        let pos = mars3d.SpaceUtil.getSatellitePosition(item.tle1, item.tle2, currentTime)
         if (!pos) {
           continue
         }
@@ -124,7 +124,7 @@
       //   graphicLayer.eachGraphic((graphic) => {
       //     var item = graphic.attr
 
-      //     let pos = mars3d.space.util.getSatellitePosition(item.tle1, item.tle2, currentTime)
+      //     let pos = mars3d.SpaceUtil.getSatellitePosition(item.tle1, item.tle2, currentTime)
       //     if (!pos) {
       //       return
       //     }

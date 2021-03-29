@@ -124,10 +124,10 @@
           [117.21764, 31.843807, 42.83],
           [117.214491, 31.843807, 42.83],
         ],
-        height: height, //高度
-        splitNum: 50, //wall边界插值数
-        wallImg: './img/textures/excavate_side_min.jpg', //边界墙材质
-        bottomImg: './img/textures/excavate_bottom_min.jpg', //底部区域材质
+        diffHeight: height, //井的深度
+        image: './img/textures/excavate_side_min.jpg', //边界墙材质
+        imageBottom: './img/textures/excavate_bottom_min.jpg', //底部区域材质
+        splitNum: 50, //井边界插值数
       })
       map.addThing(terrainPlanClip)
 
@@ -148,7 +148,7 @@
 
       $('#txtHeight').change(function () {
         var num = Number($(this).val())
-        terrainPlanClip.height = num
+        terrainPlanClip.diffHeight = num
       })
 
       $('#clearWJ').click(function () {
@@ -163,7 +163,6 @@
           style: {
             color: '#007be6',
             opacity: 0.5,
-            clampToGround: true,
           },
           success: function (graphic) {
             //绘制成功后回调
@@ -187,7 +186,6 @@
             color: '#007be6',
             opacity: 0.8,
             outline: false,
-            // clampToGround: true
           },
           success: function (graphic) {
             //绘制成功后回调

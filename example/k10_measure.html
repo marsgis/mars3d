@@ -39,7 +39,7 @@
   <div id="mars3dContainer" class="mars3d-container"></div>
 
 
-  <!-- demo面板 -->
+  <!-- 面板 -->
   <div class="infoview">
     <div>
       <input type="button" class="btn btn-info" value="清除" onclick="removeAll()" />
@@ -93,7 +93,6 @@
       map = new mars3d.Map('mars3dContainer', mapOptions)
 
       measure = new mars3d.thing.Measure({
-        removeScreenSpaceEvent: true,
         //可设置文本样式
         label: {
           color: '#ffffff',

@@ -4,8 +4,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
   <meta name="apple-touch-fullscreen" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -16,7 +15,7 @@
   <!-- 标题及搜索关键字 -->
   <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
   <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+        content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>等高线 |Mars3D|三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
@@ -24,7 +23,7 @@
 
 
   <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,jquery.range,jquery.minicolors,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+          include="jquery,jquery.range,jquery.minicolors,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
 
   <link href="css/style.css" rel="stylesheet" />
 
@@ -45,29 +44,6 @@
           <input type="button" class="btn btn-primary" value="添加矩形" id="btnDrawExtent" />
           <input type="button" class="btn btn-primary" value="添加多边形" id="btnDraw" />
           <input type="button" class="btn btn-primary" value="清除" id="clearWJ" />
-        </td>
-      </tr>
-
-      <tr>
-        <td>地表渲染：</td>
-        <td colspan="3">
-          <div class="radio radio-info radio-inline">
-            <input type="radio" id="shadingMaterials1" name="shadingMaterials" value="none" checked>
-            <label for="shadingMaterials1">无阴影 </label>
-          </div>
-          <div class="radio radio-info radio-inline">
-            <input type="radio" id="shadingMaterials2" name="shadingMaterials" value="elevation">
-            <label for="shadingMaterials2">高程 </label>
-          </div>
-          <div class="radio radio-info radio-inline">
-            <input type="radio" id="shadingMaterials3" name="shadingMaterials" value="slope">
-            <label for="shadingMaterials3">坡度 </label>
-          </div>
-          <div class="radio radio-info radio-inline">
-            <input type="radio" id="shadingMaterials4" name="shadingMaterials" value="aspect">
-            <label for="shadingMaterials4">坡向 </label>
-          </div>
-
         </td>
       </tr>
 
@@ -109,6 +85,41 @@
           px
         </td>
       </tr>
+
+
+      <tr>
+        <td>地表渲染：</td>
+        <td colspan="3">
+          <div class="radio radio-info radio-inline">
+            <input type="radio" id="shadingMaterials1" name="shadingMaterials" value="none" checked>
+            <label for="shadingMaterials1">无阴影 </label>
+          </div>
+          <div class="radio radio-info radio-inline">
+            <input type="radio" id="shadingMaterials2" name="shadingMaterials" value="elevation">
+            <label for="shadingMaterials2">高程 </label>
+          </div>
+          <div class="radio radio-info radio-inline">
+            <input type="radio" id="shadingMaterials3" name="shadingMaterials" value="slope">
+            <label for="shadingMaterials3">坡度 </label>
+          </div>
+          <div class="radio radio-info radio-inline">
+            <input type="radio" id="shadingMaterials4" name="shadingMaterials" value="aspect">
+            <label for="shadingMaterials4">坡向 </label>
+          </div>
+
+        </td>
+      </tr>
+
+
+      <tr>
+        <td>状态控制</td>
+        <td colspan="3">
+          <div class="checkbox checkbox-info checkbox-inline">
+            <input type="checkbox" id="showElse" value="this" name="jiaodu" checked />
+            <label for="showElse">显示其他区域</label>
+          </div>
+        </td>
+      </tr>
     </table>
   </div>
 
@@ -123,13 +134,15 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
-          center: {
-            y: 30.680955,
-            x: 116.014118,
-            z: 22100.48,
-            heading: 19.3,
-            pitch: -45.1,
-            roll: 0.1,
+          center: { lat: 30.704458, lng: 116.094834, alt: 26858, heading: 5, pitch: -55 },
+          showSun: false,
+          showMoon: false,
+          showSkyBox: false,
+          showSkyAtmosphere: false,
+          fog: false,
+          globe: {
+            showGroundAtmosphere: false,
+            enableLighting: false,
           },
         },
       })
@@ -159,6 +172,8 @@
       })
       map.addThing(contourLine)
 
+      window.contourLine = contourLine //for test
+
       //演示的示例区域
       contourLine.addArea([
         [116.003125, 30.948354, 1103.66],
@@ -169,7 +184,7 @@
 
       $('#chkEnabled').change(function () {
         var val = $(this).is(':checked')
-        contourLine.enabled = val
+        contourLine.contourShow = val
       })
       $('input[type=radio][name=shadingMaterials]').change(function () {
         contourLine.shadingType = this.value
@@ -235,8 +250,14 @@
         })
       })
 
+      $('#showElse').change(function () {
+        var val = $(this).is(':checked')
+        contourLine.showElseArea = val
+      })
+
       $('#clearWJ').click(function () {
         contourLine.clear()
+        $('#showElse').prop('checked', true)
       })
     }
   </script>

@@ -142,7 +142,7 @@
             angle: angle,
             length: length,
             color: Cesium.Color.fromCssColorString('#ff0000').withAlpha(0.4),
-            lineColor: Cesium.Color.fromCssColorString('#ffffff').withAlpha(0.9),
+            outlineColor: Cesium.Color.fromCssColorString('#ffffff').withAlpha(0.9),
           },
         })
         graphicLayer.addGraphic(conicSensor)
@@ -165,7 +165,7 @@
 
         $('#chkGroundArea').change(function () {
           var val = $(this).is(':checked')
-          conicSensor.groundCircleShow = val
+          conicSensor.shadowShow = val
         })
 
         $('#chkShow').change(function () {

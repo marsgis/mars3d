@@ -79,7 +79,7 @@
 
       <div class="checkbox checkbox-info checkbox-inline">
         <input type="checkbox" id="showElse" value="this" name="jiaodu" checked />
-        <label for="showElse">显示淹没区域外地图</label>
+        <label for="showElse">显示非淹没区域</label>
       </div>
     </div>
   </div>
@@ -139,15 +139,10 @@
           success: function (graphic) {
             var positions = graphic.positionsShow
 
+            //更新最大、最小高度值
+            updateHeightRange(positions)
+
             floodByMaterial.addArea(positions)
-
-            //求最大、最小高度值
-            haoutil.loading.show()
-            var result = mars3d.PolyUtil.getHeightRange(positions, map.scene)
-            $('#minHeight').val(Math.ceil(result.minHeight))
-            $('#maxHeight').val(Math.floor(result.maxHeight))
-
-            haoutil.loading.hide()
           },
         })
       })
@@ -164,22 +159,13 @@
             //绘制成功后回调
             var positions = graphic.getOutlinePositions(false)
 
+            //更新最大、最小高度值
+            updateHeightRange(positions)
+
             //区域
             floodByMaterial.addArea(positions)
-
-            //求最大、最小高度值
-            haoutil.loading.show()
-            var result = mars3d.PolyUtil.getHeightRange(positions, map.scene)
-            $('#minHeight').val(Math.ceil(result.minHeight))
-            $('#maxHeight').val(Math.floor(result.maxHeight))
-
-            haoutil.loading.hide()
           },
         })
-      })
-      $('#clearDraw').click(function () {
-        floodByMaterial.clear()
-        map.graphicLayer.clear()
       })
 
       $('#begin').click(function () {
@@ -192,13 +178,11 @@
         var minValue = Number($('#minHeight').val())
         var maxValue = Number($('#maxHeight').val())
         var speed = Number($('#speed').val())
-        var visibleOutArea = $('#showElse').is(':checked')
 
         floodByMaterial.setOptions({
           minHeight: minValue,
           maxHeight: maxValue,
           speed: speed,
-          visibleOutArea: visibleOutArea,
         })
 
         $('#range_currHeight').attr('min', minValue)
@@ -230,24 +214,54 @@
         }
       })
 
+      $('#clearDraw').click(function () {
+        clearDraw()
+      })
+
       $('#clear').click(function () {
         $('#resultView').hide()
         $('#paramView').show()
         $('#btn_start').val('自动播放')
 
-        floodByMaterial.clear()
-        map.graphicLayer.clear()
+        clearDraw()
       })
 
       $('#showElse').change(function () {
         var val = $(this).is(':checked')
-        floodByMaterial.visibleOutArea = val
+        floodByMaterial.showElseArea = val
       })
+    }
+
+    //求最大、最小高度值
+    function updateHeightRange(positions) {
+      haoutil.loading.show()
+
+      var result = mars3d.PolyUtil.getHeightRange(positions, map.scene)
+      let minHeight = Math.ceil(result.minHeight)
+      let maxHeight = Math.floor(result.maxHeight)
+
+      if (floodByMaterial.length > 0) {
+        minHeight = Math.min(minHeight, Number($('#minHeight').val()))
+        maxHeight = Math.max(maxHeight, Number($('#maxHeight').val()))
+      }
+      $('#minHeight').val(minHeight)
+      $('#maxHeight').val(maxHeight)
+
+      haoutil.loading.hide()
     }
 
     function onChangeHeight(height) {
       $('#range_currHeight').val(height).change()
       $('#lbl_nowHeight').html('当前高度：' + height.toFixed(1))
+    }
+
+    function clearDraw() {
+      floodByMaterial.clear()
+      map.graphicLayer.clear()
+
+      $('#showElse').prop('checked', true)
+      $('#minHeight').val('')
+      $('#maxHeight').val('')
     }
   </script>
 </body>

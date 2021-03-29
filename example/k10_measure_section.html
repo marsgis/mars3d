@@ -48,7 +48,7 @@
 
     <div id="mars3dContainer" class="mars3d-container"></div>
 
-    <!-- demo面板 -->
+    <!-- 面板 -->
     <div class="infoview">
       <span style="color: #cad1d1">提示：单击下面按钮激活绘制，按提示操作即可。</span>
       <br />
@@ -83,7 +83,6 @@
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
         measureObj = new mars3d.thing.Measure({
-          removeScreenSpaceEvent: true,
           //设置文本样式
           label: {
             color: '#ffffff',

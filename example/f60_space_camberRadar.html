@@ -143,12 +143,17 @@
       var camberRadar = new mars3d.graphic.CamberRadar({
         position: [117.170264, 31.840312, 363],
         style: {
-          faceColor: new Cesium.Color(1.0, 0.0, 0.0, 0.5),
-          lineColor: new Cesium.Color(1.0, 1.0, 1.0, 1.0),
+          color: '#ff0000',
+          opacity: 0.5,
+          outline: true,
+          outlineColor: '#ffffff',
+          segmentH: 50,
           ...style,
         },
       })
       graphicLayer.addGraphic(camberRadar)
+
+      window.camberRadar = camberRadar
 
       $('#model_radius').change(function () {
         let val = Number($(this).val())
