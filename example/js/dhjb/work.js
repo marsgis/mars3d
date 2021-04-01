@@ -347,8 +347,8 @@ function initEditorJS() {
                 minPointNum: 2,
               },
               style: {
-                animationDuration: 2000,
-                animationImage: 'img/textures/lineClr.png',
+                flow_speed: 10,
+                flow_image: 'img/textures/lineClr.png',
                 color: '#ffff00',
                 clampToGround: true,
               },
@@ -424,9 +424,6 @@ function initEditorJS() {
           },
           style: {
             lineType: 'dash',
-            animationDuration: 2000,
-            animationImage: 'img/textures/lineClr.png',
-            color: '#ffff00',
             clampToGround: true,
           },
           attr: {},
@@ -483,8 +480,6 @@ function initEditorJS() {
             minPointNum: 2,
           },
           style: {
-            animationDuration: 2000,
-            animationImage: 'img/textures/lineClr.png',
             color: '#ffff00',
             clampToGround: true,
           },

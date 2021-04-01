@@ -279,19 +279,20 @@
                     { "text": "虚线", "value": "dash", "impact": [ "dashLength" ] },
                     { "text": "光晕", "value": "glow" },
                     { "text": "箭头", "value": "arrow" },
-                    { "text": "动画", "value": "animation", "impact": [ "animationDuration", "animationImage" ] }
+                    { "text": "动画", "value": "flow", "impact": [ "flow_speed", "flow_image" ] }
                 ]
             },
-            { "name": "animationDuration", "label": "速度", "type": "number", "defval": 1000.0 },
-            { "name": "animationImage", "label": "图片", "type": "hidden", "defval": "img/textures/lineClr.png" },
+            { "name": "flow_speed", "label": "速度", "type": "number", "defval": 10.0 },
+            { "name": "flow_image", "label": "图片", "type": "hidden", "defval": "img/textures/lineClr.png" },
+            { "name": "dashLength", "label": "虚线间长", "type": "number", "defval": 16.0 },
 
             { "name": "color", "label": "颜色", "type": "color", "defval": "#3388ff" },
+            { "name": "opacity", "label": "透明度", "type": "slider", "defval": 1.0 },
             { "name": "width", "label": "线宽", "type": "number", "defval": 4.0 },
 
             { "name": "closure", "label": "是否闭合", "type": "radio", "defval": false },
             { "name": "clampToGround", "label": "是否贴地", "type": "radio", "defval": false },
 
-            { "name": "dashLength", "label": "虚线长度", "type": "number", "defval": 16.0 },
 
             { "name": "outline", "label": "是否衬色", "type": "radio", "defval": false, "impact": [ "outlineColor", "outlineWidth" ] },
             { "name": "outlineColor", "label": "衬色颜色", "type": "color", "defval": "#ffffff" },
@@ -301,7 +302,6 @@
             { "name": "depthFailColor", "label": "遮挡处颜色", "type": "color", "defval": "#ff0000" },
             { "name": "depthFailOpacity", "label": "遮挡处透明度", "type": "slider", "defval": 0.2 },
 
-            { "name": "opacity", "label": "透明度", "type": "slider", "defval": 1.0 },
 
             { "name": "distanceDisplayCondition", "label": "是否按视距显示", "type": "radio", "defval": false, "impact": [ "distanceDisplayCondition_far", "distanceDisplayCondition_near" ] },
             { "name": "distanceDisplayCondition_far", "label": "最大距离", "type": "number", "defval": 100000.0 },
@@ -353,17 +353,16 @@
                 "defval": "color",
                 "data": [
                     { "text": "纯色", "value": "color" },
-                    { "text": "动画", "value": "animationLine", "impact": ["animationDuration", "animationImage", "animationRepeatX", "animationAxisY" ] },
+                    { "text": "动画", "value": "flow", "impact": ["flow_speed", "flow_image", "flow_repeatX", "flow_axisY" ] },
                     { "text": "网格", "value": "grid", "impact": [ "grid_cellAlpha", "grid_lineCount", "grid_lineThickness" ] },
                     { "text": "条纹", "value": "stripe", "impact": [ "stripe_repeat", "stripe_oddcolor" ] },
                     { "text": "棋盘", "value": "checkerboard", "impact": [ "checkerboard_repeat", "checkerboard_oddcolor" ] }
                 ]
             },
-            { "name": "animationDuration", "label": "速度", "type": "number", "defval": 1000.0 },
-            { "name": "animationImage", "label": "图片", "type": "text", "defval": "img/textures/fence.png" },
-            { "name": "animationRepeatX", "label": "重复数量", "type": "number", "defval": 1.0 },
-            { "name": "animationAxisY", "label": "竖直方向", "type": "radio", "defval": false },
-
+            { "name": "flow_speed", "label": "速度", "type": "number", "defval": 10.0 },
+            { "name": "flow_image", "label": "图片", "type": "text", "defval": "img/textures/fence.png" },
+            { "name": "flow_repeatX", "label": "重复数量", "type": "number", "defval": 1.0 },
+            { "name": "flow_axisY", "label": "竖直方向", "type": "radio", "defval": false },
             { "name": "grid_lineCount", "label": "网格数量", "type": "number", "defval": 8.0 },
             { "name": "grid_lineThickness", "label": "网格宽度", "type": "number", "defval": 2.0 },
             { "name": "grid_cellAlpha", "label": "填充透明度", "type": "slider", "defval": 0.1 },
@@ -567,17 +566,16 @@
                 "defval": "color",
                 "data": [
                     { "text": "纯色", "value": "color" },
-                    { "text": "动画", "value": "animationCircle", "impact": ["animationDuration", "animationCount", "animationGradient" ] },
+                    { "text": "波纹", "value": "wave", "impact": ["wave_speed", "wave_count", "wave_gradient" ] },
                     { "text": "网格", "value": "grid", "impact": [ "grid_cellAlpha", "grid_lineCount", "grid_lineThickness" ] },
                     { "text": "条纹", "value": "stripe", "impact": [ "stripe_repeat", "stripe_oddcolor" ] },
                     { "text": "棋盘", "value": "checkerboard", "impact": [ "checkerboard_repeat", "checkerboard_oddcolor" ] },
                     { "text": "图片", "value": "image", "impact": [ "image" ] }
                 ]
             },
-            { "name": "animationDuration", "label": "速度", "type": "number", "defval": 1000.0 },
-            { "name": "animationCount", "label": "圈数", "type": "number", "defval": 1.0 },
-            { "name": "animationGradient", "label": "圈间系数", "type": "number", "defval": 0.1 },
-
+            { "name": "wave_speed", "label": "波纹速度", "type": "number", "defval": 10.0 },
+            { "name": "wave_count", "label": "波纹圈数", "type": "number", "defval": 1.0 },
+            { "name": "wave_gradient", "label": "圈间系数", "type": "number", "defval": 0.1 },
             { "name": "grid_lineCount", "label": "网格数量", "type": "number", "defval": 8.0 },
             { "name": "grid_lineThickness", "label": "网格宽度", "type": "number", "defval": 2.0 },
             { "name": "grid_cellAlpha", "label": "填充透明度", "type": "slider", "defval": 0.1 },
@@ -616,8 +614,8 @@
             "height": false
         },
         "style": [
-            { "name": "semiMinorAxis", "label": "短半径", "type": "number", "defval": 100.0 },
-            { "name": "semiMajorAxis", "label": "长半径", "type": "number", "defval": 100.0 },
+            { "name": "semiMinorAxis", "label": "短半径", "type": "number", "defval": 0.0 },
+            { "name": "semiMajorAxis", "label": "长半径", "type": "number", "defval": 0.0 },
             { "name": "height", "label": "高程", "type": "number", "defval": 0.0 },
             { "name": "diffHeight", "label": "立体高度", "type": "number", "defval": 0.0 },
 
@@ -630,16 +628,16 @@
                 "defval": "color",
                 "data": [
                     { "text": "纯色", "value": "color" },
-                    { "text": "动画", "value": "animationCircle", "impact": ["animationDuration", "animationCount", "animationGradient" ] },
+                    { "text": "波纹", "value": "wave", "impact": ["wave_speed", "wave_count", "wave_gradient" ] },
                     { "text": "网格", "value": "grid", "impact": [ "grid_cellAlpha", "grid_lineCount", "grid_lineThickness" ] },
                     { "text": "条纹", "value": "stripe", "impact": [ "stripe_repeat", "stripe_oddcolor" ] },
                     { "text": "棋盘", "value": "checkerboard", "impact": [ "checkerboard_repeat", "checkerboard_oddcolor" ] },
                     { "text": "图片", "value": "image", "impact": [ "image" ] }
                 ]
             },
-            { "name": "animationDuration", "label": "速度", "type": "number", "defval": 1000.0 },
-            { "name": "animationCount", "label": "圈数", "type": "number", "defval": 1.0 },
-            { "name": "animationGradient", "label": "圈间系数", "type": "number", "defval": 0.1 },
+            { "name": "wave_speed", "label": "波纹速度", "type": "number", "defval": 10.0 },
+            { "name": "wave_count", "label": "波纹圈数", "type": "number", "defval": 1.0 },
+            { "name": "wave_gradient", "label": "圈间系数", "type": "number", "defval": 0.1 },
             { "name": "grid_lineCount", "label": "网格数量", "type": "number", "defval": 8.0 },
             { "name": "grid_lineThickness", "label": "网格宽度", "type": "number", "defval": 2.0 },
             { "name": "grid_cellAlpha", "label": "填充透明度", "type": "slider", "defval": 0.1 },
@@ -692,12 +690,12 @@
                 "defval": "color",
                 "data": [
                     { "text": "纯色", "value": "color" },
-                    { "text": "动画", "value": "animationCircle", "impact": ["animationDuration", "animationCount", "animationGradient" ] }
+                    { "text": "波纹", "value": "wave", "impact": ["wave_speed", "wave_count", "wave_gradient" ] }
                 ]
             },
-            { "name": "animationDuration", "label": "速度", "type": "number", "defval": 1000.0 },
-            { "name": "animationCount", "label": "圈数", "type": "number", "defval": 1.0 },
-            { "name": "animationGradient", "label": "圈间系数", "type": "number", "defval": 0.1 },
+            { "name": "wave_speed", "label": "波纹速度", "type": "number", "defval": 10.0 },
+            { "name": "wave_count", "label": "波纹圈数", "type": "number", "defval": 1.0 },
+            { "name": "wave_gradient", "label": "圈间系数", "type": "number", "defval": 0.1 },
 
             { "name": "color", "label": "填充颜色", "type": "color", "defval": "#00FF00" },
             { "name": "opacity", "label": "透明度", "type": "slider", "defval": 0.6 },
