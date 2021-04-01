@@ -631,6 +631,12 @@ var exampleConfig = {
             thumbnail: 'f10_entity_model.jpg',
             fileName: 'f10_entity_model',
           },
+          {
+            name: 'Path 轨迹',
+            version: '3.0',
+            thumbnail: 'f15_entity_path.jpg',
+            fileName: 'f15_entity_path',
+          },
 
           {
             name: 'Polyline 线',
@@ -840,7 +846,7 @@ var exampleConfig = {
             fileName: 'f35_dynamicRiver',
           },
           {
-            name: '道路 demo',
+            name: '道路',
             version: '1.9',
             thumbnail: 'f35_road.jpg',
             fileName: 'f35_road',
@@ -862,6 +868,13 @@ var exampleConfig = {
             version: '3.0',
             thumbnail: 'f35_water.jpg',
             fileName: 'f35_water',
+          },
+
+          {
+            name: '井',
+            version: '3.0',
+            thumbnail: 'f35_pit.jpg',
+            fileName: 'f35_pit',
           },
         ],
       },
@@ -981,6 +994,12 @@ var exampleConfig = {
             version: '2.0',
             thumbnail: 'f45_kuangqu.jpg',
             fileName: 'f45_kuangqu',
+          },
+          {
+            name: '立体户型图',
+            version: '3.0',
+            thumbnail: 'f45_huxing.jpg',
+            fileName: 'f45_huxing',
           },
         ],
       },
@@ -1731,12 +1750,7 @@ var exampleConfig = {
             thumbnail: 'k20_jzwStyle.jpg',
             fileName: 'k20_jzwStyle',
           },
-          {
-            name: '建筑物混合遮挡',
-            version: '1.9',
-            thumbnail: 'k20_mixedOcclusion.jpg',
-            fileName: 'k20_mixedOcclusion',
-          },
+
           {
             name: '模型压平',
             version: '2.0',

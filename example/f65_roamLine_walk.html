@@ -148,7 +148,7 @@
         //该数据可以从 基础项目 飞行漫游功能界面操作后单个路线的 保存JSON
         var flydata = {
           name: '步行路线',
-          speed: 50,
+          speed: 40,
           points: [
             [117.220356, 31.833959, 43.67],
             [117.220361, 31.835111, 44.36],
@@ -183,7 +183,7 @@
           ],
           camera: {
             type: 'gs',
-            distance: 300,
+            radius: 300,
           },
           clockRange: Cesium.ClockRange.CLAMPED, //CLAMPED到达终点后停止
           pauseTime: 0.5,

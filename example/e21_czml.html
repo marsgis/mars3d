@@ -63,6 +63,9 @@
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: { y: 31.588498, x: 120.714274, z: 492.53, heading: 13.6, pitch: -55.3, roll: 0.1 },
+          // cameraController: {
+          //   maximumZoomDistance: 500000000,
+          // },
         },
       })
 
@@ -154,14 +157,14 @@
       //更新地球参数
       map.setSceneOptions({
         cameraController: {
-          maximumZoomDistance: 300000000,
+          maximumZoomDistance: 500000000,
         },
       })
 
       czmlLayer = new mars3d.layer.CzmlLayer({
         name: '卫星',
         url: 'http://data.marsgis.cn/file/czml/satellite.czml',
-        center: { y: 10, x: 111.833884, z: 150000000, heading: 0, pitch: -90, roll: 0 },
+        center: { lng: 10, lat: 111.833884, z: 150000000, heading: 0, pitch: -90, roll: 0 },
         flyTo: true,
       })
       map.addLayer(czmlLayer)

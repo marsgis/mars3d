@@ -215,12 +215,12 @@
           positions: new Cesium.CallbackProperty(function (time) {
             var pt1 = weixin.position
 
-            var hdr = new Cesium.HeadingPitchRoll(
+            var hpr = new Cesium.HeadingPitchRoll(
               Cesium.Math.toRadians(weixin.heading),
               Cesium.Math.toRadians(weixin.pitch),
               Cesium.Math.toRadians(weixin.roll + angle1)
             )
-            var ptLeft = mars3d.PointUtil.getRayEarthPosition(pt1, hdr, true)
+            var ptLeft = mars3d.PointUtil.getRayEarthPosition(pt1, hpr, true)
 
             var hdr2 = new Cesium.HeadingPitchRoll(
               Cesium.Math.toRadians(weixin.heading),

@@ -198,7 +198,7 @@
     //自定义的面板
     function addGraphic_05(graphicLayer) {
       var graphic = new mars3d.graphic.DivGraphic({
-        position: Cesium.Cartesian3.fromDegrees(116.174302, 31.00681, 751.6),
+        position: [116.174302, 31.00681],
         style: {
           html: `<div class="divpoint divpoint-theme-29baf1">
                 <div class="divpoint-wrap">
@@ -245,8 +245,13 @@
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           distanceDisplayCondition: new Cesium.DistanceDisplayCondition(1000, 200000), //按视距距离显示
           scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 100000, 0.1),
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+          clampToGround: true,
         },
+        //可以传入自定义测试点样式
+        // testPoint: {
+        //   color: '#ff0000',
+        //   pixelSize: 8,
+        // },
         pointerEvents: false, //false时不允许拾取和触发任意鼠标事件，但可以穿透div缩放地球
       })
       graphicLayer.addGraphic(graphic)

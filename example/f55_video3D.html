@@ -288,10 +288,10 @@
       //构造投射体
       var video3D = new mars3d.graphic.Video3D({
         type: mars3d.graphic.Video3D.Type.Text,
-        text: 'Mars3D 火星科技 2021',
         position: cartesian,
         cameraPosition: cameraPosition,
         style: {
+          text: 'Mars3D 火星科技 2021',
           opacity: opacity,
           textStyles: {
             font: '50px 楷体',
@@ -327,10 +327,10 @@
       //构造投射体
       var video3D = new mars3d.graphic.Video3D({
         type: mars3d.graphic.Video3D.Type.Color,
-        color: Cesium.Color.CYAN.withAlpha(0.5),
         position: cartesian,
         cameraPosition: cameraPosition,
         style: {
+          color: Cesium.Color.CYAN.withAlpha(0.5),
           opacity: opacity,
         },
         showFrustum: showFrustum,
@@ -372,7 +372,7 @@
           if (!selectedView) {
             return
           }
-          selectedView.fov = value
+          selectedView.fovDegree = value
         },
       })
 

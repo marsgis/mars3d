@@ -677,7 +677,7 @@
         "style": [
             { "name": "topRadius", "label": "顶部半径", "type": "number", "defval": 0.0 },
             { "name": "bottomRadius", "label": "底部半径", "type": "number", "defval": 100.0 },
-            { "name": "length", "label": "高度", "type": "number", "defval": 100.0 },
+            { "name": "length", "label": "锥体高度", "type": "number", "defval": 100.0 },
 
 
             { "name": "heading", "label": "方向角", "type": "number", "defval": 0.0 },

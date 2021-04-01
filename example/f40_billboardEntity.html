@@ -75,7 +75,13 @@
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
+        var graphicLayer = new mars3d.layer.GraphicLayer({
+          //点的聚合配置
+          clustering: {
+            enabled: true,
+            pixelRange: 20,
+          },
+        })
         map.addLayer(graphicLayer)
 
         var arrData
@@ -87,7 +93,7 @@
         $('#chkClustering').change(function () {
           var val = $(this).prop('checked')
 
-          graphicLayer.dataSource.clustering.enabled = val
+          graphicLayer.clustering = val
         })
 
         $('#btn_start').click(function () {
@@ -97,6 +103,9 @@
 
       function addFeature(graphicLayer, arr) {
         graphicLayer.bindPopup(function (event) {
+          if (!event.graphic) {
+            return false
+          }
           let item = event.graphic.attr
           var inthtml =
             '<table style="width: auto;"><tr>' +
@@ -127,15 +136,22 @@
             graphicLayer.closePopup()
 
             var graphic = event.graphic
-            var position = graphic.positionShow
-            map.flyToPoint(position, {
-              radius: 5000, //距离目标点的距离
-              duration: 4,
-              complete: function (e) {
-                //飞行完成回调方法
-                graphicLayer.openPopup(graphic)
-              },
-            })
+            if (graphic) {
+              //单击了具体的点对象
+              var position = graphic.positionShow
+              map.flyToPoint(position, {
+                radius: 5000, //距离目标点的距离
+                duration: 4,
+                complete: function (e) {
+                  //飞行完成回调方法
+                  graphicLayer.openPopup(graphic)
+                },
+              })
+            } else {
+              //单击了聚合的点
+              var arrEntity = event.pickedObject.id
+              map.flyTo(arrEntity)
+            }
           }
         })
 
@@ -193,32 +209,6 @@
 
           graphicLayer.addGraphic(graphic)
         }
-
-        //========聚合 start==========
-        var clustering = graphicLayer.dataSource.clustering
-        var timeTik = setInterval(function () {
-          if (clustering._cluster) {
-            clustering._cluster()
-          }
-        }, 800)
-        clustering.clusterEvent.addEventListener(function (clusteredEntities, cluster) {
-          if (timeTik) {
-            clearInterval(timeTik)
-            timeTik = null
-          }
-          cluster.label.show = false
-
-          cluster.billboard.show = true
-          cluster.billboard.id = cluster.label.id
-          // cluster.billboard.verticalOrigin = Cesium.VerticalOrigin.BOTTOM;
-          // cluster.billboard.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;  //贴地
-
-          cluster.billboard.scale = 0.5 //必须，解决数字文本锯齿
-          cluster.billboard.image = mars3d.Util.getCircleImage(clusteredEntities.length, { radius: 28 })
-        })
-        clustering.pixelRange = 20 //多少像素矩形范围内聚合
-        clustering.enabled = true
-        //========聚合 end==========
       }
 
       //计算贴地高度示例代码，可以将获取到的高度更新到数据库内，后续不用重复计算。
