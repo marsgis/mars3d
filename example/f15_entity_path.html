@@ -65,13 +65,9 @@
     </div>
   </div>
 
-  <!-- 切换视角到模型或地形（山区）的快捷按钮 -->
-  <script type="text/javascript" src="js/center_terrain_3dtiles.js"></script>
 
   <!-- 图层管理相关处理js -->
   <script type="text/javascript" src="./js/graphicManager.js"></script>
-
-
 
   <script src="./js/common.js"></script>
   <script type="text/javascript">
@@ -83,7 +79,7 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
-          center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 },
+          center: { lat: 31.756263, lng: 117.209077, alt: 7696, heading: 5, pitch: -33 },
         },
       })
 
@@ -120,12 +116,12 @@
       var graphic = new mars3d.graphic.PathEntity({
         position: property,
         style: {
-          width: 3,
-          color: '#3388ff',
+          width: 2,
+          color: '#ffff00',
           opacity: 1.0,
         },
         label: {
-          text: '飞机1号',
+          text: '火星1号',
           font_size: 19,
           font_family: '楷体',
           style: Cesium.LabelStyle.FILL_AND_OUTLINE,
@@ -138,8 +134,8 @@
         },
         model: {
           uri: 'http://data.marsgis.cn/gltf/mars/wrj.glb',
-          scale: 0.1,
-          minimumPixelSize: 20,
+          scale: 0.5,
+          minimumPixelSize: 40,
         },
       })
       graphicLayer.addGraphic(graphic)

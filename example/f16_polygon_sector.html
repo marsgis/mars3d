@@ -123,7 +123,6 @@
         graphicLayer.startDraw({
           type: 'sector',
           style: {
-            border: 3, //多边形边数量
             color: '#29cf34',
             opacity: 0.5,
             outline: true,
@@ -167,7 +166,6 @@
           [117.17505, 31.84342, 105.7],
         ],
         style: {
-          border: 3, //多边形边数量
           color: '#3388ff',
           opacity: 0.5,
           outline: true,
@@ -187,7 +185,7 @@
       //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
 
       //演示个性化处理graphic，代码在\js\graphicManager.js
-      initGraphicManager(graphic)
+      // initGraphicManager(graphic)
     }
 
     function addGraphic_02(graphicLayer) {
@@ -198,7 +196,6 @@
           [117.291172, 31.89522, 25.8],
         ],
         style: {
-          border: 4, //多边形边数量
           clampToGround: true,
           material: new Cesium.ImageMaterialProperty({
             //图片材质
@@ -219,7 +216,6 @@
           [117.135557, 31.79767, 30.9],
         ],
         style: {
-          border: 5, //多边形边数量
           material: new mars3d.material.WaterMaterialProperty({
             //图片材质
             normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
@@ -244,8 +240,7 @@
           [117.251609, 31.780963, 25.1],
         ],
         style: {
-          border: 6, //多边形边数量
-          extrudedHeight: 2000.0,
+          diffHeight: 2000.0,
           material: Cesium.Color.YELLOW,
           closeTop: false,
           closeBottom: false,

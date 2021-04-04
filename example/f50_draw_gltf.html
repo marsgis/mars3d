@@ -175,7 +175,7 @@
       )
 
       //停止编辑修改模型
-      graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.delete], function (e) {
+      graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], function (e) {
         stopEditing()
       })
 
