@@ -127,7 +127,6 @@
           style: {
             color: '#ffff00',
             opacity: 0.6,
-            clampToGround: false,
             outline: true,
             outlineWidth: 3,
             outlineColor: '#ffffff',
@@ -183,8 +182,7 @@
           },
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
 
       //演示个性化处理graphic，代码在\js\graphicManager.js
       initGraphicManager(graphic)
@@ -205,8 +203,7 @@
           outlineColor: Cesium.Color.BLACK,
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
     }
 
     function addGraphic_03(graphicLayer) {
@@ -228,8 +225,7 @@
           stRotation: new Cesium.CallbackProperty(getRotationValue, false),
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
     }
 
     function addGraphic_04(graphicLayer) {
@@ -240,6 +236,7 @@
         ],
         style: {
           image: 'img/tietu/hangpai.png',
+          clampToGround: true,
         },
       })
       graphicLayer.addGraphic(graphicZP)

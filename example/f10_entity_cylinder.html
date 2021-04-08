@@ -142,8 +142,7 @@
           opacity: 0.7,
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
 
       //演示个性化处理graphic，代码在\js\graphicManager.js
       initGraphicManager(graphic)
@@ -163,8 +162,7 @@
           pitch: 0,
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
     }
 
     //
@@ -188,8 +186,7 @@
           },
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
 
       //entity转geojson
       var geojson = graphic.toGeoJSON()
@@ -235,8 +232,7 @@
           }),
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
     }
   </script>
 </body>

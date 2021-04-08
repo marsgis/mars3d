@@ -105,6 +105,7 @@
         })
 
         measureObj.on(mars3d.EventType.click, function (e) {
+          console.log('单击了对象', e)
           let result = e.graphic?.measureResult
           if (result && result.mtype === 'section') {
             setEchartsData(result)

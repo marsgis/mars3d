@@ -476,24 +476,14 @@ var plotEdit = {
       case 'radio':
         {
           let _name_key = parname + attrName
-          inHtml =
-            '  <div class="radio radio-info radio-inline"> <input type="radio" id="' +
-            _name_key +
-            '_1" value="1"  name="' +
-            _name_key +
-            '"  ' +
-            (attrVal ? 'checked="checked"' : '') +
-            '><label for="' +
-            _name_key +
-            '_1"> 是</label></div> <div class="radio radio-info radio-inline"> <input type="radio" id="' +
-            _name_key +
-            '_2" value="2" name="' +
-            _name_key +
-            '" ' +
-            (attrVal ? '' : 'checked="checked"') +
-            ' "><label for="' +
-            _name_key +
-            '_2"> 否 </label></div>'
+          inHtml = `<div class="radio radio-info radio-inline">
+            <input type="radio" id="${_name_key}_1" value="1"  name="${_name_key}" ${attrVal ? 'checked="checked"' : ''}>
+            <label for="${_name_key}_1"> 是</label>
+          </div>
+          <div class="radio radio-info radio-inline">
+            <input type="radio" id="${_name_key}_0" value="0" name="${_name_key}" ${attrVal ? '' : 'checked="checked"'}">
+            <label for="${_name_key}_0"> 否 </label>
+          </div>`
 
           fun = function (parname, attrName, attrVal, edit) {
             $('input:radio[name="' + parname + attrName + '"]').change(function () {
@@ -571,9 +561,36 @@ var plotEdit = {
     switch (parname) {
       default:
         break
-      case 'plot_attr_style_':
+      case 'plot_attr_style_': {
         this._last_attr.style[attrName] = attrVal
+
+        let type = this._last_attr.type
+        if (
+          (attrName == 'fill' || attrName == 'outline') &&
+          attrVal === false &&
+          (type == 'plane' ||
+            type == 'circle' ||
+            type == 'ellipse' ||
+            type == 'cylinder' ||
+            type == 'ellipsoid' ||
+            type == 'box' ||
+            type == 'polylineVolume' ||
+            type == 'wall' ||
+            type == 'corridor' ||
+            type == 'rectangle' ||
+            type == 'polygon')
+        ) {
+          if (!this._last_attr.style['fill'] && !this._last_attr.style['outline']) {
+            this._last_attr.style[attrName] = true
+            $("input[name='" + parname + attrName + "']:eq(0)").attr('checked', 'checked')
+            $("input[name='" + parname + attrName + "']:eq(0)").click()
+            haoutil.msg('填充和边框不能同时为否，需要至少开启一个！')
+            return
+          }
+        }
+
         break
+      }
       case 'plot_attr_stylelabel_':
         this._last_attr.style.label = this._last_attr.style.label || {}
         this._last_attr.style.label[attrName] = attrVal

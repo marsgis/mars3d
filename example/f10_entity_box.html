@@ -119,9 +119,9 @@
           style: {
             color: '#00ff00',
             opacity: 0.6,
-            dimensionsX: 1000.0,
-            dimensionsY: 1000.0,
-            dimensionsZ: 1000.0,
+            dimensions_x: 1000.0,
+            dimensions_y: 1000.0,
+            dimensions_z: 1000.0,
           },
         })
       })
@@ -144,8 +144,7 @@
           opacity: 0.9,
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
 
       //演示个性化处理graphic，代码在\js\graphicManager.js
       initGraphicManager(graphic)
@@ -162,8 +161,7 @@
           outlineColor: '#ffff00',
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
     }
 
     //
@@ -180,8 +178,7 @@
           pitch: 0,
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
     }
 
     //
@@ -216,8 +213,7 @@
       graphic1Copy.position = [116.301991, 30.933872, 624.03]
       graphic1Copy.label.text = '我是转换后生成的'
       graphicLayer.addGraphic(graphic1Copy)
-      console.log(graphic1Copy)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      console.log(graphic1Copy) //还可以另外一种写法: graphic.addTo(graphicLayer)
     }
   </script>
 </body>

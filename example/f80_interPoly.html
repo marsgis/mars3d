@@ -42,19 +42,23 @@
     <div class="infoview">
       <div>
         <span style="color: #cad1d1;">提示：插值数大时分析略慢，请耐心等待。</span>
+        <input type="button" class="btn btn-info" value="清除" onclick="removeAll()" />
       </div>
       <div>
         插值数:
-        <input id="txtSplitNum" type="number" value="8" step="1" min="1" max="9999" class="form-control" style="width: 100px;" />
+        <input id="txtSplitNum" type="number" value="10" step="1" min="1" max="999" class="form-control" style="width: 100px;" />
 
-        <input type="button" class="btn btn-primary" value="绘制面" onclick="drawPolygon()" />
-        <input type="button" class="btn btn-primary" value="绘制线" onclick="drawPolyline()" />
-        <input type="button" class="btn btn-info" value="清除" onclick="removeAll()" />
+        <input type="button" class="btn btn-primary" value="面插值" onclick="interPolygon()" />
+      </div>
+      <div>
+        插值数:
+        <input id="txtSplitLineNum" type="number" value="100" step="1" min="1" max="9999" class="form-control" style="width: 100px;" />
+
+        <input type="button" class="btn btn-primary" value="线插值" onclick="interPolyline()" />
+        <input type="button" class="btn btn-primary" value="线插值(高度等分)" onclick="interLine()" />
       </div>
     </div>
 
-    <!-- 切换视角到模型或地形（山区）的快捷按钮 -->
-    <script type="text/javascript" src="js/center_terrain_3dtiles.js"></script>
 
     <script src="js/showPolygonInter.js"></script>
 
@@ -89,7 +93,7 @@
         clearInterResult() //在js/showPolygonInter.js
       }
 
-      function drawPolygon() {
+      function interPolygon() {
         map.graphicLayer.startDraw({
           type: 'polygon',
           style: {
@@ -115,7 +119,28 @@
         })
       }
 
-      function drawPolyline(clampToGround) {
+      function interLine(clampToGround) {
+        map.graphicLayer.startDraw({
+          type: 'polyline',
+          style: {
+            color: '#55ff33',
+            width: 3,
+          },
+          success: function (graphic) {
+            var positions = graphic.positionsShow
+            map.graphicLayer.clear()
+
+            var splitNum = Number($('#txtSplitLineNum').val())
+            var arrLine = mars3d.PolyUtil.interLine(positions, {
+              splitNum: splitNum, // 插值分割的个数
+            })
+
+            showInterLineResult(arrLine) //在js/showPolygonInter.js
+          },
+        })
+      }
+
+      function interPolyline(clampToGround) {
         map.graphicLayer.startDraw({
           type: 'polyline',
           style: {
@@ -127,7 +152,7 @@
             var positions = graphic.positionsShow
             map.graphicLayer.clear()
 
-            var splitNum = Number($('#txtSplitNum').val())
+            var splitNum = Number($('#txtSplitLineNum').val())
             var arrLine = mars3d.PolyUtil.interPolyline({
               scene: map.scene,
               positions: positions,
@@ -138,7 +163,7 @@
           },
         })
       }
-    </script>
+ </script>
   </body>
 
 </html>

@@ -158,8 +158,7 @@
           clampToGround: true,
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
 
       //演示个性化处理graphic，代码在\js\graphicManager.js
       initGraphicManager(graphic)
@@ -179,8 +178,7 @@
           }),
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
     }
 
     //
@@ -198,19 +196,18 @@
             color: Cesium.Color.fromCssColorString('#5fc4ee'),
           }),
           stRotation: new Cesium.CallbackProperty(function (e) {
-            _rotation -= 0.1
+            _rotation += 0.1
+            _rotation %= 360
             return _rotation
           }, false),
           classificationType: Cesium.ClassificationType.BOTH,
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
     }
 
     //
     function addGraphic_04(graphicLayer) {
-      var _rotation = Math.random()
       var graphic = new mars3d.graphic.EllipseEntity({
         position: [116.244399, 30.920459],
         style: {
@@ -231,8 +228,7 @@
           },
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
 
       //entity转geojson
       var geojson = graphic.toGeoJSON()
@@ -258,8 +254,7 @@
           rotationDegree: 45,
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
     }
 
     function addGraphic_06(graphicLayer) {
@@ -270,18 +265,17 @@
           semiMajorAxis: 1000, //长半轴 半径
           semiMinorAxis: 700, // 短半轴 半径
           material: new mars3d.material.CircleScanMaterialProperty({
-            //扫描材质
             image: 'img/textures/circle_bg.png',
             color: Cesium.Color.fromCssColorString('#5fc4ee'),
           }),
           stRotation: new Cesium.CallbackProperty(function (e) {
-            _rotation -= 0.1
+            _rotation += 0.1
+            _rotation %= 360
             return _rotation
           }, false),
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
     }
   </script>
 </body>

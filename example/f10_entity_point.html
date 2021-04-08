@@ -177,7 +177,7 @@
         name: '根据视距缩放点',
         position: new mars3d.LatLngPoint(116.301798, 30.835848, 915),
         style: {
-          color: Cesium.Color.LIME,
+          color: '#00ff00',
           pixelSize: 32,
           scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 500000, 0.1),
         },
@@ -190,9 +190,9 @@
         name: '贴地点',
         position: new mars3d.LatLngPoint(116.39224, 30.902853),
         style: {
-          color: Cesium.Color.YELLOW,
+          color: '#ffff00',
           pixelSize: 10,
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+          clampToGround: true,
         },
       })
       graphicLayer.addGraphic(graphic)
@@ -203,9 +203,9 @@
         name: '根据视距显示点',
         position: new mars3d.LatLngPoint(116.329102, 30.977955, 1548.6),
         style: {
-          color: Cesium.Color.BLUE,
+          color: '#0000ff',
           pixelSize: 20,
-          outlineColor: Cesium.Color.fromCssColorString('#ffffff'),
+          outlineColor: '#ffffff',
           outlineWidth: 2,
           distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 100000),
         },

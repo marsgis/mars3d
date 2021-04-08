@@ -13,17 +13,17 @@ function initEditorJS() {
       var arrPoint = [
         {
           name: '<span style="color:red;">山顶点</span>',
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND, //贴地
+          clampToGround: true, //贴地
           point: [113.942777, 36.067056, 459.77],
         },
         {
           name: '<span style="color:red;">山顶点</span>',
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND, //贴地
+          clampToGround: true, //贴地
           point: [113.944267, 36.071025, 536.88],
         },
         {
           name: '<span style="color:red;">山顶点</span>',
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND, //贴地
+          clampToGround: true, //贴地
           point: [113.939813, 36.072023, 508.97],
         },
       ]
@@ -122,12 +122,12 @@ function initEditorJS() {
       var arrPoint = [
         {
           name: '<span style="color:yellow;">鞍部点</span>',
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND, //贴地
+          clampToGround: true, //贴地
           point: [113.941765, 36.071467, 483.65],
         },
         {
           name: '<span style="color:yellow;">鞍部点</span>',
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND, //贴地
+          clampToGround: true, //贴地
           point: [113.943826, 36.068614, 448.83],
         },
       ]
@@ -202,7 +202,7 @@ function initEditorJS() {
       var arrPoint = [
         {
           name: '<span style="">倾斜变换点</span>',
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND, //贴地
+          clampToGround: true, //贴地
           point: [113.940833, 36.070734, 440.98],
         },
       ]
@@ -269,7 +269,7 @@ function initEditorJS() {
       var arrPoint = [
         {
           name: '<span style="color:blue;">方向变换点</span>',
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND, //贴地
+          clampToGround: true, //贴地
           point: [113.942894, 36.069431, 443.97],
         },
       ]

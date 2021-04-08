@@ -234,7 +234,7 @@ var JB = {
       style: {
         html: html,
         anchor: opts.anchor,
-        heightReference: opts.heightReference,
+        clampToGround: opts.clampToGround,
         horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       },

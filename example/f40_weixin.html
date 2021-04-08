@@ -62,12 +62,14 @@
     }
 
     function addGraphic_a01(graphicLayer) {
+      let lat = 31.95
+      let lng = 117.141
       let height = 1200000
 
       //加个模型
       var modelEntity = new mars3d.graphic.ModelEntity({
         name: '卫星模型',
-        position: [117.141, 31.95, height],
+        position: [lng, lat, height],
         style: {
           uri: 'http://data.marsgis.cn/gltf/mars/weixin.gltf',
           scale: 1,
@@ -78,7 +80,7 @@
 
       //加圆锥效果
       var primitive = new mars3d.graphic.CylinderPrimitive({
-        position: Cesium.Cartesian3.fromDegrees(117.141, 31.95, height * 0.5),
+        position: [lng, lat, height * 0.5],
         style: {
           length: height,
           topRadius: 0.0,
@@ -87,7 +89,7 @@
           material: Cesium.Material.fromType(mars3d.material.CircleWaveType, {
             color: Cesium.Color.fromCssColorString('#02ff00'),
             count: 1, //圆圈数量
-            speed: 20, //速度，建议取值范围1-100
+            speed: 10, //速度，建议取值范围1-100
           }),
           faceForward: false, // 当绘制的三角面片法向不能朝向视点时，自动翻转法向，从而避免法向计算后发黑等问题
           closed: true, // 是否为封闭体，实际上执行的是 是否进行背面裁剪
@@ -97,12 +99,14 @@
     }
 
     function addGraphic_a02(graphicLayer) {
+      let lat = 31.95
+      let lng = 103.856335
       let height = 1200000
 
       //加个模型
       var modelEntity = new mars3d.graphic.ModelEntity({
         name: '卫星模型',
-        position: [103.856335, 31.95, height],
+        position: [lng, lat, height],
         style: {
           uri: 'http://data.marsgis.cn/gltf/mars/weixin.gltf',
           scale: 1,
@@ -112,17 +116,9 @@
       })
       graphicLayer.addGraphic(modelEntity)
 
-      // 矩阵计算
-      var positionOnEllipsoid = Cesium.Cartesian3.fromDegrees(103.856335, 31.95, 0)
-      var modelMatrix = Cesium.Matrix4.multiplyByTranslation(
-        Cesium.Transforms.eastNorthUpToFixedFrame(positionOnEllipsoid),
-        new Cesium.Cartesian3(0.0, 0.0, height * 0.5),
-        new Cesium.Matrix4()
-      )
-
       //加圆锥效果
       var primitive = new mars3d.graphic.CylinderPrimitive({
-        modelMatrix: modelMatrix,
+        position: [lng, lat, height * 0.5],
         style: {
           length: height,
           topRadius: 0.0,

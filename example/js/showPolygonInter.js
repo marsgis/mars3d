@@ -6,20 +6,17 @@
 var interGraphicLayer
 
 function clearInterResult() {
-  if (interGraphicLayer) {
-    interGraphicLayer.clear()
+  if (!interGraphicLayer) {
+    interGraphicLayer = new mars3d.layer.GraphicLayer()
+    map.addLayer(interGraphicLayer)
   }
+
+  interGraphicLayer.clear()
 }
 
 function showInterResult(list) {
   //分析结果用于测试分析的，不做太多处理，直接清除之前的，只保留最好一个
   clearInterResult()
-
-  if (!interGraphicLayer) {
-    //创建Graphic图层
-    interGraphicLayer = new mars3d.layer.GraphicLayer()
-    map.addLayer(interGraphicLayer)
-  }
 
   var pt1, pt2, pt3
   // var geometryInstances = [];

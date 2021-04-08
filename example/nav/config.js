@@ -378,14 +378,18 @@ var exampleConfig = {
             thumbnail: 'd20_locationBar.jpg',
             fileName: 'd20_locationBar',
           },
-
           {
-            name: '放大缩小按钮',
+            name: '自定义工具栏按钮',
+            version: '3.0',
+            thumbnail: 'd20_toolButton.jpg',
+            fileName: 'd20_toolButton',
+          },
+          {
+            name: '放大缩小工具栏按钮',
             version: '1.9',
             thumbnail: 'd20_zoomNavigation.jpg',
             fileName: 'd20_zoomNavigation',
           },
-
           {
             name: '鼠标按下特效',
             version: '3.0',
@@ -399,6 +403,7 @@ var exampleConfig = {
             thumbnail: 'd20_navigation.jpg',
             fileName: 'd20_navigation',
           },
+
           {
             name: '鹰眼地图',
             version: '1.8',

@@ -119,8 +119,8 @@
             color: '#00ff00',
             opacity: 0.8,
             plane_normal: 'x',
-            dimensionsX: 1000.0,
-            dimensionsY: 1000.0,
+            dimensions_x: 1000.0,
+            dimensions_y: 1000.0,
           },
         })
       })
@@ -138,14 +138,13 @@
         position: [116.282587, 30.859197, 544.31],
         style: {
           plane: new Cesium.Plane(Cesium.Cartesian3.UNIT_Y, 0.0),
-          dimensionsX: 2000.0,
-          dimensionsY: 1000.0,
+          dimensions_x: 2000.0,
+          dimensions_y: 1000.0,
           color: '#00ff00',
           opacity: 0.9,
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
 
       //演示个性化处理graphic，代码在\js\graphicManager.js
       initGraphicManager(graphic)
@@ -164,8 +163,7 @@
           }),
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
 
       //绑定Tooltip
       graphic.bindTooltip('我是graphic上绑定的Tooltip').openTooltip()
@@ -178,7 +176,7 @@
         style: {
           plane: new Cesium.Plane(Cesium.Cartesian3.UNIT_Z, 0.0),
           dimensions: new Cesium.Cartesian2(1000.0, 1000.0),
-
+          color: 'rgba(255,0,0,0.5)',
           outline: true,
           outlineColor: '#ffff00',
           heading: 45,
@@ -186,8 +184,7 @@
           pitch: 0,
         },
       })
-      graphicLayer.addGraphic(graphic)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
     }
 
     //
@@ -223,8 +220,7 @@
       graphic1Copy.position = [116.301991, 30.933872, 624.03]
       graphic1Copy.label.text = '我是转换后生成的'
       graphicLayer.addGraphic(graphic1Copy)
-      console.log(graphic1Copy)
-      //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      console.log(graphic1Copy) //还可以另外一种写法: graphic.addTo(graphicLayer)
     }
   </script>
 </body>
