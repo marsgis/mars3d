@@ -35,13 +35,12 @@ function initEditorJS() {
           {
             type: 'Feature',
             properties: {
-              edittype: 'point',
               name: '点标记',
               style: {
                 color: '#ffffff',
                 outlineColor: '#ff0000',
                 visibleDepth: true,
-                heightReference: 'CLAMP_TO_GROUND',
+                clampToGround: true,
               },
               attr: {},
               type: 'point',
@@ -54,13 +53,12 @@ function initEditorJS() {
           {
             type: 'Feature',
             properties: {
-              edittype: 'point',
               name: '点标记',
               style: {
                 color: '#ffffff',
                 outlineColor: '#ff0000',
                 visibleDepth: true,
-                heightReference: 'CLAMP_TO_GROUND',
+                clampToGround: true,
               },
               attr: {},
               type: 'point',
@@ -73,13 +71,12 @@ function initEditorJS() {
           {
             type: 'Feature',
             properties: {
-              edittype: 'point',
               name: '点标记',
               style: {
                 color: '#ffffff',
                 outlineColor: '#ff0000',
                 visibleDepth: true,
-                heightReference: 'CLAMP_TO_GROUND',
+                clampToGround: true,
               },
               attr: {},
               type: 'point',
@@ -137,13 +134,12 @@ function initEditorJS() {
           {
             type: 'Feature',
             properties: {
-              edittype: 'point',
               name: '点标记',
               style: {
                 color: '#ffffff',
                 outlineColor: '#ff0000',
                 visibleDepth: true,
-                heightReference: 'CLAMP_TO_GROUND',
+                clampToGround: true,
               },
               attr: {},
               type: 'point',
@@ -156,13 +152,12 @@ function initEditorJS() {
           {
             type: 'Feature',
             properties: {
-              edittype: 'point',
               name: '点标记',
               style: {
                 color: '#ffffff',
                 outlineColor: '#ff0000',
                 visibleDepth: true,
-                heightReference: 'CLAMP_TO_GROUND',
+                clampToGround: true,
               },
               attr: {},
               type: 'point',
@@ -213,13 +208,12 @@ function initEditorJS() {
           {
             type: 'Feature',
             properties: {
-              edittype: 'point',
               name: '点标记',
               style: {
                 color: '#ffffff',
                 outlineColor: '#ff0000',
                 visibleDepth: true,
-                heightReference: 'CLAMP_TO_GROUND',
+                clampToGround: true,
               },
               attr: {},
               type: 'point',
@@ -280,13 +274,12 @@ function initEditorJS() {
           {
             type: 'Feature',
             properties: {
-              edittype: 'point',
               name: '点标记',
               style: {
                 color: '#ffffff',
                 outlineColor: '#ff0000',
                 visibleDepth: true,
-                heightReference: 'CLAMP_TO_GROUND',
+                clampToGround: true,
               },
               attr: {},
               type: 'point',
@@ -341,7 +334,6 @@ function initEditorJS() {
           {
             type: 'Feature',
             properties: {
-              edittype: 'polyline',
               name: '线',
               config: {
                 minPointNum: 2,
@@ -417,7 +409,6 @@ function initEditorJS() {
       var geojson = {
         type: 'Feature',
         properties: {
-          edittype: 'polyline',
           name: '线',
           config: {
             minPointNum: 2,
@@ -474,7 +465,6 @@ function initEditorJS() {
       var geojson = {
         type: 'Feature',
         properties: {
-          edittype: 'polyline',
           name: '线',
           config: {
             minPointNum: 2,

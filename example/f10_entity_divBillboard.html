@@ -166,13 +166,11 @@
 
     function addGraphic_a2(graphicLayer) {
       var graphic = new mars3d.graphic.DivBillboardEntity({
-        name: '贴地图标',
         position: [116.39224, 30.902853],
         style: {
           html: '<div id="divpoint" class="divpoint1"><div class="title">M a r s G I S</div></div>',
-          horizontalOrigin: 1,
-          verticalOrigin: 1,
-          heightReference: 1,
+          horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           clampToGround: true,
         },
       })
@@ -184,9 +182,9 @@
         position: [116.340443, 30.882935, 389.88],
         style: {
           html: '<div id="divpoint" class="divpoint1"><div class="title">火 星 科 技</div></div>',
-          horizontalOrigin: 1,
-          verticalOrigin: 1,
-          heightReference: 1,
+          horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+          clampToGround: true,
         },
       })
       graphicLayer.addGraphic(graphic)

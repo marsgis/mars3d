@@ -172,7 +172,6 @@
           },
         })
         graphicLayer.addGraphic(graphic)
-        //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
 
         //演示个性化处理graphic，代码在\js\graphicManager.js
         initGraphicManager(graphic)
@@ -203,7 +202,6 @@
           },
         })
         graphicLayer.addGraphic(graphic)
-        //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
 
         //entity转geojson
         let geojson = graphic.toGeoJSON()
@@ -235,7 +233,6 @@
           },
         })
         graphicLayer.addGraphic(graphic)
-        //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
       }
 
       //虚线
@@ -255,7 +252,6 @@
           },
         })
         graphicLayer.addGraphic(graphic)
-        //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
       }
 
       //虚线 ，双色间隔
@@ -276,7 +272,6 @@
           },
         })
         graphicLayer.addGraphic(graphic)
-        //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
       }
 
       function addGraphic_a6(graphicLayer) {
@@ -289,14 +284,13 @@
             width: 5,
             material: new mars3d.material.LineFlowMaterialProperty({
               //动画线材质
-              color: Cesium.Color.fromCssColorString('#00ff00'),
+              color: '#00ff00',
               image: 'img/textures/LinkPulse.png',
-              speed: 3, //速度，建议取值范围1-100
+              speed: 3,
             }),
           },
         })
         graphicLayer.addGraphic(graphic)
-        //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
       }
 
       function addGraphic_a7(graphicLayer) {
@@ -308,17 +302,16 @@
           positions: positions,
           style: {
             width: 8,
+            //动画线材质
             material: new mars3d.material.LineFlowMaterialProperty({
-              //动画线材质
-              color: Cesium.Color.fromCssColorString('#66bd63'),
+              color: '#66bd63',
               repeat: new Cesium.Cartesian2(2.0, 1.0),
               image: 'img/textures/line.png',
-              speed: 25, //速度，建议取值范围1-100
+              speed: 25,
             }),
           },
         })
         graphicLayer.addGraphic(graphic)
-        //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
       }
 
       function addGraphic_a8(graphicLayer) {
@@ -334,12 +327,11 @@
             material: new mars3d.material.LineFlowMaterialProperty({
               color: '#1a9850',
               image: 'img/textures/ArrowOpacity.png',
-              speed: 20, //速度，建议取值范围1-100
+              speed: 20,
             }),
           },
         })
         graphicLayer.addGraphic(graphic)
-        //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
       }
 
       //演示CallbackProperty属性
@@ -353,7 +345,7 @@
         let _color = _color1
         setInterval(function () {
           _color = _color === _color1 ? _color2 : _color1
-        }, 500)
+        }, 400)
 
         let graphic = new mars3d.graphic.PolylineEntity({
           positions: positions,
@@ -367,7 +359,6 @@
           },
         })
         graphicLayer.addGraphic(graphic)
-        //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
       }
 
       function addGraphic_a10(graphicLayer) {
@@ -381,12 +372,11 @@
             width: 10,
             material: new mars3d.material.LineFlowMaterialProperty({
               image: 'img/textures/lineClr2.png',
-              speed: 10, //速度，建议取值范围1-100
+              speed: 10,
             }),
           },
         })
         graphicLayer.addGraphic(graphic)
-        //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
       }
 
       function addGraphic_a11(graphicLayer) {
@@ -401,12 +391,11 @@
               color: Cesium.Color.AQUA,
               image: './img/textures/arrow2.png',
               repeat: new Cesium.Cartesian2(20, 1),
-              speed: 30, //速度，建议取值范围1-100
+              speed: 30,
             }),
           },
         })
         graphicLayer.addGraphic(graphic)
-        //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
       }
 
       function addGraphic_a12(graphicLayer) {
@@ -418,15 +407,14 @@
           style: {
             width: 18,
             material: new mars3d.material.LineFlowMaterialProperty({
-              color: Cesium.Color.fromCssColorString('#a6d96a'),
+              color: '#a6d96a',
               repeat: new Cesium.Cartesian2(4.0, 1.0),
               image: 'img/textures/arrow_1.png',
-              speed: 20, //速度，建议取值范围1-100
+              speed: 20,
             }),
           },
         })
         graphicLayer.addGraphic(graphic)
-        //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
       }
 
       function addGraphic_a13(graphicLayer) {
@@ -441,12 +429,11 @@
             material: new mars3d.material.LineFlowMaterialProperty({
               color: Cesium.Color.CHARTREUSE,
               image: 'img/textures/lineClr.png',
-              speed: 25, //速度，建议取值范围1-100
+              speed: 25,
             }),
           },
         })
         graphicLayer.addGraphic(graphic)
-        //graphic.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
       }
     </script>
   </body>

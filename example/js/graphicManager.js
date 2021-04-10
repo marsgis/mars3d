@@ -103,7 +103,9 @@ function initLayerManager(graphicLayer) {
       reader.readAsText(file, 'UTF-8')
       reader.onloadend = function (e) {
         let json = this.result
-        graphicLayer.loadGeoJSON(json)
+        graphicLayer.loadGeoJSON(json, {
+          flyTo: true,
+        })
 
         clearSelectFile()
       }

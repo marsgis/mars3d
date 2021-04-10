@@ -105,6 +105,8 @@
 
           var targetPoints = graphic.getOutlinePositions(false, 45)
 
+          map.graphicLayer.clear()
+
           var targetArr = []
           for (var i = 0; i < targetPoints.length; i++) {
             var targetPoint = targetPoints[i]
@@ -113,8 +115,6 @@
           }
 
           createPoint(center, true)
-
-          map.graphicLayer.clear()
         },
       })
     }
@@ -131,6 +131,7 @@
         success: function (graphic) {
           //绘制成功后回调
           var positions = graphic.positionsShow
+          map.graphicLayer.clear()
 
           var center = positions[0]
           var targetPoint = positions[1]
@@ -138,8 +139,6 @@
 
           createPoint(center, true)
           createPoint(targetPoint, false)
-
-          map.graphicLayer.clear()
         },
       })
     }
@@ -168,8 +167,8 @@
             text: isFirst ? '观察位置' : '目标点',
             font_size: 17,
             font_family: '楷体',
-            style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-            fillColor: Cesium.Color.AZURE,
+            color: Cesium.Color.AZURE,
+            outline: true,
             outlineColor: Cesium.Color.BLACK,
             outlineWidth: 2,
             horizontalOrigin: Cesium.HorizontalOrigin.CENTER,

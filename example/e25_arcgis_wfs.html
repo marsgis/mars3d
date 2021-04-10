@@ -64,32 +64,31 @@
             where: ' 1=1 ',
             minimumLevel: 16,
             symbol: {
+              type: 'billboardP',
               styleOptions: {
                 image: 'img/marker/mark3.png',
-                scale: 1,
-                heightReference: 'NONE',
+                scale: 0.7,
+                verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                clampToGround: true,
                 label: {
                   text: '{NAME}',
                   font_size: 15,
                   color: '#ffffff',
                   outline: true,
                   outlineColor: '#000000',
-                  pixelOffsetY: -50,
-                  heightReference: 'NONE',
+                  pixelOffsetY: -30,
+                  distanceDisplayCondition: true,
+                  distanceDisplayCondition_far: 2000,
+                  distanceDisplayCondition_near: 0,
                 },
               },
-            },
-            //点的聚合配置
-            clustering: {
-              enabled: true,
-              pixelRange: 20,
             },
             popup: '名称：{NAME}<br />地址：{address}',
             show: true,
           },
         ],
-        terrain: false,
       })
+      delete mapOptions.terrain
 
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
@@ -120,6 +119,7 @@
         where: " NAME like '%合肥%' ",
         minimumLevel: changeLevel,
         symbol: {
+          type: 'polygonP',
           styleOptions: {
             color: '#FED976',
             outline: false,

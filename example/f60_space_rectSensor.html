@@ -160,10 +160,10 @@
           angle1: angle1,
           angle2: angle2,
           length: length,
-          heading: Cesium.Math.toRadians(heading),
-          pitch: Cesium.Math.toRadians(pitch),
-          roll: Cesium.Math.toRadians(roll),
-          color: Cesium.Color.fromCssColorString('#00ff00').withAlpha(0.4),
+          heading: heading,
+          pitch: pitch,
+          roll: roll,
+          color: 'rgba(0,255,0,0.4)',
           outline: true,
           topShow: true,
           topSteps: 2,
@@ -193,17 +193,17 @@
       //滑动条
       $('#model_heading').range({
         onChange: function (value, bfb) {
-          rectSensor.heading = Cesium.Math.toRadians(value)
+          rectSensor.heading = value
         },
       })
       $('#model_pitch').range({
         onChange: function (value, bfb) {
-          rectSensor.pitch = Cesium.Math.toRadians(value)
+          rectSensor.pitch = value
         },
       })
       $('#model_roll').range({
         onChange: function (value, bfb) {
-          rectSensor.roll = Cesium.Math.toRadians(value)
+          rectSensor.roll = value
         },
       })
 

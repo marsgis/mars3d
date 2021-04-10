@@ -50,8 +50,7 @@
 
     var map
 
-    var qingtianSkybox = new Cesium.SkyBox({
-      nearGround: true, //近地天空盒
+    var qingtianSkybox = new mars3d.GroundSkyBox({
       sources: {
         positiveX: 'img/skybox_near/qingtian/rightav9.jpg',
         negativeX: 'img/skybox_near/qingtian/leftav9.jpg',
@@ -62,8 +61,7 @@
       },
     })
 
-    var wanxiaSkybox = new Cesium.SkyBox({
-      nearGround: true, //近地天空盒
+    var wanxiaSkybox = new mars3d.GroundSkyBox({
       sources: {
         positiveX: 'img/skybox_near/wanxia/SunSetRight.png',
         negativeX: 'img/skybox_near/wanxia/SunSetLeft.png',
@@ -74,8 +72,7 @@
       },
     })
 
-    var lantianSkybox = new Cesium.SkyBox({
-      nearGround: true, //近地天空盒
+    var lantianSkybox = new mars3d.GroundSkyBox({
       sources: {
         positiveX: 'img/skybox_near/lantian/Right.jpg',
         negativeX: 'img/skybox_near/lantian/Left.jpg',

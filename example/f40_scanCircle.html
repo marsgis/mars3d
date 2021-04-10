@@ -137,7 +137,7 @@
             //扫描材质
             material: new mars3d.material.CircleScanMaterialProperty({
               image: 'img/textures/circleScan.png',
-              color: Cesium.Color.fromCssColorString('#00ff00'),
+              color: '#00ff00',
             }),
             stRotation: new Cesium.CallbackProperty(function (e) {
               _rotation -= 0.1
@@ -159,10 +159,10 @@
             material: new mars3d.material.CircleScanMaterialProperty({
               //扫描材质
               image: 'img/textures/circle_bg.png',
-              color: Cesium.Color.fromCssColorString('#5fc4ee'),
+              color: '#5fc4ee',
             }),
             stRotation: new Cesium.CallbackProperty(function (e) {
-              _rotation -= 0.1
+              _rotation += 0.1
               return _rotation
             }, false),
             classificationType: Cesium.ClassificationType.BOTH,

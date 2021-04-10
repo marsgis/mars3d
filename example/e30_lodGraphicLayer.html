@@ -19,7 +19,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>按网格动态加大数据矢量数据 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>LOD分层分块动态加大数据矢量数据 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <script
       type="text/javascript"
@@ -40,7 +40,6 @@
     <script src="./js/common.js"></script>
     <script type="text/javascript">
       'use script' //开发环境建议开启严格模式
-
       var map
 
       function initMap(options) {
@@ -55,52 +54,46 @@
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
         var lodGraphicLayer = new mars3d.layer.LodGraphicLayer({
-          IdName: 'id', //数据的唯一主键 字段名称
+          IdField: 'id', //数据的唯一主键 字段名称
           minimumLevel: 11, //限定层级，只加载该层级下的数据。[与效率相关的重要参数]
           debuggerTileInfo: true,
-          getDataForGrid: (opts, callback) => {
-            //获取网格内的数据，calback为回调方法，参数传数据数组
+          //根据LOD分块信息去请求对应的Tile瓦块内的数据
+          queryGridData: (grid, callback) => {
             var url = 'http://data.marsgis.cn/server/pointRandom/'
             $.ajax({
               url: url,
               data: {
-                xmin: opts.rectangle.xmin,
-                ymin: opts.rectangle.ymin,
-                xmax: opts.rectangle.xmax,
-                ymax: opts.rectangle.ymax,
+                xmin: grid.extent.xmin,
+                ymin: grid.extent.ymin,
+                xmax: grid.extent.xmax,
+                ymax: grid.extent.ymax,
                 count: 5,
               },
               type: 'get',
               dataType: 'json',
               success: function (data) {
-                callback(opts, data)
+                callback(grid, data) //执行回调，回传数据
               },
               error: function (data) {
                 console.log('ajax请求出错', data)
               },
             })
           },
-          createGraphic: (opts, attributes) => {
-            //根据数据创造entity
+          //根据 attr属性 创建 矢量对象[必须返回Graphic对象]
+          createGraphic(grid, attr) {
+            let height = mars3d.PointUtil.getSurfaceHeight(map.scene, Cesium.Cartesian3.fromDegrees(attr.x, attr.y))
 
-            //添加实体
-            var entity = lodGraphicLayer.dataSource.entities.add({
-              name: attributes.name,
-              position: Cesium.Cartesian3.fromDegrees(attributes.x, attributes.y, 0),
-              billboard: {
-                image: 'img/marker/mark3.png',
-                scale: 0.8,
-                horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-                verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND, // CLAMP_TO_GROUND,
+            var graphic = new mars3d.graphic.ModelPrimitive({
+              position: [attr.x, attr.y, height],
+              style: {
+                url: 'http://data.marsgis.cn/gltf/mars/leida.glb',
+                scale: 1,
+                minimumPixelSize: 40,
               },
-              data: attributes,
             })
+            lodGraphicLayer.addGraphic(graphic)
 
-            return entity
-          },
-          removeGraphic: (enetity) => {
-            lodGraphicLayer.dataSource.entities.remove(enetity)
+            return graphic
           },
         })
         map.addLayer(lodGraphicLayer)

@@ -312,8 +312,8 @@
             label: {
               text: item.name,
               font: '20px 楷体',
-              style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-              fillColor: Cesium.Color.AZURE,
+              color: Cesium.Color.AZURE,
+              outline: true,
               outlineColor: Cesium.Color.BLACK,
               outlineWidth: 2,
               horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
@@ -390,7 +390,7 @@
       graphic.entityGraphic.material = new mars3d.material.LineFlowMaterialProperty({
         color: Cesium.Color.CHARTREUSE,
         image: 'img/textures/lineClr.png',
-        speed: 20, //速度，建议取值范围1-100
+        speed: 20,
       })
 
       map.flyToGraphic(graphic)

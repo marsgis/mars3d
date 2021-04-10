@@ -69,6 +69,10 @@
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
 
+      //创建矢量数据图层
+      var graphicLayer = new mars3d.layer.GraphicLayer()
+      map.addLayer(graphicLayer)
+
       //取数据
       var property = getDynamicProperty()
 
@@ -77,21 +81,10 @@
       var stopTime = times[times.length - 1].clone()
 
       //绘制轨道
-      var entitydd = map.entities.add({
-        availability: new Cesium.TimeIntervalCollection([
-          new Cesium.TimeInterval({
-            start: startTime,
-            stop: stopTime,
-          }),
-        ]),
-        position: property, // 点集
+      var graphic = new mars3d.graphic.PathEntity({
+        position: property,
         orientation: new Cesium.VelocityOrientationProperty(property),
-        model: {
-          uri: 'http://data.marsgis.cn/gltf/mars/weixin.gltf',
-          scale: 1,
-          minimumPixelSize: 90,
-        },
-        path: {
+        style: {
           leadTime: 0,
           resolution: 1,
           material: new Cesium.PolylineGlowMaterialProperty({
@@ -100,28 +93,31 @@
           }),
           width: 10,
         },
+        model: {
+          uri: 'http://data.marsgis.cn/gltf/mars/weixin.gltf',
+          scale: 1,
+          minimumPixelSize: 90,
+        },
       })
-
-      //创建矢量数据图层
-      var graphicLayer = new mars3d.layer.GraphicLayer()
-      map.addLayer(graphicLayer)
+      graphicLayer.addGraphic(graphic)
 
       //视锥体 展示
       var satelliteSensor = new mars3d.graphic.SatelliteSensor({
         position: property,
-        autoHeading: true, //是否自动角度，根据监听的卫星模型
         style: {
           sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
           angle1: 20,
           angle2: 10,
-          pitch: Cesium.Math.toRadians(0),
-          roll: Cesium.Math.toRadians(0),
-          color: Cesium.Color.fromCssColorString('#6ef500').withAlpha(0.5),
+          pitch: 0,
+          roll: 0,
+          color: 'rgba(110,245,0,0.5)',
         },
+        trackedEntity: graphic,
+        autoHeading: true, //是否自动角度，根据trackedEntity监听的卫星模型
       })
       graphicLayer.addGraphic(satelliteSensor)
 
-      satelliteSensor.trackedEntity = entitydd
+      // satelliteSensor.trackedEntity = graphic
     }
 
     function getDynamicProperty() {

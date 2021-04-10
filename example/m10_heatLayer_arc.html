@@ -98,12 +98,13 @@
         { y: 31.831903, x: 117.256958, z: 789.61, heading: 284.2, pitch: -18.2, roll: 359.8 },
       ])
 
+      //创建Graphic图层
+      var graphicLayer = new mars3d.layer.GraphicLayer()
+      map.addLayer(graphicLayer)
+
       $('#chkUnderground').change(function () {
         var val = $(this).is(':checked')
-        for (var i = 0; i < arrEntity.length; i++) {
-          var entity = arrEntity[i]
-          entity.show = val
-        }
+        graphicLayer.show = val
       })
 
       //测试点数据，实际开发时换掉
@@ -131,18 +132,16 @@
       for (var i = 0; i < arrPoints.length; i++) {
         var item = arrPoints[i]
 
-        arrEntity.push(
-          map.entities.add({
-            name: '点' + i,
-            position: Cesium.Cartesian3.fromDegrees(item.lng, item.lat, 90),
-            point: {
-              color: Cesium.Color.fromCssColorString('#ffff00'),
-              pixelSize: 7,
-            },
-            show: false,
-          })
-        )
+        var primitive = new mars3d.graphic.PointPrimitive({
+          position: [item.lng, item.lat, 90],
+          style: {
+            color: '#ffff00',
+            pixelSize: 7,
+          },
+        })
+        graphicLayer.addGraphic(primitive)
       }
+      graphicLayer.show = false
     }
 
     //获取bbox矩形区域内的count个随机点

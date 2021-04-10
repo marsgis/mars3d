@@ -66,10 +66,10 @@
         <tr>
           <td class="nametd">前后侧摆（pitch）</td>
           <td>
-            <input id="model_pitch" type="range" min="-180" max="180" step="0.001" value="5" title="前后侧摆pitch" />
+            <input id="model_pitch" type="range" min="-180" max="180" step="0.001" value="9" title="前后侧摆pitch" />
           </td>
           <td>
-            <input id="model_pitch_2" type="number" min="-180" max="180" step="0.001" value="5" title="前后侧摆pitch" />
+            <input id="model_pitch_2" type="number" min="-180" max="180" step="0.001" value="9" title="前后侧摆pitch" />
           </td>
         </tr>
         <tr>
@@ -232,10 +232,10 @@
             sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
             angle1: angle1,
             angle2: angle2,
-            heading: Cesium.Math.toRadians(heading), //弧度值
-            pitch: Cesium.Math.toRadians(pitch),
-            roll: Cesium.Math.toRadians(roll),
-            color: Cesium.Color.fromCssColorString('#00ffff').withAlpha(0.7),
+            heading: heading, //角度值
+            pitch: pitch,
+            roll: roll,
+            color: 'rgba(0,255,255,0.7)',
           },
           fixedFrameTransform: converter,
           reverse: reverse,
@@ -249,10 +249,10 @@
             angle1: angle1,
             angle2: angle2,
             sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
-            heading: Cesium.Math.toRadians(heading), //弧度值
-            pitch: -Cesium.Math.toRadians(pitch),
-            roll: Cesium.Math.toRadians(roll),
-            color: Cesium.Color.fromCssColorString('#ffff00').withAlpha(0.7),
+            heading: heading, //弧度值
+            pitch: -pitch,
+            roll: roll,
+            color: 'rgba(255,255,0,0.7)',
           },
           fixedFrameTransform: converter,
           reverse: reverse,
@@ -291,7 +291,7 @@
             $('#model_heading_2').val(value)
 
             modelGraphic.heading = value
-            satelliteSensor.heading = Cesium.Math.toRadians(value) //角度使用的是弧度
+            satelliteSensor.heading = value
             satelliteSensor2.heading = satelliteSensor.heading
           },
         })
@@ -300,7 +300,7 @@
           $('#model_heading').val(value)
 
           modelGraphic.heading = value
-          satelliteSensor.heading = Cesium.Math.toRadians(value) //角度使用的是弧度
+          satelliteSensor.heading = value
           satelliteSensor2.heading = satelliteSensor.heading
         })
 
@@ -309,7 +309,7 @@
             $('#model_pitch_2').val(value)
 
             modelGraphic.pitch = value
-            satelliteSensor.pitch = Cesium.Math.toRadians(value)
+            satelliteSensor.pitch = value
             satelliteSensor2.pitch = -satelliteSensor.pitch
           },
         })
@@ -318,7 +318,7 @@
           $('#model_pitch').val(value)
 
           modelGraphic.pitch = value
-          satelliteSensor.pitch = Cesium.Math.toRadians(value)
+          satelliteSensor.pitch = value
           satelliteSensor2.pitch = -satelliteSensor.pitch
         })
 
@@ -327,7 +327,7 @@
             $('#model_roll_2').val(value)
 
             modelGraphic.roll = value
-            satelliteSensor.roll = Cesium.Math.toRadians(value)
+            satelliteSensor.roll = value
             satelliteSensor2.roll = satelliteSensor.roll
           },
         })
@@ -336,7 +336,7 @@
           $('#model_roll').val(value)
 
           modelGraphic.roll = value
-          satelliteSensor.roll = Cesium.Math.toRadians(value)
+          satelliteSensor.roll = value
           satelliteSensor2.roll = satelliteSensor.roll
         })
 
@@ -370,15 +370,12 @@
 
         $('#model_x').change(function () {
           updatePosition()
-          locate()
         })
         $('#model_y').change(function () {
           updatePosition()
-          locate()
         })
         $('#model_z').change(function () {
           updatePosition()
-          locate()
         })
 
         $('input[type=radio][name=shadingMaterials]').change(function () {
@@ -407,7 +404,7 @@
       }
 
       function locate() {
-        map.flyToGraphic(modelGraphic)
+        map.flyToGraphic(modelGraphic, { radius: modelGraphic.height * 2 })
       }
     </script>
   </body>

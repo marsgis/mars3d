@@ -75,19 +75,24 @@
       map.addLayer(tileLayer)
 
       var count = 0
-      tileLayer.on(mars3d.EventType.loadTileStart, function (event) {
+      tileLayer.on(mars3d.EventType.addTile, function (event) {
         count++
-        console.log(`${count},开始请求加载瓦片: L:${event.imagery.level},X:${event.imagery.x},Y:${event.imagery.y}`)
+        console.log(`${count},开始请求加载瓦片: L:${event.level},X:${event.x},Y:${event.y}`)
       })
 
-      tileLayer.on(mars3d.EventType.loadTileEnd, function (event) {
+      tileLayer.on(mars3d.EventType.addTileSuccess, function (event) {
         count--
-        console.log(`${count},开始请求加载瓦片: L:${event.imagery.level},X:${event.imagery.x},Y:${event.imagery.y}`)
+        console.log(`${count},开始请求加载瓦片: L:${event.level},X:${event.x},Y:${event.y}`)
       })
 
-      tileLayer.on(mars3d.EventType.loadTileError, function (event) {
+      tileLayer.on(mars3d.EventType.addTileError, function (event) {
         count--
-        console.log(`${count},开始请求加载瓦片: L:${event.imagery.level},X:${event.imagery.x},Y:${event.imagery.y}`)
+        console.log(`${count},开始请求加载瓦片: L:${event.level},X:${event.x},Y:${event.y}`)
+      })
+
+      //卸载移除了瓦片
+      tileLayer.on(mars3d.EventType.removeTile, function (event) {
+        console.log(`卸载移除了瓦片: L:${event.level},X:${event.x},Y:${event.y}`)
       })
 
       //wms、arcgis等矢量发布类型图层支持click事件

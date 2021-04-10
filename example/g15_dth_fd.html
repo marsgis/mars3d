@@ -78,12 +78,11 @@
         url: 'http://data.marsgis.cn/file/geojson/draw-dth-wm.json',
         symbol: {
           styleOptions: {
-            clampToGround: true,
             label: {
               text: '{name}',
 
-              heightReference: 0,
               height: 25, //单体化面没有高度，所以中心点文字需要指定一个高度值。
+              // clampToGround: true,
 
               opacity: 1,
               font_size: 22,

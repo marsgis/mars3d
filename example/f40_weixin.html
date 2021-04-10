@@ -89,7 +89,7 @@
           material: Cesium.Material.fromType(mars3d.material.CircleWaveType, {
             color: Cesium.Color.fromCssColorString('#02ff00'),
             count: 1, //圆圈数量
-            speed: 10, //速度，建议取值范围1-100
+            speed: 10,
           }),
           faceForward: false, // 当绘制的三角面片法向不能朝向视点时，自动翻转法向，从而避免法向计算后发黑等问题
           closed: true, // 是否为封闭体，实际上执行的是 是否进行背面裁剪

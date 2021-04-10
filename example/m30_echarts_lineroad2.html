@@ -53,6 +53,8 @@
 
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
+        map.basemap = '2017' //蓝色底图
+
         $.getJSON('http://data.marsgis.cn/file/apidemo/bjgj.json', function (data) {
           //创建Echarts图层
           createEchartsLayer(data)
@@ -65,6 +67,10 @@
 
         var echartsLayer = new mars3d.layer.EchartsLayer(options)
         map.addLayer(echartsLayer)
+
+        $(window).resize(function () {
+          echartsLayer.resize()
+        })
       }
 
       function getEchartsOption(data) {

@@ -461,47 +461,45 @@
       }
 
       function testShading() {
-        //卫星朝向的中线地面点
-        map.entities.add({
-          polyline: {
-            positions: new Cesium.CallbackProperty(function (time) {
-              var pt1 = roamLine.position,
-                pt2 = centerPosion
-              if (!pt1 || !pt2) {
-                return []
-              }
+        //创建矢量数据图层
+        var graphicLayer = new mars3d.layer.GraphicLayer()
+        map.addLayer(graphicLayer)
 
-              return [pt1, pt2]
-            }, false),
+        //卫星朝向的中线地面点
+        let line1 = new mars3d.graphic.PolylineEntity({
+          positions: new Cesium.CallbackProperty(function (time) {
+            var pt1 = roamLine.position,
+              pt2 = centerPosion
+            if (!pt1 || !pt2) {
+              return []
+            }
+
+            return [pt1, pt2]
+          }, false),
+          style: {
             width: 2,
+            color: '#ff0000',
             arcType: Cesium.ArcType.NONE,
-            material: Cesium.Color.fromCssColorString('#ff0000'),
           },
         })
+        graphicLayer.addGraphic(line1)
 
         //卫星边线2点
-        map.entities.add({
-          // polygon: {
-          //     hierarchy: new Cesium.CallbackProperty(function (time) {
-          //         var positions = getFourShadingPosition({ angle: 20  });
-          //         return new Cesium.PolygonHierarchy(positions)
-          //     }, false),
-          //     material: Cesium.Color.fromCssColorString("#0000ff").withAlpha(0.2)
-          // }
-          polyline: {
-            positions: new Cesium.CallbackProperty(function (time) {
-              var positions = getFourShadingPosition({
-                angle: 2.4,
-                angle2: 1.4,
-              })
-              return positions
-            }, false),
-            clampToGround: true,
+        let graphicTriangle = new mars3d.graphic.PolylineEntity({
+          positions: new Cesium.CallbackProperty(function (time) {
+            var positions = getFourShadingPosition({
+              angle: 2.4,
+              angle2: 1.4,
+            })
+            return positions
+          }, false),
+          style: {
             width: 2,
-            // arcType: Cesium.ArcType.NONE,
-            material: Cesium.Color.fromCssColorString('#0000ff'),
+            color: '#0000ff',
+            clampToGround: true,
           },
         })
+        graphicLayer.addGraphic(graphicTriangle)
 
         setInterval(function () {
           if (!map.clock.shouldAnimate || !thisPositions) {

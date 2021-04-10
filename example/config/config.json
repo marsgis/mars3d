@@ -1,5 +1,8 @@
 ﻿{
   "map3d": {
+    "templateValues":{
+      "dataServer":"http://data.marsgis.cn"
+    },
     "scene": {
       "center": { "lat": 30.526361, "lng": 116.335987, "alt": 45187, "heading": 0, "pitch": -45 },
       "scene3DOnly": false,
@@ -54,7 +57,7 @@
       }
     },
     "terrain": {
-      "url": "http://data.marsgis.cn/terrain",
+      "url": "{dataServer}/terrain",
       "show": true
     },
     "basemaps": [
@@ -183,7 +186,7 @@
         "name": "离线地图  (供参考)",
         "type": "xyz",
         "icon": "http://mars3d.cn/example/img/basemaps/mapboxSatellite.png",
-        "url": "http://data.marsgis.cn/maptile/wgs3857img/{z}/{x}/{y}.jpg",
+        "url": "{dataServer}/maptile/wgs3857img/{z}/{x}/{y}.jpg",
         "minimumLevel": 1,
         "maximumLevel": 18,
         "minimumTerrainLevel": 1,

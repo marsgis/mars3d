@@ -89,14 +89,14 @@
         //===========================================================
         //取数据
         var property = getDynamicProperty(function (timeInterval) {
-          entity.availability = new Cesium.TimeIntervalCollection([new Cesium.TimeInterval(timeInterval)])
+          graphic.entity.availability = new Cesium.TimeIntervalCollection([new Cesium.TimeInterval(timeInterval)])
         })
 
         var times = property._property._times
         var startTime = times[0].clone()
         var stopTime = times[times.length - 1].clone()
 
-        var entity = map.entities.add({
+        var graphic = new mars3d.graphic.PathEntity({
           availability: new Cesium.TimeIntervalCollection([
             new Cesium.TimeInterval({
               start: startTime,
@@ -105,12 +105,7 @@
           ]),
           position: property, // 点集
           orientation: new Cesium.VelocityOrientationProperty(property),
-          model: {
-            uri: 'http://data.marsgis.cn/gltf/mars/weixin.gltf',
-            scale: 1,
-            minimumPixelSize: 150,
-          },
-          path: {
+          style: {
             leadTime: 0,
             trailTime: 2800,
             resolution: 1,
@@ -120,7 +115,14 @@
             }),
             width: 10,
           },
+          model: {
+            uri: 'http://data.marsgis.cn/gltf/mars/weixin.gltf',
+            scale: 1,
+            minimumPixelSize: 150,
+          },
         })
+        graphicLayer.addGraphic(graphic)
+
         //===========================================================
 
         //视锥体 展示
@@ -131,17 +133,15 @@
             sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
             angle1: 20,
             angle2: 10,
-            rotation: {
-              heading: Cesium.Math.toRadians(0),
-              pitch: Cesium.Math.toRadians(0),
-              roll: Cesium.Math.toRadians(0),
-            },
-            color: Cesium.Color.fromCssColorString('#6ef500').withAlpha(0.5),
+            heading: 0,
+            pitch: 0,
+            roll: 0,
+            color: 'rgba(110,245,0,0.5)',
           },
         })
         graphicLayer.addGraphic(satelliteSensor)
 
-        satelliteSensor.trackedEntity = entity //本身跟随卫星
+        satelliteSensor.trackedEntity = graphic //本身跟随卫星
 
         //地面站 展示
         var localStart = Cesium.Cartesian3.fromDegrees(109.51856, 18.258736, 2)

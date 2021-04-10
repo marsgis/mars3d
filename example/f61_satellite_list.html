@@ -205,40 +205,42 @@
       if (!position) {
         return
       }
-
       var thisIsInPoly = dmfwGraphic.isInPoly(position)
       if (thisIsInPoly !== weixin._lastInPoly) {
         if (thisIsInPoly) {
           //开始进入区域内
           console.log(weixin.name + '开始进入区域内')
 
-          weixin.coneShow = true //打开视锥体
-          weixin.lineToDMZ = map.entities.add({
-            polyline: {
-              positions: new Cesium.CallbackProperty(function (time) {
-                var pots = weixin.position
-                if (!pots) {
-                  return []
-                }
-                return [pots, dmfwGraphic.positionShow]
-              }, false),
-              arcType: Cesium.ArcType.NONE,
+          let lineToDMZ = new mars3d.graphic.PolylineEntity({
+            positions: new Cesium.CallbackProperty(function (time) {
+              var pots = weixin.position
+              if (!pots) {
+                return []
+              }
+              return [pots, dmfwGraphic.positionShow]
+            }, false),
+            style: {
               width: 7,
+              //动画线材质
               material: new mars3d.material.LineFlowMaterialProperty({
-                //动画线材质
-                color: Cesium.Color.AQUA,
-                duration: 500, //时长，控制速度
                 url: './img/textures/arrow2.png',
+                color: Cesium.Color.AQUA,
                 repeat: new Cesium.Cartesian2(15, 1),
+                speed: 60, //时长，控制速度
               }),
+              arcType: Cesium.ArcType.NONE,
             },
           })
+          map.graphicLayer.addGraphic(lineToDMZ)
+
+          weixin.coneShow = true //打开视锥体
+          weixin.lineToDMZ = lineToDMZ
         } else {
           //离开区域
           console.log(weixin.name + '离开区域')
 
           weixin.coneShow = false //关闭视锥体
-          map.entities.remove(weixin.lineToDMZ)
+          map.graphicLayer.removeGraphic(weixin.lineToDMZ)
           delete weixin.lineToDMZ
         }
 

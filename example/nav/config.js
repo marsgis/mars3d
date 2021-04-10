@@ -528,10 +528,10 @@ var exampleConfig = {
         name: '其他矢量图层',
         content: [
           {
-            name: '大数据点Lod加载',
+            name: '矢量数据Lod加载',
             version: '1.7',
-            thumbnail: 'e30_lodEntityLayer.jpg',
-            fileName: 'e30_lodEntityLayer',
+            thumbnail: 'e30_lodGraphicLayer.jpg',
+            fileName: 'e30_lodGraphicLayer',
           },
           {
             name: '高德POI图层',

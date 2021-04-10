@@ -266,12 +266,12 @@
           switch (selectType) {
             default:
               //按城市
-              var dnnm = $('#txtCity').data('citypicker').getCode()
-              // var dmmc = $("#txtCity").data('citypicker').getVal();
+              //var dnnm = $('#txtCity').data('citypicker').getCode()
+              var dmmc = $('#txtCity').data('citypicker').getName()
 
               loadData({
                 page: 1,
-                city: dnnm,
+                city: dmmc,
                 citylimit: true,
               })
               break
@@ -285,6 +285,7 @@
                   [extent.xmax, extent.ymax],
                   [extent.xmax, extent.ymin],
                 ],
+                limit: true,
               })
               break
             case '3': //按范围
@@ -295,6 +296,7 @@
               loadData({
                 page: 1,
                 graphic: drawGraphic,
+                limit: true,
               })
               break
           }
@@ -441,8 +443,8 @@
               label: {
                 text: item.name,
                 font: '20px 楷体',
-                style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-                fillColor: Cesium.Color.AZURE,
+                color: Cesium.Color.AZURE,
+                outline: true,
                 outlineColor: Cesium.Color.BLACK,
                 outlineWidth: 2,
                 horizontalOrigin: Cesium.HorizontalOrigin.CENTER,

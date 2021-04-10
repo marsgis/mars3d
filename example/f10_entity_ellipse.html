@@ -140,7 +140,6 @@
       addGraphic_03(graphicLayer)
       addGraphic_04(graphicLayer)
       addGraphic_05(graphicLayer)
-      addGraphic_06(graphicLayer)
     }
 
     //
@@ -172,9 +171,9 @@
           semiMajorAxis: 1500, //长半轴 半径
           semiMinorAxis: 900, // 短半轴 半径
           material: new mars3d.material.CircleWaveMaterialProperty({
-            color: Cesium.Color.fromCssColorString('#ff0000'),
+            color: '#ff0000',
             count: 1, //单个圆圈
-            speed: 40, //速度，建议取值范围1-100
+            speed: 40,
           }),
         },
       })
@@ -193,11 +192,10 @@
           //扫描材质
           material: new mars3d.material.CircleScanMaterialProperty({
             image: 'img/textures/circleScan.png',
-            color: Cesium.Color.fromCssColorString('#5fc4ee'),
+            color: '#5fc4ee',
           }),
           stRotation: new Cesium.CallbackProperty(function (e) {
-            _rotation += 0.1
-            _rotation %= 360
+            _rotation -= 0.1
             return _rotation
           }, false),
           classificationType: Cesium.ClassificationType.BOTH,
@@ -248,31 +246,10 @@
         style: {
           semiMajorAxis: 1500, //长半轴 半径
           semiMinorAxis: 900, // 短半轴 半径
-          extrudedHeight: 1000.0,
+          diffHeight: 1000.0,
           color: '#00ff00',
           opacity: 0.3,
           rotationDegree: 45,
-        },
-      })
-      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
-    }
-
-    function addGraphic_06(graphicLayer) {
-      var _rotation = Math.random()
-      var graphic = new mars3d.graphic.EllipseEntity({
-        position: new mars3d.LatLngPoint(116.406841, 30.948774, 876.37),
-        style: {
-          semiMajorAxis: 1000, //长半轴 半径
-          semiMinorAxis: 700, // 短半轴 半径
-          material: new mars3d.material.CircleScanMaterialProperty({
-            image: 'img/textures/circle_bg.png',
-            color: Cesium.Color.fromCssColorString('#5fc4ee'),
-          }),
-          stRotation: new Cesium.CallbackProperty(function (e) {
-            _rotation += 0.1
-            _rotation %= 360
-            return _rotation
-          }, false),
         },
       })
       graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)

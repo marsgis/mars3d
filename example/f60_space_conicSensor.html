@@ -156,12 +156,11 @@
           style: {
             angle: angle,
             length: length,
-            heading: Cesium.Math.toRadians(heading),
-            pitch: Cesium.Math.toRadians(pitch),
-            roll: Cesium.Math.toRadians(roll),
-            color: Cesium.Color.fromCssColorString('#ff0000').withAlpha(0.4),
-            outline: true,
-            outlineColor: Cesium.Color.fromCssColorString('#ffffff').withAlpha(0.9),
+            heading: heading,
+            pitch: pitch,
+            roll: roll,
+            color: 'rgba(255,0,0,0.4)',
+            outlineColor: 'rgba(255,255,255,0.9)',
           },
         })
         graphicLayer.addGraphic(conicSensor)
@@ -188,17 +187,17 @@
         //滑动条
         $('#model_heading').range({
           onChange: function (value, bfb) {
-            conicSensor.heading = Cesium.Math.toRadians(value)
+            conicSensor.heading = value
           },
         })
         $('#model_pitch').range({
           onChange: function (value, bfb) {
-            conicSensor.pitch = Cesium.Math.toRadians(value)
+            conicSensor.pitch = value
           },
         })
         $('#model_roll').range({
           onChange: function (value, bfb) {
-            conicSensor.roll = Cesium.Math.toRadians(value)
+            conicSensor.roll = value
           },
         })
 

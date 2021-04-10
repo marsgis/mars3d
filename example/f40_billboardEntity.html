@@ -168,8 +168,8 @@
               label: {
                 text: item.text,
                 font_size: 19,
-                style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-                fillColor: Cesium.Color.AZURE,
+                color: Cesium.Color.AZURE,
+                outline: true,
                 outlineColor: Cesium.Color.BLACK,
                 outlineWidth: 2,
                 horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
@@ -180,32 +180,6 @@
             },
             attr: item,
           })
-
-          //如果用point，可以切换到下面注释的PointEntity方式
-          // var graphic = new mars3d.graphic.PointEntity({
-          //   position: new mars3d.LatLngPoint(item.lng, item.lat, item.z || 0),
-          //   style: {
-          //     color: Cesium.Color.fromCssColorString('#3388ff'),
-          //     pixelSize: 10,
-          //     outlineColor: Cesium.Color.fromCssColorString('#ffffff'),
-          //     outlineWidth: 2,
-          //     clampToGround: true,
-          //     scaleByDistance: new Cesium.NearFarScalar(1.5e2, 1.0, 8.0e6, 0.2),
-          //     label: {
-          //       text: item.text,
-          //       font_size: 17,
-          //       style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-          //       fillColor: Cesium.Color.AZURE,
-          //       outlineColor: Cesium.Color.BLACK,
-          //       outlineWidth: 2,
-          //       horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
-          //       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-          //       pixelOffset: new Cesium.Cartesian2(10, 0), //偏移量
-          //       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 80000),
-          //     },
-          //   },
-          //   attr: item,
-          // })
 
           graphicLayer.addGraphic(graphic)
         }

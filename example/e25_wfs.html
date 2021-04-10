@@ -47,7 +47,6 @@
         scene: {
           center: { y: 31.815668, x: 117.216449, z: 818, heading: 31, pitch: -29, roll: 0 },
         },
-
         layers: [
           {
             name: '合肥教育点',
@@ -61,37 +60,36 @@
             minimumLevel: 13,
             debuggerTileInfo: false,
             symbol: {
+              type: 'billboardP',
               styleOptions: {
                 image: 'img/marker/mark1.png',
-                scale: 1,
+                scale: 0.7,
+                verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
                 scaleByDistance: true,
                 scaleByDistance_far: 20000,
                 scaleByDistance_farValue: 0.5,
                 scaleByDistance_near: 1000,
                 scaleByDistance_nearValue: 1,
+                clampToGround: true,
                 label: {
                   text: '{项目名称}',
                   font_size: 15,
                   color: '#ffffff',
                   outline: true,
                   outlineColor: '#000000',
-                  pixelOffsetY: -50,
+                  pixelOffsetY: -30,
                   distanceDisplayCondition: true,
                   distanceDisplayCondition_far: 2000,
                   distanceDisplayCondition_near: 0,
                 },
               },
             },
-            clustering: {
-              //点的聚合配置
-              enabled: true,
-              pixelRange: 20,
-            },
             popup: 'all',
             show: true,
           },
         ],
       })
+      delete mapOptions.terrain
 
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
@@ -126,6 +124,7 @@
         },
         minimumLevel: changeLevel,
         symbol: {
+          type: 'polygonP',
           styleOptions: {
             color: '#00469c',
             outline: false,

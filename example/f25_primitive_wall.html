@@ -20,8 +20,12 @@
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
     <title>Wall 墙 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-    <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+    ></script>
 
     <link href="css/style.css" rel="stylesheet" />
   </head>
@@ -86,6 +90,7 @@
         addGraphic_a6(graphicLayer)
         addGraphic_a7(graphicLayer)
         addGraphic_a8(graphicLayer)
+        addGraphic_a9(graphicLayer)
       }
 
       function addGraphic_a1(graphicLayer) {
@@ -183,8 +188,6 @@
               image: 'img/textures/fence.png',
               axisY: true,
               color: Cesium.Color.fromCssColorString('#ff0000'),
-              image2: 'img/textures/tanhao.png',
-              color2: Cesium.Color.fromCssColorString('#ffff00'),
               speed: 10, //速度，建议取值范围1-100
             }),
           },
@@ -206,6 +209,7 @@
               image: 'img/textures/fence.png',
               axisY: true,
               color: Cesium.Color.fromCssColorString('#ff0000'),
+              hasImage2: true,
               image2: 'img/textures/tanhao.png',
               color2: Cesium.Color.fromCssColorString('#ffff00'),
               speed: 10, //速度，建议取值范围1-100
@@ -261,6 +265,34 @@
       }
 
       function addGraphic_a8(graphicLayer) {
+        var primitive = new mars3d.graphic.WallPrimitive({
+          positions: [
+            [117.251382, 31.824055, 28.4],
+            [117.278989, 31.819766, 27.3],
+            [117.279566, 31.799699, 3.9],
+            [117.265249, 31.797702, 26.3],
+            [117.245146, 31.811783, 29],
+          ],
+          style: {
+            closure: true,
+            diffHeight: 500,
+            material: Cesium.Material.fromType(mars3d.material.WallScrollType, {
+              image: 'img/textures/fence.png',
+              color: Cesium.Color.CHARTREUSE,
+              count: 3,
+              speed: 20,
+            }),
+          },
+        })
+        graphicLayer.addGraphic(primitive)
+        //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+
+        //entity转geojson
+        var geojson = primitive.toGeoJSON()
+        console.log(geojson)
+      }
+
+      function addGraphic_a9(graphicLayer) {
         //显示合肥市边界
         $.getJSON('http://data.marsgis.cn/file/geojson/hefei.json', function (feature) {
           var coordinates = feature.geometry.coordinates[0]

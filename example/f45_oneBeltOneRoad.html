@@ -218,8 +218,8 @@
                 text: item.name,
                 font_size: 17,
                 font_family: '楷体',
-                style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-                fillColor: Cesium.Color.WHITE,
+                color: Cesium.Color.WHITE,
+                outline: true,
                 outlineColor: Cesium.Color.BLACK,
                 outlineWidth: 2,
                 horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
@@ -252,7 +252,7 @@
             image: 'img/textures/LinkPulse.png',
             color: options.color,
             repeat: new Cesium.Cartesian2(10.0, 1.0),
-            speed: 2, //速度，建议取值范围1-100
+            speed: 2,
           }),
         },
       })

@@ -135,9 +135,9 @@
           var p3 = Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height3 + height2 + height1 / 2)
 
           // 添加柱体
-          createZT(p1, height3, Cesium.Color.fromCssColorString('#63AEFF'), html)
-          createZT(p2, height2, Cesium.Color.fromCssColorString('#FFB861'), html)
-          createZT(p3, height1, Cesium.Color.fromCssColorString('#FF6D5D'), html)
+          createZT(p1, height3, '#63AEFF', html)
+          createZT(p2, height2, '#FFB861', html)
+          createZT(p3, height1, '#FF6D5D', html)
 
           // 添加文字
           var primitive = new mars3d.graphic.LabelPrimitive({
@@ -146,9 +146,9 @@
               text: numall,
               font_size: 18,
               font_family: '楷体',
-              style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-              fillColor: Cesium.Color.fromCssColorString('#00ff00'),
-              outlineColor: Cesium.Color.BLACK,
+              color: '#00ff00',
+              outline: true,
+              outlineColor: '#000000',
               outlineWidth: 1,
               horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
               verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
@@ -168,7 +168,7 @@
             length: len,
             topRadius: 6000.0,
             bottomRadius: 6000.0,
-            material: color,
+            color: color,
           },
         })
         graphicLayer.addGraphic(graphic)

@@ -39,6 +39,11 @@
     <div class="infoview">
       <div>
         图层状态：
+
+        <div class="checkbox checkbox-primary checkbox-inline">
+          <input id="chkShow" class="styled" type="checkbox" checked />
+          <label for="chkShow"> 显示隐藏 </label>
+        </div>
         <div class="checkbox checkbox-primary checkbox-inline">
           <input id="chkPopup" class="styled" type="checkbox" checked />
           <label for="chkPopup"> Popup绑定 </label>
@@ -129,6 +134,7 @@
         addGraphic_a6(graphicLayer)
         addGraphic_a7(graphicLayer)
         addGraphic_a8(graphicLayer)
+        addGraphic_a9(graphicLayer)
       }
 
       //取区域内的随机图标
@@ -156,7 +162,10 @@
           ],
           style: {
             width: 4,
-            color: Cesium.Color.YELLOW,
+            material: Cesium.Material.fromType(mars3d.material.LineTrailType, {
+              color: Cesium.Color.CHARTREUSE,
+              speed: 5,
+            }),
           },
         })
         graphicLayer.addGraphic(primitive)
@@ -230,7 +239,7 @@
             material: Cesium.Material.fromType(mars3d.material.LineFlowType, {
               color: Cesium.Color.fromCssColorString('#1a9850'),
               image: 'img/textures/ArrowOpacity.png',
-              speed: 30, //速度，建议取值范围1-100
+              speed: 10,
             }),
           },
         })
@@ -252,7 +261,7 @@
               axisY: false,
               repeat: new Cesium.Cartesian2(20.0, 1.0),
               color: Cesium.Color.fromCssColorString('#ffff00'),
-              speed: 60, //速度，建议取值范围1-100
+              speed: 40,
             }),
           },
         })
@@ -291,7 +300,7 @@
             material: Cesium.Material.fromType(mars3d.material.LineFlowType, {
               color: Cesium.Color.CHARTREUSE,
               image: 'img/textures/lineClr.png',
-              speed: 25, //速度，建议取值范围1-100
+              speed: 15,
             }),
           },
         })
@@ -310,11 +319,34 @@
           style: {
             width: 5,
             closure: true,
-            color: '#00ffff',
+            material: Cesium.Material.fromType(mars3d.material.LineFlickerType, {
+              color: new Cesium.Color(0.0, 1.0, 0.0, 0.7),
+              speed: 5,
+            }),
           },
         })
         graphicLayer.addGraphic(primitive)
         //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      }
+
+      function addGraphic_a9(graphicLayer) {
+        let graphic = new mars3d.graphic.PolylinePrimitive({
+          positions: [
+            [117.208284, 31.809663, 36.2],
+            [117.221568, 31.793622, 32.7],
+            [117.271391, 31.797771, 24.3],
+          ],
+          style: {
+            width: 5,
+            material: Cesium.Material.fromType(mars3d.material.LineFlowColorType, {
+              color: Cesium.Color.fromCssColorString('#00ffff'),
+              speed: 10,
+              percent: 0.15,
+              alpha: 0.2,
+            }),
+          },
+        })
+        graphicLayer.addGraphic(graphic)
       }
     </script>
   </body>

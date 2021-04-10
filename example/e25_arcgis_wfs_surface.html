@@ -74,18 +74,18 @@
             where: " NAME like '%大学%' ",
             minimumLevel: 15,
             symbol: {
+              type: 'billboardP',
               styleOptions: {
                 image: 'img/marker/mark3.png',
-                scale: 1,
-                heightReference: 'NONE',
+                scale: 0.7,
+                verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
                 label: {
                   text: '{NAME}',
                   font_size: 15,
                   color: '#ffffff',
                   outline: true,
                   outlineColor: '#000000',
-                  pixelOffsetY: -50,
-                  heightReference: 'NONE',
+                  pixelOffsetY: -30,
                 },
               },
             },
@@ -102,18 +102,18 @@
       var layerPoint = map.getLayer('兴趣点', 'name')
       layerPoint.on(mars3d.EventType.addGraphic, function (event) {
         //添加entity的回调，方便自定义控制。
-        updateAutoSurfaceHeight(event.czmObject)
+        updateAutoSurfaceHeight(event.graphic)
       })
     }
 
     //点的自动贴地处理
-    function updateAutoSurfaceHeight(entity) {
-      if (!entity.position) {
+    function updateAutoSurfaceHeight(graphic) {
+      if (!graphic.position) {
         return
       }
 
       //点贴模型测试
-      var position = entity.position.getValue()
+      var position = graphic.position
       position = mars3d.PointUtil.getSurfaceHeight(map.scene, position, {
         asyn: true, //是否异步求准确高度
         has3dtiles: true, //是否先求贴模型上（无模型时改为false，提高效率）
@@ -121,7 +121,7 @@
           console.log('原始高度为：' + cartOld.height.toFixed(2) + ',贴地高度：' + newHeight.toFixed(2))
 
           var positionNew = Cesium.Cartesian3.fromRadians(cartOld.longitude, cartOld.latitude, newHeight)
-          entity.position.setValue(positionNew)
+          graphic.position = positionNew
         },
       })
     }

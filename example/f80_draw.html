@@ -220,29 +220,6 @@
         stopEditing()
       })
 
-      ////编辑时拖拽点颜色（修改内部默认值）
-      // mars3d.graphic.DrawUtil.PointColor.Control = Cesium.Color.fromCssColorString('#1c197d') //位置控制拖拽点
-      // mars3d.graphic.DrawUtil.PointColor.MoveHeight = Cesium.Color.fromCssColorString('#9500eb') //上下移动高度的拖拽点
-      // mars3d.graphic.DrawUtil.PointColor.EditAttr = Cesium.Color.fromCssColorString('#f73163') //辅助修改属性（如半径）的拖拽点
-      // mars3d.graphic.DrawUtil.PointColor.AddMidPoint = Cesium.Color.fromCssColorString('#04c2c9').withAlpha(0.3) //增加新点，辅助拖拽点
-
-      ////标绘时的tooltip（修改内部默认值）
-      // mars3d.graphic.DrawUtil.message.draw.point.start = '单击 完成绘制'
-      // mars3d.graphic.DrawUtil.message.draw.poly.start = '单击 开始绘制'
-      // mars3d.graphic.DrawUtil.message.draw.poly.cont = '单击增加点，右击删除点'
-      // mars3d.graphic.DrawUtil.message.draw.poly.end = '单击增加点，右击删除点<br/>双击完成绘制'
-      // mars3d.graphic.DrawUtil.message.draw.poly.end2 = '单击完成绘制'
-      // mars3d.graphic.DrawUtil.message.edit.start = '单击后 激活编辑'
-      // mars3d.graphic.DrawUtil.message.edit.end = '释放后 完成修改'
-      // mars3d.graphic.DrawUtil.message.dragger.def = '拖动 修改位置' //默认拖拽时提示
-      // mars3d.graphic.DrawUtil.message.dragger.addMidPoint = '拖动 增加点'
-      // mars3d.graphic.DrawUtil.message.dragger.moveHeight = '拖动 修改高度'
-      // mars3d.graphic.DrawUtil.message.dragger.editRadius = '拖动 修改半径'
-      // mars3d.graphic.DrawUtil.message.dragger.editHeading = '拖动 修改方向'
-      // mars3d.graphic.DrawUtil.message.dragger.editScale = '拖动 修改缩放比例'
-      // mars3d.graphic.DrawUtil.message.del.def = '<br/>右击 删除该点'
-      // mars3d.graphic.DrawUtil.message.del.min = '无法删除，点数量不能少于'
-
       $('#btnSaveKML').click(function () {
         if (graphicLayer.length === 0) {
           window.layer.msg('当前没有标注任何数据，无需保存！')
