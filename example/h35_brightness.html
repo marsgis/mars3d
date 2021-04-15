@@ -81,7 +81,7 @@
             url: 'http://data.marsgis.cn/file/geojson/chendu-daolu.json',
             symbol: {
               styleOptions: {
-                lineType: 'glow',
+                materialType: 'PolylineGlow',
                 glowPower: 0.1,
                 color: '#FF4500',
                 width: 15,
@@ -92,10 +92,11 @@
             show: true,
           },
           {
-            type: 'water',
+            type: 'geojson',
             name: '河流(面状)特效',
             url: 'http://data.marsgis.cn/file/geojson/chendu-heliu.json',
             symbol: {
+              type: 'water',
               styleOptions: {
                 normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
                 frequency: 5000.0, // 控制波数的数字。

@@ -176,8 +176,8 @@
           }, false),
           style: {
             arcType: Cesium.ArcType.NONE,
-            material: new Cesium.PolylineDashMaterialProperty({
-              color: Cesium.Color.fromCssColorString('#ff0000'),
+            material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolylineDash, {
+              color: '#ff0000',
             }),
             width: 1,
           },

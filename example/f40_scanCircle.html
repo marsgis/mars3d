@@ -118,7 +118,7 @@
           position: [121.522454, 31.267553, 61.9],
           style: {
             radius: 2000,
-            material: Cesium.Material.fromType(mars3d.material.ScanLineType, {
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.ScanLine, {
               color: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
               speed: 10,
             }),
@@ -135,7 +135,7 @@
           style: {
             radius: 1500.0,
             //扫描材质
-            material: new mars3d.material.CircleScanMaterialProperty({
+            material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleScan, {
               image: 'img/textures/circleScan.png',
               color: '#00ff00',
             }),
@@ -156,7 +156,7 @@
           position: new mars3d.LatLngPoint(121.526215, 31.245237, 123.5),
           style: {
             radius: 700.0,
-            material: new mars3d.material.CircleScanMaterialProperty({
+            material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleScan, {
               //扫描材质
               image: 'img/textures/circle_bg.png',
               color: '#5fc4ee',

@@ -157,7 +157,7 @@
         style: {
           plane: new Cesium.Plane(Cesium.Cartesian3.UNIT_Z, 0.0),
           dimensions: new Cesium.Cartesian2(1000.0, 1000.0),
-          material: new Cesium.ImageMaterialProperty({
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Image, {
             image: 'img/textures/movingRiver.png',
             transparent: true,
           }),
@@ -215,12 +215,18 @@
       var geojson = graphic.toGeoJSON()
       console.log(geojson)
 
-      //geojson转entity
-      var graphic1Copy = mars3d.graphic.PlaneEntity.fromGeoJSON(geojson)
-      graphic1Copy.position = [116.301991, 30.933872, 624.03]
-      graphic1Copy.label.text = '我是转换后生成的'
-      graphicLayer.addGraphic(graphic1Copy)
-      console.log(graphic1Copy) //还可以另外一种写法: graphic.addTo(graphicLayer)
+      addGeoJson(geojson, graphicLayer)
+    }
+
+    //添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
+    function addGeoJson(geojson, graphicLayer) {
+      var graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0]
+      delete graphicCopy.attr
+      //新的坐标
+      graphicCopy.position = [116.301991, 30.933872, 624.03]
+      graphicCopy.style.label = graphicCopy.style.label || {}
+      graphicCopy.style.label.text = '我是转换后生成的'
+      graphicLayer.addGraphic(graphicCopy)
     }
   </script>
 </body>

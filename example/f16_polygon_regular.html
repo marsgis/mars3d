@@ -197,8 +197,7 @@
         style: {
           border: 4, //多边形边数量
           clampToGround: true,
-          material: new Cesium.ImageMaterialProperty({
-            //图片材质
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Image, {
             image: 'img/textures/laker_surface.jpg',
             color: Cesium.Color.WHITE.withAlpha(0.8), //透明度处理
           }),
@@ -215,8 +214,7 @@
         ],
         style: {
           border: 5, //多边形边数量
-          material: new mars3d.material.WaterMaterialProperty({
-            //图片材质
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Water, {
             normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
             frequency: 8000.0, // 控制波数的数字。
             animationSpeed: 0.02, // 控制水的动画速度的数字。

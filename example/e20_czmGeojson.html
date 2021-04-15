@@ -89,7 +89,7 @@
     function showPointDemo() {
       removeLayer()
 
-      geoJsonLayer = new mars3d.layer.GeoJsonLayer({
+      geoJsonLayer = new mars3d.layer.CzmGeoJsonLayer({
         name: '体育设施点',
         url: 'http://data.marsgis.cn/file/geojson/hfty-point.json',
         symbol: {
@@ -163,12 +163,11 @@
     function showChinaLineDemo() {
       removeLayer()
 
-      geoJsonLayer = new mars3d.layer.GeoJsonLayer({
+      geoJsonLayer = new mars3d.layer.CzmGeoJsonLayer({
         name: '省界线',
         url: 'http://data.marsgis.cn/file/geojson/sheng-line.json',
         symbol: {
           styleOptions: {
-            lineType: 'solid',
             color: '#ffffff',
             width: 2,
             opacity: 0.8,
@@ -205,7 +204,7 @@
     function showGuihuaDemo() {
       removeLayer()
 
-      geoJsonLayer = new mars3d.layer.GeoJsonLayer({
+      geoJsonLayer = new mars3d.layer.CzmGeoJsonLayer({
         id: 1987,
         name: '用地规划',
         url: 'http://data.marsgis.cn/file/geojson/guihua.json',
@@ -268,7 +267,7 @@
     function showJianzhuwuDemo() {
       removeLayer()
 
-      geoJsonLayer = new mars3d.layer.GeoJsonLayer({
+      geoJsonLayer = new mars3d.layer.CzmGeoJsonLayer({
         name: '建筑物面',
         url: 'http://data.marsgis.cn/file/geojson/jzw.json',
         symbol: {
@@ -300,7 +299,7 @@
     function showDantihuaDemo() {
       removeLayer()
 
-      geoJsonLayer = new mars3d.layer.GeoJsonLayer({
+      geoJsonLayer = new mars3d.layer.CzmGeoJsonLayer({
         name: '文庙-单体化',
         url: ' http://data.marsgis.cn/file/geojson/draw-dth-wm.json',
         //dth 标识为单体化数据，内部特殊处理
@@ -338,7 +337,7 @@
     function showAnhuiDemo() {
       removeLayer()
 
-      geoJsonLayer = new mars3d.layer.GeoJsonLayer({
+      geoJsonLayer = new mars3d.layer.CzmGeoJsonLayer({
         name: '安徽各市',
         url: 'http://data.marsgis.cn/file/geojson/anhui.json',
         symbol: {

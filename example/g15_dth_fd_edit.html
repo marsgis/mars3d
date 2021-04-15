@@ -106,7 +106,6 @@
 
       //单体化图层
       geoJsonLayerDTH = new mars3d.layer.GeoJsonLayer({
-        type: 'geojson',
         name: '文庙-单体化',
         //dth 标识为单体化数据，内部特殊处理
         dth: {
@@ -223,7 +222,7 @@
     //切换到预览模式
     function toYLMS() {
       var geojson = graphicLayerEdit.toGeoJSON()
-      debugger
+
       geoJsonLayerDTH.load({ data: geojson })
 
       graphicLayerEdit.hasEdit = false

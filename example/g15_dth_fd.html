@@ -73,42 +73,32 @@
 
       //单体化图层
       var geoJsonLayerDTH = new mars3d.layer.GeoJsonLayer({
-        type: 'geojson',
         name: '文庙-单体化',
         url: 'http://data.marsgis.cn/file/geojson/draw-dth-wm.json',
         symbol: {
+          // type: 'polygon',
           styleOptions: {
+            // color: 'rgba(255,0,0,0.2)',
+            // clampToGround: true,
             label: {
               text: '{name}',
-
               height: 25, //单体化面没有高度，所以中心点文字需要指定一个高度值。
               // clampToGround: true,
-
               opacity: 1,
               font_size: 22,
               color: '#ffffff',
-
               font_family: '楷体',
               outline: true,
               outlineColor: '#000000',
               outlineWidth: 3,
-
               background: false,
               backgroundColor: '#000000',
               backgroundOpacity: 0.1,
-
-              font_weight: 'normal',
-              font_style: 'normal',
-
               scaleByDistance: true,
               scaleByDistance_far: 1000,
               scaleByDistance_farValue: 0.3,
               scaleByDistance_near: 10,
               scaleByDistance_nearValue: 1,
-
-              distanceDisplayCondition: false,
-              distanceDisplayCondition_far: 1000,
-              distanceDisplayCondition_near: 0,
             },
           },
         },

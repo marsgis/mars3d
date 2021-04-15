@@ -116,7 +116,7 @@
             style: {
               color: color,
               pixelSize: 5,
-              outlineColor: Cesium.Color.fromCssColorString('#000000'),
+              outlineColor: '#000000',
               outlineWidth: 1,
             },
             tooltip: '第' + j + '个',
@@ -157,23 +157,14 @@
           },
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
 
       //演示个性化处理graphic，代码在\js\graphicManager.js
       initGraphicManager(primitive)
 
       //entity转geojson
       var geojson = primitive.toGeoJSON()
-      console.log(geojson)
-
-      //geojson转entity
-      var primitiveCopy = mars3d.graphic.PointPrimitive.fromGeoJSON(geojson)
-      primitiveCopy.position = [116.18869, 30.95041, 525.84]
-
-      primitiveCopy.label.text = '我是转换后生成的点'
-      graphicLayer.addGraphic(primitiveCopy)
-      console.log(primitiveCopy)
+      console.log('转换后的geojson', geojson)
     }
 
     function addGraphic_a2(graphicLayer) {
@@ -181,12 +172,11 @@
         position: [116.39224, 30.902853],
         style: {
           pixelSize: 9,
-          color: Cesium.Color.fromCssColorString('#ff0000'),
+          color: '#ff0000',
           clampToGround: true,
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     function addGraphic_a3(graphicLayer) {
@@ -197,8 +187,7 @@
           color: Cesium.Color.YELLOW,
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     function addGraphic_a4(graphicLayer) {
@@ -207,13 +196,12 @@
         style: {
           color: Cesium.Color.BLUE,
           pixelSize: 20,
-          outlineColor: Cesium.Color.fromCssColorString('#ffffff'),
+          outlineColor: '#ffffff',
           outlineWidth: 2,
           distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 100000),
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
   </script>
 </body>

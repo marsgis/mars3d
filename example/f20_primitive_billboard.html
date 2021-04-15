@@ -130,8 +130,6 @@
       addGraphic_a4(graphicLayer)
     }
 
-
-
     function addGraphic_a1(graphicLayer) {
       var primitive = new mars3d.graphic.BillboardPrimitive({
         position: [116.244399, 30.920459, 573.6],
@@ -152,22 +150,14 @@
           },
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
 
       //演示个性化处理graphic，代码在\js\graphicManager.js
       initGraphicManager(primitive)
 
       //entity转geojson
       var geojson = primitive.toGeoJSON()
-      console.log(geojson)
-
-      //geojson转entity
-      var primitiveCopy = mars3d.graphic.BillboardPrimitive.fromGeoJSON(geojson)
-      primitiveCopy.position = [116.18869, 30.95041, 525.84]
-      primitiveCopy.label.text = '我是转换后生成的点'
-      graphicLayer.addGraphic(primitiveCopy)
-      console.log(primitiveCopy)
+      console.log('转换后的geojson', geojson)
     }
 
     function addGraphic_a2(graphicLayer) {
@@ -181,8 +171,7 @@
           clampToGround: true,
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     function addGraphic_a3(graphicLayer) {
@@ -194,8 +183,7 @@
           pixelOffset: new Cesium.Cartesian2(0, -6), //偏移量
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     function addGraphic_a4(graphicLayer) {
@@ -206,8 +194,7 @@
           scale: 1,
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
     }
   </script>
 </body>

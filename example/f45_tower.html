@@ -229,8 +229,8 @@
         positions: positions,
         style: {
           width: 4,
-          material: Cesium.Material.fromType('Color', {
-            color: Cesium.Color.fromCssColorString(color || '#ffff00'),
+          material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.Color, {
+            color: color || '#ffff00',
           }),
         },
       })

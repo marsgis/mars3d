@@ -107,8 +107,7 @@
           opacity: 0.7,
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
 
       //演示个性化处理graphic，代码在\js\graphicManager.js
       initGraphicManager(primitive)
@@ -132,8 +131,7 @@
           pitch: 0,
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     function addGraphic_a3(graphicLayer) {
@@ -147,8 +145,7 @@
           opacity: 0.4,
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     function addGraphic_a4(graphicLayer) {
@@ -159,16 +156,15 @@
           topRadius: 0.0,
           bottomRadius: 1500.0,
           // 自定义扩散波纹纹理
-          material: new mars3d.material.CylinderWaveMaterial({
-            color: Cesium.Color.fromCssColorString('#ffff00').withAlpha(0.7),
+          material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.CylinderWave, {
+            color: '#ffff00',
             repeat: 30.0,
           }),
           faceForward: false, // 当绘制的三角面片法向不能朝向视点时，自动翻转法向，从而避免法向计算后发黑等问题
           closed: true, // 是否为封闭体，实际上执行的是 是否进行背面裁剪
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     function addGraphic_a5(graphicLayer) {
@@ -196,9 +192,9 @@
           length: point.alt,
           topRadius: 0.0,
           bottomRadius: 3000,
-          material: Cesium.Material.fromType(mars3d.material.CircleWaveType, {
+          material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.CircleWave, {
             duration: 2000,
-            color: Cesium.Color.fromCssColorString('#02ff00'),
+            color: '#02ff00',
           }),
         },
       })

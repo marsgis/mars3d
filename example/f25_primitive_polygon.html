@@ -63,7 +63,15 @@
         style="width: 80px;" />万条
 
       <input type="button" class="btn btn-primary" value="生成" id="btnAddData" />
+    </div>
+
+    <div>
+      数据管理：
       <input type="button" class="btn btn-primary" value="清除" id="btnClear" />
+      <input id="btnExpFile" type="button" class="btn btn-primary" value="保存GeoJSON" title="保存为GeoJSON文件" />
+      <input id="btnImpFile" type="button" class="btn btn-primary" value="打开GeoJSON" title="打开之前保存的GeoJSON文件" />
+
+      <input id="input_draw_file" type="file" accept=".json" style="display: none" />
     </div>
   </div>
 
@@ -174,8 +182,7 @@
           },
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
 
       //演示个性化处理graphic，代码在\js\graphicManager.js
       initGraphicManager(primitive)
@@ -195,8 +202,7 @@
           image: 'img/textures/excavate_bottom_min.jpg',
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
 
       //entity转geojson
       var geojson = primitive.toGeoJSON()
@@ -215,15 +221,14 @@
           [117.214681, 31.81402, 32.97],
         ],
         style: {
-          material: Cesium.Material.fromType(mars3d.material.PolyBlobType, {
+          material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.PolyBlob, {
             lightColor: new Cesium.Color(1.0, 1.0, 1.0, 0.5),
             darkColor: new Cesium.Color(0.0, 0.0, 1.0, 0.5),
             frequency: 30.0, //次数
           }),
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     //面状：草地面效果
@@ -237,15 +242,14 @@
           [117.308954, 31.828975, 16.29],
         ],
         style: {
-          material: Cesium.Material.fromType(mars3d.material.PolyGrassType, {
+          material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.PolyGrass, {
             grassColor: new Cesium.Color(0.25, 0.4, 0.1, 1.0),
             dirtColor: new Cesium.Color(0.1, 0.1, 0.1, 1.0),
             patchiness: 1.5, //斑驳
           }),
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     //面状：木材面效果
@@ -259,7 +263,7 @@
           [117.267705, 31.8491, 22.11],
         ],
         style: {
-          material: Cesium.Material.fromType(mars3d.material.PolyWoodType, {
+          material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.PolyWood, {
             lightWoodColor: new Cesium.Color(0.6, 0.3, 0.1, 1.0),
             darkWoodColor: new Cesium.Color(0.4, 0.2, 0.07, 1.0),
             ringFrequency: 10.0, //环 频率
@@ -268,8 +272,7 @@
           }),
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     //面状：混合效果
@@ -291,15 +294,14 @@
           [117.154815, 31.853495],
         ],
         style: {
-          material: Cesium.Material.fromType(mars3d.material.PolyBlobType, {
+          material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.PolyBlob, {
             lightColor: new Cesium.Color(1.0, 1.0, 1.0, 0.5),
             darkColor: new Cesium.Color(0.0, 0.0, 1.0, 0.5),
             frequency: 30.0, //次数
           }),
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     //面状： 柏油路面效果
@@ -313,15 +315,14 @@
           [117.208302, 31.85757],
         ],
         style: {
-          material: Cesium.Material.fromType(mars3d.material.PolyAsphaltType, {
+          material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.PolyAsphalt, {
             asphaltColor: new Cesium.Color(0.15, 0.15, 0.15, 1.0),
             bumpSize: 0.005, //凹凸大小
             roughness: 0.2, //粗糙
           }),
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     //面状：碎石面效果
@@ -336,15 +337,14 @@
         ],
         style: {
           width: 5,
-          material: Cesium.Material.fromType(mars3d.material.PolyFacetType, {
+          material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.PolyFacet, {
             lightColor: new Cesium.Color(0.25, 0.25, 0.25, 0.75),
             darkColor: new Cesium.Color(0.75, 0.75, 0.75, 0.75),
             frequency: 50.0, //次数
           }),
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
     }
   </script>
 </body>

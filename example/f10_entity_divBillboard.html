@@ -152,16 +152,21 @@
       //演示个性化处理graphic，代码在\js\graphicManager.js
       initGraphicManager(graphic)
 
-      //entity转geojson
+      //graphic转geojson
       var geojson = graphic.toGeoJSON()
-      console.log(geojson)
+      console.log('转换后的geojson', geojson)
+      addGeoJson(geojson, graphicLayer)
+    }
 
-      //geojson转entity
-      var graphicCopy = mars3d.graphic.DivBillboardEntity.fromGeoJSON(geojson)
+    //添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
+    function addGeoJson(geojson, graphicLayer) {
+      var graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0]
+      delete graphicCopy.attr
+      //新的坐标
       graphicCopy.position = [116.33493, 30.822064, 644.43]
-      graphicCopy.label.text = '我是转换后生成的点'
+      graphicCopy.style.label = graphicCopy.style.label || {}
+      graphicCopy.style.label.text = '我是转换后生成的'
       graphicLayer.addGraphic(graphicCopy)
-      console.log(graphicCopy)
     }
 
     function addGraphic_a2(graphicLayer) {

@@ -71,7 +71,7 @@
         position: center,
         style: {
           radius: 50000.0,
-          material: new mars3d.material.CircleWaveMaterialProperty({
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleWave, {
             color: '#ff0000',
             count: 1, //单个圆圈
             speed: 20,
@@ -99,7 +99,7 @@
         { name: '铜陵市', lon: 117.9382, lat: 30.9375 },
       ]
 
-      var lineMaterial = Cesium.Material.fromType(mars3d.material.LineFlowType, {
+      var lineMaterial = mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
         image: 'img/textures/lineClr.png',
         color: new Cesium.Color(255 / 255, 201 / 255, 38 / 255, 1),
         speed: 10,

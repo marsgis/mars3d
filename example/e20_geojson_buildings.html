@@ -75,12 +75,13 @@
         name: '建筑物面',
         url: 'http://data.marsgis.cn/file/geojson/buildings-hf.json',
         symbol: {
+          type: 'polygon',
           styleOptions: {
             color: '#0d3685',
             opacity: 1.0,
             outline: false,
           },
-          callback: function (attr, entity, styleOpt) {
+          callback: function (attr, styleOpt) {
             var floor = Number(attr.floor || 1)
             for (var key in colorHash) {
               if (floor <= parseInt(key)) {

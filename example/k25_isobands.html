@@ -131,10 +131,8 @@
             fill: true, //是否填充
             color: '#ffff00', //颜色
             opacity: 0.7, //透明度
-            outline: false, //是否边框
-            clampToGround: false, //是否贴地
           },
-          callback: function (attr, entity, styleOpt) {
+          callback: function (attr, styleOpt) {
             //得到点的权重，计算落在那个色度带
             let val = Number(attr.speed.split('-')[0] || 0)
             let color = getColor(val)

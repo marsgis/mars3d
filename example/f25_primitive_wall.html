@@ -123,7 +123,7 @@
           style: {
             closure: true,
             diffHeight: 500,
-            material: Cesium.Material.fromType(mars3d.material.LineFlowType, {
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
               image: 'img/textures/arrow.png',
               color: Cesium.Color.CHARTREUSE,
               repeat: new Cesium.Cartesian2(30, 1),
@@ -152,9 +152,9 @@
           style: {
             diffHeight: 800,
             closure: true,
-            material: Cesium.Material.fromType(mars3d.material.LineFlowType, {
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
               image: 'img/textures/fence.png',
-              color: Cesium.Color.fromCssColorString('#ffff00'),
+              color: '#ffff00',
               speed: 10, //速度，建议取值范围1-100
               axisY: true,
             }),
@@ -183,11 +183,11 @@
           style: {
             closure: true,
             diffHeight: 700,
-            material: Cesium.Material.fromType(mars3d.material.LineFlowType, {
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
               //动画线材质
               image: 'img/textures/fence.png',
               axisY: true,
-              color: Cesium.Color.fromCssColorString('#ff0000'),
+              color: '#ff0000',
               speed: 10, //速度，建议取值范围1-100
             }),
           },
@@ -204,14 +204,14 @@
           ],
           style: {
             diffHeight: 500,
-            material: Cesium.Material.fromType(mars3d.material.LineFlowType, {
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
               //动画线材质
               image: 'img/textures/fence.png',
               axisY: true,
-              color: Cesium.Color.fromCssColorString('#ff0000'),
+              color: '#ff0000',
               hasImage2: true,
               image2: 'img/textures/tanhao.png',
-              color2: Cesium.Color.fromCssColorString('#ffff00'),
+              color2: '#ffff00',
               speed: 10, //速度，建议取值范围1-100
             }),
             label: {
@@ -252,9 +252,9 @@
           ],
           style: {
             diffHeight: 400,
-            material: Cesium.Material.fromType(mars3d.material.LineFlowType, {
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
               image: 'img/textures/arrow.png',
-              color: Cesium.Color.fromCssColorString('#00eba8'),
+              color: '#00eba8',
               repeat: new Cesium.Cartesian2(20, 1),
               speed: 20, //速度，建议取值范围1-100
             }),
@@ -276,7 +276,7 @@
           style: {
             closure: true,
             diffHeight: 500,
-            material: Cesium.Material.fromType(mars3d.material.WallScrollType, {
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.WallScroll, {
               image: 'img/textures/fence.png',
               color: Cesium.Color.CHARTREUSE,
               count: 3,
@@ -301,9 +301,9 @@
             positions: coordinates,
             style: {
               diffHeight: 3000,
-              material: Cesium.Material.fromType(mars3d.material.LineFlowType, {
+              material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
                 image: 'img/textures/fence.png',
-                color: Cesium.Color.fromCssColorString('#bdf700'),
+                color: '#bdf700',
                 repeat: new Cesium.Cartesian2(5, 1),
                 axisY: true, //方向，true时上下，false左右
                 speed: 10, //速度，建议取值范围1-100

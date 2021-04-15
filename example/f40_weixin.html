@@ -86,8 +86,8 @@
           topRadius: 0.0,
           bottomRadius: 300000,
           // 自定义扩散波纹纹理
-          material: Cesium.Material.fromType(mars3d.material.CircleWaveType, {
-            color: Cesium.Color.fromCssColorString('#02ff00'),
+          material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.CircleWave, {
+            color: '#02ff00',
             count: 1, //圆圈数量
             speed: 10,
           }),
@@ -125,15 +125,14 @@
           bottomRadius: 200000,
           // 自定义扩散波纹纹理
           material: new mars3d.material.CylinderWaveMaterial({
-            color: Cesium.Color.fromCssColorString('#ffff00').withAlpha(0.7),
+            color: 'rgba(255,255,0,0.7)',
             repeat: 30.0,
           }),
           faceForward: false, // 当绘制的三角面片法向不能朝向视点时，自动翻转法向，从而避免法向计算后发黑等问题
           closed: true, // 是否为封闭体，实际上执行的是 是否进行背面裁剪
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
   </script>
 </body>

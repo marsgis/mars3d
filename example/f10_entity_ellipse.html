@@ -170,7 +170,7 @@
         style: {
           semiMajorAxis: 1500, //长半轴 半径
           semiMinorAxis: 900, // 短半轴 半径
-          material: new mars3d.material.CircleWaveMaterialProperty({
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleWave, {
             color: '#ff0000',
             count: 1, //单个圆圈
             speed: 40,
@@ -189,8 +189,7 @@
         style: {
           semiMajorAxis: 1500, //长半轴 半径
           semiMinorAxis: 900, // 短半轴 半径
-          //扫描材质
-          material: new mars3d.material.CircleScanMaterialProperty({
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleWave, {
             image: 'img/textures/circleScan.png',
             color: '#5fc4ee',
           }),
@@ -212,9 +211,11 @@
           semiMinorAxis: 1100, // 短半轴 半径
           semiMajorAxis: 2000, //长半轴 半径
           height: 200,
-          fillType: 'wave',
-          wave_count: 2,
-          outline: false,
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleWave, {
+            color: '#ffff00',
+            count: 2,
+            speed: 20,
+          }),
           label: {
             text: '我是原始的',
             font_size: 18,
@@ -228,16 +229,21 @@
       })
       graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
 
-      //entity转geojson
+      //graphic转geojson
       var geojson = graphic.toGeoJSON()
-      console.log(geojson)
+      console.log('转换后的geojson', geojson)
+      addGeoJson(geojson, graphicLayer)
+    }
 
-      //geojson转entity
-      var graphic1Copy = mars3d.graphic.EllipseEntity.fromGeoJSON(geojson)
-      graphic1Copy.position = [116.301991, 30.933872, 624.03]
-      graphic1Copy.label.text = '我是转换后生成的'
-      graphicLayer.addGraphic(graphic1Copy)
-      console.log(graphic1Copy)
+    //添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
+    function addGeoJson(geojson, graphicLayer) {
+      var graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0]
+      delete graphicCopy.attr
+      //新的坐标
+      graphicCopy.position = [116.301991, 30.933872, 624.03]
+      graphicCopy.style.label = graphicCopy.style.label || {}
+      graphicCopy.style.label.text = '我是转换后生成的'
+      graphicLayer.addGraphic(graphicCopy)
     }
 
     function addGraphic_05(graphicLayer) {

@@ -138,11 +138,11 @@
         style: {
           radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
           maximumConeDegree: 90,
-          material: Cesium.Material.fromType(mars3d.material.EllipsoidElectricType, {
+          material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.EllipsoidElectric, {
             color: Cesium.Color.GREEN,
             speed: 5.0,
           }),
-          outline: true,
+          outline: false,
         },
       })
       graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
@@ -154,11 +154,11 @@
         style: {
           radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
           maximumConeDegree: 90,
-          material: Cesium.Material.fromType(mars3d.material.EllipsoidWaveType, {
-            color: Cesium.Color.fromCssColorString('#00ffff'),
+          material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.EllipsoidWave, {
+            color: '#00ffff',
             speed: 5.0,
           }),
-          outline: true,
+          outline: false,
         },
       })
       graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
@@ -193,16 +193,21 @@
       })
       graphicLayer.addGraphic(graphic)
 
-      //entity转geojson
+      //graphic转geojson
       var geojson = graphic.toGeoJSON()
-      console.log(geojson)
+      console.log('转换后的geojson', geojson)
+      addGeoJson(geojson, graphicLayer)
+    }
 
-      //geojson转entity
-      var graphic1Copy = mars3d.graphic.EllipsoidPrimitive.fromGeoJSON(geojson)
-      graphic1Copy.position = [116.5, 31.0, 1000]
-      graphic1Copy.label.text = '我是转换后生成的'
-      graphicLayer.addGraphic(graphic1Copy)
-      console.log(graphic1Copy) //还可以另外一种写法: graphic.addTo(graphicLayer)
+    //添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
+    function addGeoJson(geojson, graphicLayer) {
+      var graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0]
+      delete graphicCopy.attr
+      //新的坐标
+      graphicCopy.position = [116.5, 31.0, 1000]
+      graphicCopy.style.label = graphicCopy.style.label || {}
+      graphicCopy.style.label.text = '我是转换后生成的'
+      graphicLayer.addGraphic(graphicCopy)
     }
 
     //2圈平面扇形
@@ -219,7 +224,7 @@
           maximumClockDegree: 20.0,
           minimumConeDegree: 90,
           maximumConeDegree: 90,
-          color: Cesium.Color.fromCssColorString('#ffff00').withAlpha(0.5),
+          color: 'rgba(255,255,0,0.2)',
           outline: true,
         },
       })
@@ -280,7 +285,7 @@
           innerRadii: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
           minimumConeDegree: 60.0,
           maximumConeDegree: 140.0,
-          color: Cesium.Color.DARKCYAN.withAlpha(0.3),
+          color: 'rgba(31,254,230,0.3)',
           outline: true,
         },
       })
@@ -296,7 +301,7 @@
           radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
           innerRadii: new Cesium.Cartesian3(1800.0, 1800.0, 1800.0),
           minimumConeDegree: 110.0,
-          color: Cesium.Color.fromCssColorString('#1ffee6').withAlpha(0.3),
+          color: 'rgba(149,228,12,0.3)',
           outline: true,
         },
       })
@@ -315,7 +320,7 @@
           maximumClockDegree: 180.0,
           minimumConeDegree: 20.0,
           maximumConeDegree: 70.0,
-          color: Cesium.Color.fromCssColorString('#95e40c').withAlpha(0.3),
+          color: 'rgba(149,228,12,0.3)',
           outline: true,
         },
       })
@@ -332,7 +337,7 @@
           minimumClockDegree: -90.0,
           maximumClockDegree: 180.0,
           maximumConeDegree: 90.0,
-          color: Cesium.Color.fromCssColorString('#f2fa19').withAlpha(0.3),
+          color: 'rgba(242,250,25,0.3)',
           outline: true,
         },
       })
@@ -350,7 +355,7 @@
           minimumClockDegree: 180.0,
           maximumClockDegree: 400.0,
           maximumConeDegree: 90.0,
-          color: Cesium.Color.fromCssColorString('#f79a2c').withAlpha(0.3),
+          color: 'rgba(247,154,44,0.3)',
           outline: true,
         },
       })

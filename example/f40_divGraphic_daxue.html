@@ -144,9 +144,9 @@
             positions: coordinates,
             style: {
               diffHeight: 800,
-              material: Cesium.Material.fromType(mars3d.material.LineFlowType, {
+              material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
                 image: 'img/textures/fence.png',
-                color: Cesium.Color.fromCssColorString('#0111A9'),
+                color: '#0111A9',
                 repeat: new Cesium.Cartesian2(5, 1),
                 axisY: true, //方向，true时上下，false左右
                 speed: 10,

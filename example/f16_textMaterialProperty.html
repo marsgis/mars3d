@@ -118,17 +118,15 @@
       map.addLayer(graphicLayer)
 
       //材质对象
-      textMaterialProperty = new mars3d.material.TextMaterialProperty({
+      textMaterialProperty = mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Text, {
         text: 'Mars3D三维地球平台软件',
-        textStyles: {
-          font: '50px 楷体',
-          fill: true,
-          fillColor: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
-          stroke: true,
-          strokeWidth: 2,
-          strokeColor: new Cesium.Color(1.0, 1.0, 1.0, 0.8),
-          backgroundColor: new Cesium.Color(0.0, 0.0, 0.0, 0),
-        },
+        font: '50px 楷体',
+        fill: true,
+        fillColor: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
+        stroke: true,
+        strokeWidth: 2,
+        strokeColor: new Cesium.Color(1.0, 1.0, 1.0, 0.8),
+        backgroundColor: new Cesium.Color(0.0, 0.0, 0.0, 0),
       })
       $('#btnOK').click(function () {
         textMaterialProperty.text = $('#txtName').val()
@@ -155,16 +153,14 @@
         ],
         style: {
           diffHeight: 5,
-          material: new mars3d.material.TextMaterialProperty({
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Text, {
             text: '水利闸门',
-            textStyles: {
-              font: '60px 楷体',
-              fill: true,
-              fillColor: Cesium.Color.WHITE,
-              backgroundColor: new Cesium.Color(0.0, 0.0, 0.0, 0.5),
-              textBaseline: 'middle',
-              padding: 10,
-            },
+            font: '60px 楷体',
+            fill: true,
+            fillColor: Cesium.Color.WHITE,
+            backgroundColor: new Cesium.Color(0.0, 0.0, 0.0, 0.5),
+            textBaseline: 'middle',
+            padding: 10,
           }),
         },
       })
@@ -181,17 +177,16 @@
         ],
         style: {
           classificationType: Cesium.ClassificationType.BOTH,
-          material: new mars3d.material.TextMaterialProperty({
+          clampToGround: true,
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Text, {
             text: '火星路',
-            textStyles: {
-              font: '50px 楷体',
-              fill: true,
-              fillColor: Cesium.Color.DARKGREEN,
-              stroke: true,
-              strokeWidth: 3,
-              strokeColor: Cesium.Color.WHITE,
-              backgroundColor: new Cesium.Color(0.0, 0.0, 0.0, 0),
-            },
+            font: '50px 楷体',
+            fill: true,
+            fillColor: Cesium.Color.DARKGREEN,
+            stroke: true,
+            strokeWidth: 3,
+            strokeColor: Cesium.Color.WHITE,
+            backgroundColor: new Cesium.Color(0.0, 0.0, 0.0, 0),
           }),
           rotationDegree: 163,
         },

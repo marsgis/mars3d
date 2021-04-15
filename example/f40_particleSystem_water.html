@@ -162,9 +162,10 @@
       map = new mars3d.Map('mars3dContainer', mapOptions)
 
       //显示水域
-      var waterLayer = new mars3d.layer.WaterLayer({
+      var waterLayer = new mars3d.layer.GeoJsonLayer({
         url: 'http://data.marsgis.cn/file/geojson/wangjiaba.json',
         symbol: {
+          type: 'water',
           styleOptions: {
             height: 32, //水面高度
             normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
@@ -174,7 +175,6 @@
             specularIntensity: 0.2, // 控制镜面反射强度的数字。
             baseWaterColor: '#123e59', // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
             blendColor: '#123e59', // 从水中混合到非水域时使用的rgba颜色对象。
-            clampToGround: false, //是否贴地
           },
         },
       })

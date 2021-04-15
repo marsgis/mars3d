@@ -87,7 +87,7 @@
         style: {
           leadTime: 0,
           resolution: 1,
-          material: new Cesium.PolylineGlowMaterialProperty({
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolylineGlow, {
             glowPower: 0.1,
             color: Cesium.Color.GREEN,
           }),

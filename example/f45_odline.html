@@ -93,7 +93,7 @@
             positions: busLine.positions,
             style: {
               width: 2.0,
-              material: Cesium.Material.fromType(mars3d.material.ODLineType, {
+              material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.ODLine, {
                 color: new Cesium.Color(Math.random() * 0.5 + 0.5, Math.random() * 0.8 + 0.2, 0.0, 1.0),
                 speed: 2 + 1.0 * Math.random(),
                 startTime: Math.random(),

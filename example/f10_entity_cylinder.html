@@ -188,16 +188,21 @@
       })
       graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
 
-      //entity转geojson
+      //graphic转geojson
       var geojson = graphic.toGeoJSON()
-      console.log(geojson)
+      console.log('转换后的geojson', geojson)
+      addGeoJson(geojson, graphicLayer)
+    }
 
-      //geojson转entity
-      var graphic1Copy = mars3d.graphic.CylinderEntity.fromGeoJSON(geojson)
-      graphic1Copy.position = [116.301991, 30.933872, 624.03]
-      graphic1Copy.label.text = '我是转换后生成的'
-      graphicLayer.addGraphic(graphic1Copy)
-      console.log(graphic1Copy)
+    //添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
+    function addGeoJson(geojson, graphicLayer) {
+      var graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0]
+      delete graphicCopy.attr
+      //新的坐标
+      graphicCopy.position = [116.301991, 30.933872, 624.03]
+      graphicCopy.style.label = graphicCopy.style.label || {}
+      graphicCopy.style.label.text = '我是转换后生成的'
+      graphicLayer.addGraphic(graphicCopy)
     }
 
     //
@@ -226,7 +231,7 @@
           length: point.alt,
           topRadius: 0.0,
           bottomRadius: 3000,
-          material: new mars3d.material.CircleWaveMaterialProperty({
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleWave, {
             duration: 2000,
             color: '#02ff00',
           }),

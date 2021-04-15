@@ -222,7 +222,7 @@
             style: {
               width: 7,
               //动画线材质
-              material: new mars3d.material.LineFlowMaterialProperty({
+              material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
                 url: './img/textures/arrow2.png',
                 color: Cesium.Color.AQUA,
                 repeat: new Cesium.Cartesian2(15, 1),

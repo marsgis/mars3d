@@ -187,9 +187,11 @@
         style: {
           radius: 2000,
           height: 200,
-          fillType: 'wave',
-          wave_count: 2,
-          outline: false,
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleWave, {
+            color: '#ffff00',
+            count: 2,
+            speed: 20,
+          }),
           label: {
             text: '我是原始的',
             font_size: 18,
@@ -203,16 +205,21 @@
       })
       graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
 
-      //entity转geojson
+      //graphic转geojson
       var geojson = graphic.toGeoJSON()
-      console.log(geojson)
+      console.log('转换后的geojson', geojson)
+      addGeoJson(geojson, graphicLayer)
+    }
 
-      //geojson转entity
-      var graphic1Copy = mars3d.graphic.CircleEntity.fromGeoJSON(geojson)
-      graphic1Copy.position = [116.301991, 30.933872, 624.03]
-      graphic1Copy.label.text = '我是转换后生成的'
-      graphicLayer.addGraphic(graphic1Copy)
-      console.log(graphic1Copy)
+    //添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
+    function addGeoJson(geojson, graphicLayer) {
+      var graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0]
+      delete graphicCopy.attr
+      //新的坐标
+      graphicCopy.position = [116.301991, 30.933872, 624.03]
+      graphicCopy.style.label = graphicCopy.style.label || {}
+      graphicCopy.style.label.text = '我是转换后生成的'
+      graphicLayer.addGraphic(graphicCopy)
     }
 
     function addGraphic_03(graphicLayer) {
@@ -234,7 +241,7 @@
         position: new mars3d.LatLngPoint(116.329199, 30.881595, 390.3),
         style: {
           radius: 1500.0,
-          material: new mars3d.material.CircleWaveMaterialProperty({
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleWave, {
             color: '#ff0000',
             count: 1, //单个圆圈
             speed: 20,
@@ -252,7 +259,7 @@
         style: {
           radius: 1500.0,
           //扫描材质
-          material: new mars3d.material.CircleScanMaterialProperty({
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleScan, {
             image: 'img/textures/circleScan.png',
             color: '#5fc4ee',
           }),
@@ -273,7 +280,7 @@
         style: {
           radius: 1000.0,
           //扫描材质
-          material: new mars3d.material.CircleScanMaterialProperty({
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleScan, {
             image: 'img/textures/circle_bg.png',
             color: '#ffff00',
           }),

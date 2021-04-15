@@ -387,7 +387,7 @@
 
       //动画线材质
       graphic.entityGraphic.width = 5
-      graphic.entityGraphic.material = new mars3d.material.LineFlowMaterialProperty({
+      graphic.entityGraphic.material = mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
         color: Cesium.Color.CHARTREUSE,
         image: 'img/textures/lineClr.png',
         speed: 20,

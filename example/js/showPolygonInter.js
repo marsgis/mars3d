@@ -51,7 +51,7 @@ function showInterResult(list) {
     var primitivePoly = new mars3d.graphic.PolygonPrimitive({
       positions: positions,
       style: {
-        material: Cesium.Material.fromType('Color', {
+        material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.Color, {
           color: Cesium.Color.fromCssColorString('#ffffff').withAlpha(0.01),
         }),
       },
@@ -64,7 +64,7 @@ function showInterResult(list) {
       positions: positions,
       style: {
         width: 1,
-        material: Cesium.Material.fromType('Color', {
+        material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.Color, {
           color: Cesium.Color.fromCssColorString('#ffff00').withAlpha(0.3),
         }),
       },

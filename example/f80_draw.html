@@ -50,7 +50,7 @@
         </label>
       </div>
       <div class="checkbox checkbox-primary checkbox-inline">
-        <input id="chkPopup" class="styled" type="checkbox" checked>
+        <input id="chkPopup" class="styled" type="checkbox" >
         <label for="chkPopup">
           Popup绑定
         </label>
@@ -167,6 +167,9 @@
             roll: 0,
           },
         },
+        control: {
+          infoBox: false,
+        },
       })
 
       //创建三维地球场景
@@ -180,6 +183,8 @@
 
       //图层管理的相关处理，代码在\js\graphicManager.js
       initLayerManager(graphicLayer)
+
+      graphicLayer.unbindPopup()
 
       //绑定标绘相关事件监听(可以自行加相关代码实现业务需求，此处主要做示例)
       graphicLayer.on(mars3d.EventType.drawStart, function (e) {
@@ -240,7 +245,7 @@
 
       //加载历史演示数据
       if (location.hostname !== '127.0.0.1' && location.hostname !== 'localhost') {
-        $.getJSON('http://data.marsgis.cn/file/geojson/draw-demo.json', function (result) {
+        $.getJSON('http://data.marsgis.cn/file/geojson/geojson-draw.json', function (result) {
           graphicLayer.loadGeoJSON(result, { clear: true, flyTo: true })
         })
       }

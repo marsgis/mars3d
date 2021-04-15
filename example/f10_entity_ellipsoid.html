@@ -130,6 +130,7 @@
       addGraphic_01(graphicLayer)
       addGraphic_02(graphicLayer)
       addGraphic_03(graphicLayer)
+      addGraphic_03b(graphicLayer)
       addGraphic_04(graphicLayer)
       addGraphic_05(graphicLayer)
       addGraphic_06(graphicLayer)
@@ -173,20 +174,33 @@
       graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
     }
 
-    //
     function addGraphic_03(graphicLayer) {
       var graphic = new mars3d.graphic.EllipsoidEntity({
-        position: new mars3d.LatLngPoint(116.3, 31.0, 1000),
+        position: new mars3d.LatLngPoint(116.307258, 30.999546, 1239.2),
         style: {
-          radii: new Cesium.Cartesian3(1000.0, 1000.0, 1000.0),
-          fill: false,
-          outline: true,
-          outlineColor: Cesium.Color.YELLOW,
-          slicePartitions: 24,
-          stackPartitions: 36,
-          heading: 45,
-          roll: 45,
-          pitch: 0,
+          radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
+          maximumConeDegree: 90,
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.EllipsoidElectric, {
+            color: Cesium.Color.GREEN,
+            speed: 5.0,
+          }),
+          outline: false,
+        },
+      })
+      graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
+    }
+
+    function addGraphic_03b(graphicLayer) {
+      var graphic = new mars3d.graphic.EllipsoidEntity({
+        position: new mars3d.LatLngPoint(116.303345, 31.087028, 452.2),
+        style: {
+          radii: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
+          maximumConeDegree: 90,
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.EllipsoidWave, {
+            color: '#00ffff',
+            speed: 5.0,
+          }),
+          outline: false,
         },
       })
       graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
@@ -221,16 +235,21 @@
       })
       graphicLayer.addGraphic(graphic)
 
-      //entity转geojson
+      //graphic转geojson
       var geojson = graphic.toGeoJSON()
-      console.log(geojson)
+      console.log('转换后的geojson', geojson)
+      addGeoJson(geojson, graphicLayer)
+    }
 
-      //geojson转entity
-      var graphic1Copy = mars3d.graphic.EllipsoidEntity.fromGeoJSON(geojson)
-      graphic1Copy.position = [116.5, 31.0, 1000]
-      graphic1Copy.label.text = '我是转换后生成的'
-      graphicLayer.addGraphic(graphic1Copy)
-      console.log(graphic1Copy) //还可以另外一种写法: graphic.addTo(graphicLayer)
+    //添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
+    function addGeoJson(geojson, graphicLayer) {
+      var graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0]
+      delete graphicCopy.attr
+      //新的坐标
+      graphicCopy.position = [116.5, 31.0, 1000]
+      graphicCopy.style.label = graphicCopy.style.label || {}
+      graphicCopy.style.label.text = '我是转换后生成的'
+      graphicLayer.addGraphic(graphicCopy)
     }
 
     //2圈平面扇形

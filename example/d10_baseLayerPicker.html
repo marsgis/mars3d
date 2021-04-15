@@ -70,7 +70,7 @@
         iconUrl: 'img/basemaps/esriNationalGeographic.png',
         category: '标准坐标系',
         creationFunction: function () {
-          return mars3d.layer.createImageryProvider({
+          return mars3d.LayerUtil.createImageryProvider({
             type: 'image',
             url: 'img/tietu/world.jpg',
           })
@@ -85,12 +85,12 @@
         category: '标准坐标系',
         creationFunction: function () {
           return [
-            mars3d.layer.createImageryProvider({
+            mars3d.LayerUtil.createImageryProvider({
               type: 'tdt',
               layer: 'img_d',
               key: mars3d.Token.tiandituArr,
             }),
-            mars3d.layer.createImageryProvider({
+            mars3d.LayerUtil.createImageryProvider({
               type: 'tdt',
               layer: 'img_z',
               key: mars3d.Token.tiandituArr,
@@ -106,7 +106,7 @@
         tooltip: '微软提供的高清卫星地图',
         category: '标准坐标系',
         creationFunction: function () {
-          return mars3d.layer.createImageryProvider({
+          return mars3d.LayerUtil.createImageryProvider({
             type: 'bing',
             layer: 'Aerial',
           })
@@ -120,7 +120,7 @@
         tooltip: 'ESRI提供的高清卫星地图',
         category: '标准坐标系',
         creationFunction: function () {
-          return mars3d.layer.createImageryProvider({
+          return mars3d.LayerUtil.createImageryProvider({
             type: 'arcgis',
             url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
           })
@@ -135,8 +135,8 @@
         category: '国测局偏移坐标系',
         creationFunction: function () {
           return [
-            mars3d.layer.createImageryProvider({ type: 'google', layer: 'img_d' }),
-            mars3d.layer.createImageryProvider({ type: 'google', layer: 'img_z' }),
+            mars3d.LayerUtil.createImageryProvider({ type: 'google', layer: 'img_d' }),
+            mars3d.LayerUtil.createImageryProvider({ type: 'google', layer: 'img_z' }),
           ]
         },
       })
@@ -149,8 +149,8 @@
         category: '国测局偏移坐标系',
         creationFunction: function () {
           return [
-            mars3d.layer.createImageryProvider({ type: 'gaode', layer: 'img_d' }),
-            mars3d.layer.createImageryProvider({ type: 'gaode', layer: 'img_z' }),
+            mars3d.LayerUtil.createImageryProvider({ type: 'gaode', layer: 'img_d' }),
+            mars3d.LayerUtil.createImageryProvider({ type: 'gaode', layer: 'img_z' }),
           ]
         },
       })

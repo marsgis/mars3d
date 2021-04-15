@@ -162,7 +162,7 @@
           ],
           style: {
             width: 4,
-            material: Cesium.Material.fromType(mars3d.material.LineTrailType, {
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineTrail, {
               color: Cesium.Color.CHARTREUSE,
               speed: 5,
             }),
@@ -183,7 +183,7 @@
           ],
           style: {
             width: 6,
-            lineType: 'dash', //虚线
+            materialType: mars3d.MaterialType.PolylineDash, //虚线
             dashLength: 20,
             color: Cesium.Color.RED,
             label: {
@@ -212,15 +212,11 @@
           ],
           style: {
             width: 5,
-            material: Cesium.Material.fromType(Cesium.Material.FadeType, {
-              repeat: false,
-              fadeInColor: Cesium.Color.CYAN,
-              fadeOutColor: Cesium.Color.CYAN.withAlpha(0),
-              time: new Cesium.Cartesian2(0.0, 0.0),
-              fadeDirection: {
-                x: true,
-                y: false,
-              },
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlowColor, {
+              color: '#FFFF00',
+              speed: 10,
+              percent: 0.15,
+              alpha: 0.2,
             }),
           },
         })
@@ -236,8 +232,8 @@
           ],
           style: {
             width: 5,
-            material: Cesium.Material.fromType(mars3d.material.LineFlowType, {
-              color: Cesium.Color.fromCssColorString('#1a9850'),
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
+              color: '#1a9850',
               image: 'img/textures/ArrowOpacity.png',
               speed: 10,
             }),
@@ -256,11 +252,11 @@
           ],
           style: {
             width: 5,
-            material: Cesium.Material.fromType(mars3d.material.LineFlowType, {
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
               image: './img/textures/arrow2.png',
               axisY: false,
               repeat: new Cesium.Cartesian2(20.0, 1.0),
-              color: Cesium.Color.fromCssColorString('#ffff00'),
+              color: '#ffff00',
               speed: 40,
             }),
           },
@@ -277,8 +273,8 @@
           ],
           style: {
             width: 3,
-            material: Cesium.Material.fromType(mars3d.material.ODLineType, {
-              color: Cesium.Color.fromCssColorString('#FF0000'),
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.ODLine, {
+              color: '#FF0000',
               speed: 5 + 1.0 * Math.random(),
               startTime: Math.random(),
             }),
@@ -297,7 +293,7 @@
           positions: positions,
           style: {
             width: 5,
-            material: Cesium.Material.fromType(mars3d.material.LineFlowType, {
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
               color: Cesium.Color.CHARTREUSE,
               image: 'img/textures/lineClr.png',
               speed: 15,
@@ -319,7 +315,7 @@
           style: {
             width: 5,
             closure: true,
-            material: Cesium.Material.fromType(mars3d.material.LineFlickerType, {
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlicker, {
               color: new Cesium.Color(0.0, 1.0, 0.0, 0.7),
               speed: 5,
             }),
@@ -338,8 +334,8 @@
           ],
           style: {
             width: 5,
-            material: Cesium.Material.fromType(mars3d.material.LineFlowColorType, {
-              color: Cesium.Color.fromCssColorString('#00ffff'),
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlowColor, {
+              color: '#00ffff',
               speed: 10,
               percent: 0.15,
               alpha: 0.2,

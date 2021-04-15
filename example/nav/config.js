@@ -458,8 +458,8 @@ var exampleConfig = {
           {
             name: 'GeoJson图层',
             version: '2.0',
-            thumbnail: 'e20_geojson.jpg',
-            fileName: 'e20_geojson',
+            thumbnail: 'e20_czmGeojson.jpg',
+            fileName: 'e20_czmGeojson',
           },
           {
             name: '立体建筑物GeoJson图层',
@@ -497,6 +497,12 @@ var exampleConfig = {
         name: 'WFS矢量服务',
         content: [
           {
+            name: 'WFS图层',
+            version: '3.0',
+            thumbnail: 'e25_wfs.jpg',
+            fileName: 'e25_wfs',
+          },
+          {
             name: 'ArcGIS Server动态图层',
             version: '2.1',
             thumbnail: 'e25_arcgis_dynamic.jpg',
@@ -515,12 +521,6 @@ var exampleConfig = {
             thumbnail: 'e25_arcgis_wfs_surface.jpg',
             fileName: 'e25_arcgis_wfs_surface',
             plugins: 'esri',
-          },
-          {
-            name: 'OGC WFS图层',
-            version: '3.0',
-            thumbnail: 'e25_wfs.jpg',
-            fileName: 'e25_wfs',
           },
         ],
       },
@@ -775,8 +775,8 @@ var exampleConfig = {
           {
             name: 'PolylineVolume 管道线',
             version: '3.0',
-            thumbnail: 'f25_primitive_polylinevolume.jpg',
-            fileName: 'f25_primitive_polylinevolume',
+            thumbnail: 'f25_primitive_polylineVolume.jpg',
+            fileName: 'f25_primitive_polylineVolume',
           },
           {
             name: 'Corridor 走廊',
@@ -1761,21 +1761,18 @@ var exampleConfig = {
             version: '2.0',
             thumbnail: 'k20_tilesetFlat.jpg',
             fileName: 'k20_tilesetFlat',
-            // plugins: 'tileset',
           },
           {
             name: '模型裁剪开挖',
             version: '2.0',
             thumbnail: 'k20_tilesetClip.jpg',
             fileName: 'k20_tilesetClip',
-            // plugins: 'tileset',
           },
           {
             name: '模型淹没分析',
             version: '2.0',
             thumbnail: 'k20_tilesetFlood.jpg',
             fileName: 'k20_tilesetFlood',
-            // plugins: 'tileset',
           },
           {
             name: '模型热力图',

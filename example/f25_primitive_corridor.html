@@ -115,8 +115,7 @@
           },
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
 
       //演示个性化处理graphic，代码在\js\graphicManager.js
       initGraphicManager(primitive)
@@ -137,8 +136,7 @@
           color: Cesium.Color.BLUE.withAlpha(0.5),
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
 
       //entity转geojson
       var geojson = primitive.toGeoJSON()
@@ -155,17 +153,16 @@
           height: 200.0,
           width: 200.0,
           cornerType: Cesium.CornerType.MITERED,
-          material: Cesium.Material.fromType(mars3d.material.LineFlowType, {
+          material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
             image: './img/textures/arrow2.png',
             axisY: false,
             repeat: new Cesium.Cartesian2(20.0, 1.0),
-            color: Cesium.Color.fromCssColorString('#ffff00'),
+            color: '#ffff00',
             speed: 60,
           }),
         },
       })
-      graphicLayer.addGraphic(primitive)
-      //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
   </script>
 </body>

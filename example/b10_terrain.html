@@ -83,7 +83,7 @@
       var map = new mars3d.Map('mars3dContainer', mapOptions)
 
       //方式2：在创建地球后更新terrainProvider(用 mars3d.layer.createTerrainProvider工厂方法创建)[目前1个球只支持1个地形服务]
-      map.terrainProvider = mars3d.layer.createTerrainProvider({
+      map.terrainProvider = mars3d.LayerUtil.createTerrainProvider({
         url: 'http://data.marsgis.cn/terrain',
       })
 
@@ -93,35 +93,35 @@
         switch (type) {
           default:
           case 'none': //无地形
-            map.terrainProvider = mars3d.layer.getNoTerrainProvider()
+            map.terrainProvider = mars3d.LayerUtil.getNoTerrainProvider()
             break
           case 'xyz': //标准xyz服务
-            map.terrainProvider = mars3d.layer.createTerrainProvider({
+            map.terrainProvider = mars3d.LayerUtil.createTerrainProvider({
               url: 'http://data.marsgis.cn/terrain',
             })
             break
           case 'arcgis': //ArcGIS地形服务
-            map.terrainProvider = mars3d.layer.createTerrainProvider({
+            map.terrainProvider = mars3d.LayerUtil.createTerrainProvider({
               type: 'arcgis',
               url: 'https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer',
             })
             break
           case 'ion': //cesium官方ion在线服务
-            map.terrainProvider = mars3d.layer.createTerrainProvider({
+            map.terrainProvider = mars3d.LayerUtil.createTerrainProvider({
               type: 'ion',
               requestWaterMask: true,
               requestVertexNormals: true,
             })
             break
           case 'gee': //谷歌地球企业服务
-            map.terrainProvider = mars3d.layer.createTerrainProvider({
+            map.terrainProvider = mars3d.LayerUtil.createTerrainProvider({
               type: 'gee',
               url: 'http://www.earthenterprise.org/3d',
               proxy: 'http://data.marsgis.cn/proxy/',
             })
             break
           case 'vr': //vr地形服务
-            map.terrainProvider = mars3d.layer.createTerrainProvider({
+            map.terrainProvider = mars3d.LayerUtil.createTerrainProvider({
               type: 'vr',
               url: 'https://www.vr-theworld.com/vr-theworld/tiles1.0.0/73/',
             })

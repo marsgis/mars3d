@@ -92,7 +92,13 @@ var plotEdit = {
     config.style = config.style || {}
 
     if (latlngs) {
-      this.updateLatlngsHtml(latlngs, config.points)
+      this._hasHeight = true
+
+      if (attr.type == 'rectangle') {
+        this._hasHeight = false
+      }
+
+      this.updateLatlngsHtml(latlngs)
     }
 
     let arrFun = []
@@ -108,6 +114,7 @@ var plotEdit = {
         }
         let attrName = edit.name
         let attrVal = attr.style[attrName] || edit.defval
+        attr.style[attrName] = attrVal
 
         //贴地对象
         if (attr.style['clampToGround']) {
@@ -134,7 +141,6 @@ var plotEdit = {
             continue
           }
         }
-
         let input = this.getAttrInput(parname, attrName, attrVal, edit)
         if (input.fun) {
           arrFun.push({ parname: parname, name: attrName, value: attrVal, edit: edit, fun: input.fun })
@@ -159,6 +165,7 @@ var plotEdit = {
 
           let attrName = edit.name
           let attrVal = attr.style.label[attrName] || defStyleLbl[attrName]
+          attr.style.label[attrName] = attrVal
 
           let input = this.getAttrInput(parname, attrName, attrVal, edit)
           if (input.fun) {
@@ -204,18 +211,10 @@ var plotEdit = {
 
     window.tab2attr() //切换面板
   },
-  lastCfg: null,
-  updateLatlngsHtml: function (latlngs, cfg) {
-    cfg = cfg || this.lastCfg || {}
-    this.lastCfg = cfg
-
+  updateLatlngsHtml: function (latlngs) {
     $('#plot_latlngs_addheight').val('')
     $('#plot_latlngs_allheight').val('')
     $('#view_updateheight').hide()
-
-    if (!cfg.hasOwnProperty('height')) {
-      cfg.height = true
-    }
 
     //显示坐标信息
     let inHtml = ''
@@ -235,7 +234,7 @@ var plotEdit = {
         '<tr>  <td class="nametd">纬度：</td> <td><input type="number" class="mp_input plot_latlngs" data-type="wd" step="0.000001"  value="' +
         wd +
         '"></td></tr>'
-      if (cfg.height) {
+      if (this._hasHeight) {
         inHtml +=
           '<tr><td class="nametd">高程：</td> <td><input type="number" class="mp_input plot_latlngs" data-type="height" step="0.1" value="' +
           height +
@@ -245,7 +244,7 @@ var plotEdit = {
       }
       inHtml += ' </table> </div>'
     } else {
-      if (cfg.height) {
+      if (this._hasHeight) {
         $('#view_updateheight').show()
       }
 
@@ -285,7 +284,7 @@ var plotEdit = {
           '" value="' +
           wd +
           '"></td> </tr> '
-        if (cfg.height) {
+        if (this._hasHeight) {
           inHtml +=
             '<tr>  <td class="nametd">高程：</td> <td><input  type="number" step="0.1" class="mp_input plot_latlngs" data-type="height" data-index="' +
             idx +
@@ -453,22 +452,37 @@ var plotEdit = {
             let attrVal = $(this).attr('data-value')
 
             that.updateAttr(parname, attrName, attrVal)
-
+            let thisSel
             for (let jj = 0; jj < edit.data.length; jj++) {
               let temp = edit.data[jj]
               if (temp.impact == null) {
                 continue
               }
-              that.changeViewByAttr(parname, temp.impact, temp.value === attrVal)
+              if (temp.value === attrVal) {
+                thisSel = temp
+                continue
+              }
+              that.changeViewByAttr(parname, temp.impact, false)
+            }
+            if (thisSel) {
+              that.changeViewByAttr(parname, thisSel.impact, true)
             }
           })
 
+          let thisSel
           for (let jj = 0; jj < edit.data.length; jj++) {
             let temp = edit.data[jj]
             if (temp.impact == null) {
               continue
             }
-            that.changeViewByAttr(parname, temp.impact, temp.value === attrVal)
+            if (temp.value === attrVal) {
+              thisSel = temp
+              continue
+            }
+            that.changeViewByAttr(parname, temp.impact, false)
+          }
+          if (thisSel) {
+            that.changeViewByAttr(parname, thisSel.impact, true)
           }
         }
         break

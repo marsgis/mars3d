@@ -192,7 +192,7 @@
         style: {
           plane: new Cesium.Plane(Cesium.Cartesian3.UNIT_Z, 0.0),
           dimensions: new Cesium.Cartesian2(4000.0, 4000.0),
-          material: new Cesium.ImageMaterialProperty({
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Image, {
             image: 'img/textures/movingRiver.png',
             transparent: true,
           }),
@@ -337,7 +337,7 @@
           closure: true,
           diffHeight: 500,
           //动画线材质
-          material: new mars3d.material.LineFlowMaterialProperty({
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
             image: 'img/textures/fence.png',
             color: '#00ff00',
             speed: 10,
@@ -375,7 +375,7 @@
           [116.472468, 30.823091, 677.39],
         ],
         style: {
-          material: new mars3d.material.WaterMaterialProperty({
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Water, {
             normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
             frequency: 8000.0, // 控制波数的数字。
             animationSpeed: 0.02, // 控制水的动画速度的数字。

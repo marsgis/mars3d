@@ -62,8 +62,8 @@
           {
             id: 20210208,
             name: '标绘示例数据',
-            type: 'draw',
-            url: 'http://data.marsgis.cn/file/geojson/draw-demo.json',
+            type: 'geojson',
+            url: 'http://data.marsgis.cn/file/geojson/geojson-draw.json',
             popup: '{name}',
             show: true,
           },
@@ -95,19 +95,18 @@
     function showAnhuiDemo() {
       removeLayer()
 
-      drawLayer = new mars3d.layer.DrawLayer({
+      drawLayer = new mars3d.layer.GeoJsonLayer({
         name: '安徽各市',
         url: 'http://data.marsgis.cn/file/geojson/anhui.json',
         symbol: {
           type: 'wall',
           styleOptions: {
-            diffHeight: 9000, //墙高
-            fill: true, //是否填充
-            fillType: 'flow',
-            flow_speed: 10, //速度
-            flow_image: 'img/textures/fence.png', //图片
-            flow_repeatX: 1, //重复数量
-            flow_axisY: true, //竖直方向
+            diffHeight: 5000, //墙高
+            materialType: mars3d.MaterialType.LineFlow,
+            speed: 10, //速度
+            image: 'img/textures/fence.png', //图片
+            repeatX: 1, //重复数量
+            axisY: true, //竖直方向
             color: '#FFFF00', //颜色
             opacity: 0.6, //透明度
             outline: false,

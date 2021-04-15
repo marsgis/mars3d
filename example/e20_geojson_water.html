@@ -77,10 +77,11 @@
             show: true,
           },
           {
-            type: 'water',
+            type: 'geojson',
             name: '河流(面状)',
             url: 'http://data.marsgis.cn/file/geojson/hedao-nei.json',
             symbol: {
+              type: 'water',
               styleOptions: {
                 height: 5, //水面高度
                 normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
@@ -102,10 +103,11 @@
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
 
-      var waterLayer = new mars3d.layer.WaterLayer({
+      var waterLayer = new mars3d.layer.GeoJsonLayer({
         name: '河流(面状)',
         url: 'http://data.marsgis.cn/file/geojson/hedao-wai.json',
         symbol: {
+          type: 'water',
           styleOptions: {
             height: 3, //水面高度
             normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
@@ -146,7 +148,9 @@
 
       function updateHeight(height) {
         graphic.height = height
-        waterLayer.updateHeight(height) //水域高度变化
+        waterLayer.eachGraphic((graphic) => {
+          graphic.updateHeight(height) //水域高度变化
+        })
       }
 
       $('#btnOpenZm').click(() => {

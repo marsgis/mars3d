@@ -152,7 +152,7 @@
           scale: 20,
           minimumPixelSize: 50,
           label: {
-            text: '我是原始模型',
+            text: '我是原始的',
             font_size: 18,
             color: '#ffffff',
             pixelOffsetY: -50,
@@ -167,16 +167,21 @@
       //演示个性化处理graphic，代码在\js\graphicManager.js
       initGraphicManager(graphic)
 
-      //entity转geojson
+      //graphic转geojson
       var geojson = graphic.toGeoJSON()
-      console.log(geojson)
+      console.log('转换后的geojson', geojson)
+      addGeoJson(geojson, graphicLayer)
+    }
 
-      //geojson转entity
-      var graphic1Copy = mars3d.graphic.ModelEntity.fromGeoJSON(geojson)
-      graphic1Copy.position = [116.348278, 30.861971, 393.99]
-      graphic1Copy.label.text = '我是转换后生成的模型'
-      graphicLayer.addGraphic(graphic1Copy)
-      console.log(graphic1Copy)
+    //添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
+    function addGeoJson(geojson, graphicLayer) {
+      var graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0]
+      delete graphicCopy.attr
+      //新的坐标
+      graphicCopy.position = [116.348278, 30.861971, 393.99]
+      graphicCopy.style.label = graphicCopy.style.label || {}
+      graphicCopy.style.label.text = '我是转换后生成的'
+      graphicLayer.addGraphic(graphicCopy)
     }
 
     function addGraphic_02(graphicLayer) {

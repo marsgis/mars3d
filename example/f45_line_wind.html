@@ -79,9 +79,9 @@
       var graphicLayer = new mars3d.layer.GraphicLayer()
       map.addLayer(graphicLayer)
 
-      var lineMaterial = Cesium.Material.fromType(mars3d.material.LineFlowType, {
+      var lineMaterial = mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
         image: 'img/textures/ArrowOpacity.png',
-        color: Cesium.Color.fromCssColorString('#00ff00'),
+        color: '#00ff00',
         speed: 30,
       })
 

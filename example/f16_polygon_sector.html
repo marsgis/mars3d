@@ -152,9 +152,9 @@
       })
 
       //加一些演示数据
-      addGraphic_01(graphicLayer)
-      addGraphic_02(graphicLayer)
-      addGraphic_03(graphicLayer)
+      // addGraphic_01(graphicLayer)
+      // addGraphic_02(graphicLayer)
+      // addGraphic_03(graphicLayer)
       addGraphic_04(graphicLayer)
     }
 
@@ -196,8 +196,7 @@
         ],
         style: {
           clampToGround: true,
-          material: new Cesium.ImageMaterialProperty({
-            //图片材质
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Image, {
             image: 'img/textures/excavate_bottom_min.jpg',
             color: Cesium.Color.WHITE.withAlpha(0.8), //透明度处理
           }),
@@ -214,8 +213,7 @@
           [117.135557, 31.79767, 30.9],
         ],
         style: {
-          material: new mars3d.material.WaterMaterialProperty({
-            //图片材质
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Water, {
             normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
             frequency: 8000.0, // 控制波数的数字。
             animationSpeed: 0.02, // 控制水的动画速度的数字。

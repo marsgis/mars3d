@@ -175,7 +175,7 @@
         graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
 
         //演示个性化处理graphic，代码在\js\graphicManager.js
-        initGraphicManager(graphic)
+        // initGraphicManager(graphic)
       }
 
       function addGraphic_02(graphicLayer) {
@@ -188,12 +188,10 @@
             [117.183832, 31.814237, 38.76],
           ],
           style: {
+            materialType: mars3d.MaterialType.Image,
+            image: 'img/textures/excavate_bottom_min.jpg',
+            opacity: 0.8, //透明度
             clampToGround: true,
-            material: new Cesium.ImageMaterialProperty({
-              //图片材质
-              image: 'img/textures/excavate_bottom_min.jpg',
-              color: Cesium.Color.WHITE.withAlpha(0.8), //透明度处理
-            }),
           },
         })
         graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
@@ -211,16 +209,14 @@
             [117.214681, 31.81402, 32.97],
           ],
           style: {
-            material: new mars3d.material.WaterMaterialProperty({
-              //图片材质
-              normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
-              frequency: 8000.0, // 控制波数的数字。
-              animationSpeed: 0.02, // 控制水的动画速度的数字。
-              amplitude: 5.0, // 控制水波振幅的数字。
-              specularIntensity: 0.8, // 控制镜面反射强度的数字。
-              baseWaterColor: '#006ab4', // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
-              blendColor: '#006ab4', // 从水中混合到非水域时使用的rgba颜色对象。
-            }),
+            materialType: mars3d.MaterialType.Water,
+            normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
+            frequency: 8000.0, // 控制波数的数字。
+            animationSpeed: 0.02, // 控制水的动画速度的数字。
+            amplitude: 5.0, // 控制水波振幅的数字。
+            specularIntensity: 0.8, // 控制镜面反射强度的数字。
+            baseWaterColor: '#006ab4', // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
+            blendColor: '#006ab4', // 从水中混合到非水域时使用的rgba颜色对象。
           },
         })
         graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)

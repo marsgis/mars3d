@@ -68,10 +68,9 @@
 
       //2.在layer图层上绑定Popup单击弹窗
       function bindLayerDemo() {
-        var graphicLayer = new mars3d.layer.DrawLayer({
+        var graphicLayer = new mars3d.layer.GeoJsonLayer({
           name: '标绘示例数据',
-          type: 'draw',
-          url: 'http://data.marsgis.cn/file/geojson/draw-demo.json',
+          url: 'http://data.marsgis.cn/file/geojson/geojson-draw.json',
         })
         map.addLayer(graphicLayer)
 

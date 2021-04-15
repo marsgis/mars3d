@@ -26965,8 +26965,8 @@ var tileset = scene.primitives.add(new Cesium.Cesium3DTileset({
  * @param [options.sphericalHarmonicCoefficients] - The third order spherical harmonic coefficients used for the diffuse color of image-based lighting.
  * @param [options.specularEnvironmentMaps] - A URL to a KTX file that contains a cube map of the specular lighting and the convoluted specular mipmaps.
  * @param [options.backFaceCulling = true] - Whether to cull back-facing geometry. When true, back face culling is determined by the glTF material's doubleSided property; when false, back face culling is disabled.
- * @param [options.vectorClassificationOnly = false] - Indicates that only the tileset's vector tiles should be used for classification.
  * @param [options.debugHeatmapTilePropertyName] - The tile variable to colorize as a heatmap. All rendered tiles will be colorized relative to each other's specified variable value.
+ * @param [options.pickPrimitive] - The primitive to be rendered during the pick pass instead of the tileset.
  * @param [options.debugFreezeFrame = false] - For debugging only. Determines if only the tiles from last frame should be used for rendering.
  * @param [options.debugColorizeTiles = false] - For debugging only. When true, assigns a random color to each tile.
  * @param [options.debugWireframe = false] - For debugging only. When true, render's each tile's content as a wireframe.
@@ -27018,8 +27018,8 @@ export class Cesium3DTileset {
         sphericalHarmonicCoefficients?: Cartesian3[];
         specularEnvironmentMaps?: string;
         backFaceCulling?: boolean;
-        vectorClassificationOnly?: boolean;
         debugHeatmapTilePropertyName?: string;
+        pickPrimitive?: any;
         debugFreezeFrame?: boolean;
         debugColorizeTiles?: boolean;
         debugWireframe?: boolean;
@@ -27353,6 +27353,10 @@ export class Cesium3DTileset {
      */
     backFaceCulling: boolean;
     /**
+     * The primitive to be rendered during the pick pass instead of the tileset.
+     */
+    pickPrimitive: any;
+    /**
      * This property is for debugging only; it is not optimized for production use.
     <p>
     Determines if only the tiles from last frame should be used for rendering.  This
@@ -27429,10 +27433,6 @@ export class Cesium3DTileset {
     </p>
      */
     debugShowUrl: boolean;
-    /**
-     * Function for examining vector lines as they are being streamed.
-     */
-    examineVectorLinesFunction: (...params: any[]) => any;
     /**
      * Gets the tileset's asset object property, which contains metadata about the tileset.
     <p>
@@ -27644,10 +27644,6 @@ export class Cesium3DTileset {
     diffuse and specular lighting contribution from those sources to the final color. A value of 0.0 will disable those light sources.
      */
     imageBasedLightingFactor: Cartesian2;
-    /**
-     * Indicates that only the tileset's vector tiles should be used for classification.
-     */
-    vectorClassificationOnly: boolean;
     /**
      * Provides a hook to override the method used to request the tileset json
     useful when fetching tilesets from remote servers

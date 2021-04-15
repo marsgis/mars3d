@@ -414,7 +414,7 @@ function initEditorJS() {
             minPointNum: 2,
           },
           style: {
-            lineType: 'dash',
+            materialType: mars3d.MaterialType.PolylineDash, //虚线
             clampToGround: true,
           },
           attr: {},

@@ -114,6 +114,7 @@
             scaleByDistance_farValue: 0.5,
             scaleByDistance_near: 1000,
             scaleByDistance_nearValue: 1,
+            clampToGround: true,
             label: {
               text: '{项目名称}',
               font_size: 25,
@@ -245,12 +246,12 @@
           },
         ],
         onClickRow: function (item, $element, field) {
-          var entity = item._entity
-          if (entity == null) {
+          var graphic = item.graphic
+          if (graphic == null) {
             toastr.warning(item.name + ' 无经纬度坐标信息！')
             return
           }
-          map.flyTo(entity)
+          graphic.flyTo({ radius: 1000 })
         },
       })
     }

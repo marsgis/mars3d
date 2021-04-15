@@ -25,17 +25,15 @@
       let that = this
       $.getJSON(this.path + 'config/attr.json', function (data) {
         that.attrConfig = data
-
-        // that.getDefaultVal() //测试用
+        that.setDefaultVal()
         //that.getReadmeTxt() //测试用
 
         that.attrConfig['curve'] = that.attrConfig['polyline']
-        that.attrConfig['model-p'] = that.attrConfig['model']
         that.startEditing()
       })
     }
     //获取所有可配置属性的默认值
-    getDefaultVal() {
+    setDefaultVal() {
       let data = this.attrConfig
 
       //标号默认样式
@@ -44,18 +42,12 @@
         let defstyle = {}
         for (let idx = 0; idx < data[i].style.length; idx++) {
           let item = data[i].style[idx]
-          if (item.defval === '' || item.defval === 0 || item.defval === false) {
-            continue
-          }
-          // if (item.name == 'radius' ||item.name == 'diffHeight' )&& item.defval === 0) {
-          //   continue
-          // }
           defstyle[item.name] = item.defval
         }
         attrDefConfig[i] = defstyle
       }
-      console.log('===========标号默认样式=================')
-      console.log(JSON.stringify(attrDefConfig))
+      this.attrDefConfig = attrDefConfig
+      // console.log('标号默认样式', JSON.stringify(attrDefConfig))
     }
     //获取所有可配置属性的说明文档
     getReadmeTxt() {
@@ -118,7 +110,8 @@
     //释放插件
     disable() {}
     getDefStyle(type) {
-      return mars3d.graphic.StyleUtil.getDefStyle(type)
+      let defStyle = this.attrDefConfig[type] || {}
+      return mars3d.Util.clone(defStyle)
     }
     getMinPointNum() {
       let graphic = this.config.graphic

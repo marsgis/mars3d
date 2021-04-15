@@ -68,11 +68,11 @@
 
       //geojson图层
       var geoJsonLayer1 = new mars3d.layer.GeoJsonLayer({
-        type: 'geojson',
         url: 'http://data.marsgis.cn/file/geojson/lineback_1.json',
         symbol: {
+          // type: 'polyline',
           styleOptions: {
-            lineType: 'glow',
+            materialType: 'PolylineGlow',
             glowPower: 0.06, //发光强度
             width: 50, //线宽
             color: '#FF4500',
@@ -85,11 +85,10 @@
       map.addLayer(geoJsonLayer1)
 
       var geoJsonLayer2 = new mars3d.layer.GeoJsonLayer({
-        type: 'geojson',
         url: 'http://data.marsgis.cn/file/geojson/lineback2_1.json',
         symbol: {
           styleOptions: {
-            lineType: 'glow',
+            materialType: 'PolylineGlow',
             glowPower: 0.1, //发光强度
             width: 10, //线宽
             color: '#FF4500',
@@ -102,11 +101,10 @@
       map.addLayer(geoJsonLayer2)
 
       var geoJsonLayer3 = new mars3d.layer.GeoJsonLayer({
-        type: 'geojson',
         url: 'http://data.marsgis.cn/file/geojson/lineback3_1.json',
         symbol: {
           styleOptions: {
-            lineType: 'glow',
+            materialType: 'PolylineGlow',
             glowPower: 0.1, //发光强度
             width: 10, //线宽
             color: '#FF4500',

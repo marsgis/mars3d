@@ -22,7 +22,7 @@
 
 
   <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+    include="jquery,font-awesome,toastr,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
 
   <link href="css/style.css" rel="stylesheet" />
 </head>
@@ -118,6 +118,8 @@
 
       //新增绘制
       $('#btnStartDraw').click(function () {
+        haoutil.msg('管线的绘制时容易报“Invalid array length”的未知错误，极不稳定，项目中慎用！')
+
         //开始绘制
         graphicLayer.startDraw({
           type: 'polylineVolume',
@@ -179,7 +181,7 @@
           color: '#00ffff',
           opacity: 0.9,
           label: {
-            text: '我是原始线',
+            text: '我是原始的',
             font_size: 18,
             color: '#ffffff',
             distanceDisplayCondition: true,
@@ -190,20 +192,24 @@
       })
       graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
 
-      //entity转geojson
+      //graphic转geojson
       var geojson = graphic.toGeoJSON()
-      console.log(geojson)
+      console.log('转换后的geojson', geojson)
+      addGeoJson(geojson, graphicLayer)
+    }
 
-      //geojson转entity
-      var graphicCopy = mars3d.graphic.PolylineVolumeEntity.fromGeoJSON(geojson)
+    //添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
+    function addGeoJson(geojson, graphicLayer) {
+      var graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0]
+      delete graphicCopy.attr
+      //新的坐标
       graphicCopy.positions = [
         [117.172852, 31.872736, 33.69],
         [117.251461, 31.866011, 26.44],
       ]
-      graphicCopy.label.text = '我是转换后生成的线'
+      graphicCopy.style.label = graphicCopy.style.label || {}
+      graphicCopy.style.label.text = '我是转换后生成的'
       graphicLayer.addGraphic(graphicCopy)
-
-      console.log(graphicCopy)
     }
 
     function addGraphic_a3(graphicLayer) {
