@@ -659,8 +659,8 @@ var exampleConfig = {
           {
             name: 'PolylineVolume 管道线',
             version: '1.5',
-            thumbnail: 'f15_entity_polylinevolume.jpg',
-            fileName: 'f15_entity_polylinevolume',
+            thumbnail: 'f15_entity_polylineVolume.jpg',
+            fileName: 'f15_entity_polylineVolume',
           },
           {
             name: 'Corridor 走廊',

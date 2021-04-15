@@ -76,14 +76,11 @@
         name: '文庙-单体化',
         url: 'http://data.marsgis.cn/file/geojson/draw-dth-wm.json',
         symbol: {
-          // type: 'polygon',
           styleOptions: {
             // color: 'rgba(255,0,0,0.2)',
-            // clampToGround: true,
             label: {
               text: '{name}',
               height: 25, //单体化面没有高度，所以中心点文字需要指定一个高度值。
-              // clampToGround: true,
               opacity: 1,
               font_size: 22,
               color: '#ffffff',
@@ -105,8 +102,7 @@
         //dth 标识为单体化数据，内部特殊处理
         dth: {
           type: 'click', //设置这个属性改为单击后高亮,默认为鼠标移入高亮
-          color: '#ffff00',
-          opacity: 0.5,
+          color: 'rgba(255,255,0,0.3)',
           buffer: 1.0,
         },
         popup: [
