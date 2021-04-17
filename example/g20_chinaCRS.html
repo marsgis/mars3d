@@ -23,9 +23,6 @@
   <!--第三方lib-->
   <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/" include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
 
-  <script src="../lib/mars3d/thirdParty/tdt/cesiumTdt.js"></script>
-  <script src="../lib/mars3d/thirdParty/tdt/TdtDmLayer.js"></script>
-
   <link href="css/style.css" rel="stylesheet" />
 </head>
 
@@ -36,10 +33,14 @@
   <div id="mars3dContainer" class="mars3d-container"></div>
 
 
-  <div id="tipView" class="info-tips">
-    (1)使用国家测绘局天地图在线地名服务<br />
-    (2)如未显示地名，可能是服务不稳定造成。
+  <div class="infoview">
+    <input type="button" class="btn btn-primary" value="WGS84标准底图" onclick="goWGS84Basemap()" />
+    <input type="button" class="btn btn-primary" value="GCJ02国测局偏移底图" onclick="goGCJ02Basemap()" />
   </div>
+
+
+
+
 
   <script src="./js/common.js"></script>
   <script type="text/javascript">
@@ -51,31 +52,59 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
-          center: {
-            y: 23.816631,
-            x: 111.688366,
-            z: 4605984.38,
-            heading: 355.5,
-            pitch: -80.2,
-            roll: 0.1,
-          },
+          center: { lat: 31.839149, lng: 117.205666, alt: 644, heading: 2, pitch: -56 },
         },
-        terrain: {
-          show: false,
-        },
+        baseLayerPicker: false,
       })
 
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
 
-      // 设置最大俯仰角，[-90,0]区间内，默认为-30，单位弧度
-      map.scene.screenSpaceCameraController.constrainedPitch = Cesium.Math.toRadians(-20)
+      create3dtilesModel()
+    }
 
-      //天地图 三维地名服务  /plugins/tdt/TdtDmLayer.js
-      var tdtDmLayer = new mars3d.layer.TdtDmLayer({
-        key: mars3d.Token.tianditu,
+    let tiles3dLayer
+
+    function removeLayer() {
+      if (tiles3dLayer) {
+        map.removeLayer(tiles3dLayer, true)
+        tiles3dLayer = null
+      }
+    }
+
+    function create3dtilesModel() {
+      removeLayer()
+
+      //添加参考三维模型
+      tiles3dLayer = new mars3d.layer.TilesetLayer({
+        name: '合肥国家大学科技园',
+        url: 'http://data.marsgis.cn/3dtiles/qx-hfdxy/tileset.json',
+        maximumScreenSpaceError: 1,
+        maximumMemoryUsage: 1024,
+        chinaCRS: mars3d.ChinaCRS.WGS84,
+        position: {
+          alt: -19,
+        },
       })
-      map.addLayer(tdtDmLayer)
+      map.addLayer(tiles3dLayer)
+    }
+
+    function goWGS84Basemap() {
+      map.setCameraView({ lat: 31.839149, lng: 117.205666, alt: 644, heading: 2, pitch: -56 })
+
+      map.basemap = 2020 // 天地图卫星
+      map.options.chinaCRS = mars3d.ChinaCRS.WGS84
+
+      create3dtilesModel()
+    }
+
+    function goGCJ02Basemap() {
+      map.setCameraView({ lat: 31.837966, lng: 117.211427, alt: 785, heading: 1, pitch: -65 })
+
+      map.basemap = 2021 //高德卫星(GCJ02偏移)
+      map.options.chinaCRS = mars3d.ChinaCRS.GCJ02
+
+      create3dtilesModel()
     }
   </script>
 </body>

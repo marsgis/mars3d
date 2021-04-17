@@ -72,7 +72,25 @@
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
 
-      showFeijiDemo()
+      //url传入模型地址
+      var type = haoutil.system.getRequestByName('data')
+      switch (type) {
+        default:
+          showFeijiDemo()
+          break
+        case 'feiji':
+          $('#viewSL').hide()
+          showFeijiDemo()
+          break
+        case 'chuanbo':
+          $('#viewSL').hide()
+          showChuanboDemo()
+          break
+        case 'huojian':
+          $('#viewSL').hide()
+          showHuojianDemo()
+          break
+      }
     }
 
     var czmlLayer
@@ -183,6 +201,9 @@
     //示例：
     function showHuojianDemo() {
       removeLayer()
+
+      map.basemap = 'ArcGIS卫星'
+      map.setCameraView({ lat: 28.561843, lng: -80.577575, alt: 630, heading: 359, pitch: -85 })
 
       czmlLayer = new mars3d.layer.CzmlLayer({
         name: '火箭发射',

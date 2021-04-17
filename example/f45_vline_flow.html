@@ -23,9 +23,6 @@
   <!--第三方lib-->
   <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/" include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
 
-  <script src="../lib/mars3d/thirdParty/tdt/cesiumTdt.js"></script>
-  <script src="../lib/mars3d/thirdParty/tdt/TdtDmLayer.js"></script>
-
   <link href="css/style.css" rel="stylesheet" />
 </head>
 
@@ -36,10 +33,11 @@
   <div id="mars3dContainer" class="mars3d-container"></div>
 
 
-  <div id="tipView" class="info-tips">
-    (1)使用国家测绘局天地图在线地名服务<br />
-    (2)如未显示地名，可能是服务不稳定造成。
+  <!-- 面板 -->
+  <div class="infoview">
+    面板
   </div>
+
 
   <script src="./js/common.js"></script>
   <script type="text/javascript">
@@ -51,31 +49,56 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
-          center: {
-            y: 23.816631,
-            x: 111.688366,
-            z: 4605984.38,
-            heading: 355.5,
-            pitch: -80.2,
-            roll: 0.1,
-          },
-        },
-        terrain: {
-          show: false,
+          center: { lat: 31.815403, lng: 117.214262, alt: 346, heading: 39, pitch: -8 },
         },
       })
 
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
 
-      // 设置最大俯仰角，[-90,0]区间内，默认为-30，单位弧度
-      map.scene.screenSpaceCameraController.constrainedPitch = Cesium.Math.toRadians(-20)
+      map.basemap = 2017 //切换到蓝色底图
 
-      //天地图 三维地名服务  /plugins/tdt/TdtDmLayer.js
-      var tdtDmLayer = new mars3d.layer.TdtDmLayer({
-        key: mars3d.Token.tianditu,
+      var tilesetLayer = new mars3d.layer.TilesetLayer({
+        url: 'http://data.marsgis.cn/3dtiles/jzw-hefei/tileset.json',
+        marsJzwStyle: true, //打开建筑物特效（内置Shader代码）
+        maximumScreenSpaceError: 3,
+        maximumMemoryUsage: 1024,
+        center: { y: 31.805004, x: 117.222617, z: 1457.4, heading: 1.6, pitch: -30.5, roll: 0 },
+        showClickFeature: true,
+        popup: 'all',
       })
-      map.addLayer(tdtDmLayer)
+      map.addLayer(tilesetLayer)
+
+      //创建Graphic图层
+      var graphicLayer = new mars3d.layer.GraphicLayer()
+      map.addLayer(graphicLayer)
+
+      for (var j = 0; j < 200; ++j) {
+        var startPt = randomPoint()
+
+        let endPt = startPt.clone()
+        endPt.alt = haoutil.math.random(1000, 2000)
+
+        var primitive = new mars3d.graphic.PolylinePrimitive({
+          positions: [startPt, endPt],
+          style: {
+            width: 1,
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlowColor, {
+              color: 'rgb(141,172,172)',
+              speed: haoutil.math.random(10, 20),
+              percent: 0.1,
+              alpha: 0.01,
+            }),
+          },
+        })
+        graphicLayer.addGraphic(primitive)
+      }
+    }
+    //取区域内的随机图标
+    function randomPoint() {
+      var jd = haoutil.math.random(117.208056 * 1000, 117.25548 * 1000) / 1000
+      var wd = haoutil.math.random(31.816617 * 1000, 31.855756 * 1000) / 1000
+      return new mars3d.LatLngPoint(jd, wd, 100)
     }
   </script>
 </body>

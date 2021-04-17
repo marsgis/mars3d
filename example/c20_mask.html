@@ -60,7 +60,7 @@
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
         //geojson 合肥边界线
-        geoJsonLayer = new mars3d.layer.CzmGeoJsonLayer({
+        geoJsonLayer = new mars3d.layer.GeoJsonLayer({
           url: 'http://data.marsgis.cn/file/geojson/hefei.json',
           mask: true, //标识为遮罩层【重点参数】
           symbol: {

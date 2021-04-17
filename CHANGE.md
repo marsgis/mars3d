@@ -5,7 +5,7 @@
 - 整理梳理material，新增了MaterialType和MaterialUtil类来统一管理。
 - 整理规范了entity和primitive的style样式，规范一致性传参，方便后续自由切换数据类型。
 - 整理了矢量图层，原来的GeoJsonLayer更名为CzmGeoJsonLayer
-- 设计了新的GeoJsonLayer，采用可再symobl中配置type参数指定Graphic类型来渲染，默认为primitive方式。
+- 设计了新的GeoJsonLayer，采用可在symobl中配置type参数指定Graphic类型来渲染，默认为primitive方式。
 - 重构了LodGraphicLayer，采用Graphic方式渲染，默认内部为primitive方式，也可以按需自定义type。 
 
 

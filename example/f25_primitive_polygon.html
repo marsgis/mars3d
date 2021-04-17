@@ -182,7 +182,7 @@
           },
         },
       })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
 
       //演示个性化处理graphic，代码在\js\graphicManager.js
       initGraphicManager(primitive)
@@ -202,7 +202,7 @@
           image: 'img/textures/excavate_bottom_min.jpg',
         },
       })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
 
       //entity转geojson
       var geojson = primitive.toGeoJSON()
@@ -221,14 +221,18 @@
           [117.214681, 31.81402, 32.97],
         ],
         style: {
-          material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.PolyBlob, {
-            lightColor: new Cesium.Color(1.0, 1.0, 1.0, 0.5),
-            darkColor: new Cesium.Color(0.0, 0.0, 1.0, 0.5),
-            frequency: 30.0, //次数
-          }),
+          materialType: mars3d.MaterialType.Water,
+          normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
+          frequency: 1000.0, // 控制波数的数字。
+          animationSpeed: 0.01, // 控制水的动画速度的数字。
+          amplitude: 10, // 控制水波振幅的数字。
+          specularIntensity: 0.5, // 控制镜面反射强度的数字。
+          baseWaterColor: '#006ab4', // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
+          blendColor: '#006ab4', // 从水中混合到非水域时使用的rgba颜色对象。
+          clampToGround: true,
         },
       })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     //面状：草地面效果
@@ -249,7 +253,7 @@
           }),
         },
       })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     //面状：木材面效果
@@ -272,7 +276,7 @@
           }),
         },
       })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     //面状：混合效果
@@ -301,7 +305,7 @@
           }),
         },
       })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     //面状： 柏油路面效果
@@ -322,7 +326,7 @@
           }),
         },
       })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     //面状：碎石面效果
@@ -344,7 +348,7 @@
           }),
         },
       })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
   </script>
 </body>

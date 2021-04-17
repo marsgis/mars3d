@@ -109,6 +109,8 @@
     function creteaPointPrimitive(graphicLayer) {
       clr.init()
 
+      haoutil.msg('加载数据44万条，请耐心等待~')
+
       var degree = 45 //角度
 
       var resource = new Cesium.Resource({
@@ -117,6 +119,7 @@
       resource
         .fetchJson()
         .then(function (rs) {
+          console.log('加载数据' + rs.length + '条')
           for (var i = 1; i < rs.length; i++) {
             var item = rs[i]
 
@@ -161,7 +164,7 @@
           maximumConeDegree: 90,
           slicePartitions: 45,
           stackPartitions: 45,
-          material: Cesium.Color.RED.withAlpha(0.3),
+          color: Cesium.Color.RED.withAlpha(0.3),
           outline: true,
           outlineColor: Cesium.Color.WHITE.withAlpha(0.8),
         },
@@ -182,7 +185,7 @@
           maximumConeDegree: 90,
           slicePartitions: 45,
           stackPartitions: 45,
-          material: Cesium.Color.YELLOW.withAlpha(0.3),
+          color: Cesium.Color.YELLOW.withAlpha(0.3),
           outline: true,
           outlineColor: Cesium.Color.WHITE.withAlpha(0.8),
         },

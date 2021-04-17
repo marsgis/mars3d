@@ -126,23 +126,13 @@
 
     function deleteAll() {
       graphicLayer.clear()
-
-      if (lastdataSource) {
-        map.dataSources.remove(lastdataSource)
-        lastdataSource = null
-      }
+      map.graphicLayer.clear()
       lastgeojson = null
     }
 
-    var lastdataSource
     var lastgeojson
 
     function updateBuffer(graphic) {
-      if (lastdataSource) {
-        map.dataSources.remove(lastdataSource)
-        lastdataSource = null
-      }
-
       var width = Number($('#txtRadius').val()) * 1000 //km
 
       var buffere
@@ -161,20 +151,16 @@
         return
       }
 
-      Cesium.GeoJsonDataSource.load(buffere, {
-        stroke: Cesium.Color.fromCssColorString('#ffffff').withAlpha(0.7),
-        strokeWidth: 2,
-        fill: Cesium.Color.fromCssColorString('#ff0000').withAlpha(0.4),
-        clampToGround: true,
+      let graphicsOptions = mars3d.Util.geoJsonToGraphics(buffere, {
+        type: 'polygon',
+        style: {
+          color: 'rgba(255,0,0,0.4)',
+          clampToGround: true,
+        },
       })
-        .then(function (dataSource) {
-          lastdataSource = dataSource
-          map.dataSources.add(dataSource)
-          map.dataSources.lower(dataSource)
-        })
-        .otherwise(function (error) {
-          haoutil.alert(error, '加载数据出错')
-        })
+
+      map.graphicLayer.clear()
+      map.graphicLayer.addGraphic(graphicsOptions)
     }
   </script>
 </body>

@@ -258,6 +258,7 @@
         position: new mars3d.LatLngPoint(116.37617, 30.847384, 396.12),
         style: {
           radius: 1500.0,
+          clampToGround: false,
           //扫描材质
           material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleScan, {
             image: 'img/textures/circleScan.png',
@@ -289,6 +290,7 @@
             return _rotation
           }, false),
         },
+        hasEdit: false, //不允许编辑
       })
       graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
     }

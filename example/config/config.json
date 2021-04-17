@@ -1,8 +1,5 @@
 ﻿{
   "map3d": {
-    "templateValues":{
-      "dataServer":"http://data.marsgis.cn"
-    },
     "scene": {
       "center": { "lat": 30.526361, "lng": 116.335987, "alt": 45187, "heading": 0, "pitch": -45 },
       "scene3DOnly": false,
@@ -49,7 +46,7 @@
       "mouseDownView": true,
       "location": {
         "fps": true,
-        "format": "<div>经度:{x}</div> <div>纬度:{y}</div> <div>海拔：{z}米</div>   <div>层级：{level}</div> <div>方向：{heading}度</div><div>俯仰角：{pitch}度</div><div>视高：{height}米</div>"
+        "format": "<div>经度:{x}</div> <div>纬度:{y}</div><div>海拔：{z}米</div><div>层级：{level}</div> <div>方向：{heading}度</div><div>俯仰角：{pitch}度</div><div>视高：{height}米</div>"
       },
       "navigation": {
         "legend": { "left": "100px", "bottom": "-1px" },
@@ -57,7 +54,7 @@
       }
     },
     "terrain": {
-      "url": "{dataServer}/terrain",
+      "url": "http://data.marsgis.cn/terrain",
       "show": true
     },
     "basemaps": [
@@ -186,7 +183,7 @@
         "name": "离线地图  (供参考)",
         "type": "xyz",
         "icon": "http://mars3d.cn/example/img/basemaps/mapboxSatellite.png",
-        "url": "{dataServer}/maptile/wgs3857img/{z}/{x}/{y}.jpg",
+        "url": "http://data.marsgis.cn/maptile/googleImg/{z}/{x}/{y}.jpg",
         "minimumLevel": 1,
         "maximumLevel": 18,
         "minimumTerrainLevel": 1,

@@ -43,11 +43,6 @@
       <input type="button" class="btn btn-primary" value="规划面" onclick="showGuihuaDemo()" />
       <input type="button" class="btn btn-primary" value="安徽区域面" onclick="showAnhuiDemo()" />
     </div>
-    <div>
-      特殊面：
-      <input type="button" class="btn btn-primary" value="立体建筑物" onclick="showJianzhuwuDemo()" />
-      <input type="button" class="btn btn-primary" value="单体化面" onclick="showDantihuaDemo()" />
-    </div>
   </div>
 
 
@@ -107,7 +102,7 @@
               color: '#ffffff',
               outline: true,
               outlineColor: '#000000',
-              pixelOffsetY: -25,
+              pixelOffsetY: -45,
               scaleByDistance: true,
               scaleByDistance_far: 80000,
               scaleByDistance_farValue: 0.5,
@@ -260,76 +255,6 @@
       layerTest.on(mars3d.EventType.click, function (event) {
         //单击事件
         console.log('单击了图层', event)
-      })
-    }
-
-    //示例：显示特殊面数据（立体建筑物）
-    function showJianzhuwuDemo() {
-      removeLayer()
-
-      geoJsonLayer = new mars3d.layer.CzmGeoJsonLayer({
-        name: '建筑物面',
-        url: 'http://data.marsgis.cn/file/geojson/jzw.json',
-        symbol: {
-          styleOptions: {
-            color: '#0d3685',
-            outlineColor: '#0d3685',
-            opacity: 0.8,
-          },
-        },
-        //buildings 标识为建筑物数据，内部特殊处理
-        buildings: {
-          cloumn: 'floors',
-          height: 'flo_height',
-        },
-        center: { y: 31.932537, x: 120.419919, z: 368, heading: 331, pitch: -41, roll: 0 },
-        popup: 'all',
-        flyTo: true,
-      })
-      map.addLayer(geoJsonLayer)
-
-      //绑定事件
-      geoJsonLayer.on(mars3d.EventType.load, function (event) {
-        console.log('数据加载完成', event)
-        initTree(event.list)
-      })
-    }
-
-    //示例：显示特殊面数据（单体化）
-    function showDantihuaDemo() {
-      removeLayer()
-
-      geoJsonLayer = new mars3d.layer.CzmGeoJsonLayer({
-        name: '文庙-单体化',
-        url: ' http://data.marsgis.cn/file/geojson/draw-dth-wm.json',
-        //dth 标识为单体化数据，内部特殊处理
-        dth: {
-          buffer: 3,
-          color: '#ffff00',
-          opacity: 0.5,
-        },
-        popup: [
-          { field: 'name', name: '房屋名称' },
-          { field: 'jznf', name: '建造年份' },
-          { field: 'ssdw', name: '所属单位' },
-          { field: 'remark', name: '备注信息' },
-        ],
-        center: {
-          y: 33.589536,
-          x: 119.032216,
-          z: 145.08,
-          heading: 3.1,
-          pitch: -22.9,
-          roll: 0,
-        },
-        flyTo: true,
-      })
-      map.addLayer(geoJsonLayer)
-
-      //绑定事件
-      geoJsonLayer.on(mars3d.EventType.load, function (event) {
-        console.log('数据加载完成', event)
-        initTree(event.list, '房屋名称')
       })
     }
 

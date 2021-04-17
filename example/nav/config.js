@@ -211,7 +211,7 @@ var exampleConfig = {
             version: '1.6',
             thumbnail: 'c10_mvt.jpg',
             fileName: 'c10_mvt',
-            plugins: 'pbf',
+            thirdParty: 'pbf',
           },
         ],
       },
@@ -457,9 +457,9 @@ var exampleConfig = {
         content: [
           {
             name: 'GeoJson图层',
-            version: '2.0',
-            thumbnail: 'e20_czmGeojson.jpg',
-            fileName: 'e20_czmGeojson',
+            version: '3.0',
+            thumbnail: 'e20_geojson.jpg',
+            fileName: 'e20_geojson',
           },
           {
             name: '立体建筑物GeoJson图层',
@@ -474,12 +474,6 @@ var exampleConfig = {
             fileName: 'e20_geojson_water',
           },
           {
-            name: '标绘GeoJson图层',
-            version: '3.0',
-            thumbnail: 'e20_geojson_draw.jpg',
-            fileName: 'e20_geojson_draw',
-          },
-          {
             name: 'KML图层',
             version: '1.2',
             thumbnail: 'e21_kml.jpg',
@@ -490,6 +484,12 @@ var exampleConfig = {
             version: '1.2',
             thumbnail: 'e21_czml.jpg',
             fileName: 'e21_czml',
+          },
+          {
+            name: 'CzmGeoJson图层(Cesium原生加载)',
+            version: '2.0',
+            thumbnail: 'e20_czmGeojson.jpg',
+            fileName: 'e20_czmGeojson',
           },
         ],
       },
@@ -544,7 +544,7 @@ var exampleConfig = {
             version: '2.0',
             thumbnail: 'e30_tdtDmLayer.jpg',
             fileName: 'e30_tdtDmLayer',
-            plugins: 'tdt',
+            thirdParty: 'tdt',
           },
           {
             name: '经纬网图层',
@@ -709,7 +709,7 @@ var exampleConfig = {
 
       'feature-primitive': {
         name: 'Primitive基础矢量对象',
-        details: '【该分组示例待完善】Primitive 是更底层的实现方式，渲染效率更高，但功能性较差。',
+        details: 'Primitive 是更底层的实现方式，渲染效率更高，但功能性较差。',
         content: [
           {
             name: 'Label 文字',
@@ -895,10 +895,17 @@ var exampleConfig = {
           },
           {
             name: '图标点+文字(primitive方式)',
-            version: '1.89',
+            version: '1.8',
             thumbnail: 'f40_billboardPrimitive.jpg',
             fileName: 'f40_billboardPrimitive',
           },
+          {
+            name: 'AQI空气质量指数',
+            version: '1.5',
+            thumbnail: 'f40_worker_aqi.jpg',
+            fileName: 'f40_worker_aqi',
+          },
+
           {
             name: '动态效果点',
             version: '1.7',
@@ -955,8 +962,14 @@ var exampleConfig = {
           {
             name: '柱状线',
             version: '1.2',
-            thumbnail: 'f45_myGlobeDataSource.jpg',
-            fileName: 'f45_myGlobeDataSource',
+            thumbnail: 'f45_vline.jpg',
+            fileName: 'f45_vline',
+          },
+          {
+            name: '竖直飞线',
+            version: '3.0',
+            thumbnail: 'f45_vline_flow.jpg',
+            fileName: 'f45_vline_flow',
           },
           {
             name: '一带一路',
@@ -1421,12 +1434,12 @@ var exampleConfig = {
             thumbnail: 'g20_3dtiles_move.jpg',
             fileName: 'g20_3dtiles_move',
           },
-          // {
-          //   name: '国测局坐标系纠偏',
-          //   version: '2.0',
-          //   thumbnail: '37_crs.jpg',
-          //   fileName: '37_crs',
-          // },
+          {
+            name: '国测局坐标系纠偏',
+            version: '2.0',
+            thumbnail: 'g20_chinaCRS.jpg',
+            fileName: 'g20_chinaCRS',
+          },
         ],
       },
     },
@@ -2016,6 +2029,34 @@ var exampleConfig = {
             version: '3.0',
             thumbnail: 'm35_dhjb.jpg',
             fileName: 'm35_dhjb',
+          },
+          {
+            name: '船舶模拟',
+            version: '1.3',
+            thumbnail: 'e21_czml_chuanbo.gif',
+            fileName: 'e21_czml',
+            params: 'data=chuanbo',
+          },
+          {
+            name: '飞机模拟',
+            version: '1.3',
+            thumbnail: 'e21_czml_feiji.gif',
+            fileName: 'e21_czml',
+            params: 'data=feiji',
+          },
+          {
+            name: '火箭发射过程',
+            version: '2.0',
+            thumbnail: 'e21_czml_huojian.gif',
+            fileName: 'e21_czml',
+            params: 'data=huojian',
+          },
+          {
+            name: '实时卫星轨迹',
+            version: '2.0',
+            thumbnail: 'f61_satellite_list.jpg',
+            fileName: 'f61_satellite_list',
+            plugins: 'space',
           },
         ],
       },

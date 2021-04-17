@@ -94,7 +94,7 @@ var plotEdit = {
     if (latlngs) {
       this._hasHeight = true
 
-      if (attr.type == 'rectangle') {
+      if (attr.type == 'rectangle' || attr.type == 'circle') {
         this._hasHeight = false
       }
 
