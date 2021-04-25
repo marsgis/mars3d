@@ -139,6 +139,7 @@
       addGraphic_02(graphicLayer)
       addGraphic_03(graphicLayer)
       addGraphic_04(graphicLayer)
+      addGraphic_05(graphicLayer)
     }
 
     function addGraphic_01(graphicLayer) {
@@ -234,6 +235,27 @@
         },
       })
       graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
+    }
+
+    function addGraphic_05(graphicLayer) {
+      var primitive = new mars3d.graphic.PolygonEntity({
+        positions: [
+          [117.261476, 31.799865, 20.8],
+          [117.270864, 31.804957, 26],
+          [117.289609, 31.804853, 25.4],
+          [117.290861, 31.79569, 25.2],
+          [117.268148, 31.788912, 18.5],
+        ],
+        style: {
+          height: 50,
+          diffHeight: 200,
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolyGradient, {
+            color: '#3388cc',
+            alphaPower: 1.5,
+          }),
+        },
+      })
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
   </script>
 </body>

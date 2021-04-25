@@ -243,24 +243,24 @@
 
       //自定义特效 Shader
       var fragmentShader = `
-          //渐变效果1
-          //  gl_FragColor = vec4(0.2,  0.5, 1.0, 1.0); // 颜色
-          //  gl_FragColor *= vec4(vec3(v_stcVertex.z / 50.0), 1.0); // 渐变
+          // 注意shader中写浮点数是，一定要带小数点，否则会报错，比如0需要写成0.0，1要写成1.0
+          float _baseHeight = 0.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
+          float _heightRange = 50.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange) 默认是 0-60米
+          float _glowRange = 80.0; // 光环的移动范围(高度)
 
-          //渐变效果2
-          float minHeight = 40.0; //渐变楼高范围 开始高度
-          float maxHeight = 120.0;//渐变楼高范围 最大高度
-          float mars_pl = fract(czm_frameNumber / maxHeight) * 3.14159265 * 2.0;
-          float mars_sd = v_stcVertex.z / minHeight + sin(mars_pl) * 0.1;
-          gl_FragColor *= vec4(mars_sd, mars_sd, mars_sd, 1.0);
+          // 建筑基础色
+          float mars_height = v_stcVertex.z - _baseHeight;
+          float mars_a11 = fract(czm_frameNumber / 120.0) * 3.14159265 * 2.0;
+          float mars_a12 = mars_height / _heightRange + sin(mars_a11) * 0.1;
+          gl_FragColor *= vec4(mars_a12, mars_a12, mars_a12, 1.0);
 
           // 动态光环
-          float glowRange = 100.0; // 光环的移动范围(最大高度)
-          float time = fract(czm_frameNumber / 360.0);
-          time = abs(time - 0.5) * 2.0;
-          float diff = step(0.005, abs( clamp(v_stcVertex.z / glowRange, 0.0, 1.0) - time));
-          gl_FragColor.rgb += gl_FragColor.rgb * (1.0 - diff);
-          `
+          float mars_a13 = fract(czm_frameNumber / 360.0);
+          float mars_h = clamp(mars_height / _glowRange, 0.0, 1.0);
+          mars_a13 = abs(mars_a13 - 0.5) * 2.0;
+          float mars_diff = step(0.005, abs(mars_h - mars_a13));
+          gl_FragColor.rgb += gl_FragColor.rgb * (1.0 - mars_diff);
+       `
 
       tiles3dLayer = new mars3d.layer.TilesetLayer({
         name: '成都市建筑物',

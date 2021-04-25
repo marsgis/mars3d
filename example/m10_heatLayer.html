@@ -41,7 +41,6 @@
 
 
 
-
   <script src="./js/common.js"></script>
   <script type="text/javascript">
     'use script' //开发环境建议开启严格模式
@@ -52,15 +51,7 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
-          //此处参数会覆盖config.json中的对应配置
-          center: {
-            y: 24.608348,
-            x: 122.396075,
-            z: 1117557.39,
-            heading: 347.4,
-            pitch: -60,
-            roll: 359.9,
-          },
+          center: { lat: 31.466724, lng: 119.306582, alt: 182294, heading: 359, pitch: -68 },
         },
       })
 

@@ -99,7 +99,11 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {})
+      var mapOptions = mars3d.Util.merge(options, {
+        scene: {
+          center: { lat: 30.519639, lng: 116.489725, alt: 60366, heading: 0, pitch: -45 },
+        },
+      })
 
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
@@ -126,60 +130,21 @@
       })
 
       //加一些演示数据
-      addGraphic_01(graphicLayer)
-      addGraphic_02(graphicLayer)
       addGraphic_03(graphicLayer)
       addGraphic_04(graphicLayer)
       addGraphic_05(graphicLayer)
       addGraphic_06(graphicLayer)
+      addGraphic_07(graphicLayer)
+      addGraphic_09(graphicLayer)
+      addGraphic_10(graphicLayer)
     }
 
-    //加css动画的扩散点
-    function addGraphic_01(graphicLayer) {
-      var graphic = new mars3d.graphic.DivGraphic({
-        position: [116.325461, 30.933429, 543.67],
-        style: {
-          html: '<div class="mars3d-animation-point" style="color:#f33349;"><p></p></div>',
-          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), //按视距距离显示
-        },
-      })
-      graphicLayer.addGraphic(graphic)
-    }
-
-    //添加GIF图标，DIV方式
-    function addGraphic_02(graphicLayer) {
-      var graphic = new mars3d.graphic.DivGraphic({
-        position: [116.467993, 31.040598, 671.05],
-        style: {
-          html: '<img src="img/marker/tf.gif" style="width:100px;height:100px;" ></img>',
-          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), //按视距距离显示
-          horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-          verticalOrigin: Cesium.VerticalOrigin.CENTER,
-        },
-        pointerEvents: false, //false时不允许拾取和触发任意鼠标事件，但可以穿透div缩放地球
-      })
-      graphicLayer.addGraphic(graphic)
-    }
-
-    //添加GIF图标，DIV方式
-    function addGraphic_03(graphicLayer) {
-      var graphic = new mars3d.graphic.DivGraphic({
-        position: [116.561124, 30.959874, 268.2],
-        style: {
-          html: '<img src="img/marker/emergency.gif" style="width:100px;height:100px;" ></img>',
-          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), //按视距距离显示
-          horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-          verticalOrigin: Cesium.VerticalOrigin.CENTER,
-        },
-        pointerEvents: false, //false时不允许拾取和触发任意鼠标事件，但可以穿透div缩放地球
-      })
-      graphicLayer.addGraphic(graphic)
-    }
+   
 
     //类似toolitp的自定义html
-    function addGraphic_04(graphicLayer) {
+    function addGraphic_03(graphicLayer) {
       var graphic = new mars3d.graphic.DivGraphic({
-        position: [116.239443, 30.862119, 506.6],
+        position: [116.146461, 31.380152, 395.1],
         style: {
           html: `<div class="mars3d-popup-content-wrapper  divpoint-background">
                   <div class="mars3d-popup-content divpoint-color">
@@ -195,10 +160,68 @@
       graphicLayer.addGraphic(graphic)
     }
 
-    //自定义的面板
+    //添加GIF图标，DIV方式
+    function addGraphic_04(graphicLayer) {
+      var graphic = new mars3d.graphic.DivGraphic({
+        position: [116.79013, 31.164872, 289],
+        style: {
+          html: '<img src="img/marker/tf.gif" style="width:100px;height:100px;" ></img>',
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), //按视距距离显示
+          horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+          verticalOrigin: Cesium.VerticalOrigin.CENTER,
+        },
+        pointerEvents: false, //false时不允许拾取和触发任意鼠标事件，但可以穿透div缩放地球
+      })
+      graphicLayer.addGraphic(graphic)
+    }
+
+    //添加GIF图标，DIV方式
     function addGraphic_05(graphicLayer) {
       var graphic = new mars3d.graphic.DivGraphic({
-        position: [116.174302, 31.00681],
+        position: [116.144401, 31.183562, 873.3],
+        style: {
+          html: '<img src="img/marker/emergency.gif" style="width:100px;height:100px;" ></img>',
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), //按视距距离显示
+          horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+          verticalOrigin: Cesium.VerticalOrigin.CENTER,
+        },
+        pointerEvents: false, //false时不允许拾取和触发任意鼠标事件，但可以穿透div缩放地球
+      })
+      graphicLayer.addGraphic(graphic)
+    }
+
+    //加css动画的扩散点 DivLightPoint
+    function addGraphic_06(graphicLayer) {
+      var graphic = new mars3d.graphic.DivLightPoint({
+        position: [116.630276, 31.213813, 215.6],
+        style: {
+          color: '#f33349',
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), //按视距距离显示
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+    }
+
+    //内置扩展的动态文本 DivBoderLabel
+    function addGraphic_07(graphicLayer) {
+      var graphic = new mars3d.graphic.DivBoderLabel({
+        position: [116.460722, 31.140888, 781],
+        style: {
+          text: 'Mars3D三维地球平台软件',
+          font_size: 15,
+          font_family: '微软雅黑',
+          color: '#ccc',
+          boderColor: '#15d1f2',
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+    }
+
+ 
+    //自定义的面板
+    function addGraphic_09(graphicLayer) {
+      var graphic = new mars3d.graphic.DivGraphic({
+        position: [116.228043, 30.882207],
         style: {
           html: `<div class="divpoint divpoint-theme-29baf1">
                 <div class="divpoint-wrap">
@@ -243,8 +266,8 @@
           // anchor: [0, 0],
           horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(1000, 200000), //按视距距离显示
-          scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 100000, 0.1),
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), //按视距距离显示
+          scaleByDistance: new Cesium.NearFarScalar(1000, 1.0, 200000, 0.2),
           clampToGround: true,
         },
         //可以传入自定义测试点样式
@@ -260,9 +283,9 @@
     }
 
     //自定义的面板
-    function addGraphic_06(graphicLayer) {
+    function addGraphic_10(graphicLayer) {
       var graphic = new mars3d.graphic.DivGraphic({
-        position: Cesium.Cartesian3.fromDegrees(116.406756, 30.835499, 396.93),
+        position: Cesium.Cartesian3.fromDegrees(116.706926, 30.945346, 457.5),
         style: {
           html: `<div class="divpoint divpoint-theme-29baf1">
                 <div class="divpoint-wrap">
@@ -319,22 +342,22 @@
       var tempTime
 
       //起点
-      var startPoint = Cesium.Cartesian3.fromDegrees(116.406756, 30.835499, 396.93)
+      var startPoint = Cesium.Cartesian3.fromDegrees(116.706926, 30.945346, 457.5)
       tempTime = map.clock.currentTime //飞行开始时间
       property.addSample(tempTime, startPoint)
 
       //移动到的第1个目标点
-      var point1 = Cesium.Cartesian3.fromDegrees(116.171998, 30.86887, 733.6)
+      var point1 = Cesium.Cartesian3.fromDegrees(116.311439, 30.76485, 423.7)
       tempTime = Cesium.JulianDate.addSeconds(tempTime, time, new Cesium.JulianDate())
       property.addSample(tempTime, point1)
 
       //移动到的第2个目标点
-      var point2 = Cesium.Cartesian3.fromDegrees(116.311677, 31.038516, 768.84)
+      var point2 = Cesium.Cartesian3.fromDegrees(116.63081, 30.786585, 85)
       tempTime = Cesium.JulianDate.addSeconds(tempTime, time, new Cesium.JulianDate())
       property.addSample(tempTime, point2)
 
       //移动到的第3个目标点
-      var point3 = Cesium.Cartesian3.fromDegrees(116.406756, 30.835499, 396.93)
+      var point3 = Cesium.Cartesian3.fromDegrees(116.706926, 30.945346, 457.5)
       tempTime = Cesium.JulianDate.addSeconds(tempTime, time, new Cesium.JulianDate())
       property.addSample(tempTime, point3)
 

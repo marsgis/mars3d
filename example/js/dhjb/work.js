@@ -38,6 +38,7 @@ function initEditorJS() {
               name: '点标记',
               style: {
                 color: '#ffffff',
+                outline: true,
                 outlineColor: '#ff0000',
                 visibleDepth: true,
                 clampToGround: true,
@@ -56,6 +57,7 @@ function initEditorJS() {
               name: '点标记',
               style: {
                 color: '#ffffff',
+                outline: true,
                 outlineColor: '#ff0000',
                 visibleDepth: true,
                 clampToGround: true,
@@ -74,6 +76,7 @@ function initEditorJS() {
               name: '点标记',
               style: {
                 color: '#ffffff',
+                outline: true,
                 outlineColor: '#ff0000',
                 visibleDepth: true,
                 clampToGround: true,
@@ -137,6 +140,7 @@ function initEditorJS() {
               name: '点标记',
               style: {
                 color: '#ffffff',
+                outline: true,
                 outlineColor: '#ff0000',
                 visibleDepth: true,
                 clampToGround: true,
@@ -155,6 +159,7 @@ function initEditorJS() {
               name: '点标记',
               style: {
                 color: '#ffffff',
+                outline: true,
                 outlineColor: '#ff0000',
                 visibleDepth: true,
                 clampToGround: true,
@@ -211,6 +216,7 @@ function initEditorJS() {
               name: '点标记',
               style: {
                 color: '#ffffff',
+                outline: true,
                 outlineColor: '#ff0000',
                 visibleDepth: true,
                 clampToGround: true,
@@ -277,6 +283,7 @@ function initEditorJS() {
               name: '点标记',
               style: {
                 color: '#ffffff',
+                outline: true,
                 outlineColor: '#ff0000',
                 visibleDepth: true,
                 clampToGround: true,
@@ -334,18 +341,11 @@ function initEditorJS() {
           {
             type: 'Feature',
             properties: {
-              name: '线',
-              config: {
-                minPointNum: 2,
-              },
+              type: 'polyline',
               style: {
-                flow_speed: 10,
-                flow_image: 'img/textures/lineClr.png',
                 color: '#ffff00',
                 clampToGround: true,
               },
-              attr: {},
-              type: 'polyline',
             },
             geometry: {
               type: 'LineString',
@@ -409,16 +409,12 @@ function initEditorJS() {
       var geojson = {
         type: 'Feature',
         properties: {
-          name: '线',
-          config: {
-            minPointNum: 2,
-          },
+          type: 'polyline',
           style: {
             materialType: mars3d.MaterialType.PolylineDash, //虚线
+            color: '#ff0000',
             clampToGround: true,
           },
-          attr: {},
-          type: 'polyline',
         },
         geometry: {
           type: 'LineString',
@@ -465,16 +461,11 @@ function initEditorJS() {
       var geojson = {
         type: 'Feature',
         properties: {
-          name: '线',
-          config: {
-            minPointNum: 2,
-          },
+          type: 'polyline',
           style: {
             color: '#ffff00',
             clampToGround: true,
           },
-          attr: {},
-          type: 'polyline',
         },
         geometry: {
           type: 'LineString',

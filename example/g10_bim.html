@@ -21,8 +21,7 @@
 
 
   <!--第三方lib-->
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/" include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
 
   <link href="css/style.css" rel="stylesheet" />
 </head>
@@ -148,6 +147,11 @@
 
       //模型裁剪
       var tilesetPlanClip = new mars3d.thing.TilesetPlanClip({
+        positions: [
+          [117.096786, 31.851355, 0],
+          [117.096834, 31.851464, 0],
+          [117.09691, 31.851375, 0],
+        ],
         layer: tiles3dLayer,
         clipOutSide: false,
         edgeColor: Cesium.Color.GREY,
@@ -280,12 +284,13 @@
           style: {
             color: '#007be6',
             opacity: 0.5,
-            clampToGround: true,
           },
           success: function (graphic) {
             //绘制成功后回调
             var positions = graphic.positionsShow
             map.graphicLayer.clear()
+
+            console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
 
             tilesetPlanClip.positions = positions
           },

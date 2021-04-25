@@ -1,7 +1,6 @@
 /* div Point 的样式 */
 
 /*类popup的divpoint样式，黑色字体 + 白色背景*/
-
 .divpoint-color {
   color: #2b2929;
 }
@@ -10,7 +9,7 @@
   background: rgba(255, 255, 255, 0.85);
 }
 
-/*面板的divpoint样式*/
+/*一种面板的divpoint样式*/
 .divpoint-wrap {
   position: relative;
   padding: 30px;
@@ -339,4 +338,78 @@
   height: auto;
   text-align: left;
   color: rgba(255, 255, 255, 1);
+}
+
+/**一个简单文本DIV面板**/
+.mars3d-divlabel {
+  min-width: 90px;
+  min-height: 35px;
+  position: absolute;
+  left: 16px;
+  bottom: 31px;
+  cursor: default;
+  border-radius: 4px;
+  opacity: 0.96;
+  border: 1px solid #14171c;
+  box-shadow: 0px 2px 21px 0px rgba(33, 34, 39, 0.55);
+  border-radius: 4px;
+  box-sizing: border-box;
+  background: linear-gradient(0deg, #1e202a 0%, #0d1013 100%);
+}
+
+.mars3d-divlabel::before {
+  content: "";
+  width: calc(100% + 22px);
+  height: 39px;
+  position: absolute;
+  bottom: -39px;
+  left: -22px;
+  background: url(../img/marker/popupLbl.png) 0px 0px no-repeat;
+  background-position: 0px 0px;
+}
+
+.mars3d-divlabel-text {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding: 1px 20px;
+  font-size: 14px;
+  font-family: 'MicrosoftYaHei';
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 33px;
+  border: 1px solid #ffffff4f;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  white-space:nowrap;
+}
+
+
+/**一个渐变的文本DIV面板**/
+.mars3d-gradient-label {
+  text-align: center;
+  padding: 5px 30px;
+  margin: 0;
+  color: #fff;
+  background: linear-gradient(rgb(7 10 203 / 75%), rgb(16 238 220));
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  max-height: 130px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  white-space:nowrap;
+}
+
+.mars3d-gradient-label:after {
+  content: "";
+  position: absolute;
+  bottom: -60px;
+  left: calc(50% - 3px);
+  display: block;
+  width: 3px;
+  height: 60px;
+  border-right: 3px solid #2bcdbb;
 }

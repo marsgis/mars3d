@@ -133,14 +133,14 @@
       //动态运行车辆的尾气粒子效果
       function addGraphic_a3(graphicLayer) {
         var roamLine = new mars3d.graphic.RoamLine({
-          points: [
+          positions: [
             [117.226585, 31.818437, 32.41],
             [117.226838, 31.811681, 28.23],
           ],
           speed: 120,
           model: {
             show: true,
-            uri: 'http://data.marsgis.cn/gltf/mars/qiche.gltf',
+            url: 'http://data.marsgis.cn/gltf/mars/qiche.gltf',
             scale: 0.2,
           },
           clockLoop: true, //是否循环播放

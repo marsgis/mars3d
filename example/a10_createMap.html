@@ -50,10 +50,11 @@
           showSun: true,
           showMoon: true,
           showSkyBox: true,
-          showSkyAtmosphere: true,
+          showSkyAtmosphere: false, //关闭球周边的白色轮廓 map.scene.skyAtmosphere = false
           fog: true,
           fxaa: true,
           globe: {
+            showGroundAtmosphere: false, //关闭大气（球表面白蒙蒙的效果）
             depthTestAgainstTerrain: false,
             baseColor: '#546a53',
           },
@@ -91,6 +92,8 @@
 
       //cesium对应的原始地球对象
       var viewer = map.viewer
+
+      window.map = map
     }
   </script>
 </body>

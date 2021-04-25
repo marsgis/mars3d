@@ -100,9 +100,14 @@ var dataWork = {
     var node = this.selectdNode
     if (node) {
       var that = this
+
+      this.steptimes = 0
+      node.widget.disable()
+      node.widget.activate()
+
       this.timeIdx = setTimeout(function () {
         that.activateNextNode(node.index)
-      }, (node.times - this.steptimes) * 1000)
+      }, node.times * 1000)
     } else {
       this.start()
     }

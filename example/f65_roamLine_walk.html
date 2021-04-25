@@ -149,7 +149,7 @@
         var flydata = {
           name: '步行路线',
           speed: 40,
-          points: [
+          positions: [
             [117.220356, 31.833959, 43.67],
             [117.220361, 31.835111, 44.36],
             [117.213242, 31.835863, 42.31],
@@ -163,7 +163,7 @@
           ],
           model: {
             show: true,
-            uri: 'http://data.marsgis.cn/gltf/mars/man/walk.gltf',
+            url: 'http://data.marsgis.cn/gltf/mars/man/walk.gltf',
             scale: 5,
             minimumPixelSize: 50,
           },
@@ -242,7 +242,7 @@
 
         //贴地时，异步计算完成后开始
         // roamLine.clampToGround(function (e) {//异步计算完成贴地后再启动
-        //     //贴地后的路线值为flyLine.points
+        //     //贴地后的路线值为flyLine.positions
         //     startFly()
         // });
       }

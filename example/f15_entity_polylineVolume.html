@@ -222,8 +222,12 @@
           shape: 'circle',
           radius: 80,
           cornerType: Cesium.CornerType.BEVELED,
-          color: '#ff0000',
-          opacity: 0.9,
+          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
+            color: '#ff0000',
+            image: 'img/textures/fenceline.png',
+            speed: 10,
+            repeat_x: 6,
+          }),
         },
       })
       graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)

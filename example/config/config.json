@@ -86,8 +86,8 @@
       {
         "name": "ArcGIS卫星",
         "icon": "http://mars3d.cn/example/img/basemaps/esriWorldImagery.png",
-        "type": "arcgis",
-        "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
+        "type": "xyz",
+        "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
         "enablePickFeatures": false
       },
       {

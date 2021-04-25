@@ -702,6 +702,7 @@
         "data": [
           { "text": "实线", "value": "Color" },
           { "text": "虚线", "value": "PolylineDash", "impact": ["dashLength"] },
+          { "text": "衬色线", "value": "PolylineOutline", "impact": ["outlineColor", "outlineWidth"] },
           { "text": "光晕", "value": "PolylineGlow" , "impact": ["glowPower"]},
           { "text": "箭头", "value": "PolylineArrow" },
           { "text": "流动线", "value": "LineFlow", "impact": ["speed", "image", "repeat"] },
@@ -711,6 +712,8 @@
         ]
       },
       { "name": "dashLength", "label": "虚线间长", "type": "number", "defval": 16.0 },
+      { "name": "outlineColor", "label": "衬色颜色", "type": "color", "defval": "#ffffff" },
+      { "name": "outlineWidth", "label": "衬色宽度", "type": "number", "defval": 2.0 },
       { "name": "glowPower", "label": "高亮强度", "type": "number", "defval":0.25 },
       { "name": "image", "label": "图片", "type": "label", "defval": "img/textures/lineClr.png" },
       { "name": "speed", "label": "速度", "type": "number", "defval": 10.0 },
@@ -723,9 +726,6 @@
       { "name": "closure", "label": "是否闭合", "type": "radio", "defval": false },
       { "name": "clampToGround", "label": "是否贴地", "type": "radio", "defval": false },
 
-      { "name": "outline", "label": "是否衬色", "type": "radio", "defval": false, "impact": ["outlineColor", "outlineWidth"] },
-      { "name": "outlineColor", "label": "衬色颜色", "type": "color", "defval": "#ffffff" },
-      { "name": "outlineWidth", "label": "衬色宽度", "type": "number", "defval": 2.0 },
 
       { "name": "depthFail", "label": "是否显示遮挡", "type": "radio", "defval": false, "impact": ["depthFailColor", "depthFailOpacity"] },
       { "name": "depthFailColor", "label": "遮挡处颜色", "type": "color", "defval": "#ff0000" },

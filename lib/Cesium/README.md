@@ -10,7 +10,4 @@ github地址：https://github.com/CesiumGS/cesium
 介绍：
 	Cesium 是一款面向三维地球和地图的，世界级的JavaScript开源产品。它提供了基于JavaScript语言的开发包，
 	方便用户快速搭建一款零插件的虚拟地球Web应用，并在性能，精度，渲染质量以及多平台，易用性上都有高质量的保证。
-
-目录说明：
-	Cesium 官方压缩版包
-	CesiumUnminified 官方未压缩版包，可以进行调试 
+ 

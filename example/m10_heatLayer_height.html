@@ -41,17 +41,8 @@
   </div>
 
 
-
-  <div class="heatmap" style="overflow: hidden; width: 840px;height: 400px;display: none;">
-    <div class="heatmap-canvas" width="800" height="400"></div>
-  </div>
-
-
-
-
-  <!-- 图例面板 -->
-  <div style=" position: absolute; bottom: 30px; left: 10px;">
-    <img src="img/heatmap-tuli.png" height="200px" />
+  <div class="infoview">
+    <input type="button" class="btn btn-primary" id="btnUpdate" value="更新数据" />
   </div>
 
 
@@ -98,6 +89,10 @@
         },
       })
       map.addLayer(heatLayer)
+
+      $('#btnUpdate').click(function () {
+        heatLayer.positions = getRandomPoints(1000)
+      })
     }
 
     //获取bbox矩形区域内的count个随机点

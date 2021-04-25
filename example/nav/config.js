@@ -625,6 +625,12 @@ var exampleConfig = {
             fileName: 'f10_entity_cylinder',
           },
           {
+            name: '圆锥追踪体',
+            version: '3.0',
+            thumbnail: 'f16_coneTrack.jpg',
+            fileName: 'f16_coneTrack',
+          },
+          {
             name: 'Ellipsoid 球、半球、椭球',
             version: '1.5',
             thumbnail: 'f10_entity_ellipsoid.jpg',
@@ -752,6 +758,12 @@ var exampleConfig = {
             version: '3.0',
             thumbnail: 'f20_primitive_cylinder.jpg',
             fileName: 'f20_primitive_cylinder',
+          },
+          {
+            name: 'Frustum 四棱锥体',
+            version: '3.0',
+            thumbnail: 'f20_primitive_frustum.jpg',
+            fileName: 'f20_primitive_frustum',
           },
           {
             name: 'Ellipsoid 球、半球、椭球',
@@ -1006,6 +1018,12 @@ var exampleConfig = {
             version: '1.6',
             thumbnail: 'f45_flypath.jpg',
             fileName: 'f45_flypath',
+          },
+          {
+            name: '渐变区域',
+            version: '3.0',
+            thumbnail: 'f45_polyGradient.jpg',
+            fileName: 'f45_polyGradient',
           },
           {
             name: '矿区岩层效果',
@@ -1590,6 +1608,12 @@ var exampleConfig = {
             version: '1.9',
             thumbnail: 'h30_snow.gif',
             fileName: 'h30_snow',
+          },
+          {
+            name: '云图',
+            version: '3.0',
+            thumbnail: 'h30_cloud.jpg',
+            fileName: 'h30_cloud',
           },
           {
             name: '水面倒影 demo',
