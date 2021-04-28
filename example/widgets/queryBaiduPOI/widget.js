@@ -73,7 +73,9 @@
       )
 
       //查询控制器
-      this.baiduPOI = new mars3d.query.BaiduPOI()
+      this.baiduPOI = new mars3d.query.BaiduPOI({
+        // city: '合肥市',
+      })
     }
     //每个窗口创建完成后调用
     winCreateOK(opt, result) {

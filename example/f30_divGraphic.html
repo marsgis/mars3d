@@ -130,16 +130,51 @@
       })
 
       //加一些演示数据
+      addGraphic_01(graphicLayer)
+      addGraphic_01(graphicLayer)
+      addGraphic_02(graphicLayer)
       addGraphic_03(graphicLayer)
       addGraphic_04(graphicLayer)
       addGraphic_05(graphicLayer)
       addGraphic_06(graphicLayer)
       addGraphic_07(graphicLayer)
+      addGraphic_08(graphicLayer)
       addGraphic_09(graphicLayer)
       addGraphic_10(graphicLayer)
     }
 
-   
+    //一个简单的文本
+    function addGraphic_01(graphicLayer) {
+      var graphic = new mars3d.graphic.DivGraphic({
+        position: [116.741611, 31.408068, 75.5],
+        style: {
+          html: `<div class="mars3d-divlabel">
+                    <div class="mars3d-divlabel-text">合肥火星科技有限公司</div>
+                </div>`,
+          horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+          verticalOrigin: Cesium.VerticalOrigin.CENTER,
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 400000), //按视距距离显示
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+    }
+
+    //一个简单的文本
+    function addGraphic_02(graphicLayer) {
+      var graphic = new mars3d.graphic.DivGraphic({
+        position: [116.510732, 31.403786, 176.4],
+        style: {
+          html: `<div class="mars3d-gradient-label">
+                    <div>合肥火星科技有限公司</div>
+                </div>`,
+          offsetY: -60,
+          horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 400000), //按视距距离显示
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+    }
 
     //类似toolitp的自定义html
     function addGraphic_03(graphicLayer) {
@@ -217,7 +252,23 @@
       graphicLayer.addGraphic(graphic)
     }
 
- 
+    //内置扩展的竖立文本 DivBoderLabel
+    function addGraphic_08(graphicLayer) {
+      var graphic = new mars3d.graphic.DivUpLabel({
+        position: [116.327136, 30.99723, 914.6],
+        style: {
+          text: '我是竖立的文本',
+          color: '#fff',
+          font_size: 16,
+          font_family: '微软雅黑',
+          lineHeight: 60,
+          circleSize: 8,
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 100000), //按视距距离显示
+        },
+      })
+      graphicLayer.addGraphic(graphic)
+    }
+
     //自定义的面板
     function addGraphic_09(graphicLayer) {
       var graphic = new mars3d.graphic.DivGraphic({

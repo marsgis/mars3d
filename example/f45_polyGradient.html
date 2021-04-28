@@ -71,13 +71,9 @@
                 text: '{name}', //对应的属性名称
                 opacity: 1,
                 font_size: 25,
-                color: '#3388cc',
-
+                color: '#fff',
                 font_family: '楷体',
-                outline: true,
-                outlineColor: '#ffffff',
-                outlineWidth: 3,
-
+                outline: false,
                 scaleByDistance: true,
                 scaleByDistance_far: 20000000,
                 scaleByDistance_farValue: 0.1,
@@ -86,13 +82,14 @@
               },
             },
             callback: function (attr, styleOpt) {
+              let randomHeight = attr.gdp * 5 //测试的高度
               return {
                 color: getColor(),
-                diffHeight: haoutil.math.random(10000, 20000),
+                diffHeight: randomHeight,
               }
             },
           },
-          popup: '{name}',
+          popup: '{name} : {gdp}亿元  ',
         })
         map.addLayer(geoJsonLayer)
 
@@ -105,7 +102,7 @@
         })
       }
 
-      let arrColor = ['rgb(18,76,154)', 'rgb(15,176,255)', 'rgb(0,244,188)', 'rgb(51,176,204)', '#8CB7E5', '#42B2BE', '#40C4E4', '#139FF0']
+      let arrColor = ['rgb(15,176,255)', 'rgb(18,76,154)', '#40C4E4', '#42B2BE', 'rgb(51,176,204)', '#8CB7E5', 'rgb(0,244,188)', '#139FF0']
 
       let index = 0
       function getColor() {

@@ -338,7 +338,6 @@
     "name": "圆",
     "style": [
       { "name": "radius", "label": "半径", "type": "number", "defval": 0.0 },
-      { "name": "height", "label": "高程", "type": "number", "defval": 0.0 },
       { "name": "diffHeight", "label": "立体高度", "type": "number", "defval": 0.0 },
 
       { "name": "fill", "label": "是否填充", "type": "radio", "defval": true, "impact": ["materialType", "color", "opacity"] },

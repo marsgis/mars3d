@@ -156,6 +156,8 @@
     }
     //更新图上的属性
     updateAttr2map(attr) {
+      console.log('更新属性', attr)
+
       var graphic = this.config.graphic //当前编辑的graphic
       graphic.setOptions(attr)
     }

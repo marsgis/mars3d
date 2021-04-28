@@ -317,7 +317,7 @@
         type: 'polyline',
         // maxPointNum: 2,  //限定最大点数，可以绘制2个点的线，自动结束
         style: {
-          color: '#55ff33',
+          color: clampToGround ? '#ffff00' : '#3388ff',
           width: 3,
           clampToGround: clampToGround,
         },
@@ -328,7 +328,7 @@
       graphicLayer.startDraw({
         type: 'polygon',
         style: {
-          color: '#29cf34',
+          color: clampToGround ? '#ffff00' : '#3388ff',
           opacity: 0.5,
           outline: false,
           outlineWidth: 2.0,
@@ -341,7 +341,7 @@
       graphicLayer.startDraw({
         type: 'curve',
         style: {
-          color: '#55ff33',
+          color: clampToGround ? '#ffff00' : '#3388ff',
           width: 3,
           clampToGround: clampToGround,
         },
@@ -352,7 +352,7 @@
       graphicLayer.startDraw({
         type: 'corridor',
         style: {
-          color: '#55ff33',
+          color: clampToGround ? '#ffff00' : '#3388ff',
           width: 500,
           clampToGround: clampToGround,
         },
@@ -363,7 +363,7 @@
       graphicLayer.startDraw({
         type: 'circle',
         style: {
-          color: '#ffff00',
+          color: clampToGround ? '#ffff00' : '#3388ff',
           opacity: 0.6,
           clampToGround: clampToGround,
         },
@@ -374,7 +374,7 @@
       graphicLayer.startDraw({
         type: 'rectangle',
         style: {
-          color: '#ffff00',
+          color: clampToGround ? '#ffff00' : '#3388ff',
           opacity: 0.6,
           clampToGround: clampToGround,
         },
@@ -426,7 +426,7 @@
           fill: true,
           color: '#00ff00',
           opacity: 0.6,
-          diffHeight: 1000,
+          length: 1000,
         },
       })
     }

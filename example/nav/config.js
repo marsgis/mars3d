@@ -1818,6 +1818,12 @@ var exampleConfig = {
             fileName: 'k20_heatLayer_3dtiles',
             plugins: 'heatmap',
           },
+          {
+            name: '限高分析',
+            version: '3.0',
+            thumbnail: 'k20_limitHeight.jpg',
+            fileName: 'k20_limitHeight',
+          },
         ],
       },
       'analysi-data': {

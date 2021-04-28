@@ -94,7 +94,7 @@ var plotEdit = {
     if (latlngs) {
       this._hasHeight = true
 
-      if (attr.type == 'rectangle' || attr.type == 'circle') {
+      if (attr.type == 'rectangle' || attr.type == 'corridor') {
         this._hasHeight = false
       }
 
@@ -572,10 +572,14 @@ var plotEdit = {
   },
   //属性面板值修改后触发此方法
   updateAttr: function (parname, attrName, attrVal) {
+    let newAttr = {}
     switch (parname) {
       default:
         break
       case 'plot_attr_style_': {
+        newAttr.style = {}
+        newAttr.style[attrName] = attrVal
+
         this._last_attr.style[attrName] = attrVal
 
         let type = this._last_attr.type
@@ -608,12 +612,18 @@ var plotEdit = {
       case 'plot_attr_stylelabel_':
         this._last_attr.style.label = this._last_attr.style.label || {}
         this._last_attr.style.label[attrName] = attrVal
+
+        newAttr.style = { label: {} }
+        newAttr.style.label[attrName] = attrVal
         break
       case 'plot_attr_attr_':
         this._last_attr.attr[attrName] = attrVal
         //this.startEditing(this._last_attr);
+
+        newAttr.attr = {}
+        newAttr.attr[attrName] = attrVal
         break
     }
-    thisWidget.updateAttr2map(this._last_attr)
+    thisWidget.updateAttr2map(newAttr)
   },
 }
