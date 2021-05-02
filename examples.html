@@ -31,7 +31,7 @@
       content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
     />
 
-    <title>功能示例 - Mars3D | Mars3D三维地球平台 |三维地图| 火星科技|合肥火星科技|合肥火星科技有限公司</title>
+    <title>Mars3D功能示例 | Mars3D三维地球平台 | 火星科技 |合肥火星科技有限公司</title>
 
     <script
       type="text/javascript"
@@ -40,10 +40,9 @@
       libpath="./lib/"
     ></script>
 
-    <link rel="stylesheet" href="http://mars3d.cn/css/common.css?time=20210329" />
-    <link rel="stylesheet" href="http://mars3d.cn/css/header.css?time=20210329" />
-    <link rel="stylesheet" href="http://mars3d.cn/css/sideBar.css?time=20210329" />
-    <link rel="stylesheet" href="http://mars3d.cn/css/examples.css?time=20210329" />
+    <link rel="stylesheet" href="http://mars3d.cn/v2/css/common.css?time=20210329" />
+    <link rel="stylesheet" href="http://mars3d.cn/v2/css/sideBar.css?time=20210329" />
+    <link rel="stylesheet" href="http://mars3d.cn/v2/css/examples.css?time=20210329" />
     <style>
       /*无头部菜单时*/
       .noHeader .main-sidebar, .left-side {
@@ -58,7 +57,6 @@
 
   <body class="hold-transition skin-blue sidebar-mini noHeader" data-spy="scroll" data-target="#scrollSpy">
     <div class="wrapper">
- 
       <!-- 侧边栏 -->
       <aside class="sidebar-wrapper main-sidebar" id="scrollSpy">
         <section class="sidebar" id="sidebar">
@@ -81,7 +79,7 @@
                     </a>
                     <a target="_black" href="https://github.com/marsgis/mars3d">
                     <img alt="GitHub stars" src="https://img.shields.io/github/stars/marsgis/mars3d?style=flat&logo=github">
-                    </a> 
+                    </a>
                 </span>
                 <br /><br />
                 1. 名称内有 demo 的属于存在已知问题的示例，此处仅做演示。<br />
@@ -95,7 +93,7 @@
 
       <div style="position: absolute; right: 10px; top: 10px">
         <a href="javascript:haoutil.file.downloadFile('功能清单.txt', getAllName());">下载功能清单txt</a>
-        <a href="javascript:haoutil.file.downloadFile('功能清单.csv',getVerDiff('0.0.0'))">下载功能清单csv</a>
+        <a href="javascript:haoutil.file.downloadFile('功能清单.csv',getVerDiff())">下载功能清单csv</a>
       </div>
 
       <!-- footer -->
@@ -107,13 +105,12 @@
     </div>
 
     <script>
-      var examplePath = 'example/' //示例功能所在目录
-      var exampleImgPath ='http://mars3d.cn/example/'
-      var autoShowCode = true
+      window.exampleConfig = 'data/example.json' //配置文件目录
+      window.exampleIconPath = 'http://mars3d.cn/data/exampleIcon/' //ICON目录
+      window.examplePath = 'example/' //示例功能所在目录
+      window.autoShowCode = true
     </script>
-    
-    <script src="example/nav/config.js?time=20210329"></script>
-    <script src="http://mars3d.cn/js/sidebar.js?time=20210329"></script>
-    <script src="http://mars3d.cn/js/example.js?time=20210329"></script>
+    <script src="http://mars3d.cn/v2/js/sidebar.js?time=20210329"></script>
+    <script src="http://mars3d.cn/v2/js/example.js?time=20210329"></script>
   </body>
 </html>

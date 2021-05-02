@@ -17,7 +17,9 @@ class HuxingLayer extends mars3d.layer.GraphicLayer {
    * @return {void}  无
    */
   _addedHook() {
+    super._addedHook()
     this.load()
+
     this.on(mars3d.EventType.click, this._graphic_clickHandler, this)
     this._map.on(mars3d.EventType.clickMap, this._map_clickHandler, this)
 
@@ -31,12 +33,16 @@ class HuxingLayer extends mars3d.layer.GraphicLayer {
    * @return {void}  无
    */
   _removedHook() {
+    super._removedHook()
+
     this.off(mars3d.EventType.click, this._graphic_clickHandler, this)
     this._map.off(mars3d.EventType.clickMap, this._map_clickHandler, this)
 
     this.off(mars3d.EventType.mouseOver, this._graphic_mouseOverHandler, this)
     this.off(mars3d.EventType.mouseOut, this._graphic_mouseOutHandler, this)
   }
+
+  //加载数据
   load(newOptions = {}) {
     this.options = {
       ...this.options,
@@ -66,21 +72,9 @@ class HuxingLayer extends mars3d.layer.GraphicLayer {
 
     this._cache_huxin = {}
 
-    //循环每个面
-    let features = geojson.features
-    for (let i = 0; i < features.length; i++) {
-      let feature = features[i]
-      let attr = feature.properties
-
-      if (feature.geometry.type == 'MultiPolygon') {
-        var coordinatesNew = []
-        feature.geometry.coordinates.forEach((coordinate) => {
-          this.addHuxing(coordinate[0], attr)
-        })
-        feature.geometry.coordinates = coordinatesNew
-      } else {
-        this.addHuxing(feature.geometry.coordinates[0], attr)
-      }
+    let arr = mars3d.Util.geoJsonToGraphics(geojson) //解析geojson
+    for (let i = 0; i < arr.length; i++) {
+      this.addHuxing(arr[i].positions, arr[i].attr)
     }
 
     if (this.options.flyTo) {
