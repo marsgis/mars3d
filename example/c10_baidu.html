@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d,mars3d-widget"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -34,12 +34,10 @@
   <body class="dark">
     <div id="mars3dContainer" class="mars3d-container"></div>
 
-    <div class="infoview">
+    <div class="infoview infoview-right">
       <input id="btnAddLayer" type="button" class="btn btn-primary" value="叠加图层" onclick="addLayer()" />
       <input id="btnRemoveLayer" type="button" class="btn btn-primary" value="移除图层" onclick="removeLayer()" />
     </div>
-
-    <div id="tipView" class="info-tips">(1) 当前加载的拾取坐标非百度坐标，所以仅供展示。</div>
 
     <script type="text/javascript">
       'use script' //开发环境建议开启严格模式
@@ -57,14 +55,7 @@
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', {
           scene: {
-            center: {
-              y: 25.816726,
-              x: 114.165359,
-              z: 3339609.8,
-              heading: 355.7,
-              pitch: -81.2,
-              roll: 0,
-            },
+            center: { lat: 31.675177, lng: 117.323257, alt: 81193, heading: 359, pitch: -79 },
             highDynamicRange: false,
           },
           control: {
@@ -72,6 +63,11 @@
             homeButton: true, //视角复位按钮
             sceneModePicker: true, //二三维切换按钮
             defaultContextMenu: true, //右键菜单
+            location: {
+              fps: true,
+              format:
+                '<div>经度:{x}</div> <div>纬度:{y}</div><div>海拔：{z}米</div><div>层级：{level}</div> <div>方向：{heading}度</div><div>俯仰角：{pitch}度</div><div>视高：{height}米</div>',
+            },
           },
           terrain: {
             url: 'http://data.marsgis.cn/terrain',
@@ -117,6 +113,9 @@
             },
           ],
         })
+
+        //poi查询栏
+        activatePOIQuery(map)
       }
 
       //叠加的图层
@@ -138,19 +137,13 @@
         }
       }
 
-      function openTipView(content, title) {
-        window.layer.open({
-          type: 1,
-          title: title || '功能 和 已知问题 提示',
-          offset: 'rt',
-          shade: false,
-          skin: 'layer-mars-dialog animation-scale-up',
-          content: content,
+      //附加：激活POI查询widget，用于在底图上叠加显示数据
+      function activatePOIQuery(map) {
+        mars3d.widget.activate({
+          map: map,
+          name: 'POI查询',
+          uri: 'widgets/queryBaiduPOI/widget.js',
         })
-      }
-
-      if ($('#tipView').length > 0) {
-        openTipView($('#tipView'))
       }
     </script>
   </body>

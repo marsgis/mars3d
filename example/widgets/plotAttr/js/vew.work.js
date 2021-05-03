@@ -94,7 +94,9 @@ var plotEdit = {
     if (latlngs) {
       this._hasHeight = true
 
-      if (attr.type == 'rectangle' || attr.type == 'corridor') {
+      if (attr.style.clampToGround) {
+        this._hasHeight = false
+      } else if (attr.type == 'rectangle' || attr.type == 'corridor') {
         this._hasHeight = false
       }
 

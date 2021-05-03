@@ -25,7 +25,7 @@
 
 
   <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"></script>
+    include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d,mars3d-widget"></script>
 
   <link href="css/style.css" rel="stylesheet" />
 </head>
@@ -33,7 +33,7 @@
 <body class="dark">
   <div id="mars3dContainer" class="mars3d-container"></div>
 
-  <div class="infoview">
+  <div class="infoview infoview-right">
     <input id="btnAddLayer" type="button" class="btn btn-primary" value="叠加图层" onclick="addLayer()" />
     <input id="btnRemoveLayer" type="button" class="btn btn-primary" value="移除图层" onclick="removeLayer()" />
   </div>
@@ -114,6 +114,9 @@
           },
         ],
       })
+
+      //poi查询栏
+      activatePOIQuery(map)
     }
 
     //叠加的图层
@@ -130,11 +133,21 @@
       })
       map.addLayer(tileLayer)
     }
+
     function removeLayer() {
       if (tileLayer) {
         map.removeLayer(tileLayer, true)
         tileLayer = null
       }
+    }
+
+    //附加：激活POI查询widget，用于在底图上叠加显示数据
+    function activatePOIQuery(map) {
+      mars3d.widget.activate({
+        map: map,
+        name: 'POI查询',
+        uri: 'widgets/queryBaiduPOI/widget.js',
+      })
     }
   </script>
 </body>

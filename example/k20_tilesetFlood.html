@@ -221,6 +221,8 @@
           var maxValue = Number($('#maxHeight').val())
           var speed = Number($('#speed').val())
 
+          console.log('当前参数', { minHeight: minValue, maxHeight: maxValue })
+
           tilesetFlood.setOptions({
             minHeight: minValue,
             maxHeight: maxValue,
@@ -243,7 +245,7 @@
         $('#range_currHeight').range({
           onChange: function (value, bfb) {
             tilesetFlood.height = value
-            $('#lbl_nowHeight').html('当前高度：' + value.toFixed(1))
+            $('#lbl_nowHeight').html(value.toFixed(1))
 
             $('#btn_start').val('自动播放')
           },
@@ -271,7 +273,7 @@
 
       function onChangeHeight(height) {
         $('#range_currHeight').val(height).change()
-        $('#lbl_nowHeight').html('当前高度：' + height.toFixed(1))
+        $('#lbl_nowHeight').html(height.toFixed(1))
       }
     </script>
   </body>

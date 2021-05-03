@@ -60,7 +60,7 @@
     "basemaps": [
       { "id": 10, "name": "地图底图", "type": "group" },
       {
-        "id": 2020,
+        "pid": 10,
         "name": "天地图卫星",
         "icon": "http://mars3d.cn/example/img/basemaps/tdt_img.png",
         "type": "tdt",
@@ -69,6 +69,7 @@
         "show": true
       },
       {
+        "pid": 10,
         "name": "天地图电子",
         "icon": "http://mars3d.cn/example/img/basemaps/tdt_vec.png",
         "type": "group",
@@ -78,26 +79,75 @@
         ]
       },
       {
-        "name": "谷歌卫星",
-        "icon": "http://mars3d.cn/example/img/basemaps/google_img.png",
-        "type": "google",
-        "layer": "img_d"
+        "id": 2021,
+        "pid": 10,
+        "name": "高德影像",
+        "type": "group",
+        "icon": "http://mars3d.cn/example/img/basemaps/gaode_img.png",
+        "layers": [
+          { "name": "底图", "type": "gaode", "layer": "img_d" },
+          { "name": "注记", "type": "gaode", "layer": "img_z" }
+        ]
       },
       {
-        "name": "ArcGIS卫星",
+        "pid": 10,
+        "name": "高德电子",
+        "type": "gaode",
+        "icon": "http://mars3d.cn/example/img/basemaps/gaode_vec.png",
+        "layer": "vec"
+      },
+      {
+        "pid": 10,
+        "name": "百度影像",
+        "type": "group",
+        "icon": "http://mars3d.cn/example/img/basemaps/bd-img.png",
+        "layers": [
+          { "name": "底图", "type": "baidu", "layer": "img_d" },
+          { "name": "注记", "type": "baidu", "layer": "img_z" }
+        ]
+      },
+      {
+        "pid": 10,
+        "name": "百度电子",
+        "icon": "http://mars3d.cn/example/img/basemaps/bd-vec.png",
+        "type": "baidu",
+        "layer": "vec"
+      },
+      {
+        "pid": 10,
+        "name": "腾讯影像",
+        "icon": "http://mars3d.cn/example/img/basemaps/gaode_img.png",
+        "type": "group",
+        "layers": [
+          { "name": "底图", "type": "tencent", "layer": "img_d" },
+          { "name": "注记", "type": "tencent", "layer": "img_z" }
+        ]
+      },
+      {
+        "pid": 10,
+        "name": "腾讯电子",
+        "icon": "http://mars3d.cn/example/img/basemaps/gaode_vec.png",
+        "type": "tencent",
+        "layer": "vec"
+      },
+      {
+        "pid": 10,
+        "name": "ArcGIS影像",
         "icon": "http://mars3d.cn/example/img/basemaps/esriWorldImagery.png",
         "type": "xyz",
         "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
         "enablePickFeatures": false
       },
       {
-        "name": "微软卫星",
+        "pid": 10,
+        "name": "微软影像",
         "icon": "http://mars3d.cn/example/img/basemaps/bingAerial.png",
         "type": "bing",
         "key": "AuKhM0WRkjhX8E4y1OM0TukYycaw_4Vh3eSfXONDf7OARls-WEB3K_Rfx89bWxof",
         "layer": "Aerial"
       },
       {
+        "pid": 10,
         "name": "OSM地图",
         "type": "xyz",
         "icon": "http://mars3d.cn/example/img/basemaps/osm.png",
@@ -105,14 +155,25 @@
         "subdomains": "abc"
       },
       {
-        "name": "黑色底图",
-        "icon": "http://mars3d.cn/example/img/basemaps/bd-c-dark.png",
-        "type": "mapbox",
-        "username": "marsgis",
-        "styleId": "cki0a2mtc2vyo1bqu76p8ks8m",
-        "scaleFactor": true
+        "id": 2017,
+        "pid": 10,
+        "name": "蓝色底图",
+        "icon": "http://mars3d.cn/example/img/basemaps/bd-c-midnight.png",
+        "type": "xyz",
+        "url": "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer/tile/{z}/{y}/{x}",
+        "chinaCRS": "GCJ02",
+        "enablePickFeatures": false
       },
       {
+        "pid": 10,
+        "name": "黑色底图",
+        "icon": "http://mars3d.cn/example/img/basemaps/bd-c-dark.png",
+        "type": "tencent",
+        "layer": "custom",
+        "style": "4"
+      },
+      {
+        "pid": 10,
         "name": "灰色底图",
         "icon": "http://mars3d.cn/example/img/basemaps/bd-c-grayscale.png",
         "type": "mapbox",
@@ -120,66 +181,8 @@
         "styleId": "cki0a92b123qo1aluk0e5v7sb",
         "scaleFactor": true
       },
-
       {
-        "id": 2017,
-        "name": "蓝色底图(GCJ02偏移)",
-        "icon": "http://mars3d.cn/example/img/basemaps/bd-c-midnight.png",
-        "crs": "gcj",
-        "type": "arcgis",
-        "url": "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer",
-        "enablePickFeatures": false
-      },
-
-      {
-        "name": "谷歌卫星(GCJ02偏移)",
-        "type": "group",
-        "crs": "gcj",
-        "icon": "http://mars3d.cn/example/img/basemaps/google_img.png",
-        "layers": [
-          { "name": "底图", "type": "google", "layer": "img_d", "crs": "gcj" },
-          { "name": "注记", "type": "google", "layer": "img_z", "crs": "gcj" }
-        ]
-      },
-      {
-        "id": 2021,
-        "name": "高德卫星(GCJ02偏移)",
-        "type": "group",
-        "icon": "http://mars3d.cn/example/img/basemaps/gaode_img.png",
-        "crs": "gcj",
-        "layers": [
-          { "name": "底图", "type": "gaode", "layer": "img_d" },
-          { "name": "注记", "type": "gaode", "layer": "img_z" }
-        ]
-      },
-      {
-        "name": "高德电子(GCJ02偏移)",
-        "type": "group",
-        "icon": "http://mars3d.cn/example/img/basemaps/gaode_vec.png",
-        "crs": "gcj",
-        "layers": [
-          { "name": "底图", "type": "gaode", "layer": "vec_d" },
-          { "name": "注记", "type": "gaode", "layer": "vec_z" }
-        ]
-      },
-      {
-        "name": "百度卫星 (BD偏移)",
-        "type": "group",
-        "icon": "http://mars3d.cn/example/img/basemaps/bd-img.png",
-        "crs": "baidu",
-        "layers": [
-          { "name": "底图", "type": "baidu", "layer": "img_d" },
-          { "name": "注记", "type": "baidu", "layer": "img_z" }
-        ]
-      },
-      {
-        "name": "百度电子 (BD偏移)",
-        "icon": "http://mars3d.cn/example/img/basemaps/bd-vec.png",
-        "crs": "baidu",
-        "type": "baidu",
-        "layer": "vec"
-      },
-      {
+        "pid": 10,
         "name": "离线地图  (供参考)",
         "type": "xyz",
         "icon": "http://mars3d.cn/example/img/basemaps/mapboxSatellite.png",
@@ -191,14 +194,17 @@
         "rectangle": { "xmin": -180, "xmax": 180, "ymin": -85, "ymax": 85 }
       },
       {
-        "name": "单张图片  (本地离线)",
+        "pid": 10,
+        "name": "单张图片 (本地离线)",
         "icon": "http://mars3d.cn/example/img/basemaps/offline.png",
         "type": "image",
         "url": "http://mars3d.cn/example/img/tietu/world.jpg"
       }
     ],
     "layers": [
+      { "id": 20, "name": "辅助图层", "type": "group" },
       {
+        "pid":20,
         "name": "行政区划界线",
         "type": "xyz",
         "url": "https://t{s}.tianditu.gov.cn/DataServer?T=ibo_w&x={x}&y={y}&l={z}&tk=9ae78c51a0a28f06444d541148496e36",
@@ -207,11 +213,26 @@
         "show": true
       },
       {
+        "pid":20,
         "name": "天地图注记",
         "type": "tdt",
         "layer": "img_z",
         "key": ["9ae78c51a0a28f06444d541148496e36"],
         "show": false
+      },
+      { "id": 30, "name": "实时路况", "type": "group" },
+      {
+        "pid":30,
+        "name": "高德实时路况",
+        "type": "gaode",
+        "layer": "time",
+        "proxy": "http://data.marsgis.cn/proxy/"
+      },
+      {
+        "pid":30,
+        "name": "百度实时路况",
+        "type": "baidu",
+        "layer": "time"
       }
     ]
   }

@@ -146,7 +146,7 @@
               "fileName": "c10_tentect"
             },
             {
-              "name": "百度 demo",
+              "name": "百度",
               "version": "1.7",
               "thumbnail": "c10_baidu.jpg",
               "fileName": "c10_baidu"
@@ -253,6 +253,12 @@
         {
           "name": "图层参数及控制",
           "children": [
+            {
+              "name": "图层管理",
+              "version": "3.0",
+              "thumbnail": "c20_manageLayers.jpg",
+              "fileName": "c20_manageLayers"
+            },
             {
               "name": "瓦片底图的参数",
               "version": "1.3",
@@ -1419,12 +1425,6 @@
               "version": "1.6",
               "thumbnail": "g20_3dtiles_move.jpg",
               "fileName": "g20_3dtiles_move"
-            },
-            {
-              "name": "国测局坐标系纠偏",
-              "version": "2.0",
-              "thumbnail": "g20_chinaCRS.jpg",
-              "fileName": "g20_chinaCRS"
             }
           ]
         }

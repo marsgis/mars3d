@@ -275,14 +275,16 @@
         type: 'billboard',
         style: {
           image: 'img/marker/mark1.png',
+          horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           label: {
             //不需要文字时，去掉label配置即可
             text: '可以同时支持文字',
-            font_size: 30,
+            font_size: 26,
             color: '#ffffff',
             outline: true,
             outlineColor: '#000000',
-            pixelOffsetY: -50,
+            pixelOffsetY: -60,
           },
         },
       })

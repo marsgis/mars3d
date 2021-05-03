@@ -89,14 +89,15 @@
       initLayerManager(graphicLayer)
 
       //加一些演示数据
-      addGraphic_a1(graphicLayer)
-      addGraphic_a2(graphicLayer)
-      addGraphic_a3(graphicLayer)
-      addGraphic_a4(graphicLayer)
-      addGraphic_a5(graphicLayer)
+      addGraphic_01(graphicLayer)
+      addGraphic_02(graphicLayer)
+      addGraphic_03(graphicLayer)
+      addGraphic_04(graphicLayer)
+      addGraphic_05(graphicLayer)
+      addGraphic_06(graphicLayer)
     }
 
-    function addGraphic_a1(graphicLayer) {
+    function addGraphic_01(graphicLayer) {
       var primitive = new mars3d.graphic.CylinderPrimitive({
         position: [116.282587, 30.859197, 1544.31],
         style: {
@@ -117,9 +118,9 @@
       console.log(geojson)
     }
 
-    function addGraphic_a2(graphicLayer) {
+    function addGraphic_02(graphicLayer) {
       var primitive = new mars3d.graphic.CylinderPrimitive({
-        position: new mars3d.LatLngPoint(116.329199, 30.881595, 390.3),
+        position: new mars3d.LatLngPoint(116.22457, 30.883148, 1035.2),
         style: {
           length: 2000.0,
           topRadius: 0.0,
@@ -134,7 +135,23 @@
       graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
 
-    function addGraphic_a3(graphicLayer) {
+    //
+    function addGraphic_03(graphicLayer) {
+      var primitive = new mars3d.graphic.CylinderPrimitive({
+        position: [116.177214, 30.842242, 2000],
+        style: {
+          slices: 4, //四凌锥
+          length: 4000.0,
+          topRadius: 0.0,
+          bottomRadius: 900.0,
+          color: '#00ffff',
+          opacity: 0.7,
+        },
+      })
+      graphicLayer.addGraphic(primitive)
+    }
+
+    function addGraphic_04(graphicLayer) {
       var primitive = new mars3d.graphic.CylinderPrimitive({
         position: [116.244399, 30.920459, 573.6],
         style: {
@@ -148,7 +165,7 @@
       graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
 
-    function addGraphic_a4(graphicLayer) {
+    function addGraphic_05(graphicLayer) {
       var primitive = new mars3d.graphic.CylinderPrimitive({
         position: [116.328775, 30.954602, 5000],
         style: {
@@ -167,7 +184,7 @@
       graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
 
-    function addGraphic_a5(graphicLayer) {
+    function addGraphic_06(graphicLayer) {
       //添加卫星1
       var point = new mars3d.LatLngPoint(116.148832, 30.920609, 9000)
 

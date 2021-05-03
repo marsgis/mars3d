@@ -26,7 +26,6 @@
       $.getJSON(this.path + 'config/attr.json', function (data) {
         that.attrConfig = data
         that.setDefaultVal()
-        //that.getReadmeTxt() //测试用
 
         that.attrConfig['curve'] = that.attrConfig['polyline']
         that.startEditing()
@@ -47,60 +46,12 @@
         attrDefConfig[i] = defstyle
       }
       this.attrDefConfig = attrDefConfig
-      // console.log('标号默认样式', JSON.stringify(attrDefConfig))
+
+      // let logInfo = JSON.stringify(attrDefConfig)
+      // logInfo = logInfo.replaceAll('"diffHeight":0,', '').replaceAll('"hasShadows":false,', '')
+      // console.log('标号默认样式', logInfo)
     }
-    //获取所有可配置属性的说明文档
-    getReadmeTxt() {
-      let data = this.attrConfig
 
-      //标号可配置的属性
-      let strAPI = ''
-      for (let i in data) {
-        let strAPIItem = ''
-        for (let idx = 0; idx < data[i].style.length; idx++) {
-          let item = data[i].style[idx]
-          if (haoutil.isutil.isString(item.defval)) {
-            item.defval = '"' + item.defval + '"'
-          }
-
-          let strData = ''
-          if (item.type === 'combobox') {
-            strData = ',可选项：'
-            item.data.forEach(function (comb) {
-              if (comb.value == comb.text) {
-                strData += `${comb.value},`
-              } else {
-                strData += `${comb.value} (解释：${comb.text}),`
-              }
-            })
-          }
-          let type
-          switch (item.type) {
-            case 'slider':
-            case 'number':
-              type = 'Number'
-              break
-            case 'radio':
-              type = 'Boolean'
-              break
-            default:
-              type = 'String'
-              break
-          }
-
-          strAPIItem += ` * @property {${type}} [${item.name} = ${item.defval}] ${item.label} ${strData} \n`
-        }
-        strAPI += `
-  /**
-  * ${data[i].name} 支持的样式信息
-  *
-  * @typedef {Object} ${i}.StyleOptions
-  *
-  ${strAPIItem}*
-  */\n\n`
-      }
-      haoutil.file.downloadFile('标绘属性配置.txt', strAPI)
-    }
     //每个窗口创建完成后调用
     winCreateOK(opt, result) {
       this.viewWindow = result

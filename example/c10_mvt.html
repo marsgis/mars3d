@@ -21,7 +21,7 @@
   <title>Mapbox矢量瓦片(.pbf) | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
   <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d,cesium-pbf"></script>
+    include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d,mars3d-widget,cesium-pbf"></script>
 
   <link href="css/style.css" rel="stylesheet" />
 </head>
@@ -83,7 +83,19 @@
         ],
       })
 
+      //poi查询栏
+      activatePOIQuery(map)
+
       //另外的实现方式可以参考：https://github.com/robbo1975/MapboxVectorTileImageryProvider
+    }
+
+    //附加：激活POI查询widget，用于在底图上叠加显示数据
+    function activatePOIQuery(map) {
+      mars3d.widget.activate({
+        map: map,
+        name: 'POI查询',
+        uri: 'widgets/queryBaiduPOI/widget.js',
+      })
     }
   </script>
 </body>

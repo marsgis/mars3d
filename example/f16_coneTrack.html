@@ -70,10 +70,27 @@
       //加一些演示数据
       addGraphic_01(graphicLayer)
       addGraphic_02(graphicLayer)
+      addGraphic_03(graphicLayer)
     }
 
     //静态的位置
     function addGraphic_01(graphicLayer) {
+      var coneTrack = new mars3d.graphic.ConeTrack({
+        position: [116.327881, 31.018378, 5000],
+        targetPosition: [116.311135, 30.998408, 1264.9], //可选
+        style: {
+          slices: 4, //四凌锥
+          // length: 4000,//targetPosition存在时无需传
+          angle: 5, //半场角度
+          color: '#ff0000',
+          opacity: 0.4,
+        },
+      })
+      graphicLayer.addGraphic(coneTrack)
+    }
+
+    //静态的位置
+    function addGraphic_02(graphicLayer) {
       let position = [116.28782, 30.971557, 5000]
       //加个飞机
       var primitive = new mars3d.graphic.ModelPrimitive({
@@ -119,7 +136,7 @@
     }
 
     //动态的位置
-    function addGraphic_02(graphicLayer) {
+    function addGraphic_03(graphicLayer) {
       let propertyFJ = getSampledPositionProperty([
         [116.364307, 31.03778, 5000],
         [116.42794, 31.064786, 5000],
