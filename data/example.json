@@ -761,6 +761,12 @@
               "fileName": "f20_primitive_model"
             },
             {
+              "name": "大数据 小模型(合并渲染)",
+              "version": "3.0",
+              "thumbnail": "f20_primitive_modelCombine.jpg",
+              "fileName": "f20_primitive_modelCombine"
+            },
+            {
               "name": "Polyline 线",
               "version": "3.0",
               "thumbnail": "f25_primitive_polyline.jpg",
@@ -795,6 +801,12 @@
               "version": "3.0",
               "thumbnail": "f25_primitive_polygon.jpg",
               "fileName": "f25_primitive_polygon"
+            },
+            {
+              "name": "大数据面(合并渲染)",
+              "version": "3.0",
+              "thumbnail": "f25_primitive_polygonCombine.jpg",
+              "fileName": "f25_primitive_polygonCombine"
             },
             {
               "name": "文字贴图",
@@ -1357,7 +1369,7 @@
               "fileName": "g10_piping"
             },
             {
-              "name": "成都市区（城市白模）",
+              "name": "合肥市区（城市白模）",
               "version": "1.9",
               "thumbnail": "k20_jzwStyle.jpg",
               "fileName": "k20_jzwStyle"

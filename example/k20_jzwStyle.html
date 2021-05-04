@@ -17,7 +17,7 @@
         content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-  <title>你好 成都 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+  <title>你好 合肥 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
   <!--第三方lib-->
   <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
@@ -84,36 +84,29 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
-          center: {
-            y: 30.630359,
-            x: 104.065939,
-            z: 2964.05,
-            heading: 3.2,
-            pitch: -36.4,
-            roll: 0,
-          },
+          center: { lat: 31.841018, lng: 117.252932, alt: 1346, heading: 38, pitch: -26 },
         },
         layers: [
           {
             type: 'geojson',
             name: '道路线',
-            url: 'http://data.marsgis.cn/file/geojson/chendu-daolu.json',
+            url: 'http://data.marsgis.cn/file/geojson/hefei-road.json',
             symbol: {
               styleOptions: {
                 materialType: 'PolylineGlow',
-                glowPower: 0.1,
+                glowPower: 0.2,
                 color: '#FF4500',
-                width: 15,
-                opacity: 0.9,
-                clampToGround: true,
+                width: 12,
+                opacity: 0.8,
+                // clampToGround: true,
               },
             },
             show: true,
           },
           {
             type: 'geojson',
-            name: '河流(面状)特效',
-            url: 'http://data.marsgis.cn/file/geojson/chendu-heliu.json',
+            name: '河流(面状)',
+            url: 'http://data.marsgis.cn/file/geojson/hefei-water.json',
             symbol: {
               type: 'water',
               styleOptions: {
@@ -124,7 +117,7 @@
                 specularIntensity: 0.8, // 控制镜面反射强度的数字。
                 baseWaterColor: '#00baff', // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
                 blendColor: '#00baff', // 从水中混合到非水域时使用的rgba颜色对象。
-                clampToGround: true,
+                // clampToGround: true,
               },
             },
             show: true,
@@ -210,8 +203,8 @@
       //模型
       tiles3dLayer = new mars3d.layer.TilesetLayer({
         type: '3dtiles',
-        name: '成都市建筑物',
-        url: 'http://data.marsgis.cn/3dtiles/jzw-chengdu-gcj/tileset.json',
+        name: '合肥市建筑物',
+        url: 'http://data.marsgis.cn/3dtiles/jzw-hefei/tileset.json',
         // "style": {
         //     "color": {
         //         "conditions": [
@@ -229,8 +222,8 @@
         showClickFeature: true,
         popup: [
           { field: 'objectid', name: '编号' },
+          { field: 'name', name: '名称' },
           { field: 'height', name: '楼高', unit: '米' },
-          { field: 'xzqh_name', name: '辖区' },
         ],
       })
       map.addLayer(tiles3dLayer)
@@ -245,8 +238,8 @@
       var fragmentShader = `
           // 注意shader中写浮点数是，一定要带小数点，否则会报错，比如0需要写成0.0，1要写成1.0
           float _baseHeight = 0.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
-          float _heightRange = 50.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange) 默认是 0-60米
-          float _glowRange = 80.0; // 光环的移动范围(高度)
+          float _heightRange = 120.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange) 默认是 0-60米
+          float _glowRange = 200.0; // 光环的移动范围(高度)
 
           // 建筑基础色
           float mars_height = v_stcVertex.z - _baseHeight;
@@ -263,17 +256,17 @@
        `
 
       tiles3dLayer = new mars3d.layer.TilesetLayer({
-        name: '成都市建筑物',
-        url: 'http://data.marsgis.cn/3dtiles/jzw-chengdu-gcj/tileset.json',
+        name: '合肥市建筑物',
+        url: 'http://data.marsgis.cn/3dtiles/jzw-hefei/tileset.json',
         // marsJzwStyle: true, //打开建筑物特效（内置Shader代码）
         marsJzwStyle: fragmentShader, //字符串值时，表示使用该字符串定义的自定义Shader
         showClickFeature: true,
         popup: [
           { field: 'objectid', name: '编号' },
+          { field: 'name', name: '名称' },
           { field: 'height', name: '楼高', unit: '米' },
-          { field: 'xzqh_name', name: '辖区' },
         ],
-        center: { lat: 30.627689, lng: 104.068076, alt: 2040, heading: 4, pitch: -29 },
+        center: { lat: 31.841018, lng: 117.252932, alt: 1346, heading: 38, pitch: -26 },
         flyTo: true,
       })
       map.addLayer(tiles3dLayer)

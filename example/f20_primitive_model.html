@@ -63,12 +63,6 @@
       <input id="txtCount" type="number" value="1024" min="1" max="100000.0" step="1" class="form-control"
         style="width: 80px;" />条
 
-      <div class="checkbox checkbox-primary checkbox-inline">
-        <input id="chkModelInstanceCollection" class="styled" type="checkbox" checked>
-        <label for="chkModelInstanceCollection">
-          合并渲染
-        </label>
-      </div>
       <input type="button" class="btn btn-primary" value="生成" id="btnAddData" />
       <input type="button" class="btn btn-primary" value="清除" id="btnClear" />
     </div>
@@ -116,13 +110,8 @@
         var startTime = new Date().getTime()
 
         var count = Number($('#txtCount').val())
-        let hasInstance = $('#chkModelInstanceCollection').is(':checked')
 
-        if (hasInstance) {
-          createCollection(count)
-        } else {
-          createModels(count)
-        }
+        createModels(count)
 
         haoutil.loading.close()
         var endTime = new Date().getTime()
@@ -137,47 +126,6 @@
       addGraphic_a1(graphicLayer)
       addGraphic_a2(graphicLayer)
       addGraphic_a3(graphicLayer)
-    }
-
-    //合并渲染
-    function createCollection(count) {
-      var instances = []
-      for (var j = 0; j < count; ++j) {
-        var position = randomPoint().toCartesian()
-
-        var heading = Math.random()
-        var pitch = Math.random()
-        var roll = Math.random()
-        var scale = (Math.random() + 1.0) / 2.0
-
-        var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(position, new Cesium.HeadingPitchRoll(heading, pitch, roll))
-        Cesium.Matrix4.multiplyByUniformScale(modelMatrix, scale, modelMatrix)
-
-        instances.push({
-          modelMatrix: modelMatrix,
-        })
-      }
-
-      var modelInstance = new mars3d.graphic.ModelInstance({
-        url: 'http://data.marsgis.cn/gltf/mars/feiji.glb',
-        instances: instances,
-      })
-      graphicLayer.addGraphic(modelInstance)
-
-      //单击事件 （测试交互）
-      modelInstance.on(mars3d.EventType.click, function (event) {
-        var instance = event.pickedObject
-        var scaleMatrix = Cesium.Matrix4.fromUniformScale(1.1)
-        var modelMatrix = Cesium.Matrix4.multiply(instance.modelMatrix, scaleMatrix, new Cesium.Matrix4())
-        instance.modelMatrix = modelMatrix
-      })
-    }
-    function orientCamera(center, radius) {
-      var range = radius * 2 //Math.max(radius, camera.frustum.near) * 2.0;
-      var heading = Cesium.Math.toRadians(230.0)
-      var pitch = Cesium.Math.toRadians(-20.0)
-      map.camera.lookAt(center, new Cesium.HeadingPitchRange(heading, pitch, range))
-      map.camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
     }
 
     function createModels(count) {
@@ -216,7 +164,7 @@
           },
         },
       })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
 
       //演示个性化处理graphic，代码在\js\graphicManager.js
       initGraphicManager(primitive)
@@ -236,7 +184,7 @@
           minimumPixelSize: 100,
         },
       })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
 
     function addGraphic_a3(graphicLayer) {
@@ -248,7 +196,7 @@
           minimumPixelSize: 50,
         },
       })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
   </script>
 </body>

@@ -1,295 +1,308 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="author" content="火星科技 http://mars3d.cn ">
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+    ></script>
 
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
-  <!--第三方lib-->
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-<body class="dark">
-  <!--加载前进行操作提示，优化用户体验-->
-  <div id="mask" class="signmask" onclick="removeMask()"></div>
+    <!-- 面板 -->
+    <div class="infoview">
+      间隔 <input id="txtCount" type="number" value="20" min="1" max="1000.0" step="1" class="form-control" style="width: 100px" />
+      米插值
+      <input type="button" class="btn btn-primary" value="生成图标" id="btnShowData1" />
+      <input type="button" class="btn btn-primary" value="清除" id="btnClearData" />
 
-  <div id="mars3dContainer" class="mars3d-container"></div>
+      <input type="button" class="btn btn-primary" value="加载演示数据" id="btnLoadDemo" />
+    </div>
 
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
 
+      var map
+      var flatBillboard
 
-
-  <!-- 面板 -->
-  <div class="infoview">
-    间隔 <input id="txtCount" type="number" value="20" min="1" max="1000.0" step="1" class="form-control"
-      style="width: 100px;" />
-    米插值
-    <input type="button" class="btn btn-primary" value="生成图标" id="btnShowData1" />
-    <input type="button" class="btn btn-primary" value="清除" id="btnClearData" />
-
-    <input type="button" class="btn btn-primary" value="加载演示数据" id="btnLoadDemo" />
-  </div>
-
-
-
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
-
-    var map
-    var flatBillboard
-
-    function initMap(options) {
-      //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {
-        scene: {
-          center: {
-            y: 28.894341,
-            x: 116.393971,
-            z: 767909.44,
-            heading: 1.1,
-            pitch: -78,
-            roll: 0,
-          },
-          globe: {
-            baseColor: '#a3b3c2',
-          },
-        },
-        control: {
-          infoBox: false,
-        },
-        terrain: false,
-        layers: [
-          {
-            type: 'geojson',
-            name: '省界线',
-            url: 'http://data.marsgis.cn/file/geojson/china-full.json',
-            symbol: {
-              type: 'polylineP',
-              styleOptions: {
-                fill: true,
-                color: '#cccccc',
-                opacity: 0.1,
-                outline: true,
-                outlineWidth: 2,
-                outlineColor: '#cccccc',
-                outlineOpacity: 0.9,
-              },
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: {
+              y: 28.894341,
+              x: 116.393971,
+              z: 767909.44,
+              heading: 1.1,
+              pitch: -78,
+              roll: 0,
             },
-            show: true,
+            globe: {
+              baseColor: '#a3b3c2',
+            },
           },
-        ],
-      })
-
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
-      map.basemap = undefined
-
-      //移除2.5D视图
-      var arr = $('.cesium-sceneModePicker-wrapper').children()
-      if (arr.length > 3) {
-        arr[3].remove()
-      }
-
-      //创建Graphic图层
-      var graphicLayer = new mars3d.layer.GraphicLayer()
-      map.addLayer(graphicLayer)
-
-      //在layer上绑定监听事件
-      graphicLayer.on(mars3d.EventType.click, function (event) {
-        console.log('监听layer，单击了矢量对象', event)
-      })
-
-      //可在图层上绑定popup,对所有加到这个图层的矢量数据都生效
-      graphicLayer.bindPopup('我是layer上绑定的Popup', {
-        anchor: [0, -10],
-      })
-
-      flatBillboard = new mars3d.graphic.FlatBillboard({
-        // data: [], //也可以后面通过属性传入
-        style: {
-          width: 30, //单位：像素
-          height: 60,
-        },
-      })
-      graphicLayer.addGraphic(flatBillboard)
-
-      $('#btnShowData1').click(function () {
-        clearData()
-
-        haoutil.loading.show()
-        var startTime = new Date().getTime()
-
-        var numPoints = Number($('#txtCount').val())
-
-        // 创建等值线区域
-        var extent = [112.287256, 27.408204, 120.695453, 34.659583]
-        var pointGrid = turf.pointGrid(extent, numPoints, {
-          units: 'miles',
+          control: {
+            infoBox: false,
+          },
+          terrain: false,
+          layers: [
+            {
+              type: 'geojson',
+              name: '省界线',
+              url: 'http://data.marsgis.cn/file/geojson/china-full.json',
+              symbol: {
+                type: 'polylineP',
+                styleOptions: {
+                  fill: true,
+                  color: '#cccccc',
+                  opacity: 0.1,
+                  outline: true,
+                  outlineWidth: 2,
+                  outlineColor: '#cccccc',
+                  outlineOpacity: 0.9,
+                },
+              },
+              show: true,
+            },
+          ],
         })
 
-        var arr = []
-        for (var i = 0; i < pointGrid.features.length; i++) {
-          var coor = pointGrid.features[i].geometry.coordinates
-          var position = Cesium.Cartesian3.fromDegrees(coor[0], coor[1], 1000)
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map.basemap = undefined
 
-          var angle = haoutil.math.random(0, 360) //随机方向
-          var speed = haoutil.math.random(0, 60) //随机数值
-
-          arr.push({
-            position: position,
-            angle: angle,
-            image: getImageBySpeed(speed),
-          })
+        //移除2.5D视图
+        var arr = $('.cesium-sceneModePicker-wrapper').children()
+        if (arr.length > 3) {
+          arr[3].remove()
         }
 
-        flatBillboard.data = arr
+        //创建Graphic图层
+        var graphicLayer = new mars3d.layer.GraphicLayer()
+        map.addLayer(graphicLayer)
 
-        haoutil.loading.close()
-        var endTime = new Date().getTime()
-        // 两个时间戳相差的毫秒数
-        var usedTime = (endTime - startTime) / 1000
-        console.log(usedTime)
+        //在layer上绑定监听事件
+        graphicLayer.on(mars3d.EventType.click, function (event) {
+          let pickedItem = event.pickedObject?.data
+          // let attr = event.graphic.attr
+          console.log('单击了合并对象中的单个值为', pickedItem)
+        })
 
-        haoutil.msg('共耗时' + usedTime.toFixed(2) + '秒')
-      })
+        //可在图层上绑定popup,对所有加到这个图层的矢量数据都生效
+        graphicLayer.bindPopup(function (event) {
+          if (!event.graphic) {
+            return false
+          }
+          let attr = event.graphic.attr
+          if (!attr) {
+            return false
+          }
+          return mars3d.Util.getTemplateHtml({ title: '建筑物', template: 'all', attr: attr })
+        })
 
-      $('#btnClearData').click(function () {
-        clearData()
-      })
+        flatBillboard = new mars3d.graphic.FlatBillboard({
+          // instances: [], //也可以后面通过属性传入
+          style: {
+            width: 30, //单位：像素
+            height: 60,
+          },
+        })
+        graphicLayer.addGraphic(flatBillboard)
 
-      $('#btnLoadDemo').click(function () {
+        $('#btnShowData1').click(function () {
+          clearData()
+
+          haoutil.loading.show()
+          var startTime = new Date().getTime()
+
+          var numPoints = Number($('#txtCount').val())
+
+          // 创建等值线区域
+          var extent = [112.287256, 27.408204, 120.695453, 34.659583]
+          var pointGrid = turf.pointGrid(extent, numPoints, {
+            units: 'miles',
+          })
+
+          var arr = []
+          for (var i = 0; i < pointGrid.features.length; i++) {
+            var coor = pointGrid.features[i].geometry.coordinates
+            var position = Cesium.Cartesian3.fromDegrees(coor[0], coor[1], 1000)
+
+            var angle = haoutil.math.random(0, 360) //随机方向
+            var speed = haoutil.math.random(0, 60) //随机数值
+
+            arr.push({
+              position: position,
+              angle: angle,
+              image: getImageBySpeed(speed),
+              attr: {
+                name: '第' + i + '个图标',
+                remark: '测试绑定的属性',
+              },
+            })
+          }
+
+          flatBillboard.instances = arr
+
+          haoutil.loading.close()
+          var endTime = new Date().getTime()
+          // 两个时间戳相差的毫秒数
+          var usedTime = (endTime - startTime) / 1000
+          console.log(usedTime)
+
+          haoutil.msg('共耗时' + usedTime.toFixed(2) + '秒')
+        })
+
+        $('#btnClearData').click(function () {
+          clearData()
+        })
+
+        $('#btnLoadDemo').click(function () {
+          loadDemo()
+        })
+
         loadDemo()
-      })
-
-      loadDemo()
-    }
-
-    function clearData() {
-      if (flatBillboard) {
-    flatBillboard.clear()
-  }
-    }
-
-    //加载气象演示数据
-    var arrWind
-
-    function loadDemo() {
-      if (arrWind) {
-        showWindPoint(arrWind)
-      } else {
-        $.ajax({
-          type: 'GET',
-          url: 'http://data.marsgis.cn/file/apidemo/windpoint.json',
-          success: function (res) {
-            arrWind = res.data
-            showWindPoint(arrWind)
-          },
-          error: function (err) {
-            haoutil.msg('实时查询气象信息失败，请稍候再试')
-          },
-        })
       }
-    }
 
-    function showWindPoint(arr) {
-      clearData()
-
-      var arrPoint = []
-      for (let i = 0, len = arr.length; i < len; i++) {
-        const item = arr[i]
-
-        arrPoint.push({
-          position: Cesium.Cartesian3.fromDegrees(item.x, item.y, 1000),
-          angle: 360 - item.dir, //方向
-          image: getImageBySpeed(item.speed), //速度 ，使用不同图片
-        })
+      function clearData() {
+        if (flatBillboard) {
+          flatBillboard.clear()
+        }
       }
-      flatBillboard.data = arrPoint
-    }
 
-    function getImageBySpeed(speed) {
-      var windVaneUrl = 'img/windVane/01.svg'
-      if (speed >= 0 && speed <= 2) {
-        windVaneUrl = 'img/windVane/01.svg'
-      } else if (speed > 2 && speed <= 4) {
-        windVaneUrl = 'img/windVane/02.svg'
-      } else if (speed > 4 && speed <= 6) {
-        windVaneUrl = 'img/windVane/03.svg'
-      } else if (speed > 6 && speed <= 8) {
-        windVaneUrl = 'img/windVane/04.svg'
-      } else if (speed > 8 && speed <= 10) {
-        windVaneUrl = 'img/windVane/05.svg'
-      } else if (speed > 10 && speed <= 12) {
-        windVaneUrl = 'img/windVane/06.svg'
-      } else if (speed > 12 && speed <= 14) {
-        windVaneUrl = 'img/windVane/07.svg'
-      } else if (speed > 14 && speed <= 16) {
-        windVaneUrl = 'img/windVane/08.svg'
-      } else if (speed > 16 && speed <= 18) {
-        windVaneUrl = 'img/windVane/09.svg'
-      } else if (speed > 18 && speed <= 20) {
-        windVaneUrl = 'img/windVane/10.svg'
-      } else if (speed > 20 && speed <= 22) {
-        windVaneUrl = 'img/windVane/11.svg'
-      } else if (speed > 22 && speed <= 24) {
-        windVaneUrl = 'img/windVane/12.svg'
-      } else if (speed > 24 && speed <= 26) {
-        windVaneUrl = 'img/windVane/13.svg'
-      } else if (speed > 26 && speed <= 28) {
-        windVaneUrl = 'img/windVane/14.svg'
-      } else if (speed > 28 && speed <= 30) {
-        windVaneUrl = 'img/windVane/15.svg'
-      } else if (speed > 30 && speed <= 32) {
-        windVaneUrl = 'img/windVane/16.svg'
-      } else if (speed > 32 && speed <= 34) {
-        windVaneUrl = 'img/windVane/17.svg'
-      } else if (speed > 34 && speed <= 36) {
-        windVaneUrl = 'img/windVane/18.svg'
-      } else if (speed > 36 && speed <= 38) {
-        windVaneUrl = 'img/windVane/19.svg'
-      } else if (speed > 38 && speed <= 40) {
-        windVaneUrl = 'img/windVane/20.svg'
-      } else if (speed > 40 && speed <= 42) {
-        windVaneUrl = 'img/windVane/21.svg'
-      } else if (speed > 42 && speed <= 44) {
-        windVaneUrl = 'img/windVane/22.svg'
-      } else if (speed > 44 && speed <= 46) {
-        windVaneUrl = 'img/windVane/23.svg'
-      } else if (speed > 46 && speed <= 48) {
-        windVaneUrl = 'img/windVane/24.svg'
-      } else if (speed > 48 && speed <= 50) {
-        windVaneUrl = 'img/windVane/25.svg'
-      } else if (speed > 50 && speed <= 52) {
-        windVaneUrl = 'img/windVane/26.svg'
-      } else if (speed > 52 && speed <= 54) {
-        windVaneUrl = 'img/windVane/27.svg'
-      } else if (speed > 54 && speed <= 56) {
-        windVaneUrl = 'img/windVane/28.svg'
-      } else if (speed > 56) {
-        windVaneUrl = 'img/windVane/29.svg'
+      //加载气象演示数据
+      var arrWind
+
+      function loadDemo() {
+        if (arrWind) {
+          showWindPoint(arrWind)
+        } else {
+          $.ajax({
+            type: 'GET',
+            url: 'http://data.marsgis.cn/file/apidemo/windpoint.json',
+            success: function (res) {
+              arrWind = res.data
+              showWindPoint(arrWind)
+            },
+            error: function (err) {
+              haoutil.msg('实时查询气象信息失败，请稍候再试')
+            },
+          })
+        }
       }
-      return windVaneUrl
-    }
-  </script>
-</body>
 
+      function showWindPoint(arr) {
+        clearData()
+
+        var arrPoint = []
+        for (let i = 0, len = arr.length; i < len; i++) {
+          const item = arr[i]
+
+          arrPoint.push({
+            position: Cesium.Cartesian3.fromDegrees(item.x, item.y, 1000),
+            angle: 360 - item.dir, //方向
+            image: getImageBySpeed(item.speed), //速度 ，使用不同图片
+            attr: {
+              name: '第' + i + '个图标',
+              remark: '测试绑定的属性',
+            },
+          })
+        }
+        flatBillboard.instances = arrPoint
+      }
+
+      function getImageBySpeed(speed) {
+        var windVaneUrl = 'img/windVane/01.svg'
+        if (speed >= 0 && speed <= 2) {
+          windVaneUrl = 'img/windVane/01.svg'
+        } else if (speed > 2 && speed <= 4) {
+          windVaneUrl = 'img/windVane/02.svg'
+        } else if (speed > 4 && speed <= 6) {
+          windVaneUrl = 'img/windVane/03.svg'
+        } else if (speed > 6 && speed <= 8) {
+          windVaneUrl = 'img/windVane/04.svg'
+        } else if (speed > 8 && speed <= 10) {
+          windVaneUrl = 'img/windVane/05.svg'
+        } else if (speed > 10 && speed <= 12) {
+          windVaneUrl = 'img/windVane/06.svg'
+        } else if (speed > 12 && speed <= 14) {
+          windVaneUrl = 'img/windVane/07.svg'
+        } else if (speed > 14 && speed <= 16) {
+          windVaneUrl = 'img/windVane/08.svg'
+        } else if (speed > 16 && speed <= 18) {
+          windVaneUrl = 'img/windVane/09.svg'
+        } else if (speed > 18 && speed <= 20) {
+          windVaneUrl = 'img/windVane/10.svg'
+        } else if (speed > 20 && speed <= 22) {
+          windVaneUrl = 'img/windVane/11.svg'
+        } else if (speed > 22 && speed <= 24) {
+          windVaneUrl = 'img/windVane/12.svg'
+        } else if (speed > 24 && speed <= 26) {
+          windVaneUrl = 'img/windVane/13.svg'
+        } else if (speed > 26 && speed <= 28) {
+          windVaneUrl = 'img/windVane/14.svg'
+        } else if (speed > 28 && speed <= 30) {
+          windVaneUrl = 'img/windVane/15.svg'
+        } else if (speed > 30 && speed <= 32) {
+          windVaneUrl = 'img/windVane/16.svg'
+        } else if (speed > 32 && speed <= 34) {
+          windVaneUrl = 'img/windVane/17.svg'
+        } else if (speed > 34 && speed <= 36) {
+          windVaneUrl = 'img/windVane/18.svg'
+        } else if (speed > 36 && speed <= 38) {
+          windVaneUrl = 'img/windVane/19.svg'
+        } else if (speed > 38 && speed <= 40) {
+          windVaneUrl = 'img/windVane/20.svg'
+        } else if (speed > 40 && speed <= 42) {
+          windVaneUrl = 'img/windVane/21.svg'
+        } else if (speed > 42 && speed <= 44) {
+          windVaneUrl = 'img/windVane/22.svg'
+        } else if (speed > 44 && speed <= 46) {
+          windVaneUrl = 'img/windVane/23.svg'
+        } else if (speed > 46 && speed <= 48) {
+          windVaneUrl = 'img/windVane/24.svg'
+        } else if (speed > 48 && speed <= 50) {
+          windVaneUrl = 'img/windVane/25.svg'
+        } else if (speed > 50 && speed <= 52) {
+          windVaneUrl = 'img/windVane/26.svg'
+        } else if (speed > 52 && speed <= 54) {
+          windVaneUrl = 'img/windVane/27.svg'
+        } else if (speed > 54 && speed <= 56) {
+          windVaneUrl = 'img/windVane/28.svg'
+        } else if (speed > 56) {
+          windVaneUrl = 'img/windVane/29.svg'
+        }
+        return windVaneUrl
+      }
+    </script>
+  </body>
 </html>

@@ -75,7 +75,7 @@
         name: '建筑物面',
         url: 'http://data.marsgis.cn/file/geojson/buildings-hf.json',
         symbol: {
-          type: 'polygon',
+          type: 'polygonCombine', //大数据面类型，效率高
           styleOptions: {
             color: '#0d3685',
             opacity: 1.0,
@@ -83,18 +83,14 @@
           },
           callback: function (attr, styleOpt) {
             var floor = Number(attr.floor || 1)
+            var diffHeight = floor * 5
             for (var key in colorHash) {
               if (floor <= parseInt(key)) {
-                return { color: colorHash[key] }
+                return { height: 0, diffHeight: diffHeight, color: colorHash[key] }
               }
             }
-            return null
+            return { height: 0, diffHeight: diffHeight }
           },
-        },
-        //buildings 标识为建筑物数据，内部特殊处理
-        buildings: {
-          cloumn: 'floor',
-          height: 5,
         },
         popup: 'all',
       })
@@ -105,6 +101,12 @@
         console.log('数据加载完成', event)
 
         haoutil.loading.hide() //关闭
+      })
+
+      //在layer上绑定监听事件
+      geoJsonLayer.on(mars3d.EventType.click, function (event) {
+        let pickedItem = event.graphic.attr
+        console.log('单击了合并对象中的单个值为', pickedItem)
       })
     }
   </script>

@@ -72,29 +72,29 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
-          center: { lat: 30.641408, lng: 104.061745, alt: 980, heading: 17, pitch: -30 },
+          center: { lat: 31.841018, lng: 117.252932, alt: 1346, heading: 38, pitch: -26 },
         },
         layers: [
           {
             type: 'geojson',
             name: '道路线',
-            url: 'http://data.marsgis.cn/file/geojson/chendu-daolu.json',
+            url: 'http://data.marsgis.cn/file/geojson/hefei-road.json',
             symbol: {
               styleOptions: {
                 materialType: 'PolylineGlow',
-                glowPower: 0.1,
+                glowPower: 0.2,
                 color: '#FF4500',
-                width: 15,
-                opacity: 0.9,
-                clampToGround: true,
+                width: 12,
+                opacity: 0.8,
+                // clampToGround: true,
               },
             },
             show: true,
           },
           {
             type: 'geojson',
-            name: '河流(面状)特效',
-            url: 'http://data.marsgis.cn/file/geojson/chendu-heliu.json',
+            name: '河流(面状)',
+            url: 'http://data.marsgis.cn/file/geojson/hefei-water.json',
             symbol: {
               type: 'water',
               styleOptions: {
@@ -105,7 +105,7 @@
                 specularIntensity: 0.8, // 控制镜面反射强度的数字。
                 baseWaterColor: '#00baff', // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
                 blendColor: '#00baff', // 从水中混合到非水域时使用的rgba颜色对象。
-                clampToGround: true,
+                // clampToGround: true,
               },
             },
             show: true,
@@ -120,14 +120,14 @@
 
       //添加参考三维模型
       var tiles3dLayer = new mars3d.layer.TilesetLayer({
-        name: '成都市建筑物',
-        url: 'http://data.marsgis.cn/3dtiles/jzw-chengdu-gcj/tileset.json',
-        marsJzwStyle: true,
+        name: '合肥市建筑物',
+        url: 'http://data.marsgis.cn/3dtiles/jzw-hefei/tileset.json',
+        marsJzwStyle: true, //打开建筑物特效（内置Shader代码）
         showClickFeature: true,
         popup: [
           { field: 'objectid', name: '编号' },
+          { field: 'name', name: '名称' },
           { field: 'height', name: '楼高', unit: '米' },
-          { field: 'xzqh_name', name: '辖区' },
         ],
       })
       map.addLayer(tiles3dLayer)

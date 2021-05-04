@@ -35,7 +35,7 @@
       3D Tiles 示例：
       <input type="button" class="btn btn-primary" value="倾斜摄影(某县城)" onclick="showQxShequDemo()" />
       <input type="button" class="btn btn-primary" value="倾斜摄影(某景区)" onclick="showQxSimiaoDemo()" />
-      <input type="button" class="btn btn-primary" value="城市白膜(成都市区)" onclick="showJzwHefeiDemo()" />
+      <input type="button" class="btn btn-primary" value="城市白膜(合肥市区)" onclick="showJzwHefeiDemo()" />
       <input type="button" class="btn btn-primary" value="人工建模(石化工厂)" onclick="showMaxShihuaDemo()" />
       <input type="button" class="btn btn-primary" value="BIM(桥梁)" onclick="showBimQiaoliangDemo()" />
     </div>
@@ -281,16 +281,16 @@
       map.basemap = 2017 //切换到蓝色底图
 
       tiles3dLayer = new mars3d.layer.TilesetLayer({
-        name: '成都市建筑物',
-        url: 'http://data.marsgis.cn/3dtiles/jzw-chengdu-gcj/tileset.json',
+        name: '合肥市建筑物',
+        url: 'http://data.marsgis.cn/3dtiles/jzw-hefei/tileset.json',
         marsJzwStyle: true, //打开建筑物特效（内置Shader代码）
         showClickFeature: true,
         popup: [
           { field: 'objectid', name: '编号' },
+          { field: 'name', name: '名称' },
           { field: 'height', name: '楼高', unit: '米' },
-          { field: 'xzqh_name', name: '辖区' },
         ],
-        center: { lat: 30.627689, lng: 104.068076, alt: 2040, heading: 4, pitch: -29 },
+        center: { lat: 31.841018, lng: 117.252932, alt: 1346, heading: 38, pitch: -26 },
         flyTo: true,
       })
       map.addLayer(tiles3dLayer)

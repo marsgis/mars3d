@@ -300,12 +300,16 @@
               outlineColor: '#0d3685',
               opacity: 0.8,
             },
+            callback: function (attr, styleOpt) {
+              var diffHeight = Number(attr.floors || 1) * Number(attr.flo_height)
+              return { height: 0, diffHeight: diffHeight }
+            },
           },
           //buildings 标识为建筑物数据，内部特殊处理
-          buildings: {
-            cloumn: 'floors',
-            height: 'flo_height',
-          },
+          // buildings: {
+          //   cloumn: 'floors',
+          //   height: 'flo_height',
+          // },
           center: { y: 31.932537, x: 120.419919, z: 368, heading: 331, pitch: -41, roll: 0 },
           popup: 'all',
           flyTo: true,
