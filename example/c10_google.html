@@ -23,7 +23,7 @@
 
 
   <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"></script>
+    include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d,mars3d-widget"></script>
 
   <link href="css/style.css" rel="stylesheet" />
 </head>
@@ -33,7 +33,7 @@
 
 
 
-  <div class="infoview">
+  <div class="infoview infoview-right">
     <input id="btnAddLayer" type="button" class="btn btn-primary" value="叠加图层" onclick="addLayer()" />
     <input id="btnRemoveLayer" type="button" class="btn btn-primary" value="移除图层" onclick="removeLayer()" />
   </div>
@@ -73,37 +73,48 @@
         //方式1：在创建地球前的参数中配置
         basemaps: [
           {
-            name: '谷歌影像(无偏移)',
+            name: '谷歌影像',
             icon: 'img/basemaps/google_img.png',
-            type: 'google',
-            layer: 'img_d',
+            type: 'xyz',
+            url: 'https://boxa.earthol.com/map.jpg?lyrs=y&gl=cn&x={x}&y={y}&z={z}',
+            chinaCRS: mars3d.ChinaCRS.GCJ02,
             show: true,
           },
           {
-            name: '谷歌影像(GCJ02)',
+            name: '谷歌影像(WGS84)',
+            icon: 'img/basemaps/google_img.png',
+            type: 'google',
+            layer: 'img_d',
+            chinaCRS: mars3d.ChinaCRS.WGS84,
+          },
+          {
+            name: '谷歌影像',
             icon: 'img/basemaps/esriWorldImagery.png',
             type: 'group',
             layers: [
-              { name: '底图', type: 'google', layer: 'img_d', crs: 'GCJ02' },
-              { name: '注记', type: 'google', layer: 'img_d', crs: 'GCJ02' },
+              { name: '底图', type: 'google', layer: 'img_d', chinaCRS: mars3d.ChinaCRS.GCJ02 },
+              { name: '注记', type: 'google', layer: 'img_d', chinaCRS: mars3d.ChinaCRS.GCJ02 },
             ],
           },
           {
-            name: '谷歌电子(GCJ02)',
+            name: '谷歌电子',
             icon: 'img/basemaps/google_vec.png',
             type: 'google',
             layer: 'vec',
-            crs: 'GCJ02',
+            chinaCRS: mars3d.ChinaCRS.GCJ02,
           },
           {
-            name: '谷歌地形(GCJ02)',
+            name: '谷歌地形',
             icon: 'img/basemaps/stamenWatercolor.png',
             type: 'google',
             layer: 'ter',
-            crs: 'GCJ02',
+            chinaCRS: mars3d.ChinaCRS.GCJ02,
           },
         ],
       })
+
+      //poi查询栏
+      activatePOIQuery(map)
     }
 
     //叠加的图层
@@ -116,15 +127,25 @@
       tileLayer = new mars3d.layer.GoogleLayer({
         name: '谷歌地形',
         layer: 'ter',
-        crs: 'GCJ02',
+        chinaCRS: mars3d.ChinaCRS.GCJ02,
       })
       map.addLayer(tileLayer)
     }
+
     function removeLayer() {
       if (tileLayer) {
         map.removeLayer(tileLayer, true)
         tileLayer = null
       }
+    }
+
+    //附加：激活POI查询widget，用于在底图上叠加显示数据
+    function activatePOIQuery(map) {
+      mars3d.widget.activate({
+        map: map,
+        name: 'POI查询',
+        uri: 'widgets/queryBaiduPOI/widget.js',
+      })
     }
 
     function openTipView(content, title) {

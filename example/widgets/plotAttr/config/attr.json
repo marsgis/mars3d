@@ -791,7 +791,7 @@
         "defval": "Color",
         "data": [
           { "text": "纯色", "value": "Color" },
-          { "text": "流动效果", "value": "LineFlow", "impact": ["speed", "image", "repeat", "axisY"] },
+          { "text": "流动效果", "value": "LineFlow", "impact": ["speed", "image", "repeat_x", "repeat_y", "axisY"] },
           { "text": "走马灯效果", "value": "WallScroll", "impact": ["speed", "image", "count"] },
           { "text": "文本", "value": "Text", "impact": ["text", "font_size", "font_weight", "font_family", "font_style"] },
           { "text": "网格", "value": "Grid", "impact": ["cellAlpha", "lineCount", "lineThickness"] },

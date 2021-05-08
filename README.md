@@ -63,7 +63,6 @@
 
 ### Vue技术栈
 1. 最简项目[https://github.com/marsgis/mars3d-vue-template](https://github.com/marsgis/mars3d-vue-template)
-2. 最简项目(本地版)[https://github.com/marsgis/mars3d-vue-template-local](https://github.com/marsgis/mars3d-vue-template-local)    `mars3d库非npm引入`
 3. 基础项目(widget模式)[https://github.com/marsgis/mars3d-vue-widget](https://github.com/marsgis/mars3d-vue-widget)
 4. CS桌面程序项目 [https://github.com/marsgis/mars3d-vue-electron](https://github.com/marsgis/mars3d-vue-electron)
 
@@ -87,7 +86,6 @@
 
 ### Vue技术栈
 1. 最简项目[https://gitee.com/marsgis/mars3d-vue-template](https://gitee.com/marsgis/mars3d-vue-template)
-2. 最简项目(本地版)[https://gitee.com/marsgis/mars3d-vue-template-local](https://gitee.com/marsgis/mars3d-vue-template-local)    `mars3d库非npm引入`
 3. 基础项目(widget模式)[https://gitee.com/marsgis/mars3d-vue-widget](https://gitee.com/marsgis/mars3d-vue-widget)
 4. CS桌面程序项目 [https://gitee.com/marsgis/mars3d-vue-electron](https://gitee.com/marsgis/mars3d-vue-electron)
 

@@ -101,9 +101,9 @@
       providerViewModels.push(imgModel)
 
       imgModel = new Cesium.ProviderViewModel({
-        name: 'Bing卫星',
+        name: 'Bing影像',
         iconUrl: 'img/basemaps/bingAerial.png',
-        tooltip: '微软提供的高清卫星地图',
+        tooltip: '微软提供的高清影像地图',
         category: '标准坐标系',
         creationFunction: function () {
           return mars3d.LayerUtil.createImageryProvider({
@@ -115,9 +115,9 @@
       providerViewModels.push(imgModel)
 
       imgModel = new Cesium.ProviderViewModel({
-        name: 'ESRI卫星',
+        name: 'ESRI影像',
         iconUrl: 'img/basemaps/esriWorldImagery.png',
-        tooltip: 'ESRI提供的高清卫星地图',
+        tooltip: 'ESRI提供的高清影像地图',
         category: '标准坐标系',
         creationFunction: function () {
           return mars3d.LayerUtil.createImageryProvider({

@@ -88,6 +88,10 @@
     getAttrList() {
       return this.config.attrList || this.defaultAttrList
     }
+    getLayerName() {
+      let graphic = this.config.graphic
+      return graphic?._layer?.name || ''
+    }
 
     startEditing(graphic, lonlats) {
       if (graphic) {

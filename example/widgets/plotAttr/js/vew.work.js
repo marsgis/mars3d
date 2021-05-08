@@ -108,7 +108,9 @@ var plotEdit = {
     //==============style==================
     if (this.hasEditSylte) {
       parname = 'plot_attr_style_'
-      inHtml = '<tr><td class="nametd">类型：</td><td>' + (attr.name || config.name) + '</td></tr>'
+      inHtml = `<tr><td class="nametd">所在图层：</td><td>${thisWidget.getLayerName()}</td></tr>
+      <tr><td class="nametd">标号类型：</td><td>${attr.name || config.name}</td></tr>`
+
       for (let idx = 0; idx < config.style.length; idx++) {
         let edit = config.style[idx]
         if (edit.type == 'hidden') {
