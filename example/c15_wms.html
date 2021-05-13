@@ -105,7 +105,7 @@
     function addLayer() {
       removeLayer()
 
-      map.setCameraView({ lat: 31.793441, lng: 117.223353, alt: 3401, heading: 360, pitch: -48 })
+      map.setCameraView({ lat: 31.807797, lng: 117.222876, alt: 5162, heading: 1, pitch: -77 })
 
       //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
       tileLayer = new mars3d.layer.WmsLayer({
@@ -131,6 +131,7 @@
         getFeatureInfoParameters: {
           feature_count: 10,
         },
+        rectangle: { xmin: 116.742927, xmax: 117.674247, ymin: 31.48272, ymax: 32.159975 },
         popup: 'all',
         // "popupPosition":{"top":10,"left":10 }, //固定再左侧位置，不浮动 ，数值对应top/btoom、left/right
       })

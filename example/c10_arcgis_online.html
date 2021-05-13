@@ -75,6 +75,7 @@
             icon: 'img/basemaps/esriWorldImagery.png',
             type: 'arcgis',
             layer: 'img_d', //使用layer时会自动用内部固定url "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
+            enablePickFeatures: false,
             show: true,
           },
           {
@@ -82,12 +83,14 @@
             icon: 'img/basemaps/google_vec.png',
             type: 'arcgis',
             url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer',
+            enablePickFeatures: false,
           },
           {
             name: 'ArcGIS NatGeo',
             icon: 'img/basemaps/esriWorldStreetMap.png',
             type: 'arcgis',
             url: 'https://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer',
+            enablePickFeatures: false,
           },
           {
             name: '蓝色底图(GCJ02)',

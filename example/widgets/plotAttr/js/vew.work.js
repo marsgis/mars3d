@@ -137,6 +137,10 @@ var plotEdit = {
           ) {
             continue
           }
+        } else {
+          if (attrName == 'zIndex') {
+            continue
+          }
         }
 
         //三维立体对象

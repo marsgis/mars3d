@@ -390,12 +390,10 @@
         var followedX = Number($('#followedX').val())
         var followedZ = Number($('#followedZ').val())
 
-        roamLine.setOptions({
-          camera: {
-            type: cameraType,
-            followedX: followedX,
-            followedZ: followedZ,
-          },
+        roamLine.setCameraOptions({
+          type: cameraType,
+          followedX: followedX,
+          followedZ: followedZ,
         })
       }
 
