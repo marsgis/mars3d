@@ -80,6 +80,21 @@
           clustering: {
             enabled: true,
             pixelRange: 20,
+            // opacity: 1,
+            // getImage: function (count) {   //getImage是完全自定义方式
+            //   let colorIn
+            //   if (count < 10) {
+            //     colorIn = 'rgba(110, 204, 57, 0.6)'
+            //   } else if (count < 100) {
+            //     colorIn = 'rgba(240, 194, 12,  0.6)'
+            //   } else {
+            //     colorIn = 'rgba(241, 128, 23,  0.6)'
+            //   }
+            //   return mars3d.Util.getCircleImage(count, {
+            //     color: colorIn,
+            //     radius: 30,
+            //   })
+            // },
           },
         })
         map.addLayer(graphicLayer)

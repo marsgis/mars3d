@@ -113,6 +113,7 @@
           globe: {
             depthTestAgainstTerrain: true,
           },
+          highDynamicRange: true,
         },
       })
 
@@ -178,8 +179,8 @@
         },
       })
 
-      //挖地区域
-      var terrainPlanClip = new mars3d.thing.TerrainPlanClip({
+      // 挖地区域
+      var terrainClip = new mars3d.thing.TerrainClip({
         positions: [
           [117.096176, 31.851189, 42.56],
           [117.097776, 31.851189, 42.56],
@@ -187,9 +188,19 @@
           [117.096176, 31.853494, 42.56],
         ],
         diffHeight: Number($('#txtHeight').val()), //高度
-        image: './img/textures/excavate_side_min.jpg', //边界墙材质
-        imageBottom: './img/textures/excavate_bottom_min.jpg', //底部区域材质
-        splitNum: 50, //wall边界插值数
+        image: './img/textures/excavate_side_min.jpg',
+        imageBottom: './img/textures/excavate_bottom_min.jpg',
+        splitNum: 80, //井边界插值数
+      })
+      map.addThing(terrainClip)
+
+      var terrainPlanClip = new mars3d.thing.TerrainPlanClip({
+        positions: [
+          [117.096176, 31.851189, 42.56],
+          [117.097776, 31.851189, 42.56],
+          [117.097776, 31.853494, 42.56],
+          [117.096176, 31.853494, 42.56],
+        ],
       })
       map.addThing(terrainPlanClip)
 
@@ -200,20 +211,23 @@
 
       $('#chkClippingPlanes').change(function () {
         var val = $(this).is(':checked')
+        terrainClip.enabled = val
         terrainPlanClip.enabled = val
       })
 
       $('#txtHeight').change(function () {
         var num = Number($(this).val())
-        terrainPlanClip.height = num
+        terrainClip.height = num
       })
 
       $('#clearWJ').click(function () {
-        terrainPlanClip.clear() //清除挖地区域
+        terrainClip.clear() //清除挖地区域
+        terrainPlanClip.clear()
       })
 
       $('#btnDraw').click(function () {
-        terrainPlanClip.clear() //清除挖地区域
+        terrainClip.clear() //清除挖地区域
+        terrainPlanClip.clear()
 
         map.graphicLayer.startDraw({
           type: 'polygon',
@@ -230,13 +244,15 @@
             console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
 
             //挖地区域
+            terrainClip.positions = positions
             terrainPlanClip.positions = positions
           },
         })
       })
 
       $('#btnDrawExtent').click(function () {
-        terrainPlanClip.clear() //清除挖地区域
+        terrainClip.clear() //清除挖地区域
+        terrainPlanClip.clear()
 
         map.graphicLayer.startDraw({
           type: 'rectangle',
@@ -253,6 +269,7 @@
             console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
 
             //挖地区域
+            terrainClip.positions = positions
             terrainPlanClip.positions = positions
           },
         })

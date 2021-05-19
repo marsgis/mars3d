@@ -148,8 +148,11 @@
     activate() {
       this.map.addLayer(this.graphicLayer)
 
+      $('.mars3d-locationbar').append('<div id="queryAddress" class="mars3d-locationbar-content" style="margin-right: 50px;"></div>')
+
       //单击地图事件
       this.map.on(mars3d.EventType.clickMap, this.onMapClick, this)
+      this.map.on(mars3d.EventType.cameraChanged, this.onMapCameraChanged, this)
     }
     //关闭释放
     disable() {
@@ -157,6 +160,9 @@
 
       //释放单击地图事件
       this.map.off(mars3d.EventType.clickMap, this.onMapClick, this)
+      this.map.off(mars3d.EventType.cameraChanged, this.onMapCameraChanged, this)
+
+      $('#queryAddress').remove()
 
       this.hideAllQueryBarView()
       this.clearLayers()
@@ -167,6 +173,23 @@
         this.hideAllQueryBarView()
         $('#txt_querypoi').blur()
       }
+    }
+    onMapCameraChanged(event) {
+      let radius = this.map.camera.positionCartographic.height //单位：米
+      if (radius > 100000) {
+        this.address = null
+        $('#queryAddress').html('')
+        return
+      }
+
+      this.baiduPOI.getAddress({
+        location: this.map.getCenter(),
+        success: (result) => {
+          this.address = result
+
+          $('#queryAddress').html('地址：' + result.address)
+        },
+      })
     }
     hideAllQueryBarView() {
       $('#querybar_histroy_view').hide()
@@ -199,6 +222,7 @@
 
       this.baiduPOI.autoTip({
         text: text,
+        city: this.address?.city,
         location: this.map.getCenter(),
         success: (result) => {
           var inhtml = ''
@@ -210,7 +234,6 @@
 
             inhtml += "<li><i class='fa fa-search'></i><a href=\"javascript:queryBaiduPOIWidget.autoSearch('" + name + '\');">' + name + '</a></li>'
           }
-
           if (inhtml.length > 0) {
             $('#querybar_ul_autotip').html(inhtml)
             $('#querybar_autotip_view').show()
@@ -246,8 +269,10 @@
 
       this.thispage = 1
       this.queryText = text
-      this.query_location = this.map.getCenter()
-      this.query_radius = this.map.camera.positionCartographic.height //单位：米
+
+      this.query_city = this.address?.city
+      // this.query_location = this.map.getCenter()
+      // this.query_radius = this.map.camera.positionCartographic.height //单位：米
 
       this.queryPOI()
     }
@@ -257,8 +282,9 @@
         text: this.queryText,
         count: this.pageSize,
         page: this.thispage - 1,
-        location: this.query_location,
-        radius: this.query_radius,
+        city: this.query_city,
+        // location: this.query_location,
+        // radius: this.query_radius,
         success: (result) => {
           if (!this.isActivate) {
             return

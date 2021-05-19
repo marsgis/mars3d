@@ -42,7 +42,7 @@
       { "name": "color", "label": "颜色", "type": "color", "defval": "#ffffff" },
       { "name": "opacity", "label": "透明度", "type": "slider", "defval": 1.0 },
 
-      { "name": "outline", "label": "是否衬色", "type": "radio", "defval": true, "impact": ["outlineColor", "outlineOpacity", "outlineWidth"] },
+      { "name": "outline", "label": "是否衬色", "type": "radio", "defval": false, "impact": ["outlineColor", "outlineOpacity", "outlineWidth"] },
       { "name": "outlineColor", "label": "衬色颜色", "type": "color", "defval": "#000000" },
       { "name": "outlineOpacity", "label": "衬色透明度", "type": "slider", "defval": 0.6 },
       { "name": "outlineWidth", "label": "衬色宽度", "type": "number", "defval": 3.0 },
@@ -723,11 +723,6 @@
 
       { "name": "closure", "label": "是否闭合", "type": "radio", "defval": false },
       { "name": "clampToGround", "label": "是否贴地", "type": "radio", "defval": false },
-
-
-      { "name": "depthFail", "label": "是否显示遮挡", "type": "radio", "defval": false, "impact": ["depthFailColor", "depthFailOpacity"] },
-      { "name": "depthFailColor", "label": "遮挡处颜色", "type": "color", "defval": "#ff0000" },
-      { "name": "depthFailOpacity", "label": "遮挡处透明度", "type": "slider", "defval": 0.2 },
 
       {
         "name": "distanceDisplayCondition",

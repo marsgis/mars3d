@@ -136,6 +136,8 @@
           type: 'billboard',
           style: {
             image: 'img/marker/start.png',
+            horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           },
           success: function (graphic) {
             startGraphic = graphic
@@ -158,6 +160,8 @@
           type: 'billboard',
           style: {
             image: 'img/marker/end.png',
+            horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           },
           success: function (graphic) {
             endGraphic = graphic

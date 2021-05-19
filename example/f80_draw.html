@@ -476,6 +476,7 @@
         },
       })
     }
+
     function toKML() {
       var geojsonObject = graphicLayer.toGeoJSON()
       if (geojsonObject == null) {
@@ -506,9 +507,9 @@
       })
 
       var kml = tokml(geojsonObject, {
-        name: 'MarsGIS标绘数据',
-        documentName: 'MarsGIS标绘数据',
-        documentDescription: 'MarsGIS标绘数据 by marsgis',
+        name: 'Mars3D标绘数据',
+        documentName: 'Mars3D标绘数据文件',
+        documentDescription: '标绘数据 by mars3d.cn',
         simplestyle: true,
       })
 

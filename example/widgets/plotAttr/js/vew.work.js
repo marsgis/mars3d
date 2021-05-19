@@ -510,9 +510,10 @@ var plotEdit = {
           fun = function (parname, attrName, attrVal, edit) {
             $('input:radio[name="' + parname + attrName + '"]').change(function () {
               let attrVal = $(this).val() == '1'
-              that.updateAttr(parname, attrName, attrVal)
-
-              that.changeViewByAttr(parname, edit.impact, attrVal)
+              let isOK = that.updateAttr(parname, attrName, attrVal)
+              if (isOK) {
+                that.changeViewByAttr(parname, edit.impact, attrVal)
+              }
             })
             that.changeViewByAttr(parname, edit.impact, attrVal)
           }
@@ -611,7 +612,7 @@ var plotEdit = {
             $("input[name='" + parname + attrName + "']:eq(0)").attr('checked', 'checked')
             $("input[name='" + parname + attrName + "']:eq(0)").click()
             haoutil.msg('填充和边框不能同时为否，需要至少开启一个！')
-            return
+            return false
           }
         }
 
@@ -633,5 +634,6 @@ var plotEdit = {
         break
     }
     thisWidget.updateAttr2map(newAttr)
+    return true
   },
 }

@@ -141,7 +141,7 @@
 
       $('#chkHasTerrain').change(function () {
         var isStkTerrain = $(this).is(':checked')
-        map.updateTerrainProvider(isStkTerrain)
+        map.hasTerrain = isStkTerrain
       })
       $('#chkTestTerrain').change(function () {
         var val = $(this).is(':checked')

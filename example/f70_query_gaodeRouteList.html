@@ -182,6 +182,8 @@
           type: 'billboard',
           style: {
             image: 'img/marker/start.png',
+            horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           },
           success: function (graphic) {
             startGraphic = graphic
@@ -368,8 +370,8 @@
 
         arrTable.push({
           name: name,
-          allDistance: item.allDistance, //总距离
-          allDuration: item.allDuration, //全部所需时间
+          allDistance: distance, //总距离
+          allDuration: time, //全部所需时间
           graphic: graphic,
         })
       }
