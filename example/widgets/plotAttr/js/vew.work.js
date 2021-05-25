@@ -50,7 +50,11 @@ var plotEdit = {
         }
       })
 
-      thisWidget.updateGeo2map(latlngs, true)
+      let arrPoint = []
+      for (let i = 0; i < latlngs.length; i += 3) {
+        arrPoint.push([latlngs[i], latlngs[i + 1], latlngs[i + 2]])
+      }
+      thisWidget.updatePoints2map(arrPoint)
     })
 
     //改变高度 - 在地表高程偏移
@@ -72,7 +76,11 @@ var plotEdit = {
         }
       })
 
-      thisWidget.updateGeo2map(latlngs, true)
+      let arrPoint = []
+      for (let i = 0; i < latlngs.length; i += 3) {
+        arrPoint.push([latlngs[i], latlngs[i + 1], latlngs[i + 2]])
+      }
+      thisWidget.updatePoints2map(arrPoint)
     })
   },
   _last_attr: null,
@@ -117,7 +125,7 @@ var plotEdit = {
           continue
         }
         let attrName = edit.name
-        let attrVal = attr.style[attrName] || edit.defval
+        let attrVal = attr.style[attrName] ?? edit.defval
         attr.style[attrName] = attrVal
 
         //贴地对象
@@ -172,7 +180,7 @@ var plotEdit = {
           }
 
           let attrName = edit.name
-          let attrVal = attr.style.label[attrName] || defStyleLbl[attrName]
+          let attrVal = attr.style.label[attrName] ?? defStyleLbl[attrName]
           attr.style.label[attrName] = attrVal
 
           let input = this.getAttrInput(parname, attrName, attrVal, edit)
@@ -200,7 +208,7 @@ var plotEdit = {
       }
 
       let attrName = edit.name
-      let attrVal = attr.attr[attrName] || edit.defval || ''
+      let attrVal = attr.attr[attrName] ?? edit.defval ?? ''
 
       let input = this.getAttrInput(parname, attrName, attrVal, edit)
       if (input.fun) {
@@ -320,7 +328,6 @@ var plotEdit = {
           withHeight = true
         }
       })
-      thisWidget.updateGeo2map(latlngs, withHeight)
 
       //重新修改界面
       let arr = []
@@ -334,6 +341,7 @@ var plotEdit = {
         }
       }
       that.updateLatlngsHtml(arr)
+      thisWidget.updatePoints2map(arr)
     })
     $('#view_latlngs .latlng-install').click(function () {
       let idx = Number($(this).attr('data-index'))
@@ -341,7 +349,7 @@ var plotEdit = {
       let latlngs = []
       let withHeight = false
       $('.plot_latlngs').each(function () {
-        latlngs.push(Number($(this).val()))
+        latlngs.push(Number($(this).val() || 0))
         if ($(this).attr('data-type') === 'height') {
           withHeight = true
         }
@@ -363,17 +371,16 @@ var plotEdit = {
       let pt2 = idx == arr.length - 1 ? arr[0] : arr[idx + 1]
       let jd = Number(((pt1[0] + pt2[0]) / 2).toFixed(6))
       let wd = Number(((pt1[1] + pt2[1]) / 2).toFixed(6))
+
       if (withHeight) {
         let gd = Number(((pt1[2] + pt2[2]) / 2).toFixed(1))
         arr.splice(idx + 1, 0, [jd, wd, gd])
-        latlngs.splice((idx + 1) * 3, 0, jd, wd, gd)
       } else {
         arr.splice(idx + 1, 0, [jd, wd])
-        latlngs.splice((idx + 1) * 3, 0, jd, wd)
       }
 
       that.updateLatlngsHtml(arr)
-      thisWidget.updateGeo2map(latlngs, withHeight)
+      thisWidget.updatePoints2map(arr)
     })
 
     $('.plot_latlngs').bind('input propertychange', function () {
@@ -385,7 +392,18 @@ var plotEdit = {
           withHeight = true
         }
       })
-      thisWidget.updateGeo2map(latlngs, withHeight)
+
+      let arrPoint = []
+      if (withHeight) {
+        for (let i = 0; i < latlngs.length; i += 3) {
+          arrPoint.push([latlngs[i], latlngs[i + 1], latlngs[i + 2]])
+        }
+      } else {
+        for (let i = 0; i < latlngs.length; i += 2) {
+          arrPoint.push([latlngs[i], latlngs[i + 1]])
+        }
+      }
+      thisWidget.updatePoints2map(arrPoint)
     })
   },
   // //单击地图空白，释放属性面板

@@ -145,14 +145,8 @@
 
     function clearAll() {
       sightline.clear()
-
-      for (var i = 0, len = arrPoint.length; i < len; i++) {
-        map.graphicLayer.removeGraphic(arrPoint[i])
-      }
-      arrPoint = []
+      map.graphicLayer.clear()
     }
-
-    var arrPoint = []
 
     function createPoint(position, isFirst) {
       var graphic = new mars3d.graphic.PointEntity({

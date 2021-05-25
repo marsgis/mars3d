@@ -338,6 +338,7 @@
   height: auto;
   text-align: left;
   color: rgba(255, 255, 255, 1);
+  overflow: hidden;
 }
 
 /**一个简单文本DIV面板**/

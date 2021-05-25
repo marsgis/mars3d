@@ -119,8 +119,8 @@
         for (var j = 0, len = floor.length; j < len; j++) {
           var floorCfg = floor[j]
 
-          var minHight = floorCfg.bottom
-          var maxHight = floorCfg.top
+          var minHight = floorCfg.bottom //当前层的 底部海拔高度
+          var maxHight = floorCfg.top //当前层的 顶部海拔高度
 
           var primitive = new mars3d.graphic.PolygonPrimitive({
             positions: points,

@@ -40,7 +40,7 @@
     <div id="viewSL" class="infoview">
       <div>
         示例：
-        <input type="button" class="btn btn-primary" value="平台标绘数据" onclick="showDrawDemo()" />
+        <input type="button" class="btn btn-primary" value="平台标绘数据" onclick="showDrawDemo(true)" />
         <input type="button" class="btn btn-primary" value="体育设施点" onclick="showPointDemo()" />
         <input type="button" class="btn btn-primary" value="省界线" onclick="showChinaLineDemo()" />
         <input type="button" class="btn btn-primary" value="规划面" onclick="showGuihuaDemo()" />
@@ -88,14 +88,14 @@
       }
 
       //示例：平台通过draw标绘后保存的geojosn数据（已经内置style了，无需配置symbol）
-      function showDrawDemo() {
+      function showDrawDemo(flyTo) {
         removeLayer()
 
         geoJsonLayer = new mars3d.layer.GeoJsonLayer({
           name: '标绘示例数据',
           url: 'http://data.marsgis.cn/file/geojson/geojson-draw.json',
           popup: '{type} {name}',
-          show: true,
+          flyTo: flyTo,
         })
         map.addLayer(geoJsonLayer)
 

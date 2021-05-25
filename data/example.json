@@ -191,8 +191,7 @@
               "name": "Mapbox矢量瓦片(.pbf)",
               "version": "1.6",
               "thumbnail": "c10_mvt.jpg",
-              "fileName": "c10_mvt",
-              "thirdParty": "pbf"
+              "fileName": "c10_mvt"
             }
           ]
         },
@@ -530,7 +529,7 @@
               "version": "2.0",
               "thumbnail": "e30_tdtDmLayer.jpg",
               "fileName": "e30_tdtDmLayer",
-              "thirdParty": "tdt"
+              "plugins": "tdt"
             },
             {
               "name": "经纬网图层",

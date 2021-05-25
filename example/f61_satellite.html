@@ -162,6 +162,9 @@
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
+        //指定时间
+        // map.clock.currentTime = Cesium.JulianDate.fromDate(new Date('2020-11-27 10:48:28'))
+
         map.clock.shouldAnimate = true
         map.clock.multiplier = 1 //速度
 

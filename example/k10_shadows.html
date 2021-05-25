@@ -107,9 +107,15 @@
         } else {
           var _date = $('#txt_rzfx_Date').val()
 
-          var startDate = getCurrTime()
+          var currentTime = getCurrTime()
+          var startDate = new Date(_date + ' 00:00:00')
           var endDate = new Date(_date + ' 23:59:59')
-          shadows.start(startDate, endDate)
+          if (currentTime >= endDate) {
+            haoutil.msg('开始时间必须小于结束时间！')
+            return
+          }
+
+          shadows.start(startDate, endDate, currentTime)
 
           $('#btn_rzfx_btn_rzfx_pause').val('暂停')
         }

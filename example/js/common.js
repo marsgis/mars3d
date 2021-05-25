@@ -4,31 +4,44 @@
 if (!mars3d.Util.webglreport()) {
   mars3d.Util.webglerror()
 }
-
 //读取 config.json 配置文件
 let configUrl = 'config/config.json'
-fetch(configUrl)
-  .then(function (response) {
-    if (!response.ok) {
-      var error = new Error(response.statusText)
-      error.response = response
-      throw error
-    } else {
-      return response.json()
-    }
-  })
-  .then((json) => {
+mars3d.Resource.fetchJson({ url: configUrl })
+  .then(function (json) {
     //构建地图
     window.initMap(json.map3d)
+
     //移除遮罩
     setTimeout(removeMask, 3000)
   })
-  .catch(function (error) {
-    console.log('加载JSON出错', error) 
-
+  .otherwise(function (error) {
+    console.log('加载JSON出错', error)
     removeMask()
     haoutil.alert(error?.message, '出错了')
   })
+
+// fetch(configUrl)
+//   .then(function (response) {
+//     if (!response.ok) {
+//       var error = new Error(response.statusText)
+//       error.response = response
+//       throw error
+//     } else {
+//       return response.json()
+//     }
+//   })
+//   .then((json) => {
+//     //构建地图
+//     window.initMap(json.map3d)
+//     //移除遮罩
+//     setTimeout(removeMask, 3000)
+//   })
+//   .catch(function (error) {
+//     console.log('加载JSON出错', error)
+
+//     removeMask()
+//     haoutil.alert(error?.message, '出错了')
+//   })
 
 //移除遮罩
 function removeMask() {

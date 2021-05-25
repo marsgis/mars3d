@@ -116,25 +116,12 @@
       var graphic = this.config.graphic //当前编辑的graphic
       graphic.setOptions(attr)
     }
-    //更新图上的几何形状、坐标等
-    updateGeo2map(coords, withHeight) {
-      let positions = []
-      if (withHeight) {
-        for (let i = 0; i < coords.length; i += 3) {
-          let point = Cesium.Cartesian3.fromDegrees(coords[i], coords[i + 1], coords[i + 2])
-          positions.push(point)
-        }
-      } else {
-        for (let i = 0; i < coords.length; i += 2) {
-          let point = Cesium.Cartesian3.fromDegrees(coords[i], coords[i + 1], 0)
-          positions.push(point)
-        }
-      }
+    //更新坐标
+    updatePoints2map(points) {
+      console.log('更新坐标', points)
 
-      var graphic = this.config.graphic //当前编辑的graphic
-      graphic.positions = positions
-
-      return positions
+      var graphic = this.config.graphic
+      graphic.positions = points
     }
     centerCurrentEntity() {
       let graphic = this.config.graphic

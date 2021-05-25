@@ -95,8 +95,9 @@
 
       map.basemap = 2017
 
-      //添加测试的演示图层
+      //添加演示图层
       addArcGisWFSLayer1()
+      addArcGisWFSLayer2()
     }
 
     //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
@@ -146,7 +147,26 @@
         wfsLayer.setWhere(' 1=1 ')
       }, 10000)
     }
-  </script>
+
+    //适合少于1000条的少量数据，一次性请求加载
+    function addArcGisWFSLayer2() {
+      //一次性加载的wfs图层
+      var wfsLayer = new mars3d.layer.ArcGisWfsSingleLayer({
+        name: '合肥边界线',
+        url: 'http://data.marsgis.cn/arcgis/rest/services/mars/hefei/MapServer/41',
+        symbol: {
+          type: 'polyline',
+          styleOptions: {
+            color: '#39E09B',
+            width: 8,
+            opacity: 0.8,
+          },
+        },
+        popup: 'all',
+      })
+      map.addLayer(wfsLayer)
+    }
+     </script>
 </body>
 
 </html>
