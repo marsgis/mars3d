@@ -1,135 +1,140 @@
 <!-- 2017-12-4 14:24:10 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>ArcGIS Server服务(含瓦片和动态) | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>ArcGIS Server服务(含瓦片和动态) | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"
+    ></script>
 
+    <script type="text/javascript" src="../lib/proj4/proj4-src.js"></script>
 
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
+  <body class="dark">
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d,mars3d-esri"></script>
+    <div class="infoview">
+      <input id="btnAddLayer" type="button" class="btn btn-primary" value="叠加图层" onclick="addLayer()" />
+      <input id="btnRemoveLayer" type="button" class="btn btn-primary" value="移除图层" onclick="removeLayer()" />
+    </div>
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
 
-<body class="dark">
-  <div id="mars3dContainer" class="mars3d-container"></div>
+      $(document).ready(function () {
+        if (!mars3d.Util.webglreport()) {
+          mars3d.Util.webglerror()
+          return
+        }
+        initMap()
+      })
 
-
-  <div class="infoview">
-    <input id="btnAddLayer" type="button" class="btn btn-primary" value="叠加图层" onclick="addLayer()" />
-    <input id="btnRemoveLayer" type="button" class="btn btn-primary" value="移除图层" onclick="removeLayer()" />
-  </div>
-
-
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
-
-    $(document).ready(function () {
-      if (!mars3d.Util.webglreport()) {
-        mars3d.Util.webglerror()
-        return
-      }
-      initMap()
-    })
-
-    var map
-    function initMap() {
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', {
-        scene: {
-          center: { y: 31.026852, x: 117.164195, z: 154181.14, heading: 0, pitch: -63.5, roll: 0 },
-        },
-        control: {
-          baseLayerPicker: true, //basemaps底图切换按钮
-          homeButton: true, //视角复位按钮
-          sceneModePicker: true, //二三维切换按钮
-          defaultContextMenu: true, //右键菜单
-        },
-        terrain: {
-          url: 'http://data.marsgis.cn/terrain',
-          show: true,
-        },
-        //方式1：在创建地球前的参数中配置
-        basemaps: [
-          {
-            name: 'ArcGIS影像',
-            icon: 'img/basemaps/esriWorldImagery.png',
-            type: 'arcgis',
-            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
-            enablePickFeatures: false,
+      var map
+      function initMap() {
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', {
+          scene: {
+            center: { y: 31.026852, x: 117.164195, z: 154181.14, heading: 0, pitch: -63.5, roll: 0 },
+          },
+          control: {
+            baseLayerPicker: true, //basemaps底图切换按钮
+            homeButton: true, //视角复位按钮
+            sceneModePicker: true, //二三维切换按钮
+            defaultContextMenu: true, //右键菜单
+          },
+          terrain: {
+            url: 'http://data.marsgis.cn/terrain',
             show: true,
           },
-          {
-            name: 'ArcGIS电子街道',
-            icon: 'img/basemaps/google_vec.png',
-            type: 'arcgis',
-            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer',
-            enablePickFeatures: false,
-          },
-          {
-            name: 'ArcGIS NatGeo',
-            icon: 'img/basemaps/esriWorldStreetMap.png',
-            type: 'arcgis',
-            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer',
-            enablePickFeatures: false,
-          },
-          {
-            name: '蓝色底图(GCJ02)',
-            icon: 'img/basemaps/bd-c-midnight.png',
-            type: 'arcgis',
-            url: 'http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer',
-            enablePickFeatures: false,
-          },
-          {
-            name: '灰色底图(GCJ02)',
-            icon: 'img/basemaps/bd-c-grayscale.png',
-            type: 'arcgis',
-            url: 'http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetGray/MapServer',
-            enablePickFeatures: false,
-          },
-        ],
-      })
-    }
-
-    //叠加的图层
-    var tileLayer
-
-    function addLayer() {
-      removeLayer()
-
-      //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
-      tileLayer = new mars3d.layer.ArcGisLayer({
-        url: 'http://data.marsgis.cn/arcgis/rest/services/mars/guihua/MapServer',
-        enablePickFeatures: false,
-      })
-      map.addLayer(tileLayer)
-    }
-    function removeLayer() {
-      if (tileLayer) {
-        map.removeLayer(tileLayer, true)
-        tileLayer = null
+          //方式1：在创建地球前的参数中配置
+          basemaps: [
+            {
+              name: 'ArcGIS影像',
+              icon: 'img/basemaps/esriWorldImagery.png',
+              type: 'arcgis',
+              url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
+              enablePickFeatures: false,
+              show: true,
+            },
+            {
+              name: 'ArcGIS电子街道',
+              icon: 'img/basemaps/google_vec.png',
+              type: 'arcgis',
+              url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer',
+              enablePickFeatures: false,
+            },
+            {
+              name: 'ArcGIS NatGeo',
+              icon: 'img/basemaps/esriWorldStreetMap.png',
+              type: 'arcgis',
+              url: 'https://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer',
+              enablePickFeatures: false,
+            },
+            {
+              name: '蓝色底图(GCJ02)',
+              icon: 'img/basemaps/bd-c-midnight.png',
+              type: 'arcgis',
+              url: 'http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer',
+              enablePickFeatures: false,
+            },
+            {
+              name: '灰色底图(GCJ02)',
+              icon: 'img/basemaps/bd-c-grayscale.png',
+              type: 'arcgis',
+              url: 'http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetGray/MapServer',
+              enablePickFeatures: false,
+            },
+          ],
+        })
       }
-    }
-  </script>
-</body>
 
+      //叠加的图层
+      var tileLayer
+
+      function addLayer() {
+        removeLayer()
+
+        //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+        tileLayer = new mars3d.layer.ArcGisLayer({
+          url: 'http://data.marsgis.cn/arcgis/rest/services/mars/guihua/MapServer',
+          enablePickFeatures: false, //如需打开单击，改为true
+          flyTo: true,
+        })
+        map.addLayer(tileLayer)
+
+        tileLayer.on(mars3d.EventType.loadConfig, function (event) {
+          console.log('加载完成服务信息', event)
+        })
+      }
+      function removeLayer() {
+        if (tileLayer) {
+          map.removeLayer(tileLayer, true)
+          tileLayer = null
+        }
+      }
+    </script>
+  </body>
 </html>

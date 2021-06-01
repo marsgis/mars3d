@@ -23,7 +23,7 @@
 
   <!--第三方lib-->
   <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d,mars3d-esri"></script>
+    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
 
   <link href="css/style.css" rel="stylesheet" />
 
@@ -62,10 +62,12 @@
       map = new mars3d.Map('mars3dContainer', mapOptions)
 
       var arcGisLayer = new mars3d.layer.ArcGisLayer({
-        name: '合肥规划',
-        url: 'http://data.marsgis.cn/arcgis/rest/services/mars/guihua/MapServer',
-        layers: '0',
-        // "layerDefs": "{\"0\":\"用地编号 = 'R'\"}",  //可以加条件筛选数据
+        name: '合肥建筑物',
+        url: 'http://data.marsgis.cn/arcgis/rest/services/kehu/nlsx/MapServer',
+        // url: 'http://data.marsgis.cn/arcgis/rest/services/crs/ssjzw4326/MapServer',
+        // url: 'http://data.marsgis.cn/arcgis/rest/services/crs/ssjzw4490/MapServer', //大地2000地理坐标系
+        // url: 'http://data.marsgis.cn/arcgis/rest/services/crs/ssjzw4548/MapServer', //大地2000高斯投影坐标系
+        // url: 'http://data.marsgis.cn/arcgis/rest/services/crs/ssjzw2000/MapServer',  //大地2000高斯投影坐标系
         showClickFeature: true,
         pickFeatureStyle: {
           clampToGround: true,
@@ -78,12 +80,16 @@
           outlineOpacity: 1.0,
         },
         popup: 'all',
+        flyTo: true,
       })
       map.addLayer(arcGisLayer)
 
-      //单击事件
+      //绑定事件
+      arcGisLayer.on(mars3d.EventType.loadConfig, function (event) {
+        console.log('加载完成服务信息', event)
+      })
+
       arcGisLayer.on(mars3d.EventType.click, function (event) {
-        //单击事件
         console.log('单击了矢量数据，共' + event.features.length + '条', event)
       })
     }

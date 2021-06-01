@@ -1,0 +1,219 @@
+<!-- 2017-12-7 14:56:03 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>GeoJSON格式加载 矢量瓦片 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <!--需要引入额外的第3方插件js-->
+    <script src="../lib/mars3d/thirdParty/weiVectorTile/CesiumVectorTile.min.js"></script>
+    <script src="../lib/mars3d/thirdParty/weiVectorTile/WeiVectorTileLayer.js"></script>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
+
+      var map
+      var viewer
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            //此处参数会覆盖config.json中的对应配置
+            center: {
+              y: 27.344528,
+              x: 116.865807,
+              z: 534624.56,
+              heading: 10,
+              pitch: -52,
+              roll: 0,
+            },
+          },
+        })
+
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+        viewer = map.viewer
+
+        //geojson 安徽各市
+        $.ajax({
+          type: 'get',
+          dataType: 'json',
+          url: 'http://data.marsgis.cn/file/geojson/anhui.json',
+          timeout: 0, //永不超时
+          success: function (geojson) {
+            showGeoJsonVectorTile(geojson)
+          },
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+            haoutil.alert('Json文件加载失败！')
+          },
+        })
+
+        //geojson 安徽边界线
+        $.ajax({
+          type: 'get',
+          dataType: 'json',
+          url: 'http://data.marsgis.cn/file/geojson/hefei.json',
+          timeout: 0, //永不超时
+          success: function (feature) {
+            showBJXLine(feature)
+          },
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+            haoutil.alert('Json文件加载失败！')
+          },
+        })
+      }
+
+      //API文档，参考lib\mars3d\thirdParty\weiVectorTile\Document.rar（解压Document.rar）
+      function showGeoJsonVectorTile(geojson) {
+        var tileLayer = new mars3d.layer.WeiVectorTileLayer({
+          source: geojson,
+          zIndex: 2,
+          removeDuplicate: false,
+          allowPick: true, //允许单击
+          defaultStyle: {
+            //参考api文档的Cesium.VectorStyle类
+            tileCacheSize: 200,
+
+            fill: true, //是否填充，仅面数据有效。
+            fillColor: 'rgba(0,255,255,0.1)',
+
+            outline: true, //是否显示边，仅面数据有效。
+            outlineColor: 'rgba(138,138,138,1)',
+            lineWidth: 2,
+
+            showMaker: false,
+
+            showCenterLabel: true, //是否显示文本，仅对线和面数据有效
+            centerLabelPropertyName: 'name',
+            fontColor: 'rgba(255,255,255,1)',
+            fontSize: 23,
+            fontFamily: '楷体',
+            labelOffsetX: -10,
+            labelOffsetY: -5,
+          },
+          minimumLevel: 1,
+          maximumLevel: 20,
+          simplify: false,
+          styleFilter: function (feature, style, x, y, level) {
+            if (level < 6) {
+              style.fontSize = level * 2
+            } else {
+              style.fontSize = 23
+            }
+
+            if (feature.properties && feature.properties.name && feature.properties.name == '合肥市') {
+              style.fillColor = Cesium.Color.YELLOW.withAlpha(0.2)
+            }
+            return style
+          },
+          //以下为mars3d参数,API参考http://mars3d.cn/api/BaseTileLayer.html#.ConstructorOptions
+          popup: 'all',
+        })
+        map.addLayer(tileLayer)
+      }
+
+      function showBJXLine(feature) {
+        //缓冲区
+        var bufferedOuter = turf.buffer(feature, 2000, {
+          units: 'meters',
+        })
+        var bufferedInner = turf.buffer(feature, 1000, {
+          units: 'meters',
+        })
+
+        bufferedInner = turf.difference(bufferedInner, feature)
+
+        bufferedOuter = turf.difference(bufferedOuter, bufferedInner)
+
+        bufferedInner = turf.featureCollection([bufferedInner])
+        bufferedOuter = turf.featureCollection([bufferedOuter])
+
+        var tileLayer = new mars3d.layer.WeiVectorTileLayer({
+          source: bufferedOuter,
+          zIndex: 99,
+          removeDuplicate: false,
+          defaultStyle: {
+            outlineColor: 'rgba(209,204,226,1)',
+            lineWidth: 2,
+            outline: true,
+            fill: true,
+            fillColor: 'rgba(209,204,226,1)',
+            tileCacheSize: 200,
+            showMaker: false,
+            showCenterLabel: true,
+            fontColor: 'rgba(255,0,0,1)',
+            labelOffsetX: -10,
+            labelOffsetY: -5,
+            fontSize: 13,
+            fontFamily: '黑体',
+            centerLabelPropertyName: 'NAME',
+          },
+          maximumLevel: 20,
+          minimumLevel: 5,
+          simplify: false,
+        })
+        map.addLayer(tileLayer)
+
+        var tileLayer2 = new mars3d.layer.WeiVectorTileLayer({
+          source: bufferedInner,
+          zIndex: 99,
+          removeDuplicate: false,
+          defaultStyle: {
+            outlineColor: 'rgba(185,169,199,1)',
+            lineWidth: 2,
+            outline: true,
+            fill: true,
+            fillColor: 'rgba(185,169,199,1)',
+            tileCacheSize: 200,
+            showMaker: false,
+            showCenterLabel: true,
+            fontColor: 'rgba(255,0,0,1)',
+            labelOffsetX: -10,
+            labelOffsetY: -5,
+            fontSize: 13,
+            fontFamily: '黑体',
+            centerLabelPropertyName: 'NAME',
+          },
+          maximumLevel: 20,
+          minimumLevel: 5,
+          simplify: false,
+        })
+        map.addLayer(tileLayer2)
+      }
+    </script>
+  </body>
+</html>

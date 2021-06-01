@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d,mars3d-esri,mars3d-echarts"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d,mars3d-echarts"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -35,7 +35,6 @@
     <div id="mask" class="signmask" onclick="removeMask()"></div>
 
     <div id="mars3dContainer" class="mars3d-container"></div>
-
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
@@ -62,19 +61,17 @@
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
-        //请求数据
-        var query = mars3d.L.esri.query({
+        var queryMapserver = new mars3d.query.QueryArcServer({
           url: 'http://data.marsgis.cn/arcgis/rest/services/mars/hefei/MapServer/33',
         })
-        query.run(function (error, featureCollection, response) {
-          if (error != null && error.code > 0) {
-            haoutil.alert(error.message, '服务访问出错')
-            return
-          }
-          if (featureCollection === undefined || featureCollection == null || featureCollection.features.length === 0) {
-            haoutil.msg('未找到符合查询条件的要素！')
-            return
-          } else {
+        queryMapserver.query({
+          page: false,
+          success: (result) => {
+            if (result.count == 0) {
+              haoutil.msg('未查询到相关记录！')
+              return
+            }
+            let featureCollection = result.geojson
             var busLines = []
             for (let i = 0; i < featureCollection.features.length; i++) {
               var feature = featureCollection.features[i]
@@ -95,7 +92,11 @@
             }
             //创建Echarts图层
             createEchartsLayer(busLines)
-          }
+          },
+          error: (error, msg) => {
+            console.log('服务访问错误', error)
+            haoutil.alert(msg, '服务访问错误')
+          },
         })
       }
 

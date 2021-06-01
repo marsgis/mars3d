@@ -541,7 +541,7 @@
         this.arrHistory = eval(laststorage)
       }
       //先删除之前相同记录
-      this.arrHistory.remove(data)
+      haoutil.array.remove(this.arrHistory, data)
 
       this.arrHistory.push(data)
 

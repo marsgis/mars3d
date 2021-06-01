@@ -40,6 +40,10 @@
     <!-- 面板 -->
     <div class="infoview">
       <input id="btnSelPoint" type="button" class="btn btn-primary" value="追踪目标点" />
+
+      <!-- <button id="btnGetRegion" class="btn btn-primary">获取区域边界值</button>
+      <button id="btnGetCenter" class="btn btn-primary">获取中心点坐标</button>
+      <button id="btnRemoveAll" class="btn btn-primary">清除</button> -->
     </div>
 
     <!-- 图层管理相关处理js -->
@@ -122,13 +126,61 @@
             },
           })
         })
+
+        $('#btnGetRegion').click(function () {
+          var coords = graphicFrustum.getRayEarthPositions()
+
+          //显示边界点
+          map.graphicLayer.clear()
+          coords.forEach(function (item) {
+            var primitive = new mars3d.graphic.PointPrimitive({
+              position: item,
+              style: {
+                color: '#ff0000',
+                pixelSize: 8,
+                outline: true,
+                outlineColor: '#ffffff',
+                outlineWidth: 2,
+                clampToGround: true,
+              },
+            })
+            map.graphicLayer.addGraphic(primitive)
+          })
+        })
+
+        $('#btnGetCenter').click(function () {
+          map.graphicLayer.clear()
+
+          var groundPosition = graphicFrustum.groundPosition
+          if (!groundPosition) {
+            haoutil.alert('当前与地球无交点')
+            return
+          }
+
+          var primitive = new mars3d.graphic.PointPrimitive({
+            position: groundPosition,
+            style: {
+              color: '#ff0000',
+              pixelSize: 8,
+              outline: true,
+              outlineColor: '#ffffff',
+              outlineWidth: 2,
+              clampToGround: true,
+            },
+          })
+          map.graphicLayer.addGraphic(primitive)
+        })
+
+        $('#btnRemoveAll').click(function () {
+          map.graphicLayer.clear()
+        })
       }
 
       function addGraphic_02(graphicLayer) {
         var graphic = new mars3d.graphic.FrustumPrimitive({
           position: [116.25813, 30.983059, 5000],
           style: {
-            angle: 15,
+            angle: 7,
             length: 4000,
             color: '#FF0000',
             opacity: 0.4,
@@ -157,7 +209,7 @@
         var graphic = new mars3d.graphic.FrustumPrimitive({
           position: [116.303349, 31.070789, 7000],
           style: {
-            angle: 20,
+            angle: 10,
             angle2: 0.01,
             length: 7000,
             heading: 70,

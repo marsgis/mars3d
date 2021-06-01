@@ -108,7 +108,7 @@
         console.log('开始分析', e)
       })
       floodByGraphic.on(mars3d.EventType.change, function (e) {
-        // console.log('分析中，高度变化了', e)
+        console.log('分析中，高度变化了', e)
         onChangeHeight(e.height)
       })
       floodByGraphic.on(mars3d.EventType.end, function (e) {

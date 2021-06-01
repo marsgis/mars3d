@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
+
+      var map
+      let graphicLayer
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: {
+              lat: 31.30003,
+              lng: 116.08603,
+              alt: 11445.39,
+              heading: 51.4,
+              pitch: -86.6,
+              roll: 2.3,
+            },
+          },
+        })
+        delete mapOptions.terrain
+
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+
+        //创建矢量数据图层
+        graphicLayer = new mars3d.layer.GraphicLayer()
+        map.addLayer(graphicLayer)
+
+        //飞行区域边界线
+        let graphic = new mars3d.graphic.PolygonEntity({
+          positions: [
+            [116.069898, 31.303655],
+            [116.098708, 31.322126],
+            [116.108063, 31.311256],
+            [116.079317, 31.292959],
+            [116.069898, 31.303655],
+          ],
+          style: {
+            color: '#ffff00',
+            outline: true,
+            outlineWidth: 3,
+            outlineColor: '#00ff00',
+          },
+        })
+        graphicLayer.addGraphic(graphic)
+
+        graphic.highlight({
+          time: 8, //闪烁时长（秒）
+          onEnd: function () {
+            //结束后自动移除
+            graphic.style = { fill: false }
+
+            work4HP.activate() //闪烁结束后开始飞行
+          },
+        })
+      }
+
+      //功能4
+      var work4HP = {
+        flySpeed: 600, //飞行速度
+        psNum: 400,
+        frameNum: 0,
+        arr4LinePrimitive: [],
+        arrColor: [new Cesium.Color(1.0, 0.0, 0.0, 0.3), new Cesium.Color(0.0, 1.0, 0, 0.3), new Cesium.Color(0.0, 0.0, 1, 0.3)],
+        //激活功能
+        activate() {
+          //飞行路线
+          this.roamLine = new mars3d.graphic.RoamLine({
+            name: '无人机航拍',
+            speed: this.flySpeed,
+            positions: [
+              [116.077374, 31.294215, 1000],
+              [116.107153, 31.312963, 1000],
+              [116.103816, 31.316868, 1000],
+              [116.074092, 31.297972, 1000],
+              [116.07068, 31.301908, 1000],
+              [116.100465, 31.320893, 1000],
+            ],
+            model: {
+              url: 'http://data.marsgis.cn/gltf/mars/wrj.glb',
+              scale: 0.02,
+              minimumPixelSize: 50,
+              show: true,
+            },
+            path: {
+              color: '#ffff00',
+              width: 3,
+              isAll: false,
+              show: true,
+            },
+            clockLoop: false, //是否循环播放
+          })
+          graphicLayer.addGraphic(this.roamLine)
+
+          this.roamLine.start()
+
+          //视角切换（分步执行）
+          map.setCameraViewList([
+            {
+              lat: 31.261244,
+              lng: 116.087805,
+              alt: 4571.19,
+              heading: 2.3,
+              pitch: -45.4,
+              roll: 357.6,
+              stop: 4,
+            },
+            {
+              lat: 31.299649,
+              lng: 116.129938,
+              alt: 2725.83,
+              heading: 290.2,
+              pitch: -34,
+              roll: 358.1,
+              stop: 4,
+            },
+            {
+              lat: 31.288891,
+              lng: 116.106146,
+              alt: 4268.26,
+              heading: 325.4,
+              pitch: -55.7,
+              roll: 357.5,
+            },
+          ])
+
+          this.stepNum = Math.floor(this.psNum / (this.flySpeed / 100))
+          map.on(mars3d.EventType.clockTick, this.clock_onTick, this)
+        },
+        clock_onTick(e) {
+          if (!map.clock.shouldAnimate) {
+            return
+          }
+          this.frameNum++
+
+          //当前的路线中的点位
+          var currIndex = this.roamLine.indexForFlyOK
+
+          if (currIndex % 2 == 0) {
+            if (this.frameNum % this.stepNum == 0) {
+              //计算方向
+              var p1, p2
+              if (currIndex == 0 || !currIndex) {
+                p1 = this.roamLine.positions[0]
+                p2 = this.roamLine.positions[1]
+              } else {
+                p1 = this.roamLine.positions[currIndex + 1]
+                p2 = this.roamLine.positions[currIndex]
+              }
+              if (!p1 || !p2) {
+                return
+              }
+
+              var hpr = mars3d.PointUtil.getHeadingPitchRollForLine(p1, p2)
+              var heading = Cesium.Math.toDegrees(hpr.heading)
+
+              //添加四棱锥体线
+              var graphicFrustum = new mars3d.graphic.FrustumPrimitive({
+                position: this.roamLine.position,
+                style: {
+                  angle: 15,
+                  angle2: 12,
+                  heading: heading,
+                  length: Cesium.Cartographic.fromCartesian(this.roamLine.position).height,
+                  fill: false,
+                  outline: true,
+                  outlineColor: '#ffffff',
+                  outlineOpacity: 1.0,
+                },
+                asynchronous: false,
+                flat: true,
+              })
+              graphicLayer.addGraphic(graphicFrustum)
+
+              this.arr4LinePrimitive.push(graphicFrustum)
+            }
+            if (this.frameNum % this.stepNum == 10) {
+              //移除四棱锥体线
+              if (this.arr4LinePrimitive.length > 0) {
+                graphicLayer.removeGraphic(this.arr4LinePrimitive.shift())
+              }
+            }
+          }
+
+          if (this.frameNum % this.stepNum == 0 && currIndex % 2 == 0) {
+            if (this.arr4LinePrimitive.length > 0) {
+              let graphicFrustum = this.arr4LinePrimitive[this.arr4LinePrimitive.length - 1]
+              //地面的4个顶点坐标
+              let positions = graphicFrustum.getRayEarthPositions()
+              //添加地面矩形
+              var primitive = new mars3d.graphic.PolygonPrimitive({
+                positions: positions,
+                style: {
+                  color: this.arrColor[graphicLayer.length % this.arrColor.length],
+                  zIndex: graphicLayer.length,
+                },
+              })
+              graphicLayer.addGraphic(primitive)
+            }
+          }
+        },
+        //释放功能
+        disable() {
+          map.clock.onTick.removeEventListener(this.clock_onTick, this)
+          this.roamLine.stop()
+
+          graphicLayer.clear()
+
+          this.arr4LinePrimitive = []
+          this.frameNum = 0
+        },
+      }
+    </script>
+  </body>
+</html>

@@ -67,11 +67,18 @@
         scene: {
           fxaa: true,
           center: { lat: 33.595369, lng: 119.031319, alt: 300, heading: 180, pitch: -43 },
+          globe: {
+            baseColor: '#000',
+          },
         },
       })
 
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      // let imageryLayer = map.scene.imageryLayers.get(0)
+      // imageryLayer.dayAlpha = 0.1  //白天图层透明值
+      // imageryLayer.nightAlpha = 1.0 //夜晚图层透明值
 
       //加个模型
       var tilesetLayer = new mars3d.layer.TilesetLayer({
@@ -79,6 +86,7 @@
         maximumScreenSpaceError: 0.5,
         maximumMemoryUsage: 1024,
         position: { alt: 81.5 },
+        shadows: Cesium.ShadowMode.ENABLED,
       })
       map.addLayer(tilesetLayer)
 

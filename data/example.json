@@ -292,7 +292,7 @@
       "children": [
         {
           "name": "初始化控件",
-          "details":"Cesium内置的控件，构造地图时按需传参配置",
+          "details": "Cesium内置的控件，构造地图时按需传参配置",
           "children": [
             {
               "name": "底图切换控制",
@@ -394,6 +394,12 @@
               "version": "1.8",
               "thumbnail": "d20_overviewmap.jpg",
               "fileName": "d20_overviewmap"
+            },
+            {
+              "name": "移动端位置定位",
+              "version": "1.6",
+              "thumbnail": "d20_geolocation.jpg",
+              "fileName": "d20_geolocation"
             }
           ]
         }
@@ -473,8 +479,26 @@
             {
               "name": "CzmGeoJson图层(Cesium原生加载)",
               "version": "2.0",
-              "thumbnail": "e20_czmGeojson.jpg",
-              "fileName": "e20_czmGeojson"
+              "thumbnail": "e21_czmGeojson.jpg",
+              "fileName": "e21_czmGeojson"
+            },
+            {
+              "name": "WKT格式数据解析",
+              "version": "1.9",
+              "thumbnail": "e22_wkt.jpg",
+              "fileName": "e22_wkt"
+            },
+            {
+              "name": "矢量瓦片方式加载GeoJson",
+              "version": "1.5",
+              "thumbnail": "e22_weiVectorTile_geojson.jpg",
+              "fileName": "e22_weiVectorTile_geojson"
+            },
+            {
+              "name": "矢量瓦片方式加载Shp",
+              "version": "1.5",
+              "thumbnail": "e22_weiVectorTile_shp.jpg",
+              "fileName": "e22_weiVectorTile_shp"
             }
           ]
         },
@@ -1009,6 +1033,18 @@
               "fileName": "f45_flypath"
             },
             {
+              "name": "飞机绕圈巡航",
+              "version": "1.6",
+              "thumbnail": "f45_flypath2.jpg",
+              "fileName": "f45_flypath2"
+            },
+            {
+              "name": "卫星成像过程",
+              "version": "1.6",
+              "thumbnail": "f45_satellite_foot.jpg",
+              "fileName": "f45_satellite_foot"
+            },
+            {
               "name": "渐变区域",
               "version": "3.0",
               "thumbnail": "f45_polyGradient.jpg",
@@ -1184,6 +1220,20 @@
               "version": "2.0",
               "thumbnail": "f61_satellite_list.jpg",
               "fileName": "f61_satellite_list",
+              "plugins": "space"
+            },
+            {
+              "name": "卫星过境分析",
+              "version": "1.9",
+              "thumbnail": "f62_satellite_gjfx.jpg",
+              "fileName": "f62_satellite_gjfx",
+              "plugins": "space"
+            },
+            {
+              "name": "成像范围计算",
+              "version": "1.9",
+              "thumbnail": "f62_satellite_shading.jpg",
+              "fileName": "f62_satellite_shading",
               "plugins": "space"
             }
           ]
@@ -2038,6 +2088,18 @@
               "version": "3.0",
               "thumbnail": "m35_dhjb.jpg",
               "fileName": "m35_dhjb"
+            },
+            {
+              "name": "无人机航拍过程",
+              "version": "2.0",
+              "thumbnail": "m35_wrjhp.gif",
+              "ileName": "m35_wrjhp"
+            },
+            {
+              "name": "铁路仿真",
+              "version": "2.0",
+              "thumbnail": "m35_railway.gif",
+              "fileName": "m35_railway"
             },
             {
               "name": "船舶模拟",
