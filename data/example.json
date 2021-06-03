@@ -360,6 +360,18 @@
           "name": "自定义控件",
           "children": [
             {
+              "name": "导航球",
+              "version": "3.0",
+              "thumbnail": "d20_compass.jpg",
+              "fileName": "d20_compass"
+            },
+            {
+              "name": "比例尺",
+              "version": "3.0",
+              "thumbnail": "d20_distanceLegend.jpg",
+              "fileName": "d20_distanceLegend"
+            },
+            {
               "name": "下侧状态栏",
               "version": "3.0",
               "thumbnail": "d20_locationBar.jpg",
@@ -384,10 +396,10 @@
               "fileName": "d20_mouseDownView"
             },
             {
-              "name": "导航球+比例尺",
+              "name": "卷帘对比",
               "version": "3.0",
-              "thumbnail": "d20_navigation.jpg",
-              "fileName": "d20_navigation"
+              "thumbnail": "d20_mapSplit.jpg",
+              "fileName": "d20_mapSplit"
             },
             {
               "name": "鹰眼地图",
@@ -644,6 +656,12 @@
               "version": "1.5",
               "thumbnail": "f10_entity_ellipsoid.jpg",
               "fileName": "f10_entity_ellipsoid"
+            },
+            {
+              "name": "半球、雷达范围",
+              "version": "3.0",
+              "thumbnail": "f10_entity_hemisphere.jpg",
+              "fileName": "f10_entity_hemisphere"
             },
             {
               "name": "Model 小模型",
@@ -2093,7 +2111,7 @@
               "name": "无人机航拍过程",
               "version": "2.0",
               "thumbnail": "m35_wrjhp.gif",
-              "ileName": "m35_wrjhp"
+              "fileName": "m35_wrjhp"
             },
             {
               "name": "铁路仿真",

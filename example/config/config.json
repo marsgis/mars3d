@@ -44,15 +44,13 @@
 
       "defaultContextMenu": true,
       "mouseDownView": true,
+      "compass": { "top": "10px", "right": "5px" },
+      "distanceLegend": { "left": "100px", "bottom": "2px" },
       "location": {
         "fps": true,
         "crs":"EPSG:3857",
         "crsDecimal":0,
         "template": "<div>经度:{lng}</div> <div>纬度:{lat}</div> <div>平面坐标:x{crsx},y{crsy}</div> <div>海拔：{alt}米</div> <div>层级：{level}</div><div>方向：{heading}度</div> <div>俯仰角：{pitch}度</div><div>视高：{cameraHeight}米</div>"
-      },
-      "navigation": {
-        "legend": { "left": "100px", "bottom": "-1px" },
-        "compass": { "top": "10px", "right": "5px" }
       }
     },
     "terrain": {
@@ -62,6 +60,7 @@
     "basemaps": [
       { "id": 10, "name": "地图底图", "type": "group" },
       {
+        "id": 2020,
         "pid": 10,
         "name": "天地图影像",
         "icon": "http://mars3d.cn/example/img/basemaps/tdt_img.png",
