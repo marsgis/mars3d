@@ -46,7 +46,7 @@
 
         //方式1：在创建地球前的传参中配置control参数
         // mapOptions.control = {
-        //   location: {
+        //   locationBar: {
         //     fps: true,
         //     template: '<div>经度:{lng}</div><div>纬度:{lat}</div> <div>海拔：{alt}米</div> <div>层级：{level}</div><div>方向：{heading}度</div> <div>俯仰角：{pitch}度</div><div>视高：{cameraHeight}米</div>'
         //   }
@@ -68,15 +68,15 @@
           //     pitch = '仰视:' + locationData.pitch
           //   }
 
-          //   var dfmX = mars3d.Util.formatDegree(locationData.x)
-          //   var dfmY = mars3d.Util.formatDegree(locationData.y)
+          //   var dfmX = mars3d.Util.formatDegree(locationData.lng)
+          //   var dfmY = mars3d.Util.formatDegree(locationData.lat)
 
-          //   return `<div>视高：${locationData.height}米</div>
-          //               <div>${pitch}度</div>
-          //               <div>方向：${locationData.heading}度</div>
-          //               <div>海拔：${locationData.z}米</div>
-          //               <div>纬度:${locationData.y} , ${dfmY}</div>
-          //               <div>经度:${locationData.x} , ${dfmX}</div>`
+          //   return ` <div>经度:${locationData.lat} , ${dfmX}</div>
+          //           <div>纬度:${locationData.lng} , ${dfmY}</div>
+          //           <div>海拔：${locationData.alt}米</div>
+          //           <div>方向：${locationData.heading}度</div>
+          //           <div>${pitch}度</div>
+          //           <div>视高：${locationData.cameraHeight}米</div>`
           // },
         })
         map.addControl(locationBar)
