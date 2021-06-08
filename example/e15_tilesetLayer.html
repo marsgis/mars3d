@@ -114,6 +114,9 @@
       //固定光照，避免gltf模型随时间存在亮度不一致。
       map.fixedLight = true
 
+      //调试面板
+      map.viewer.extend(Cesium.viewerCesiumInspectorMixin)
+
       //针对不同终端的优化配置
       if (haoutil.system.isPCBroswer()) {
         // Cesium 1.61以后会默认关闭反走样，对于桌面端而言还是开启得好，

@@ -26,7 +26,8 @@
         "enableTranslate": true,
         "enableTilt": true,
         "enableZoom": true,
-        "enableCollisionDetection": true
+        "enableCollisionDetection": true,
+        "minimumCollisionTerrainHeight": 15000
       }
     },
     "control": {
@@ -66,8 +67,7 @@
         "icon": "http://mars3d.cn/example/img/basemaps/tdt_img.png",
         "type": "tdt",
         "layer": "img_d",
-        "key": ["9ae78c51a0a28f06444d541148496e36"],
-        "show": true
+        "key": ["9ae78c51a0a28f06444d541148496e36"]
       },
       {
         "pid": 10,
@@ -136,7 +136,8 @@
         "icon": "http://mars3d.cn/example/img/basemaps/esriWorldImagery.png",
         "type": "xyz",
         "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-        "enablePickFeatures": false
+        "enablePickFeatures": false,
+        "show": true
       },
       {
         "pid": 10,
@@ -210,7 +211,7 @@
         "url": "https://t{s}.tianditu.gov.cn/DataServer?T=ibo_w&x={x}&y={y}&l={z}&tk=9ae78c51a0a28f06444d541148496e36",
         "subdomains": "01234567",
         "maximumLevel": 10,
-        "show": true
+        "show": false
       },
       {
         "pid":20,

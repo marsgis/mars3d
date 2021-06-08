@@ -670,6 +670,12 @@
               "fileName": "f10_entity_model"
             },
             {
+              "name": "点对象动态位置",
+              "version": "2.1",
+              "thumbnail": "f10_entity_dynamic.gif",
+              "fileName": "f10_entity_dynamic"
+            },
+            {
               "name": "Path 轨迹",
               "version": "3.0",
               "thumbnail": "f15_entity_path.jpg",

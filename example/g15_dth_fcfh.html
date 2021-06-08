@@ -43,6 +43,7 @@
       'use script' //开发环境建议开启严格模式
 
       var map
+      var geoJsonLayerDTH
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -70,43 +71,24 @@
           url: 'http://data.marsgis.cn/3dtiles/qx-xiaolou/tileset.json',
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
-          position: { alt: 7.5 },
+          position: { alt: 0.6 },
           show: true,
         })
         map.addLayer(tilesetLayer)
 
-        createDantihuaLayer()
-      }
-      var geoJsonLayerDTH
-      var highlighColor = Cesium.Color.fromCssColorString('#00ff00').withAlpha(0.5) //高亮时颜色
-      var nullColor = new Cesium.Color(0.0, 0.0, 0.0, 0.01)
-
-      //创建单体化图层
-      function createDantihuaLayer() {
-        //单体化图层
+        //创建单体化图层
         geoJsonLayerDTH = new mars3d.layer.GeoJsonLayer({
           name: '分层分户单体化',
           url: 'http://data.marsgis.cn/file/geojson/dth_fcfh.json',
+          onCreateGraphic: createDthGraphic, //自定义解析数据
+          dth: {
+            type: 'click', //设置这个属性改为单击后高亮,默认为鼠标移入高亮
+            color: 'rgba(0,255,0,0.5)',
+            buffer: 0.2,
+          },
           popup: 'all',
-          onCreateGraphic: createDthGraphic,
         })
         map.addLayer(geoJsonLayerDTH)
-
-        geoJsonLayerDTH.on(mars3d.EventType.mouseOver, function (event) {
-          console.log('监听layer，鼠标移入了矢量对象', event)
-          var attributes = event.graphic?.geometryInstanceAttributes
-          if (attributes) {
-            attributes.color = Cesium.ColorGeometryInstanceAttribute.toValue(highlighColor)
-          }
-        })
-        geoJsonLayerDTH.on(mars3d.EventType.mouseOut, function (event) {
-          console.log('监听layer，鼠标移出了矢量对象', event)
-
-          var attributes = event.graphic?.geometryInstanceAttributes
-          if (attributes) {
-            attributes.color = Cesium.ColorGeometryInstanceAttribute.toValue(nullColor)
-          }
-        })
       }
 
       //添加单体化矢量对象
@@ -127,8 +109,6 @@
             style: {
               height: minHight,
               extrudedHeight: maxHight,
-              color: nullColor,
-              classification: true,
             },
             attr: floorCfg,
           })

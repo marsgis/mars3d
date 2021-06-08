@@ -83,7 +83,7 @@
             type: 'xyz',
             url:
               'http://t3.tianditu.gov.cn/img_c/wmts?service=WMTS&version=1.0.0&request=GetTile&tilematrix={z}&layer=img&style=default&tilerow={y}&tilecol={x}&tilematrixset=c&format=tiles&tk=6c99c7793f41fccc4bd595b03711913e',
-            crs: 'EPSG4490', //标识坐标系
+            crs: 'EPSG:4490', //标识坐标系
             show: true,
           },
         ],
@@ -94,7 +94,7 @@
             type: 'xyz',
             url:
               'http://www.sdmap.gov.cn/tileservice/SDPubMap?layer=SDPubMap&style=default&tilematrixset=default028mm&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix={z}&TileCol={x}&TileRow={y}',
-            crs: 'EPSG4490',
+            crs: 'EPSG:4490',
             rectangle: { xmin: 114.3, xmax: 123.2, ymin: 34.165, ymax: 38.626 },
             minimumLevel: 5,
             maximumLevel: 18,
@@ -110,7 +110,7 @@
           //     "icon": "img/basemaps/google_vec.png",
           //     "type": "xyz",
           //     "url": "https://localhost:6080/arcgis/rest/services/test/MapServer/tile/{z}/{y}/{x}",
-          //     "crs": "EPSG4490",
+          //     "crs": "EPSG:4490",
           //     "minimumLevel": 0,
           //     "maximumLevel": 18
           // },
@@ -119,7 +119,7 @@
           //     "icon": "img/basemaps/google_vec.png",
           //     "type": "xyz",
           //     "url": "http://47.106.133.145:20000/geowebcache/service/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&LAYER=arcgis-China&STYLE=_null&FORMAT=image/jpeg&TILEMATRIXSET=EPSG:4326_arcgis-China&TILEMATRIX=EPSG:4326_arcgis-China:{z}&TILEROW={y}&TILECOL={x}",
-          //     "crs": "EPSG4490",
+          //     "crs": "EPSG:4490",
           //     "minimumLevel": 0,
           //     "maximumLevel": 18,
           //     "proxy": "http://data.marsgis.cn/proxy/",  //代理服务，解决跨域问题

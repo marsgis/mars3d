@@ -17,7 +17,7 @@ mars3d.Resource.fetchJson({ url: configUrl })
   .otherwise(function (error) {
     console.log('加载JSON出错', error)
     removeMask()
-    haoutil.alert(error?.message, '出错了')
+    haoutil.alert(error && error.message, '出错了')
   })
 
 // fetch(configUrl)
