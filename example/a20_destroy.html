@@ -58,6 +58,7 @@
 
       function createMap() {
         if (map) {
+          haoutil.msg('地图已存在,请勿重复创建!')
           return
         }
         map = new mars3d.Map('mars3dContainer', mapOptions)
@@ -65,6 +66,7 @@
 
       function destroyMap() {
         if (!map) {
+          haoutil.msg('地图已销毁,无需重复销毁!')
           return
         }
 

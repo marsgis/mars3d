@@ -46,12 +46,13 @@
 
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', mapOptions)
+        map.basemap = null
 
         let _alllayers = this.map.getTileLayers()
 
         var mapSplit = new mars3d.control.MapSplit({
-          leftLayer: _alllayers[0],
-          rightLayer: _alllayers[1],
+          rightLayer: _alllayers[0],
+          leftLayer: _alllayers[1],
         })
         map.addControl(mapSplit)
       }

@@ -22,8 +22,6 @@ body {
     padding: 0;
     border: none;
     overflow: hidden;
-    overflow-x: hidden;
-    overflow-y: hidden;
     font-family: "Helvetica Neue", Helvetica, Tahoma, Arial, "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
     font-size: 14px;
     background:#000;
@@ -32,6 +30,8 @@ body {
 
 body {
     position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 input,
@@ -71,10 +71,13 @@ li {
     width: 100%;
     margin: 0;
     padding: 0;
+    left: 0;
+    top: 0;
     border: none;
     overflow: hidden;
     position: relative;
 }
+
 
 .signmask {
     height: 100%;

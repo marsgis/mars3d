@@ -157,16 +157,6 @@
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
-        scene: {
-          center: {
-            y: 30.831262,
-            x: 116.342362,
-            z: 12364.89,
-            heading: 0,
-            pitch: -80,
-            roll: 0,
-          },
-        },
         control: {
           infoBox: false,
         },
@@ -332,7 +322,8 @@
         style: {
           color: clampToGround ? '#ffff00' : '#3388ff',
           opacity: 0.5,
-          outline: false,
+          outline: true,
+          outlineColor: '#ffffff',
           outlineWidth: 2.0,
           clampToGround: clampToGround,
         },
@@ -367,6 +358,9 @@
         style: {
           color: clampToGround ? '#ffff00' : '#3388ff',
           opacity: 0.6,
+          outline: true,
+          outlineColor: '#ffffff',
+          outlineWidth: 2.0,
           clampToGround: clampToGround,
         },
       })
@@ -378,6 +372,9 @@
         style: {
           color: clampToGround ? '#ffff00' : '#3388ff',
           opacity: 0.6,
+          outline: true,
+          outlineColor: '#ffffff',
+          outlineWidth: 2.0,
           clampToGround: clampToGround,
         },
       })

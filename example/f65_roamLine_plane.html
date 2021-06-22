@@ -320,6 +320,9 @@
           switch (attrVal) {
             default:
               break
+            case 'gs': //锁定第一视角
+              $('#tr_followedX').show()
+              break
             case 'dy': //锁定第一视角
               $('#tr_followedX').show()
               $('#tr_followedZ').show()
@@ -392,6 +395,7 @@
 
         roamLine.setCameraOptions({
           type: cameraType,
+          radius: cameraType == 'gs' ? followedX : 0,
           followedX: followedX,
           followedZ: followedZ,
         })

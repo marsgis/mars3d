@@ -1384,6 +1384,12 @@
               "version": "2.0",
               "thumbnail": "f80_interPoly.jpg",
               "fileName": "f80_interPoly"
+            },
+            {
+              "name": "图层数据贴地高度",
+              "version": "3.0",
+              "thumbnail": "f80_clampToGround_calcHeight.jpg",
+              "fileName": "f80_clampToGround_calcHeight"
             }
           ]
         }
@@ -1496,6 +1502,24 @@
             }
           ]
         },
+        {
+          "name": "模型Style样式示例",
+          "children": [
+            {
+              "name": "BIM分层展示",
+              "version": "3.0",
+              "thumbnail": "g18_style_fc.jpg",
+              "fileName": "g18_style_fc"
+            },
+            {
+              "name": "建筑物样式",
+              "version": "3.0",
+              "thumbnail": "g18_style_jzw.jpg",
+              "fileName": "g18_style_jzw"
+            }
+          ]
+        },
+
         {
           "name": "数据编辑控制",
           "children": [
@@ -1879,8 +1903,14 @@
           ]
         },
         {
-          "name": "数据分析",
+          "name": "客户端空间分析",
           "children": [
+            {
+              "name": "面求交",
+              "version": "2.3",
+              "thumbnail": "k25_intersect.jpg",
+              "fileName": "k25_intersect"
+            },
             {
               "name": "等值面",
               "version": "2.1",
@@ -2101,6 +2131,17 @@
               "thumbnail": "m30_echarts_lineroad2.jpg",
               "fileName": "m30_echarts_lineroad2",
               "plugins": "echarts"
+            }
+          ]
+        },
+        {
+          "name": "Three.js支持",
+          "children": [
+            {
+              "name": "集成Demo",
+              "version": "3.0",
+              "thumbnail": "m32_three.jpg",
+              "fileName": "m32_three"
             }
           ]
         },

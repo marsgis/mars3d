@@ -80,7 +80,7 @@
             format: 'image/tile',
             tileMatrixLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19'],
             tileMatrixSetID: 'Matrix_WD_DOM_1',
-            crs: 'EPSG4326',
+            crs: 'EPSG:4326',
             proxy: 'http://data.marsgis.cn/proxy/', //代理服务，解决跨域问题
             show: true,
           },
@@ -104,8 +104,19 @@
         format: 'image/png',
         tileMatrixLabels: [...Array(20).keys()].map((level) => 'EPSG:4326:' + level), //会替换tileMatrix参数 config.json中时直接写数组值
         tileMatrixSetID: 'EPSG:4326',
-        crs: 'EPSG4326',
+        crs: 'EPSG:4326',
         alpha: 0.8,
+
+        enablePickFeatures: true,
+        pickFeaturesUrl: 'http://data.marsgis.cn/geoserver/mars/wms',
+        popup: 'all',
+        showClickFeature: true,
+        pickFeatureStyle: {
+          clampToGround: true, //选择的要素样式，同Draw类样式
+          fill: true,
+          color: '#2deaf7',
+          opacity: 0.6,
+        },
       })
       map.addLayer(tileLayer)
     }

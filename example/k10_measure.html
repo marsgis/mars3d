@@ -104,10 +104,12 @@
       map.addThing(measure)
 
       measure.on(mars3d.EventType.start, function (e) {
+        console.log('start', e)
         //开始分析前回调(异步)
         haoutil.loading.show()
       })
       measure.on(mars3d.EventType.end, function (e) {
+        console.log('end', e)
         //分析完成后回调(异步)
         haoutil.loading.hide()
 

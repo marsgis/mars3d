@@ -55,9 +55,11 @@
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
-        map.viewer.imageryLayers._layers.forEach(function (layer, index, arr) {
-          layer.brightness = 0.25
-        })
+        map.basemap = 2017 //蓝色底图
+
+        // map.viewer.imageryLayers._layers.forEach(function (layer, index, arr) {
+        //   layer.brightness = 0.25
+        // })
 
         $.ajax({
           url: 'http://data.marsgis.cn/file/apidemo/wuhan-car',
@@ -76,8 +78,6 @@
 
         rs = rs.split('\n')
         var maxLength = 0
-        //leaflet只识别经纬度坐标，需要将数据中的米坐标转成经纬度坐标
-        var projection = mars3d.L.CRS.EPSG3857.projection
 
         var ggPoints
         for (let i = 0; i < rs.length; i++) {
@@ -91,12 +91,13 @@
           }
           for (let j = 0; j < item.length; j += 2) {
             //需要将数据中的米坐标转成经纬度坐标
-            var latLng = projection.unproject(mars3d.L.point([item[j], item[j + 1]]))
-            coordinates.push([latLng.lng, latLng.lat])
+            var ptJwd = mars3d.PointTrans.mct2jwd([item[j], item[j + 1]])
+            ptJwd = mars3d.PointTrans.bd2wgs(ptJwd)
+            coordinates.push(ptJwd)
             timeData.push({
               geometry: {
                 type: 'Point',
-                coordinates: [latLng.lng, latLng.lat],
+                coordinates: ptJwd,
               },
               count: 1,
               time: j,
