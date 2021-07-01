@@ -33,6 +33,9 @@
 
   <div id="mars3dContainer" class="mars3d-container"></div>
 
+  <div id="tipView" class="info-tips">
+    (1)  加载数据44万条，请耐心等待~
+  </div>
 
 
   <!-- 面板 -->
@@ -95,21 +98,21 @@
       var graphicLayer = new mars3d.layer.GraphicLayer()
       map.addLayer(graphicLayer)
 
-      //添加点集
-      creteaPointPrimitive(graphicLayer)
-
       //半球范围圈
       createEllipsoid(graphicLayer)
 
       //火焰效果
       createParticle(graphicLayer)
+
+      //添加点集
+      creteaPointPrimitive(graphicLayer)
     }
 
     //添加点集
     function creteaPointPrimitive(graphicLayer) {
       clr.init()
 
-      haoutil.msg('加载数据44万条，请耐心等待~')
+      // haoutil.msg('加载数据44万条，请耐心等待~')
 
       var degree = 45 //角度
 
@@ -120,6 +123,7 @@
         .fetchJson()
         .then(function (rs) {
           console.log('加载数据' + rs.length + '条')
+
           for (var i = 1; i < rs.length; i++) {
             var item = rs[i]
 

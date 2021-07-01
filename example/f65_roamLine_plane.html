@@ -123,9 +123,29 @@
             <input id="followedZ" type="number" min="0" max="99999" value="0" class="mp_input" />
           </td>
         </tr>
+
+        <tr id="tr_offsetZ" title="偏离漫游对象的高度，单位：米">
+          <td class="nametd">高度偏移值</td>
+          <td>
+            <input id="offsetZ" type="number" min="-9999" max="9999" value="0" step="0.1" class="mp_input" />
+          </td>
+        </tr>
+        <tr id="tr_offsetY" title="偏离漫游对象的横向值，单位：米">
+          <td class="nametd">横向偏移值</td>
+          <td>
+            <input id="offsetY" type="number" min="-9999" max="9999" value="0" step="0.1" class="mp_input" />
+          </td>
+        </tr>
+        <tr id="tr_offsetX" title="偏离漫游对象的前后值，单位：米">
+          <td class="nametd">前后偏移值</td>
+          <td>
+            <input id="offsetX" type="number" min="-9999" max="9999" value="0" step="0.1" class="mp_input" />
+          </td>
+        </tr>
+
         <tr>
           <td class="nametd">模型角度</td>
-          <td style="min-width: 130px;">
+          <td style="min-width: 130px">
             <div class="radio radio-info radio-inline">
               <input type="radio" id="jiaodu_1" value="1" name="jiaodu" checked />
               <label for="jiaodu_1">自动</label>
@@ -309,6 +329,9 @@
         $('#cameraType').attr('data-value', roamLine.options.camera.type)
         $('#followedX').val(roamLine.options.camera.followedX)
         $('#followedZ').val(roamLine.options.camera.followedZ)
+        $('#offsetZ').val(roamLine.options.camera.offsetZ || 0)
+        $('#offsetY').val(roamLine.options.camera.offsetY || 0)
+        $('#offsetX').val(roamLine.options.camera.offsetX || 0)
 
         //改变视角模式
         $('#cameraType').select() //绑定样式
@@ -320,7 +343,7 @@
           switch (attrVal) {
             default:
               break
-            case 'gs': //锁定第一视角
+            case 'gs': //
               $('#tr_followedX').show()
               break
             case 'dy': //锁定第一视角
@@ -329,6 +352,9 @@
 
               $('#followedX').val(200)
               $('#followedZ').val(50)
+              $('#offsetZ').val(0)
+              $('#offsetY').val(0)
+              $('#offsetX').val(0)
 
               break
             case 'sd': //锁定上帝视角
@@ -349,6 +375,15 @@
           updateCameraSetting()
         })
         $('#followedZ').change(function () {
+          updateCameraSetting()
+        })
+        $('#offsetY').change(function () {
+          updateCameraSetting()
+        })
+        $('#offsetZ').change(function () {
+          updateCameraSetting()
+        })
+        $('#offsetX').change(function () {
           updateCameraSetting()
         })
 
@@ -392,12 +427,18 @@
         var cameraType = $('#cameraType').attr('data-value')
         var followedX = Number($('#followedX').val())
         var followedZ = Number($('#followedZ').val())
+        var offsetZ = Number($('#offsetZ').val())
+        var offsetY = Number($('#offsetY').val())
+        var offsetX = Number($('#offsetX').val())
 
         roamLine.setCameraOptions({
           type: cameraType,
           radius: cameraType == 'gs' ? followedX : 0,
           followedX: followedX,
           followedZ: followedZ,
+          offsetZ: offsetZ,
+          offsetY: offsetY,
+          offsetX: offsetX,
         })
       }
 

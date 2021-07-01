@@ -236,11 +236,10 @@
           name: '用地规划',
           url: 'http://data.marsgis.cn/file/geojson/guihua.json',
           symbol: {
+            type: 'polygonCombine',
             styleOptions: {
               opacity: 0.6,
               color: '#0000FF',
-              width: 3,
-              clampToGround: true,
             },
             styleField: '类型',
             styleFieldOptions: {

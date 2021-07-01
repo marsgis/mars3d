@@ -4,12 +4,12 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="author" content="火星科技 http://mars3d.cn ">
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
+  <meta name="author" content="火星科技 http://mars3d.cn " />
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="x5-fullscreen" content="true" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
   <!-- 标题及搜索关键字 -->
@@ -23,9 +23,10 @@
 
   <!--第三方lib-->
   <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,web-icons,bootstrap,layer,toastr,nprogress,haoutil,turf,mars3d"></script>
+    include="jquery,web-icons,bootstrap,layer,toastr,nprogress,haoutil,echarts,turf,mars3d"></script>
 
   <link href="css/style.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/e20_geojson_buildings.css">
 
 </head>
 
@@ -36,8 +37,88 @@
   <div id="mars3dContainer" class="mars3d-container"></div>
 
 
+  <!-- 右侧图表面板-->
+  <div class="achart_container">
+    <div class="right_item">
+      <div class="_item_top">
+        <div class="_item_title">接入建筑栋数</div>
+      </div>
+      <div class="_item_row _item_full_box_width justify-between">
+        <div class="row1 flex-1">
+          <img src="./img/icon/监测建筑.png" alt="" class="icon">
+          <div class="row1_right">
+            <div class="right_title">87</div>
+            <div class="right_sub_title">监测建筑</div>
+          </div>
+        </div>
+        <div class="row1 flex-1 ml">
+          <img src="./img/icon/监测面积.png" alt="" class="icon">
+          <div class="row1_right">
+            <div class="right_title">2021</div>
+            <div class="right_sub_title">监测面积(万m²)</div>
+          </div>
+        </div>
+      </div>
+      <div class="_item_row" style="align-items: flex-start;">
+        <div class="row3">
+          <div class="_item_row_box3">
+            <div class="ring1">
+              <div id="ring"> </div>
+            </div>
+          </div>
+        </div>
+        <div class="row2 flex items-center">
+          <div class="_item_row_box2">
+            <div class="box2_item"  count="64"  >
+              办公建筑
+              </div>
+            <div class="box2_item1"  count="1"  >
+              综合建筑
+              </div>
+            <div class="box2_item2"  count="4"  >
+              商场建筑
+              </div>
+            <div class="box2_item3"  count="10"  >
+              宾馆饭店
+              </div>
+            <div class="box2_item4"  count="1"  >
+              医疗卫生
+              </div>
+            <div class="box2_item5"  count="1"  >
+              文化教育
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="right_item bg">
+      <div class="right_item">
+        <div class="_item_top">
+          <div class="_item_title">各类建筑接入情况</div>
+        </div>
+        <div class="_item_full_box">
+          <div class="bar">
+            <div id="bar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="right_item bg">
+      <div class="right_item">
+        <div class="_item_top">
+          <div class="_item_title">能耗趋势</div>
+        </div>
+        <div class="_item_full_box">
+          <div class="bar">
+            <div id="line" class="bar_chart"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="./js/common.js"></script>
+  <script src="./js/e20_geojson_buildings.js"></script>
   <script type="text/javascript">
     'use script' //开发环境建议开启严格模式
 
@@ -57,7 +138,9 @@
 
       map.basemap = 2017 //蓝色底图
 
-      toastr.info('文件数据较大，正在加载数据，请稍等片刻……')
+      initEcharts()
+
+      window.toastr.info('文件数据较大，正在加载数据，请稍等片刻……')
       haoutil.loading.show()
 
       var colorHash = {

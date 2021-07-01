@@ -161,11 +161,11 @@
         map.viewer.animation.container.style.display = show ? 'block' : 'none'
 
         if (show) {
-          map.controls.location.css({
+          map.controls.locationBar.css({
             left: '170px',
           })
         } else {
-          map.controls.location.css({
+          map.controls.locationBar.css({
             left: '0px',
           })
         }
@@ -177,11 +177,11 @@
         map.viewer.timeline.container.style.display = show ? 'block' : 'none'
 
         if (show) {
-          map.controls.location.css({
+          map.controls.locationBar.css({
             bottom: '25px',
           })
         } else {
-          map.controls.location.css({
+          map.controls.locationBar.css({
             bottom: '0px',
           })
         }
@@ -190,27 +190,22 @@
       //位置信息状态栏
       $('#showLocation').change(function () {
         var show = $(this).is(':checked')
-        map.controls.location.show = show
+
+        map.controls.locationBar.show = show
       })
 
       //导航球
       $('#showNav').change(function () {
         var show = $(this).is(':checked')
-        if (show) {
-          $('#navigationDiv').show()
-        } else {
-          $('#navigationDiv').hide()
-        }
+
+        map.controls.compass.show = show
       })
 
       //比例尺
       $('#showLegend').change(function () {
         var show = $(this).is(':checked')
-        if (show) {
-          $('#distanceLegendDiv').show()
-        } else {
-          $('#distanceLegendDiv').hide()
-        }
+
+        map.controls.distanceLegend.show = show
       })
       //显示位置搜索
       $('#showLocationSearch').change(function () {

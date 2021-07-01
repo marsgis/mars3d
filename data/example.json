@@ -526,8 +526,8 @@
             {
               "name": "ArcGIS Server动态图层",
               "version": "2.1",
-              "thumbnail": "e25_arcgis_dynamic.jpg",
-              "fileName": "e25_arcgis_dynamic"
+              "thumbnail": "c15_arcgis.jpg",
+              "fileName": "c15_arcgis"
             },
             {
               "name": "ArcGIS WFS图层",
@@ -1510,6 +1510,12 @@
               "version": "3.0",
               "thumbnail": "g18_style_fc.jpg",
               "fileName": "g18_style_fc"
+            },
+            {
+              "name": "单击查看分户",
+              "version": "3.0",
+              "thumbnail": "g18_style_fh.jpg",
+              "fileName": "g18_style_fh"
             },
             {
               "name": "建筑物样式",

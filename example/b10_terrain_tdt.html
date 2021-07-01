@@ -35,6 +35,16 @@
   <div id="mars3dContainer" class="mars3d-container"></div>
 
 
+  <!-- 面板 -->
+  <div class="infoview">
+    <div class="checkbox checkbox-primary checkbox-inline">
+      <input id="chkWireframe" class="styled" type="checkbox">
+      <label for="chkWireframe">
+        地形三角网
+      </label>
+    </div>
+  </div>
+
   <script src="./js/common.js"></script>
   <script type="text/javascript">
     'use script' //开发环境建议开启严格模式
@@ -53,6 +63,13 @@
         url: 'https://t{s}.tianditu.gov.cn/DataServer',
         key: mars3d.Token.tianditu,
         subdomains: '01234567',
+      })
+
+      $('#chkWireframe').change(function () {
+        var val = $(this).is(':checked')
+
+        //三角网
+        map.scene.globe._surface.tileProvider._debug.wireframe = val
       })
     }
   </script>

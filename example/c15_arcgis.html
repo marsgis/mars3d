@@ -28,8 +28,6 @@
       include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"
     ></script>
 
-    <script type="text/javascript" src="../lib/proj4/proj4-src.js"></script>
-
     <link href="css/style.css" rel="stylesheet" />
   </head>
 
@@ -114,27 +112,48 @@
       }
 
       //叠加的图层
-      var tileLayer
+      var arcGisLayer
 
       function addLayer() {
         removeLayer()
 
         //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
-        tileLayer = new mars3d.layer.ArcGisLayer({
+        arcGisLayer = new mars3d.layer.ArcGisLayer({
+          name: '合肥建筑物',
           url: 'http://data.marsgis.cn/arcgis/rest/services/mars/guihua/MapServer',
-          enablePickFeatures: false, //如需打开单击，改为true
+          // url: 'http://data.marsgis.cn/arcgis/rest/services/crs/ssjzw4326/MapServer',
+          // url: 'http://data.marsgis.cn/arcgis/rest/services/crs/ssjzw4490/MapServer', //大地2000地理坐标系
+          // url: 'http://data.marsgis.cn/arcgis/rest/services/crs/ssjzw4548/MapServer', //大地2000高斯投影坐标系
+          // url: 'http://data.marsgis.cn/arcgis/rest/services/crs/ssjzw2000/MapServer',  //大地2000高斯投影坐标系
+          showClickFeature: true,
+          pickFeatureStyle: {
+            clampToGround: true,
+            fill: true,
+            color: '#2deaf7',
+            opacity: 0.6,
+            outline: true,
+            outlineWidth: 3,
+            outlineColor: '#e000d9',
+            outlineOpacity: 1.0,
+          },
+          popup: 'all',
           flyTo: true,
         })
-        map.addLayer(tileLayer)
+        map.addLayer(arcGisLayer)
 
-        tileLayer.on(mars3d.EventType.loadConfig, function (event) {
+        //绑定事件
+        arcGisLayer.on(mars3d.EventType.loadConfig, function (event) {
           console.log('加载完成服务信息', event)
+        })
+
+        arcGisLayer.on(mars3d.EventType.click, function (event) {
+          console.log('单击了矢量数据，共' + event.features.length + '条', event)
         })
       }
       function removeLayer() {
-        if (tileLayer) {
-          map.removeLayer(tileLayer, true)
-          tileLayer = null
+        if (arcGisLayer) {
+          map.removeLayer(arcGisLayer, true)
+          arcGisLayer = null
         }
       }
     </script>

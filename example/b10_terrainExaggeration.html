@@ -40,14 +40,13 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {
-        scene: {
-          terrainExaggeration: 10, //地形夸张系数
-        },
-      })
+      var mapOptions = mars3d.Util.merge(options, {})
 
       //创建三维地球场景
       var map = new mars3d.Map('mars3dContainer', mapOptions)
+
+      //修改地形夸张
+      map.scene.globe.terrainExaggeration = 10.0
     }
   </script>
 </body>

@@ -18,14 +18,14 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>销毁释放地球 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>示例 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d,mars3d-heatmap"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -37,52 +37,53 @@
 
     <div id="mars3dContainer" class="mars3d-container"></div>
 
-    <div class="infoview">
-      <input type="button" class="btn btn-primary" value="创建地图" onclick="createMap()" />
-      <input type="button" class="btn btn-primary" value="销毁地图" onclick="destroyMap()" />
-    </div>
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
       'use script' //开发环境建议开启严格模式
-
       var map
-      var mapOptions
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        mapOptions = mars3d.Util.merge(options, {
-          layers: [
-            {
-              type: 'geojson',
-              name: '示例数据',
-              url: 'http://data.marsgis.cn/file/geojson/geojson-draw.json',
-              popup: '{draw_typename}',
-              show: true,
-            },
-          ],
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 31.832696, lng: 117.221018, alt: 183, heading: 355, pitch: -48 },
+          },
         })
 
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', mapOptions)
-      }
 
-      function createMap() {
-        if (map) {
-          haoutil.msg('地图已存在,请勿重复创建!')
-          return
-        }
-        map = new mars3d.Map('mars3dContainer', mapOptions)
-      }
+        let tiles3dLayer = new mars3d.layer.TilesetLayer({
+          url: 'http://data.marsgis.cn/3dtiles/max-loufh/tileset.json',
+          maximumScreenSpaceError: 1,
+          position: { lng: 117.22091, lat: 31.833568, alt: 42.5 },
+        })
+        map.addLayer(tiles3dLayer)
 
-      function destroyMap() {
-        if (!map) {
-          haoutil.msg('地图已销毁,无需重复销毁!')
-          return
-        }
+        //单击事件
+        tiles3dLayer.on(mars3d.EventType.click, function (event) {
+          console.log('单击了3dtiles图层', event)
 
-        map.destroy()
-        map = null
+          // tiles3dLayer.tileset._selectedTiles[0].transform = Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(100, 0, 0))
+          // Cesium.Matrix4.multiply(temp1.transform, Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(100, 0, 0)), temp1.transform)
+
+          let attr = event.graphic?.attr
+          if (attr) {
+            tiles3dLayer.style = new Cesium.Cesium3DTileStyle({
+              color: {
+                conditions: [
+                  ["${name} ==='" + attr.name + "'", 'rgb(255, 255, 255)'],
+                  ['true', 'rgba(255, 255, 255,0.03)'],
+                ],
+              },
+            })
+          }
+        })
+
+        map.on(mars3d.EventType.clickMap, function (event) {
+          tiles3dLayer.style = undefined
+        })
       }
     </script>
   </body>

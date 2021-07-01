@@ -1,0 +1,268 @@
+@font-face {
+  font-family: "UnidreamLED";
+  src: url("./fonts/UnidreamLED.ttf") format("truetype");
+}
+.achart_container {
+  position: absolute;
+  padding: 10px;
+  top: 0;
+  right: 0;
+  width: 29rem;
+  height: 100%;
+  background: linear-gradient(to right,rgba(84,97,117,.5), rgba(42,52,69,1));
+}
+
+.right_item {
+  width: 100%;
+  height: 31%;
+  margin-bottom: 0.72rem;
+  /* background-color: #ccc; */
+}
+
+._item_top {
+  position: relative;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.22rem;
+}
+
+._item_title {
+  position: relative;
+  height: 1.56rem;
+  padding-left: 1.25rem;
+  line-height: 1.56rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #FFFFFF;
+  letter-spacing: 1px;
+  margin-bottom: 0.7rem;
+
+
+}
+
+._item_title::before {
+  content: "";
+  width: 0.5rem;
+  height: 1rem;
+  background: rgba(229, 237, 255, 1);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+._item_title::after {
+  content: "";
+  width: 26.5rem;
+  height: 0.63rem;
+  background: url("../img/icon/分割.png");
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 0.13rem);
+}
+
+._item_row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+._item_row_title {
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 1.25rem;
+  letter-spacing: 2px;
+  text-shadow: 0px 0px 0px #02E1FF;
+}
+
+.row1 {
+  width: 10rem;
+  align-items: center;
+  display: flex;
+  margin-bottom: 1.19rem;
+}
+
+.icon {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+}
+
+.row1_right {
+  margin-left: 0.75rem;
+  text-align: left;
+}
+
+.ml {
+  margin-left: 50px;
+}
+
+.right_title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #FEBC04;
+  line-height: 2rem;
+  background: linear-gradient(180deg, #E5BE38 0%, #FF882E 100%);
+  -webkit-background-clip: text;
+  white-space: nowrap;
+  -webkit-text-fill-color: transparent;
+  font-family: "UnidreamLED",
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+
+.right_sub_title {
+  font-size: 0.88rem;
+  color: #D8D8D8;
+  line-height: 1;
+  white-space: nowrap;
+  background: linear-gradient(180deg, #E5BE38 0%, #FF882E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+._item_full_box {
+  width: 100%;
+  height: 14rem;
+  margin-top: 35px;
+}
+
+._item_full_box_width {
+  width: 100%;
+}
+
+.row3 {
+  flex: 1;
+  position: relative;
+}
+
+._item_row_box3 {
+  width: 12rem;
+  height: 12rem;
+}
+
+._item_row_box2 {
+  width: 10rem;
+  margin-right: 40px;
+  margin-top: 20px;
+  transform: translateX(-1rem);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.box2_item,
+.box2_item1,
+.box2_item2,
+.box2_item3,
+.box2_item4,
+.box2_item5 {
+  position: relative;
+  width: 100%;
+  height: 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  padding-left: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+}
+
+.box2_item::before,
+.box2_item1::before,
+.box2_item2::before,
+.box2_item3::before,
+.box2_item4::before,
+.box2_item5::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 0.06rem solid #FFFFFF;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: .5rem;
+  transform: translateY(-50%);
+}
+
+.box2_item::before {
+  background: rgba(14,227,247, 0.58);
+}
+
+.box2_item1::before {
+  background: rgba(255,113,94, 0.58);
+}
+
+.box2_item2::before {
+  background: rgba(254,  217,  118, 0.64);
+}
+
+.box2_item3::before {
+  background: rgba(234,94,230, 0.64);
+}
+
+.box2_item4::before {
+  background: rgba(94, 225, 186, 0.58);
+}
+
+.box2_item5::before {
+  background: rgba(113, 204, 78, 0.58);
+}
+
+.box2_item::after,
+.box2_item1::after,
+.box2_item2::after,
+.box2_item3::after,
+.box2_item4::after,
+.box2_item5::after {
+  content: attr(count);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #87C1FA;
+  position: absolute;
+  top: 50%;
+  right: .5rem;
+  transform: translateY(-50%);
+
+}
+
+.box2_item:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0);
+}
+
+.ring1 {
+  width: 100%;
+  height: 100%;
+  padding-top: 1rem;
+  overflow: hidden;
+}
+
+#ring {
+  width: 100%;
+  height: 100%;
+}
+.bar{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+
+}
+.bar_chart{
+  width: 100%;
+  height: 100%;
+}
+#bar{
+  width: 100%;
+  height: 100%;
+}
+/* .bg {
+  background-color: #ccc;
+} */

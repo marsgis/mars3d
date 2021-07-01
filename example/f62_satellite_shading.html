@@ -47,10 +47,6 @@
           </div>
         </div>
 
-        <div class="form-group" style="text-align: center">
-          <input id="btnAdd" type="button" class="btn btn-primary" value="计算成像范围" />
-          <input id="btnRemoveAll" type="button" class="btn btn-danger" value="清除所有" />
-        </div>
 
         <div class="form-group">
           <label for="txtStartTime" class="col-xs-4 col-sm-4 control-label">开始时间：</label>
@@ -65,19 +61,25 @@
             <input type="text" class="form-control" id="txtEndTime" placeholder="YYYY-MM-DD" />
           </div>
         </div>
-        <div class="form-group">
-          <label for="txtColor" class="col-xs-4 col-sm-4 control-label">路线颜色：</label>
+        <div class="form-group" title="地面成像范围区域的颜色">
+          <label for="txtColor" class="col-xs-4 col-sm-4 control-label">区域颜色：</label>
           <div class="col-xs-8 col-sm-8" style="padding-left: 0px">
             <input type="text" id="txtColor" class="form-control" style="width: 100%" value="#ff0000" />
           </div>
         </div>
 
         <div class="form-group">
-          <label for="txtOpacity" class="col-xs-4 col-sm-4 control-label">透明度：</label>
+          <label for="txtOpacity" class="col-xs-4 col-sm-4 control-label">区域透明度</label>
           <div class="col-xs-8 col-sm-8" style="padding-left: 0px">
             <input id="txtOpacity" type="range" min="0.01" max="1.00" step="0.01" value="0.40" />
           </div>
         </div>
+        <div class="form-group" style="text-align: center">
+          <input id="btnAdd" type="button" class="btn btn-primary" value="计算成像区域" />
+          <input id="btnRemoveAll" type="button" class="btn btn-danger" value="清除所有" />
+        </div>
+
+
         <div class="form-group">
           <div class="col-xs-offset-3 col-sm-offset-3 col-xs-9 col-sm-9">
             <div class="checkbox checkbox-primary checkbox-inline">
@@ -90,6 +92,7 @@
             </div>
           </div>
         </div>
+
       </form>
     </div>
 
@@ -238,6 +241,9 @@
           position: 'bottom left',
           control: 'saturation',
           change: function (hex) {},
+        })
+        map.on(mars3d.EventType.click, function (e) {
+          $('#txtColor').minicolors('hide')
         })
 
         $('#txtOpacity').range({

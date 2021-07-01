@@ -37,7 +37,7 @@
     <div id="mars3dContainer" class="mars3d-container"></div>
 
     <div class="infoview">
-
+      <div>
         图层状态：
         <div class="checkbox checkbox-primary checkbox-inline">
           <input id="chkShow" class="styled" type="checkbox" checked />
@@ -55,15 +55,8 @@
           <input id="chkContextMenu" class="styled" type="checkbox" checked />
           <label for="chkContextMenu"> 右键菜单绑定 </label>
         </div>
-
-        &nbsp;&nbsp;
-        &nbsp;&nbsp;
-
-      <a href="editor.html#f10_entity_dynamic_3dtiles" target="_blank" class="btn btn-default">动态贴模型示例</a>
-
+      </div>
     </div>
-
-
 
     <!-- 切换视角到模型或地形（山区）的快捷按钮 -->
     <script type="text/javascript" src="js/center_terrain_3dtiles.js"></script>
@@ -82,17 +75,24 @@
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
             fxaa: true,
-            center: { lat: 31.754913, lng: 117.248572, alt: 6220, heading: 357, pitch: -31 },
+            center: { lat: 33.588603, lng: 119.03174, alt: 406, heading: 3, pitch: -44 },
           },
         })
 
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
-        map.basemap = 2017 //蓝色底图
-
         //固定光照，避免gltf模型随时间存在亮度不一致。
         map.fixedLight = true
+
+        let tiles3dLayer = new mars3d.layer.TilesetLayer({
+          name: '文庙',
+          url: 'http://data.marsgis.cn/3dtiles/qx-simiao/tileset.json',
+          maximumScreenSpaceError: 1,
+          maximumMemoryUsage: 1024,
+          position: { alt: 81.5 },
+        })
+        map.addLayer(tiles3dLayer)
 
         //创建矢量数据图层
         var graphicLayer = new mars3d.layer.GraphicLayer()
@@ -106,8 +106,8 @@
           let graphic = new mars3d.graphic.ModelEntity({
             style: {
               url: 'http://data.marsgis.cn/gltf/mars/qiche.gltf',
-              scale: 0.5,
-              minimumPixelSize: 20,
+              scale: 0.1,
+              minimumPixelSize: 10,
               label: {
                 //不需要文字时，去掉label配置即可
                 text: '皖A000' + i,
@@ -119,34 +119,11 @@
                 distanceDisplayCondition: true,
                 distanceDisplayCondition_far: 50000,
                 distanceDisplayCondition_near: 0,
+                visibleDepth: false,
               },
             },
-          })
-          graphicLayer.addGraphic(graphic)
-        }
-        for (let i = 0; i < 20; i++) {
-          let graphic = new mars3d.graphic.BillboardEntity({
-            style: {
-              image: 'img/marker/mark3.png',
-              scale: 0.6,
-              horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-              verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-              scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 500000, 0.1),
-            },
-          })
-          graphicLayer.addGraphic(graphic)
-        }
-        for (let i = 0; i < 3; i++) {
-          let graphic = new mars3d.graphic.DivUpLabel({
-            style: {
-              text: '火星科技',
-              color: '#fff',
-              font_size: 13,
-              font_family: '微软雅黑',
-              lineHeight: 20,
-              circleSize: 5,
-              distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 100000),
-            },
+            clampToTileset: true, //贴模型，但效率不高，车多就卡
+            frameRate: 30, //控制贴模型的效率，多少帧计算一次
           })
           graphicLayer.addGraphic(graphic)
         }
@@ -156,22 +133,22 @@
           graphic.addDynamicPosition(randomPoint())
         })
         graphicLayer.eachGraphic((graphic) => {
-          graphic.addDynamicPosition(randomPoint(), 20)
+          graphic.addDynamicPosition(randomPoint(), 30)
         })
 
         //定时更新动态位置（setInterval为演示）
         setInterval(() => {
           graphicLayer.eachGraphic((graphic) => {
-            graphic.addDynamicPosition(randomPoint(), 20)
+            graphic.addDynamicPosition(randomPoint(), 30)
           })
-        }, 20000)
+        }, 30000)
       }
 
       //取区域内的随机图标
       function randomPoint() {
-        var jd = haoutil.math.random(117.207666 * 1000, 117.287241 * 1000) / 1000
-        var wd = haoutil.math.random(31.817099 * 1000, 31.876848 * 1000) / 1000
-        return Cesium.Cartesian3.fromDegrees(jd, wd, 30)
+        var jd = haoutil.math.random(119.028631 * 1000, 119.034843 * 1000) / 1000
+        var wd = haoutil.math.random(33.589624 * 1000, 33.594783 * 1000) / 1000
+        return Cesium.Cartesian3.fromDegrees(jd, wd, 0)
       }
     </script>
   </body>

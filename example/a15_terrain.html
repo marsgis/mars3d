@@ -39,6 +39,12 @@
         开启地形
       </label>
     </div>
+    <div class="checkbox checkbox-primary checkbox-inline">
+      <input id="chkWireframe" class="styled" type="checkbox">
+      <label for="chkWireframe">
+        地形三角网
+      </label>
+    </div>
   </div>
 
   <script type="text/javascript">
@@ -89,6 +95,13 @@
 
         //可以开启和关闭地形
         map.hasTerrain = val
+      })
+
+      $('#chkWireframe').change(function () {
+        var val = $(this).is(':checked')
+
+        //三角网
+        map.scene.globe._surface.tileProvider._debug.wireframe = val
       })
     }
   </script>
