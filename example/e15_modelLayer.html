@@ -40,6 +40,7 @@
     <input type="button" class="btn btn-primary" value="动画模型" onclick="showDonghuaDemo()" />
     <input type="button" class="btn btn-primary" value="风力发电机" onclick="showFenliDemo()" />
     <input type="button" class="btn btn-primary" value="光伏电场" onclick="showGguangfu()" />
+    <input type="button" class="btn btn-warning" value="清除" onclick="removeLayer()" />
   </div>
 
 
@@ -139,6 +140,8 @@
 
     //风力发电机
     function showFenliDemo() {
+      removeLayer()
+
       var arrData = []
 
       var positions = [

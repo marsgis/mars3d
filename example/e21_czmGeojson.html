@@ -46,7 +46,7 @@
   </div>
 
 
-  <div class="infoview" style="overflow:auto;right:5px;left:auto; top:50px;max-height:90%;">
+  <div class="infoview" style="overflow:auto;left:10px; top:78px;max-height:calc(100% - 120px);">
     <ul id="treeOverlays" class="ztree"></ul>
   </div>
 
@@ -62,6 +62,9 @@
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: { y: 31.588498, x: 120.714274, z: 492.53, heading: 13.6, pitch: -55.3, roll: 0.1 },
+        },
+        control: {
+          infoBox: false,
         },
       })
 

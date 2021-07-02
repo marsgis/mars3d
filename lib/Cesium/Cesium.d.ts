@@ -322,7 +322,9 @@ export enum WebGLConstants {
     COMPRESSED_RGB_PVRTC_2BPPV1_IMG = 35841,
     COMPRESSED_RGBA_PVRTC_4BPPV1_IMG = 35842,
     COMPRESSED_RGBA_PVRTC_2BPPV1_IMG = 35843,
+    COMPRESSED_RGBA_ASTC_4x4_WEBGL = 37808,
     COMPRESSED_RGB_ETC1_WEBGL = 36196,
+    COMPRESSED_RGBA_BPTC_UNORM = 36492,
     HALF_FLOAT_OES = 36193,
     DOUBLE = 5130,
     READ_BUFFER = 3074,
@@ -4421,16 +4423,21 @@ export enum ComponentDatatype {
 /**
  * Describes a compressed texture and contains a compressed texture buffer.
  * @param internalFormat - The pixel format of the compressed texture.
+ * @param pixelDatatype - The pixel datatype of the compressed texture.
  * @param width - The width of the texture.
  * @param height - The height of the texture.
  * @param buffer - The compressed texture buffer.
  */
 export class CompressedTextureBuffer {
-    constructor(internalFormat: PixelFormat, width: number, height: number, buffer: Uint8Array);
+    constructor(internalFormat: PixelFormat, pixelDatatype: PixelDatatype, width: number, height: number, buffer: Uint8Array);
     /**
      * The format of the compressed texture.
      */
     readonly internalFormat: PixelFormat;
+    /**
+     * The datatype of the compressed texture.
+     */
+    readonly pixelDatatype: PixelDatatype;
     /**
      * The width of the texture.
      */
@@ -6390,6 +6397,11 @@ export enum ExtrapolationType {
 various features.
  */
 export namespace FeatureDetection {
+    /**
+     * Detects whether the current browser supports Basis Universal textures and the web assembly modules needed to transcode them.
+     * @returns true if the browser supports web assembly modules and the scene supports Basis Universal textures, false if not.
+     */
+    function supportsBasis(scene: Scene): boolean;
     /**
      * Detects whether the current browser supports the full screen standard.
      * @returns true if the browser supports the full screen standard, false if not.
@@ -8655,12 +8667,14 @@ export class IonResource extends Resource {
      * @param [options.preferBlob = false] - If true, we will load the image via a blob.
      * @param [options.preferImageBitmap = false] - If true, image will be decoded during fetch and an <code>ImageBitmap</code> is returned.
      * @param [options.flipY = false] - If true, image will be vertically flipped during decode. Only applies if the browser supports <code>createImageBitmap</code>.
+     * @param [options.skipColorSpaceConversion = false] - If true, any custom gamma or color profiles in the image will be ignored. Only applies if the browser supports <code>createImageBitmap</code>.
      * @returns a promise that will resolve to the requested data when loaded. Returns undefined if <code>request.throttle</code> is true and the request does not have high enough priority.
      */
     fetchImage(options?: {
         preferBlob?: boolean;
         preferImageBitmap?: boolean;
         flipY?: boolean;
+        skipColorSpaceConversion?: boolean;
     }): Promise<ImageBitmap> | Promise<HTMLImageElement> | undefined;
 }
 
@@ -9069,61 +9083,6 @@ export class LinearSpline {
      */
     evaluate(time: number, result?: Cartesian3): Cartesian3;
 }
-
-/**
- * Asynchronously loads and parses the given URL to a CRN file or parses the raw binary data of a CRN file.
-Returns a promise that will resolve to an object containing the image buffer, width, height and format once loaded,
-or reject if the URL failed to load or failed to parse the data.  The data is loaded
-using XMLHttpRequest, which means that in order to make requests to another origin,
-the server must have Cross-Origin Resource Sharing (CORS) headers enabled.
- * @example
- * // load a single URL asynchronously
-Cesium.loadCRN('some/url').then(function(textureData) {
-    var width = textureData.width;
-    var height = textureData.height;
-    var format = textureData.internalFormat;
-    var arrayBufferView = textureData.bufferView;
-    // use the data to create a texture
-}).otherwise(function(error) {
-    // an error occurred
-});
- * @param resourceOrUrlOrBuffer - The URL of the binary data or an ArrayBuffer.
- * @returns A promise that will resolve to the requested data when loaded. Returns undefined if <code>request.throttle</code> is true and the request does not have high enough priority.
- */
-export function loadCRN(resourceOrUrlOrBuffer: Resource | string | ArrayBuffer): Promise<CompressedTextureBuffer> | undefined;
-
-/**
- * Asynchronously loads and parses the given URL to a KTX file or parses the raw binary data of a KTX file.
-Returns a promise that will resolve to an object containing the image buffer, width, height and format once loaded,
-or reject if the URL failed to load or failed to parse the data.  The data is loaded
-using XMLHttpRequest, which means that in order to make requests to another origin,
-the server must have Cross-Origin Resource Sharing (CORS) headers enabled.
-<p>
-The following are part of the KTX format specification but are not supported:
-<ul>
-    <li>Big-endian files</li>
-    <li>Metadata</li>
-    <li>3D textures</li>
-    <li>Texture Arrays</li>
-    <li>Cubemaps</li>
-    <li>Mipmaps</li>
-</ul>
-</p>
- * @example
- * // load a single URL asynchronously
-Cesium.loadKTX('some/url').then(function(ktxData) {
-    var width = ktxData.width;
-    var height = ktxData.height;
-    var format = ktxData.internalFormat;
-    var arrayBufferView = ktxData.bufferView;
-    // use the data to create a texture
-}).otherwise(function(error) {
-    // an error occurred
-});
- * @param resourceOrUrlOrBuffer - The URL of the binary data or an ArrayBuffer.
- * @returns A promise that will resolve to the requested data when loaded. Returns undefined if <code>request.throttle</code> is true and the request does not have high enough priority.
- */
-export function loadKTX(resourceOrUrlOrBuffer: Resource | string | ArrayBuffer): Promise<CompressedTextureBuffer> | undefined;
 
 /**
  * Defines how geodetic ellipsoid coordinates ({@link Cartographic}) project to a
@@ -12403,9 +12362,25 @@ export enum PixelFormat {
      */
     RGBA_PVRTC_2BPPV1 = WebGLConstants.COMPRESSED_RGBA_PVRTC_2BPPV1_IMG,
     /**
+     * A pixel format containing red, green, blue, and alpha channels that is ASTC compressed.
+     */
+    RGBA_ASTC = WebGLConstants.COMPRESSED_RGBA_ASTC_4x4_WEBGL,
+    /**
      * A pixel format containing red, green, and blue channels that is ETC1 compressed.
      */
-    RGB_ETC1 = WebGLConstants.COMPRESSED_RGB_ETC1_WEBGL
+    RGB_ETC1 = WebGLConstants.COMPRESSED_RGB_ETC1_WEBGL,
+    /**
+     * A pixel format containing red, green, and blue channels that is ETC2 compressed.
+     */
+    RGB8_ETC2 = WebGLConstants.COMPRESSED_RGB8_ETC2,
+    /**
+     * A pixel format containing red, green, blue, and alpha channels that is ETC2 compressed.
+     */
+    RGBA8_ETC2_EAC = WebGLConstants.COMPRESSED_RGBA8_ETC2_EAC,
+    /**
+     * A pixel format containing red, green, blue, and alpha channels that is BC7 compressed.
+     */
+    RGBA_BC7 = WebGLConstants.COMPRESSED_RGBA_BPTC_UNORM
 }
 
 /**
@@ -14787,12 +14762,14 @@ export class Resource {
      * @param [options.preferBlob = false] - If true, we will load the image via a blob.
      * @param [options.preferImageBitmap = false] - If true, image will be decoded during fetch and an <code>ImageBitmap</code> is returned.
      * @param [options.flipY = false] - If true, image will be vertically flipped during decode. Only applies if the browser supports <code>createImageBitmap</code>.
+     * @param [options.skipColorSpaceConversion = false] - If true, any custom gamma or color profiles in the image will be ignored. Only applies if the browser supports <code>createImageBitmap</code>.
      * @returns a promise that will resolve to the requested data when loaded. Returns undefined if <code>request.throttle</code> is true and the request does not have high enough priority.
      */
     fetchImage(options?: {
         preferBlob?: boolean;
         preferImageBitmap?: boolean;
         flipY?: boolean;
+        skipColorSpaceConversion?: boolean;
     }): Promise<ImageBitmap> | Promise<HTMLImageElement> | undefined;
     /**
      * Creates a Resource and calls fetchImage() on it.
@@ -14808,6 +14785,7 @@ export class Resource {
      * @param [options.request] - A Request object that will be used. Intended for internal use only.
      * @param [options.preferBlob = false] - If true, we will load the image via a blob.
      * @param [options.preferImageBitmap = false] - If true, image will be decoded during fetch and an <code>ImageBitmap</code> is returned.
+     * @param [options.skipColorSpaceConversion = false] - If true, any custom gamma or color profiles in the image will be ignored. Only applies when requesting an image and the browser supports <code>createImageBitmap</code>.
      * @returns a promise that will resolve to the requested data when loaded. Returns undefined if <code>request.throttle</code> is true and the request does not have high enough priority.
      */
     static fetchImage(options: {
@@ -14822,6 +14800,7 @@ export class Resource {
         request?: Request;
         preferBlob?: boolean;
         preferImageBitmap?: boolean;
+        skipColorSpaceConversion?: boolean;
     }): Promise<ImageBitmap> | Promise<HTMLImageElement> | undefined;
     /**
      * Asynchronously loads the given resource as text.  Returns a promise that will resolve to
@@ -27152,8 +27131,9 @@ var tileset = scene.primitives.add(new Cesium.Cesium3DTileset({
  * @param [options.lightColor] - The light color when shading models. When <code>undefined</code> the scene's light color is used instead.
  * @param [options.luminanceAtZenith = 0.2] - The sun's luminance at the zenith in kilo candela per meter squared to use for this model's procedural environment map.
  * @param [options.sphericalHarmonicCoefficients] - The third order spherical harmonic coefficients used for the diffuse color of image-based lighting.
- * @param [options.specularEnvironmentMaps] - A URL to a KTX file that contains a cube map of the specular lighting and the convoluted specular mipmaps.
+ * @param [options.specularEnvironmentMaps] - A URL to a KTX2 file that contains a cube map of the specular lighting and the convoluted specular mipmaps.
  * @param [options.backFaceCulling = true] - Whether to cull back-facing geometry. When true, back face culling is determined by the glTF material's doubleSided property; when false, back face culling is disabled.
+ * @param [options.showOutline = true] - Whether to display the outline for models using the {@link https://github.com/KhronosGroup/glTF/tree/master/extensions/2.0/Vendor/CESIUM_primitive_outline|CESIUM_primitive_outline} extension. When true, outlines are displayed. When false, outlines are not displayed.
  * @param [options.vectorClassificationOnly = false] - Indicates that only the tileset's vector tiles should be used for classification.
  * @param [options.debugHeatmapTilePropertyName] - The tile variable to colorize as a heatmap. All rendered tiles will be colorized relative to each other's specified variable value.
  * @param [options.debugFreezeFrame = false] - For debugging only. Determines if only the tiles from last frame should be used for rendering.
@@ -27207,6 +27187,7 @@ export class Cesium3DTileset {
         sphericalHarmonicCoefficients?: Cartesian3[];
         specularEnvironmentMaps?: string;
         backFaceCulling?: boolean;
+        showOutline?: boolean;
         vectorClassificationOnly?: boolean;
         debugHeatmapTilePropertyName?: string;
         debugFreezeFrame?: boolean;
@@ -27545,6 +27526,12 @@ export class Cesium3DTileset {
      */
     backFaceCulling: boolean;
     /**
+     * Whether to display the outline for models using the
+    {@link https://github.com/KhronosGroup/glTF/tree/master/extensions/2.0/Vendor/CESIUM_primitive_outline|CESIUM_primitive_outline} extension.
+    When true, outlines are displayed. When false, outlines are not displayed.
+     */
+    readonly showOutline: boolean;
+    /**
      * This property is for debugging only; it is not optimized for production use.
     <p>
     Determines if only the tiles from last frame should be used for rendering.  This
@@ -27700,6 +27687,13 @@ export class Cesium3DTileset {
     event is raised, so code in <code>tileVisible</code> can manually set a feature's
     properties (e.g. color and show) after the style is applied. When
     a new style is assigned any manually set properties are overwritten.
+    </p>
+    <p>
+    Use an always "true" condition to specify the Color for all objects that are not
+    overridden by pre-existing conditions. Otherwise, the default color Cesium.Color.White
+    will be used. Similarly, use an always "true" condition to specify the show property
+    for all objects that are not overridden by pre-existing conditions. Otherwise, the
+    default show value true will be used.
     </p>
      * @example
      * tileset.style = new Cesium.Cesium3DTileStyle({
@@ -29146,10 +29140,13 @@ viewer.scene.primitives.add(Cesium.createOsmBuildings({
        specified, a default style is used which gives each building or building part a
        color inferred from its OpenStreetMap <code>tags</code>. If no color can be inferred,
        <code>options.defaultColor</code> is used.
+ * @param [options.showOutline = true] - Whether to show outlines around buildings. When true,
+       outlines are displayed. When false, outlines are not displayed.
  */
 export function createOsmBuildings(options?: {
     defaultColor?: Color;
     style?: Cesium3DTileStyle;
+    showOutline?: boolean;
 }): Cesium3DTileset;
 
 /**
@@ -33737,8 +33734,15 @@ export namespace MaterialAppearance {
  * {@link https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_techniques_webgl/README.md|KHR_techniques_webgl}
  * </li><li>
  * {@link https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_texture_transform/README.md|KHR_texture_transform}
+ * </li><li>
+ * {@link https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_texture_basisu|KHR_texture_basisu}
  * </li>
  * </ul>
+ * </p>
+ * <p>
+ * Note: for models with compressed textures using the KHR_texture_basisu extension, we recommend power of 2 textures in both dimensions
+ * for maximum compatibility. This is because some samplers require power of 2 textures ({@link https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Using_textures_in_WebGL|Using textures in WebGL})
+ * and KHR_texture_basisu requires multiple of 4 dimensions ({@link https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_texture_basisu/README.md#additional-requirements|KHR_texture_basisu additional requirements}).
  * </p>
  * <p>
  * For high-precision rendering, Cesium supports the {@link https://github.com/KhronosGroup/glTF/blob/master/extensions/1.0/Vendor/CESIUM_RTC/README.md|CESIUM_RTC} extension, which introduces the
@@ -33775,9 +33779,10 @@ export namespace MaterialAppearance {
  * @param [options.lightColor] - The light color when shading the model. When <code>undefined</code> the scene's light color is used instead.
  * @param [options.luminanceAtZenith = 0.2] - The sun's luminance at the zenith in kilo candela per meter squared to use for this model's procedural environment map.
  * @param [options.sphericalHarmonicCoefficients] - The third order spherical harmonic coefficients used for the diffuse color of image-based lighting.
- * @param [options.specularEnvironmentMaps] - A URL to a KTX file that contains a cube map of the specular lighting and the convoluted specular mipmaps.
+ * @param [options.specularEnvironmentMaps] - A URL to a KTX2 file that contains a cube map of the specular lighting and the convoluted specular mipmaps.
  * @param [options.credit] - A credit for the data source, which is displayed on the canvas.
  * @param [options.backFaceCulling = true] - Whether to cull back-facing geometry. When true, back face culling is determined by the material's doubleSided property; when false, back face culling is disabled. Back faces are not culled if {@link Model#color} is translucent or {@link Model#silhouetteSize} is greater than 0.0.
+ * @param [options.showOutline = true] - Whether to display the outline for models using the {@link https://github.com/KhronosGroup/glTF/tree/master/extensions/2.0/Vendor/CESIUM_primitive_outline|CESIUM_primitive_outline} extension. When true, outlines are displayed. When false, outlines are not displayed.
  */
 export class Model {
     constructor(options?: {
@@ -33813,6 +33818,7 @@ export class Model {
         specularEnvironmentMaps?: string;
         credit?: Credit | string;
         backFaceCulling?: boolean;
+        showOutline?: boolean;
     });
     /**
      * Determines if the model primitive will be shown.
@@ -33895,6 +33901,12 @@ export class Model {
      * translucent or {@link Model#silhouetteSize} is greater than 0.0.
      */
     backFaceCulling: boolean;
+    /**
+     * Whether to display the outline for models using the
+     * {@link https://github.com/KhronosGroup/glTF/tree/master/extensions/2.0/Vendor/CESIUM_primitive_outline|CESIUM_primitive_outline} extension.
+     * When true, outlines are displayed. When false, outlines are not displayed.
+     */
+    readonly showOutline: boolean;
     /**
      * This property is for debugging only; it is not for production use nor is it optimized.
      * <p>
@@ -34011,7 +34023,7 @@ export class Model {
      */
     sphericalHarmonicCoefficients: Cartesian3[];
     /**
-     * A URL to a KTX file that contains a cube map of the specular lighting and the convoluted specular mipmaps.
+     * A URL to a KTX2 file that contains a cube map of the specular lighting and the convoluted specular mipmaps.
      */
     specularEnvironmentMaps: string;
     /**
@@ -34055,6 +34067,8 @@ export class Model {
      * {@link https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_techniques_webgl/README.md|KHR_techniques_webgl}
      * </li><li>
      * {@link https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_texture_transform/README.md|KHR_texture_transform}
+     * </li><li>
+     * {@link https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_texture_basisu/README.md|KHR_texture_basisu}
      * </li>
      * </ul>
      * </p>
@@ -34117,6 +34131,7 @@ export class Model {
      * @param [options.dequantizeInShader = true] - Determines if a {@link https://github.com/google/draco|Draco} encoded model is dequantized on the GPU. This decreases total memory usage for encoded models.
      * @param [options.credit] - A credit for the model, which is displayed on the canvas.
      * @param [options.backFaceCulling = true] - Whether to cull back-facing geometry. When true, back face culling is determined by the material's doubleSided property; when false, back face culling is disabled. Back faces are not culled if {@link Model#color} is translucent or {@link Model#silhouetteSize} is greater than 0.0.
+     * @param [options.showOutline = true] - Whether to display the outline for models using the {@link https://github.com/KhronosGroup/glTF/tree/master/extensions/2.0/Vendor/CESIUM_primitive_outline|CESIUM_primitive_outline} extension. When true, outlines are displayed. When false, outlines are not displayed.
      * @returns The newly created model.
      */
     static fromGltf(options: {
@@ -34147,6 +34162,7 @@ export class Model {
         dequantizeInShader?: boolean;
         credit?: Credit | string;
         backFaceCulling?: boolean;
+        showOutline?: boolean;
     }): Model;
     /**
      * Returns the glTF node with the given <code>name</code> property.  This is used to
@@ -37260,7 +37276,7 @@ export class Scene {
      */
     sphericalHarmonicCoefficients: Cartesian3[];
     /**
-     * The url to the KTX file containing the specular environment map and convoluted mipmaps for image-based lighting of PBR models.
+     * The url to the KTX2 file containing the specular environment map and convoluted mipmaps for image-based lighting of PBR models.
      */
     specularEnvironmentMaps: string;
     /**
@@ -40915,7 +40931,6 @@ var widget = new Cesium.CesiumWidget('cesiumContainer', {
  * @param [options.creditContainer] - The DOM element or ID that will contain the {@link CreditDisplay}.  If not specified, the credits are added
        to the bottom of the widget itself.
  * @param [options.creditViewport] - The DOM element or ID that will contain the credit pop up created by the {@link CreditDisplay}.  If not specified, it will appear over the widget itself.
- * @param [options.terrainExaggeration = 1.0] - A scalar used to exaggerate the terrain. Note that terrain exaggeration will not modify any other primitive as they are positioned relative to the ellipsoid.
  * @param [options.shadows = false] - Determines if shadows are cast by light sources.
  * @param [options.terrainShadows = ShadowMode.RECEIVE_ONLY] - Determines if the terrain casts or receives shadows from light sources.
  * @param [options.mapMode2D = MapMode2D.INFINITE_SCROLL] - Determines if the 2D map is rotatable or can be scrolled infinitely in the horizontal direction.
@@ -40941,7 +40956,6 @@ export class CesiumWidget {
         contextOptions?: any;
         creditContainer?: Element | string;
         creditViewport?: Element | string;
-        terrainExaggeration?: number;
         shadows?: boolean;
         terrainShadows?: ShadowMode;
         mapMode2D?: MapMode2D;
@@ -42672,8 +42686,6 @@ declare module "cesium/Source/Core/LagrangePolynomialApproximation" { import { L
 declare module "cesium/Source/Core/LeapSecond" { import { LeapSecond } from 'cesium'; export default LeapSecond; }
 declare module "cesium/Source/Core/LinearApproximation" { import { LinearApproximation } from 'cesium'; export default LinearApproximation; }
 declare module "cesium/Source/Core/LinearSpline" { import { LinearSpline } from 'cesium'; export default LinearSpline; }
-declare module "cesium/Source/Core/loadCRN" { import { loadCRN } from 'cesium'; export default loadCRN; }
-declare module "cesium/Source/Core/loadKTX" { import { loadKTX } from 'cesium'; export default loadKTX; }
 declare module "cesium/Source/Core/MapProjection" { import { MapProjection } from 'cesium'; export default MapProjection; }
 declare module "cesium/Source/Core/Math" { import { Math } from 'cesium'; export default Math; }
 declare module "cesium/Source/Core/Matrix2" { import { Matrix2 } from 'cesium'; export default Matrix2; }

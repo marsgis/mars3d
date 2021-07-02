@@ -260,7 +260,7 @@ function initGraphicManager(graphic) {
     graphic.highlight({
       time: 20, //闪烁时长（秒）
       maxAlpha: 0.5,
-      color: Cesium.Color.RED,
+      color: Cesium.Color.YELLOW,
       onEnd: function () {
         //结束后回调
       },

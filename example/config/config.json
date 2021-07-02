@@ -121,7 +121,8 @@
         "layers": [
           { "name": "底图", "type": "tencent", "layer": "img_d" },
           { "name": "注记", "type": "tencent", "layer": "img_z" }
-        ]
+        ],
+        "show": true
       },
       {
         "pid": 10,
@@ -144,8 +145,7 @@
         "icon": "http://mars3d.cn/example/img/basemaps/bingAerial.png",
         "type": "bing",
         "key": "AuKhM0WRkjhX8E4y1OM0TukYycaw_4Vh3eSfXONDf7OARls-WEB3K_Rfx89bWxof",
-        "layer": "Aerial",
-        "show": true
+        "layer": "Aerial"
       },
       {
         "pid": 10,
