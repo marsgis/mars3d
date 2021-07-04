@@ -20,10 +20,9 @@
   <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
   <title>地形夸张 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-
   <!--第三方lib-->
   <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d,jquery.range"></script>
 
   <link href="css/style.css" rel="stylesheet" />
 </head>
@@ -33,6 +32,19 @@
   <div id="mask" class="signmask" onclick="removeMask()"></div>
 
   <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <!-- 面板 -->
+    <div class="infoview">
+      <table class="mars-table">
+        <tr>
+          <td>夸张程度</td>
+          <td>
+            <input id="txt_gradations"  type="range" min="1" max="80" step="0.1" value="10" onchange="changeVal()">
+          </td>
+        </tr>
+      </table>
+    </div>
+  
 
   <script src="./js/common.js"></script>
   <script type="text/javascript">
@@ -46,7 +58,13 @@
       var map = new mars3d.Map('mars3dContainer', mapOptions)
 
       //修改地形夸张
-      map.scene.globe.terrainExaggeration = 10.0
+      map.scene.terrainExaggeration = 10.0
+
+      $('#txt_gradations').range({
+        onChange: function (value, bfb) {
+          map.scene.globe.terrainExaggeration = value
+        },
+      })
     }
   </script>
 </body>

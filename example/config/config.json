@@ -42,6 +42,7 @@
       "infoBox": true,
       "geocoder": true,
       "geocoderConfig": { "key": ["ae29a37307840c7ae4a785ac905927e0"] },
+      "selectionIndicator":false,
 
       "defaultContextMenu": true,
       "mouseDownView": true,

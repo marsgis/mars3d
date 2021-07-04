@@ -116,6 +116,7 @@
 
       //调试面板
       map.viewer.extend(Cesium.viewerCesiumInspectorMixin)
+      map.scene.globe.depthTestAgainstTerrain = false
 
       //针对不同终端的优化配置
       if (haoutil.system.isPCBroswer()) {

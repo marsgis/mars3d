@@ -153,7 +153,30 @@
         })
       }
 
+      function submitHeight() {
+        let mi = Number($('#txt_zmmi').val())
+        if (mi > 4) {
+          haoutil.msg('高度值太大，请设置高度范围在0到4米之间')
+          return true
+        }
+        if (mi <= 0) {
+          haoutil.msg('请设置高度范围在0到4米之间')
+          return true
+        }
+
+        let time = Number($('#txt_zmmiao').val())
+        if (time > 10 || time <= 0) {
+          haoutil.msg('建议时长范围在 0~10 秒之间')
+          return true
+        }
+        return false
+      }
+
       $('#btnOpenZm').click(() => {
+        if (submitHeight()) {
+          return
+        }
+
         var time = Number($('#txt_zmmiao').val())
         var mi = Number($('#txt_zmmi').val())
 
@@ -178,6 +201,10 @@
       })
 
       $('#btnCloseZm').click(() => {
+        if (submitHeight()) {
+          return //return 之后就会直接结束这个函数，不会在往下走
+        }
+
         var time = Number($('#txt_zmmiao').val())
         var mi = Number($('#txt_zmmi').val())
 

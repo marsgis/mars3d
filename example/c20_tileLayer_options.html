@@ -118,7 +118,7 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
-          center: { y: 24.320547, x: 108.947183, z: 15013946.99, heading: 357.2, pitch: -89.6, roll: 0 },
+          center: { lat: 31.601462, lng: 117.246888, alt: 56825, heading: 359, pitch: -69 },
         },
         control: {
           baseLayerPicker: false,
@@ -138,53 +138,25 @@
       //创建三维地球场景
       var map = new mars3d.Map('mars3dContainer', mapOptions)
 
-      //添加图层
-      var tileLayer = new mars3d.layer.TdtLayer({
-        name: '天地图影像',
-        layer: 'img_d',
-
-        crs: 'EPSG3857',
-        minimumLevel: 0,
-        maximumLevel: 18,
-        minimumTerrainLevel: 0,
-        maximumTerrainLevel: 18,
-        rectangle: { xmin: -180, xmax: 180, ymin: -85, ymax: 85 },
-        queryParameters: {
-          //可以传自定义url参数，如token等
-          token: 'mars3d',
-        },
-        enablePickFeatures: false,
-        order: 99, //层级顺序（默认按添加的顺序）
-
-        brightness: 1, //亮度
-        contrast: 1, //对比度
-        hue: 0, //色彩
-        saturation: 1, //饱和度
-        gamma: 1, //伽马值
-        opacity: 1, //透明度
-      })
-      map.addLayer(tileLayer)
-
       // The viewModel tracks the state of our mini application.
       var viewModel = {
         brightness: 1, //亮度
         contrast: 1, //对比度
-        hue: 0, //色彩
+        hue: 0.1, //色彩
         saturation: 1, //饱和度
-        gamma: 1, //伽马值
+        gamma: 0.2, //伽马值
         opacity: 1, //透明度
       }
-      viewModel.brightness = tileLayer.brightness
-      viewModel.contrast = tileLayer.contrast
-      viewModel.hue = tileLayer.hue
-      viewModel.saturation = tileLayer.saturation
-      viewModel.gamma = tileLayer.gamma
-      viewModel.opacity = tileLayer.opacity
+
+      //添加图层
+      var tileLayer = new mars3d.layer.GaodeLayer({
+        layer: 'vec',
+        ...viewModel,
+      })
+      map.addLayer(tileLayer)
 
       // Convert the viewModel members into knockout observables.
       Cesium.knockout.track(viewModel)
-
-      // Bind the viewModel to the DOM elements of the UI that call for it.
       var toolbar = document.getElementById('toolbar')
       Cesium.knockout.applyBindings(viewModel, toolbar)
 
