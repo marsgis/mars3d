@@ -50,55 +50,30 @@
       //创建三维地球场景
       var map = new mars3d.Map('mars3dContainer', mapOptions)
 
-      //鼠标事件，支持以下事件
-      // mars3d.EventType.click           //左键单击 LEFT_CLICK
-      // mars3d.EventType.clickGraphic    //左键单击到矢量或模型数据时
-      // mars3d.EventType.clickMap   //左键单击地图空白（未单击到矢量或模型数据）时
-      // mars3d.EventType.dblClick   //左键双击 LEFT_DOUBLE_CLICK
-      // mars3d.EventType.leftDown   //左键鼠标按下 LEFT_DOWN
-      // mars3d.EventType.leftUp     //左键鼠标按下后释放 LEFT_UP
-      // mars3d.EventType.mouseMove  //鼠标移动 MOUSE_MOVE
-      // mars3d.EventType.wheel      //鼠标滚轮 WHEEL
-      // mars3d.EventType.rightClick //右键单击 RIGHT_CLICK
-      // mars3d.EventType.rightDown  //右键鼠标按下 RIGHT_DOWN
-      // mars3d.EventType.rightUp    //右键鼠标按下后释放 RIGHT_UP
-      // mars3d.EventType.middleClick    //中键单击 MIDDLE_CLICK
-      // mars3d.EventType.middleDown //中键鼠标按下 MIDDLE_DOWN
-      // mars3d.EventType.middleUp   //中键鼠标按下后释放 MIDDLE_UP
-      // mars3d.EventType.pinchStart //在触摸屏上两指缩放开始 PINCH_START
-      // mars3d.EventType.pinchEnd   //在触摸屏上两指缩放结束 PINCH_END
-      // mars3d.EventType.pinchMove  //在触摸屏上两指移动 PINCH_MOVE
-      // mars3d.EventType.mouseDown  //鼠标按下[3键都触发]
-      // mars3d.EventType.mouseUp    //鼠标按下后释放[3键都触发]
-      // mars3d.EventType.mouseOver  //鼠标移入
-      // mars3d.EventType.mouseOut   //鼠标移出
-
       //on绑定事件
-      map.on(mars3d.EventType.click, this._mouseClickHandler, this)
-
-      // viver场景内的事件，支持以下事件
-      // mars3d.EventType.cameraMoveEnd  //相机移动完成
-      // mars3d.EventType.cameraChanged  //相机位置完成
-      // mars3d.EventType.preUpdate      //场景更新前
-      // mars3d.EventType.postUpdate     //场景更新后
-      // mars3d.EventType.preRender      //场景渲染前
-      // mars3d.EventType.postRender     //场景渲染后
-      // mars3d.EventType.morphStart  //场景模式(2D/3D/哥伦布)变换前
-      // mars3d.EventType.morphComplete  //场景模式(2D/3D/哥伦布)变换完成
-      // mars3d.EventType.clockTick      //时钟跳动
-
-      //on绑定事件
-      map.on(mars3d.EventType.cameraChanged, this._cameraChangedHandler, this)
+      map.on(mars3d.EventType.cameraChanged, this.map_cameraChangedHandler, this)
+      map.on(mars3d.EventType.click, this.map_clickHandler, this)
+      map.on(mars3d.EventType.dblClick, this.map_dblClickHandler, this)
 
       //off移除事件
-      // map.off(mars3d.EventType.cameraChanged, this._cameraChangedHandler, this)
+      // map.off(mars3d.EventType.cameraChanged, this.map_cameraChangedHandler, this)
     }
 
-    function _mouseClickHandler(event) {
-      console.log('鼠标单击', event)
+    var clickTimeId //双击会触发两次单击事件的解决
+
+    function map_clickHandler(event) {
+      clearTimeout(clickTimeId)
+      clickTimeId = setTimeout(function () {
+        console.log('鼠标单击', event)
+      }, 250)
     }
 
-    function _cameraChangedHandler(event) {
+    function map_dblClickHandler(event) {
+      clearTimeout(clickTimeId)
+      console.log('鼠标双击地图', event)
+    }
+
+    function map_cameraChangedHandler(event) {
       console.log('相机位置完成', event)
     }
   </script>

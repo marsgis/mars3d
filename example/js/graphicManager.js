@@ -93,7 +93,7 @@ function initLayerManager(graphicLayer) {
 
     let fileName = file.name
     let fileType = fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length).toLowerCase()
-    if (fileType !== 'json' || fileType !== 'geojson') {
+    if (fileType !== 'json' && fileType !== 'geojson') {
       window.layer.msg('文件类型不合法,请选择json格式标注文件！')
       clearSelectFile()
       return
