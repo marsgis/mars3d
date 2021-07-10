@@ -66,12 +66,11 @@
 
         //添加参考三维模型
         var tilesetLayer = new mars3d.layer.TilesetLayer({
-          type: '3dtiles',
           name: '河道边厂房',
-          url: 'http://data.marsgis.cn/3dtiles/qx-xiaolou/tileset.json',
+          url: '//data.mars3d.cn/3dtiles/qx-xiaolou/tileset.json',
+          position: { alt: 10.1 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
-          position: { alt: 0.6 },
           show: true,
         })
         map.addLayer(tilesetLayer)
@@ -79,7 +78,7 @@
         //创建单体化图层
         geoJsonLayerDTH = new mars3d.layer.GeoJsonLayer({
           name: '分层分户单体化',
-          url: 'http://data.marsgis.cn/file/geojson/dth_fcfh.json',
+          url: '//data.mars3d.cn/file/geojson/dth_fcfh.json',
           onCreateGraphic: createDthGraphic, //自定义解析数据
           dth: {
             type: 'click', //设置这个属性改为单击后高亮,默认为鼠标移入高亮

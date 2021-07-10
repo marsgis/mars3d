@@ -98,7 +98,7 @@
     </div>
 
     <div id="tipView" class="info-tips">
-      (1) 对数据有要求，仅适用于无自带着色器的模型<br />
+      (1) 对3dtiles数据有要求，仅适用于无自带着色器的纹理格式 模型<br />
     </div>
 
     <script src="./js/common.js"></script>
@@ -111,14 +111,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 36.534035,
-              x: 101.494838,
-              z: 2871.39,
-              heading: 196.6,
-              pitch: -43.5,
-              roll: 359.9,
-            },
+            center: { lat: 25.074712, lng: 102.65196, alt: 3122, heading: 28, pitch: -41 },
           },
         })
 
@@ -130,11 +123,9 @@
 
         //加模型
         var tilesetLayer = new mars3d.layer.TilesetLayer({
-          url: 'http://data.marsgis.cn/3dtiles/qx-xiaoqu/tileset.json',
+          url: '//data.mars3d.cn/3dtiles/qx-xiaoqu/tileset.json',
           maximumScreenSpaceError: 6,
-          maximumMemoryUsage: 1024,
-          center: { lat: 25.078322, lng: 102.653514, alt: 3006, heading: 29, pitch: -45 },
-          position: { lng: 102.658438, lat: 25.087756, alt: 33.4 },
+          maximumMemoryUsage: 2048,
           flyTo: true,
         })
         map.addLayer(tilesetLayer)

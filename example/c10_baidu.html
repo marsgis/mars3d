@@ -65,7 +65,7 @@
             defaultContextMenu: true, //右键菜单
           },
           terrain: {
-            url: 'http://data.marsgis.cn/terrain',
+            url: 'http://data.mars3d.cn/terrain',
             show: true,
           },
           //方式1：在创建地球前的参数中配置
@@ -104,7 +104,8 @@
               name: '离线百度瓦片(示例)',
               icon: 'img/basemaps/arcgis.png',
               type: 'baidu',
-              url: 'http://data.marsgis.cn/maptile/baiduVec/{z}/{x}/{y}.jpg',
+              url: '//data.mars3d.cn/tile/baiduVec/{z}/{x}/{y}.jpg',
+              maximumLevel: 12,
             },
           ],
         })

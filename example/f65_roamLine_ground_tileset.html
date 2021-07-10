@@ -133,15 +133,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            //此处参数会覆盖config.json中的对应配置
-            center: {
-              y: 40.414276,
-              x: 115.458072,
-              z: 1235,
-              heading: 194.6,
-              pitch: -48.8,
-              roll: 359.9,
-            },
+            center: { lat: 33.588405, lng: 119.031988, alt: 336, heading: 359, pitch: -37 },
           },
           control: {
             animation: true, //是否创建动画小器件，左下角仪表
@@ -153,11 +145,11 @@
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
         var tilesetLayer = new mars3d.layer.TilesetLayer({
-          name: '厂房',
-          url: 'http://data.marsgis.cn/3dtiles/qx-changfang/tileset.json',
-          maximumScreenSpaceError: 1,
+          name: '文庙',
+          url: '//data.mars3d.cn/3dtiles/qx-simiao/tileset.json',
+          position: { alt: 120 },
+          maximumScreenSpaceError: 2,
           maximumMemoryUsage: 1024,
-          position: { alt: 90 },
           flyTo: true,
         })
         map.addLayer(tilesetLayer)
@@ -169,18 +161,19 @@
         //该数据可以从 基础项目 飞行漫游功能界面操作后单个路线的 保存JSON
         var flydata = {
           name: '贴模型表面漫游',
-          speed: 100,
+          speed: 60,
           positions: [
-            [115.45983, 40.407136, 614],
-            [115.460034, 40.407992, 614],
-            [115.460309, 40.409162, 614],
-            [115.459229, 40.409395, 614],
-            [115.459395, 40.40983, 614],
-            [115.454293, 40.410869, 614],
+            [119.030216, 33.59167, 50.9],
+            [119.032637, 33.590768, 50.8],
+            [119.033624, 33.592647, 53.4],
+            [119.033814, 33.59293, 53.3],
+            [119.033013, 33.593351, 53.1],
+            [119.032066, 33.593706, 52.9],
+            [119.031406, 33.593802, 53],
           ],
           model: {
             show: true,
-            url: 'http://data.marsgis.cn/gltf/mars/qiche.gltf',
+            url: '//data.mars3d.cn/gltf/mars/qiche.gltf',
             scale: 0.1,
             minimumPixelSize: 20,
           },

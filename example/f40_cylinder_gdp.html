@@ -55,7 +55,7 @@
             {
               type: 'geojson',
               name: '淮海经济区11市',
-              url: 'http://data.marsgis.cn/file/geojson/huaihai.json',
+              url: '//data.mars3d.cn/file/geojson/huaihai.json',
               symbol: {
                 styleOptions: {
                   materialType: mars3d.MaterialType.PolyGradient,
@@ -97,7 +97,7 @@
         //加载数据
         $.ajax({
           type: 'GET',
-          url: 'http://data.marsgis.cn/file/apidemo/huaihai-jj.json',
+          url: '//data.mars3d.cn/file/apidemo/huaihai-jj.json',
           success: function (res) {
             showCityEconomyData(res.data)
           },

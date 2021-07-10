@@ -47,14 +47,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 39.568481,
-              x: 116.415253,
-              z: 42275.26,
-              heading: 1.9,
-              pitch: -49.6,
-              roll: 0,
-            },
+            center: { lat: 31.793495, lng: 117.236333, alt: 6846, heading: 360, pitch: -56 },
           },
         })
 
@@ -66,12 +59,12 @@
         })
 
         $.ajax({
-          url: 'http://data.marsgis.cn/file/geojson/beijing-village.json',
+          url: '//data.mars3d.cn/file/geojson/buildings-hf.json',
           type: 'GET',
           dataType: 'json',
           success: function (rs) {
             //创建mapv图层
-            createMapvLayer(rs)
+            createMapvLayer(rs.features)
           },
         })
       }

@@ -77,18 +77,16 @@
           layers: [
             {
               type: 'geojson',
-              name: '省界线',
-              url: 'http://data.marsgis.cn/file/geojson/china-full.json',
+              name: '全国省界',
+              url: '//data.mars3d.cn/file/geojson/areas/100000_full.json',
               symbol: {
-                type: 'polylineP',
+                type: 'polygonCombine',
                 styleOptions: {
-                  fill: true,
-                  color: '#cccccc',
-                  opacity: 0.1,
+                  fill: false,
                   outline: true,
                   outlineWidth: 2,
                   outlineColor: '#cccccc',
-                  outlineOpacity: 0.9,
+                  outlineOpacity: 0.8,
                 },
               },
               show: true,
@@ -208,7 +206,7 @@
         } else {
           $.ajax({
             type: 'GET',
-            url: 'http://data.marsgis.cn/file/apidemo/windpoint.json',
+            url: '//data.mars3d.cn/file/apidemo/windpoint.json',
             success: function (res) {
               arrWind = res.data
               showWindPoint(arrWind)

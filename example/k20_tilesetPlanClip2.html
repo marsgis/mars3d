@@ -66,15 +66,15 @@
       //加模型
       var tilesetLayer = new mars3d.layer.TilesetLayer({
         name: '县城社区',
-        url: 'http://data.marsgis.cn/3dtiles/qx-shequ/tileset.json',
-        maximumScreenSpaceError: 2,
+        url: '//data.mars3d.cn/3dtiles/qx-shequ/tileset.json',
+        position: { alt: 11.5 },
+        maximumScreenSpaceError: 1,
         maximumMemoryUsage: 1024,
         skipLevelOfDetail: true,
         preferLeaves: true,
         dynamicScreenSpaceError: true,
         cullWithChildrenBounds: false,
         luminanceAtZenith: 0.6,
-        position: { alt: 3 },
         center: {
           y: 28.440864,
           x: 119.486477,

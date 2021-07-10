@@ -89,7 +89,7 @@
 
       geoJsonLayer = new mars3d.layer.CzmGeoJsonLayer({
         name: '体育设施点',
-        url: 'http://data.marsgis.cn/file/geojson/hfty-point.json',
+        url: '//data.mars3d.cn/file/geojson/hfty-point.json',
         symbol: {
           styleOptions: {
             image: 'img/marker/mark1.png',
@@ -163,28 +163,16 @@
       removeLayer()
 
       geoJsonLayer = new mars3d.layer.CzmGeoJsonLayer({
-        name: '省界线',
-        url: 'http://data.marsgis.cn/file/geojson/sheng-line.json',
+        name: '全国省界',
+        url: '//data.mars3d.cn/file/geojson/areas/100000_full.json',
         symbol: {
           styleOptions: {
-            color: '#ffffff',
-            width: 2,
-            opacity: 0.8,
-            label: {
-              text: '{name}',
-              position: 'center',
-              font_size: 30,
+            fill: false,
+            outline: true,
+            outlineStyle: {
               color: '#ffffff',
-              outline: true,
-              outlineColor: '#000000',
-              scaleByDistance: true,
-              scaleByDistance_far: 60000000,
-              scaleByDistance_farValue: 0.2,
-              scaleByDistance_near: 1000000,
-              scaleByDistance_nearValue: 1,
-              distanceDisplayCondition: true,
-              distanceDisplayCondition_far: 12000000,
-              distanceDisplayCondition_near: 0,
+              width: 2,
+              opacity: 0.8,
             },
           },
         },
@@ -206,7 +194,7 @@
       geoJsonLayer = new mars3d.layer.CzmGeoJsonLayer({
         id: 1987,
         name: '用地规划',
-        url: 'http://data.marsgis.cn/file/geojson/guihua.json',
+        url: '//data.mars3d.cn/file/geojson/guihua.json',
         symbol: {
           styleOptions: {
             opacity: 0.6,
@@ -267,8 +255,8 @@
       removeLayer()
 
       geoJsonLayer = new mars3d.layer.CzmGeoJsonLayer({
-        name: '安徽各市',
-        url: 'http://data.marsgis.cn/file/geojson/anhui.json',
+        name: '合肥市',
+        url: '//data.mars3d.cn/file/geojson/areas/340100_full.json',
         symbol: {
           styleOptions: {
             fill: true,

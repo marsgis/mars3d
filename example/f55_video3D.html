@@ -161,13 +161,10 @@
       //添加参考三维模型
       var tiles3dLayer = new mars3d.layer.TilesetLayer({
         name: '合肥国家大学科技园',
-        url: 'http://data.marsgis.cn/3dtiles/qx-hfdxy/tileset.json',
-        position: { alt: -19 },
-        maximumScreenSpaceError: 2,
-        maximumMemoryUsage: 2048,
-        dynamicScreenSpaceError: true,
-        cullWithChildrenBounds: false,
-        luminanceAtZenith: 0.6,
+        url: '//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json',
+        position: { alt: -24 },
+        maximumScreenSpaceError: 1,
+        maximumMemoryUsage: 1024,
       })
       map.addLayer(tiles3dLayer)
 
@@ -186,9 +183,9 @@
     function addGraphic_01() {
       var video3D = new mars3d.graphic.Video3D({
         type: mars3d.graphic.Video3D.Type.Video,
-        url: 'http://data.marsgis.cn/video/pinjie.mp4',
-        position: [117.20551, 31.842824, 46.4],
-        cameraPosition: [117.205457, 31.842984, 68.9],
+        url: 'http:////data.mars3d.cn/file/video/menqian.mp4',
+        position: [117.20551, 31.842824, 41.4],
+        cameraPosition: [117.205457, 31.842984, 63.9],
         style: {
           fovDegree: 84.3,
           aspectRatio: 2.6,
@@ -233,7 +230,7 @@
       //构造投射体
       var video3D = new mars3d.graphic.Video3D({
         type: mars3d.graphic.Video3D.Type.Video,
-        url: 'http://data.marsgis.cn/video/lukou.mp4',
+        url: 'http:////data.mars3d.cn/file/video/lukou.mp4',
         position: cartesian,
         cameraPosition: cameraPosition,
         style: {

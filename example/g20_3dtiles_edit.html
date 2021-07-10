@@ -41,7 +41,7 @@
       <tr>
         <td>模型URL：</td>
         <td colspan="4">
-          <input id="txtModel" type="text" value="http://data.marsgis.cn/3dtiles/max-fsdzm/tileset.json" class="form-control" style="width: 100%;" />
+          <input id="txtModel" type="text" value="//data.mars3d.cn/3dtiles/max-fsdzm/tileset.json" class="form-control" style="width: 100%;" />
         <td>
           <div class="checkbox checkbox-primary checkbox-inline" title="解决跨域问题">
             <input id="chkProxy" class="styled" type="checkbox">
@@ -127,7 +127,7 @@
       <tr>
         <td>显示精度：</td>
         <td>
-          <input id="txt_maximumScreenSpaceError" type="range" min="0.1" max="30.0" step="0.1" value="8.0" title="显示精度">
+          <input id="txt_maximumScreenSpaceError" type="range" min="1" max="30.0" step="1" value="8.0" title="显示精度">
         </td>
         <td>材质底色：</td>
         <td>
@@ -453,7 +453,7 @@
 
       var isProxy = $('#chkProxy').is(':checked')
       if (isProxy) {
-        params.proxy = 'http://data.marsgis.cn/proxy/'
+        params.proxy = '//server.mars3d.cn/proxy/'
       }
 
       //记录到历史

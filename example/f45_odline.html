@@ -46,7 +46,7 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
-          center: { lat: 39.467774, lng: 116.410254, alt: 51270, heading: 360, pitch: -46 },
+          center: { lat: 38.452188, lng: 116.445231, alt: 187956, heading: 0, pitch: -49 },
         },
       })
 
@@ -59,7 +59,7 @@
       var graphicLayer = new mars3d.layer.GraphicLayer()
       map.addLayer(graphicLayer)
 
-      Cesium.Resource.fetchJson('http://data.marsgis.cn/file/apidemo/bjgj.json').then(function (data) {
+      Cesium.Resource.fetchJson('//data.mars3d.cn/file/apidemo/bjgj.json').then(function (data) {
         var timeDuration = 10.0
         var moveBaseDuration = 4.0
 

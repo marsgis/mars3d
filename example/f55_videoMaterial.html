@@ -66,7 +66,7 @@
   </div>
 
   <video id="trailer" style="display: none;" muted="muted" autoplay="autoplay" loop="loop" crossorigin="" controls="">
-    <source src="http://data.marsgis.cn/video/lukou.mp4" type="video/mp4">
+    <source src="http:////data.mars3d.cn/file/video/lukou.mp4" type="video/mp4">
   </video>
 
 
@@ -82,7 +82,6 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
-          //此处参数会覆盖config.json中的对应配置
           center: {
             y: 28.440942,
             x: 119.482189,
@@ -100,10 +99,10 @@
       //添加参考三维模型
       var tiles3dLayer = new mars3d.layer.TilesetLayer({
         name: '县城社区',
-        url: 'http://data.marsgis.cn/3dtiles/qx-shequ/tileset.json',
-        maximumScreenSpaceError: 2,
+        url: '//data.mars3d.cn/3dtiles/qx-shequ/tileset.json',
+        position: { alt: 11.5 },
+        maximumScreenSpaceError: 1,
         maximumMemoryUsage: 1024,
-        position: { alt: 3 },
       })
       map.addLayer(tiles3dLayer)
 
@@ -181,16 +180,14 @@
     function addGraphic_01(graphicLayer) {
       var graphic = new mars3d.graphic.PolygonEntity({
         positions: [
-          [119.481299, 28.439988, 131],
-          [119.481162, 28.440102, 131],
-          [119.481163, 28.440101, 122],
-          [119.481296, 28.439986, 122],
+          [119.481299, 28.439988, 140],
+          [119.481162, 28.440102, 140],
+          [119.481163, 28.440101, 130],
+          [119.481296, 28.439986, 130],
         ],
         style: {
           material: videoElement,
           stRotationDegree: 0, //视频旋转角度
-          perPositionHeight: true,
-          outline: false,
         },
       })
       graphicLayer.addGraphic(graphic)
@@ -208,8 +205,7 @@
         style: {
           material: videoElement,
           stRotationDegree: 130, //视频旋转角度
-          perPositionHeight: false,
-          outline: false,
+          clampToGround: true,
         },
       })
       graphicLayer.addGraphic(graphic)

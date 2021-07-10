@@ -1,0 +1,134 @@
+/* m10右侧统计图表1 */
+.chart {
+  position: absolute;
+  right: 55px;
+  top: 2.5%;
+  font-size: 15px;
+  border: none;
+  color: #ffffff;
+  background: none;
+  height: 100%;
+}
+.chartOne,
+.chartTwo,
+.chartThree {
+  width: 440px;
+  height: 30%;
+  margin-bottom: 20px;
+  position: relative;
+  border: 1px solid #17366c;
+  background: linear-gradient(to left, #3897cf, #3897cf) left top no-repeat, linear-gradient(to bottom, #3897cf, #3897cf) left top no-repeat,
+    linear-gradient(to left, #3897cf, #3897cf) right top no-repeat, linear-gradient(to bottom, #3897cf, #3897cf) right top no-repeat,
+    linear-gradient(to left, #3897cf, #3897cf) left bottom no-repeat, linear-gradient(to bottom, #3897cf, #3897cf) left bottom no-repeat,
+    linear-gradient(to left, #3897cf, #3897cf) right bottom no-repeat, linear-gradient(to left, #3897cf, #3897cf) right bottom no-repeat;
+  background-size: 1px 20px, 20px 1px, 1px 20px, 20px 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.chart h6 {
+  padding: 4px;
+  width: 10px;
+  margin-left: 5%;
+  float: left;
+  margin-top: 3%;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+}
+.chartOne h6::before {
+  position: absolute;
+  top: 10px;
+  left: 6%;
+  width: 20px;
+  height: 2px;
+  background: red;
+  content: ' ';
+}
+.chartTwo h6::before {
+  position: absolute;
+  top: 10px;
+  left: 6%;
+  width: 20px;
+  height: 2px;
+  background: red;
+  content: ' ';
+}
+.chartThree h6::before {
+  position: absolute;
+  top: 10px;
+  left: 6%;
+  width: 20px;
+  height: 2px;
+  background: red;
+  content: ' ';
+}
+.chartOne .chartList {
+  height: 30%;
+  width: 91%;
+  float: left;
+  margin-top: 15px;
+  font-size: 15px;
+}
+.chartOne .title {
+  float: left;
+}
+.chartOne .conter {
+  float: right;
+}
+.chartOne .title {
+  margin-right: 10px;
+}
+.chartOne .chartList li {
+  height: 50%;
+  width: 100%;
+  border-bottom: white 0.5px dashed;
+  line-height: 50%;
+  padding: 13px;
+}
+.chartOne .chartList li:hover {
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.chartOne .chartList span {
+  color: rgb(0, 174, 255);
+}
+
+/*chartTwo ul_ZJLY */
+.chartTwo_ulzjly,
+.chartThree_ulndtj {
+  width: 84%;
+  height: 90%;
+  position: absolute;
+  left: 13%;
+  bottom: 5px;
+}
+
+/* chartThree ul_NDTJ */
+.chartThree button {
+  background: none;
+  border: 0.06px solid rgb(0, 174, 255);
+  z-index: 1000;
+  font-size: 1.2rem;
+}
+.chartThree button:nth-child(2) {
+  position: absolute;
+  top: 10px;
+  right: 160px;
+}
+.chartThree button:nth-child(3) {
+  position: absolute;
+  top: 10px;
+  right: 90px;
+}
+.chartThree button:nth-child(4) {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  margin-right: 5px;
+}
+
+.chartThree button:active {
+  background-color: rgb(19, 166, 224);
+}
+.chartThree button:visited {
+  background-color: rgb(19, 166, 224);
+}

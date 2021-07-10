@@ -45,14 +45,20 @@
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {})
+      var mapOptions = mars3d.Util.merge(options, {
+        scene: {
+          center: { lat: 31.255379, lng: 121.459155, alt: 1864, heading: 121, pitch: -26 },
+        },
+      })
 
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
 
+      map.basemap = 2017 //蓝色底图
+
       var tiles3dLayer = new mars3d.layer.TilesetLayer({
-        name: '上海市区',
-        url: 'http://data.marsgis.cn/3dtiles/jzw-shanghai/tileset.json',
+        name: '上海市建筑物',
+        url: '//data.mars3d.cn/3dtiles/jzw-shanghai/tileset.json',
         maximumScreenSpaceError: 3,
         maximumMemoryUsage: 1024,
         style: {
@@ -69,17 +75,8 @@
             ],
           },
         },
-        center: {
-          y: 31.257341,
-          x: 121.466139,
-          z: 2170.8,
-          heading: 122.2,
-          pitch: -31.8,
-          roll: 0.2,
-        },
         showClickFeature: true,
         popup: 'all',
-        flyTo: true,
       })
       map.addLayer(tiles3dLayer)
 

@@ -40,7 +40,7 @@
       <tr>
         <td>模型URL：</td>
         <td>
-          <input id="txtModel" type="text" value="http://data.marsgis.cn/3dtiles/qx-changfang/tileset.json" class="form-control" style="width: 500px;" />
+          <input id="txtModel" type="text" value="//data.mars3d.cn/3dtiles/qx-simiao/tileset.json" class="form-control" style="width: 500px;" />
         </td>
         <td>
           <input type="button" class="btn btn-primary" value="加载模型" onclick="showModel()" />
@@ -77,7 +77,7 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
-          center: { lat: 40.415179, lng: 115.459959, alt: 653, heading: 0, pitch: -60 },
+          center: { lat: 33.597401, lng: 119.031399, alt: 514, heading: 0, pitch: -46 },
           showSun: false,
           showMoon: false,
           showSkyBox: false,
@@ -133,7 +133,7 @@
       })
 
       //历史记录模型地址
-      var lasturl = haoutil.storage.get('onlyModel')
+      var lasturl = haoutil.storage.get('g10_onlyModel')
       if (lasturl) {
         $('#txtModel').val(lasturl)
       }
@@ -151,7 +151,7 @@
     function showModel() {
       removeLayer()
       var _url = $('#txtModel').val()
-      haoutil.storage.add('onlyModel', _url)
+      haoutil.storage.add('g10_onlyModel', _url)
 
       tiles3dLayer = new mars3d.layer.TilesetLayer({
         url: _url,

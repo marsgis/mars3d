@@ -37,7 +37,6 @@
 
     <div id="mars3dContainer" class="mars3d-container"></div>
 
-
     <script src="./js/common.js"></script>
     <script type="text/javascript">
       'use script' //开发环境建议开启严格模式
@@ -48,7 +47,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 30.007232, lng: 114.035624, alt: 60557, heading: 27, pitch: -51 },
+            center: { lat: 31.665038, lng: 117.26431, alt: 40054, heading: 360, pitch: -62 },
           },
         })
 
@@ -57,61 +56,35 @@
 
         map.basemap = 2017 //蓝色底图
 
-        // map.viewer.imageryLayers._layers.forEach(function (layer, index, arr) {
-        //   layer.brightness = 0.25
-        // })
-
         $.ajax({
-          url: 'http://data.marsgis.cn/file/apidemo/wuhan-car',
+          url: '//data.mars3d.cn/file/geojson/hefei-road.json',
           type: 'GET',
-          dataType: 'text',
-          success: function (result) {
+          dataType: 'json',
+          success: function (rs) {
             //创建mapv图层
-            createMapvLayer(result)
+            createMapvLayer(rs.features)
           },
         })
       }
 
       function createMapvLayer(rs) {
-        var data = []
         var timeData = []
 
-        rs = rs.split('\n')
-        var maxLength = 0
+        let arr = mars3d.Util.geoJsonToGraphics(rs) //解析geojson
+        for (let i = 0; i < arr.length; i++) {
+          let item = arr[i]
 
-        var ggPoints
-        for (let i = 0; i < rs.length; i++) {
-          var item = rs[i].split(',')
-          var coordinates = []
-          if (item.length > maxLength) {
-            maxLength = item.length
-          }
-          if (item.length < 2) {
-            continue
-          }
-          for (let j = 0; j < item.length; j += 2) {
-            //需要将数据中的米坐标转成经纬度坐标
-            var ptJwd = mars3d.PointTrans.mct2jwd([item[j], item[j + 1]])
-            ptJwd = mars3d.PointTrans.bd2wgs(ptJwd)
-            coordinates.push(ptJwd)
+          for (let j = 0; j < item.positions.length; j++) {
             timeData.push({
               geometry: {
                 type: 'Point',
-                coordinates: ptJwd,
+                coordinates: item.positions[j],
               },
               count: 1,
               time: j,
             })
           }
-          ggPoints = coordinates
-          data.push({
-            geometry: {
-              type: 'LineString',
-              coordinates: coordinates,
-            },
-          })
         }
-        //console.log(JSON.stringify(data));
 
         var options1 = {
           strokeStyle: 'rgba(53,57,255,0.5)',
@@ -121,7 +94,7 @@
           draw: 'simple',
           depthTest: false,
         }
-        var dataSet1 = new mapv.DataSet(data)
+        var dataSet1 = new mapv.DataSet(rs)
 
         //创建MapV图层  线图层
         var mapVLayer1 = new mars3d.layer.MapVLayer(options1, dataSet1)

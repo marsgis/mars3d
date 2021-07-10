@@ -58,7 +58,7 @@
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
 
-      $.getJSON('http://data.marsgis.cn/file/apidemo/heat.json', function (data) {
+      $.getJSON('//data.mars3d.cn/file/apidemo/heat.json', function (data) {
         var arrPoints = []
         for (var i = 0; i < data.Data.length; i++) {
           let item = data.Data[i]

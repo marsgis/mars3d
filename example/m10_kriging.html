@@ -54,7 +54,7 @@
       //创建三维地球场景
       map = new mars3d.Map('mars3dContainer', mapOptions)
 
-      $.getJSON('http://data.marsgis.cn/file/geojson/temperature.json', function (data) {
+      $.getJSON('//data.mars3d.cn/file/geojson/temperature.json', function (data) {
         //获取插值绘制图片
         var image = loadkriging(data.features, kriging_bounds, kriging_colors) //kriging_bounds, kriging_colors在js/temperature_data.js中定义
 

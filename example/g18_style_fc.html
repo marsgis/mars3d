@@ -66,7 +66,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 31.842608, lng: 117.251271, alt: 187, heading: 2, pitch: -47 },
+            center: { lat: 31.842449, lng: 117.251173, alt: 144, heading: 4, pitch: -35 },
           },
         })
 
@@ -77,19 +77,12 @@
         tiles3dLayer = new mars3d.layer.TilesetLayer({
           name: '教学楼',
           type: '3dtiles',
-          url: 'http://data.marsgis.cn/3dtiles/bim-daxue/tileset.json',
-          position: {
-            lng: 117.251229,
-            lat: 31.844015,
-            alt: 36.2,
-          },
+          url: '//data.mars3d.cn/3dtiles/bim-daxue/tileset.json',
+          position: { lng: 117.251229, lat: 31.844015, alt: 31.2 },
           maximumScreenSpaceError: 16,
           maximumMemoryUsage: 1024,
           showClickFeature: true,
-          pickFeatureStyle: {
-            color: '#00FF00',
-          },
-          // popup: 'all',
+          pickFeatureStyle: { color: '#00FF00' },
           flyTo: true,
         })
         map.addLayer(tiles3dLayer)

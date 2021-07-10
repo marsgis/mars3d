@@ -917,7 +917,7 @@
             {
               "name": "走马灯围墙",
               "version": "3.0",
-              "thumbnail": "f35_scrollWall.jpg",
+              "thumbnail": "f35_scrollWall.gif",
               "fileName": "f35_scrollWall"
             },
             {
@@ -994,7 +994,7 @@
             {
               "name": "扫描效果",
               "version": "3.0",
-              "thumbnail": "f40_scanCircle.jpg",
+              "thumbnail": "f40_scanCircle.gif",
               "fileName": "f40_scanCircle"
             }
           ]
@@ -1017,7 +1017,7 @@
             {
               "name": "竖直飞线",
               "version": "3.0",
-              "thumbnail": "f45_vline_flow.jpg",
+              "thumbnail": "f45_vline_flow.gif",
               "fileName": "f45_vline_flow"
             },
             {
@@ -1041,7 +1041,7 @@
             {
               "name": "北京公交线(OD线)",
               "version": "2.2",
-              "thumbnail": "f45_odline.jpg",
+              "thumbnail": "f45_odline.gif",
               "fileName": "f45_odline"
             },
             {
@@ -1053,19 +1053,19 @@
             {
               "name": "动态轨迹路线",
               "version": "1.6",
-              "thumbnail": "f45_flypath.jpg",
+              "thumbnail": "f45_flypath.gif",
               "fileName": "f45_flypath"
             },
             {
               "name": "飞机绕圈巡航",
               "version": "1.6",
-              "thumbnail": "f45_flypath2.jpg",
+              "thumbnail": "f45_flypath2.gif",
               "fileName": "f45_flypath2"
             },
             {
               "name": "卫星成像过程",
               "version": "1.6",
-              "thumbnail": "f45_satellite_foot.jpg",
+              "thumbnail": "f45_satellite_foot.gif",
               "fileName": "f45_satellite_foot"
             },
             {
@@ -1179,14 +1179,14 @@
             {
               "name": "圆椎体-动态展示",
               "version": "1.8",
-              "thumbnail": "f60_space_conicSensor_dynamic.jpg",
+              "thumbnail": "f60_space_conicSensor_dynamic.gif",
               "fileName": "f60_space_conicSensor_dynamic",
               "plugins": "space"
             },
             {
               "name": "目标追踪展示",
               "version": "1.8",
-              "thumbnail": "f60_space_conicSensor_lookAt.jpg",
+              "thumbnail": "f60_space_conicSensor_lookAt.gif",
               "fileName": "f60_space_conicSensor_lookAt",
               "plugins": "space"
             },
@@ -1207,7 +1207,7 @@
             {
               "name": "卫星视锥体-动态展示",
               "version": "1.8",
-              "thumbnail": "f60_space_satelliteSensor_dynamic.jpg",
+              "thumbnail": "f60_space_satelliteSensor_dynamic.gif",
               "fileName": "f60_space_satelliteSensor_dynamic",
               "plugins": "space"
             },
@@ -1235,14 +1235,14 @@
             {
               "name": "卫星过境动态展示",
               "version": "2.0",
-              "thumbnail": "f61_satellite_change.jpg",
+              "thumbnail": "f61_satellite_change.gif",
               "fileName": "f61_satellite_change",
               "plugins": "space"
             },
             {
               "name": "多卫星TLE实时展示",
               "version": "2.0",
-              "thumbnail": "f61_satellite_list.jpg",
+              "thumbnail": "f61_satellite_list.gif",
               "fileName": "f61_satellite_list",
               "plugins": "space"
             },
@@ -1274,13 +1274,13 @@
             {
               "name": "室内漫游",
               "version": "2.2",
-              "thumbnail": "f65_roamLine_indoor.jpg",
+              "thumbnail": "f65_roamLine_indoor.gif",
               "fileName": "f65_roamLine_indoor"
             },
             {
               "name": "行人漫游",
               "version": "2.0",
-              "thumbnail": "f65_roamLine_walk.jpg",
+              "thumbnail": "f65_roamLine_walk.gif",
               "fileName": "f65_roamLine_walk"
             },
             {
@@ -1298,13 +1298,13 @@
             {
               "name": "飞行路线",
               "version": "1.6",
-              "thumbnail": "f65_roamLine_plane.jpg",
+              "thumbnail": "f65_roamLine_plane.gif",
               "fileName": "f65_roamLine_plane"
             },
             {
               "name": "飞行路线(带投射)",
               "version": "2.0",
-              "thumbnail": "f65_roamLine_plane_ray.jpg",
+              "thumbnail": "f65_roamLine_plane_ray.gif",
               "fileName": "f65_roamLine_plane_ray"
             },
             {
@@ -1450,7 +1450,7 @@
             {
               "name": "合肥市区（城市白模）",
               "version": "1.9",
-              "thumbnail": "k20_jzwStyle.jpg",
+              "thumbnail": "k20_jzwStyle.gif",
               "fileName": "k20_jzwStyle"
             },
             {
@@ -1872,7 +1872,7 @@
             {
               "name": "建筑物特效",
               "version": "1.9",
-              "thumbnail": "k20_jzwStyle.jpg",
+              "thumbnail": "k20_jzwStyle.gif",
               "fileName": "k20_jzwStyle"
             },
             {
@@ -2045,7 +2045,7 @@
             {
               "name": "大迁徙图",
               "version": "1.7",
-              "thumbnail": "m20_mapv_qianxiTime.jpg",
+              "thumbnail": "m20_mapv_qianxiTime.gif",
               "fileName": "m20_mapv_qianxiTime",
               "plugins": "mapv"
             },
@@ -2085,43 +2085,50 @@
             {
               "name": "流出线",
               "version": "1.6",
-              "thumbnail": "m30_echarts_line_chu.jpg",
+              "thumbnail": "m30_echarts_line_chu.gif",
               "fileName": "m30_echarts_line_chu",
               "plugins": "echarts"
             },
             {
               "name": "流出线2",
               "version": "2.0",
-              "thumbnail": "m30_echarts_line_chu2.jpg",
+              "thumbnail": "m30_echarts_line_chu2.gif",
               "fileName": "m30_echarts_line_chu2",
               "plugins": "echarts"
             },
             {
               "name": "流入线",
               "version": "1.6",
-              "thumbnail": "m30_echarts_line_ru.jpg",
+              "thumbnail": "m30_echarts_line_ru.gif",
               "fileName": "m30_echarts_line_ru",
               "plugins": "echarts"
             },
             {
               "name": "物流运输图",
               "version": "1.6",
-              "thumbnail": "m30_echarts_line1.jpg",
+              "thumbnail": "m30_echarts_line1.gif",
               "fileName": "m30_echarts_line1",
               "plugins": "echarts"
             },
             {
               "name": "人口迁徙图",
               "version": "1.6",
-              "thumbnail": "m30_echarts_line2.jpg",
+              "thumbnail": "m30_echarts_line2.gif",
               "fileName": "m30_echarts_line2",
               "plugins": "echarts"
             },
             {
               "name": "流向动态效果",
               "version": "1.6",
-              "thumbnail": "m30_echarts_line3.jpg",
+              "thumbnail": "m30_echarts_line3.gif",
               "fileName": "m30_echarts_line3",
+              "plugins": "echarts"
+            },
+            {
+              "name": "流向动态效果",
+              "version": "1.6",
+              "thumbnail": "m30_echarts_line4.jpg",
+              "fileName": "m30_echarts_line4",
               "plugins": "echarts"
             },
             {
@@ -2134,7 +2141,7 @@
             {
               "name": "公交路线热力图",
               "version": "1.6",
-              "thumbnail": "m30_echarts_lineroad2.jpg",
+              "thumbnail": "m30_echarts_lineroad2.gif",
               "fileName": "m30_echarts_lineroad2",
               "plugins": "echarts"
             }
@@ -2196,7 +2203,7 @@
             {
               "name": "实时卫星轨迹",
               "version": "2.0",
-              "thumbnail": "f61_satellite_list.jpg",
+              "thumbnail": "f61_satellite_list.gif",
               "fileName": "f61_satellite_list",
               "plugins": "space"
             }

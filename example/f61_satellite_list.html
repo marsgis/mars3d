@@ -86,7 +86,7 @@
         name: '地面站模型',
         position: position,
         style: {
-          url: 'http://data.marsgis.cn/gltf/mars/leida.glb',
+          url: '//data.mars3d.cn/gltf/mars/leida.glb',
           heading: 270,
           scale: 30,
           minimumPixelSize: 40,
@@ -105,7 +105,7 @@
       graphicLayer.addGraphic(dmfwGraphic)
 
       $.ajax({
-        url: 'http://data.marsgis.cn/file/apidemo/tle-china.json',
+        url: '//data.mars3d.cn/file/apidemo/tle-china.json',
         dataType: 'json',
         type: 'get',
         success: function (data) {
@@ -146,7 +146,7 @@
 
         //属性处理
         item.model = item.model || {}
-        item.model.url = item.model.url || 'http://data.marsgis.cn/gltf/mars/weixin.gltf'
+        item.model.url = item.model.url || '//data.mars3d.cn/gltf/mars/weixin.gltf'
         item.model.show = true
 
         item.path = item.path || {}

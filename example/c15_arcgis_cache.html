@@ -62,7 +62,7 @@
           defaultContextMenu: true, //右键菜单
         },
         terrain: {
-          url: 'http://data.marsgis.cn/terrain',
+          url: 'http://data.mars3d.cn/terrain',
           show: true,
         },
         //方式1：在创建地球前的参数中配置
@@ -71,7 +71,7 @@
             name: 'ArcGIS影像',
             icon: 'img/basemaps/esriWorldImagery.png',
             type: 'arcgis_cache',
-            url: 'http://data.marsgis.cn/maptile-arcgis/googleVec/_alllayers/{z}/{y}/{x}.jpg',
+            url: '//data.mars3d.cn/arcgis_cache/googleVec/_alllayers/{z}/{y}/{x}.jpg',
             upperCase: false,
             minimumLevel: 0,
             maximumLevel: 4,
@@ -92,7 +92,7 @@
 
       //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
       tileLayer = new mars3d.layer.ArcGisCacheLayer({
-        url: 'http://data.marsgis.cn/maptile-arcgis/hfgh/_alllayers/{z}/{y}/{x}.png',
+        url: '//data.mars3d.cn/arcgis_cache/hfgh/_alllayers/{z}/{y}/{x}.png',
         upperCase: false,
         minimumLevel: 1,
         maximumLevel: 17,

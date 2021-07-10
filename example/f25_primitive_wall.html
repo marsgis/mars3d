@@ -294,26 +294,29 @@
 
       function addGraphic_a9(graphicLayer) {
         //显示合肥市边界
-        $.getJSON('http://data.marsgis.cn/file/geojson/hefei.json', function (feature) {
-          var coordinates = feature.geometry.coordinates[0]
+        $.getJSON('//data.mars3d.cn/file/geojson/areas/340100.json', function (geojson) {
+          let arr = mars3d.Util.geoJsonToGraphics(geojson) //解析geojson
+          for (let i = 0; i < arr.length; i++) {
+            let item = arr[i]
+            var primitive = new mars3d.graphic.WallPrimitive({
+              positions: item.positions,
+              style: {
+                diffHeight: 3000,
+                material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
+                  image: 'img/textures/fence.png',
+                  color: '#bdf700',
+                  repeat: new Cesium.Cartesian2(5, 1),
+                  axisY: true, //方向，true时上下，false左右
+                  speed: 10, //速度，建议取值范围1-100
+                }),
+              },
+              attr: item.attr,
+            })
+            graphicLayer.addGraphic(primitive)
+            //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
 
-          var primitive = new mars3d.graphic.WallPrimitive({
-            positions: coordinates,
-            style: {
-              diffHeight: 3000,
-              material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-                image: 'img/textures/fence.png',
-                color: '#bdf700',
-                repeat: new Cesium.Cartesian2(5, 1),
-                axisY: true, //方向，true时上下，false左右
-                speed: 10, //速度，建议取值范围1-100
-              }),
-            },
-          })
-          graphicLayer.addGraphic(primitive)
-          //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
-
-          primitive.bindTooltip('合肥欢迎您 - 火星科技')
+            primitive.bindTooltip('合肥欢迎您 - 火星科技')
+          }
         })
       }
     </script>

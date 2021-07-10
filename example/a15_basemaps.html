@@ -23,7 +23,7 @@
 
   <!--第三方lib-->
   <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+    include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"></script>
 
   <link href="css/style.css" rel="stylesheet" />
 </head>
@@ -69,43 +69,43 @@
             name: '离线地图',
             icon: 'img/basemaps/mapboxSatellite.png',
             type: 'xyz',
-            url: 'http://data.marsgis.cn/maptile/googleImg/{z}/{x}/{y}.jpg',
+            url: '//data.mars3d.cn/tile/googleImg/{z}/{x}/{y}.jpg',
             maximumLevel: 12,
           },
           {
             name: '单张图片',
             icon: 'img/basemaps/offline.png',
             type: 'image',
-            url: 'img/tietu/world.jpg',
+            url: '//data.mars3d.cn/file/img/world/world.jpg',
           },
         ],
       })
 
       //根据config配置的id或name属性，更新显示指定的地图底图
-      map.basemap = '离线地图'
+      // map.basemap = '离线地图'
 
       //basemaps说支持的图层类型（tileLayer）
+      // "type": "image"
+      // "type": "xyz"
+      // "type": "wms"
+      // "type": "wmts"
+      // "type": "tms"
+      // "type": "arcgis"
+      // "type": "arcgis_cache"
+      // "type": "gee"
+
+      // "type": "tileinfo" 瓦片信息（一般用于测试）
+      // "type": "grid"   网格线（一般用于无地图模式）
+
       // "type": "tdt"
       // "type": "gaode"
       // "type": "baidu"
       // "type": "tencent"
       // "type": "osm"
       // "type": "google"
-      // "type": "arcgis"
       // "type": "bing"
       // "type": "mapbox"
       // "type": "ion"
-
-      // "type": "image"
-      // "type": "xyz"
-      // "type": "arcgis_cache"
-      // "type": "wms"
-      // "type": "wmts"
-      // "type": "tms"
-      // "type": "gee"
-
-      // "type": "tileinfo" 瓦片信息（一般用于测试）
-      // "type": "grid"   网格线（一般用于无地图模式）
     }
   </script>
 </body>

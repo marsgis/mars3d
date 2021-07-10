@@ -70,10 +70,10 @@
       var tilesetLayer = new mars3d.layer.TilesetLayer({
         type: '3dtiles',
         name: '合肥国家大学科技园',
-        url: 'http://data.marsgis.cn/3dtiles/qx-hfdxy/tileset.json',
+        url: '//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json',
+        position: { alt: -24 },
         maximumScreenSpaceError: 1,
         maximumMemoryUsage: 1024,
-        position: { alt: -25 },
         show: true,
       })
       map.addLayer(tilesetLayer)
@@ -81,7 +81,7 @@
       //单体化图层【支持geoserver的wfs服务配置dth属性】
       var wfsLayer = new mars3d.layer.WfsLayer({
         name: '建筑物面',
-        url: 'http://data.marsgis.cn/geoserver/mars/wfs',
+        url: '//server.mars3d.cn/geoserver/mars/wfs',
         layer: 'mars:hfjzw',
         parameters: {
           //支持所有wfs的参数
@@ -103,7 +103,7 @@
       //单体化图层【也支持arcgis的wfs服务配置dth属性】
       // var wfsLayer = new mars3d.layer.ArcGisWfsLayer({
       //   name: '建筑物面矢量图层',
-      //   url: 'http://data.marsgis.cn/arcgis/rest/services/mars/hefei/MapServer/37',
+      //   url: '//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/37',
       //   minimumLevel: 15,
       //   //表示“单体化”专用图层
       //   dth: {

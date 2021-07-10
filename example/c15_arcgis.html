@@ -64,7 +64,7 @@
             defaultContextMenu: true, //右键菜单
           },
           terrain: {
-            url: 'http://data.marsgis.cn/terrain',
+            url: 'http://data.mars3d.cn/terrain',
             show: true,
           },
           //方式1：在创建地球前的参数中配置
@@ -120,11 +120,11 @@
         //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
         arcGisLayer = new mars3d.layer.ArcGisLayer({
           name: '合肥建筑物',
-          url: 'http://data.marsgis.cn/arcgis/rest/services/mars/guihua/MapServer',
-          // url: 'http://data.marsgis.cn/arcgis/rest/services/crs/ssjzw4326/MapServer',
-          // url: 'http://data.marsgis.cn/arcgis/rest/services/crs/ssjzw4490/MapServer', //大地2000地理坐标系
-          // url: 'http://data.marsgis.cn/arcgis/rest/services/crs/ssjzw4548/MapServer', //大地2000高斯投影坐标系
-          // url: 'http://data.marsgis.cn/arcgis/rest/services/crs/ssjzw2000/MapServer',  //大地2000高斯投影坐标系
+          url: '//server.mars3d.cn/arcgis/rest/services/mars/guihua/MapServer',
+          // url: '//server.mars3d.cn/arcgis/rest/services/crs/ssjzw4326/MapServer',
+          // url: '//server.mars3d.cn/arcgis/rest/services/crs/ssjzw4490/MapServer', //大地2000地理坐标系
+          // url: '//server.mars3d.cn/arcgis/rest/services/crs/ssjzw4548/MapServer', //大地2000高斯投影坐标系
+          // url: '//server.mars3d.cn/arcgis/rest/services/crs/ssjzw2000/MapServer',  //大地2000高斯投影坐标系
           showClickFeature: true,
           pickFeatureStyle: {
             clampToGround: true,

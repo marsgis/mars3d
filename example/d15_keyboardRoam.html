@@ -132,19 +132,18 @@
               enableCollisionDetection: false,
             },
           },
+          control: {
+            infoBox: false,
+          },
           layers: [
             {
               id: 1987,
               name: '教学楼',
               type: '3dtiles',
-              url: 'http://data.marsgis.cn/3dtiles/bim-daxue/tileset.json',
-              position: { lng: 117.251229, lat: 31.844015, alt: 36.2 },
+              url: '//data.mars3d.cn/3dtiles/bim-daxue/tileset.json',
+              position: { lng: 117.251229, lat: 31.844015, alt: 31.2 },
               maximumScreenSpaceError: 16,
               maximumMemoryUsage: 1024,
-              pickFeatureStyle: {
-                color: '#00FF00',
-              },
-              popup: 'all',
               show: true,
             },
           ],
@@ -189,7 +188,7 @@
         map.keyboardRoam.dirStep = 50 //相机原地旋转步长，值越大步长越小。
         map.keyboardRoam.rotateStep = 0.3 //相机围绕目标点旋转速率，0.3-2.0
 
-        map.setCameraView({ lat: 31.843803, lng: 117.250994, alt: 39, heading: 304, pitch: -6 })
+        map.setCameraView({ lat: 31.843804, lng: 117.250994, alt: 33, heading: 307, pitch: 1 })
       }
 
       //室外

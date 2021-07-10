@@ -116,7 +116,7 @@
     <input id="btnConsoleJson" type="button" class="btn btn-info" value="打印参数" />
   </div>
   <video id="trailer" style="display: none;" muted="muted" autoplay="autoplay" loop="loop" crossorigin="" controls="">
-    <!-- <source src="http://data.marsgis.cn/video/lukou.mp4" type="video/mp4"> -->
+    <!-- <source src="http:////data.mars3d.cn/file/video/lukou.mp4" type="video/mp4"> -->
   </video>
 
 
@@ -157,13 +157,10 @@
       //添加参考三维模型
       var tiles3dLayer = new mars3d.layer.TilesetLayer({
         name: '合肥国家大学科技园',
-        url: 'http://data.marsgis.cn/3dtiles/qx-hfdxy/tileset.json',
-        position: { alt: -19 },
-        maximumScreenSpaceError: 2,
-        maximumMemoryUsage: 2048,
-        dynamicScreenSpaceError: true,
-        cullWithChildrenBounds: false,
-        luminanceAtZenith: 0.6,
+        url: '//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json',
+        position: { alt: -24 },
+        maximumScreenSpaceError: 1,
+        maximumMemoryUsage: 1024,
       })
       map.addLayer(tiles3dLayer)
 
@@ -196,8 +193,8 @@
       var video3D = new mars3d.graphic.Video3D({
         type: mars3d.graphic.Video3D.Type.Video,
         dom: $('#trailer'),
-        position: [117.20551, 31.842824, 46.4],
-        cameraPosition: [117.205457, 31.842984, 68.9],
+        position: [117.20551, 31.842824, 41.4],
+        cameraPosition: [117.205457, 31.842984, 63.9],
         style: {
           fovDegree: 84.3,
           aspectRatio: 2.6,

@@ -1,266 +1,307 @@
 <!-- 2017-12-7 14:56:03 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-        content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>等高线 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>等高线 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,jquery.range,jquery.minicolors,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+    ></script>
 
+    <link href="css/style.css" rel="stylesheet" />
+    <style>
+      .flatTable {
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
 
+      .flatTable tr td,
+      th {
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        text-align: center;
+      }
+    </style>
+  </head>
 
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-          include="jquery,jquery.range,jquery.minicolors,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-  <link href="css/style.css" rel="stylesheet" />
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-</head>
+    <div id="toolbar" class="infoview">
+      <table class="mars-table">
+        <tr>
+          <td>限定区域</td>
+          <td colspan="3">
+            <input type="button" class="btn btn-primary" value="添加矩形" id="btnDrawExtent" />
+            <input type="button" class="btn btn-primary" value="添加多边形" id="btnDraw" />
+            <input type="button" class="btn btn-primary" value="清除" id="clearWJ" />
+          </td>
+        </tr>
 
-<body class="dark">
-  <!--加载前进行操作提示，优化用户体验-->
-  <div id="mask" class="signmask" onclick="removeMask()"></div>
+        <tr>
+          <td>等高线：</td>
+          <td>
+            <div class="checkbox checkbox-primary checkbox-inline">
+              <input id="chkEnabled" class="styled" type="checkbox" checked />
+              <label for="chkEnabled"> 显示 </label>
+            </div>
+          </td>
+          <td colspan="2">
+            <input type="text" id="txtColor" class="form-control" style="width: 100px" value="#FF0000" />
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>间隔</td>
+          <td>
+            <input id="txtSpacing" style="width: 136px" type="range" min="10.0" max="500.0" step="1.0" value="100" />
+          </td>
+          <td>米</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>线宽</td>
+          <td>
+            <input id="txtWidth" style="width: 125px" type="range" min="1.0" max="10.0" step="0.1" value="1.5" />
+          </td>
+          <td>px</td>
+        </tr>
 
-  <div id="mars3dContainer" class="mars3d-container"></div>
+        <tr>
+          <td>地表渲染：</td>
+          <td colspan="3">
+            <div class="radio radio-info radio-inline">
+              <input type="radio" id="shadingMaterials1" name="shadingMaterials" value="none" checked />
+              <label for="shadingMaterials1">无阴影 </label>
+            </div>
+            <div class="radio radio-info radio-inline">
+              <input type="radio" id="shadingMaterials2" name="shadingMaterials" value="elevation" />
+              <label for="shadingMaterials2">高程 </label>
+            </div>
+            <div class="radio radio-info radio-inline">
+              <input type="radio" id="shadingMaterials3" name="shadingMaterials" value="slope" />
+              <label for="shadingMaterials3">坡度 </label>
+            </div>
+            <div class="radio radio-info radio-inline">
+              <input type="radio" id="shadingMaterials4" name="shadingMaterials" value="aspect" />
+              <label for="shadingMaterials4">坡向 </label>
+            </div>
+          </td>
+        </tr>
 
+        <tr>
+          <td>状态控制</td>
+          <td colspan="3">
+            <div class="checkbox checkbox-info checkbox-inline">
+              <input type="checkbox" id="showElse" value="this" name="jiaodu" checked />
+              <label for="showElse">显示其他区域</label>
+            </div>
+          </td>
+        </tr>
+      </table>
 
-  <div id="toolbar" class="infoview">
-    <table class="mars-table">
-      <tr>
-        <td>限定区域</td>
-        <td colspan="3">
-          <input type="button" class="btn btn-primary" value="添加矩形" id="btnDrawExtent" />
-          <input type="button" class="btn btn-primary" value="添加多边形" id="btnDraw" />
-          <input type="button" class="btn btn-primary" value="清除" id="clearWJ" />
-        </td>
-      </tr>
+      <!-- 操作单个记录 -->
+      <table class="mars-table flatTable">
+        <thead>
+          <th>区域</th>
+          <th>操作</th>
+        </thead>
+        <tbody id="tbPoly"></tbody>
+      </table>
+    </div>
 
-      <tr>
-        <td>等高线：</td>
-        <td>
-          <div class="checkbox checkbox-primary checkbox-inline">
-            <input id="chkEnabled" class="styled" type="checkbox" checked>
-            <label for="chkEnabled">
-              显示
-            </label>
-          </div>
-        </td>
-        <td colspan="2">
-          <input type="text" id="txtColor" class="form-control" style="width:100px;" value="#FF0000">
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>
-          间隔
-        </td>
-        <td>
-          <input id="txtSpacing" style="width: 136px" type="range" min="10.0" max="500.0" step="1.0" value="100">
-        </td>
-        <td>
-          米
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>
-          线宽
-        </td>
-        <td>
-          <input id="txtWidth" style="width: 125px" type="range" min="1.0" max="10.0" step="0.1" value="1.5">
-        </td>
-        <td>
-          px
-        </td>
-      </tr>
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
 
+      var map
+      var contourLine
 
-      <tr>
-        <td>地表渲染：</td>
-        <td colspan="3">
-          <div class="radio radio-info radio-inline">
-            <input type="radio" id="shadingMaterials1" name="shadingMaterials" value="none" checked>
-            <label for="shadingMaterials1">无阴影 </label>
-          </div>
-          <div class="radio radio-info radio-inline">
-            <input type="radio" id="shadingMaterials2" name="shadingMaterials" value="elevation">
-            <label for="shadingMaterials2">高程 </label>
-          </div>
-          <div class="radio radio-info radio-inline">
-            <input type="radio" id="shadingMaterials3" name="shadingMaterials" value="slope">
-            <label for="shadingMaterials3">坡度 </label>
-          </div>
-          <div class="radio radio-info radio-inline">
-            <input type="radio" id="shadingMaterials4" name="shadingMaterials" value="aspect">
-            <label for="shadingMaterials4">坡向 </label>
-          </div>
-
-        </td>
-      </tr>
-
-
-      <tr>
-        <td>状态控制</td>
-        <td colspan="3">
-          <div class="checkbox checkbox-info checkbox-inline">
-            <input type="checkbox" id="showElse" value="this" name="jiaodu" checked />
-            <label for="showElse">显示其他区域</label>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
-
-
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
-
-    var map
-
-    function initMap(options) {
-      //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {
-        scene: {
-          center: { lat: 30.704458, lng: 116.094834, alt: 26858, heading: 5, pitch: -55 },
-          showSun: false,
-          showMoon: false,
-          showSkyBox: false,
-          showSkyAtmosphere: false,
-          fog: false,
-          globe: {
-            showGroundAtmosphere: false,
-            enableLighting: false,
-          },
-        },
-      })
-
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
-
-      var contourLine = new mars3d.thing.ContourLine({
-        spacing: 100,
-        width: 1.5,
-        color: Cesium.Color.RED,
-        //地表渲染的配色方案
-        colorScheme: {
-          elevation: {
-            step: [0.0, 0.045, 0.1, 0.15, 0.37, 0.54, 1.0],
-            color: ['#000000', '#2747E0', '#D33B7D', '#D33038', '#FF9742', '#FF9742', '#ffd700', '#ffffff'],
-          },
-          slope: {
-            step: [0.0, 0.29, 0.5, Math.sqrt(2) / 2, 0.87, 0.91, 1.0],
-            color: ['#000000', '#2747E0', '#D33B7D', '#D33038', '#FF9742', '#FF9742', '#ffd700', '#ffffff'],
-          },
-          aspect: {
-            step: [0.0, 0.2, 0.4, 0.6, 0.8, 0.9, 1.0],
-            color: ['#000000', '#2747E0', '#D33B7D', '#D33038', '#FF9742', '#FF9742', '#ffd700', '#ffffff'],
-          },
-        },
-      })
-      map.addThing(contourLine)
-
-      window.contourLine = contourLine //for test
-
-      //演示的示例区域
-      contourLine.addArea([
-        [116.003125, 30.948354, 1103.66],
-        [116.23964, 30.946376, 563.02],
-        [116.223677, 30.802558, 522.04],
-        [115.997891, 30.807484, 440.83],
-      ])
-
-      $('#chkEnabled').change(function () {
-        var val = $(this).is(':checked')
-        contourLine.contourShow = val
-      })
-      $('input[type=radio][name=shadingMaterials]').change(function () {
-        contourLine.shadingType = this.value
-      })
-
-      $('#txtColor').minicolors({
-        position: 'bottom left',
-        control: 'saturation',
-        change: function (hex) {
-          contourLine.color = Cesium.Color.fromCssColorString(hex)
-        },
-      })
-
-      $('#txtSpacing').range({
-        onChange: function (value, bfb) {
-          contourLine.spacing = value
-        },
-      })
-
-      $('#txtWidth').range({
-        onChange: function (value, bfb) {
-          contourLine.width = value
-        },
-      })
-
-      $('#btnDraw').click(function () {
-        map.graphicLayer.startDraw({
-          type: 'polygon',
-          style: {
-            color: '#007be6',
-            opacity: 0.5,
-            outline: false,
-          },
-          success: function (graphic) {
-            //绘制成功后回调
-            var positions = graphic.positionsShow
-            map.graphicLayer.clear()
-
-            console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
-
-            contourLine.addArea(positions)
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 30.704458, lng: 116.094834, alt: 26858, heading: 5, pitch: -55 },
+            showSun: false,
+            showMoon: false,
+            showSkyBox: false,
+            showSkyAtmosphere: false,
+            fog: false,
+            globe: {
+              showGroundAtmosphere: false,
+              enableLighting: false,
+            },
           },
         })
-      })
 
-      $('#btnDrawExtent').click(function () {
-        map.graphicLayer.startDraw({
-          type: 'rectangle',
-          style: {
-            color: '#007be6',
-            opacity: 0.8,
-            outline: false,
-          },
-          success: function (graphic) {
-            //绘制成功后回调
-            var positions = graphic.getOutlinePositions(false)
-            map.graphicLayer.clear()
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
 
-            console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
-
-            contourLine.addArea(positions)
+        contourLine = new mars3d.thing.ContourLine({
+          spacing: 100,
+          width: 1.5,
+          color: Cesium.Color.RED,
+          //地表渲染的配色方案
+          colorScheme: {
+            elevation: {
+              step: [0.0, 0.045, 0.1, 0.15, 0.37, 0.54, 1.0],
+              color: ['#000000', '#2747E0', '#D33B7D', '#D33038', '#FF9742', '#FF9742', '#ffd700', '#ffffff'],
+            },
+            slope: {
+              step: [0.0, 0.29, 0.5, Math.sqrt(2) / 2, 0.87, 0.91, 1.0],
+              color: ['#000000', '#2747E0', '#D33B7D', '#D33038', '#FF9742', '#FF9742', '#ffd700', '#ffffff'],
+            },
+            aspect: {
+              step: [0.0, 0.2, 0.4, 0.6, 0.8, 0.9, 1.0],
+              color: ['#000000', '#2747E0', '#D33B7D', '#D33038', '#FF9742', '#FF9742', '#ffd700', '#ffffff'],
+            },
           },
         })
-      })
+        map.addThing(contourLine)
 
-      $('#showElse').change(function () {
-        var val = $(this).is(':checked')
-        contourLine.showElseArea = val
-      })
+        window.contourLine = contourLine //for test
 
-      $('#clearWJ').click(function () {
-        contourLine.clear()
-        $('#showElse').prop('checked', true)
-      })
-    }
-  </script>
-</body>
+        //演示的示例区域
+        let areaItem = contourLine.addArea([
+          [116.003125, 30.948354, 1103.66],
+          [116.23964, 30.946376, 563.02],
+          [116.223677, 30.802558, 522.04],
+          [115.997891, 30.807484, 440.83],
+        ])
+        addTableItem(areaItem)
 
+        $('#chkEnabled').change(function () {
+          var val = $(this).is(':checked')
+          contourLine.contourShow = val
+        })
+        $('input[type=radio][name=shadingMaterials]').change(function () {
+          contourLine.shadingType = this.value
+        })
+
+        $('#txtColor').minicolors({
+          position: 'bottom left',
+          control: 'saturation',
+          change: function (hex) {
+            contourLine.color = Cesium.Color.fromCssColorString(hex)
+          },
+        })
+
+        $('#txtSpacing').range({
+          onChange: function (value, bfb) {
+            contourLine.spacing = value
+          },
+        })
+
+        $('#txtWidth').range({
+          onChange: function (value, bfb) {
+            contourLine.width = value
+          },
+        })
+
+        $('#btnDraw').click(function () {
+          map.graphicLayer.startDraw({
+            type: 'polygon',
+            style: {
+              color: '#007be6',
+              opacity: 0.5,
+              outline: false,
+            },
+            success: function (graphic) {
+              //绘制成功后回调
+              var positions = graphic.positionsShow
+              map.graphicLayer.clear()
+
+              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
+
+              let areaItem = contourLine.addArea(positions)
+              addTableItem(areaItem)
+            },
+          })
+        })
+
+        $('#btnDrawExtent').click(function () {
+          map.graphicLayer.startDraw({
+            type: 'rectangle',
+            style: {
+              color: '#007be6',
+              opacity: 0.8,
+              outline: false,
+            },
+            success: function (graphic) {
+              //绘制成功后回调
+              var positions = graphic.getOutlinePositions(false)
+              map.graphicLayer.clear()
+
+              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
+
+              let areaItem = contourLine.addArea(positions)
+              addTableItem(areaItem)
+            },
+          })
+        })
+
+        $('#showElse').change(function () {
+          var val = $(this).is(':checked')
+          contourLine.showElseArea = val
+        })
+
+        $('#clearWJ').click(function () {
+          contourLine.clear()
+          $('#showElse').prop('checked', true)
+
+          // 清除表格
+          var tbody = document.getElementById('tbPoly')
+          tbody.innerHTML = ''
+        })
+      }
+
+      // 区域表格添加一行记录
+      function addTableItem(item) {
+        // 增加tr和td表格
+        var tbody = document.getElementById('tbPoly')
+        var tr = document.createElement('tr')
+        tr.innerHTML = `
+          <tr>
+            <td>区域${item.id}</td>
+            <td>
+              <a class="flyTo" href="javascript:void(0)" title="飞行定位到区域"><i class="fa fa-send-o"></i></a>&nbsp;&nbsp;
+              <a class="remove" href="javascript:void(0)" title="删除区域"><i class="fa fa-trash"></i></a>
+            </td>
+          </tr>`
+        tbody.appendChild(tr)
+
+        //绑定单击事件 定位
+        tr.querySelector('.flyTo').addEventListener('click', function (e) {
+          map.flyToPositions(item.positions)
+        })
+
+        // 移动至绘制区域
+        tr.querySelector('.remove').addEventListener('click', function (e) {
+          contourLine.removeArea(item)
+          tbody.removeChild(tr)
+        })
+      }
+    </script>
+  </body>
 </html>

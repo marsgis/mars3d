@@ -72,8 +72,8 @@
       map.basemap = 2017 //蓝色底图
 
       var tilesetLayer = new mars3d.layer.TilesetLayer({
-        url: 'http://data.marsgis.cn/3dtiles/jzw-hefei/tileset.json',
-        maximumScreenSpaceError: 3,
+        url: '//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json',
+        maximumScreenSpaceError: 1,
         maximumMemoryUsage: 1024,
         center: { y: 31.805004, x: 117.222617, z: 1457.4, heading: 1.6, pitch: -30.5, roll: 0 },
         showClickFeature: true,
@@ -111,7 +111,7 @@
         //以下为矩形矢量对象的样式参数
         style: {
           arc: true, //是否为曲面
-          height: 280.0,
+          height: 200.0,
         },
         // flyTo: true,
       })

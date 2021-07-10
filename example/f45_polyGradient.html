@@ -47,7 +47,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 26.099477, lng: 116.588267, alt: 629475, heading: 13, pitch: -48 },
+            center: { lat: 26.339073, lng: 118.495643, alt: 937783, heading: 355, pitch: -58 },
           },
         })
 
@@ -58,7 +58,7 @@
 
         let geoJsonLayer = new mars3d.layer.GeoJsonLayer({
           name: '安徽各市',
-          url: 'http://data.marsgis.cn/file/geojson/anhui.json',
+          url: '//data.mars3d.cn/file/geojson/areas/340000_full.json',
           symbol: {
             type: 'polygon',
             styleOptions: {

@@ -100,7 +100,7 @@
         map.addLayer(graphicLayer)
 
         var arrData
-        $.getJSON('http://data.marsgis.cn/file/apidemo/mudi.json', function (result) {
+        $.getJSON('//data.mars3d.cn/file/apidemo/mudi.json', function (result) {
           arrData = result.data
           addFeature(graphicLayer, arrData)
         })

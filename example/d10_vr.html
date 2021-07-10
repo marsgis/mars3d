@@ -53,14 +53,7 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
-          center: {
-            y: 28.440942,
-            x: 119.482189,
-            z: 191.32,
-            heading: 227.4,
-            pitch: -27.6,
-            roll: 359.9,
-          },
+          center: { lat: 28.439577, lng: 119.476925, alt: 229, heading: 57, pitch: -29 },
         },
         control: {
           vrButton: true,
@@ -73,14 +66,15 @@
       //加个模型，效果更NB
       var tiles3dLayer = new mars3d.layer.TilesetLayer({
         name: '县城社区',
-        url: 'http://data.marsgis.cn/3dtiles/qx-shequ/tileset.json',
+        url: '//data.mars3d.cn/3dtiles/qx-shequ/tileset.json',
+        position: { alt: 11.5 },
         maximumScreenSpaceError: 1,
         maximumMemoryUsage: 1024,
         dynamicScreenSpaceError: true,
         cullWithChildrenBounds: false,
         skipLevelOfDetail: true,
         preferLeaves: true,
-        position: { alt: 3 },
+        center: { lat: 28.439577, lng: 119.476925, alt: 229, heading: 57, pitch: -29 },
       })
       map.addLayer(tiles3dLayer)
 

@@ -61,7 +61,7 @@
             {
               name: '兴趣点',
               type: 'arcgis_wfs',
-              url: 'http://data.marsgis.cn/arcgis/rest/services/mars/hefei/MapServer/1',
+              url: '//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/1',
               where: ' 1=1 ',
               minimumLevel: 16,
               symbol: {
@@ -108,7 +108,7 @@
         //瓦片图，对比参考用
         var tileLayer = new mars3d.layer.ArcGisLayer({
           name: '瓦片图层',
-          url: 'http://data.marsgis.cn/arcgis/rest/services/mars/hefei/MapServer',
+          url: '//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer',
           layers: '37',
           popup: '名称：{NAME}<br />层数：{floor}',
           maximumLevel: changeLevel - 1,
@@ -119,7 +119,7 @@
         //动态矢量图
         var wfsLayer = new mars3d.layer.ArcGisWfsLayer({
           name: '建筑物面矢量图层',
-          url: 'http://data.marsgis.cn/arcgis/rest/services/mars/hefei/MapServer/37',
+          url: '//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/37',
           where: " NAME like '%合肥%' ",
           minimumLevel: changeLevel,
           symbol: {
@@ -159,7 +159,7 @@
         //一次性加载的wfs图层
         var wfsLayer = new mars3d.layer.ArcGisWfsSingleLayer({
           name: '合肥边界线',
-          url: 'http://data.marsgis.cn/arcgis/rest/services/mars/hefei/MapServer/41',
+          url: '//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/41',
           symbol: {
             type: 'polyline',
             styleOptions: {

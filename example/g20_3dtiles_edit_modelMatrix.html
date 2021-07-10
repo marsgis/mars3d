@@ -44,7 +44,7 @@
         <tr>
           <td>模型URL：</td>
           <td colspan="4">
-            <input id="txtModel" type="text" value="http://data.marsgis.cn/3dtiles/max-fsdzm/tileset.json" class="form-control" style="width: 100%" />
+            <input id="txtModel" type="text" value="//data.mars3d.cn/3dtiles/max-fsdzm/tileset.json" class="form-control" style="width: 100%" />
           </td>
 
           <td>
@@ -502,7 +502,7 @@
 
         var isProxy = $('#chkProxy').is(':checked')
         if (isProxy) {
-          params.proxy = 'http://data.marsgis.cn/proxy/'
+          params.proxy = '//server.mars3d.cn/proxy/'
         }
 
         //记录到历史

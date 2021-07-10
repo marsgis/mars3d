@@ -72,7 +72,7 @@
         creationFunction: function () {
           return mars3d.LayerUtil.createImageryProvider({
             type: 'image',
-            url: 'img/tietu/world.jpg',
+            url: '//data.mars3d.cn/file/img/world/world.jpg',
           })
         },
       })
@@ -188,7 +188,7 @@
           iconUrl: 'img/basemaps/TerrainSTK.png',
           creationFunction: function () {
             return new Cesium.CesiumTerrainProvider({
-              url: 'http://data.marsgis.cn/terrain',
+              url: 'http://data.mars3d.cn/terrain',
               requestWaterMask: true,
               requestVertexNormals: true,
             })

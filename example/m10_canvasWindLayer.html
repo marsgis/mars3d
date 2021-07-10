@@ -165,7 +165,7 @@
       } else {
         $.ajax({
           type: 'get',
-          url: 'http://data.marsgis.cn/file/apidemo/windyuv.json',
+          url: '//data.mars3d.cn/file/apidemo/windyuv.json',
           dataType: 'json',
           success: function (res) {
             earthWindData = res
@@ -199,7 +199,7 @@
       } else {
         $.ajax({
           type: 'GET',
-          url: 'http://data.marsgis.cn/file/apidemo/windpoint.json',
+          url: '//data.mars3d.cn/file/apidemo/windpoint.json',
           success: function (res) {
             dongnanWindData = convertWindData(res.data)
             canvasWindLayer.data = dongnanWindData

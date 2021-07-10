@@ -93,8 +93,11 @@
 
         geoJsonLayer = new mars3d.layer.GeoJsonLayer({
           name: '标绘示例数据',
-          url: 'http://data.marsgis.cn/file/geojson/geojson-draw.json',
+          url: '//data.mars3d.cn/file/geojson/mars3d-draw.json',
           popup: '{type} {name}',
+          queryParameters: {
+            token: 'mars3d', //可以传自定义url参数，如token等
+          },
           flyTo: flyTo,
         })
         map.addLayer(geoJsonLayer)
@@ -115,7 +118,7 @@
 
         geoJsonLayer = new mars3d.layer.GeoJsonLayer({
           name: '体育设施点',
-          url: 'http://data.marsgis.cn/file/geojson/hfty-point.json',
+          url: '//data.mars3d.cn/file/geojson/hfty-point.json',
           symbol: {
             styleOptions: {
               image: 'img/marker/mark1.png',
@@ -190,17 +193,16 @@
         removeLayer()
 
         geoJsonLayer = new mars3d.layer.GeoJsonLayer({
-          name: '省界线',
-          url: 'http://data.marsgis.cn/file/geojson/sheng-line.json',
+          name: '全国省界',
+          url: '//data.mars3d.cn/file/geojson/areas/100000_full.json',
           symbol: {
+            type: 'polylineP',
             styleOptions: {
-              // setHeight: 5000, //指定高度
               color: '#ffffff',
               width: 2,
               opacity: 0.8,
               label: {
                 text: '{name}',
-                position: 'center',
                 font_size: 30,
                 color: '#ffffff',
                 outline: true,
@@ -213,6 +215,9 @@
                 distanceDisplayCondition: true,
                 distanceDisplayCondition_far: 12000000,
                 distanceDisplayCondition_near: 0,
+
+                position: '{center}', //省会位置center
+                setHeight: 10000,
               },
             },
           },
@@ -234,7 +239,7 @@
         geoJsonLayer = new mars3d.layer.GeoJsonLayer({
           id: 1987,
           name: '用地规划',
-          url: 'http://data.marsgis.cn/file/geojson/guihua.json',
+          url: '//data.mars3d.cn/file/geojson/guihua.json',
           symbol: {
             type: 'polygonCombine',
             styleOptions: {
@@ -295,7 +300,7 @@
 
         geoJsonLayer = new mars3d.layer.GeoJsonLayer({
           name: '建筑物面',
-          url: 'http://data.marsgis.cn/file/geojson/jzw.json',
+          url: '//data.mars3d.cn/file/geojson/buildings-demo.json',
           symbol: {
             styleOptions: {
               color: '#0d3685',
@@ -331,7 +336,7 @@
 
         geoJsonLayer = new mars3d.layer.GeoJsonLayer({
           name: '文庙-单体化',
-          url: ' http://data.marsgis.cn/file/geojson/draw-dth-wm.json',
+          url: ' //data.mars3d.cn/file/geojson/dth-wm.json',
           //dth 标识为单体化数据，内部特殊处理
           dth: {
             buffer: 3,
@@ -368,8 +373,8 @@
         removeLayer()
 
         geoJsonLayer = new mars3d.layer.GeoJsonLayer({
-          name: '安徽各市',
-          url: 'http://data.marsgis.cn/file/geojson/anhui.json',
+          name: '合肥市',
+          url: '//data.mars3d.cn/file/geojson/areas/340100_full.json',
           symbol: {
             type: 'polygon',
             styleOptions: {
@@ -481,8 +486,8 @@
         removeLayer()
 
         geoJsonLayer = new mars3d.layer.GeoJsonLayer({
-          name: '安徽各市',
-          url: 'http://data.marsgis.cn/file/geojson/anhui.json',
+          name: '合肥市',
+          url: '//data.mars3d.cn/file/geojson/areas/340100_full.json',
           symbol: {
             type: 'wall',
             styleOptions: {
@@ -492,7 +497,7 @@
               image: 'img/textures/fence.png', //图片
               repeatX: 1, //重复数量
               axisY: true, //竖直方向
-              color: '#FFFF00', //颜色
+              color: '#00ffff', //颜色
               opacity: 0.6, //透明度
               outline: false,
             },

@@ -52,7 +52,7 @@
       map = new mars3d.Map('mars3dContainer', mapOptions)
 
       $.ajax({
-        url: 'http://data.marsgis.cn/file/apidemo/population909500.json',
+        url: '//data.mars3d.cn/file/apidemo/population.json',
         type: 'get',
         dataType: 'json',
         success: function (data) {
@@ -91,7 +91,7 @@
           let surfacePosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, 0)
           let heightPosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, height * heightScale)
 
-          let primitive = new mars3d.graphic.PolylinePrimitive({
+          let primitive = new mars3d.graphic.PolylineEntity({
             positions: [surfacePosition, heightPosition],
             style: {
               width: 4,

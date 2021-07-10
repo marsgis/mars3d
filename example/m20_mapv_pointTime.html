@@ -38,7 +38,9 @@
     <div id="mars3dContainer" class="mars3d-container"></div>
 
     <!-- 面板 -->
-    <div class="infoview">提示：在视域变化中部分效果（如点的闪烁）没有融合，可根据实际项目决定是否采用此效果。</div>
+    <div id="tipView" class="info-tips">
+      (1) 在视域变化中部分效果（如点的闪烁）没有融合，可根据实际项目决定是否采用此效果。<br />
+    </div>
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
@@ -50,15 +52,17 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 18.682867, lng: 110.580081, alt: 4783716, heading: 354, pitch: -75 },
+            center: { lat: 21.004037, lng: 107.525781, alt: 10103609, heading: 356, pitch: -83 },
           },
         })
 
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
+        map.basemap = 2017 //蓝色底图
+
         $.ajax({
-          url: 'http://data.marsgis.cn/file/apidemo/china-point.json',
+          url: '//data.mars3d.cn/file/apidemo/weibo2.json',
           type: 'GET',
           dataType: 'json',
           success: function (rs) {

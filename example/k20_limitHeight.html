@@ -49,15 +49,13 @@
           </td>
         </tr>
         <tr>
-          <td class="nametd">高度选择</td>
+          <td class="nametd">限制高度</td>
           <td>
             <input id="range_currHeight" title="高度" type="range" min="0" max="180" step="0.1" value="80" />
           </td>
           <td>当前高度: <span id="lbl_nowHeight">80</span></td>
         </tr>
       </table>
-
-      <span style="color: #cccccc;"> 提示：高度 是 绘制区域的面为0米的 相对高度</span>
     </div>
 
     <script src="./js/common.js"></script>
@@ -82,34 +80,39 @@
 
         //加模型
         var tilesetLayer = new mars3d.layer.TilesetLayer({
-          url: 'http://data.marsgis.cn/3dtiles/qx-xiaoqu/tileset.json',
+          url: '//data.mars3d.cn/3dtiles/qx-xiaoqu/tileset.json',
           maximumScreenSpaceError: 6,
-          maximumMemoryUsage: 1024,
-          position: { lng: 102.658438, lat: 25.087756, alt: 33.4 },
+          maximumMemoryUsage: 2048,
         })
         map.addLayer(tilesetLayer)
 
         //限高分析类
         var limitHeight = new mars3d.thing.LimitHeight({
           color: 'rgba(255,0,0,0.5)',
-          height: 80,
+          height: 80, //限高
+          bottomHeight: 1865, //模型地面的海拔高度（单位：米）
           positions: [
-            [102.662083, 25.09593, 1900],
-            [102.665105, 25.078242, 1900],
-            [102.650108, 25.085209, 1900],
-            [102.655136, 25.097225, 1900],
+            [102.662083, 25.09593, 0],
+            [102.665105, 25.078242, 0],
+            [102.650108, 25.085209, 0],
+            [102.655136, 25.097225, 0],
           ],
         })
         map.addThing(limitHeight)
+
+        //自动读取模型的高度，但不一定准确。
+        // tilesetLayer.on(mars3d.EventType.load, function (event) {
+        //   limitHeight.bottomHeight = mars3d.LatLngPoint.fromCartesian(tilesetLayer.boundingSphere.center).alt
+        // })
 
         $('#btnDraw').click(function () {
           map.graphicLayer.clear()
           map.graphicLayer.startDraw({
             type: 'polygon',
             style: {
-              color: '#007be6',
-              opacity: 0.5,
-              outline: false,
+              color: '#ffff00',
+              opacity: 0.3,
+              clampToGround: true,
             },
             success: function (graphic) {
               //绘制成功后回调
@@ -127,9 +130,9 @@
           map.graphicLayer.startDraw({
             type: 'rectangle',
             style: {
-              color: '#007be6',
-              opacity: 0.2,
-              outline: false,
+              color: '#ffff00',
+              opacity: 0.3,
+              clampToGround: true,
             },
             success: function (graphic) {
               //绘制成功后回调

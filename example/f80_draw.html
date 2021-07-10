@@ -87,7 +87,7 @@
       <input id="btnSaveKML" type="button" class="btn btn-primary" value="另存KML" />
       <input id="btnSaveWKT" type="button" class="btn btn-primary" value="另存WKT" />
 
-      <input id="input_draw_file" type="file" accept=".json" style="display:none;" />
+      <input id="input_draw_file" type="file" accept=".json,.geojson" style="display:none;" />
     </div>
 
 
@@ -172,7 +172,7 @@
       map.addLayer(graphicLayer)
 
       //图层管理的相关处理，代码在\js\graphicManager.js
-      initLayerManager(graphicLayer)
+      window.initLayerManager(graphicLayer)
 
       graphicLayer.unbindPopup()
 
@@ -235,7 +235,7 @@
 
       //加载历史演示数据
       if (location.hostname !== '127.0.0.1' && location.hostname !== 'localhost') {
-        $.getJSON('http://data.marsgis.cn/file/geojson/geojson-draw.json', function (result) {
+        $.getJSON('//data.mars3d.cn/file/geojson/mars3d-draw.json', function (result) {
           graphicLayer.loadGeoJSON(result, { clear: true, flyTo: true })
         })
       }
@@ -299,7 +299,7 @@
         type: 'model',
         style: {
           scale: 10,
-          url: 'http://data.marsgis.cn/gltf/mars/firedrill/xiaofangche.gltf',
+          url: '//data.mars3d.cn/gltf/mars/firedrill/xiaofangche.gltf',
         },
       })
     }
@@ -504,7 +504,7 @@
         }
       })
 
-      var kml = tokml(geojsonObject, {
+      var kml = window.tokml(geojsonObject, {
         name: 'Mars3D标绘数据',
         documentName: 'Mars3D标绘数据文件',
         documentDescription: '标绘数据 by mars3d.cn',

@@ -47,16 +47,8 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 31.231319,
-              x: 118.810112,
-              z: 103265.46,
-              heading: 360,
-              pitch: -50.2,
-              roll: 0,
-            },
+            center: { lat: 31.314417, lng: 118.82149, alt: 78939, heading: 358, pitch: -46 },
           },
-          layers: [],
         })
 
         //创建三维地球场景
@@ -65,12 +57,40 @@
         map.basemap = 2017
 
         //显示边界
-        $.getJSON('http://data.marsgis.cn/file/geojson/nanjing.json', function (result) {
-          addBoundary(result.features)
+        let geoJsonLayer = new mars3d.layer.GeoJsonLayer({
+          name: '合肥市',
+          url: '//data.mars3d.cn/file/geojson/areas/320100_full.json',
+          symbol: {
+            type: 'wall',
+            styleOptions: {
+              diffHeight: 800, //墙高
+              materialType: mars3d.MaterialType.LineFlow,
+              speed: 10, //速度
+              image: 'img/textures/fence.png', //图片
+              repeatX: 1, //重复数量
+              axisY: true, //竖直方向
+              color: '#00ffff', //颜色
+              opacity: 0.6, //透明度
+              outline: false,
+              label: {
+                text: '{name}',
+                font_size: 18,
+                color: '#ffffff',
+                distanceDisplayCondition: true,
+                distanceDisplayCondition_far: 500000,
+                distanceDisplayCondition_near: 0,
+
+                position: 'center',
+                setHeight: 900,
+              },
+            },
+          },
+          popup: '{name}',
         })
+        map.addLayer(geoJsonLayer)
 
         //显示高校点
-        $.getJSON('http://data.marsgis.cn/file/apidemo/gaoxiao.json', function (result) {
+        $.getJSON('//data.mars3d.cn/file/apidemo/gaoxiao.json', function (result) {
           addFeature(result)
         })
       }
@@ -127,41 +147,6 @@
             attr: item,
           })
           graphicLayer.addGraphic(graphic)
-        }
-      }
-
-      //加单个墙和名称
-      function addBoundary(arr) {
-        //创建Graphic图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
-
-        for (var i = 0, len = arr.length; i < len; i++) {
-          let feature = arr[i]
-          let coordinates = feature.geometry.coordinates[0]
-
-          let primitive = new mars3d.graphic.WallPrimitive({
-            positions: coordinates,
-            style: {
-              diffHeight: 800,
-              material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-                image: 'img/textures/fence.png',
-                color: '#0111A9',
-                repeat: new Cesium.Cartesian2(5, 1),
-                axisY: true, //方向，true时上下，false左右
-                speed: 10,
-              }),
-              label: {
-                text: feature.properties.Name,
-                font_size: 18,
-                color: '#ffffff',
-                distanceDisplayCondition: true,
-                distanceDisplayCondition_far: 500000,
-                distanceDisplayCondition_near: 0,
-              },
-            },
-          })
-          graphicLayer.addGraphic(primitive)
         }
       }
     </script>

@@ -139,7 +139,7 @@
       function addGraphic_a1(graphicLayer) {
         //加一些演示数据
         Cesium.Resource.fetchJson({
-          url: 'http://data.marsgis.cn/file/geojson/buildings-hf.json',
+          url: '//data.mars3d.cn/file/geojson/buildings-hf.json',
         })
           .then((data) => {
             let arr = mars3d.Util.geoJsonToGraphics(data, {
@@ -178,7 +178,7 @@
       function addGraphic_a2(graphicLayer) {
         //加一些演示数据
         Cesium.Resource.fetchJson({
-          url: 'http://data.marsgis.cn/file/geojson/buildings-hf.json',
+          url: '//data.mars3d.cn/file/geojson/buildings-hf.json',
         })
           .then((data) => {
             let arr = mars3d.Util.geoJsonToGraphics(data)

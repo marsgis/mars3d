@@ -64,7 +64,7 @@
             defaultContextMenu: true, //右键菜单
           },
           terrain: {
-            url: 'http://data.marsgis.cn/terrain',
+            url: 'http://data.mars3d.cn/terrain',
             show: true,
           },
           //方式1：在创建地球前的参数中配置
@@ -81,7 +81,7 @@
                 format: 'image/png',
               },
               alpha: 0.6, //透明度
-              proxy: 'http://data.marsgis.cn/proxy/', //代理服务，解决跨域问题
+              proxy: '//server.mars3d.cn/proxy/', //代理服务，解决跨域问题
               show: true,
             },
             {
@@ -92,13 +92,13 @@
               url:
                 '//www.lightpollutionmap.info/geoserver/gwc/service/wms?transparent=true&format=image%2Fpng&service=WMS&version=1.1.1&request=GetMap&styles=&layers=PostGIS%3AVIIRS_2019&bbox={westProjected},{southProjected},{eastProjected},{northProjected}&width={width}&height={height}&srs=EPSG%3A3857',
               alpha: 0.6, //透明度
-              proxy: 'http://data.marsgis.cn/proxy/', //代理服务，解决跨域问题
+              proxy: '//server.mars3d.cn/proxy/', //代理服务，解决跨域问题
             },
             {
               name: '单张图片',
               icon: 'http://mars3d.cn/example/img/basemaps/offline.png',
               type: 'image',
-              url: 'http://mars3d.cn/example/img/tietu/world.jpg',
+              url: '//data.mars3d.cn/file/img/world/world.jpg',
             },
           ],
         })
@@ -112,7 +112,7 @@
 
         //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
         tileLayer = new mars3d.layer.WmsLayer({
-          url: 'http://data.marsgis.cn/geoserver/mars/wms',
+          url: '//server.mars3d.cn/geoserver/mars/wms',
           layers: 'mars:hf',
           parameters: {
             transparent: 'true',

@@ -120,13 +120,13 @@
 
       //添加参考三维模型
       var tiles3dLayer = new mars3d.layer.TilesetLayer({
-        url: 'http://data.marsgis.cn/3dtiles/qx-shequ/tileset.json',
-        maximumScreenSpaceError: 2,
-        maximumMemoryUsage: 2048,
+        url: '//data.mars3d.cn/3dtiles/qx-shequ/tileset.json',
+        position: { alt: 11.5 },
+        maximumScreenSpaceError: 1,
+        maximumMemoryUsage: 1024,
         dynamicScreenSpaceError: true,
         cullWithChildrenBounds: false,
         luminanceAtZenith: 0.6,
-        position: { alt: 3 },
       })
       map.addLayer(tiles3dLayer)
 

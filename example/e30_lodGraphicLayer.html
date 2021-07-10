@@ -59,7 +59,7 @@
           debuggerTileInfo: true,
           //根据LOD分块信息去请求对应的Tile瓦块内的数据
           queryGridData: (grid, callback) => {
-            var url = 'http://data.marsgis.cn/server/pointRandom/'
+            var url = '//server.mars3d.cn/server/pointRandom/'
             $.ajax({
               url: url,
               data: {
@@ -86,7 +86,7 @@
             var graphic = new mars3d.graphic.ModelPrimitive({
               position: [attr.x, attr.y, height],
               style: {
-                url: 'http://data.marsgis.cn/gltf/mars/leida.glb',
+                url: '//data.mars3d.cn/gltf/mars/leida.glb',
                 scale: 1,
                 minimumPixelSize: 40,
               },

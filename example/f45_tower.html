@@ -64,7 +64,7 @@
       map.addLayer(graphicLayer)
 
       $.ajax({
-        url: 'http://data.marsgis.cn/file/apidemo/tower.json',
+        url: '//data.mars3d.cn/file/apidemo/tower.json',
         type: 'GET',
         dataType: 'json',
         success: function (result) {
@@ -209,7 +209,7 @@
         var primitive = new mars3d.graphic.ModelPrimitive({
           position: position,
           style: {
-            url: 'http://data.marsgis.cn/gltf/mars/tower/' + modelUrls[j],
+            url: '//data.mars3d.cn/gltf/mars/tower/' + modelUrls[j],
             heading: degree,
             scale: 1,
             distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 4000.0),

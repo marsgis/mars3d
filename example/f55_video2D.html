@@ -124,7 +124,7 @@
     </div>
 
     <video id="trailer" style="display: none" muted="muted" autoplay="autoplay" loop="loop" crossorigin="" controls="">
-      <source src="http://data.marsgis.cn/video/duimian.mp4" type="video/mp4" />
+      <source src="http:////data.mars3d.cn/file/video/duimian.mp4" type="video/mp4" />
     </video>
 
     <script src="./js/common.js"></script>
@@ -157,13 +157,10 @@
         //添加参考三维模型
         var tiles3dLayer = new mars3d.layer.TilesetLayer({
           name: '合肥国家大学科技园',
-          url: 'http://data.marsgis.cn/3dtiles/qx-hfdxy/tileset.json',
-          position: { alt: -19 },
-          maximumScreenSpaceError: 2,
-          maximumMemoryUsage: 2048,
-          dynamicScreenSpaceError: true,
-          cullWithChildrenBounds: false,
-          luminanceAtZenith: 0.6,
+          url: '//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json',
+          position: { alt: -24 },
+          maximumScreenSpaceError: 1,
+          maximumMemoryUsage: 1024,
         })
         map.addLayer(tiles3dLayer)
 
@@ -232,7 +229,7 @@
       function addGraphic_01(graphicLayer) {
         var video2D = new mars3d.graphic.Video2D({
           dom: videoElement,
-          position: [117.205459, 31.842988, 69.3],
+          position: [117.205459, 31.842988, 64.3],
           style: {
             camera: {
               direction: { x: -0.20300781957546601, y: 0.3881445982693198, z: -0.8989613985180693 },

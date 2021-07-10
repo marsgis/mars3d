@@ -100,18 +100,14 @@
       //管网数据：3dtiles
       var tilesetLayer = new mars3d.layer.TilesetLayer({
         name: '地下管网',
-        url: 'http://data.marsgis.cn/3dtiles/max-piping-hf/tileset.json',
+        url: '//data.mars3d.cn/3dtiles/max-piping/tileset.json',
+        position: { lng: 117.215457, lat: 31.843363, alt: -3.6 },
+        rotation: { z: 336.7 },
         maximumScreenSpaceError: 2,
         maximumMemoryUsage: 1024,
-        position: {
-          lng: 117.215457,
-          lat: 31.843363,
-          alt: 5,
-        },
-        rotation: { z: 336.7 },
-        center: { y: 31.840525, x: 117.217024, z: 495.12, heading: 0, pitch: -59.3, roll: 0 },
         showClickFeature: true,
         popup: 'all',
+        center: { y: 31.840525, x: 117.217024, z: 495.12, heading: 0, pitch: -59.3, roll: 0 },
       })
       map.addLayer(tilesetLayer)
 

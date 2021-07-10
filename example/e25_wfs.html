@@ -51,7 +51,7 @@
           {
             name: '合肥教育点',
             type: 'wfs',
-            url: 'http://data.marsgis.cn/geoserver/mars/wfs',
+            url: '//server.mars3d.cn/geoserver/mars/wfs',
             layer: 'mars:hfjy',
             parameters: {
               //支持所有wfs的参数
@@ -102,7 +102,7 @@
       var tileLayer = new mars3d.layer.WmsLayer({
         name: '建筑物面',
         type: 'wms',
-        url: 'http://data.marsgis.cn/geoserver/mars/wms',
+        url: '//server.mars3d.cn/geoserver/mars/wms',
         layers: 'mars:hfjzw',
         crs: 'EPSG:4326',
         parameters: {
@@ -118,7 +118,7 @@
 
       var wfsLayer = new mars3d.layer.WfsLayer({
         name: '建筑物面',
-        url: 'http://data.marsgis.cn/geoserver/mars/wfs',
+        url: '//server.mars3d.cn/geoserver/mars/wfs',
         layer: 'mars:hfjzw',
         parameters: {
           //支持所有wfs的参数

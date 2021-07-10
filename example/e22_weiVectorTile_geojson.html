@@ -46,34 +46,23 @@
       'use script' //开发环境建议开启严格模式
 
       var map
-      var viewer
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            //此处参数会覆盖config.json中的对应配置
-            center: {
-              y: 27.344528,
-              x: 116.865807,
-              z: 534624.56,
-              heading: 10,
-              pitch: -52,
-              roll: 0,
-            },
+            center: { lat: 27.689337, lng: 118.112448, alt: 762174, heading: 358, pitch: -62 },
           },
         })
 
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', mapOptions)
-        viewer = map.viewer
 
         //geojson 安徽各市
         $.ajax({
           type: 'get',
           dataType: 'json',
-          url: 'http://data.marsgis.cn/file/geojson/anhui.json',
-          timeout: 0, //永不超时
+          url: '//data.mars3d.cn/file/geojson/areas/340000_full.json',
           success: function (geojson) {
             showGeoJsonVectorTile(geojson)
           },
@@ -86,10 +75,9 @@
         $.ajax({
           type: 'get',
           dataType: 'json',
-          url: 'http://data.marsgis.cn/file/geojson/hefei.json',
-          timeout: 0, //永不超时
-          success: function (feature) {
-            showBJXLine(feature)
+          url: '//data.mars3d.cn/file/geojson/areas/340000.json',
+          success: function (geojson) {
+            showBJXLine(geojson.features[0])
           },
           error: function (XMLHttpRequest, textStatus, errorThrown) {
             haoutil.alert('Json文件加载失败！')
@@ -147,6 +135,8 @@
       }
 
       function showBJXLine(feature) {
+        console.log('边界线', feature)
+
         //缓冲区
         var bufferedOuter = turf.buffer(feature, 2000, {
           units: 'meters',
@@ -174,13 +164,7 @@
             fillColor: 'rgba(209,204,226,1)',
             tileCacheSize: 200,
             showMaker: false,
-            showCenterLabel: true,
-            fontColor: 'rgba(255,0,0,1)',
-            labelOffsetX: -10,
-            labelOffsetY: -5,
-            fontSize: 13,
-            fontFamily: '黑体',
-            centerLabelPropertyName: 'NAME',
+            showCenterLabel: false,
           },
           maximumLevel: 20,
           minimumLevel: 5,
@@ -200,13 +184,7 @@
             fillColor: 'rgba(185,169,199,1)',
             tileCacheSize: 200,
             showMaker: false,
-            showCenterLabel: true,
-            fontColor: 'rgba(255,0,0,1)',
-            labelOffsetX: -10,
-            labelOffsetY: -5,
-            fontSize: 13,
-            fontFamily: '黑体',
-            centerLabelPropertyName: 'NAME',
+            showCenterLabel: false,
           },
           maximumLevel: 20,
           minimumLevel: 5,

@@ -54,7 +54,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { y: 31.588498, x: 120.714274, z: 492.53, heading: 13.6, pitch: -55.3, roll: 0.1 },
+            center: { lat: 31.722018, lng: 117.251926, alt: 8378, heading: 360, pitch: -33 },
           },
         })
 
@@ -65,7 +65,9 @@
 
         let tiles3dLayer = new mars3d.layer.TilesetLayer({
           name: '合肥市建筑物',
-          url: 'http://data.marsgis.cn/3dtiles/jzw-hefei/tileset.json',
+          url: '//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json',
+          maximumScreenSpaceError: 1,
+          maximumMemoryUsage: 1024,
           marsJzwStyle: true, //打开建筑物特效（内置Shader代码）
           showClickFeature: true,
           popup: [
@@ -80,7 +82,7 @@
 
         let geoJsonLayer = new mars3d.layer.GeoJsonLayer({
           name: '体育设施点',
-          url: 'http://data.marsgis.cn/file/geojson/hfty-point.json',
+          url: '//data.mars3d.cn/file/geojson/hfty-point.json',
           symbol: {
             type: 'billboard',
             styleOptions: {

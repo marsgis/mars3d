@@ -124,25 +124,14 @@
       // 加个模型
       var tiles3dLayer = new mars3d.layer.TilesetLayer({
         name: '地下管网',
-        url: 'http://data.marsgis.cn/3dtiles/max-piping-hf/tileset.json',
+        url: '//data.mars3d.cn/3dtiles/max-piping/tileset.json',
+        position: { lng: 117.215457, lat: 31.843363, alt: -3.6 },
+        rotation: { z: 336.7 },
         maximumScreenSpaceError: 2,
         maximumMemoryUsage: 1024,
-        position: {
-          lng: 117.215457,
-          lat: 31.843363,
-          alt: 5,
-        },
-        rotation: { z: 336.7 },
-        center: {
-          y: 31.840525,
-          x: 117.217024,
-          z: 495.12,
-          heading: 0,
-          pitch: -59.3,
-          roll: 0,
-        },
         showClickFeature: true,
         popup: 'all',
+        center: { lat: 31.838081, lng: 117.216584, alt: 406, heading: 1, pitch: -34 },
       })
       map.addLayer(tiles3dLayer)
 
@@ -166,7 +155,7 @@
       var graphicModel = new mars3d.graphic.ModelEntity({
         position: [117.214494, 31.844015, 30],
         style: {
-          url: 'http://data.marsgis.cn/gltf/mars/firedrill/xiaofangche2.gltf',
+          url: '//data.mars3d.cn/gltf/mars/firedrill/xiaofangche2.gltf',
           scale: 7,
           minimumPixelSize: 50,
         },

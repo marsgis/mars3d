@@ -46,7 +46,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 31.35196, lng: 121.51419, alt: 9140, heading: 193, pitch: -40 },
+            center: { lat: 31.170953, lng: 121.485939, alt: 7473, heading: 10, pitch: -40 },
           },
         })
 
@@ -55,8 +55,8 @@
         map.basemap = 2017 //蓝色底图
 
         var tiles3dLayer = new mars3d.layer.TilesetLayer({
-          name: '上海市区',
-          url: 'http://data.marsgis.cn/3dtiles/jzw-shanghai/tileset.json', //定义在 config\marsUrl.js
+          name: '上海市建筑物',
+          url: '//data.mars3d.cn/3dtiles/jzw-shanghai/tileset.json',
           maximumScreenSpaceError: 8,
           maximumMemoryUsage: 1024,
           marsJzwStyle: true,
@@ -65,6 +65,7 @@
               conditions: [['true', 'rgb(3, 104, 255)']],
             },
           },
+          popup: 'all',
         })
         map.addLayer(tiles3dLayer)
 

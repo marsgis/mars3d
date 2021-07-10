@@ -96,13 +96,13 @@
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
-          center: { lat: 31.841018, lng: 117.252932, alt: 1346, heading: 38, pitch: -26 },
+          center: { lat: 31.825314, lng: 117.242517, alt: 3195, heading: 29, pitch: -39 },
         },
         layers: [
           {
             type: 'geojson',
             name: '道路线',
-            url: 'http://data.marsgis.cn/file/geojson/hefei-road.json',
+            url: '//data.mars3d.cn/file/geojson/hefei-road.json',
             symbol: {
               styleOptions: {
                 materialType: 'PolylineGlow',
@@ -110,15 +110,15 @@
                 color: '#FF4500',
                 width: 12,
                 opacity: 0.8,
-                // clampToGround: true,
               },
             },
+            popup: '{name}',
             show: true,
           },
           {
             type: 'geojson',
             name: '河流(面状)',
-            url: 'http://data.marsgis.cn/file/geojson/hefei-water.json',
+            url: '//data.mars3d.cn/file/geojson/hefei-water.json',
             symbol: {
               type: 'water',
               styleOptions: {
@@ -132,6 +132,7 @@
                 // clampToGround: true,
               },
             },
+            popup: '{name}',
             show: true,
           },
         ],
@@ -145,7 +146,9 @@
       //添加参考三维模型
       var tiles3dLayer = new mars3d.layer.TilesetLayer({
         name: '合肥市建筑物',
-        url: 'http://data.marsgis.cn/3dtiles/jzw-hefei/tileset.json',
+        url: '//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json',
+        maximumScreenSpaceError: 1,
+        maximumMemoryUsage: 1024,
         marsJzwStyle: true, //打开建筑物特效（内置Shader代码）
         showClickFeature: true,
         popup: [

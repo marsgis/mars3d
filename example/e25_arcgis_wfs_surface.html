@@ -58,19 +58,17 @@
           {
             type: '3dtiles',
             name: '合肥国家大学科技园',
-            url: 'http://data.marsgis.cn/3dtiles/qx-hfdxy/tileset.json',
+            url: '//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json',
             maximumScreenSpaceError: 1,
             maximumMemoryUsage: 1024,
-            position: {
-              alt: 50,
-            },
+            position: { alt: 50 },
             show: true,
           },
           {
             id: 87,
             type: 'arcgis_wfs',
             name: '兴趣点',
-            url: 'http://data.marsgis.cn/arcgis/rest/services/mars/hefei/MapServer/1',
+            url: '//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/1',
             where: " NAME like '%大学%' ",
             minimumLevel: 15,
             symbol: {

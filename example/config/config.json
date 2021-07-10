@@ -56,7 +56,7 @@
       }
     },
     "terrain": {
-      "url": "//data.marsgis.cn/terrain",
+      "url": "//data.mars3d.cn/terrain",
       "show": true
     },
     "basemaps": [
@@ -188,7 +188,7 @@
         "name": "离线地图  (供参考)",
         "type": "xyz",
         "icon": "http://mars3d.cn/example/img/basemaps/mapboxSatellite.png",
-        "url": "http://data.marsgis.cn/maptile/googleImg/{z}/{x}/{y}.jpg",
+        "url": "//data.mars3d.cn/tile/googleImg/{z}/{x}/{y}.jpg",
         "minimumLevel": 1,
         "maximumLevel": 18,
         "minimumTerrainLevel": 1,
@@ -200,7 +200,7 @@
         "name": "单张图片 (本地离线)",
         "icon": "http://mars3d.cn/example/img/basemaps/offline.png",
         "type": "image",
-        "url": "http://mars3d.cn/example/img/tietu/world.jpg"
+        "url": "//data.mars3d.cn/file/img/world/world.jpg"
       }
     ],
     "layers": [
@@ -230,7 +230,7 @@
         "layer": "time",
         "minimumTerrainLevel": 4,
         "minimumLevel": 4,
-        "proxy": "http://data.marsgis.cn/proxy/"
+        "proxy": "//server.mars3d.cn/proxy/"
       },
       {
         "pid":30,

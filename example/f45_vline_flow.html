@@ -59,10 +59,10 @@
       map.basemap = 2017 //切换到蓝色底图
 
       var tilesetLayer = new mars3d.layer.TilesetLayer({
-        url: 'http://data.marsgis.cn/3dtiles/jzw-hefei/tileset.json',
-        marsJzwStyle: true, //打开建筑物特效（内置Shader代码）
-        maximumScreenSpaceError: 3,
+        url: '//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json',
+        maximumScreenSpaceError: 1,
         maximumMemoryUsage: 1024,
+        marsJzwStyle: true, //打开建筑物特效（内置Shader代码）
         center: { y: 31.805004, x: 117.222617, z: 1457.4, heading: 1.6, pitch: -30.5, roll: 0 },
         showClickFeature: true,
         popup: 'all',

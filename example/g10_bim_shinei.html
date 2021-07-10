@@ -89,20 +89,8 @@
             id: 1987,
             name: '教学楼',
             type: '3dtiles',
-            url: 'http://data.marsgis.cn/3dtiles/bim-daxue/tileset.json',
-            position: {
-              lng: 117.251229,
-              lat: 31.844015,
-              alt: 36.2,
-            },
-            center: {
-              y: 31.842655,
-              x: 117.251587,
-              z: 304.57,
-              heading: 358,
-              pitch: -59,
-              roll: 0,
-            },
+            url: '//data.mars3d.cn/3dtiles/bim-daxue/tileset.json',
+            position: { lng: 117.251229, lat: 31.844015, alt: 31.2 },
             maximumScreenSpaceError: 16,
             maximumMemoryUsage: 1024,
             showClickFeature: true,
@@ -140,10 +128,10 @@
       //挖地区域
       var terrainPlanClip = new mars3d.thing.TerrainPlanClip({
         positions: [
-          [117.251176, 31.843707, 32.24],
-          [117.251877, 31.843707, 32.24],
-          [117.251877, 31.844216, 32.24],
-          [117.251176, 31.844216, 32.24],
+          [117.251176, 31.843707, 28.24],
+          [117.251877, 31.843707, 28.24],
+          [117.251877, 31.844216, 28.24],
+          [117.251176, 31.844216, 28.24],
         ],
         diffHeight: 10, //高度
         image: './img/textures/excavate_side_min.jpg', //边界墙材质
@@ -197,36 +185,15 @@
     }
 
     function centerAtDX1() {
-      map.setCameraView({
-        y: 31.84371,
-        x: 117.251041,
-        z: 38.51,
-        heading: 56.1,
-        pitch: -8.1,
-        roll: 0.1,
-      })
+      map.setCameraView({ lat: 31.843703, lng: 117.251038, alt: 33, heading: 50, pitch: -6 })
     }
 
     function centerAtDX2() {
-      map.setCameraView({
-        y: 31.84381,
-        x: 117.250991,
-        z: 38.41,
-        heading: 305.9,
-        pitch: -12.3,
-        roll: 359.9,
-      })
+      map.setCameraView({ lat: 31.843816, lng: 117.250978, alt: 34, heading: 308, pitch: -8 })
     }
 
     function centerAtDX3() {
-      map.setCameraView({
-        y: 31.843787,
-        x: 117.251172,
-        z: 41.78,
-        heading: 17.2,
-        pitch: -9.3,
-        roll: 0.1,
-      })
+      map.setCameraView({ lat: 31.843789, lng: 117.251188, alt: 42, heading: 6, pitch: -31 })
     }
   </script>
 </body>

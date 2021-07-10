@@ -65,7 +65,7 @@
       //加载车辆
       $.ajax({
         type: 'GET',
-        url: 'http://data.marsgis.cn/file/apidemo/car-list.json',
+        url: '//data.mars3d.cn/file/apidemo/car-list.json',
         success: function (res) {
           showCarList(res.data)
         },
@@ -149,13 +149,13 @@
           case 1:
             modelParam = {
               scale: 2,
-              url: 'http://data.marsgis.cn/gltf/mars/car/jiaobanche.glb',
+              url: '//data.mars3d.cn/gltf/mars/car/tufangche.glb',
             }
             break
           case 2:
             modelParam = {
               scale: 1,
-              url: 'http://data.marsgis.cn/gltf/mars/car/wajueji.glb',
+              url: '//data.mars3d.cn/gltf/mars/car/wajueji.glb',
             }
             break
         }
@@ -233,7 +233,7 @@
     function getPathList(beginTime, endTime) {
       $.ajax({
         type: 'GET',
-        url: 'http://data.marsgis.cn/file/apidemo/car-path.json',
+        url: '//data.mars3d.cn/file/apidemo/car-path.json',
         // data: {
         //     beginTime: beginTime,
         //     endTime: endTime,

@@ -3,7 +3,8 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
   <meta name="author" content="火星科技 http://mars3d.cn ">
   <meta name="apple-touch-fullscreen" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -23,9 +24,11 @@
 
 
   <!--第三方lib-->
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/" include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d,mars3d-heatmap"></script>
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,echarts,turf,mars3d,mars3d-heatmap"></script>
 
   <link href="css/style.css" rel="stylesheet" />
+  <link href="./css/m10_heatLayer_height.css" rel="stylesheet" />
 </head>
 
 <body class="dark">
@@ -41,18 +44,45 @@
   </div>
 
 
+  <!-- 统计图表 -->
+  <div class="chart">
+    <div class="chartOne">
+      <h6>分类统计</h6>
+      <ul id="ulFLTJ" class="chartList">
+      </ul>
+    </div>
+    <div class="chartTwo" id="chartTwo">
+      <h6>分资金来源统计</h6>
+      <div id="ul_ZJLY" class="chartTwo_ulzjly"></div>
+    </div>
+    <div class="chartThree" id="chartThree">
+      <h6>分年度统计</h6>
+      <button type="button" name="项目数" value="xms" id="btnNDTJ_ms" >项目数</button>
+      <button type="button" name="占地数" value="zds" id="btnNDTJ_zds">占地数</button>
+      <button type="button" name="资金量" value="zjl" id="btnNDTJ_zjl">资金量</button>
+      <div id="ul_ NDTJ" class="chartThree_ulndtj">
+      </div>
+    </div>
+  </div>
+
+
   <div class="infoview">
     <input type="button" class="btn btn-primary" id="btnUpdate" value="更新数据" />
   </div>
 
 
   <script src="./js/common.js"></script>
+
+  <script src="./js/m10_heatLayer_height.js"></script>
+  
   <script type="text/javascript">
     'use script' //开发环境建议开启严格模式
 
     var map
 
     function initMap(options) {
+      initCharts()
+	  
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
         scene: {

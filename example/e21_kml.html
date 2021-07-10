@@ -67,7 +67,7 @@
             {
               name: '国境线',
               type: 'kml',
-              url: 'http://data.marsgis.cn/file/kml/countryboundary.kml',
+              url: '//data.mars3d.cn/file/kml/countryboundary.kml',
               symbol: {
                 styleOptions: {
                   color: '#FED976',
@@ -80,7 +80,7 @@
             {
               name: '省界线',
               type: 'kml',
-              url: 'http://data.marsgis.cn/file/kml/province.kml',
+              url: '//data.mars3d.cn/file/kml/province.kml',
               symbol: {
                 styleOptions: {
                   color: '#00FF00',
@@ -114,7 +114,7 @@
         removeLayer()
 
         kmlLayer = new mars3d.layer.KmlLayer({
-          url: 'http://data.marsgis.cn/file/kml/hftl.kml',
+          url: '//data.mars3d.cn/file/kml/hftl.kml',
           symbol: {
             styleOptions: {
               color: '#00ffff',
@@ -165,7 +165,7 @@
 
         kmlLayer = new mars3d.layer.KmlLayer({
           name: '路线',
-          url: 'http://data.marsgis.cn/file/kml/bslx.kmz',
+          url: '//data.mars3d.cn/file/kml/bslx.kmz',
           symbol: {
             styleOptions: {
               font_family: '楷体',
@@ -194,7 +194,7 @@
 
         kmlLayer = new mars3d.layer.KmlLayer({
           name: '海上安全警告',
-          url: 'http://data.marsgis.cn/file/kml/NAVWARN.kmz',
+          url: '//data.mars3d.cn/file/kml/NAVWARN.kmz',
           popup: '{description}',
           center: { y: 7.084013, x: 109.599602, z: 2065692, heading: 7, pitch: -74, roll: 0 },
           flyTo: true,
@@ -217,7 +217,7 @@
 
         kmlLayer = new mars3d.layer.KmlLayer({
           name: '气象数据',
-          url: 'http://data.marsgis.cn/file/kml/dg8.kml',
+          url: '//data.mars3d.cn/file/kml/dg8.kml',
           opacity: 0.7,
           popup: 'all',
           flyTo: true,
@@ -240,7 +240,7 @@
 
         kmlLayer = new mars3d.layer.KmlLayer({
           name: '全球各国GDP',
-          url: 'http://data.marsgis.cn/file/kml/gdpPerCapita2008.kmz',
+          url: '//data.mars3d.cn/file/kml/gdpPerCapita2008.kmz',
           center: { y: 12.46821, x: 91.404177, z: 18969935, heading: 359, pitch: -87, roll: 0 },
           popup: 'all',
           flyTo: true,

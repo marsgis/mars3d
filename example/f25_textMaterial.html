@@ -61,9 +61,9 @@
 
       //加个模型
       var tiles3dLayer = new mars3d.layer.TilesetLayer({
-        name: '整体模型',
-        url: 'http://data.marsgis.cn/3dtiles/max-fsdzm/tileset.json',
-        position: { alt: 11.3 },
+        name: '水利闸门',
+        url: '//data.mars3d.cn/3dtiles/max-fsdzm/tileset.json',
+        position: { alt: 15.2 },
         maximumScreenSpaceError: 1,
         maximumMemoryUsage: 1024,
       })
@@ -86,8 +86,8 @@
     function addGraphic_01(graphicLayer) {
       var primitive = new mars3d.graphic.WallPrimitive({
         positions: [
-          [121.479914, 29.791249, 18],
-          [121.479694, 29.791303, 18],
+          [121.479914, 29.791249, 32],
+          [121.479694, 29.791303, 32],
         ],
         style: {
           diffHeight: 5,
@@ -109,8 +109,8 @@
     function addGraphic_02(graphicLayer) {
       var primitive = new mars3d.graphic.WallPrimitive({
         positions: [
-          [121.479343, 29.791419, 25],
-          [121.479197, 29.791474, 25],
+          [121.479343, 29.791419, 35],
+          [121.479197, 29.791474, 35],
         ],
         style: {
           diffHeight: 5,
@@ -158,8 +158,8 @@
     function addGraphic_04(graphicLayer) {
       var rectanglePrimitive = new mars3d.graphic.RectanglePrimitive({
         positions: [
-          [121.479593, 29.791632],
-          [121.480136, 29.79169],
+          [121.479593, 29.791632, 13],
+          [121.480136, 29.79169, 13],
         ],
         style: {
           material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.Text, {

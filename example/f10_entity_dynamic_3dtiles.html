@@ -87,10 +87,10 @@
 
         let tiles3dLayer = new mars3d.layer.TilesetLayer({
           name: '文庙',
-          url: 'http://data.marsgis.cn/3dtiles/qx-simiao/tileset.json',
+          url: '//data.mars3d.cn/3dtiles/qx-simiao/tileset.json',
+          position: { alt: 80.6 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
-          position: { alt: 81.5 },
         })
         map.addLayer(tiles3dLayer)
 
@@ -105,7 +105,7 @@
         for (let i = 0; i < 20; i++) {
           let graphic = new mars3d.graphic.ModelEntity({
             style: {
-              url: 'http://data.marsgis.cn/gltf/mars/qiche.gltf',
+              url: '//data.mars3d.cn/gltf/mars/qiche.gltf',
               scale: 0.1,
               minimumPixelSize: 10,
               label: {

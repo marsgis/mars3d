@@ -44,7 +44,7 @@
   <div class="infoview">
     <div>
       模型URL：
-      <input id="txtModel" type="text" value="http://data.marsgis.cn/gltf/mars/feiji.glb" class="form-control"
+      <input id="txtModel" type="text" value="//data.mars3d.cn/gltf/mars/feiji.glb" class="form-control"
         style="width:350px;" />
 
       <div class="checkbox checkbox-primary checkbox-inline" title="解决跨域问题">
@@ -237,7 +237,7 @@
 
       var isProxy = $('#chkProxy').is(':checked')
       if (isProxy) {
-        url = 'http://data.marsgis.cn/proxy/' + url
+        url = '//server.mars3d.cn/proxy/' + url
       }
 
       graphicLayer.startDraw({
