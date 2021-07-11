@@ -21,7 +21,8 @@
 
 
   <!--第三方lib-->
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/" include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+   include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d,mars3d-space"></script>
 
   <link href="css/style.css" rel="stylesheet" />
 </head>
@@ -54,6 +55,9 @@
       var mapOptions = mars3d.Util.merge(options, {
         scene: {
           center: { lat: 30.758571, lng: 116.426699, alt: 23428, heading: 347, pitch: -40 },
+          clock: {
+            currentTime: '2021-07-01 10:45:00',
+          },
         },
       })
 
@@ -71,6 +75,7 @@
       addGraphic_01(graphicLayer)
       addGraphic_02(graphicLayer)
       addGraphic_03(graphicLayer)
+      addGraphic_04(graphicLayer)
     }
 
     //静态的位置
@@ -210,6 +215,48 @@
         property.addSample(time, position)
       }
       return property
+    }
+
+    //
+    function addGraphic_04(graphicLayer) {
+      var model = new mars3d.graphic.ModelEntity({
+        name: '地面站模型',
+        position: [117.170264, 31.840312, 258],
+        style: {
+          url: '//data.mars3d.cn/gltf/mars/leida.glb',
+          scale: 1,
+          minimumPixelSize: 40,
+          clampToGround: true,
+        },
+      })
+      graphicLayer.addGraphic(model)
+
+      //卫星
+      var weixin = new mars3d.graphic.Satellite({
+        name: '高分1号卫星',
+        tle1: '1 39150U 13018A   18309.20646405  .00000034  00000-0  12253-4 0  9993',
+        tle2: '2 39150  97.9189  29.2064 0018076 220.9170 139.0692 14.76532215297913',
+        model: {
+          url: '//data.mars3d.cn/gltf/mars/weixin.gltf',
+          scale: 1,
+          minimumPixelSize: 90,
+          autoHeading: true,
+          show: true,
+        },
+        path: { color: '#00ff00', opacity: 0.5, width: 1, show: true },
+      })
+      graphicLayer.addGraphic(weixin)
+
+      var coneTrack = new mars3d.graphic.ConeTrack({
+        position: model.position,
+        targetPosition: weixin.property,
+        style: {
+          angle: 1, //半场角度
+          color: '#ff0000',
+          opacity: 0.4,
+        },
+      })
+      graphicLayer.addGraphic(coneTrack)
     }
   </script>
 </body>

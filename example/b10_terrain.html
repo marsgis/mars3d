@@ -68,8 +68,16 @@
       <div>
         调试：
         <div class="checkbox checkbox-primary checkbox-inline">
-          <input id="chkWireframe" class="styled" type="checkbox" />
-          <label for="chkWireframe"> 地形三角网 </label>
+          <input id="chkTerrain" class="styled" type="checkbox" checked>
+          <label for="chkTerrain">
+            开启地形
+          </label>
+        </div>
+        <div class="checkbox checkbox-primary checkbox-inline">
+          <input id="chkWireframe" class="styled" type="checkbox">
+          <label for="chkWireframe">
+            地形三角网
+          </label>
         </div>
       </div>
     </div>
@@ -137,6 +145,13 @@
               })
               break
           }
+        })
+
+        $('#chkTerrain').change(function () {
+          var val = $(this).is(':checked')
+
+          //可以开启和关闭地形
+          map.hasTerrain = val
         })
 
         $('#chkWireframe').change(function () {
