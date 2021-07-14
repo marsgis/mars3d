@@ -1,0 +1,304 @@
+{
+  "layers": [
+    { "id": 2040, "pid": 20, "name": "城市白模", "type": "group" },
+    {
+      "id": 204011,
+      "pid": 2040,
+      "type": "3dtiles",
+      "name": "合肥市区",
+      "url": "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
+      "maximumScreenSpaceError": 1,
+      "maximumMemoryUsage": 1024,
+      "marsJzwStyle": true,
+      "showClickFeature": true,
+      "popup": [
+        { "field": "objectid", "name": "编号" },
+        { "field": "name", "name": "名称" },
+        { "field": "height", "name": "楼高", "unit": "米" }
+      ],
+      "center": { "lat": 31.786281, "lng": 117.223716, "alt": 3718, "heading": 2, "pitch": -45 }
+    },
+    {
+      "id": 204012,
+      "pid": 2040,
+      "type": "3dtiles",
+      "name": "上海市区",
+      "url": "//data.mars3d.cn/3dtiles/jzw-shanghai/tileset.json",
+      "maximumScreenSpaceError": 4,
+      "maximumMemoryUsage": 1024,
+      "style": {
+        "color": {
+          "conditions": [
+            ["${floor} >= 200", "rgba(45, 0, 75, 0.5)"],
+            ["${floor} >= 100", "rgb(170, 162, 204)"],
+            ["${floor} >= 50", "rgb(224, 226, 238)"],
+            ["${floor} >= 25", "rgb(252, 230, 200)"],
+            ["${floor} >= 10", "rgb(248, 176, 87)"],
+            ["${floor} >= 5", "rgb(198, 106, 11)"],
+            ["true", "rgb(127, 59, 8)"]
+          ]
+        }
+      },
+      "showClickFeature": true,
+      "popup": [
+        { "field": "name", "name": "名称" },
+        { "field": "floor", "name": "楼层" }
+      ],
+      "center": { "lat": 31.257341, "lng": 121.466139, "alt": 2170.8, "heading": 122.2, "pitch": -31.8 }
+    },
+    { "id": 2060, "pid": 20, "name": "BIM模型", "type": "group" },
+    {
+      "pid": 2060,
+      "type": "3dtiles",
+      "name": "大学教学楼",
+      "url": "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
+      "position": { "lng": 117.251229, "lat": 31.844015, "alt": 31.2 },
+      "showClickFeature": true,
+      "pickFeatureStyle": { "color": "#FFFF00" },
+      "popup": "all",
+      "scenetree": "scenetree.json",
+      "center": { "lat": 31.842516, "lng": 117.25107, "alt": 145, "heading": 8, "pitch": -39 }
+    },
+    {
+      "pid": 2060,
+      "type": "3dtiles",
+      "name": "轻轨地铁站",
+      "url": "//data.mars3d.cn/3dtiles/bim-ditiezhan/tileset.json",
+      "position": { "lng": 117.203994, "lat": 31.857999, "alt": 28.9 },
+      "rotation": { "z": 168.1 },
+      "showClickFeature": true,
+      "pickFeatureStyle": { "color": "#00FF00" },
+      "popup": "all",
+      "scenetree": "scenetree.json",
+      "center": { "lat": 31.856125, "lng": 117.204513, "alt": 155, "heading": 350, "pitch": -31 }
+    },
+    {
+      "id": 206012,
+      "pid": 2060,
+      "type": "3dtiles",
+      "name": "桥梁",
+      "url": "//data.mars3d.cn/3dtiles/bim-qiaoliang/tileset.json",
+      "position": { "lng": 117.096906, "lat": 31.851564, "alt": 45 },
+      "rotation": { "z": 17.5 },
+      "maximumScreenSpaceError": 16,
+      "maximumMemoryUsage": 1024,
+      "skipLevelOfDetail": true,
+      "loadSiblings": true,
+      "cullRequestsWhileMoving": true,
+      "cullRequestsWhileMovingMultiplier": 10,
+      "preferLeaves": true,
+      "progressiveResolutionHeightFraction": 0.5,
+      "dynamicScreenSpaceError": true,
+      "preloadWhenHidden": true,
+      "center": { "lat": 31.849357, "lng": 117.099194, "alt": 306.2, "heading": 327.1, "pitch": -30.9 },
+      "scenetree": "scenetree.json",
+      "showClickFeature": true,
+      "pickFeatureStyle": { "color": "#00FF00" },
+      "popup": "all"
+    },
+    { "id": 2020, "pid": 20, "name": "人工建模", "type": "group" },
+    {
+      "pid": 2020,
+      "type": "3dtiles",
+      "name": "居民楼(分层分户)",
+      "url": "//data.mars3d.cn/3dtiles/max-fcfh/tileset.json",
+      "maximumScreenSpaceError": 1,
+      "maximumMemoryUsage": 1024,
+      "showClickFeature": true,
+      "popup": "all",
+      "scenetree": "scenetree.json",
+      "center": {"lat":31.831874,"lng":117.220976,"alt":236,"heading":354,"pitch":-41}
+    },
+    {
+      "pid": 2020,
+      "type": "3dtiles",
+      "name": "油田联合站",
+      "url": "//data.mars3d.cn/3dtiles/max-ytlhz/tileset.json",
+      "maximumScreenSpaceError": 1,
+      "maximumMemoryUsage": 1024,
+      "showClickFeature": true,
+      "popup": "all",
+      "scenetree": "scenetree.json",
+      "center": {"lat":40.894622,"lng":121.917884,"alt":433,"heading":64,"pitch":-38}
+    },
+    {
+      "id": 202013,
+      "pid": 2020,
+      "type": "3dtiles",
+      "name": "地下管网",
+      "url": "//data.mars3d.cn/3dtiles/max-piping/tileset.json",
+      "position": { "lng": 117.215457, "lat": 31.843363, "alt": -3.6 },
+      "rotation": { "z": 336.7 },
+      "maximumScreenSpaceError": 2,
+      "maximumMemoryUsage": 1024,
+      "showClickFeature": true,
+      "popup": "all",
+      "center": { "lat": 31.838821, "lng": 117.216402, "alt": 461, "heading": 0, "pitch": -46 },
+      "msg": "演示数据，地下数据拖动时会在地面漂移"
+    },
+    {
+      "id": 202012,
+      "pid": 2020,
+      "type": "3dtiles",
+      "name": "石化工厂",
+      "url": "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
+      "position": { "lng": 117.077158, "lat": 31.659116, "alt": 24.6 },
+      "maximumScreenSpaceError": 1,
+      "maximumMemoryUsage": 1024,
+      "showClickFeature": true,
+      "popup": "all",
+      "scenetree": "scenetree.json",
+      "center": { "lat": 31.654916, "lng": 117.08278, "alt": 279, "heading": 316, "pitch": -29 }
+    },
+    {
+      "id": 202030,
+      "pid": 2020,
+      "name": "水利闸门",
+      "type": "group",
+      "center": { "lat": 29.794301, "lng": 121.47998, "alt": 262, "heading": 191, "pitch": -35 }
+    },
+    {
+      "pid": 202030,
+      "type": "gltf",
+      "name": "闸门",
+      "url": "//data.mars3d.cn/gltf/mars/zhamen.glb",
+      "position": { "lng": 121.479813, "lat": 29.791278, "alt": 16 },
+      "style": { "heading": 105 },
+      "center": { "lat": 29.791607, "lng": 121.479925, "alt": 27, "heading": 198, "pitch": -18 }
+    },
+    {
+      "id": 202011,
+      "pid": 202030,
+      "type": "3dtiles",
+      "name": "整体",
+      "url": "//data.mars3d.cn/3dtiles/max-fsdzm/tileset.json",
+      "position": { "alt": 15.2 },
+      "maximumScreenSpaceError": 1,
+      "maximumMemoryUsage": 1024,
+      "center": { "lat": 29.792675, "lng": 121.480207, "alt": 190.8, "heading": 196.1, "pitch": -49 }
+    },
+    { "id": 2030, "pid": 20, "name": "倾斜摄影", "type": "group" },
+    {
+      "pid": 2030,
+      "type": "3dtiles",
+      "name": "大雁塔",
+      "url": "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
+      "position": { "alt": -27 },
+      "maximumScreenSpaceError": 1,
+      "maximumMemoryUsage": 1024,
+      "center": {
+        "lat": 34.214367,
+        "lng": 108.959067,
+        "alt": 732,
+        "heading": 3,
+        "pitch": -31
+      }
+    },
+    {
+      "pid": 2030,
+      "type": "3dtiles",
+      "name": "合肥大学科技园",
+      "url": "//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
+      "position": { "alt": -24  },
+      "maximumScreenSpaceError": 1,
+      "maximumMemoryUsage": 1024,
+      "center":{"lat":31.841523,"lng":117.205761,"alt":166,"heading":1,"pitch":-33}
+    },
+    {
+      "id": 203014,
+      "pid": 2030,
+      "type": "3dtiles",
+      "name": "县城社区",
+      "url": "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
+      "position": { "alt": 11.5 },
+      "maximumScreenSpaceError": 2,
+      "maximumMemoryUsage": 2048,
+      "dynamicScreenSpaceError": true,
+      "cullWithChildrenBounds": false,
+      "center": { "lat": 28.440864, "lng": 119.486477, "alt": 588.23, "heading": 268.6, "pitch": -37.8 },
+      "show": false,
+      "flyTo": false
+    },
+    {
+      "pid": 2030,
+      "type": "3dtiles",
+      "name": "小区",
+      "url": "//data.mars3d.cn/3dtiles/qx-xiaoqu/tileset.json",
+      "maximumScreenSpaceError": 6,
+      "maximumMemoryUsage": 2048,
+      "dynamicScreenSpaceError": true,
+      "cullWithChildrenBounds": false,
+      "skipLevelOfDetail": true,
+      "preferLeaves": true,
+      "center": { "lat": 25.078322, "lng": 102.653514, "alt": 3006, "heading": 29, "pitch": -45 }
+    },
+    {
+      "pid": 2030,
+      "name": "河道边厂房(分层分户)",
+      "type": "group",
+      "center": {"lat":31.56196,"lng":120.848283,"alt":92,"heading":71,"pitch":-42},
+      "layers": [
+        {
+          "type": "3dtiles",
+          "name": "河道边厂房-单体化",
+          "url": "//data.mars3d.cn/3dtiles/qx-xiaolou-dth/tileset.json",
+          "classificationType":1,
+          "style": {
+            "color": "rgba(255, 255, 255, 0.01)"
+          },
+          "position": { "alt": 16.8 },
+          "maximumScreenSpaceError": 1,
+          "maximumMemoryUsage": 1024,
+          "showMoveFeature": true,
+          "pickFeatureStyle": {
+            "color": "#00ff00",
+            "opacity": 0.2
+          },
+          "popup": "all"
+        },
+        {
+          "type": "3dtiles",
+          "name": "河道边厂房",
+          "url": "//data.mars3d.cn/3dtiles/qx-xiaolou/tileset.json",
+          "position": { "alt": 10.1 },
+          "maximumScreenSpaceError": 1,
+          "maximumMemoryUsage": 1024,
+          "center": {"lat":31.56196,"lng":120.848283,"alt":92,"heading":71,"pitch":-42}
+        }
+      ]
+    },
+    {
+      "pid": 2030,
+      "name": "文庙(分栋单体)",
+      "type": "group",
+      "center": { "lat": 33.589536, "lng": 119.032216, "alt": 145.08, "heading": 3.1, "pitch": -22.9 },
+      "layers": [
+        {
+          "type": "geojson",
+          "name": "文庙-单体化",
+          "url": " //data.mars3d.cn/file/geojson/dth-wm.json",
+          "dth": { "buffer": 1, "color": "#ffff00", "opacity": 0.5 },
+          "popup": [
+            { "field": "name", "name": "房屋名称" },
+            { "field": "jznf", "name": "建造年份" },
+            { "field": "ssdw", "name": "所属单位" },
+            { "field": "remark", "name": "备注信息" }
+          ]
+        },
+        {
+          "type": "3dtiles",
+          "name": "文庙",
+          "url": "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
+          "position": { "alt": 80.6 },
+          "maximumScreenSpaceError": 2,
+          "maximumMemoryUsage": 2048,
+          "dynamicScreenSpaceError": true,
+          "cullWithChildrenBounds": false,
+          "skipLevelOfDetail": true,
+          "preferLeaves": true,
+          "center": { "lat": 33.589536, "lng": 119.032216, "alt": 145.08, "heading": 3.1, "pitch": -22.9 }
+        }
+      ]
+    }
+  ]
+}

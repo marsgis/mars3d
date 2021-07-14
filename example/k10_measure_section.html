@@ -30,14 +30,13 @@
     <link href="css/style.css" rel="stylesheet" />
     <style>
       .sectionChars {
-        top: auto;
-        width: 90%;
-        height: 200px;
-        bottom: 30px;
-        left: 5%;
-        top: auto;
-        bottom: 10px;
         display: none;
+        width: calc(100% - 220px);
+        height: 200px;
+        top: auto;
+        left: 100px;
+        right: 100px;
+        bottom: 30px;
       }
     </style>
   </head>
@@ -228,17 +227,18 @@
               type: 'category',
               boundaryGap: false,
               axisLine: {
-                show: false,
+                show: true,
               },
               axisLabel: {
-                show: false,
+                show: true,
+                formatter: '{value} 米',
               },
               data: data.arrLen,
             },
           ],
           yAxis: [
             {
-              //name: '高度',
+              name: '高程',
               type: 'value',
               min: getMinZ(arrPoint),
               axisLabel: {

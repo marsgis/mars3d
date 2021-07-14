@@ -163,10 +163,13 @@
       let graphic = new mars3d.graphic.Regular({
         positions: [
           [117.237988, 31.827364, 30],
-          [117.180234, 31.826722, 30],
+          // [117.180234, 31.826722, 30],
         ],
         style: {
           border: 3, //多边形边数量
+          radius: 5000,
+          startAngle: 0, //开始角度(正东方向为0,顺时针到360度)
+
           color: '#3388ff',
           opacity: 0.5,
           outline: true,
@@ -190,12 +193,11 @@
 
     function addGraphic_02(graphicLayer) {
       let graphic = new mars3d.graphic.Regular({
-        positions: [
-          [117.357442, 31.854502, 30],
-          [117.296693, 31.847083, 30],
-        ],
+        position: [117.357442, 31.854502, 30],
         style: {
           border: 4, //多边形边数量
+          radius: 3000,
+          startAngle: 20, //开始角度(正东方向为0,顺时针到360度)
           clampToGround: true,
           material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Image, {
             image: 'img/textures/laker_surface.jpg',
@@ -208,12 +210,11 @@
 
     function addGraphic_03(graphicLayer) {
       let graphic = new mars3d.graphic.Regular({
-        positions: [
-          [117.250028, 31.729021, 30],
-          [117.187612, 31.716227, 30],
-        ],
+        position: [117.250028, 31.729021, 30],
         style: {
           border: 5, //多边形边数量
+          radius: 3000,
+          startAngle: 30, //开始角度(正东方向为0,顺时针到360度)
           material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Water, {
             normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
             frequency: 8000.0, // 控制波数的数字。
@@ -230,12 +231,11 @@
 
     function addGraphic_04(graphicLayer) {
       let graphic = new mars3d.graphic.Regular({
-        positions: [
-          [117.47016, 31.746452, 15.6],
-          [117.514494, 31.71959, 33],
-        ],
+        position: [117.371943, 31.765769, 15.6],
         style: {
           border: 6, //多边形边数量
+          radius: 3000,
+          startAngle: 40, //开始角度(正东方向为0,顺时针到360度)
           diffHeight: 2000.0,
           material: Cesium.Color.YELLOW,
           closeTop: false,

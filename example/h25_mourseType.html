@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -39,6 +39,18 @@
 
     <!-- 切换视角到模型或地形（山区）的快捷按钮 -->
     <script type="text/javascript" src="js/center_terrain_3dtiles.js"></script>
+
+    <!-- 面板 -->
+    <div class="infoview">
+      <div class="radio radio-info radio-inline">
+        <input type="radio" id="shadingMaterials1" name="shadingMaterials" value="1" checked />
+        <label for="shadingMaterials1">更换中键和右键</label>
+      </div>
+      <div class="radio radio-info radio-inline">
+        <input type="radio" id="shadingMaterials2" name="shadingMaterials" value="0" />
+        <label for="shadingMaterials2">Cesium操作习惯 </label>
+      </div>
+    </div>
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
@@ -59,11 +71,17 @@
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
-        //设置鼠标操作习惯,更换中键和右键
-        map.changeMouseModel(true)
-
         //限定pitch角度： max ，min(默认-90)
         map.setPitchRange(-10)
+
+        $('input:radio[name="shadingMaterials"]').change(function () {
+          if ($(this).val() === '1') {
+            //设置鼠标操作习惯,更换中键和右键
+            map.changeMouseModel(true)
+          } else {
+            map.changeMouseModel(false)
+          }
+        })
       }
     </script>
   </body>

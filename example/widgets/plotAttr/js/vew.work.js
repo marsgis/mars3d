@@ -200,7 +200,28 @@ var plotEdit = {
     parname = 'plot_attr_attr_'
     inHtml = ''
     attr.attr = attr.attr || {}
+
     let attrcfg = thisWidget.getAttrList()
+    let tempKyes = {}
+    for (let idx = 0; idx < attrcfg.length; idx++) {
+      let edit = attrcfg[idx]
+      tempKyes[edit.name] = true
+    }
+    for (var key in attr.attr) {
+      let attrVal = attr.attr[key]
+      if (tempKyes[key]) {
+        continue
+      }
+
+      if (haoutil.isutil.isString(attrVal)) {
+        attrcfg.push({ name: key, label: key, type: 'text', defval: '' })
+      } else if (haoutil.isutil.isNumber(attrVal)) {
+        attrcfg.push({ name: key, label: key, type: 'number', defval: 0.0 })
+      } else if (typeof attrVal == 'boolean') {
+        attrcfg.push({ name: key, label: key, type: 'radio', defval: false })
+      }
+    }
+
     for (let idx = 0; idx < attrcfg.length; idx++) {
       let edit = attrcfg[idx]
       if (edit.type == 'hidden') {
@@ -217,6 +238,7 @@ var plotEdit = {
 
       inHtml += '<tr  id="' + parname + 'tr_' + attrName + '" > <td class="nametd">' + edit.label + '</td>  <td>' + input.html + '</td>  </tr>'
     }
+
     $('#talbe_attr').html(inHtml)
 
     //执行各方法

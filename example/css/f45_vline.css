@@ -1,0 +1,215 @@
+@font-face {
+  font-family: 'UnidreamLED';
+  src: url('./fonts/UnidreamLED.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GenderIcon';
+  src: url('./fonts/GenderIcon.ttf') format('truetype');
+}
+
+.genderIcon {
+  font-family: 'GenderIcon' !important;
+  font-size: 30px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.genderIcon-nan:before {
+  content: '\e6a6';
+}
+
+.genderIcon-nv:before {
+  content: '\e6a7';
+}
+
+.genderIcon-nan1:before {
+  content: '\e6c2';
+}
+
+.genderIcon-nv1:before {
+  content: '\e6c3';
+}
+
+.populationView {
+  position: absolute;
+  width: 360px;
+  height: calc(100% - 80px);
+  top: 10px;
+  left: 10px;
+}
+
+.realPopulation,
+.populationStructure,
+.aging {
+  width: 100%;
+  border: 1px solid rgb(11, 59, 75);
+  margin-bottom: 1.066667rem;
+  background: linear-gradient(to left, #3897cf, #3897cf) left top no-repeat, linear-gradient(to bottom, #3897cf, #3897cf) left top no-repeat,
+    linear-gradient(to left, #3897cf, #3897cf) right top no-repeat, linear-gradient(to bottom, #3897cf, #3897cf) right top no-repeat,
+    linear-gradient(to left, #3897cf, #3897cf) left bottom no-repeat, linear-gradient(to bottom, #3897cf, #3897cf) left bottom no-repeat,
+    linear-gradient(to left, #3897cf, #3897cf) right bottom no-repeat, linear-gradient(to left, #3897cf, #3897cf) right bottom no-repeat;
+  background-size: 1px 20px, 20px 1px, 1px 20px, 20px 1px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.realPopulation{
+  height: 20%;
+}
+.populationStructure{
+  height: 40%;
+}
+.aging{
+  height: 40%;
+}
+
+.populationView_text {
+  margin-top: 20px;
+  padding-left: 6px;
+  width: 100%;
+  height: 20px;
+}
+.firstBox {
+  margin-left: 10px;
+}
+.text_icon {
+  font-weight: bold;
+  color: rgb(6, 84, 123);
+}
+
+/* 实有人口数据显示样式 */
+.comment {
+  position: absolute;
+  top: 40px;
+  left: 10px;
+  width: 33%;
+  height: 80px;
+}
+.populationNumber {
+  left: 10px;
+}
+.birthRate {
+  left: 133px;
+}
+.deathRate {
+  left: 266px;
+}
+
+.columnar {
+  float: left;
+  display: block;
+  margin-top: 16px;
+  width: 8px;
+  height: 50px;
+  background-color: #0e6de9;
+}
+.birthRate .columnar {
+  background-color: #00af6d;
+}
+
+.deathRate .columnar {
+  background-color: #b150d9;
+}
+.number {
+  display: block;
+  margin-left: 20px;
+  margin-top: 10px;
+  font-size: 26px;
+  color: #1ae9f1;
+  font-family: 'UnidreamLED', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.text-num {
+  display: block;
+  position: absolute;
+  left: 20px;
+  bottom: 0;
+}
+/* 人口结构样式 */
+.male {
+  position: absolute;
+  top: 43%;
+  left: 21%;
+  width: 8%;
+  height: 8%;
+  text-align: center;
+  border-radius: 20px;
+  font-size: 10px;
+}
+.female {
+  position: absolute;
+  top: 43%;
+  left: 71%;
+  width: 8%;
+  height: 8%;
+  text-align: center;
+  border-radius: 20px;
+  font-size: 10px;
+}
+.genderIcon-nan1 {
+  color: #00f6ff;
+}
+.genderIcon-nv1 {
+  color: #ff6ac4;
+}
+/* 老龄化分析样式 */
+.man_icon {
+  position: relative;
+  top: 10%;
+  left: 25%;
+  width: 8%;
+  height: 8%;
+  color: rgb(43, 167, 244);
+}
+.woman_icon {
+  position: relative;
+  top: 10%;
+  left: 37%;
+  width: 8%;
+  height: 8%;
+  color: rgb(201, 25, 199);
+}
+
+.man_display {
+  position: absolute;
+  bottom: 24%;
+  left: 70%;
+  width: 100px;
+  height: 36px;
+  line-height: 36px;
+  font-size: 17px;
+  text-align: center;
+  border: 1px solid rgb(43, 167, 244);
+  color: rgb(43, 167, 244);
+  background-color: rgba(21, 180, 192, 0.3);
+  border-radius: 4px;
+}
+.woman_display {
+  position: absolute;
+  bottom: 18%;
+  left: 70%;
+  width: 100px;
+  height: 36px;
+  line-height: 36px;
+  border: 1px solid rgb(201, 25, 199);
+  text-align: center;
+  font-size: 17px;
+  color: rgb(201, 25, 199);
+  background-color: rgba(201, 25, 199, 0.3);
+  border-radius: 4px;
+}
+
+/* echarts 图表容器 */
+.population {
+  margin-top: 56px;
+  width: 100%;
+  height: 40%;
+}
+.structure {
+  width: 100%;
+  height: 70%;
+}
+.agingAnalysis {
+  width: 58%;
+  height: 60%;
+}

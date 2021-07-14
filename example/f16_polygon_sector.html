@@ -152,9 +152,9 @@
       })
 
       //加一些演示数据
-      // addGraphic_01(graphicLayer)
-      // addGraphic_02(graphicLayer)
-      // addGraphic_03(graphicLayer)
+      addGraphic_01(graphicLayer)
+      addGraphic_02(graphicLayer)
+      addGraphic_03(graphicLayer)
       addGraphic_04(graphicLayer)
     }
 
@@ -162,10 +162,14 @@
       let graphic = new mars3d.graphic.Sector({
         positions: [
           [117.151322, 31.863556, 34.3],
-          [117.18186, 31.869359, 29.8],
-          [117.17505, 31.84342, 105.7],
+          // [117.18186, 31.869359, 29.8],
+          // [117.17505, 31.84342, 105.7],
         ],
         style: {
+          radius: 5000,
+          startAngle: 0, //开始角度(正东方向为0,顺时针到360度)
+          endAngle: 90,
+
           color: '#3388ff',
           opacity: 0.5,
           outline: true,
@@ -189,12 +193,11 @@
 
     function addGraphic_02(graphicLayer) {
       let graphic = new mars3d.graphic.Sector({
-        positions: [
-          [117.257699, 31.861722, 24.8],
-          [117.29788, 31.848922, 15.1],
-          [117.291172, 31.89522, 25.8],
-        ],
+        position: [117.257699, 31.861722, 24.8],
         style: {
+          radius: 4000,
+          startAngle: 45, //开始角度(正东方向为0,顺时针到360度)
+          endAngle: 170,
           clampToGround: true,
           material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Image, {
             image: 'img/textures/excavate_bottom_min.jpg',
@@ -207,12 +210,12 @@
 
     function addGraphic_03(graphicLayer) {
       let graphic = new mars3d.graphic.Sector({
-        positions: [
-          [117.152749, 31.77278, 24.1],
-          [117.188968, 31.771299, 28.4],
-          [117.135557, 31.79767, 30.9],
-        ],
+        position: [117.152749, 31.77278, 24.1],
         style: {
+          radius: 3000,
+          startAngle: 90, //开始角度(正东方向为0,顺时针到360度)
+          endAngle: 20,
+
           material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Water, {
             normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
             frequency: 8000.0, // 控制波数的数字。
@@ -229,12 +232,12 @@
 
     function addGraphic_04(graphicLayer) {
       let graphic = new mars3d.graphic.Sector({
-        positions: [
-          [117.272405, 31.798676, 21.2],
-          [117.30149, 31.790685, 14.3],
-          [117.251609, 31.780963, 25.1],
-        ],
+        position: [117.272405, 31.798676, 21.2],
         style: {
+          radius: 3000,
+          startAngle: 0, //开始角度(正东方向为0,顺时针到360度)
+          endAngle: 60,
+
           diffHeight: 2000.0,
           material: Cesium.Color.YELLOW,
           closeTop: false,

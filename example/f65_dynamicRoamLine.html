@@ -20,9 +20,15 @@
   <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
   <!--第三方lib-->
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/" include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+  include="jquery,font-awesome,bootstrap,bootstrap-table,layer,haoutil,turf,mars3d"></script>
 
   <link href="css/style.css" rel="stylesheet" />
+  <style>
+    .fixed-table-container tbody .selected td {
+        background-color: #3f4854a9;
+    }
+  </style>
 </head>
 
 <body class="dark">
@@ -32,9 +38,18 @@
   <div id="mars3dContainer" class="mars3d-container"></div>
 
   <!-- 面板 -->
-  <div id="logView" class="infoview"></div>
+  <div id="logView" class="infoview infoview-right"></div>
+
+  <!-- 车辆列表 -->
+  <div  class="infoview">
+    <table id="table">
+
+    </table>
+  </div>
+
 
   <script src="./js/common.js"></script>
+
   <script type="text/javascript">
     'use script' //开发环境建议开启严格模式
 
@@ -66,6 +81,7 @@
       $.ajax({
         type: 'GET',
         url: '//data.mars3d.cn/file/apidemo/car-list.json',
+        dataType: 'json',
         success: function (res) {
           showCarList(res.data)
         },
@@ -135,13 +151,15 @@
         lastClickCar = car
 
         //视角定位下
-        car.flyToPoint({ radius: 1000 })
+        // car.flyToPoint({ radius: 1000 })
       })
 
       var lastClickCar
 
       for (var i = 0, len = arr.length; i < len; i++) {
         var item = arr[i]
+
+        item.show = true
 
         var modelParam
         switch (item.type) {
@@ -182,6 +200,8 @@
         graphicLayer.addGraphic(car)
       }
 
+      tabInit(arr)
+
       // 定时获取卡车和铲车的列表数据
       this.createPath()
     }
@@ -196,7 +216,7 @@
       var endTime = date.format('yyyy-MM-dd HH:mm:ss')
 
       // 修改当前时间回退一分钟，因为数据永远是当前时间之前的。
-      date.setMinutes(date.getMinutes() - 1)
+      date.setSeconds(date.getSeconds() - 60)
       map.clock.currentTime = window.Cesium.JulianDate.fromDate(date)
 
       //取数据的时间范围，开始时间
@@ -234,6 +254,7 @@
       $.ajax({
         type: 'GET',
         url: '//data.mars3d.cn/file/apidemo/car-path.json',
+        dataType: 'json',
         // data: {
         //     beginTime: beginTime,
         //     endTime: endTime,
@@ -290,6 +311,71 @@
         logView.html(log + '<br />')
       }
     }
+
+    //==================================================
+    function tabInit(data) {
+      $('#table').bootstrapTable({
+        pagination: false,
+        singleSelect: true,
+        data: data,
+        checkboxHeader: true,
+        columns: [
+          {
+            title: '是否显示',
+            field: 'show',
+            align: 'center',
+            checkbox: true,
+            width: 50,
+          },
+          {
+            title: '序号',
+            sortable: true,
+            editable: false,
+            align: 'left',
+            formatter: function (value, row, index) {
+              return index + 1
+            },
+          },
+          {
+            field: 'name',
+            title: '车牌号',
+          },
+          {
+            field: 'type',
+            title: '类型',
+            formatter: function (value, row, index) {
+              if (value == 1) {
+                return '土方车'
+              } else if (value == 2) {
+                return '挖掘机'
+              }
+              return ''
+            },
+          },
+        ],
+        //定位车辆区域
+        onClickRow: function (row) {
+          let car = graphicLayer.getGraphicById(row.id)
+          if (car) {
+            car.flyToPoint({ radius: 900 })
+          }
+        },
+        //勾选隐藏车辆
+        onCheck: function (row) {
+          let car = graphicLayer.getGraphicById(row.id)
+          if (car) {
+            car.show = true
+          }
+        },
+        //取消勾选显示车辆
+        onUncheck: function (row) {
+          let car = graphicLayer.getGraphicById(row.id)
+          if (car) {
+            car.show = false
+          }
+        },
+      })
+}
   </script>
 </body>
 

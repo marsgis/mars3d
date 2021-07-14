@@ -51,7 +51,7 @@
         <td>
           <input type="text" id="txtColor" class="form-control" style="width:100px;" value="#363635">
 
-          <a href="editor.html#g10_onlyModel2" target="_blank" class="btn btn-default">另外一种处理方式</a>
+          <a href="editor.html#g20_onlyModel2" target="_blank" class="btn btn-default">另外一种处理方式</a>
 
         </td>
         <td>
@@ -133,7 +133,7 @@
       })
 
       //历史记录模型地址
-      var lasturl = haoutil.storage.get('g10_onlyModel')
+      var lasturl = haoutil.storage.get('g20_onlyModel')
       if (lasturl) {
         $('#txtModel').val(lasturl)
       }
@@ -151,7 +151,7 @@
     function showModel() {
       removeLayer()
       var _url = $('#txtModel').val()
-      haoutil.storage.add('g10_onlyModel', _url)
+      haoutil.storage.add('g20_onlyModel', _url)
 
       tiles3dLayer = new mars3d.layer.TilesetLayer({
         url: _url,

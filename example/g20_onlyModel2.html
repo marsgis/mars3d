@@ -104,7 +104,7 @@
       map = new mars3d.Map('mars3dContainer', mapOptions)
 
       //历史记录模型地址
-      var lasturl = haoutil.storage.get('g10_onlyModel2')
+      var lasturl = haoutil.storage.get('g20_onlyModel2')
       if (lasturl) {
         $('#txtModel').val(lasturl)
       }
@@ -122,7 +122,7 @@
     function showModel() {
       removeLayer()
       var _url = $('#txtModel').val()
-      haoutil.storage.add('g10_onlyModel2', _url)
+      haoutil.storage.add('g20_onlyModel2', _url)
 
       tiles3dLayer = new mars3d.layer.TilesetLayer({
         url: _url,

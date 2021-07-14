@@ -1,48 +1,47 @@
 let chartsData = {
-  "fltj":[
-      { "name":"公共文化", "xms":160, "zds":10, "zjl":645 },
-      { "name":"公共教育", "xms":848, "zds":580, "zjl":10 },
-      { "name":"医疗卫生", "xms":370, "zds":10, "zjl":150560 },
-      { "name":"公共体育", "xms":91, "zds":0, "zjl":182 },
-      { "name":"社会保障", "xms":233, "zds":10, "zjl":808 },
-      { "name":"基层公共服务", "xms":20, "zds":10, "zjl":10 }
+  fltj: [
+    { name: '公共文化', xms: 160, zds: 10, zjl: 645 },
+    { name: '公共教育', xms: 848, zds: 580, zjl: 10 },
+    { name: '医疗卫生', xms: 370, zds: 10, zjl: 150560 },
+    { name: '公共体育', xms: 91, zds: 0, zjl: 182 },
+    { name: '社会保障', xms: 233, zds: 10, zjl: 808 },
+    { name: '基层公共服务', xms: 20, zds: 10, zjl: 10 },
   ],
-  "zjly":[
-      { "name":"省级", "value":88 },
-      { "name":"市级", "value":127 },
-      { "name":"区县级", "value":175 },
-      { "name":"街道级", "value":270 },
-      { "name":"社会资本", "value":42 }
+  zjly: [
+    { name: '省级', value: 88 },
+    { name: '市级', value: 127 },
+    { name: '区县级', value: 175 },
+    { name: '街道级', value: 270 },
+    { name: '社会资本', value: 42 },
   ],
-  "ndtj":{
-      "xms":[
-          { "name":"2013", "value":1 },
-          { "name":"2014", "value":2 },
-          { "name":"2015", "value":6 },
-          { "name":"2016", "value":36 },
-          { "name":"2017", "value":85 },
-          { "name":"2018", "value":10 },
-          { "name":"2018年", "value":17 }
-      ],
-      "zds":[
-          { "name":"2013", "value":10 },
-          { "name":"2014", "value":20 },
-          { "name":"2015", "value":30 },
-          { "name":"2016", "value":40 },
-          { "name":"2017", "value":50 },
-          { "name":"2018", "value":60 }
-      ],
-      "zjl":[
-          { "name":"2013", "value":55600 },
-          { "name":"2014", "value":95600 },
-          { "name":"2015", "value":162896 },
-          { "name":"2016", "value":195761 },
-          { "name":"2017", "value":87068 },
-          { "name":"2018", "value":68393 }
-      ]
-  }
+  ndtj: {
+    xms: [
+      { name: '2013', value: 1 },
+      { name: '2014', value: 2 },
+      { name: '2015', value: 6 },
+      { name: '2016', value: 36 },
+      { name: '2017', value: 85 },
+      { name: '2018', value: 10 },
+      { name: '2018年', value: 17 },
+    ],
+    zds: [
+      { name: '2013', value: 10 },
+      { name: '2014', value: 20 },
+      { name: '2015', value: 30 },
+      { name: '2016', value: 40 },
+      { name: '2017', value: 50 },
+      { name: '2018', value: 60 },
+    ],
+    zjl: [
+      { name: '2013', value: 55600 },
+      { name: '2014', value: 95600 },
+      { name: '2015', value: 162896 },
+      { name: '2016', value: 195761 },
+      { name: '2017', value: 87068 },
+      { name: '2018', value: 68393 },
+    ],
+  },
 }
-
 
 //初始化图表
 function initCharts() {
@@ -55,7 +54,7 @@ function initCharts() {
 function initCharts_One(arr) {
   for (var i = 0, len = arr.length; i < len; i++) {
     let item = arr[i]
-    let html =`<li>
+    let html = `<li>
         <div class="title">${item.name}</div>
         <div class="conter"><span>${item.xms}</span>个，投资<span>${item.zds}</span>亿，占地<span>${item.zjl}</span>亩</div>
       </li>`
@@ -119,7 +118,7 @@ function initCharts_Two(arr) {
           '#8378EA',
           '#96BFFF',
         ],
-        center: ['35%', '55%'],
+        center: ['45%', '55%'],
         data: data, //使用for循环添加
         emphasis: {
           itemStyle: {

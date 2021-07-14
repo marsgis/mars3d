@@ -3,8 +3,7 @@ function fontSize(res) {
   return res * font_size
 }
 
- function initEcharts () {
-
+function initEcharts() {
   //饼形图
   var myChart = echarts.init(document.getElementById('ring'))
   var option = {
@@ -127,7 +126,7 @@ function fontSize(res) {
 
   //柱状图
   var myChart2 = echarts.init(document.getElementById('bar'), 'dark')
-  var option = {
+  var option2 = {
     backgroundColor: 'transparent',
 
     tooltip: {
@@ -256,12 +255,11 @@ function fontSize(res) {
       },
     ],
   }
-  myChart2.setOption(option)
-
+  myChart2.setOption(option2)
 
   // 折线图
   let myChart3 = echarts.init(document.getElementById('line'), 'dark')
-  var option = {
+  var option3 = {
     backgroundColor: 'transparent',
 
     tooltip: {
@@ -427,7 +425,7 @@ function fontSize(res) {
         barGap: '-100%',
         barWidth: 12,
         z: -8,
-        data: [1,1,1],
+        data: [1, 1, 1],
       },
       {
         name: '文化教育',
@@ -440,7 +438,7 @@ function fontSize(res) {
         barGap: '-100%',
         barWidth: 12,
         z: -8,
-        data: [1,2,1,1,2],
+        data: [1, 2, 1, 1, 2],
       },
       {
         type: 'bar',
@@ -455,5 +453,5 @@ function fontSize(res) {
       },
     ],
   }
-  myChart3.setOption(option)
+  myChart3.setOption(option3)
 }

@@ -43,7 +43,7 @@
       <tr>
         <td>模型URL：</td>
         <td colspan="3">
-          <input id="txtModel" type="text" value="//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json" class="form-control" style="width: 450px;" />
+          <input id="txtModel" type="text" value="//data.mars3d.cn/3dtiles/qx-dyt/tileset.json" class="form-control" style="width: 450px;" />
         </td>
         <td>
           <input type="button" class="btn btn-primary" value="加载模型" onclick="showModel()" />
@@ -134,7 +134,7 @@
         $('#txtModel').val(url)
       } else {
         //历史记录模型地址
-        var lasturl = haoutil.storage.get('37_3dtiles_move')
+        var lasturl = haoutil.storage.get('g20_3dtiles_move')
         if (lasturl) {
           $('#txtModel').val(lasturl)
         }
@@ -162,7 +162,7 @@
       removeLayer()
 
       var _url = $('#txtModel').val()
-      haoutil.storage.add('37_3dtiles_move', _url)
+      haoutil.storage.add('g20_3dtiles_move', _url)
 
       tiles3dLayer = new mars3d.layer.TilesetLayer({
         url: _url,

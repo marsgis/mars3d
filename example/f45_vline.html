@@ -1,108 +1,186 @@
 <!-- 2017-12-7 14:56:03 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-        content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>柱状线 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>柱状线 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d,mars3d-echarts"
+    ></script>
 
+    <link href="css/style.css" rel="stylesheet" />
 
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/" include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+    <link rel="stylesheet" href="css/f45_vline.css" />
+  </head>
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-<body class="dark">
-  <!--加载前进行操作提示，优化用户体验-->
-  <div id="mask" class="signmask" onclick="removeMask()"></div>
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-  <div id="mars3dContainer" class="mars3d-container"></div>
+    <div class="populationView">
+      <!-- 实有人口 -->
+      <div class="realPopulation">
+        <div class="populationView_text">
+          <span class="firstBox text_population">实有人口</span>
+          <span class="firstBox text_icon">/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/</span>
+        </div>
 
+        <div class="container">
+          <div class="comment populationNumber">
+            <span class="columnar"></span>
+            <span class="number">250685</span>
+            <p class="text-num">实有人口（人）</p>
+          </div>
 
+          <div class="comment birthRate">
+            <span class="columnar"></span>
+            <span class="number">12.6%</span>
+            <p class="text-num">人口出生率</p>
+          </div>
 
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
+          <div class="comment deathRate">
+            <span class="columnar"></span>
+            <span class="number">57.0%</span>
+            <p class="text-num">人口死亡率</p>
+          </div>
+        </div>
+        <div id="population" class="population"></div>
+      </div>
 
-    var map
+      <!-- 人口结构 -->
+      <div class="populationStructure">
+        <div class="populationView_text">
+          <span class="firstBox text_population">人口结构</span>
+          <span class="firstBox text_icon">/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/</span>
+        </div>
+        <div class="male">
+          <span class="genderIcon genderIcon-nan1"></span>
+          <span>男性</span>
+        </div>
+        <div class="female">
+          <span class="genderIcon genderIcon-nv1"></span>
+          <span>女性</span>
+        </div>
+        <div id="structure" class="structure"></div>
+      </div>
 
-    function initMap(options) {
-      //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {
-        scene: {
-          center: { lat: 3.74685, lng: 103.588387, alt: 14532035, heading: 0, pitch: -86 },
-        },
-      })
+      <!-- 老龄化分析 -->
+      <div class="aging">
+        <div class="populationView_text">
+          <span class="firstBox text_population">老龄化分析</span>
+          <span class="firstBox text_icon">/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/&nbsp;/</span>
+        </div>
+        <span class="man_icon genderIcon genderIcon-nan"></span>
+        <span class="woman_icon genderIcon genderIcon-nv"></span>
+        <div class="man_display">
+          <span class="genderIcon genderIcon-nan"></span>
+          <span>38.53%</span>
+        </div>
+        <div class="woman_display">
+          <span class="genderIcon genderIcon-nv"></span>
+          <span>61.49%</span>
+        </div>
 
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
+        <div id="agingAnalysis" class="agingAnalysis"></div>
+      </div>
+    </div>
 
-      $.ajax({
-        url: '//data.mars3d.cn/file/apidemo/population.json',
-        type: 'get',
-        dataType: 'json',
-        success: function (data) {
-          showData(data)
-        },
-        error: function (data) {
-          console.log('ajax请求出错', data)
-        },
-      })
-    }
+    <script src="./js/f45_vline.js"></script>
 
-    function showData(data) {
-      let heightScale = 2000000
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
 
-      for (let x = 0; x < 1; x++) {
-        let series = data[x]
-        let seriesName = series[0]
-        let coordinates = series[1]
+      var map
+      function initMap(options) {
+        //Echart图表 f45_vline.js
+        initEcharts()
 
-        //创建Graphic图层
-        let graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 3.74685, lng: 103.588387, alt: 14532035, heading: 0, pitch: -86 },
+          },
+        })
 
-        //Now loop over each coordinate in the series and create
-        for (let i = 0; i < coordinates.length; i += 3) {
-          let latitude = coordinates[i]
-          let longitude = coordinates[i + 1]
-          let height = coordinates[i + 2]
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
 
-          //Ignore lines of zero height.
-          if (height === 0) {
-            continue
+        map.basemap = 2017
+
+        $.ajax({
+          url: '//data.mars3d.cn/file/apidemo/population.json',
+          type: 'get',
+          dataType: 'json',
+          success: function (data) {
+            showData(data)
+          },
+          error: function (data) {
+            console.log('ajax请求出错', data)
+          },
+        })
+      }
+
+      function showData(data) {
+        let heightScale = 2000000
+
+        for (let x = 0; x < 1; x++) {
+          let series = data[x]
+          let seriesName = series[0]
+          let coordinates = series[1]
+
+          //创建Graphic图层
+          let graphicLayer = new mars3d.layer.GraphicLayer()
+          map.addLayer(graphicLayer)
+
+          //Now loop over each coordinate in the series and create
+          for (let i = 0; i < coordinates.length; i += 3) {
+            let latitude = coordinates[i]
+            let longitude = coordinates[i + 1]
+            let height = coordinates[i + 2]
+
+            //Ignore lines of zero height.
+            if (height === 0) {
+              continue
+            }
+
+            let color = Cesium.Color.fromHsl(0.6 - height * 0.5, 1.0, 0.5)
+            let surfacePosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, 0)
+            let heightPosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, height * heightScale)
+
+            let primitive = new mars3d.graphic.PolylineEntity({
+              positions: [surfacePosition, heightPosition],
+              style: {
+                width: 4,
+                color: color,
+              },
+            })
+            graphicLayer.addGraphic(primitive)
           }
-
-          let color = Cesium.Color.fromHsl(0.6 - height * 0.5, 1.0, 0.5)
-          let surfacePosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, 0)
-          let heightPosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, height * heightScale)
-
-          let primitive = new mars3d.graphic.PolylineEntity({
-            positions: [surfacePosition, heightPosition],
-            style: {
-              width: 4,
-              color: color,
-            },
-          })
-          graphicLayer.addGraphic(primitive)
         }
       }
-    }
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>

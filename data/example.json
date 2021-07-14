@@ -533,15 +533,13 @@
               "name": "ArcGIS WFS图层",
               "version": "3.0",
               "thumbnail": "e25_arcgis_wfs.jpg",
-              "fileName": "e25_arcgis_wfs",
-              "plugins": "esri"
+              "fileName": "e25_arcgis_wfs"
             },
             {
               "name": "ArcGIS WFS图层贴模型",
               "version": "3.0",
               "thumbnail": "e25_arcgis_wfs_surface.jpg",
-              "fileName": "e25_arcgis_wfs_surface",
-              "plugins": "esri"
+              "fileName": "e25_arcgis_wfs_surface"
             }
           ]
         },
@@ -956,6 +954,12 @@
               "fileName": "f40_worker_aqi"
             },
             {
+              "name": "动态水球点",
+              "version": "3.0",
+              "thumbnail": "f40_liquidfill.jpg",
+              "fileName": "f40_liquidfill"
+            },
+            {
               "name": "动态效果点",
               "version": "1.7",
               "thumbnail": "f40_divGraphic_daxue.gif",
@@ -1085,29 +1089,6 @@
               "version": "3.0",
               "thumbnail": "f45_huxing.jpg",
               "fileName": "f45_huxing"
-            }
-          ]
-        },
-        {
-          "name": "gltf小模型控制",
-          "children": [
-            {
-              "name": "gltf模型标绘(含参数编辑)",
-              "version": "1.7",
-              "thumbnail": "f50_draw_gltf.jpg",
-              "fileName": "f50_draw_gltf"
-            },
-            {
-              "name": "gltf零部件控制(运载火箭)",
-              "version": "1.8",
-              "thumbnail": "f50_gltf_rocket.jpg",
-              "fileName": "f50_gltf_rocket"
-            },
-            {
-              "name": "模型自旋转",
-              "version": "1.8",
-              "thumbnail": "f50_gltf_rotate.jpg",
-              "fileName": "f50_gltf_rotate"
             }
           ]
         },
@@ -1328,8 +1309,7 @@
               "name": "ArcGIS Server矢量服务查询",
               "version": "2.0",
               "thumbnail": "f70_query_arcgis.jpg",
-              "fileName": "f70_query_arcgis",
-              "plugins": "esri"
+              "fileName": "f70_query_arcgis"
             },
             {
               "name": "GeoServer矢量服务查询(OGC WFS)",
@@ -1380,6 +1360,12 @@
               "fileName": "f80_isInPoly"
             },
             {
+              "name": "Property属性机制演示",
+              "version": "3.0",
+              "thumbnail": "f80_property.jpg",
+              "fileName": "f80_property"
+            },
+            {
               "name": "线面内插值计算",
               "version": "2.0",
               "thumbnail": "f80_interPoly.jpg",
@@ -1396,17 +1382,75 @@
       ]
     },
     {
-      "name": "三维模型",
+      "name": "gLTF小模型",
+      "icon": "fa-fighter-jet",
+      "children": [
+        {
+          "name": "相关矢量对象",
+          "children": [
+            {
+              "name": "ModelEntity对象",
+              "version": "2.1",
+              "thumbnail": "f10_entity_model.jpg",
+              "fileName": "f10_entity_model"
+            },
+            {
+              "name": "ModelPrimitive对象",
+              "version": "2.1",
+              "thumbnail": "f20_primitive_model.jpg",
+              "fileName": "f20_primitive_model"
+            },
+            {
+              "name": "ModelCombine对象(大数据+合并渲染)",
+              "version": "3.0",
+              "thumbnail": "f20_primitive_modelCombine.jpg",
+              "fileName": "f20_primitive_modelCombine"
+            },
+            {
+              "name": "ModelLayer图层对象",
+              "version": "3.0",
+              "thumbnail": "e15_modelLayer.jpg",
+              "fileName": "e15_modelLayer"
+            }
+          ]
+        },
+        {
+          "name": "小模型编辑控制",
+          "children": [
+            {
+              "name": "gltf模型标绘(含参数编辑)",
+              "version": "1.7",
+              "thumbnail": "f50_draw_gltf.jpg",
+              "fileName": "f50_draw_gltf"
+            },
+            {
+              "name": "gltf零部件控制(运载火箭)",
+              "version": "1.8",
+              "thumbnail": "f50_gltf_rocket.jpg",
+              "fileName": "f50_gltf_rocket"
+            },
+            {
+              "name": "模型自旋转",
+              "version": "1.8",
+              "thumbnail": "f50_gltf_rotate.jpg",
+              "fileName": "f50_gltf_rotate"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3DTiles三维模型",
       "icon": "fa-building-o",
       "children": [
         {
           "name": "各类3dtiles模型",
           "children": [
             {
-              "name": "厂房(单模型无地球场景)",
-              "version": "1.7",
-              "thumbnail": "g10_onlyModel.jpg",
-              "fileName": "g10_onlyModel"
+              "name": "3dtiles图层",
+              "version": "3.0",
+              "thumbnail": "g10_3dtiles_layers.jpg",
+              "fileName": "g10_3dtiles_layers"
             },
             {
               "name": "县城城区（倾斜摄影）",
@@ -1525,9 +1569,8 @@
             }
           ]
         },
-
         {
-          "name": "数据编辑控制",
+          "name": "模型编辑控制",
           "children": [
             {
               "name": "3dtiles模型位置及参数编辑",
@@ -1540,6 +1583,12 @@
               "version": "1.6",
               "thumbnail": "g20_3dtiles_move.jpg",
               "fileName": "g20_3dtiles_move"
+            },
+            {
+              "name": "单模型场景(无地球)",
+              "version": "1.7",
+              "thumbnail": "g20_onlyModel.jpg",
+              "fileName": "g20_onlyModel"
             }
           ]
         }
@@ -1604,6 +1653,12 @@
         {
           "name": "视角相机控制",
           "children": [
+            {
+              "name": "视角书签",
+              "version": "3.0",
+              "thumbnail": "h20_bookmark.jpg",
+              "fileName": "h20_bookmark"
+            },
             {
               "name": "开场动画",
               "version": "1.5",
@@ -2050,7 +2105,7 @@
               "plugins": "mapv"
             },
             {
-              "name": "北京",
+              "name": "合肥建筑物",
               "version": "1.7",
               "thumbnail": "m20_mapv_polygon.jpg",
               "fileName": "m20_mapv_polygon",
