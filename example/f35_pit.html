@@ -32,6 +32,10 @@
   <div id="mars3dContainer" class="mars3d-container"></div>
 
 
+  <div id="tipView" class="info-tips">
+    (1) 井目前主要地形开挖分析内部中使用，在本示例内未开启深度检测时会浮动在地图上。
+  </div>
+
 
   <div class="infoview">
     <div>
@@ -64,6 +68,10 @@
       <input type="button" class="btn btn-primary" value="绘制矩形" id="btnDrawExtent" />
       <input type="button" class="btn btn-primary" value="绘制多边形" id="btnDraw" />
       <input type="button" class="btn btn-primary" value="清除" id="clearWJ" />
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkTestTerrain" class="styled" type="checkbox" />
+        <label for="chkTestTerrain"> 深度检测 </label>
+      </div>
     </div>
   </div>
 
@@ -97,6 +105,14 @@
 
       //图层管理的相关处理，代码在\js\graphicManager.js
       initLayerManager(graphicLayer)
+
+      $('#chkTestTerrain').change(function () {
+        var val = $(this).is(':checked')
+        map.scene.globe.depthTestAgainstTerrain = val
+        if (val) {
+          toastr.info('深度监测打开后，您将无法看到地下或被地形遮挡的对象。')
+        }
+      })
 
       $('#txtHeight').change(function () {
         var num = Number($(this).val())
@@ -190,7 +206,7 @@
           },
         },
       })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
 
       //演示个性化处理graphic，代码在\js\graphicManager.js
       initGraphicManager(primitive)
@@ -213,7 +229,7 @@
           splitNum: 50, //井边界插值数
         },
       })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
 
       //entity转geojson
       var geojson = primitive.toGeoJSON()
@@ -238,7 +254,7 @@
           splitNum: 50, //井边界插值数
         },
       })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
+      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
     }
   </script>
 </body>

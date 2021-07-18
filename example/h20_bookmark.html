@@ -59,6 +59,7 @@
       border-radius: 5px;
       margin: 10px 2px;
       overflow: auto;
+      overflow-x: hidden;
     }
 
     .bookmarkView .no-found {
@@ -88,12 +89,28 @@
 
     .bookmarkView table td {
       border: 0.3px solid white;
+      width: 100%;
+      position: relative;
     }
 
+    .bookmarkView table td p{
+      display: inline-block;
+      width: 160px;
+      /* height: 20px; */
+      white-space: nowrap;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+    }
+    .bookmarkView table td p:hover{
+      display: inline-block;
+      width: 160px;
+      white-space: normal;
+      word-wrap:break-word
+    }
     .bookmarkView table i {
-      position: relative;
-      right: -90px;
-      bottom: 1px;
+      position: absolute;
+      right: 10px;
+      top: 185px;
       cursor: pointer;
     }
 
@@ -212,7 +229,7 @@
       let html = `<tr id="tr-${item.id}" class="trItem">
                      <td class="newAddView">
                       <div id='flyView-${item.id}'><img src="${item.image}"/></div>
-                      <div>${item.name}<i id="deleView-${item.id}" class="fa fa-trash"></i></div>
+                      <div><p>${item.name}</p><i id="deleView-${item.id}" class="fa fa-trash"></i></div>
                       </div>
                     </td>
                   </tr>`

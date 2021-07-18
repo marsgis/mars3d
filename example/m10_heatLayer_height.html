@@ -57,7 +57,7 @@
     </div>
     <div class="chartThree" id="chartThree">
       <h6>分年度统计</h6>
-      <button type="button" name="项目数" value="xms" id="btnNDTJ_ms" >项目数</button>
+      <button type="button" name="项目数" value="xms" id="btnNDTJ_xms" >项目数</button>
       <button type="button" name="占地数" value="zds" id="btnNDTJ_zds">占地数</button>
       <button type="button" name="资金量" value="zjl" id="btnNDTJ_zjl">资金量</button>
       <div id="ul_ NDTJ" class="chartThree_ulndtj">
@@ -74,7 +74,7 @@
   <script src="./js/common.js"></script>
 
   <script src="./js/m10_heatLayer_height.js"></script>
-  
+
   <script type="text/javascript">
     'use script' //开发环境建议开启严格模式
 
@@ -82,7 +82,7 @@
 
     function initMap(options) {
       initCharts()
-	  
+
       //合并属性参数，可覆盖config.json中的对应配置
       var mapOptions = mars3d.Util.merge(options, {
         scene: {

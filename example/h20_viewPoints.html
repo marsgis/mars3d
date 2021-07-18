@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,echarts-liquidfill,mars3d"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -37,85 +37,45 @@
 
     <div id="mars3dContainer" class="mars3d-container"></div>
 
+    <!-- 面板 -->
+    <!-- <div class="infoview"> </div> -->
+
     <script src="./js/common.js"></script>
     <script type="text/javascript">
       'use script' //开发环境建议开启严格模式
 
       var map
-      var graphicLayer
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lng: 117.084439, lat: 31.653047, alt: 354, heading: 319, pitch: -23 },
+            center: { lng: 102.5, lat: 35.13135, alt: 14307887.9, heading: 360, pitch: -90 },
           },
         })
 
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
-        // 加载石化工厂模型
-        let tiles3dLayer = new mars3d.layer.TilesetLayer({
-          name: '石化工厂',
-          url: 'http://data.mars3d.cn/3dtiles/max-shihua/tileset.json',
-          position: { lng: 117.077158, lat: 31.659116, alt: 24.6 },
+        var tiles3dLayer = new mars3d.layer.TilesetLayer({
+          name: '大雁塔',
+          url: '//data.mars3d.cn/3dtiles/qx-dyt/tileset.json',
+          position: { alt: -27 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
-          popup: 'all',
         })
         map.addLayer(tiles3dLayer)
 
-        //创建div数据图层
-        graphicLayer = new mars3d.layer.DivLayer()
-        map.addLayer(graphicLayer)
+        //创建视点
+        var viewPoints = [
+          { lng: 108.961601, lat: 34.217109, alt: 509.2, heading: 314.5, pitch: -22.5, duration: 8, stop: 1 },
+          { lng: 108.96164, lat: 34.222159, alt: 510.3, heading: 211.2, pitch: -22.5, duration: 5, stop: 0 },
+          { lng: 108.957259, lat: 34.221967, alt: 494.3, heading: 127.5, pitch: -17.2, duration: 5, stop: 0 },
+          { lng: 108.957319, lat: 34.217225, alt: 515.5, heading: 25.4, pitch: -25.3, duration: 5 },
+        ]
 
-        //添加矢量数据
-        addGraphic([117.077462, 31.657745, 60], { value: 0.53, color: '#fb980b' })
-        addGraphic([117.079091, 31.65898, 90], { value: 0.45, color: '#00ff00' })
-        addGraphic([117.079766, 31.658268, 70], { value: 0.35, color: '#00ffff' })
-        addGraphic([117.07913, 31.655748, 80], { value: 0.21, color: '#ff0000' })
-      }
-
-      function addGraphic(position, attr) {
-        var graphic = new mars3d.graphic.DivGraphic({
-          position: position,
-          style: {
-            html: `<div style="width: 80px;height:80px;"></div>`,
-            horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-          },
-          attr: attr,
-        })
-        graphic.on(mars3d.EventType.add, function (e) {
-          let dom = e.target.container.firstChild
-          let attr = e.target.attr
-
-          let liquidfillchartChart = echarts.init(dom)
-
-          //参考API：https://github.com/ecomfe/echarts-liquidfill
-          //参考示例：https://www.makeapie.com/explore.html#tags=liquidFill~sort=rank~timeframe=all~author=all
-          let option = {
-            series: [
-              {
-                type: 'liquidFill',
-                radius: '100%',
-                outline: { show: false },
-                color: [attr.color],
-                data: [attr.value],
-                label: {
-                  normal: {
-                    color: '#294D99',
-                    insideColor: '#fff',
-                    fontSize: 20,
-                  },
-                },
-              },
-            ],
-          }
-          liquidfillchartChart.setOption(option)
-        })
-        graphicLayer.addGraphic(graphic)
+        // 视角切换（分步执行）
+        map.setCameraViewList(viewPoints)
       }
     </script>
   </body>

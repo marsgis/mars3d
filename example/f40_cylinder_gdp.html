@@ -25,10 +25,54 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,echarts-gl,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
+    <style>
+      .gdpView {
+        min-width: 90px;
+        min-height: 35px;
+        position: absolute;
+        left: 16px;
+        bottom: 31px;
+        cursor: default;
+        border-radius: 4px;
+        opacity: 0.96;
+        border: 1px solid rgba(35, 40, 44, 0.226);
+        box-shadow: 0px 2px 21px 0px rgba(35, 40, 44, 0.226);
+        border-radius: 4px;
+        box-sizing: border-box;
+        background: rgba(2, 79, 128, 0.425);
+      }
+
+      .gdpView::before {
+        content: '';
+        width: calc(100% + 22px);
+        height: 39px;
+        position: absolute;
+        bottom: -39px;
+        left: -22px;
+        background: url(./img/marker/popupLbl.png) 0px 0px no-repeat;
+        background-position: 0px 0px;
+      }
+
+      .gdpCharts {
+        width: 500px;
+        height: 300px;
+        text-align: center;
+        padding: 1px 20px;
+        font-size: 14px;
+        font-family: 'MicrosoftYaHei';
+        font-weight: 400;
+        color: #ffffff;
+        line-height: 33px;
+        /* border: 1px solid #ffffff4f; */
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        white-space: nowrap;
+      }
+    </style>
   </head>
 
   <body class="dark">
@@ -53,6 +97,7 @@
           },
           layers: [
             {
+              id: 1987,
               type: 'geojson',
               name: '淮海经济区11市',
               url: '//data.mars3d.cn/file/geojson/huaihai.json',
@@ -79,7 +124,6 @@
                   淮北市: { color: '#EAC9A8' },
                 },
               },
-              popup: '{Name}',
               show: true,
             },
           ],
@@ -99,11 +143,17 @@
           type: 'GET',
           url: '//data.mars3d.cn/file/apidemo/huaihai-jj.json',
           success: function (res) {
-            showCityEconomyData(res.data)
+            conventChartsData(res.data) //单击显示的popup
+
+            showCityEconomyData(res.data) //柱状图
+            bindHaihuaiPopup()
           },
           error: function (err) {
             haoutil.msg('获取信息失败，请稍候再试')
           },
+        })
+        map.on(mars3d.EventType.load, function (event) {
+          console.log('矢量数据对象加载完成', event)
         })
       }
 
@@ -116,6 +166,7 @@
        * 展示某年的椎体
        */
       function showYearZT(arr) {
+        // console.log(arr)
         for (let i = 0; i < arr.length; i += 1) {
           const attr = arr[i]
           const jwd = getJWDByName(attr['name'])
@@ -208,6 +259,154 @@
           }
         }
         return []
+      }
+
+      //================以下是单击显示的echarst图表的相关代码===============
+      let arrYear
+      let objCity = {}
+
+      // 转换值
+      function conventChartsData(arrOld) {
+        console.log('转换前数据=>', arrOld)
+
+        arrYear = Object.keys(arrOld) //[年份]
+        objCity = {} //十一个城市对应的各年度数据
+
+        for (let a = 0; a < arrYear.length; a++) {
+          let arrCity = arrOld[arrYear[a]] //指定某年的11个城市对应数据
+
+          // 循环十次
+          for (let b = 0; b < arrCity.length; b++) {
+            let item = arrCity[b]
+
+            if (!objCity[item.code]) {
+              objCity[item.code] = []
+            }
+            objCity[item.code].push(item.GDP)
+          }
+        }
+
+        console.log('转换完成的数据=>', objCity)
+      }
+
+      function bindHaihuaiPopup() {
+        var layerHuaihai = map.getLayer(1987, 'id') // 获取config.json中对应图层
+
+        var getInnerHtml = `
+              <div class="gdpView">
+                <div class="gdpCharts" id="gdpCharts">
+                </div>
+              </div>`
+        layerHuaihai
+          .bindPopup(getInnerHtml, {
+            template: false, //不使用内置的HTML模版
+            anchor: [0, 0], //左右、上下的偏移像素值。
+            timeRender: true, //实时刷新popup内的内容。
+            onAdd: function (event) {
+              var attr = event.graphic.attr
+              showCityCharts(attr)
+            },
+          })
+          .openPopup()
+      }
+
+      function showCityCharts(attr) {
+        let arrGDPvalues = objCity[attr.code]
+        if (!arrGDPvalues) {
+          haoutil.msg(attr.Name + ' 无经济数据')
+          return
+        }
+
+        // arrGDPvalues  是点击的城市的数值,需要以[b,0,value]的方式重新排列
+        let arrData = []
+        for (let b = 0; b < arrGDPvalues.length; b++) {
+          arrData[b] = [b, 0, arrGDPvalues[b]]
+        }
+
+        var myChart = echarts.init(document.getElementById('gdpCharts'))
+        var option = {
+          visualMap: {
+            max: 4000,
+            show: false,
+            inRange: {
+              color: ['#37A2DA', '#32C5E9', '#67E0E3', '#9FE6B8', '#FFDB5C'],
+            },
+          },
+          title: {
+            text: attr.Name,
+          },
+          // x轴是横向，是时间
+          xAxis3D: {
+            type: 'category',
+            data: arrYear,
+            nameTextStyle: {
+              color: 'rgb(0, 0, 0, 0.1)',
+            },
+            // splitLine不可见时仅仅线不可见
+            splitLine: {
+              show: false,
+            },
+          },
+          // y轴被缩小
+          yAxis3D: {
+            type: 'category',
+            data: [' '],
+            nameTextStyle: {
+              color: 'rgb(0, 0, 0, 0.1)',
+            },
+            splitLine: {
+              show: false,
+            },
+          },
+          // z轴是gdp的值
+          zAxis3D: {
+            type: 'value',
+            name: 'GDP',
+            axisLine: {
+              lineStyle: {
+                color: 'rgb(0, 0, 0, 0.1)',
+              },
+            },
+            nameTextStyle: {
+              color: 'white',
+              fontSize: '18',
+            },
+            nameGap: '50',
+          },
+          grid3D: {
+            boxWidth: 200, //缩大放小x轴
+            boxDepth: 20, // 缩大放小y轴
+            axisLabel: {
+              textStyle: {
+                color: 'white',
+                fontSize: 15,
+              },
+            },
+            axisPointer: {
+              //坐标轴指示线，就是鼠标移入时，指向x轴，y轴的线
+              show: false,
+            },
+          },
+          series: [
+            {
+              type: 'bar3D',
+              data: arrData,
+              shading: 'lambert',
+              emphasis: {
+                label: {
+                  textStyle: {
+                    color: 'white',
+                    fontSize: '15',
+                  },
+                  formatter: function (arrData) {
+                    return arrYear[arrData.data[0]] + '年：' + arrData.data[2] + '亿元'
+                  },
+                },
+              },
+            },
+          ],
+        }
+        myChart.setOption(option)
       }
     </script>
   </body>

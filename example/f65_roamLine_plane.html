@@ -99,6 +99,9 @@
 
     <!-- 控制 面板 -->
     <div class="infoview">
+      <input id="btnStart" type="button" class="btn btn-primary" value="开始" />
+      <input id="btnStop" type="button" class="btn btn-primary" value="停止" />
+
       <table class="mp_table">
         <tr>
           <td class="nametd">漫游视角</td>
@@ -303,8 +306,14 @@
         roamLine = new mars3d.graphic.RoamLine(flydata)
         graphicLayer.addGraphic(roamLine)
 
-        //启动漫游
-        roamLine.start()
+        $('#btnStart').click(function () {
+          //启动漫游
+          roamLine.start()
+        })
+
+        $('#btnStop').click(function () {
+          roamLine.stop()
+        })
 
         initUI()
 

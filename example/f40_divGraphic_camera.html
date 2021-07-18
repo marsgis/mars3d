@@ -18,37 +18,76 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>功能示例 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>控件 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,echarts-liquidfill,mars3d"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
+    <style>
+      .mars3d-camera-content {
+        /* 防止下面的line一直随img动画 */
+        height: 30px;
+      }
+      .mars3d-camera-img {
+        width: 30px;
+        height: 30px;
+        animation: cameraMove 1s linear infinite alternate;
+        -webkit-animation: cameraMove 1s linear infinite alternate;
+      }
+      @keyframes cameraMove {
+        from {
+          margin-top: 20px;
+        }
+        to {
+          margin-top: 0px;
+        }
+      }
+      @-webkit-keyframes cameraMove {
+        from {
+          margin-top: 20px;
+        }
+        to {
+          margin-top: 0px;
+        }
+      }
+      .mars3d-camera-line {
+        height: 150px;
+        width: 5px;
+        margin-top: 20px;
+        border-left: 3px dashed #5b8fee;
+        margin-left: calc(50% - 1px);
+      }
+      .mars3d-camera-point {
+        border-radius: 50%;
+        width: 8px;
+        height: 8px;
+        margin-left: calc(50% - 3px);
+        background-color: #5b8fee;
+      }
+    </style>
   </head>
 
   <body class="dark">
-    <!--加载前进行操作提示，优化用户体验-->
-    <div id="mask" class="signmask" onclick="removeMask()"></div>
-
     <div id="mars3dContainer" class="mars3d-container"></div>
 
     <script src="./js/common.js"></script>
+
     <script type="text/javascript">
       'use script' //开发环境建议开启严格模式
 
       var map
-      var graphicLayer
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lng: 117.084439, lat: 31.653047, alt: 354, heading: 319, pitch: -23 },
+            center: { lat: 31.649617, lng: 117.081721, alt: 444, heading: 348, pitch: -25 },
           },
         })
 
@@ -66,56 +105,32 @@
         })
         map.addLayer(tiles3dLayer)
 
-        //创建div数据图层
-        graphicLayer = new mars3d.layer.DivLayer()
+        //创建DIV数据图层
+        var graphicLayer = new mars3d.layer.DivLayer()
         map.addLayer(graphicLayer)
 
-        //添加矢量数据
-        addGraphic([117.077462, 31.657745, 60], { value: 0.53, color: '#fb980b' })
-        addGraphic([117.079091, 31.65898, 90], { value: 0.45, color: '#00ff00' })
-        addGraphic([117.079766, 31.658268, 70], { value: 0.35, color: '#00ffff' })
-        addGraphic([117.07913, 31.655748, 80], { value: 0.21, color: '#ff0000' })
+        //添加数据
+        addGraphic(graphicLayer, [117.077531, 31.6578, 49.5])
+        addGraphic(graphicLayer, [117.079078, 31.658993, 88.4])
+        addGraphic(graphicLayer, [117.080323, 31.657841, 57.8])
+        addGraphic(graphicLayer, [117.07918, 31.656492, 43.2])
       }
 
-      function addGraphic(position, attr) {
-        var graphic = new mars3d.graphic.DivGraphic({
+      function addGraphic(graphicLayer, position) {
+        var graphicImg = new mars3d.graphic.DivGraphic({
           position: position,
           style: {
-            html: `<div style="width: 80px;height:80px;"></div>`,
-            horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+            html: ` <div class="mars3d-camera-content">
+                      <img class="mars3d-camera-img" src="img/marker/camera.svg" >
+                    </div>
+                    <div class="mars3d-camera-line" ></div>
+                    <div class="mars3d-camera-point"></div>
+                  `,
+            offsetX: -16,
+            distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 100000),
           },
-          attr: attr,
         })
-        graphic.on(mars3d.EventType.add, function (e) {
-          let dom = e.target.container.firstChild
-          let attr = e.target.attr
-
-          let liquidfillchartChart = echarts.init(dom)
-
-          //参考API：https://github.com/ecomfe/echarts-liquidfill
-          //参考示例：https://www.makeapie.com/explore.html#tags=liquidFill~sort=rank~timeframe=all~author=all
-          let option = {
-            series: [
-              {
-                type: 'liquidFill',
-                radius: '100%',
-                outline: { show: false },
-                color: [attr.color],
-                data: [attr.value],
-                label: {
-                  normal: {
-                    color: '#294D99',
-                    insideColor: '#fff',
-                    fontSize: 20,
-                  },
-                },
-              },
-            ],
-          }
-          liquidfillchartChart.setOption(option)
-        })
-        graphicLayer.addGraphic(graphic)
+        graphicLayer.addGraphic(graphicImg)
       }
     </script>
   </body>

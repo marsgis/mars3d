@@ -44,12 +44,12 @@
         <input type="button" class="btn btn-primary" value="体育设施点" onclick="showPointDemo()" />
         <input type="button" class="btn btn-primary" value="省界线" onclick="showChinaLineDemo()" />
         <input type="button" class="btn btn-primary" value="规划面" onclick="showGuihuaDemo()" />
-        <input type="button" class="btn btn-primary" value="安徽区域面" onclick="showAnhuiDemo()" />
-        <input type="button" class="btn btn-primary" value="安徽边界墙" onclick="showAnhui2Demo()" />
+        <input type="button" class="btn btn-primary" value="立体建筑物" onclick="showJianzhuwuDemo()" />
+        <input type="button" class="btn btn-primary" value="合肥区域面" onclick="showAnhuiDemo()" />
+        <input type="button" class="btn btn-primary" value="合肥边界墙" onclick="showAnhui2Demo()" />
       </div>
       <div>
         特殊面：
-        <input type="button" class="btn btn-primary" value="立体建筑物" onclick="showJianzhuwuDemo()" />
         <input type="button" class="btn btn-primary" value="单体化面" onclick="showDantihuaDemo()" />
       </div>
     </div>
@@ -294,7 +294,7 @@
         })
       }
 
-      //示例：显示特殊面数据（立体建筑物）
+      //示例： 立体建筑物
       function showJianzhuwuDemo() {
         removeLayer()
 
@@ -327,44 +327,6 @@
         geoJsonLayer.on(mars3d.EventType.load, function (event) {
           console.log('数据加载完成', event)
           initTree(event.list)
-        })
-      }
-
-      //示例：显示特殊面数据（单体化）
-      function showDantihuaDemo() {
-        removeLayer()
-
-        geoJsonLayer = new mars3d.layer.GeoJsonLayer({
-          name: '文庙-单体化',
-          url: ' //data.mars3d.cn/file/geojson/dth-wm.json',
-          //dth 标识为单体化数据，内部特殊处理
-          dth: {
-            buffer: 3,
-            color: '#ffff00',
-            opacity: 0.5,
-          },
-          popup: [
-            { field: 'name', name: '房屋名称' },
-            { field: 'jznf', name: '建造年份' },
-            { field: 'ssdw', name: '所属单位' },
-            { field: 'remark', name: '备注信息' },
-          ],
-          center: {
-            y: 33.589536,
-            x: 119.032216,
-            z: 145.08,
-            heading: 3.1,
-            pitch: -22.9,
-            roll: 0,
-          },
-          flyTo: true,
-        })
-        map.addLayer(geoJsonLayer)
-
-        //绑定事件
-        geoJsonLayer.on(mars3d.EventType.load, function (event) {
-          console.log('数据加载完成', event)
-          initTree(event.list, '房屋名称')
         })
       }
 
@@ -485,6 +447,8 @@
       function showAnhui2Demo() {
         removeLayer()
 
+        map.setCameraView({ lat: 30.672846, lng: 117.799845, alt: 59234, heading: 338, pitch: -31 })
+
         geoJsonLayer = new mars3d.layer.GeoJsonLayer({
           name: '合肥市',
           url: '//data.mars3d.cn/file/geojson/areas/340100_full.json',
@@ -504,7 +468,7 @@
           },
           popup: '{name}',
           // "tooltip": "{name}",
-          flyTo: true,
+          // flyTo: true,
         })
         map.addLayer(geoJsonLayer)
 
@@ -515,6 +479,59 @@
         })
         geoJsonLayer.on(mars3d.EventType.click, function (event) {
           console.log('单击了图层', event)
+        })
+      }
+
+      //示例：显示特殊面数据（单体化）
+      var tilesetLayer
+      function showDantihuaDemo() {
+        removeLayer()
+
+        //三维模型
+        if (!tilesetLayer) {
+          tilesetLayer = new mars3d.layer.TilesetLayer({
+            name: '文庙',
+            type: '3dtiles',
+            url: '//data.mars3d.cn/3dtiles/qx-simiao/tileset.json',
+            position: { alt: 80.6 },
+            maximumScreenSpaceError: 1,
+            maximumMemoryUsage: 1024,
+            show: true,
+          })
+          map.addLayer(tilesetLayer)
+        }
+
+        geoJsonLayer = new mars3d.layer.GeoJsonLayer({
+          name: '文庙-单体化',
+          url: ' //data.mars3d.cn/file/geojson/dth-wm.json',
+          //dth 标识为单体化数据，内部特殊处理
+          dth: {
+            buffer: 3,
+            color: '#ffff00',
+            opacity: 0.5,
+          },
+          popup: [
+            { field: 'name', name: '房屋名称' },
+            { field: 'jznf', name: '建造年份' },
+            { field: 'ssdw', name: '所属单位' },
+            { field: 'remark', name: '备注信息' },
+          ],
+          center: {
+            y: 33.589536,
+            x: 119.032216,
+            z: 145.08,
+            heading: 3.1,
+            pitch: -22.9,
+            roll: 0,
+          },
+          flyTo: true,
+        })
+        map.addLayer(geoJsonLayer)
+
+        //绑定事件
+        geoJsonLayer.on(mars3d.EventType.load, function (event) {
+          console.log('数据加载完成', event)
+          initTree(event.list, '房屋名称')
         })
       }
 

@@ -107,19 +107,21 @@
       "showClickFeature": true,
       "popup": "all",
       "scenetree": "scenetree.json",
-      "center": {"lat":31.831874,"lng":117.220976,"alt":236,"heading":354,"pitch":-41}
+      "center": { "lat": 31.831874, "lng": 117.220976, "alt": 236, "heading": 354, "pitch": -41 }
     },
     {
       "pid": 2020,
       "type": "3dtiles",
       "name": "油田联合站",
       "url": "//data.mars3d.cn/3dtiles/max-ytlhz/tileset.json",
+      "position": { "lng": 117.094224, "lat": 31.815859, "alt": 26.4 },
+      "rotation": { "z": 116.2 },
       "maximumScreenSpaceError": 1,
       "maximumMemoryUsage": 1024,
       "showClickFeature": true,
       "popup": "all",
       "scenetree": "scenetree.json",
-      "center": {"lat":40.894622,"lng":121.917884,"alt":433,"heading":64,"pitch":-38}
+      "center": { "lat": 31.816176, "lng": 117.097985, "alt": 516, "heading": 270, "pitch": -55 }
     },
     {
       "id": 202013,
@@ -199,10 +201,10 @@
       "type": "3dtiles",
       "name": "合肥大学科技园",
       "url": "//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
-      "position": { "alt": -24  },
+      "position": { "alt": -24 },
       "maximumScreenSpaceError": 1,
       "maximumMemoryUsage": 1024,
-      "center":{"lat":31.841523,"lng":117.205761,"alt":166,"heading":1,"pitch":-33}
+      "center": { "lat": 31.841523, "lng": 117.205761, "alt": 166, "heading": 1, "pitch": -33 }
     },
     {
       "id": 203014,
@@ -236,13 +238,13 @@
       "pid": 2030,
       "name": "河道边厂房(分层分户)",
       "type": "group",
-      "center": {"lat":31.56196,"lng":120.848283,"alt":92,"heading":71,"pitch":-42},
+      "center": { "lat": 31.56196, "lng": 120.848283, "alt": 92, "heading": 71, "pitch": -42 },
       "layers": [
         {
           "type": "3dtiles",
           "name": "河道边厂房-单体化",
           "url": "//data.mars3d.cn/3dtiles/qx-xiaolou-dth/tileset.json",
-          "classificationType":1,
+          "classificationType": 1,
           "style": {
             "color": "rgba(255, 255, 255, 0.01)"
           },
@@ -263,7 +265,7 @@
           "position": { "alt": 10.1 },
           "maximumScreenSpaceError": 1,
           "maximumMemoryUsage": 1024,
-          "center": {"lat":31.56196,"lng":120.848283,"alt":92,"heading":71,"pitch":-42}
+          "center": { "lat": 31.56196, "lng": 120.848283, "alt": 92, "heading": 71, "pitch": -42 }
         }
       ]
     },

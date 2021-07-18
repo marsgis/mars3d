@@ -406,9 +406,9 @@
 
         var cameraFollow = $('#chkCameraFollow').is(':checked')
         if (cameraFollow) {
-          map.camera.direction = selectedView.recordObj.direction
-          map.camera.right = selectedView.recordObj.right
-          map.camera.up = selectedView.recordObj.up
+          map.camera.direction = selectedView.style.camera.direction
+          map.camera.right = selectedView.style.camera.right
+          map.camera.up = selectedView.style.camera.up
           map.camera.position = selectedView.position
         }
       }

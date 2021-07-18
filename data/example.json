@@ -960,6 +960,12 @@
               "fileName": "f40_liquidfill"
             },
             {
+              "name": "浮动监控点",
+              "version": "3.0",
+              "thumbnail": "f40_divGraphic_camera.jpg",
+              "fileName": "f40_divGraphic_camera"
+            },
+            {
               "name": "动态效果点",
               "version": "1.7",
               "thumbnail": "f40_divGraphic_daxue.gif",
@@ -1688,6 +1694,12 @@
               "version": "2.2",
               "thumbnail": "h20_firstPersonRoam.jpg",
               "fileName": "h20_firstPersonRoam"
+            },
+            {
+              "name": "视点飞行",
+              "version": "3.0",
+              "thumbnail": "h20_viewPoints.jpg",
+              "fileName": "h20_viewPoints"
             },
             {
               "name": "视角历史记录",

@@ -87,16 +87,17 @@
           popup: 'all',
           flyTo: true,
         })
-        map.addLayer(geoJsonLayer)
 
         //绑定事件
         geoJsonLayer.on(mars3d.EventType.load, function (event) {
           console.log('数据加载完成', event)
-          initTree(event.list)
+          initTree(event.list, 'airportName')
         })
         geoJsonLayer.on(mars3d.EventType.click, function (event) {
           console.log('单击了图层', event)
         })
+
+        map.addLayer(geoJsonLayer)
       }
 
       //提取坐标信息
@@ -121,7 +122,6 @@
         if (!arr || arr.length == 0) {
           return
         }
-
         //初始化树
         var setting = {
           check: {

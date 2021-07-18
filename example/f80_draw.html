@@ -74,7 +74,12 @@
           是否编辑
         </label>
       </div>
-
+      <div class="checkbox checkbox-primary checkbox-inline" title="屏蔽拾取地形坐标，避免穿透3dtiles模型">
+        <input id="chk_onlyPickModelPosition" class="styled" type="checkbox">
+        <label for="chk_onlyPickModelPosition">
+          仅在3dtiles上标绘
+        </label>
+      </div>
 
     </div>
 
@@ -213,6 +218,13 @@
         console.log('删除了对象', e)
 
         stopEditing()
+      })
+
+      $('#chk_onlyPickModelPosition').change(function () {
+        var val = $(this).is(':checked')
+
+        //控制鼠标只取模型上的点，忽略地形上的点的拾取
+        map.onlyPickModelPosition = val
       })
 
       $('#btnSaveKML').click(function () {
