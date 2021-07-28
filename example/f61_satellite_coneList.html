@@ -197,22 +197,18 @@
         $('#td_tle1').html(weixin.options.tle1)
         $('#td_tle2').html(weixin.options.tle2)
 
-        //定时更新面板
-        setInterval(function () {
-          showRealTimeInfo(weixin)
-        }, 200)
-      }
+        //显示实时坐标和时间
+        weixin.on(mars3d.EventType.change, function (event) {
+          let date = Cesium.JulianDate.toDate(map.clock.currentTime)
+          $('#td_time').html(date.format('yyyy-M-d HH:mm:ss'))
 
-      //显示实时坐标和时间
-      function showRealTimeInfo(weixin) {
-        $('#td_time').html(Cesium.JulianDate.toDate(map.clock.currentTime).format('yyyy-M-d HH:mm:ss'))
-
-        if (weixin.position) {
-          var point = mars3d.LatLngPoint.fromCartesian(weixin.position)
-          $('#td_jd').html(point.lng)
-          $('#td_wd').html(point.lat)
-          $('#td_gd').html(haoutil.str.formatLength(point.alt))
-        }
+          if (weixin.position) {
+            var point = mars3d.LatLngPoint.fromCartesian(weixin.position)
+            $('#td_jd').html(point.lng)
+            $('#td_wd').html(point.lat)
+            $('#td_gd').html(haoutil.str.formatLength(point.alt))
+          }
+        })
       }
     </script>
   </body>

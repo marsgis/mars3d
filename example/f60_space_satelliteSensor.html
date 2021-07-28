@@ -171,7 +171,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { y: 15.938584, x: 117.523776, z: 3813636.09, heading: 342.9, pitch: -66.4, roll: 359.9 },
+            center: { lat: 20.217716, lng: 82.229053, alt: 38911656, heading: 10, pitch: -90 },
           },
           cameraController: {
             maximumZoomDistance: 9000000000,
@@ -195,7 +195,7 @@
         //测试位置
         $('#model_x').val(117.169969)
         $('#model_y').val(31.840886)
-        $('#model_z').val(900000)
+        $('#model_z').val(9980000)
 
         //参数
         var x = Number($('#model_x').val())
@@ -364,7 +364,13 @@
         })
 
         $('#btnGetRegion').click(function () {
-          var coords = satelliteSensor.exportImagingArea(6) //导出成像区边界坐标，参数6指示保留小数位数
+          map.graphicLayer.clear()
+
+          var coords = satelliteSensor.getAreaCoords() //导出成像区边界坐标
+          if (!coords || coords.length == 0) {
+            haoutil.alert('当前与地球无成像区边')
+            return
+          }
 
           //显示边界点，测试
           map.graphicLayer.clear()

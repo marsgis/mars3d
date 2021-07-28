@@ -320,7 +320,6 @@
         .bindPopup(getInnerHtml, {
           template: false, //不使用内置的HTML模版
           anchor: [0, 0], //左右、上下的偏移像素值。
-          timeRender: true, //实时刷新popup内的内容。
           onAdd: function (event) {
             var attr = event.graphic.attr
             showCityCharts(attr)

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>功能示例 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,bootstrap-table,layer,haoutil,mars3d"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+    <style>
+      .messagetable {
+        position: absolute;
+        display: none;
+        top: 420px;
+        left: 10px;
+        padding: 10px 15px;
+        width: 380px;
+        overflow-y: scroll;
+        border-radius: 4px;
+        border: 1px solid rgba(128, 128, 128, 0.5);
+        color: #ffffff;
+        background: rgba(0, 0, 0, 0.4);
+        box-shadow: 0 3px 14px rgba(128, 128, 128, 0.5);
+      }
+
+      .messagetable .path {
+        width: 100%;
+        height: 20px;
+        margin-bottom: 10px;
+        height: 30px;
+        line-height: 30px;
+      }
+
+      .messagetable #btnPlay {
+        position: absolute;
+        top: 2%;
+        right: 5%;
+        float: right;
+      }
+
+      .fixed-table-container tbody .selected td {
+        background-color: #3f4854a9;
+      }
+
+      /**以下为图上tooltip信息面板样式*/
+      .tipBox {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 240px;
+        height: 260px;
+      }
+
+      .tipHeader {
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background-color: #372d83;
+      }
+
+      .tipBodyFirstPart {
+        width: 100%;
+        line-height: 10px;
+        text-align: left;
+        padding: 10px 15px 5px 15px;
+        background-color: #465996;
+      }
+      .tipBodySecondPart {
+        width: 100%;
+        min-height: 5px;
+        text-align: left;
+        padding: 5px 15px 10px 15px;
+        background-color: #465996;
+      }
+      .tipBodySecondPart table {
+        width: 100%;
+      }
+      .tipBodySecondPart table tr td:not(:first-child) {
+        text-align: center;
+        font-size: 13px;
+      }
+
+      .triangle-left {
+        position: absolute;
+        top: 10px;
+        left: -15px;
+        width: 0;
+        height: 0;
+        border-top: 5px solid transparent;
+        border-right: 15px solid #372d83;
+        border-bottom: 5px solid transparent;
+      }
+    </style>
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <!-- 台风列表 -->
+    <div class="infoview">
+      <table id="listTable"></table>
+    </div>
+
+    <div id="typhoonPath" class="messagetable">
+      <div class="path">
+        <p><span id="lblName"></span> 路径信息</p>
+        <button id="btnPlay" type="button" class="btn btn-primary"><span class="fa fa-play" aria-hidden="true"></span> 播放</button>
+      </div>
+
+      <table id="pathTable"></table>
+    </div>
+
+    <script src="./js/Typhoon.js"></script>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
+
+      var map
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 8.560501, lng: 111.849127, alt: 10725692, heading: 358, pitch: -87 },
+          },
+          // control: {
+          //   animation: true,
+          //   timeline: true,
+          // },
+        })
+
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+
+        //绘制24/48小时警戒线
+        drawWarningLine()
+
+        //获取台风列表
+        queryTyphoonList().then(function (arr) {
+          //启动正在发送的台风
+          arr.forEach((item) => {
+            if (item.state == 'start') {
+              item.show = true
+              selectOneTyphoon(item)
+            }
+          })
+          showTyphoonTable(arr)
+        })
+      }
+
+      //显示台风列表
+      function showTyphoonTable(data) {
+        $('#listTable').bootstrapTable({
+          data: data,
+          height: 390,
+          pagination: false,
+          singleSelect: false,
+          checkboxHeader: false,
+          columns: [
+            {
+              title: '是否显示',
+              field: 'show',
+              align: 'center',
+              checkbox: true,
+              with: 50,
+            },
+            {
+              title: '台风编号',
+              field: 'typnumber',
+              align: 'center',
+            },
+            {
+              title: '台风名（中文）',
+              field: 'name_cn',
+              align: 'center',
+            },
+            {
+              title: '台风名（英文）',
+              field: 'name_en',
+              align: 'center',
+            },
+          ],
+          onCheck: function (row) {
+            selectOneTyphoon(row)
+          },
+          onUncheck: function (row) {
+            unSelectOneTyphoon(row)
+          },
+          onClickRow: function (row) {
+            if (typhoonListObj[row.id] && typhoonListObj[row.id].show) {
+              selectOneTyphoon(row)
+            }
+          },
+        })
+
+        $('#btnPlay').click(function () {
+          if (!selectTF) {
+            return
+          }
+
+          if (selectTF.playTyphoon?.isStart) {
+            stopTyphoon()
+          } else {
+            startTyphoon()
+          }
+        })
+      }
+
+      function startTyphoon() {
+        $('#btnPlay').html('<span class="fa fa-stop" aria-hidden="true"></span> 停止')
+
+        selectTF.playTyphoon = selectTF.playTyphoon || new PlayTyphoon(selectTF.options, map)
+        selectTF.playTyphoon.start()
+        selectTF.show = false
+      }
+
+      //停止播放
+      function stopTyphoon() {
+        $('#btnPlay').html('<span class="fa fa-play" aria-hidden="true"></span> 播放')
+        if (selectTF?.playTyphoon) {
+          selectTF.playTyphoon.stop()
+          selectTF.show = true
+        }
+      }
+
+      let typhoonListObj = {}
+
+      //取消勾选台风
+      function unSelectOneTyphoon(row) {
+        let typhoon = typhoonListObj[row.id]
+        if (typhoon == selectTF) {
+          stopTyphoon()
+          $('#typhoonPath').hide()
+        }
+        if (typhoon) {
+          typhoon.show = false
+        }
+      }
+
+      //勾选了台风
+      function selectOneTyphoon(row) {
+        $('#typhoonPath').show()
+        $('#lblName').html('[' + row.typnumber + ']' + '' + row.name_cn)
+        stopTyphoon()
+
+        if (typhoonListObj[row.id]) {
+          let typhoon = typhoonListObj[row.id]
+
+          typhoon.show = true
+          typhoon.flyTo()
+          showPathTable(typhoon) //已有的，直接展示
+        } else {
+          queryTyphoonItem(row.id).then(function (newData) {
+            let typhoon = new Typhoon({ ...row, ...newData }, map)
+            typhoon.flyTo()
+            showPathTable(typhoon)
+
+            typhoonListObj[row.id] = typhoon //绑定到数据中，方便使用
+          })
+        }
+      }
+
+      let selectTF
+
+      //台风路径表格的显示
+      function showPathTable(typhoon) {
+        selectTF = typhoon
+
+        $('#pathTable').bootstrapTable('destroy')
+        $('#pathTable').bootstrapTable({
+          height: getHeight(),
+          pagination: false,
+          singleSelect: true,
+          data: typhoon.options.path,
+          columns: [
+            {
+              title: '时间',
+              field: 'time_str',
+              align: 'center',
+            },
+
+            {
+              title: '风速',
+              field: 'centerSpeed',
+              align: 'center',
+              formatter: function (value, row, index) {
+                return value + 'm/s'
+              },
+            },
+            {
+              title: '移向',
+              field: 'moveTo_str',
+              align: 'center',
+            },
+            {
+              title: '强度',
+              field: 'level_str',
+              align: 'center',
+            },
+          ],
+          onClickRow: function (row) {
+            typhoon.showPointFQ(row)
+            let graphic = typhoon.getPointById(row.id)
+            if (graphic) {
+              graphic.flyTo({
+                radius: 1600000,
+                complete() {
+                  graphic.openTooltip()
+                },
+              })
+            }
+          },
+        })
+      }
+
+      function getHeight() {
+        return $(window).height() - 520
+      }
+
+      //访问后端接口，取台风列表数据
+      function queryTyphoonList() {
+        return new Promise(function (resolve, reject) {
+          function typhoon_jsons_list_default(data) {
+            var arr = []
+            data.typhoonList.forEach((item) => {
+              arr.push({
+                id: item[0],
+                name_en: item[1],
+                name_cn: item[2],
+                typnumber: item[3],
+                state: item[7],
+              })
+            })
+            resolve(arr)
+          }
+          window.typhoon_jsons_list_default = typhoon_jsons_list_default
+
+          $.ajax({
+            url: 'http://typhoon.nmc.cn/weatherservice/typhoon/jsons/list_default', //在线实时接口
+            dataType: 'jsonp',
+            // url: '//data.mars3d.cn/file/apidemo/typhoon/list_2020.json', //mock离线数据
+            // dataType: 'json',
+            type: 'GET',
+            data: {
+              t: new Date().getTime(),
+            },
+            success: typhoon_jsons_list_default,
+            error: function (data) {
+              console.log('台风列表数据获取失败', data)
+              // haoutil.msg('台风列表数据获取失败！')
+              reject(data)
+            },
+          })
+        })
+      }
+
+      //访问后端接口，取单个台风路径数据
+      function queryTyphoonItem(id) {
+        return new Promise(function (resolve, reject) {
+          function typhoon_jsons_view(res) {
+            var newData = conversionPathData(res.typhoon) //在Typhoon.js中
+            // console.log('台风数据==>', newData)
+            resolve(newData)
+          }
+          window['typhoon_jsons_view_' + id] = typhoon_jsons_view
+
+          $.ajax({
+            url: 'http://typhoon.nmc.cn/weatherservice/typhoon/jsons/view_' + id, //在线实时接口
+            dataType: 'jsonp',
+            // url: '//data.mars3d.cn/file/apidemo/typhoon/view_' + id + '.json', //mock离线数据
+            // dataType: 'json',
+            type: 'GET',
+            data: {
+              t: new Date().getTime(),
+            },
+            success: typhoon_jsons_view,
+            error: function (data) {
+              console.log('获取台风单个数据失败')
+              reject(data)
+            },
+          })
+        })
+      }
+
+      //转换数据,将后端接口数据转换为需要的格式
+      function conversionPathData(oldData) {
+        var path = []
+        oldData[8].forEach((message) => {
+          let circle7
+          let circle10
+          let circle12
+          message[10].forEach((level) => {
+            let radiusObj = {
+              speed: level[0],
+              radius1: level[1],
+              radius2: level[2],
+              radius3: level[3],
+              radius4: level[4],
+            }
+
+            if (level[0] == '30KTS') {
+              circle7 = radiusObj
+            } else if (level[0] == '50KTS') {
+              circle10 = radiusObj
+            } else if (level[0] == '64KTS') {
+              circle12 = radiusObj
+            } else {
+              console.log('未处理风圈', radiusObj)
+            }
+          })
+
+          //预测路径
+          let babj = message[11]?.BABJ
+          let arrForecast
+          if (babj) {
+            arrForecast = []
+            babj.forEach((element) => {
+              let newArr = {
+                time: element[0], //几小时预报
+                time_str: element[1],
+                lon: element[2], //预报经度
+                lat: element[3], //预报纬度
+                strength: element[4], //中心气压
+                centerSpeed: element[5], //最大风速  m/s
+                level: element[7], //预报台风等级, 代码
+                color: getColor(element[7]), //对应等级的颜色
+              }
+              arrForecast.push(newArr)
+            })
+          }
+
+          let time = new Date(message[2]) //时间
+
+          path.push({
+            id: message[0], //唯一标识
+            time: new Date(message[2]), //时间
+            time_str: time.format('MM-dd HH:mm'), //时间格式化字符串
+
+            level: message[3], //台风等级, 代码
+            level_str: getLevelStr(message[3]),
+            color: getColor(message[3]), //对应等级的颜色
+            lon: message[4], //经度
+            lat: message[5], //纬度
+            strength: message[6], //中心气压,百帕
+            centerSpeed: message[7], //最大风速,米/秒
+            moveTo: message[8], //移动方向, 代码
+            moveTo_str: getMoveToStr(message[8]),
+            windSpeed: message[9], //移动速度,公里/小时
+
+            circle7: circle7, //7级风圈, 对象
+            circle10: circle10, //10级风圈, 对象
+            circle12: circle12, //12级风圈, 对象
+            forecast: arrForecast, //预测路径, 数组
+          })
+        })
+
+        return {
+          id: oldData[0],
+          name_en: oldData[1], //台风名字,英文
+          name_cn: oldData[2], //台风名字
+          typnumber: oldData[3], //台风编号
+          state: oldData[7],
+          path: path,
+        }
+      }
+
+      //不同等级的台风对应不同的颜色
+      function getColor(level) {
+        switch (level) {
+          default:
+          case 'TD': //热带低压
+            return 'rgb(238,209,57)'
+          case 'TS': //热带风暴
+            return 'rgb(0,0,255)'
+          case 'STS': //强热带风暴
+            return 'rgb(15,128,0)'
+          case 'TY': //台风
+            return 'rgb(254,156,69)'
+          case 'STY': //强台风
+            return 'rgb(254,0,254)'
+          case 'SuperTY': //超强台风
+            return 'rgb(254,0,0)'
+        }
+      }
+
+      function getLevelStr(value) {
+        switch (value) {
+          default:
+          case 'TD':
+            return '热带低压'
+          case 'TS':
+            return '热带风暴'
+          case 'STS':
+            return '强热带风暴'
+          case 'TY':
+            return '台风'
+          case 'STY':
+            return '强台风'
+          case 'SuperTY':
+            return '超强台风'
+        }
+      }
+
+      function getMoveToStr(value) {
+        switch (value) {
+          default:
+          case 'N':
+            return '北'
+          case 'NNE':
+            return '北东北'
+          case 'NE':
+            return '东北'
+          case 'ENE':
+            return '东东北'
+          case 'E':
+            return '东'
+          case 'ESE':
+            return '东东南'
+          case 'ES':
+            return '东南'
+          case 'SSE':
+            return '南东南'
+          case 'S':
+            return '南'
+          case 'SSW':
+            return '南西南'
+          case 'SW':
+            return '西南'
+          case 'WSW':
+            return '西西南'
+          case 'W':
+            return '西'
+          case 'WNW':
+            return '西北西'
+          case 'NW':
+            return '北西'
+          case 'NNW':
+            return '北西北'
+        }
+      }
+
+      //绘制警戒线
+      function drawWarningLine() {
+        //绘制24小时警戒线
+        let lineWarning24 = new mars3d.graphic.PolylineEntity({
+          positions: [
+            [127, 34],
+            [127, 22],
+            [119, 18],
+            [119, 11],
+            [113, 4.5],
+            [105, 0],
+          ],
+          style: {
+            color: '#828314',
+            width: 2,
+            zIndex: 1,
+          },
+        })
+        map.graphicLayer.addGraphic(lineWarning24)
+
+        //注记文本
+        var textWarning24 = new mars3d.graphic.RectangleEntity({
+          positions: [
+            [128.129019, 29.104287],
+            [125.850451, 28.424599],
+          ],
+          style: {
+            material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Text, {
+              text: '24小时警戒线',
+              font: '80px 楷体',
+              color: '#828314',
+              backgroundColor: new Cesium.Color(0.0, 0.0, 0.0, 0),
+            }),
+            rotationDegree: 90,
+            zIndex: 2,
+          },
+        })
+        map.graphicLayer.addGraphic(textWarning24)
+
+        //绘制48小时警戒线
+        let lineWarning48 = new mars3d.graphic.PolylineEntity({
+          positions: [
+            [132, 34],
+            [132, 22],
+            [119, 0],
+            [105, 0],
+          ],
+          style: {
+            width: 2,
+            material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolylineDash, {
+              dashLength: 20.0,
+              color: '#4dba3d',
+            }),
+            zIndex: 1,
+          },
+        })
+        map.graphicLayer.addGraphic(lineWarning48)
+
+        //注记文本
+        var textWarning48 = new mars3d.graphic.RectangleEntity({
+          positions: [
+            [130.502492, 25.959716],
+            [133.423638, 26.772991],
+          ],
+          style: {
+            material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.Text, {
+              text: '48小时警戒线',
+              font: '80px 楷体',
+              color: '#4dba3d',
+              backgroundColor: new Cesium.Color(0.0, 0.0, 0.0, 0),
+            }),
+            rotationDegree: 90,
+            zIndex: 4,
+          },
+        })
+        map.graphicLayer.addGraphic(textWarning48)
+      }
+    </script>
+  </body>
+</html>

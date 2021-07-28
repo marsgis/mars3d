@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+      include="jquery,jquery.range,jquery.minicolors,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -101,10 +101,10 @@
               <input type="radio" name="skyBox" onclick="setSceneOptions('showSkyBox',false)" />否
             </td>
           </tr>
-          <tr>
+          <tr  title="请关闭天空盒看效果">
             <td class="nametd">空间背景颜色</td>
             <td>
-              <input type="color" id="colorStyle" style="width: 60px" />
+              <input type="text" id="colorStyle" style="width: 100px" />
             </td>
           </tr>
           <tr>
@@ -124,7 +124,7 @@
 
           <!-- 地球属性 -->
           <tr>
-            <td rowspan="5">地球Globe</td>
+            <td rowspan="6">地球Globe</td>
             <td class="nametd">地形夸张倍数</td>
             <td>
               <input id="terrain" type="range" min="1" max="80" value="1" step="1" style="width: 80px" />
@@ -153,9 +153,16 @@
             </td>
           </tr>
           <tr>
+            <td class="nametd">显示底图</td>
+            <td>
+              <input type="radio" name="depthTest" checked onclick="map.basemap=2021" />是
+              <input type="radio" name="depthTest"  onclick="map.basemap=undefined" />否
+            </td>
+          </tr>
+          <tr title="请关闭底图后看效果">
             <td class="nametd">地球背景色</td>
             <td>
-              <input type="color" id="baseColor" value="#546a53" style="width: 60px" />
+              <input type="text" id="baseColor" style="width: 100px"  />
             </td>
           </tr>
 
@@ -264,92 +271,48 @@
           mars3d.Util.webglerror()
           return
         }
-        initMap()
+
+        //读取 config.json 配置文件
+        mars3d.Resource.fetchJson({
+          url: 'config/config.json',
+        }).then(function (json) {
+          //构建地图
+          initMap(json.map3d)
+        })
       })
 
-      function initMap() {
-        //在创建地球前的传参中配置basemaps参数
-        map = new mars3d.Map('mars3dContainer', {
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            //默认视角参数
-            center: { lat: 30.715648, lng: 116.300527, alt: 10727, heading: 3, pitch: -25 },
-            shadows: false, //是否启用日照阴影
-            removeDblClick: true, //是否移除Cesium默认的双击事件
-
-            //以下是Cesium.Viewer所支持的options【控件相关的写在另外的control属性中】
-            sceneMode: 3, //3等价于Cesium.SceneMode.SCENE3D,
-
-            //以下是Cesium.Scene对象相关参数
-            showSun: true, //是否显示太阳
-            showMoon: true, //是否显示月亮
-            showSkyBox: true, //是否显示天空盒
-            showSkyAtmosphere: true, //是否显示地球大气层外光圈
-            fog: true, //是否启用雾化效果
-            fxaa: true, //是否启用抗锯齿
-
-            //以下是Cesium.Globe对象相关参数
-            globe: {
-              depthTestAgainstTerrain: false, //是否启用深度监测
-              baseColor: '#546a53', //地球默认背景色
-              showGroundAtmosphere: true, //是否在地球上绘制的地面大气
-              enableLighting: false, //是否显示昼夜区域
-            },
-            //以下是Cesium.ScreenSpaceCameraController对象相关参数
-            cameraController: {
-              zoomFactor: 3.0, //鼠标滚轮放大的步长参数
-              minimumZoomDistance: 1, //地球放大的最小值（以米为单位）
-              maximumZoomDistance: 50000000, //地球缩小的最大值（以米为单位）
-              enableRotate: true, //2D和3D视图下，是否允许用户旋转相机
-              enableTranslate: true, //2D和哥伦布视图下，是否允许用户平移地图
-              enableTilt: true, // 3D和哥伦布视图下，是否允许用户倾斜相机
-              enableZoom: true, // 是否允许 用户放大和缩小视图
-              enableCollisionDetection: true, //是否允许 地形相机的碰撞检测
-            },
+            center: { lat: 25.37169, lng: 119.094153, alt: 1182971, heading: 346, pitch: -60 },
           },
-          control: {
-            baseLayerPicker: true, //basemaps底图切换按钮
-            homeButton: true, //视角复位按钮
-            sceneModePicker: true, //二三维切换按钮
-            navigationHelpButton: true, //帮助按钮
-            fullscreenButton: true, //全屏按钮
-            defaultContextMenu: true, //右键菜单
-          },
-          basemaps: [
-            {
-              name: '天地图影像',
-              icon: 'img/basemaps/tdt_img.png',
-              type: 'tdt',
-              layer: 'img_d',
-              key: ['9ae78c51a0a28f06444d541148496e36'],
-              show: true,
-            },
-            {
-              name: '离线地图',
-              icon: 'img/basemaps/mapboxSatellite.png',
-              type: 'xyz',
-              url: '//data.mars3d.cn/tile/googleImg/{z}/{x}/{y}.jpg',
-              maximumLevel: 12,
-            },
-            {
-              name: '单张图片',
-              icon: 'img/basemaps/offline.png',
-              type: 'image',
-              url: '//data.mars3d.cn/file/img/world/world.jpg',
-            },
-          ],
         })
 
+        console.log('地图构建参数', mapOptions)
+
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+
         //空间背景颜色
-        $('#colorStyle').change(function () {
-          let color = this.value
-          $('#colorStyle').css('background-color', color)
-          setSceneOptions('backgroundColor', color)
+        $('#colorStyle').minicolors({
+          position: 'bottom left',
+          control: 'saturation',
+          format: 'rgb',
+          change: function (color, opacity) {
+            setSceneOptions('backgroundColor', color)
+          },
         })
 
         //地球背景颜色
-        $('#baseColor').change(function () {
-          $('#baseColor').css('background-color', this.value)
-          setSceneGlobeOptions('baseColor', this.value)
+        $('#baseColor').minicolors({
+          position: 'bottom left',
+          control: 'saturation',
+          format: 'rgb',
+          value: '#546a53',
+          change: function (color, opacity) {
+            setSceneGlobeOptions('baseColor', color)
+          },
         })
 
         $('#sceneMode').change(function () {

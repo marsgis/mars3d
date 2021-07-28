@@ -414,3 +414,22 @@
   height: 60px;
   border-right: 3px solid #2bcdbb;
 }
+
+/**一个渐变的文本DIV面板**/
+.mars3d-blueTxt {
+  width: 100px;
+  height: 36px;
+  line-height: 36px;
+  font-size: 16px;
+  text-align: center;
+  background-image: linear-gradient(#0434c5, #00f1f5);
+  border-radius: 5px;
+}
+
+.mars3d-blueTxt-line {
+  width: 4px;
+  height: 80px;
+  position: relative;
+  right: calc(-50% + 2px);
+  background-color: #2bcdbb;
+}

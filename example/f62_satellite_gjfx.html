@@ -333,12 +333,10 @@
         var position
         while (nowTime <= endTimes) {
           //根据时间计算卫星的位置
-          let pos = mars3d.SpaceUtil.getSatellitePosition(item.tle1, item.tle2, nowTime)
-          if (!pos) {
+          let position = mars3d.Tle.getEcfPosition(item.tle1, item.tle2, nowTime)
+          if (!position) {
             break
           }
-
-          position = pos.position
 
           //显示点[参考比较结果是否正确]
           var timeStr = new Date(nowTime).format('yyyy-MM-dd HH:mm:ss')
@@ -429,11 +427,11 @@
             if (inAreaPath[i].inOrOut == 'in' && inAreaPath[i + 1].inOrOut == 'out') {
               var inAttr = inAreaPath[i]
               var outAttr = inAreaPath[i + 1]
-              if (inAttr) {
+              if (inAttr?.lastPosition) {
                 inTime = new Date(inAttr.lastTime).format('yyyy-M-d HH:mm:ss')
                 positions.push(inAttr.lastPosition)
               }
-              if (outAttr) {
+              if (outAttr?.position) {
                 positions.push(outAttr.position)
                 outTime = new Date(outAttr.time).format('yyyy-M-d HH:mm:ss')
               }
@@ -464,9 +462,8 @@
           positions: data.positions,
           style: {
             width: 6000,
-            cornerType: Cesium.CornerType.MITERED, //指定转角处样式
+             cornerType: Cesium.CornerType.MITERED, //指定转角处样式
             color: '#00ff00',
-            outline: true,
           },
         })
         graphicLayer.addGraphic(primitive)

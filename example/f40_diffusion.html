@@ -115,6 +115,7 @@
       // haoutil.msg('加载数据44万条，请耐心等待~')
 
       var degree = 45 //角度
+      let hpr = new Cesium.HeadingPitchRoll(Cesium.Math.toRadians(degree), 0, 0)
 
       var resource = new Cesium.Resource({
         url: '//data.mars3d.cn/file/apidemo/diffusion.json',
@@ -128,15 +129,8 @@
             var item = rs[i]
 
             var val = item[3]
-            var par1Position = mars3d.PointUtil.getTranslationPosition(
-              center,
-              {
-                x: item[0],
-                y: item[1],
-                z: item[2],
-              },
-              degree
-            )
+
+            var par1Position = mars3d.PointUtil.getPositionByHprAndOffset(center, new Cesium.Cartesian3(item[0], item[1], item[2]), hpr)
 
             //加point点
             var primitive = new mars3d.graphic.PointPrimitive({

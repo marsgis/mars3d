@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,layer,haoutil,mars3d,mars3d-space"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <div id="pointInfo" class="infoview" style="display: none">
+      <table class="mars-table tb-border">
+        <tr>
+          <td class="nametd">名称</td>
+          <td id="td_name"></td>
+        </tr>
+        <tr title="北美空防司令部目录号">
+          <td class="nametd">北美空防目录号</td>
+          <td id="td_norad"></td>
+        </tr>
+        <tr title="空间研委会编号">
+          <td class="nametd">国际代号</td>
+          <td id="td_cospar"></td>
+        </tr>
+        <tr>
+          <td class="nametd">国家</td>
+          <td id="td_country"></td>
+        </tr>
+        <tr>
+          <td class="nametd">周期</td>
+          <td id="td_period"></td>
+        </tr>
+        <tr>
+          <td class="nametd">倾角</td>
+          <td id="td_inclination"></td>
+        </tr>
+        <tr>
+          <td class="nametd">远地点高度</td>
+          <td id="td_apogee"></td>
+        </tr>
+        <tr>
+          <td class="nametd">近地点高度</td>
+          <td id="td_perigee"></td>
+        </tr>
+        <tr>
+          <td class="nametd">尺寸</td>
+          <td id="td_size"></td>
+        </tr>
+        <tr>
+          <td class="nametd">发射</td>
+          <td id="td_launch"></td>
+        </tr>
+        <tr>
+          <td class="nametd">更多资料</td>
+          <td>
+            <a id="link_n2yo" href="" class="rc-vertical" target="_blank">N2YO</a>
+            <a id="link_tle" href="" class="rc-vertical" target="_blank">TLE</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
+
+      var map
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: {
+              y: 10,
+              x: 111.833884,
+              z: 150000000,
+              heading: 0,
+              pitch: -90,
+              roll: 0,
+            },
+            cameraController: {
+              zoomFactor: 3.0,
+              minimumZoomDistance: 1,
+              maximumZoomDistance: 300000000,
+              constrainedAxis: false, //解除在南北极区域鼠标操作限制
+            },
+            clock: {
+              multiplier: 2, //速度
+            },
+          },
+          control: {
+            animation: true, //是否创建动画小器件，左下角仪表
+            timeline: true, //是否显示时间线控件
+          },
+        })
+
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+
+        $.ajax({
+          url: '//data.mars3d.cn/file/apidemo/tle.json',
+          dataType: 'json',
+          type: 'get',
+          success: function (result) {
+            let arr = result.list
+            initData(arr)
+            haoutil.msg('当前外太空物数量: ' + arr.length)
+          },
+          error: function (data) {
+            haoutil.msg('获取空间目标轨道数据异常！')
+          },
+        })
+      }
+      var graphicLayer
+      function initData(arr) {
+        //创建Graphic图层
+        graphicLayer = new mars3d.layer.GraphicLayer()
+        map.addLayer(graphicLayer)
+
+        //单击地图空白处
+        map.on(mars3d.EventType.clickMap, function (event) {
+          highlightSatellite()
+        })
+
+        graphicLayer.on(mars3d.EventType.click, function (event) {
+          console.log('单击了卫星', event)
+          //单击事件
+          highlightSatellite(event.graphic)
+        })
+
+        for (let i = 0; i < arr.length; i++) {
+          let item = arr[i]
+
+          let style = {
+            pixelSize: 3,
+            color: 'rgba(0,255,0,0.4)',
+          }
+
+          //转为属性，方便使用
+          if (item.info) {
+            item.cospar = item.info[0]
+            item.name = item.info[1]
+            item.country = item.info[2]
+            item.period = item.info[3]
+            item.inclination = item.info[4]
+            item.apogee = item.info[5]
+            item.perigee = item.info[6]
+            item.size = item.info[7]
+            item.launch = new Date(item.info[8])
+            delete item.info
+
+            if (item.country == 'PRC') {
+              //中国的卫星
+              style.pixelSize = 4
+              style.color = 'rgba(0,255,255,0.6)'
+            }
+          }
+
+          var primitive = new mars3d.graphic.PointPrimitive({
+            id: item.id,
+            // position: mars3d.Tle.getEcfPosition(item.tle1, item.tle2, time) //计算卫星位置
+            style: style,
+            attr: item,
+          })
+          graphicLayer.addGraphic(primitive)
+        }
+
+        startWorker(arr)
+      }
+
+      //采用多线程来计算卫星位置
+      var worker
+      function startWorker(arr) {
+        worker = new Worker('./js/tleWorker.js')
+        worker.onmessage = function (event) {
+          let positionObj = event.data.positionObj
+          // console.log('接收到数据', positionObj)
+
+          for (var id in positionObj) {
+            let item = positionObj[id]
+            if (!item) {
+              continue
+            }
+
+            let graphic = graphicLayer.getGraphicById(id)
+            graphic.position = new Cesium.Cartesian3(item.x, item.y, item.z)
+          }
+
+          //循环继续发送请求消息
+          worker.postMessage({
+            time: Cesium.JulianDate.toDate(map.clock.currentTime),
+            list: arr,
+          })
+        }
+
+        //主线程调用worker.postMessage()方法，向 Worker 发消息。
+        worker.postMessage({
+          time: Cesium.JulianDate.toDate(map.clock.currentTime),
+          list: arr,
+        })
+      }
+
+      var lastSelectWX
+
+      function highlightSatellite(satelliteObj) {
+        if (lastSelectWX) {
+          $('#pointInfo').hide()
+          //重置上次选中的轨道样式
+          lastSelectWX.remove(true)
+          lastSelectWX = null
+        }
+
+        if (satelliteObj) {
+          let item = satelliteObj.attr
+          showInfo(item)
+
+          //高亮选中的轨道样式
+          var weixin = new mars3d.graphic.Satellite({
+            tle1: item.tle1,
+            tle2: item.tle2,
+            model: {
+              url: '//data.mars3d.cn/gltf/mars/weixin.gltf',
+              scale: 1,
+              autoHeading: true,
+              minimumPixelSize: 50,
+              show: item.name ? true : false,
+            },
+            label: {
+              color: '#ffffff',
+              opacity: 1,
+              font_family: '楷体',
+              font_size: 30,
+              outline: true,
+              outlineColor: '#000000',
+              outlineWidth: 3,
+              background: true,
+              backgroundColor: '#000000',
+              backgroundOpacity: 0.5,
+              font_weight: 'normal',
+              font_style: 'normal',
+              pixelOffsetX: 0,
+              pixelOffsetY: -20,
+              scaleByDistance: true,
+              scaleByDistance_far: 10000000,
+              scaleByDistance_farValue: 0.4,
+              scaleByDistance_near: 100000,
+              scaleByDistance_nearValue: 1,
+              show: true,
+            },
+            path: {
+              show: true,
+              color: '#e2e2e2',
+              opacity: 0.8,
+              width: 1,
+            },
+          })
+          map.graphicLayer.addGraphic(weixin)
+          lastSelectWX = weixin
+        }
+      }
+
+      function showInfo(attr) {
+        if (!attr.name) {
+          return
+        }
+
+        $('#pointInfo').show()
+
+        $('#td_name').html(attr.name)
+        $('#td_norad').html(attr.id)
+        $('#td_cospar').html(attr.cospar)
+        $('#td_country').html(attr.country)
+        $('#td_period').html(mars3d.Util.formatNum(attr.period, 2) + ' 分钟')
+        $('#td_inclination').html(attr.inclination + '°')
+        $('#td_apogee').html(mars3d.Util.formatNum(attr.apogee, 0) + ' km')
+        $('#td_perigee').html(mars3d.Util.formatNum(attr.perigee, 0) + ' km')
+        $('#td_size').html(attr.size)
+        $('#td_launch').html(attr.launch.format('yyyy-MM-dd'))
+
+        $('#link_n2yo').attr('href', 'https://www.n2yo.com/satellite/?s=' + attr.id)
+        $('#link_tle').attr('href', 'https://celestrak.com/satcat/tle.php?CATNR=' + attr.id)
+      }
+    </script>
+  </body>
+</html>

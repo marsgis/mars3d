@@ -164,7 +164,7 @@ function initEcharts() {
       left: '0%',
       right: '0%',
       top: '20%',
-      bottom: '0%',
+      bottom: '5%',
       containLabel: true,
     },
     xAxis: {
@@ -302,7 +302,7 @@ function initEcharts() {
       left: '0%',
       right: '0%',
       top: '18%',
-      bottom: '0%',
+      bottom: '5%',
       containLabel: true,
     },
     xAxis: {

@@ -84,6 +84,18 @@
               "version": "1.9",
               "thumbnail": "a20_destroy.jpg",
               "fileName": "a20_destroy"
+            },
+            {
+              "name": "多语言支持",
+              "version": "3.0",
+              "thumbnail": "a20_lang.jpg",
+              "fileName": "a20_lang"
+            },
+            {
+              "name": "蒙板遮盖",
+              "version": "3.1",
+              "thumbnail": "d20_maskDiv.jpg",
+              "fileName": "d20_maskDiv"
             }
           ]
         }
@@ -954,10 +966,16 @@
               "fileName": "f40_worker_aqi"
             },
             {
-              "name": "动态水球点",
+              "name": "动态效果点",
+              "version": "1.7",
+              "thumbnail": "f40_divGraphic_daxue.gif",
+              "fileName": "f40_divGraphic_daxue"
+            },
+            {
+              "name": "油气站标注",
               "version": "3.0",
-              "thumbnail": "f40_liquidfill.jpg",
-              "fileName": "f40_liquidfill"
+              "thumbnail": "f40_divGraphic_hg.jpg",
+              "fileName": "f40_divGraphic_hg"
             },
             {
               "name": "浮动监控点",
@@ -966,10 +984,10 @@
               "fileName": "f40_divGraphic_camera"
             },
             {
-              "name": "动态效果点",
-              "version": "1.7",
-              "thumbnail": "f40_divGraphic_daxue.gif",
-              "fileName": "f40_divGraphic_daxue"
+              "name": "动态水球点",
+              "version": "3.0",
+              "thumbnail": "f40_liquidfill.jpg",
+              "fileName": "f40_liquidfill"
             },
             {
               "name": "统计柱状图",
@@ -988,12 +1006,6 @@
               "version": "3.0",
               "thumbnail": "f40_weixin.gif",
               "fileName": "f40_weixin"
-            },
-            {
-              "name": "外太空物",
-              "version": "2.0",
-              "thumbnail": "f40_space_point.jpg",
-              "fileName": "f40_space_point"
             },
             {
               "name": "危化品扩散效果",
@@ -1095,6 +1107,12 @@
               "version": "3.0",
               "thumbnail": "f45_huxing.jpg",
               "fileName": "f45_huxing"
+            },
+            {
+              "name": "台风轨迹(综合案例)",
+              "version": "3.0",
+              "thumbnail": "f45_typhoon.jpg",
+              "fileName": "f45_typhoon"
             }
           ]
         },
@@ -1143,73 +1161,107 @@
           "name": "卫星场景对象",
           "children": [
             {
-              "name": "双曲面雷达范围",
+              "name": "CamberRadar 双曲面雷达范围",
               "version": "1.8",
               "thumbnail": "f60_space_camberRadar.jpg",
               "fileName": "f60_space_camberRadar",
               "plugins": "space"
             },
             {
-              "name": "圆椎体（竖立朝上）",
+              "name": "ConicSensor 圆椎体(固定竖立朝上)",
               "version": "1.8",
               "thumbnail": "f60_space_conicSensor_up.jpg",
               "fileName": "f60_space_conicSensor_up",
               "plugins": "space"
             },
             {
-              "name": "圆椎体",
+              "name": "ConicSensor 圆椎体(任意方向)",
               "version": "1.8",
               "thumbnail": "f60_space_conicSensor.jpg",
               "fileName": "f60_space_conicSensor",
               "plugins": "space"
             },
             {
-              "name": "圆椎体-动态展示",
+              "name": "ConicSensor 圆椎体动态展示",
               "version": "1.8",
               "thumbnail": "f60_space_conicSensor_dynamic.gif",
               "fileName": "f60_space_conicSensor_dynamic",
               "plugins": "space"
             },
             {
-              "name": "目标追踪展示",
+              "name": "ConicSensor 圆椎体追踪目标",
               "version": "1.8",
               "thumbnail": "f60_space_conicSensor_lookAt.gif",
               "fileName": "f60_space_conicSensor_lookAt",
               "plugins": "space"
             },
             {
-              "name": "四棱椎体",
+              "name": "RectSensor 四棱椎体",
               "version": "1.8",
               "thumbnail": "f60_space_rectSensor.jpg",
               "fileName": "f60_space_rectSensor",
               "plugins": "space"
             },
             {
-              "name": "卫星视锥体",
+              "name": "RectSensor 四棱椎体追踪目标",
+              "version": "3.0",
+              "thumbnail": "f60_space_rectSensor_lookAt.jpg",
+              "fileName": "f60_space_rectSensor_lookAt",
+              "plugins": "space"
+            },
+            {
+              "name": "RectSensor 大量四棱椎体",
+              "version": "3.0",
+              "thumbnail": "f60_space_rectSensor_list.jpg",
+              "fileName": "f60_space_rectSensor_list",
+              "plugins": "space"
+            },
+            {
+              "name": "SatelliteSensor 卫星视锥体",
               "version": "1.8",
               "thumbnail": "f60_space_satelliteSensor.jpg",
               "fileName": "f60_space_satelliteSensor",
               "plugins": "space"
             },
             {
-              "name": "卫星视锥体-动态展示",
+              "name": "SatelliteSensor 卫星视锥体动态展示",
               "version": "1.8",
               "thumbnail": "f60_space_satelliteSensor_dynamic.gif",
               "fileName": "f60_space_satelliteSensor_dynamic",
               "plugins": "space"
             },
             {
-              "name": "卫星TLE实时展示",
+              "name": "外太空物",
+              "version": "2.0",
+              "thumbnail": "f61_space_point.jpg",
+              "fileName": "f61_space_point"
+            },
+            {
+              "name": "Satellite TLE实时展示",
               "version": "1.9",
               "thumbnail": "f61_satellite.jpg",
               "fileName": "f61_satellite",
               "plugins": "space"
             },
             {
-              "name": "卫星TLE实时展示(多相机)",
+              "name": "Satellite TLE实时展示(多相机)",
               "version": "1.9",
               "thumbnail": "f61_satellite_coneList.jpg",
               "fileName": "f61_satellite_coneList",
+              "plugins": "space"
+            },
+            {
+              "name": "Satellite 自定义动态位置",
+              "version": "1.9",
+              "thumbnail": "f61_satellite_position.jpg",
+              "fileName": "f61_satellite_position",
+              "plugins": "space"
+            },
+            {
+              "name": "多卫星TLE实时展示",
+              "version": "2.0",
+              "thumbnail": "f61_satellite_list.gif",
+              "fileName": "f61_satellite_list",
               "plugins": "space"
             },
             {
@@ -1224,13 +1276,6 @@
               "version": "2.0",
               "thumbnail": "f61_satellite_change.gif",
               "fileName": "f61_satellite_change",
-              "plugins": "space"
-            },
-            {
-              "name": "多卫星TLE实时展示",
-              "version": "2.0",
-              "thumbnail": "f61_satellite_list.gif",
-              "fileName": "f61_satellite_list",
               "plugins": "space"
             },
             {
@@ -1421,25 +1466,31 @@
           ]
         },
         {
-          "name": "小模型编辑控制",
+          "name": "gLTF编辑控制",
           "children": [
             {
               "name": "gltf模型标绘(含参数编辑)",
               "version": "1.7",
-              "thumbnail": "f50_draw_gltf.jpg",
-              "fileName": "f50_draw_gltf"
+              "thumbnail": "g05_draw_gltf.jpg",
+              "fileName": "g05_draw_gltf"
+            },
+            {
+              "name": "gltf模型库",
+              "version": "2.1",
+              "thumbnail": "g05_gltfList.jpg",
+              "fileName": "g05_gltfList"
             },
             {
               "name": "gltf零部件控制(运载火箭)",
               "version": "1.8",
-              "thumbnail": "f50_gltf_rocket.jpg",
-              "fileName": "f50_gltf_rocket"
+              "thumbnail": "g05_gltf_rocket.jpg",
+              "fileName": "g05_gltf_rocket"
             },
             {
               "name": "模型自旋转",
               "version": "1.8",
-              "thumbnail": "f50_gltf_rotate.jpg",
-              "fileName": "f50_gltf_rotate"
+              "thumbnail": "g05_gltf_rotate.jpg",
+              "fileName": "g05_gltf_rotate"
             }
           ]
         }

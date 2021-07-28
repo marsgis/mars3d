@@ -98,56 +98,12 @@
         var degree = parseInt(item.degree)
 
         //5条线路坐标
-        var newPoint1 = mars3d.PointUtil.getTranslationPosition(
-          position,
-          {
-            x: 0.341789,
-            y: 16.837972,
-            z: 50.717621,
-          },
-          degree,
-          'z'
-        )
-        var newPoint2 = mars3d.PointUtil.getTranslationPosition(
-          position,
-          {
-            x: 0.34241,
-            y: -16.838163,
-            z: 50.717617,
-          },
-          degree,
-          'z'
-        )
-        var newPoint3 = mars3d.PointUtil.getTranslationPosition(
-          position,
-          {
-            x: -0.025005,
-            y: 0.022878,
-            z: 39.540545,
-          },
-          degree,
-          'z'
-        )
-        var newPoint4 = mars3d.PointUtil.getTranslationPosition(
-          position,
-          {
-            x: -0.024999,
-            y: 15.009109,
-            z: 39.303012,
-          },
-          degree,
-          'z'
-        )
-        var newPoint5 = mars3d.PointUtil.getTranslationPosition(
-          position,
-          {
-            x: -0.025001,
-            y: -15.009585,
-            z: 39.301099,
-          },
-          degree,
-          'z'
-        )
+        let hpr = new Cesium.HeadingPitchRoll(Cesium.Math.toRadians(degree), 0, 0)
+        var newPoint1 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(0.341789, 16.837972, 50.717621), hpr)
+        var newPoint2 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(0.34241, -16.838163, 50.717617), hpr)
+        var newPoint3 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(-0.025005, 0.022878, 39.540545), hpr)
+        var newPoint4 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(-0.024999, 15.009109, 39.303012), hpr)
+        var newPoint5 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(-0.025001, -15.009585, 39.301099), hpr)
 
         if (i === 0) {
           polylines1.push(newPoint1)

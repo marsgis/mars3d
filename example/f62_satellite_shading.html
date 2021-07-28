@@ -158,11 +158,10 @@
           var inthtml = '单击处时间：' + currentTime.format('yyyy-MM-dd HH:mm:ss')
           return inthtml
         })
-
         var weixin = new mars3d.graphic.Satellite({
-          name: ' GAOFEN 1',
-          tle1: '1 39150U 13018A   18309.20646405  .00000034  00000-0  12253-4 0  9993',
-          tle2: '2 39150  97.9189  29.2064 0018076 220.9170 139.0692 14.76532215297913',
+          name: 'GAOFEN 1',
+          tle1: '1 39150U 13018A   21180.50843864  .00000088  00000-0  19781-4 0  9997',
+          tle2: '2 39150  97.8300 252.9072 0018449 344.7422  15.3253 14.76581022440650',
           model: {
             url: '//data.mars3d.cn/gltf/mars/weixin.gltf',
             scale: 1,
@@ -306,19 +305,19 @@
 
         var temp_t = bt
         while (temp_t <= et) {
-          var pos = mars3d.SpaceUtil.getSatellitePosition(weixin.options.tle1, weixin.options.tle2, temp_t)
-          if (!pos) {
+          var point = weixin.tle.getPoint(temp_t)
+          if (!point) {
             break
           }
 
-          var ground_pos = Cesium.Cartesian3.fromDegrees(pos.longitude, pos.latitude)
+          var ground_pos = Cesium.Cartesian3.fromDegrees(point.lng, point.lat)
           positions.push(ground_pos)
 
           var time = Cesium.JulianDate.fromDate(new Date(temp_t))
           points.push({
             position: ground_pos,
             time: time,
-            height: pos.height,
+            height: point.alt,
           })
 
           temp_t += step

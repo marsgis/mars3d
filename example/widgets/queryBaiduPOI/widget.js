@@ -20,8 +20,6 @@
     create() {
       this.storageName = 'mars3d_queryBaiduPOI'
       this.pageSize = 6
-      this.arrdata = []
-      this.counts = 0
       this.allpage = 0
       this.thispage = 0
 
@@ -296,20 +294,20 @@
 
     //===================显示查询结果处理========================
     showPOIPage(data, counts) {
-      this.arrdata = data
-      this.counts = counts
-      if (this.counts < data.length) {
-        this.counts = data.length
+      // count -- 显示搜索结果的数量；data -- 结果的属性，如地址电话等
+
+      if (counts < data.length) {
+        counts = data.length
       }
-      this.allpage = Math.ceil(this.counts / this.pageSize)
+      this.allpage = Math.ceil(counts / this.pageSize)
 
       var inhtml = ''
-      if (this.counts == 0) {
+      if (counts == 0) {
         inhtml += '<div class="querybar-page"><div class="querybar-fl">没有找到"<strong>' + this.queryText + '</strong>"相关结果</div></div>'
       } else {
         this.objResultData = this.objResultData || {}
-        for (var index = 0; index < this.arrdata.length; index++) {
-          var item = this.arrdata[index]
+        for (var index = 0; index < data.length; index++) {
+          var item = data[index]
           var startIdx = (this.thispage - 1) * this.pageSize
           item.index = startIdx + (index + 1)
 
@@ -349,13 +347,13 @@
         }
 
         //底部信息
-        inhtml += '<div class="querybar-page"><div class="querybar-fl">找到<strong>' + this.counts + '</strong>条结果</div>' + _fyhtml + '</div>'
+        inhtml += '<div class="querybar-page"><div class="querybar-fl">找到<strong>' + counts + '</strong>条结果</div>' + _fyhtml + '</div>'
       }
       $('#querybar_resultlist_view').html(inhtml)
       $('#querybar_resultlist_view').show()
 
-      this.showPOIArr(this.arrdata)
-      if (this.counts == 1) {
+      this.showPOIArr(data)
+      if (counts == 1) {
         this.showDetail('0')
       }
     }
