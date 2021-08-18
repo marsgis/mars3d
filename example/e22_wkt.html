@@ -58,8 +58,17 @@
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
-        $.getJSON('//data.mars3d.cn/file/apidemo/airport.json', function (result) {
-          addOrbitList(result)
+        queryAirPortApiData().then(function (arr) {
+          addOrbitList(arr)
+        })
+      }
+
+      //访问后端接口，取数据
+      function queryAirPortApiData() {
+        return new Promise(function (resolve, reject) {
+          $.getJSON('//data.mars3d.cn/file/apidemo/airport.json', function (result) {
+            resolve(result)
+          })
         })
       }
 

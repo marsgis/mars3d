@@ -4,7 +4,7 @@
     <!-- 标题及搜索关键字 -->
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>标绘GLTF小模型 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>gltf模型标绘(含参数编辑) | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -74,14 +74,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 30.83351,
-              x: 116.354467,
-              z: 2742.7,
-              heading: 359.3,
-              pitch: -51.9,
-              roll: 0,
-            },
+            center: { lat: 30.83351, lng: 116.354467, alt: 2743, heading: 359, pitch: -52 },
             clock: {
               currentTime: '2021-01-01 22:00:00',
             },

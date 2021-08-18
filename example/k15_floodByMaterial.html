@@ -1,269 +1,274 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="author" content="火星科技 http://mars3d.cn " />
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <meta name="format-detection" content="telephone=no" />
-  <meta name="x5-fullscreen" content="true" />
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-        content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>淹没分析（globe材质） | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-  <title>淹没分析（材质） | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+    ></script>
 
-  <!--第三方lib-->
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/" include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-<body class="dark">
-  <!--加载前进行操作提示，优化用户体验-->
-  <div id="mask" class="signmask" onclick="removeMask()"></div>
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-  <div id="mars3dContainer" class="mars3d-container"></div>
+    <!-- 面板 -->
+    <div class="infoview">
+      <table id="paramView" class="mars-table">
+        <tr>
+          <td class="nametd">分析区域</td>
+          <td>
+            <button type="button" id="btnDrawExtent" class="btn btn-default">添加矩形</button>
+            <button type="button" id="btnDraw" class="btn btn-default">添加多边形</button>
+            <button type="button" id="clearDraw" class="btn btn-default">清除</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="nametd">最低海拔(米)</td>
+          <td>
+            <input id="minHeight" value="" type="number" class="form-control" />
+          </td>
+        </tr>
+        <tr>
+          <td class="nametd">最高海拔(米)</td>
+          <td>
+            <input id="maxHeight" value="" type="number" class="form-control" />
+          </td>
+        </tr>
+        <tr>
+          <td class="nametd">淹没速度(米/秒)</td>
+          <td>
+            <input id="speed" value="80" type="number" class="form-control" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <button type="button" id="begin" class="btn btn-primary">开始分析</button>
+          </td>
+        </tr>
+      </table>
 
-  <!-- 面板 -->
-  <div class="infoview">
-    <table id="paramView" class="mars-table">
-      <tr>
-        <td class="nametd">分析区域</td>
-        <td>
-          <button type="button" id="btnDrawExtent" class="btn btn-default">添加矩形</button>
-          <button type="button" id="btnDraw" class="btn btn-default">添加多边形</button>
-          <button type="button" id="clearDraw" class="btn btn-default">清除</button>
-        </td>
-      </tr>
-      <tr>
-        <td class="nametd">最低海拔(米)</td>
-        <td>
-          <input id="minHeight" value="" type="number" class="form-control" />
-        </td>
-      </tr>
-      <tr>
-        <td class="nametd">最高海拔(米)</td>
-        <td>
-          <input id="maxHeight" value="" type="number" class="form-control" />
-        </td>
-      </tr>
-      <tr>
-        <td class="nametd">淹没速度(米/秒)</td>
-        <td>
-          <input id="speed" value="80" type="number" class="form-control" />
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <button type="button" id="begin" class="btn btn-primary">开始分析</button>
-        </td>
-      </tr>
-    </table>
+      <div id="resultView" style="display: none; text-align: left">
+        <div class="rowview clearfix">
+          <span>高度选择:</span>
+          <input id="range_currHeight" title="时间" type="range" min="0" max="1000" step="0.1" value="0" />
+        </div>
+        <div class="rowview clearfix"><span>当前高度:</span><span id="lbl_nowHeight"></span></div>
 
-    <div id="resultView" style="display: none; text-align: left">
-      <div class="rowview clearfix">
-        <span>高度选择:</span>
-        <input id="range_currHeight" title="时间" type="range" min="0" max="1000" step="0.1" value="0" />
-      </div>
-      <div class="rowview clearfix"><span>当前高度:</span><span id="lbl_nowHeight"></span></div>
+        <input id="btn_start" type="button" class="btn btn-primary" value="自动播放" />
+        <button type="button" id="clear" class="btn btn-primary">返回</button>
 
-      <input id="btn_start" type="button" class="btn btn-primary" value="自动播放" />
-      <button type="button" id="clear" class="btn btn-primary">返回</button>
-
-      <div class="checkbox checkbox-info checkbox-inline">
-        <input type="checkbox" id="showElse" value="this" name="jiaodu" checked />
-        <label for="showElse">显示非淹没区域</label>
+        <div class="checkbox checkbox-info checkbox-inline">
+          <input type="checkbox" id="showElse" value="this" name="jiaodu" checked />
+          <label for="showElse">显示非淹没区域</label>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
 
-    var map
-    var floodByMaterial
+      var map
+      var floodByMaterial
 
-    function initMap(options) {
-      //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {
-        scene: {
-          showSun: false,
-          showMoon: false,
-          showSkyBox: false,
-          showSkyAtmosphere: false,
-          fog: false,
-          globe: {
-            showGroundAtmosphere: false,
-            enableLighting: false,
-          },
-        },
-      })
-
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
-
-      var speed = Number($('#speed').val())
-
-      floodByMaterial = new mars3d.thing.FloodByMaterial({
-        speed: speed,
-      })
-      map.addThing(floodByMaterial)
-
-      floodByMaterial.on(mars3d.EventType.start, function (e) {
-        console.log('开始分析', e)
-      })
-      floodByMaterial.on(mars3d.EventType.change, function (e) {
-        // console.log('分析中，高度变化了', e)
-        onChangeHeight(e.height)
-      })
-      floodByMaterial.on(mars3d.EventType.end, function (e) {
-        console.log('结束分析', e)
-      })
-
-      $('#btnDraw').click(function () {
-        map.graphicLayer.startDraw({
-          type: 'polygon',
-          style: {
-            color: '#007be6',
-            opacity: 0.5,
-            outline: false,
-          },
-          success: function (graphic) {
-            var positions = graphic.positionsShow
-
-            //更新最大、最小高度值
-            updateHeightRange(positions)
-
-            floodByMaterial.addArea(positions)
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            showSun: false,
+            showMoon: false,
+            showSkyBox: false,
+            showSkyAtmosphere: false,
+            fog: false,
+            globe: {
+              showGroundAtmosphere: false,
+              enableLighting: false,
+            },
           },
         })
-      })
 
-      $('#btnDrawExtent').click(function () {
-        map.graphicLayer.startDraw({
-          type: 'rectangle',
-          style: {
-            color: '#007be6',
-            opacity: 0.8,
-            outline: false,
-          },
-          success: function (graphic) {
-            //绘制成功后回调
-            var positions = graphic.getOutlinePositions(false)
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
 
-            //更新最大、最小高度值
-            updateHeightRange(positions)
-
-            //区域
-            floodByMaterial.addArea(positions)
-          },
-        })
-      })
-
-      $('#begin').click(function () {
-        if (floodByMaterial.length == 0) {
-          haoutil.msg('请首先绘制分析区域！')
-          return
-        }
-        map.graphicLayer.clear()
-
-        var minValue = Number($('#minHeight').val())
-        var maxValue = Number($('#maxHeight').val())
         var speed = Number($('#speed').val())
 
-        floodByMaterial.setOptions({
-          minHeight: minValue,
-          maxHeight: maxValue,
+        floodByMaterial = new mars3d.thing.FloodByMaterial({
           speed: speed,
         })
+        map.addThing(floodByMaterial)
 
-        $('#range_currHeight').attr('min', minValue)
-        $('#range_currHeight').attr('max', maxValue)
-        onChangeHeight(minValue)
+        floodByMaterial.on(mars3d.EventType.start, function (e) {
+          console.log('开始分析', e)
+        })
+        floodByMaterial.on(mars3d.EventType.change, function (e) {
+          // console.log('分析中，高度变化了', e)
+          onChangeHeight(e.height)
+        })
+        floodByMaterial.on(mars3d.EventType.end, function (e) {
+          console.log('结束分析', e)
+        })
 
-        $('#paramView').hide()
-        $('#resultView').show()
-        $('#btn_start').click() //自动启动
-      })
+        $('#btnDraw').click(function () {
+          map.graphicLayer.startDraw({
+            type: 'polygon',
+            style: {
+              color: '#007be6',
+              opacity: 0.5,
+              outline: false,
+            },
+            success: function (graphic) {
+              var positions = graphic.positionsShow
 
-      //滑动条
-      $('#range_currHeight').range({
-        onChange: function (value, bfb) {
-          floodByMaterial.height = value
-          $('#lbl_nowHeight').html(value.toFixed(1))
+              //更新最大、最小高度值
+              updateHeightRange(positions)
 
+              floodByMaterial.addArea(positions)
+            },
+          })
+        })
+
+        $('#btnDrawExtent').click(function () {
+          map.graphicLayer.startDraw({
+            type: 'rectangle',
+            style: {
+              color: '#007be6',
+              opacity: 0.8,
+              outline: false,
+            },
+            success: function (graphic) {
+              //绘制成功后回调
+              var positions = graphic.getOutlinePositions(false)
+
+              //更新最大、最小高度值
+              updateHeightRange(positions)
+
+              //区域
+              floodByMaterial.addArea(positions)
+            },
+          })
+        })
+
+        $('#begin').click(function () {
+          if (floodByMaterial.length == 0) {
+            haoutil.msg('请首先绘制分析区域！')
+            return
+          }
+          map.graphicLayer.clear()
+
+          var minValue = Number($('#minHeight').val())
+          var maxValue = Number($('#maxHeight').val())
+          var speed = Number($('#speed').val())
+
+          floodByMaterial.setOptions({
+            minHeight: minValue,
+            maxHeight: maxValue,
+            speed: speed,
+          })
+
+          $('#range_currHeight').attr('min', minValue)
+          $('#range_currHeight').attr('max', maxValue)
+          onChangeHeight(minValue)
+
+          $('#paramView').hide()
+          $('#resultView').show()
+          $('#btn_start').click() //自动启动
+        })
+
+        //滑动条
+        $('#range_currHeight').range({
+          onChange: function (value, bfb) {
+            floodByMaterial.height = value
+            $('#lbl_nowHeight').html(value.toFixed(1))
+
+            $('#btn_start').val('自动播放')
+          },
+        })
+
+        $('#btn_start').click(function () {
+          if (floodByMaterial.isStart) {
+            floodByMaterial.stop()
+            $('#btn_start').val('自动播放')
+          } else {
+            floodByMaterial.start()
+            $('#btn_start').val('暂停')
+          }
+        })
+
+        $('#clearDraw').click(function () {
+          clearDraw()
+        })
+
+        $('#clear').click(function () {
+          $('#resultView').hide()
+          $('#paramView').show()
           $('#btn_start').val('自动播放')
-        },
-      })
 
-      $('#btn_start').click(function () {
-        if (floodByMaterial.isStart) {
-          floodByMaterial.stop()
-          $('#btn_start').val('自动播放')
-        } else {
-          floodByMaterial.start()
-          $('#btn_start').val('暂停')
-        }
-      })
+          clearDraw()
+        })
 
-      $('#clearDraw').click(function () {
-        clearDraw()
-      })
-
-      $('#clear').click(function () {
-        $('#resultView').hide()
-        $('#paramView').show()
-        $('#btn_start').val('自动播放')
-
-        clearDraw()
-      })
-
-      $('#showElse').change(function () {
-        var val = $(this).is(':checked')
-        floodByMaterial.showElseArea = val
-      })
-    }
-
-    //求最大、最小高度值
-    function updateHeightRange(positions) {
-      haoutil.loading.show()
-
-      var result = mars3d.PolyUtil.getHeightRange(positions, map.scene)
-      let minHeight = Math.ceil(result.minHeight)
-      let maxHeight = Math.floor(result.maxHeight)
-
-      if (floodByMaterial.length > 0) {
-        minHeight = Math.min(minHeight, Number($('#minHeight').val()))
-        maxHeight = Math.max(maxHeight, Number($('#maxHeight').val()))
+        $('#showElse').change(function () {
+          var val = $(this).is(':checked')
+          floodByMaterial.showElseArea = val
+        })
       }
-      $('#minHeight').val(minHeight)
-      $('#maxHeight').val(maxHeight)
 
-      haoutil.loading.hide()
-    }
+      //求最大、最小高度值
+      function updateHeightRange(positions) {
+        haoutil.loading.show()
 
-    function onChangeHeight(height) {
-      $('#range_currHeight').val(height).change()
-      $('#lbl_nowHeight').html(height.toFixed(1))
-    }
+        var result = mars3d.PolyUtil.getHeightRange(positions, map.scene)
+        let minHeight = Math.ceil(result.minHeight)
+        let maxHeight = Math.floor(result.maxHeight)
 
-    function clearDraw() {
-      floodByMaterial.clear()
-      map.graphicLayer.clear()
+        if (floodByMaterial.length > 0) {
+          minHeight = Math.min(minHeight, Number($('#minHeight').val()))
+          maxHeight = Math.max(maxHeight, Number($('#maxHeight').val()))
+        }
+        $('#minHeight').val(minHeight)
+        $('#maxHeight').val(maxHeight)
 
-      $('#showElse').prop('checked', true)
-      $('#minHeight').val('')
-      $('#maxHeight').val('')
-    }
-  </script>
-</body>
+        haoutil.loading.hide()
+      }
 
+      function onChangeHeight(height) {
+        $('#range_currHeight').val(height).change()
+        $('#lbl_nowHeight').html(height.toFixed(1))
+      }
+
+      function clearDraw() {
+        floodByMaterial.clear()
+        map.graphicLayer.clear()
+
+        $('#showElse').prop('checked', true)
+        $('#minHeight').val('')
+        $('#maxHeight').val('')
+      }
+    </script>
+  </body>
 </html>

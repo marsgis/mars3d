@@ -359,7 +359,7 @@ li {
     font-size: 14px;
 }
 
-.infoview div {
+.infoview > div  {
     margin-top: 5px;
 }
 

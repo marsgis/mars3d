@@ -1,468 +1,475 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="author" content="火星科技 http://mars3d.cn " />
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <meta name="format-detection" content="telephone=no" />
-  <meta name="x5-fullscreen" content="true" />
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-  <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,echarts-gl,turf,mars3d"
+    ></script>
 
-  <!--第三方lib-->
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,layer,haoutil,echarts-gl,turf,mars3d"></script>
+    <link href="css/style.css" rel="stylesheet" />
+    <style>
+      .gdpView {
+        min-width: 90px;
+        min-height: 35px;
+        position: absolute;
+        left: 16px;
+        bottom: 31px;
+        cursor: default;
+        border-radius: 4px;
+        opacity: 0.96;
+        border: 1px solid rgba(35, 40, 44, 0.226);
+        box-shadow: 0px 2px 21px 0px rgba(35, 40, 44, 0.226);
+        border-radius: 4px;
+        box-sizing: border-box;
+        background: rgba(2, 79, 128, 0.425);
+      }
 
-  <link href="css/style.css" rel="stylesheet" />
-  <style>
-    .gdpView {
-      min-width: 90px;
-      min-height: 35px;
-      position: absolute;
-      left: 16px;
-      bottom: 31px;
-      cursor: default;
-      border-radius: 4px;
-      opacity: 0.96;
-      border: 1px solid rgba(35, 40, 44, 0.226);
-      box-shadow: 0px 2px 21px 0px rgba(35, 40, 44, 0.226);
-      border-radius: 4px;
-      box-sizing: border-box;
-      background: rgba(2, 79, 128, 0.425);
-    }
+      .gdpView::before {
+        content: '';
+        width: calc(100% + 22px);
+        height: 39px;
+        position: absolute;
+        bottom: -39px;
+        left: -22px;
+        background: url(./img/marker/popupLbl.png) 0px 0px no-repeat;
+        background-position: 0px 0px;
+      }
 
-    .gdpView::before {
-      content: '';
-      width: calc(100% + 22px);
-      height: 39px;
-      position: absolute;
-      bottom: -39px;
-      left: -22px;
-      background: url(./img/marker/popupLbl.png) 0px 0px no-repeat;
-      background-position: 0px 0px;
-    }
+      .gdpCharts {
+        width: 470px;
+        height: 275px;
+        text-align: center;
+        padding: 1px;
+        font-size: 14px;
+        font-family: 'MicrosoftYaHei';
+        font-weight: 400;
+        color: #ffffff;
+        line-height: 33px;
+        /* border: 1px solid #ffffff4f; */
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        white-space: nowrap;
+      }
 
-    .gdpCharts {
-      width: 470px;
-      height: 275px;
-      text-align: center;
-      padding: 1px;
-      font-size: 14px;
-      font-family: 'MicrosoftYaHei';
-      font-weight: 400;
-      color: #ffffff;
-      line-height: 33px;
-      /* border: 1px solid #ffffff4f; */
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      white-space: nowrap;
-    }
+      .gdpCharts::before {
+        content: '';
+        width: 100%;
+        height: 40px;
+        position: absolute;
+        left: 0;
+        background-color: #1f3f8e;
+      }
 
-    .gdpCharts::before {
-      content: "";
-      width: 100%;
-      height: 40px;
-      position: absolute;
-      left: 0;
-      background-color: #1f3f8e;
-    }
+      .btnClosePopup {
+        position: absolute;
+        right: 5px;
+        top: 2px;
+        width: 30px;
+        height: 40px;
+        font-size: 25px;
+        color: white;
+        border: none;
+        background-color: #1f3f8e !important;
+      }
+    </style>
+  </head>
 
-    .btnClosePopup {
-      position: absolute;
-      right: 5px;
-      top: 2px;
-      width: 30px;
-      height: 40px;
-      font-size: 25px;
-      color: white;
-      border: none;
-      background-color: #1f3f8e !important;
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-    }
-  </style>
-</head>
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-<body class="dark">
-  <!--加载前进行操作提示，优化用户体验-->
-  <div id="mask" class="signmask" onclick="removeMask()"></div>
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
 
-  <div id="mars3dContainer" class="mars3d-container"></div>
+      var map
+      var graphicLayer
+      var barColors = ['#00fdcf', '#63AEFF', '#FFB861', '#FF6D5D']
 
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
-
-    var map
-    var graphicLayer
-    var barColors = ['#00fdcf', '#63AEFF', '#FFB861', '#FF6D5D']
-
-    function initMap(options) {
-      //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {
-        scene: {
-          center: { lat: 30.286465, lng: 117.620524, alt: 510892, heading: 358, pitch: -50 },
-        },
-        layers: [
-          {
-            id: 1987,
-            type: 'geojson',
-            name: '淮海经济区11市',
-            url: '//data.mars3d.cn/file/geojson/huaihai.json',
-            symbol: {
-              styleOptions: {
-                materialType: mars3d.MaterialType.PolyGradient,
-                color: '#3388cc',
-                opacity: 0.7,
-                alphaPower: 1.3,
-                length: '{gdp}',
-              },
-              styleField: 'Name',
-              styleFieldOptions: {
-                济宁市: { color: '#D4AACE' },
-                临沂市: { color: '#8DC763' },
-                菏泽市: { color: '#F7F39A' },
-                枣庄市: { color: '#F7F39A' },
-                徐州市: { color: '#96F0F1' },
-                宿迁市: { color: '#EAC9A8' },
-                连云港市: { color: '#F7F39A' },
-                商丘市: { color: '#D4AACE' },
-                宿州市: { color: '#8DC763' },
-                亳州市: { color: '#96F0F1' },
-                淮北市: { color: '#EAC9A8' },
-              },
-            },
-            show: true,
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 30.286465, lng: 117.620524, alt: 510892, heading: 358, pitch: -50 },
           },
-        ],
-      })
+          layers: [
+            {
+              id: 1987,
+              type: 'geojson',
+              name: '淮海经济区11市',
+              url: '//data.mars3d.cn/file/geojson/huaihai.json',
+              symbol: {
+                styleOptions: {
+                  materialType: mars3d.MaterialType.PolyGradient,
+                  color: '#3388cc',
+                  opacity: 0.7,
+                  alphaPower: 1.3,
+                  length: '{gdp}',
+                },
+                styleField: 'Name',
+                styleFieldOptions: {
+                  济宁市: { color: '#D4AACE' },
+                  临沂市: { color: '#8DC763' },
+                  菏泽市: { color: '#F7F39A' },
+                  枣庄市: { color: '#F7F39A' },
+                  徐州市: { color: '#96F0F1' },
+                  宿迁市: { color: '#EAC9A8' },
+                  连云港市: { color: '#F7F39A' },
+                  商丘市: { color: '#D4AACE' },
+                  宿州市: { color: '#8DC763' },
+                  亳州市: { color: '#96F0F1' },
+                  淮北市: { color: '#EAC9A8' },
+                },
+              },
+              show: true,
+            },
+          ],
+        })
 
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
 
-      map.basemap = 2017 //蓝色底图
+        map.basemap = 2017 //蓝色底图
 
-      //创建Graphic图层
-      graphicLayer = new mars3d.layer.GraphicLayer()
-      map.addLayer(graphicLayer)
+        //创建Graphic图层
+        graphicLayer = new mars3d.layer.GraphicLayer()
+        map.addLayer(graphicLayer)
 
-      //加载数据
-      $.ajax({
-        type: 'GET',
-        url: '//data.mars3d.cn/file/apidemo/huaihai-jj.json',
-        success: function (res) {
-          conventChartsData(res.data) //单击显示的popup
+        queryHuaiHaiApiData()
+          .then(function (res) {
+            conventChartsData(res.data) //单击显示的popup
 
-          showCityEconomyData(res.data) //柱状图
-          bindHaihuaiPopup()
-        },
-        error: function (err) {
-          haoutil.msg('获取信息失败，请稍候再试')
-        },
-      })
-      map.on(mars3d.EventType.load, function (event) {
-        console.log('矢量数据对象加载完成', event)
-      })
-    }
+            showCityEconomyData(res.data) //柱状图
+            bindHaihuaiPopup()
+          })
+          .catch(function () {
+            haoutil.msg('获取信息失败，请稍候再试')
+          })
+        map.on(mars3d.EventType.load, function (event) {
+          console.log('矢量数据对象加载完成', event)
+        })
+      }
 
-    function showCityEconomyData(data) {
-      const yearArr = Object.keys(data)
-      showYearZT(data[yearArr[0]])
-    }
+      // 访问后端接口，取数据
+      function queryHuaiHaiApiData() {
+        return new Promise(function (resolve, reject) {
+          $.getJSON('//data.mars3d.cn/file/apidemo/huaihai-jj.json', function (result) {
+            resolve(result)
+          })
+        })
+      }
 
-    /**
-     * 展示某年的椎体
-     */
-    function showYearZT(arr) {
-      // console.log(arr)
-      for (let i = 0; i < arr.length; i += 1) {
-        const attr = arr[i]
-        const jwd = getJWDByName(attr['name'])
+      function showCityEconomyData(data) {
+        const yearArr = Object.keys(data)
+        showYearZT(data[yearArr[0]])
+      }
 
-        const num1 = attr['第一产业']
-        const num2 = attr['第二产业']
-        const num3 = attr['第三产业']
-        const numall = Number(num1 + num2 + num3).toFixed(2)
-        const html = `${attr['name']}<br/>
+      /**
+       * 展示某年的椎体
+       */
+      function showYearZT(arr) {
+        // console.log(arr)
+        for (let i = 0; i < arr.length; i += 1) {
+          const attr = arr[i]
+          const jwd = getJWDByName(attr['name'])
+
+          const num1 = attr['第一产业']
+          const num2 = attr['第二产业']
+          const num3 = attr['第三产业']
+          const numall = Number(num1 + num2 + num3).toFixed(2)
+          const html = `${attr['name']}<br/>
                         <span style="color:#63AEFF">第一产业：${num1}</span><br/>
                         <span style="color:#FFB861">第二产业：${num2}</span><br/>
                         <span style="color:#FF6D5D">第三产业：${num3}</span>`
 
-        var height1 = Math.floor(num1 * 10)
-        var height2 = Math.floor(num2 * 10)
-        var height3 = Math.floor(num3 * 10)
+          var height1 = Math.floor(num1 * 10)
+          var height2 = Math.floor(num2 * 10)
+          var height3 = Math.floor(num3 * 10)
 
-        var p1 = Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height3 / 2)
-        var p2 = Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height3 + height2 / 2)
-        var p3 = Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height3 + height2 + height1 / 2)
+          var p1 = Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height3 / 2)
+          var p2 = Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height3 + height2 / 2)
+          var p3 = Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height3 + height2 + height1 / 2)
 
-        // 添加柱体
-        createZT(p1, height3, '#63AEFF', html)
-        createZT(p2, height2, '#FFB861', html)
-        createZT(p3, height1, '#FF6D5D', html)
+          // 添加柱体
+          createZT(p1, height3, '#63AEFF', html)
+          createZT(p2, height2, '#FFB861', html)
+          createZT(p3, height1, '#FF6D5D', html)
 
-        // 添加文字
-        var primitive = new mars3d.graphic.LabelPrimitive({
-          position: Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height1 + height2 + height3),
+          // 添加文字
+          var primitive = new mars3d.graphic.LabelPrimitive({
+            position: Cesium.Cartesian3.fromDegrees(jwd[0], jwd[1], height1 + height2 + height3),
+            style: {
+              text: numall,
+              font_size: 18,
+              font_family: '楷体',
+              color: '#00ff00',
+              outline: true,
+              outlineColor: '#000000',
+              outlineWidth: 1,
+              horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+              verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+              pixelOffset: new Cesium.Cartesian2(0, -20),
+            },
+          })
+          graphicLayer.addGraphic(primitive)
+          primitive.bindTooltip(html)
+        }
+      }
+
+      /**  创建柱体 */
+      function createZT(position, len, color, html) {
+        var graphic = new mars3d.graphic.CylinderEntity({
+          position: position,
           style: {
-            text: numall,
-            font_size: 18,
-            font_family: '楷体',
-            color: '#00ff00',
-            outline: true,
-            outlineColor: '#000000',
-            outlineWidth: 1,
-            horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-            pixelOffset: new Cesium.Cartesian2(0, -20),
+            length: len,
+            topRadius: 6000.0,
+            bottomRadius: 6000.0,
+            color: color,
           },
         })
-        graphicLayer.addGraphic(primitive)
-        primitive.bindTooltip(html)
+        graphicLayer.addGraphic(graphic)
+
+        graphic.bindTooltip(html)
+
+        // graphic._position_show = position
+        // graphic._length_show = len
+        return graphic
       }
-    }
 
-    /**  创建柱体 */
-    function createZT(position, len, color, html) {
-      var graphic = new mars3d.graphic.CylinderEntity({
-        position: position,
-        style: {
-          length: len,
-          topRadius: 6000.0,
-          bottomRadius: 6000.0,
-          color: color,
-        },
-      })
-      graphicLayer.addGraphic(graphic)
+      var cityPosition = [
+        { name: '亳州', jwd: [116.203602, 33.496075] },
+        { name: '商丘', jwd: [115.871509, 34.297084] },
+        { name: '淮北', jwd: [116.688413, 33.689214] },
+        { name: '宿州', jwd: [117.234682, 33.740035] },
+        { name: '徐州', jwd: [117.70509, 34.350708] },
+        { name: '宿迁', jwd: [118.559349, 33.807355] },
+        { name: '连云港', jwd: [118.875445, 34.619808] },
+        { name: '临沂', jwd: [118.026908, 35.262767] },
+        { name: '枣庄', jwd: [117.320268, 35.072555] },
+        { name: '济宁', jwd: [116.856599, 35.500232] },
+        { name: '菏泽', jwd: [115.716086, 35.05629] },
+      ]
 
-      graphic.bindTooltip(html)
-
-      // graphic._position_show = position
-      // graphic._length_show = len
-      return graphic
-    }
-
-    var cityPosition = [
-      { name: '亳州', jwd: [116.203602, 33.496075] },
-      { name: '商丘', jwd: [115.871509, 34.297084] },
-      { name: '淮北', jwd: [116.688413, 33.689214] },
-      { name: '宿州', jwd: [117.234682, 33.740035] },
-      { name: '徐州', jwd: [117.70509, 34.350708] },
-      { name: '宿迁', jwd: [118.559349, 33.807355] },
-      { name: '连云港', jwd: [118.875445, 34.619808] },
-      { name: '临沂', jwd: [118.026908, 35.262767] },
-      { name: '枣庄', jwd: [117.320268, 35.072555] },
-      { name: '济宁', jwd: [116.856599, 35.500232] },
-      { name: '菏泽', jwd: [115.716086, 35.05629] },
-    ]
-
-    /**
-     * 根据名称获取坐标
-     */
-    function getJWDByName(name) {
-      for (let i = 0; i < cityPosition.length; i += 1) {
-        const item = cityPosition[i]
-        if (item.name === name) {
-          return item.jwd
-        }
-      }
-      return []
-    }
-
-    //================以下是单击显示的echarst图表的相关代码===============
-    let arrYear
-    let objCity = {}
-
-    // 转换值
-    function conventChartsData(arrOld) {
-      console.log('转换前数据=>', arrOld)
-
-      arrYear = Object.keys(arrOld) //[年份]
-      objCity = {} //十一个城市对应的各年度数据
-
-      for (let a = 0; a < arrYear.length; a++) {
-        let arrCity = arrOld[arrYear[a]] //指定某年的11个城市对应数据
-
-        // 循环十次
-        for (let b = 0; b < arrCity.length; b++) {
-          let item = arrCity[b]
-
-          if (!objCity[item.code]) {
-            objCity[item.code] = []
+      /**
+       * 根据名称获取坐标
+       */
+      function getJWDByName(name) {
+        for (let i = 0; i < cityPosition.length; i += 1) {
+          const item = cityPosition[i]
+          if (item.name === name) {
+            return item.jwd
           }
-          objCity[item.code].push(item.GDP)
         }
+        return []
       }
 
-      console.log('转换完成的数据=>', objCity)
-    }
+      //================以下是单击显示的echarst图表的相关代码===============
+      let arrYear
+      let objCity = {}
 
-    function bindHaihuaiPopup() {
-      var layerHuaihai = map.getLayer(1987, 'id') // 获取config.json中对应图层
+      // 转换值
+      function conventChartsData(arrOld) {
+        console.log('转换前数据=>', arrOld)
 
-      var getInnerHtml = `
+        arrYear = Object.keys(arrOld) //[年份]
+        objCity = {} //十一个城市对应的各年度数据
+
+        for (let a = 0; a < arrYear.length; a++) {
+          let arrCity = arrOld[arrYear[a]] //指定某年的11个城市对应数据
+
+          // 循环十次
+          for (let b = 0; b < arrCity.length; b++) {
+            let item = arrCity[b]
+
+            if (!objCity[item.code]) {
+              objCity[item.code] = []
+            }
+            objCity[item.code].push(item.GDP)
+          }
+        }
+
+        console.log('转换完成的数据=>', objCity)
+      }
+
+      function bindHaihuaiPopup() {
+        var layerHuaihai = map.getLayer(1987, 'id') // 获取config.json中对应图层
+
+        var getInnerHtml = `
               <div class="gdpView">
                 <div class="gdpCharts" id="gdpCharts">
                 </div>
                 <input type="button" class="btnClosePopup" onclick="cloPopup()" value="×" />
               </div>`
-      layerHuaihai
-        .bindPopup(getInnerHtml, {
-          template: false, //不使用内置的HTML模版
-          anchor: [0, 0], //左右、上下的偏移像素值。
-          onAdd: function (event) {
-            var attr = event.graphic.attr
-            showCityCharts(attr)
-          },
-        })
-        .openPopup()
-    }
-    // 关闭按钮
-    function cloPopup() {
-      var layerHuaihai = map.getLayer(1987, 'id')
-      layerHuaihai.closePopup()
-    }
-
-    function showCityCharts(attr) {
-      let arrGDPvalues = objCity[attr.code]
-      if (!arrGDPvalues) {
-        haoutil.msg(attr.Name + ' 无经济数据')
-        return
+        layerHuaihai
+          .bindPopup(getInnerHtml, {
+            template: false, //不使用内置的HTML模版
+            anchor: [0, 0], //左右、上下的偏移像素值。
+            onAdd: function (event) {
+              var attr = event.graphic.attr
+              showCityCharts(attr)
+            },
+          })
+          .openPopup()
+      }
+      // 关闭按钮
+      function cloPopup() {
+        var layerHuaihai = map.getLayer(1987, 'id')
+        layerHuaihai.closePopup()
       }
 
-      // arrGDPvalues  是点击的城市的数值,需要以[b,0,value]的方式重新排列
-      let arrData = []
-      for (let b = 0; b < arrGDPvalues.length; b++) {
-        arrData[b] = [b, 0, arrGDPvalues[b]]
-      }
+      function showCityCharts(attr) {
+        let arrGDPvalues = objCity[attr.code]
+        if (!arrGDPvalues) {
+          haoutil.msg(attr.Name + ' 无经济数据')
+          return
+        }
 
-      var myChart = echarts.init(document.getElementById('gdpCharts'))
-      var option = {
-        visualMap: {
-          max: 4500,
-          show: false,
-          inRange: {
-            color: ['#32C5E9', '#67E0E3', '#FFDB5C', '#37A2DA', '#9FE6B8'],
-          },
-        },
-        title: {
-          text: attr.Name + '   近五年GDP（亿元）',
-          top: '10',
-          left: '5',
-          textStyle: {
-            color: 'white',
-            fontSize: '17',
-            fontWidth: 'normal',
-          },
-        },
-        tooltip: {
-          show: 'true',
-          trigger: 'item',
-          showContent: 'true',
-          position: 'top',
-          textStyle: {
-            fontSize: '12',
-            color: 'black',
-          },
-          formatter: function formatter(params) {
-            return 'GDP:' + params.data[2]
-          },
-        },
-        // x轴是横向，是时间
-        xAxis3D: {
-          type: 'category',
-          data: arrYear,
-          nameTextStyle: {
-            color: 'rgb(0, 0, 0, 0.1)',
-          },
-          // splitLine不可见时仅仅线不可见
-          splitLine: {
+        // arrGDPvalues  是点击的城市的数值,需要以[b,0,value]的方式重新排列
+        let arrData = []
+        for (let b = 0; b < arrGDPvalues.length; b++) {
+          arrData[b] = [b, 0, arrGDPvalues[b]]
+        }
+
+        var myChart = echarts.init(document.getElementById('gdpCharts'))
+        var option = {
+          visualMap: {
+            max: 4500,
             show: false,
-          },
-        },
-        // y轴被缩小
-        yAxis3D: {
-          type: 'category',
-          data: [' '],
-          nameTextStyle: {
-            color: 'rgb(0, 0, 0, 0.1)',
-          },
-          splitLine: {
-            show: false,
-          },
-        },
-        // z轴是gdp的值
-        zAxis3D: {
-          type: 'value',
-          name: 'GDP',
-          axisLine: {
-            lineStyle: {
-              color: 'rgb(0, 0, 0, 0.1)',
+            inRange: {
+              color: ['#32C5E9', '#67E0E3', '#FFDB5C', '#37A2DA', '#9FE6B8'],
             },
           },
-          nameTextStyle: {
-            color: 'white',
-            fontSize: '18',
-          },
-          nameGap: '50',
-        },
-        grid3D: {
-          boxWidth: 180, //缩大放小x轴
-          boxDepth: 10, // 缩大放小y轴
-          top: '20',
-          // left: '50',
-          // 視角的設置
-          viewControl: {
-            alpha: 8,
-            beta: 0,
-            distance: 162,
-            center: [-20, 0, 0],
-          },
-          axisLabel: {
+          title: {
+            text: attr.Name + '   近五年GDP（亿元）',
+            top: '10',
+            left: '5',
             textStyle: {
               color: 'white',
-              fontSize: 15,
+              fontSize: '17',
+              fontWidth: 'normal',
             },
           },
-          axisPointer: {
-            //坐标轴指示线，就是鼠标移入时，指向x轴，y轴的线
-            show: false,
+          tooltip: {
+            show: 'true',
+            trigger: 'item',
+            showContent: 'true',
+            position: 'top',
+            textStyle: {
+              fontSize: '12',
+              color: 'black',
+            },
+            formatter: function formatter(params) {
+              return 'GDP:' + params.data[2]
+            },
           },
-        },
-        series: [
-          {
-            type: 'bar3D',
-            data: arrData,
-            shading: 'lambert',
-            label: {
-              position: 'top',
-              show: true,
+          // x轴是横向，是时间
+          xAxis3D: {
+            type: 'category',
+            data: arrYear,
+            nameTextStyle: {
+              color: 'rgb(0, 0, 0, 0.1)',
+            },
+            // splitLine不可见时仅仅线不可见
+            splitLine: {
+              show: false,
+            },
+          },
+          // y轴被缩小
+          yAxis3D: {
+            type: 'category',
+            data: [' '],
+            nameTextStyle: {
+              color: 'rgb(0, 0, 0, 0.1)',
+            },
+            splitLine: {
+              show: false,
+            },
+          },
+          // z轴是gdp的值
+          zAxis3D: {
+            type: 'value',
+            name: 'GDP',
+            axisLine: {
+              lineStyle: {
+                color: 'rgb(0, 0, 0, 0.1)',
+              },
+            },
+            nameTextStyle: {
               color: 'white',
+              fontSize: '18',
             },
-            emphasis: {
+            nameGap: '50',
+          },
+          grid3D: {
+            boxWidth: 180, //缩大放小x轴
+            boxDepth: 10, // 缩大放小y轴
+            top: '20',
+            // left: '50',
+            // 視角的設置
+            viewControl: {
+              alpha: 8,
+              beta: 0,
+              distance: 162,
+              center: [-20, 0, 0],
+            },
+            axisLabel: {
+              textStyle: {
+                color: 'white',
+                fontSize: 15,
+              },
+            },
+            axisPointer: {
+              //坐标轴指示线，就是鼠标移入时，指向x轴，y轴的线
+              show: false,
+            },
+          },
+          series: [
+            {
+              type: 'bar3D',
+              data: arrData,
+              shading: 'lambert',
               label: {
-                textStyle: {
-                  color: 'white',
-                  fontSize: '18',
+                position: 'top',
+                show: true,
+                color: 'white',
+              },
+              emphasis: {
+                label: {
+                  textStyle: {
+                    color: 'white',
+                    fontSize: '18',
+                  },
                 },
               },
             },
-          },
-        ],
+          ],
+        }
+        myChart.setOption(option)
       }
-      myChart.setOption(option)
-    }
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>

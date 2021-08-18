@@ -53,13 +53,18 @@
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
-        $.ajax({
-          url: '//data.mars3d.cn/file/apidemo/lineroad.json',
-          type: 'GET',
-          success: function (rs) {
-            //创建Echarts图层
-            createEchartsLayer(rs.data)
-          },
+        queryLineroadApiData().then(function (res) {
+          //创建Echarts图层
+          createEchartsLayer(res.data)
+        })
+      }
+
+      // 访问后端接口，取数据
+      function queryLineroadApiData() {
+        return new Promise(function (resolve, reject) {
+          $.get('//data.mars3d.cn/file/apidemo/lineroad.json', function (result) {
+            resolve(result)
+          })
         })
       }
 

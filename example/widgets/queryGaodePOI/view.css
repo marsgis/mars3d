@@ -1,0 +1,415 @@
+﻿.querybar-ssk {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  z-index: 999;
+}
+
+.querybar-ssk1 {
+  width: 260px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+  text-indent: 8px;
+  outline: none;
+  float: left;
+  border: none;
+  box-shadow: 0px 2px 6px #3a3c42;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
+.querybar-ssk1:focus {
+  border: 1px solid rgba(155, 223, 255, 0.9);
+  background-color: rgba(63, 72, 84, 0.9);
+}
+
+.querybar-ssk2 {
+  width: 50px;
+  height: 40px;
+  float: left;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  background-color: rgba(35, 68, 117, 0.85);
+}
+
+.querybar-sbox {
+  width: 260px;
+  padding: 10px;
+  box-shadow: 1px 2px 1px rgba(220, 220, 220, 0.3);
+  background: rgba(63, 72, 84, 0.9);
+  overflow: hidden;
+}
+@media screen and (max-width: 640px) {
+  .querybar-ssk1 {
+    width: 200px;
+  }
+  .querybar-ssk2 {
+    width: 45px;
+  }
+  .querybar-sbox {
+    width: 200px;
+  }
+}
+::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: #a9a9a9;
+}
+
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #a9a9a9;
+  opacity: 1;
+}
+
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #a9a9a9;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: #a9a9a9;
+}
+
+/*搜索栏*/
+.querybar-fl {
+  float: left;
+}
+
+.querybar-fr {
+  float: right;
+}
+
+.querybar-clear {
+  clear: both;
+}
+
+.querybar-clear5 {
+  clear: both;
+  height: 5px;
+}
+
+.querybar-clear10 {
+  clear: both;
+  height: 10px;
+}
+
+.querybar-sstab {
+  height: 18px;
+  padding: 5px;
+  background: #f7f7f7;
+  border: solid 1px #e0e0e0;
+  border-radius: 4px;
+}
+
+.querybar-sstab ul {
+  margin: 0;
+  padding: 0;
+}
+
+.querybar-sstab ul li {
+  width: 70px;
+  height: 18px;
+  padding: 0 20px;
+  line-height: 18px;
+  text-align: center;
+  list-style-type: none;
+  float: left;
+  font-size: 12px;
+  border-right: solid 1px #e0e0e0;
+  cursor: pointer;
+}
+
+.querybar-sstab ul li a {
+  font-size: 12px;
+  text-decoration: none;
+  color: #000000;
+}
+
+.querybar-sstab ul li a:hover {
+  color: #dcdcdc;
+}
+
+.querybar-kbtab {
+  padding-bottom: 10px;
+  overflow: hidden;
+  border-bottom: solid 1px #cccccc;
+}
+
+.querybar-kbtab ul {
+  margin: 0;
+  padding: 0;
+}
+
+.querybar-kbtab ul li {
+  list-style-type: none;
+  width: 60px;
+  float: left;
+  text-align: center;
+}
+
+.querybar-kbtab ul li a {
+  font-size: 12px;
+  text-decoration: none;
+  color: #999;
+}
+
+.querybar-kbtab ul li a img {
+  border: none;
+}
+
+.querybar-kbtab ul li a:hover {
+  color: #dcdcdc;
+}
+
+.querybar-ssls {
+}
+
+.querybar-ssls ul {
+  margin: 0;
+  padding: 10px 0;
+}
+
+.querybar-ssls li {
+  font-size: 12px;
+  line-height: 20px;
+  list-style-type: none;
+  padding-left: 10px;
+}
+
+.querybar-ssls i {
+  margin-right: 10px;
+}
+
+.querybar-ssls li a {
+  text-decoration: none;
+  color: #dcdcdc;
+}
+
+.querybar-ssls li a:hover {
+  color: #fff;
+}
+
+.querybar-znbox {
+  width: 260px;
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.15);
+  background: rgba(63, 72, 84, 0.9);
+  overflow: hidden;
+}
+
+.querybar-znts {
+}
+
+.querybar-znts ul {
+  margin: 0;
+  padding: 0;
+}
+
+.querybar-znts li {
+  font-size: 12px;
+  height: 36px;
+  line-height: 36px;
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.querybar-znts i {
+  margin-right: 10px;
+}
+
+.querybar-znts li a {
+  text-decoration: none;
+  color: #dcdcdc;
+}
+
+.querybar-znts li a:hover {
+  color: #fff;
+}
+
+.querybar-site {
+  padding: 10px 8px;
+  border-top: solid 1px #eaeaea;
+  overflow: hidden;
+}
+
+.querybar-site :hover {
+  background-color: rgba(63, 72, 84, 1);
+}
+
+.querybar-sitejj {
+  width: 220px;
+  float: left;
+}
+
+.querybar-sitejj h3 {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  padding-bottom: 6px;
+  color: #dcdcdc;
+  font-weight: bold;
+}
+
+.querybar-sitejj p {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  line-height: 20px;
+  color: #999;
+}
+
+.querybar-star {
+  color: #ff675a;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.querybar-page {
+  font-size: 12px;
+}
+
+.querybar-ye a {
+  text-decoration: none;
+  padding: 4px 6px;
+  color: #fff;
+  border: solid 1px #ccc;
+  margin-right: 4px;
+}
+
+.querybar-ye a:hover {
+  color: #fff;
+  border-color: #dcdcdc;
+}
+
+.querybar-dtit {
+  height: 44px;
+  line-height: 44px;
+  font-size: 14px;
+  text-indent: 10px;
+  background: #3385ff;
+  color: #fff;
+}
+
+.querybar-itr {
+  padding: 8px 0;
+}
+
+.querybar-itrtit {
+  font-size: 12px;
+  height: 22px;
+  line-height: 22px;
+  padding: 4px 0;
+}
+
+.querybar-more {
+  float: right;
+  text-decoration: none;
+  font-size: 12px;
+  color: #999;
+}
+
+.querybar-itrcon {
+  padding: 8px 0;
+  border-top: dashed 1px #eee;
+}
+
+.querybar-itrcon p {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  line-height: 20px;
+  color: #dcdcdc;
+}
+
+.querybar-itrcon a {
+  text-decoration: none;
+}
+
+.querybar-star_orange {
+  font-size: 12px;
+  line-height: 20px;
+  color: #ffac2d;
+}
+
+/*全部分类*/
+.querybar-allsort {
+  position: absolute;
+  width: 230px;
+  padding: 4px;
+  background: rgba(63, 72, 84, 0.9);
+  border: solid 1px #e0e0e0;
+}
+
+.querybar-sort {
+  padding: 6px 0;
+  overflow: hidden;
+}
+
+.querybar-sorta {
+  width: 60px;
+  padding-top: 4px;
+  float: left;
+  font-size: 12px;
+  font-weight: bold;
+  color: #666;
+}
+
+.querybar-sortb {
+  width: 170px;
+  float: right;
+}
+
+.querybar-sortb ul {
+  margin: 0;
+  padding: 0;
+}
+
+.querybar-sortb ul li {
+  list-style-type: none;
+  float: left;
+  padding: 0 10px 2px 0;
+}
+
+.querybar-sortb ul li a {
+  font-size: 12px;
+  text-decoration: none;
+  color: #777;
+}
+
+.querybar-sortb ul li a:hover {
+  color: #fff;
+}
+
+/*推荐排序*/
+.querybar-recsort {
+  position: absolute;
+  left: 126px;
+  width: 120px;
+  background: rgba(63, 72, 84, 0.9);
+  border: solid 1px #e0e0e0;
+}
+
+.querybar-recsort ul {
+  margin: 0;
+  padding: 0;
+}
+
+.querybar-recsort ul li {
+  padding: 4px 0 6px 0;
+  list-style-type: none;
+  text-align: center;
+  border-top: solid 1px #e0e0e0;
+}
+
+.querybar-recsort ul li a {
+  font-size: 12px;
+  text-decoration: none;
+  color: #777;
+}
+
+.querybar-recsort ul li a:hover {
+  color: #fff;
+}

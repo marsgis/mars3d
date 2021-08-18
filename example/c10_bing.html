@@ -1,160 +1,160 @@
 <!-- 2017-12-4 14:24:10 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-        content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>微软Bing | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>微软Bing | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d,mars3d-widget"
+    ></script>
 
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
+  <body class="dark">
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
+    <div class="infoview infoview-right">
+      <input id="btnAddLayer" type="button" class="btn btn-primary" value="叠加图层" onclick="addLayer()" />
+      <input id="btnRemoveLayer" type="button" class="btn btn-primary" value="移除图层" onclick="removeLayer()" />
+    </div>
 
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-   include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d,mars3d-widget"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+      $(document).ready(function () {
+        if (!mars3d.Util.webglreport()) {
+          mars3d.Util.webglerror()
+          return
+        }
+        initMap()
+      })
 
-<body class="dark">
-  <div id="mars3dContainer" class="mars3d-container"></div>
-
-  <div class="infoview infoview-right">
-    <input id="btnAddLayer" type="button" class="btn btn-primary" value="叠加图层" onclick="addLayer()" />
-    <input id="btnRemoveLayer" type="button" class="btn btn-primary" value="移除图层" onclick="removeLayer()" />
-  </div>
-
-
-
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
-
-    $(document).ready(function () {
-      if (!mars3d.Util.webglreport()) {
-        mars3d.Util.webglerror()
-        return
-      }
-      initMap()
-    })
-
-    var map
-    function initMap() {
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', {
-        scene: {
-          center: { y: 20.758452, x: 108.198353, z: 7733735.96, heading: 357.7, pitch: -82.4, roll: 0 },
-        },
-        control: {
-          baseLayerPicker: true, //basemaps底图切换按钮
-          homeButton: true, //视角复位按钮
-          sceneModePicker: true, //二三维切换按钮
-          defaultContextMenu: true, //右键菜单
-        },
-        terrain: {
-          url: 'http://data.mars3d.cn/terrain',
-          show: true,
-        },
-        //方式1：在创建地球前的参数中配置
-        basemaps: [
-          {
-            name: 'Bing影像',
-            icon: 'img/basemaps/bingAerial.png',
-            type: 'bing',
-            layer: Cesium.BingMapsStyle.AERIAL,
-            key: mars3d.Token.bing,
+      var map
+      function initMap() {
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', {
+          scene: {
+            center: { lat: 20.349464, lng: 108.816138, alt: 7733636, heading: 358, pitch: -82 },
+          },
+          control: {
+            baseLayerPicker: true, //basemaps底图切换按钮
+            homeButton: true, //视角复位按钮
+            sceneModePicker: true, //二三维切换按钮
+            defaultContextMenu: true, //右键菜单
+            locationBar: { fps: true }, //状态栏
+          },
+          terrain: {
+            url: 'http://data.mars3d.cn/terrain',
             show: true,
           },
-          {
-            name: 'Bing影像(含注记)',
-            icon: 'img/basemaps/bingAerialLabels.png',
-            type: 'bing',
-            layer: Cesium.BingMapsStyle.AERIAL_WITH_LABELS,
-            key: mars3d.Token.bing,
-          },
-          {
-            name: 'Bing电子地图',
-            icon: 'img/basemaps/bingRoads.png',
-            type: 'bing',
-            layer: Cesium.BingMapsStyle.ROAD,
-            key: mars3d.Token.bing,
-          },
-          {
-            name: 'Bing电子地图2',
-            icon: 'img/basemaps/bingRoads.png',
-            type: 'bing',
-            layer: Cesium.BingMapsStyle.ROAD_ON_DEMAND,
-            key: mars3d.Token.bing,
-          },
-          {
-            name: 'Bing浅色电子​​',
-            icon: 'img/basemaps/bingAerialLabels.png',
-            type: 'bing',
-            layer: Cesium.BingMapsStyle.CANVAS_LIGHT,
-            key: mars3d.Token.bing,
-          },
-          {
-            name: 'Bing深色地图',
-            icon: 'img/basemaps/bd-c-midnight.png',
-            type: 'bing',
-            layer: Cesium.BingMapsStyle.CANVAS_DARK,
-            key: mars3d.Token.bing,
-          },
-          {
-            name: 'Bing灰色地图',
-            icon: 'img/basemaps/bingAerialLabels.png',
-            type: 'bing',
-            layer: Cesium.BingMapsStyle.CANVAS_GRAY,
-            key: mars3d.Token.bing,
-          },
-        ],
-      })
+          //方式1：在创建地球前的参数中配置
+          basemaps: [
+            {
+              name: 'Bing影像',
+              icon: 'img/basemaps/bingAerial.png',
+              type: 'bing',
+              layer: Cesium.BingMapsStyle.AERIAL,
+              key: mars3d.Token.bing,
+              show: true,
+            },
+            {
+              name: 'Bing影像(含注记)',
+              icon: 'img/basemaps/bingAerialLabels.png',
+              type: 'bing',
+              layer: Cesium.BingMapsStyle.AERIAL_WITH_LABELS,
+              key: mars3d.Token.bing,
+            },
+            {
+              name: 'Bing电子地图',
+              icon: 'img/basemaps/bingRoads.png',
+              type: 'bing',
+              layer: Cesium.BingMapsStyle.ROAD,
+              key: mars3d.Token.bing,
+            },
+            {
+              name: 'Bing电子地图2',
+              icon: 'img/basemaps/bingRoads.png',
+              type: 'bing',
+              layer: Cesium.BingMapsStyle.ROAD_ON_DEMAND,
+              key: mars3d.Token.bing,
+            },
+            {
+              name: 'Bing浅色电子​​',
+              icon: 'img/basemaps/bingAerialLabels.png',
+              type: 'bing',
+              layer: Cesium.BingMapsStyle.CANVAS_LIGHT,
+              key: mars3d.Token.bing,
+            },
+            {
+              name: 'Bing深色地图',
+              icon: 'img/basemaps/bd-c-midnight.png',
+              type: 'bing',
+              layer: Cesium.BingMapsStyle.CANVAS_DARK,
+              key: mars3d.Token.bing,
+            },
+            {
+              name: 'Bing灰色地图',
+              icon: 'img/basemaps/bingAerialLabels.png',
+              type: 'bing',
+              layer: Cesium.BingMapsStyle.CANVAS_GRAY,
+              key: mars3d.Token.bing,
+            },
+          ],
+        })
 
-      //poi查询栏
-      activatePOIQuery(map)
-    }
-
-    //叠加的图层
-    var tileLayer
-
-    function addLayer() {
-      removeLayer()
-
-      //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
-      tileLayer = new mars3d.layer.BingLayer({
-        layer: Cesium.BingMapsStyle.CANVAS_DARK,
-        key: mars3d.Token.bing,
-      })
-      map.addLayer(tileLayer)
-    }
-    function removeLayer() {
-      if (tileLayer) {
-        map.removeLayer(tileLayer, true)
-        tileLayer = null
+        //poi查询栏
+        activatePOIQuery(map)
       }
-    }
 
-    //附加：激活POI查询widget，用于在底图上叠加显示数据
-    function activatePOIQuery(map) {
-      mars3d.widget.activate({
-        map: map,
-        name: 'POI查询',
-        uri: 'widgets/queryBaiduPOI/widget.js',
-      })
-    }
-  </script>
-</body>
+      //叠加的图层
+      var tileLayer
 
+      function addLayer() {
+        removeLayer()
+
+        //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+        tileLayer = new mars3d.layer.BingLayer({
+          layer: Cesium.BingMapsStyle.CANVAS_DARK,
+          key: mars3d.Token.bing,
+        })
+        map.addLayer(tileLayer)
+      }
+      function removeLayer() {
+        if (tileLayer) {
+          map.removeLayer(tileLayer, true)
+          tileLayer = null
+        }
+      }
+
+      //附加：激活POI查询widget，用于在底图上叠加显示数据
+      function activatePOIQuery(map) {
+        mars3d.widget.activate({
+          map: map,
+          name: 'POI查询',
+          uri: 'widgets/queryBaiduPOI/widget.js',
+        })
+      }
+    </script>
+  </body>
 </html>

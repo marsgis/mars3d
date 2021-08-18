@@ -1242,7 +1242,7 @@ export class BoundingSphere {
     });
      * @param sphere - The sphere.
      * @param cartesian - The point
-     * @returns The estimated distance squared from the bounding sphere to the point.
+     * @returns The distance squared from the bounding sphere to the point. Returns 0 if the point is inside the sphere.
      */
     static distanceSquaredTo(sphere: BoundingSphere, cartesian: Cartesian3): number;
     /**
@@ -11586,7 +11586,7 @@ export class OrientedBoundingBox {
     });
      * @param box - The box.
      * @param cartesian - The point
-     * @returns The estimated distance squared from the bounding sphere to the point.
+     * @returns The distance squared from the oriented bounding box to the point. Returns 0 if the point is inside the box.
      */
     static distanceSquaredTo(box: OrientedBoundingBox, cartesian: Cartesian3): number;
     /**
@@ -26766,6 +26766,12 @@ export class Cesium3DTileFeature {
      */
     color: Color;
     /**
+     * Gets a typed array containing the ECEF positions of the polyline.
+    Returns undefined if {@link Cesium3DTileset#vectorKeepDecodedPositions} is false
+    or the feature is not a polyline in a vector tile.
+     */
+    polylinePositions: Float64Array;
+    /**
      * Gets the tileset containing the feature.
      */
     readonly tileset: Cesium3DTileset;
@@ -27067,7 +27073,7 @@ export class Cesium3DTilePointFeature {
 }
 
 /**
- * A {@link https://github.com/CesiumGS/3d-tiles/tree/master/specification|3D Tiles tileset},
+ * A {@link https://github.com/CesiumGS/3d-tiles/tree/main/specification|3D Tiles tileset},
 used for streaming massive heterogeneous 3D geospatial datasets.
  * @example
  * var tileset = scene.primitives.add(new Cesium.Cesium3DTileset({
@@ -27135,6 +27141,7 @@ var tileset = scene.primitives.add(new Cesium.Cesium3DTileset({
  * @param [options.backFaceCulling = true] - Whether to cull back-facing geometry. When true, back face culling is determined by the glTF material's doubleSided property; when false, back face culling is disabled.
  * @param [options.showOutline = true] - Whether to display the outline for models using the {@link https://github.com/KhronosGroup/glTF/tree/master/extensions/2.0/Vendor/CESIUM_primitive_outline|CESIUM_primitive_outline} extension. When true, outlines are displayed. When false, outlines are not displayed.
  * @param [options.vectorClassificationOnly = false] - Indicates that only the tileset's vector tiles should be used for classification.
+ * @param [options.vectorKeepDecodedPositions = false] - Whether vector tiles should keep decoded positions in memory. This is used with {@link Cesium3DTileFeature.getPolylinePositions}.
  * @param [options.debugHeatmapTilePropertyName] - The tile variable to colorize as a heatmap. All rendered tiles will be colorized relative to each other's specified variable value.
  * @param [options.debugFreezeFrame = false] - For debugging only. Determines if only the tiles from last frame should be used for rendering.
  * @param [options.debugColorizeTiles = false] - For debugging only. When true, assigns a random color to each tile.
@@ -27189,6 +27196,7 @@ export class Cesium3DTileset {
         backFaceCulling?: boolean;
         showOutline?: boolean;
         vectorClassificationOnly?: boolean;
+        vectorKeepDecodedPositions?: boolean;
         debugHeatmapTilePropertyName?: string;
         debugFreezeFrame?: boolean;
         debugColorizeTiles?: boolean;
@@ -27615,7 +27623,7 @@ export class Cesium3DTileset {
     /**
      * Gets the tileset's asset object property, which contains metadata about the tileset.
     <p>
-    See the {@link https://github.com/CesiumGS/3d-tiles/tree/master/specification#reference-asset|asset schema reference}
+    See the {@link https://github.com/CesiumGS/3d-tiles/tree/main/specification#reference-asset|asset schema reference}
     in the 3D Tiles spec for the full set of properties.
     </p>
      */
@@ -27631,7 +27639,7 @@ export class Cesium3DTileset {
     /**
      * Gets the tileset's properties dictionary object, which contains metadata about per-feature properties.
     <p>
-    See the {@link https://github.com/CesiumGS/3d-tiles/tree/master/specification#reference-properties|properties schema reference}
+    See the {@link https://github.com/CesiumGS/3d-tiles/tree/main/specification#reference-properties|properties schema reference}
     in the 3D Tiles spec for the full set of properties.
     </p>
      * @example
@@ -27676,7 +27684,7 @@ export class Cesium3DTileset {
     readonly basePath: string;
     /**
      * The style, defined using the
-    {@link https://github.com/CesiumGS/3d-tiles/tree/master/specification/Styling|3D Tiles Styling language},
+    {@link https://github.com/CesiumGS/3d-tiles/tree/main/specification/Styling|3D Tiles Styling language},
     applied to each feature in the tileset.
     <p>
     Assign <code>undefined</code> to remove the style, which will restore the visual
@@ -27835,6 +27843,11 @@ export class Cesium3DTileset {
      */
     vectorClassificationOnly: boolean;
     /**
+     * Whether vector tiles should keep decoded positions in memory.
+    This is used with {@link Cesium3DTileFeature.getPolylinePositions}.
+     */
+    vectorKeepDecodedPositions: boolean;
+    /**
      * Provides a hook to override the method used to request the tileset json
     useful when fetching tilesets from remote servers
      * @param tilesetUrl - The url of the json file to be fetched
@@ -27898,7 +27911,7 @@ export namespace Cesium3DTileset {
  * A style that is applied to a {@link Cesium3DTileset}.
 <p>
 Evaluates an expression defined using the
-{@link https://github.com/CesiumGS/3d-tiles/tree/master/specification/Styling|3D Tiles Styling language}.
+{@link https://github.com/CesiumGS/3d-tiles/tree/main/specification/Styling|3D Tiles Styling language}.
 </p>
  * @example
  * tileset.style = new Cesium.Cesium3DTileStyle({
@@ -27925,7 +27938,7 @@ export class Cesium3DTileStyle {
     constructor(style?: Resource | string | any);
     /**
      * Gets the object defining the style using the
-    {@link https://github.com/CesiumGS/3d-tiles/tree/master/specification/Styling|3D Tiles Styling language}.
+    {@link https://github.com/CesiumGS/3d-tiles/tree/main/specification/Styling|3D Tiles Styling language}.
      */
     readonly style: any;
     /**
@@ -28994,7 +29007,7 @@ export enum ColorBlendMode {
  * An expression for a style applied to a {@link Cesium3DTileset}.
 <p>
 Evaluates a conditions expression defined using the
-{@link https://github.com/CesiumGS/3d-tiles/tree/master/specification/Styling|3D Tiles Styling language}.
+{@link https://github.com/CesiumGS/3d-tiles/tree/main/specification/Styling|3D Tiles Styling language}.
 </p>
 <p>
 Implements the {@link StyleExpression} interface.
@@ -29020,7 +29033,7 @@ export class ConditionsExpression {
     /**
      * Evaluates the result of an expression, optionally using the provided feature's properties. If the result of
     the expression in the
-    {@link https://github.com/CesiumGS/3d-tiles/tree/master/specification/Styling|3D Tiles Styling language}
+    {@link https://github.com/CesiumGS/3d-tiles/tree/main/specification/Styling|3D Tiles Styling language}
     is of type <code>Boolean</code>, <code>Number</code>, or <code>String</code>, the corresponding JavaScript
     primitive type will be returned. If the result is a <code>RegExp</code>, a Javascript <code>RegExp</code>
     object will be returned. If the result is a <code>Cartesian2</code>, <code>Cartesian3</code>, or <code>Cartesian4</code>,
@@ -29736,7 +29749,7 @@ export class EllipsoidSurfaceAppearance {
  * An expression for a style applied to a {@link Cesium3DTileset}.
 <p>
 Evaluates an expression defined using the
-{@link https://github.com/CesiumGS/3d-tiles/tree/master/specification/Styling|3D Tiles Styling language}.
+{@link https://github.com/CesiumGS/3d-tiles/tree/main/specification/Styling|3D Tiles Styling language}.
 </p>
 <p>
 Implements the {@link StyleExpression} interface.
@@ -29759,7 +29772,7 @@ export class Expression {
     /**
      * Evaluates the result of an expression, optionally using the provided feature's properties. If the result of
     the expression in the
-    {@link https://github.com/CesiumGS/3d-tiles/tree/master/specification/Styling|3D Tiles Styling language}
+    {@link https://github.com/CesiumGS/3d-tiles/tree/main/specification/Styling|3D Tiles Styling language}
     is of type <code>Boolean</code>, <code>Number</code>, or <code>String</code>, the corresponding JavaScript
     primitive type will be returned. If the result is a <code>RegExp</code>, a Javascript <code>RegExp</code>
     object will be returned. If the result is a <code>Cartesian2</code>, <code>Cartesian3</code>, or <code>Cartesian4</code>,
@@ -31768,6 +31781,16 @@ export class ImageryLayerCollection {
      * @param layer - the layer to move.
      */
     lowerToBottom(layer: ImageryLayer): void;
+    /**
+     * Determines the imagery layers that are intersected by a pick ray. To compute a pick ray from a
+    location on the screen, use {@link Camera.getPickRay}.
+     * @param ray - The ray to test for intersection.
+     * @param scene - The scene.
+     * @returns An array that includes all of
+                                    the layers that are intersected by a given pick ray. Undefined if
+                                    no layers are selected.
+     */
+    pickImageryLayers(ray: Ray, scene: Scene): ImageryLayer[] | undefined;
     /**
      * Asynchronously determines the imagery layer features that are intersected by a pick ray.  The intersected imagery
     layer features are found by invoking {@link ImageryProvider#pickFeatures} for each imagery layer tile intersected
@@ -38386,7 +38409,7 @@ export enum StencilOperation {
  * An expression for a style applied to a {@link Cesium3DTileset}.
 <p>
 Derived classes of this interface evaluate expressions in the
-{@link https://github.com/CesiumGS/3d-tiles/tree/master/specification/Styling|3D Tiles Styling language}.
+{@link https://github.com/CesiumGS/3d-tiles/tree/main/specification/Styling|3D Tiles Styling language}.
 </p>
 <p>
 This type describes an interface and is not intended to be instantiated directly.
@@ -38397,7 +38420,7 @@ export class StyleExpression {
     /**
      * Evaluates the result of an expression, optionally using the provided feature's properties. If the result of
     the expression in the
-    {@link https://github.com/CesiumGS/3d-tiles/tree/master/specification/Styling|3D Tiles Styling language}
+    {@link https://github.com/CesiumGS/3d-tiles/tree/main/specification/Styling|3D Tiles Styling language}
     is of type <code>Boolean</code>, <code>Number</code>, or <code>String</code>, the corresponding JavaScript
     primitive type will be returned. If the result is a <code>RegExp</code>, a Javascript <code>RegExp</code>
     object will be returned. If the result is a <code>Cartesian2</code>, <code>Cartesian3</code>, or <code>Cartesian4</code>,
@@ -38800,7 +38823,7 @@ small or the clock is sufficiently slow then no frames will be skipped.
  * @param [options.shadows = ShadowMode.ENABLED] - Determines whether the point cloud casts or receives shadows from light sources.
  * @param [options.maximumMemoryUsage = 256] - The maximum amount of memory in MB that can be used by the point cloud.
  * @param [options.shading] - Options for constructing a {@link PointCloudShading} object to control point attenuation and eye dome lighting.
- * @param [options.style] - The style, defined using the {@link https://github.com/CesiumGS/3d-tiles/tree/master/specification/Styling|3D Tiles Styling language}, applied to each point in the point cloud.
+ * @param [options.style] - The style, defined using the {@link https://github.com/CesiumGS/3d-tiles/tree/main/specification/Styling|3D Tiles Styling language}, applied to each point in the point cloud.
  * @param [options.clippingPlanes] - The {@link ClippingPlaneCollection} used to selectively disable rendering the point cloud.
  */
 export class TimeDynamicPointCloud {
@@ -38849,7 +38872,7 @@ export class TimeDynamicPointCloud {
     shading: PointCloudShading;
     /**
      * The style, defined using the
-    {@link https://github.com/CesiumGS/3d-tiles/tree/master/specification/Styling|3D Tiles Styling language},
+    {@link https://github.com/CesiumGS/3d-tiles/tree/main/specification/Styling|3D Tiles Styling language},
     applied to each point in the point cloud.
     <p>
     Assign <code>undefined</code> to remove the style, which will restore the visual

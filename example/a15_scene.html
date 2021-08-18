@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>场景参数 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>scene 场景参数 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -101,7 +101,7 @@
               <input type="radio" name="skyBox" onclick="setSceneOptions('showSkyBox',false)" />否
             </td>
           </tr>
-          <tr  title="请关闭天空盒看效果">
+          <tr title="请关闭天空盒看效果">
             <td class="nametd">空间背景颜色</td>
             <td>
               <input type="text" id="colorStyle" style="width: 100px" />
@@ -156,13 +156,13 @@
             <td class="nametd">显示底图</td>
             <td>
               <input type="radio" name="depthTest" checked onclick="map.basemap=2021" />是
-              <input type="radio" name="depthTest"  onclick="map.basemap=undefined" />否
+              <input type="radio" name="depthTest" onclick="map.basemap=undefined" />否
             </td>
           </tr>
           <tr title="请关闭底图后看效果">
             <td class="nametd">地球背景色</td>
             <td>
-              <input type="text" id="baseColor" style="width: 100px"  />
+              <input type="text" id="baseColor" style="width: 100px" />
             </td>
           </tr>
 
@@ -285,7 +285,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 25.37169, lng: 119.094153, alt: 1182971, heading: 346, pitch: -60 },
+            center: { lat: 43.260076, lng: 59.511019, alt: 28590990, heading: 0, pitch: -90 },
           },
         })
 

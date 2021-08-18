@@ -65,8 +65,8 @@
       graphicLayer = new mars3d.layer.GraphicLayer()
       map.addLayer(graphicLayer)
 
-      $.getJSON('//data.mars3d.cn/file/apidemo/flypath.json', function (data) {
-        initPath(data)
+      queryFlyPathApiData().then(function (res) {
+        initPath(res)
       })
 
       //添加事件
@@ -97,6 +97,15 @@
           radius: 3000,
           heading: -90,
           pitch: -25,
+        })
+      })
+    }
+
+    // 访问后端接口，取数据
+    function queryFlyPathApiData() {
+      return new Promise(function (resolve, reject) {
+        $.getJSON('//data.mars3d.cn/file/apidemo/flypath.json', function (result) {
+          resolve(result)
         })
       })
     }

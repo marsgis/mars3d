@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>MapV与Cesium融合 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>迁徙图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -46,24 +46,33 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 19.595969, lng: 114.608161, alt: 4099473, heading: 351, pitch: -74 },
+            center: { lat: 22.126801, lng: 119.173814, alt: 4100099, heading: 351, pitch: -74 },
           },
         })
 
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', mapOptions)
-
-        $.ajax({
-          url: '//data.mars3d.cn/file/geojson/mapvchina.json',
-          type: 'GET',
-          dataType: 'json',
-          success: function (rs) {
-            //创建mapv图层
-            createMapvLayer(rs)
-          },
+        queryMapvChinaData().then(function (res) {
+          createMapvLayer(res)
         })
       }
-
+      //数据获取
+      function queryMapvChinaData() {
+        return new Promise(function (resolve, reject) {
+          $.ajax({
+            url: '//data.mars3d.cn/file/geojson/mapvchina.json',
+            type: 'GET',
+            dataType: 'json',
+            success: function (rs) {
+              resolve(rs)
+            },
+            error: function (data) {
+              reject(data)
+            },
+          })
+        })
+      }
+      //创建mapv图层
       function createMapvLayer(geojson) {
         var geojsonDataSet = mapv.geojson.getDataSet(geojson)
 

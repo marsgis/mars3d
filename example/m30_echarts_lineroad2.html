@@ -55,9 +55,18 @@
 
         map.basemap = 2017 //蓝色底图
 
-        $.getJSON('//data.mars3d.cn/file/apidemo/bjgj.json', function (data) {
+        queryLineroadApiData().then(function (data) {
           //创建Echarts图层
           createEchartsLayer(data)
+        })
+      }
+
+      // 访问后端接口，取数据
+      function queryLineroadApiData() {
+        return new Promise(function (resolve, reject) {
+          $.getJSON('//data.mars3d.cn/file/apidemo/bjgj.json', function (result) {
+            resolve(result)
+          })
         })
       }
 

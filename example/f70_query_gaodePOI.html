@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>POI查询 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>高德POI点查询 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -117,14 +117,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 31.797919,
-              x: 117.281329,
-              z: 36235.64,
-              heading: 357.9,
-              pitch: -81.4,
-              roll: 0,
-            },
+            center: { lat: 31.797919, lng: 117.281329, alt: 36236, heading: 358, pitch: -81 },
           },
         })
 
@@ -135,34 +128,29 @@
         poiLayer = new mars3d.layer.GraphicLayer()
         map.addLayer(poiLayer)
 
-        poiLayer.bindPopup(
-          function (event) {
-            var item = event.graphic.attr
+        poiLayer.bindPopup(function (event) {
+          var item = event.graphic.attr
 
-            var inHtml = '<div class="mars-popup-titile">' + item.name + '</div><div class="mars-popup-content" >'
-            var type = $.trim(item.type)
-            if (type != '') {
-              inHtml += '<div><label>类别</label>' + type + '</div>'
-            }
-            var xzqh = $.trim(item.xzqh)
-            if (xzqh != '') {
-              inHtml += '<div><label>区域</label>' + xzqh + '</div>'
-            }
-            var tel = $.trim(item.tel)
-            if (tel != '') {
-              inHtml += '<div><label>电话</label>' + tel + '</div>'
-            }
-            var address = $.trim(item.address)
-            if (address != '') {
-              inHtml += '<div><label>地址</label>' + address + '</div>'
-            }
-            inHtml += '</div>'
-            return inHtml
-          },
-          {
-            anchor: [0, -10],
+          var inHtml = '<div class="mars-popup-titile">' + item.name + '</div><div class="mars-popup-content" >'
+          var type = $.trim(item.type)
+          if (type != '') {
+            inHtml += '<div><label>类别</label>' + type + '</div>'
           }
-        )
+          var xzqh = $.trim(item.xzqh)
+          if (xzqh != '') {
+            inHtml += '<div><label>区域</label>' + xzqh + '</div>'
+          }
+          var tel = $.trim(item.tel)
+          if (tel != '') {
+            inHtml += '<div><label>电话</label>' + tel + '</div>'
+          }
+          var address = $.trim(item.address)
+          if (address != '') {
+            inHtml += '<div><label>地址</label>' + address + '</div>'
+          }
+          inHtml += '</div>'
+          return inHtml
+        })
 
         queryGaodePOI = new mars3d.query.GaodePOI({
           // key: ['ae29a37307840c7ae4a785ac905927e0'],

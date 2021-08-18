@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+  <head>
+    <title>弹窗子页面</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!-- 移动设备 viewport -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <!-- 360浏览器默认使用Webkit内核 -->
+    <meta name="renderer" content="webkit" />
+    <!-- Chrome浏览器添加桌面快捷方式（安卓） -->
+    <link rel="icon" type="image/png" href="../../img/favicon/favicon.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- Safari浏览器添加到主屏幕（IOS） -->
+    <link rel="icon" sizes="192x192" href="img/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="火星科技MarsGIS" />
+    <!-- Win8标题栏及ICON图标 -->
+    <link rel="apple-touch-icon-precomposed" href="../../img/favicon/apple-touch-icon.png" />
+    <meta name="msapplication-TileImage" content="../../img/favicon/app-icon72x72@2x.png" />
+    <meta name="msapplication-TileColor" content="#62a8ea" />
+
+    <!-- 第3方lib引入 -->
+    <script type="text/javascript" src="../../lib/include-lib.js?time=20210803" libpath="../../lib/" include="jquery,haoutil"></script>
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=qObioeG8HeeQVrOVAGScPVhDzlmv6rL9"></script>
+    <style type="text/css">
+      body,
+      html {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        font-family: '微软雅黑';
+      }
+      #streetscapeMap {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="streetscapeMap"></div>
+
+    <!--页面js-->
+    <script>
+      var panorama
+
+      $(document).ready(function () {
+        var request = haoutil.system.getRequest()
+
+        var baiduMpt = new BMap.Point(request.lng, request.lat)
+
+        var map = new BMap.Map('streetscapeMap')
+        map.centerAndZoom(baiduMpt, 15)
+        map.addTileLayer(new BMap.PanoramaCoverageLayer())
+
+        panorama = new BMap.Panorama('streetscapeMap')
+        panorama.setPosition(baiduMpt) //根据经纬度坐标展示全景图
+        panorama.setPov({ heading: -40, pitch: 6 })
+        panorama.addEventListener('position_changed', function (e) {
+          //全景图位置改变后，普通地图中心点也随之改变
+          var pos = panorama.getPosition() //街景变换返回触发的回调函数
+
+          if (parent) {
+            pos = parent.mars3d.PointTrans.bd2wgs([pos.lng, pos.lat])
+            parent.updateMarker({ lng: pos[0], lat: pos[1] })
+          }
+
+          // var pov = panorama.getPov()
+        })
+      })
+
+      //外部传入坐标，更新街景
+      function setPosition(point) {
+        let bdPoint = parent.mars3d.PointTrans.wgs2bd([point.lng, point.lat])
+        panorama.setPosition(new BMap.Point(bdPoint[0], bdPoint[1])) //根据经纬度坐标展示全景图
+      }
+    </script>
+  </body>
+</html>

@@ -113,6 +113,31 @@
         border-right: 15px solid #372d83;
         border-bottom: 5px solid transparent;
       }
+
+      .legendContent {
+        position: fixed;
+        bottom: 30px;
+        left: 1px;
+        color: #e9e9e9;
+        text-shadow: 2px 2px 2px #000;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+      .legendContent ul{
+        margin: 0;
+        padding: 0;
+      }
+      .legendContent li {
+        margin: 3px 9px;
+        line-height: 22px;
+        float: left;
+      }
+      .legendContent span.round {
+        width: 8px;
+        height: 8px;
+        border-radius: 5px;
+        display: inline-block;
+        margin-right: 6px;
+      }
     </style>
   </head>
 
@@ -134,6 +159,17 @@
       </div>
 
       <table id="pathTable"></table>
+    </div>
+
+    <div class="legendContent">
+      <ul>
+        <li><span class="round" style="background-color: #eed139"></span>热带低压</li>
+        <li><span class="round" style="background-color: #0000ff"></span>热带风暴</li>
+        <li><span class="round" style="background-color: #0f8000"></span>强热带风暴</li>
+        <li><span class="round" style="background-color: #fe9c45"></span>台风</li>
+        <li><span class="round" style="background-color: #fe00fe"></span>强台风</li>
+        <li><span class="round" style="background-color: #fe0000"></span>超强台风</li>
+      </ul>
     </div>
 
     <script src="./js/Typhoon.js"></script>

@@ -167,10 +167,8 @@
         map.basemap = 2017 //蓝色底图
 
         //加载数据
-        $.ajax({
-          type: 'GET',
-          url: '//data.mars3d.cn/file/apidemo/oneBeltOneRoad.json',
-          success: function (res) {
+        queryoneBeltOneRoadApiData()
+          .then(function (res) {
             showRoad(res.data.land, {
               name: '丝绸之路经济带',
               color: Cesium.Color.CORAL,
@@ -180,10 +178,18 @@
               name: '21世纪海上丝绸之路',
               color: Cesium.Color.DEEPSKYBLUE,
             })
-          },
-          error: function (err) {
-            haoutil.msg('实时查询气象信息失败，请稍候再试')
-          },
+          })
+          .catch(function () {
+            haoutil.msg('实时查询信息失败，请稍候再试')
+          })
+      }
+
+      //访问后端接口，取数据
+      function queryoneBeltOneRoadApiData() {
+        return new Promise(function (resolve, reject) {
+          $.getJSON('//data.mars3d.cn/file/apidemo/oneBeltOneRoad.json', function (result) {
+            resolve(result)
+          })
         })
       }
 

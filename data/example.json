@@ -378,6 +378,12 @@
               "fileName": "d20_compass"
             },
             {
+              "name": "自定义样式导航球",
+              "version": "3.0",
+              "thumbnail": "d20_compass_custom.jpg",
+              "fileName": "d20_compass_custom"
+            },
+            {
               "name": "比例尺",
               "version": "3.0",
               "thumbnail": "d20_distanceLegend.jpg",
@@ -489,25 +495,13 @@
               "fileName": "e20_geojson_water"
             },
             {
-              "name": "KML图层",
-              "version": "1.2",
-              "thumbnail": "e21_kml.jpg",
-              "fileName": "e21_kml"
+              "name": "KML/KMZ解析加载(转GeoJson方式)",
+              "version": "3.0",
+              "thumbnail": "e21_kml2json.jpg",
+              "fileName": "e21_kml2json"
             },
             {
-              "name": "CZML图层",
-              "version": "1.2",
-              "thumbnail": "e21_czml.jpg",
-              "fileName": "e21_czml"
-            },
-            {
-              "name": "CzmGeoJson图层(Cesium原生加载)",
-              "version": "2.0",
-              "thumbnail": "e21_czmGeojson.jpg",
-              "fileName": "e21_czmGeojson"
-            },
-            {
-              "name": "WKT格式数据解析",
+              "name": "WKT解析加载(转GeoJson方式)",
               "version": "1.9",
               "thumbnail": "e22_wkt.jpg",
               "fileName": "e22_wkt"
@@ -523,6 +517,24 @@
               "version": "1.5",
               "thumbnail": "e22_weiVectorTile_shp.jpg",
               "fileName": "e22_weiVectorTile_shp"
+            },
+            {
+              "name": "CZML图层",
+              "version": "1.2",
+              "thumbnail": "e21_czml.jpg",
+              "fileName": "e21_czml"
+            },
+            {
+              "name": "CzmGeoJson图层(Cesium原生加载)",
+              "version": "2.0",
+              "thumbnail": "e21_czmGeojson.jpg",
+              "fileName": "e21_czmGeojson"
+            },
+            {
+              "name": "KML图层(Cesium原生加载)",
+              "version": "1.2",
+              "thumbnail": "e21_kml.jpg",
+              "fileName": "e21_kml"
             }
           ]
         },
@@ -1067,6 +1079,12 @@
               "fileName": "f45_odline"
             },
             {
+              "name": "民航航线(OD线)",
+              "version": "3.0",
+              "thumbnail": "f45_odline_flights.jpg",
+              "fileName": "f45_odline_flights"
+            },
+            {
               "name": "高压电线(自动计算线)",
               "version": "1.5",
               "thumbnail": "f45_tower.jpg",
@@ -1095,6 +1113,12 @@
               "version": "3.0",
               "thumbnail": "f45_polyGradient.jpg",
               "fileName": "f45_polyGradient"
+            },
+            {
+              "name": "行政区突出展示",
+              "version": "3.0",
+              "thumbnail": "f45_district.jpg",
+              "fileName": "f45_district"
             },
             {
               "name": "矿区岩层效果",
@@ -1489,7 +1513,7 @@
             {
               "name": "模型自旋转",
               "version": "1.8",
-              "thumbnail": "g05_gltf_rotate.jpg",
+              "thumbnail": "g05_gltf_rotate.gif",
               "fileName": "g05_gltf_rotate"
             }
           ]
@@ -1656,7 +1680,7 @@
       "icon": "fa-cubes",
       "children": [
         {
-          "name": "二三维视图控制",
+          "name": "视图切换和对比",
           "children": [
             {
               "name": "二维三维视图切换",
@@ -1675,6 +1699,12 @@
               "version": "1.6",
               "thumbnail": "h10_link_leaflet.jpg",
               "fileName": "h10_link_leaflet"
+            },
+            {
+              "name": "街景联动",
+              "version": "3.1",
+              "thumbnail": "h10_streetview.jpg",
+              "fileName": "h10_streetview"
             }
           ]
         },
@@ -1782,7 +1812,7 @@
               "fileName": "h25_streetView"
             },
             {
-              "name": "坐标拾取",
+              "name": "坐标拾取和转换",
               "version": "1.4",
               "thumbnail": "h25_selectPoint.jpg",
               "fileName": "h25_selectPoint"

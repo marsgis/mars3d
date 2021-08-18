@@ -29,49 +29,44 @@
         pid: 99, //图层管理 中使用，父节点id
       })
       //鼠标单击后的信息面板弹窗
-      this.graphicLayer.bindPopup(
-        function (event) {
-          let item = event.graphic?.attr
-          if (!item) {
-            return
-          }
-
-          var name
-          if (item.detail_info && item.detail_info.detail_url) {
-            name = '<a href="' + item.detail_info.detail_url + '"  target="_black" style="color: #ffffff; ">' + item.name + '</a>'
-          } else {
-            name = item.name
-          }
-
-          var inHtml = '<div class="mars-popup-titile">' + name + '</div><div class="mars-popup-content" >'
-
-          var phone = $.trim(item.tel)
-          if (phone != '') {
-            inHtml += '<div><label>电话</label>' + phone + '</div>'
-          }
-
-          var dz = $.trim(item.address)
-          if (dz != '') {
-            inHtml += '<div><label>地址</label>' + dz + '</div>'
-          }
-
-          if (item.detail_info) {
-            var fl = $.trim(item.detail_info.tag)
-            if (fl != '') {
-              inHtml += '<div><label>类别</label>' + fl + '</div>'
-            }
-          }
-          inHtml += '</div>'
-
-          return inHtml
-        },
-        {
-          anchor: [0, -10],
+      this.graphicLayer.bindPopup(function (event) {
+        let item = event.graphic?.attr
+        if (!item) {
+          return
         }
-      )
+
+        var name
+        if (item.detail_info && item.detail_info.detail_url) {
+          name = '<a href="' + item.detail_info.detail_url + '"  target="_black" style="color: #ffffff; ">' + item.name + '</a>'
+        } else {
+          name = item.name
+        }
+
+        var inHtml = '<div class="mars-popup-titile">' + name + '</div><div class="mars-popup-content" >'
+
+        var phone = $.trim(item.tel)
+        if (phone != '') {
+          inHtml += '<div><label>电话</label>' + phone + '</div>'
+        }
+
+        var dz = $.trim(item.address)
+        if (dz != '') {
+          inHtml += '<div><label>地址</label>' + dz + '</div>'
+        }
+
+        if (item.type) {
+          var fl = $.trim(item.type)
+          if (fl != '') {
+            inHtml += '<div><label>类别</label>' + fl + '</div>'
+          }
+        }
+        inHtml += '</div>'
+
+        return inHtml
+      })
 
       //查询控制器
-      this.baiduPOI = new mars3d.query.BaiduPOI({
+      this._queryPoi = new mars3d.query.BaiduPOI({
         // city: '合肥市',
       })
     }
@@ -180,9 +175,10 @@
         return
       }
 
-      this.baiduPOI.getAddress({
+      this._queryPoi.getAddress({
         location: this.map.getCenter(),
         success: (result) => {
+          console.log('地址', result)
           this.address = result
 
           $('#queryAddress').html('地址：' + result.address)
@@ -218,7 +214,8 @@
       }
       //查询外部widget
 
-      this.baiduPOI.autoTip({
+      //搜索提示
+      this._queryPoi.autoTip({
         text: text,
         city: this.address?.city,
         location: this.map.getCenter(),
@@ -272,11 +269,11 @@
       // this.query_location = this.map.getCenter()
       // this.query_radius = this.map.camera.positionCartographic.height //单位：米
 
-      this.queryPOI()
+      this.queryTextByServer()
     }
-    queryPOI() {
+    queryTextByServer() {
       //查询获取数据
-      this.baiduPOI.queryText({
+      this._queryPoi.queryText({
         text: this.queryText,
         count: this.pageSize,
         page: this.thispage - 1,
@@ -359,7 +356,7 @@
     }
     showFirstPage() {
       this.thispage = 1
-      this.queryPOI()
+      this.queryTextByServer()
     }
     showNextPage() {
       this.thispage = this.thispage + 1
@@ -368,7 +365,7 @@
         toastr.warning('当前已是最后一页了')
         return
       }
-      this.queryPOI()
+      this.queryTextByServer()
     }
 
     showPretPage() {
@@ -378,7 +375,7 @@
         toastr.warning('当前已是第一页了')
         return
       }
-      this.queryPOI()
+      this.queryTextByServer()
     }
     //点击单个结果,显示详细
     showDetail(id) {

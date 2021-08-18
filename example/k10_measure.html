@@ -93,7 +93,6 @@
       map = new mars3d.Map('mars3dContainer', mapOptions)
 
       measure = new mars3d.thing.Measure({
-        //可设置文本样式
         label: {
           color: '#ffffff',
           font_family: '楷体',
@@ -104,27 +103,21 @@
       map.addThing(measure)
 
       measure.on(mars3d.EventType.start, function (e) {
-        console.log('start', e)
-        //开始分析前回调(异步)
+        console.log('开始异步分析', e)
         haoutil.loading.show()
       })
       measure.on(mars3d.EventType.end, function (e) {
-        console.log('end', e)
-        //分析完成后回调(异步)
+        console.log('完成异步分析', e)
         haoutil.loading.hide()
 
         //测试显示，在js/showPolygonInter.js
-        if (e.mtype == 'areaSurface' && e.list) {
+        if (e.graphic?.type === mars3d.graphic.AreaSurfaceMeasure.type && e.list) {
           showInterResult(e.list)
         }
       })
       measure.on(mars3d.EventType.remove, function (e) {
         clearInterResult() //在js/showPolygonInter.js
       })
-
-      // measure.on(mars3d.EventType.drawCreated, function (e) {
-      //   console.log('触发了事件drawCreated', e)
-      // })
 
       $('#chk_onlyPickModelPosition').change(function () {
         var val = $(this).is(':checked')
@@ -197,13 +190,7 @@
     }
 
     function measureAngle() {
-      measure.angle({
-        //正北线的样式
-        // styleEx: {
-        //   color: '#ffff00',
-        //   width: 3
-        // }
-      })
+      measure.angle()
     }
 
     function measurePoint() {

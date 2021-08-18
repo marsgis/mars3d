@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>功能示例 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+
+    <style type="text/css">
+
+      /**一个简单文本DIV面板**/
+      .mars3d-divlabel {
+        min-width: 90px;
+        min-height: 35px;
+        position: absolute;
+        left: 16px;
+        bottom: 31px;
+        cursor: default;
+        border-radius: 4px;
+        opacity: 0.96;
+        border: 1px solid #14171c;
+        box-shadow: 0px 2px 21px 0px rgba(33, 34, 39, 0.55);
+        border-radius: 4px;
+        box-sizing: border-box;
+        background: linear-gradient(0deg, #1e202a 0%, #0d1013 100%);
+      }
+
+      .mars3d-divlabel::before {
+        content: '';
+        width: calc(100% + 22px);
+        height: 39px;
+        position: absolute;
+        bottom: -39px;
+        left: -22px;
+        background: url(../example/img/marker/popupLbl.png) 0px 0px no-repeat;
+        background-position: 0px 0px;
+      }
+
+      .mars3d-divlabel-text {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        padding: 1px 20px;
+        font-size: 14px;
+        font-family: 'MicrosoftYaHei';
+        font-weight: 400;
+        color: #ffffff;
+        line-height: 33px;
+        border: 1px solid #ffffff4f;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <!-- 面板 -->
+    <!-- <div class="infoview"> </div> -->
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
+
+      var map
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 24.890314, lng: 118.165162, alt: 831420, heading: 355, pitch: -48 },
+            fxaa: false,
+          },
+        })
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map.basemap = 2017 //蓝色底图
+
+        // 添加矢量图层
+        var graphicLayer = new mars3d.layer.GraphicLayer()
+        map.addLayer(graphicLayer)
+
+        //添加对象
+        addAnhui(graphicLayer)
+        addCenterCity(graphicLayer)
+        addOutCircle(graphicLayer)
+      }
+
+      let diffHeight = 20000
+
+      //添加安徽省底图和墙
+      function addAnhui(graphicLayer) {
+        //安徽省卫星底图
+        var anhuiImg = new mars3d.graphic.RectangleEntity({
+          positions: [
+            [114.877478595, 29.395624614],
+            [119.644266263, 34.655111865],
+          ],
+          style: {
+            image: '//data.mars3d.cn/file/img/anhui.png',
+            outline: false,
+            height: diffHeight,
+            clampToGround: false,
+          },
+        })
+        graphicLayer.addGraphic(anhuiImg)
+
+        // 安徽省边界线墙
+        var anhuiWall = new mars3d.layer.GeoJsonLayer({
+          name: '安徽省边界墙',
+          url: '//data.mars3d.cn/file/geojson/areas/340000.json',
+          symbol: {
+            type: 'wallP',
+            styleOptions: {
+              diffHeight: diffHeight, //墙高
+              image: './img/icon/wall.png',
+            },
+          },
+        })
+        map.addLayer(anhuiWall)
+
+        //安徽各市边界线和名称
+        var shiLayer = new mars3d.layer.GeoJsonLayer({
+          name: '安徽各市边界线',
+          url: '//data.mars3d.cn/file/geojson/areas/340000_full.json',
+          symbol: {
+            type: 'polyline',
+            styleOptions: {
+              color: 'rgb(255,255,255,0.9)',
+              setHeight: diffHeight,
+              width: 2,
+              label: {
+                text: '{name}',
+                position: 'center',
+                font_size: 18,
+                color: 'black',
+                font_family: '楷体',
+                outline: true,
+                outlineColor: '#f1f3f4',
+                outlineWidth: 3,
+                // 视距的设置
+                scaleByDistance: true,
+                scaleByDistance_far: 20000000,
+                scaleByDistance_farValue: 0.1,
+                scaleByDistance_near: 1000,
+                scaleByDistance_nearValue: 1,
+              },
+            },
+            styleField: 'name',
+            styleFieldOptions: {
+              合肥市: { color: '#00FF00' },
+            },
+          },
+          popup: '{name}',
+        })
+        map.addLayer(shiLayer)
+      }
+
+      //添加示范城市的相关对象
+      function addCenterCity(graphicLayer) {
+        let point = [117.234218, 31.814155, diffHeight + 500]
+
+        // divgraphic标注
+        var divgraphic = new mars3d.graphic.DivGraphic({
+          position: point,
+          style: {
+            html: `<div class="mars3d-divlabel">
+                <div class="mars3d-divlabel-text">示范城市</div>
+            </div>`,
+            horizontalOrigin: Cesium.HorizontalOrigin.LEFT, //横向定位
+            verticalOrigin: Cesium.VerticalOrigin.CENTER, //垂直定位
+          },
+        })
+        graphicLayer.addGraphic(divgraphic)
+
+        // 圆形动态扩散图
+        var cicle = new mars3d.graphic.CirclePrimitive({
+          position: point,
+          style: {
+            radius: 16000,
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.CircleWave, {
+              color: '#ffff00',
+              count: 2,
+              speed: 10,
+            }),
+          },
+        })
+        graphicLayer.addGraphic(cicle)
+      }
+
+      //添加周边的圆圈刻度尺等对象
+      function addOutCircle(graphicLayer) {
+        var arrImg = [
+          {
+            //刻度
+            image: './img/icon/calib.png',
+            positions: [
+              [113.564329, 35.654741],
+              [120.802219, 28.844016],
+            ],
+          },
+          {
+            //刻度尺
+            image: './img/icon/calib-value.png',
+            positions: [
+              [114.162597, 29.256489],
+              [120.216593, 35.055444],
+            ],
+          },
+          {
+            //方向
+            image: './img/icon/calib-dir.png',
+            positions: [
+              [114.162597, 29.256489],
+              [120.216593, 35.055444],
+            ],
+          },
+        ]
+
+        for (let i = 0; i < arrImg.length; i++) {
+          var item = arrImg[i]
+          var primitive = new mars3d.graphic.RectanglePrimitive({
+            positions: item.positions,
+            style: {
+              image: item.image,
+              opacity: 0.5,
+            },
+          })
+          graphicLayer.addGraphic(primitive)
+        }
+
+        //自转的半椭圆
+        var rotation = Cesium.Math.toRadians(50)
+        function getRotationValue() {
+          rotation += 0.005
+          return rotation
+        }
+        var primitive1 = new mars3d.graphic.RectangleEntity({
+          positions: [
+            [114.642444, 34.789658],
+            [119.814361, 29.425181],
+          ],
+          style: {
+            image: './img/icon/calib-semicircle.png',
+            opacity: 0.3,
+            outline: false,
+            clampToGround: true,
+            rotation: new Cesium.CallbackProperty(getRotationValue, false),
+            stRotation: new Cesium.CallbackProperty(getRotationValue, false),
+          },
+        })
+        graphicLayer.addGraphic(primitive1)
+      }
+    </script>
+  </body>
+</html>

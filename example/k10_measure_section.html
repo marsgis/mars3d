@@ -74,7 +74,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { y: 30.715648, x: 116.300527, z: 10727.2, heading: 2.9, pitch: -24.6, roll: 0 },
+            center: { lat: 30.715648, lng: 116.300527, alt: 10727, heading: 3, pitch: -25 },
           },
         })
 
@@ -92,21 +92,24 @@
         map.addThing(measureObj)
 
         measureObj.on(mars3d.EventType.start, function (e) {
+          console.log('开始分析', e)
           //开始分析前回调(异步)
           haoutil.loading.show()
         })
         measureObj.on(mars3d.EventType.end, function (e) {
+          console.log('分析结束', e)
+
           //分析完成后回调(异步)
           haoutil.loading.hide()
-          if (e.mtype === 'section') {
+          if (e.graphic?.type === mars3d.graphic.SectionMeasure.type) {
             setEchartsData(e)
           }
         })
 
         measureObj.on(mars3d.EventType.click, function (e) {
-          console.log('单击了对象', e)
-          let result = e.graphic?.measureResult
-          if (result && result.mtype === 'section') {
+          // console.log('单击了对象', e)
+          let result = e.graphic?.measured
+          if (e.graphic?.type === mars3d.graphic.SectionMeasure.type && result) {
             setEchartsData(result)
           }
         })
@@ -149,11 +152,7 @@
           tipGraphic._setPositionsToCallback()
         }
         tipGraphic._position_draw = _position_draw
-        tipGraphic
-          .bindPopup(inthtml, {
-            anchor: [0, -20], //左右、上下的偏移像素值。
-          })
-          .openPopup()
+        tipGraphic.bindPopup(inthtml).openPopup()
       }
 
       function hideTipMarker() {

@@ -62,6 +62,7 @@
             homeButton: true, //视角复位按钮
             sceneModePicker: true, //二三维切换按钮
             defaultContextMenu: true, //右键菜单
+            locationBar: { fps: true }, //状态栏
           },
           terrain: {
             url: 'http://data.mars3d.cn/terrain',
@@ -89,8 +90,7 @@
               name: '光污染图层(XYZ方式)',
               icon: 'img/basemaps/blackMarble.png',
               type: 'xyz',
-              url:
-                '//www.lightpollutionmap.info/geoserver/gwc/service/wms?transparent=true&format=image%2Fpng&service=WMS&version=1.1.1&request=GetMap&styles=&layers=PostGIS%3AVIIRS_2019&bbox={westProjected},{southProjected},{eastProjected},{northProjected}&width={width}&height={height}&srs=EPSG%3A3857',
+              url: '//www.lightpollutionmap.info/geoserver/gwc/service/wms?transparent=true&format=image%2Fpng&service=WMS&version=1.1.1&request=GetMap&styles=&layers=PostGIS%3AVIIRS_2019&bbox={westProjected},{southProjected},{eastProjected},{northProjected}&width={width}&height={height}&srs=EPSG%3A3857',
               alpha: 0.6, //透明度
               proxy: '//server.mars3d.cn/proxy/', //代理服务，解决跨域问题
             },

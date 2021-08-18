@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>三维动画教学讲解 碎部点-地貌特征点 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>动画脚本演示 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -122,14 +122,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 36.045934,
-              x: 113.942816,
-              z: 1663.41,
-              heading: 2.4,
-              pitch: -24.8,
-              roll: 0,
-            },
+            center: { lat: 36.045934, lng: 113.942816, alt: 1663, heading: 2, pitch: -25 },
           },
         })
 

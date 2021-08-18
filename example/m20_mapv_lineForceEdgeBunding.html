@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>MapV与Cesium融合 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>强边界图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -47,14 +47,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              x: 110.597446,
-              y: 29.808307,
-              z: 7852845.8,
-              heading: 352.7,
-              pitch: -86.3,
-              roll: 0.7,
-            },
+            center: { lat: 29.808307, lng: 110.597446, alt: 7852846, heading: 353, pitch: -86 },
           },
         })
 

@@ -1,155 +1,152 @@
 ﻿<!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="author" content="火星科技 http://mars3d.cn ">
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-        content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>立体曲面热力图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>热力图(几何对象) | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d,mars3d-heatmap"
+    ></script>
 
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-  <!--第三方lib-->
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/" include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d,mars3d-heatmap"></script>
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
-
-<body class="dark">
-  <!--加载前进行操作提示，优化用户体验-->
-  <div id="mask" class="signmask" onclick="removeMask()"></div>
-
-  <div id="mars3dContainer" class="mars3d-container"></div>
-
-
-  <!-- 图例面板 -->
-  <div style=" position: absolute; bottom: 30px; left: 10px;">
-    <img src="img/heatmap-tuli.png" height="200px" />
-  </div>
-
-
-  <div class="infoview">
-    <div class="checkbox checkbox-primary checkbox-inline">
-      <input id="chkUnderground" class="styled" type="checkbox">
-      <label for="chkUnderground">
-        显示对应的数据点
-      </label>
+    <!-- 图例面板 -->
+    <div style="position: absolute; bottom: 30px; left: 10px">
+      <img src="img/heatmap-tuli.png" height="200px" />
     </div>
-  </div>
 
+    <div class="infoview">
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkUnderground" class="styled" type="checkbox" />
+        <label for="chkUnderground"> 显示对应的数据点 </label>
+      </div>
+    </div>
 
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
 
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
+      var map
 
-    var map
-
-    function initMap(options) {
-      //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {
-        scene: {
-          center: { y: 31.794428, x: 117.235343, z: 2351.9, heading: 1.6, pitch: -28.8, roll: 0 },
-        },
-      })
-
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
-
-      map.basemap = 2017 //蓝色底图
-
-      var tilesetLayer = new mars3d.layer.TilesetLayer({
-        url: '//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json',
-        maximumScreenSpaceError: 1,
-        maximumMemoryUsage: 1024,
-        center: { y: 31.805004, x: 117.222617, z: 1457.4, heading: 1.6, pitch: -30.5, roll: 0 },
-        showClickFeature: true,
-        popup: 'all',
-      })
-      map.addLayer(tilesetLayer)
-
-      // 视角切换（分步执行）
-      map.setCameraViewList([
-        { lat: 31.813938, lng: 117.240085, alt: 3243, heading: 357, pitch: -52 },
-        { lat: 31.821728, lng: 117.253605, alt: 1702, heading: 319, pitch: -37 },
-        { lat: 31.836674, lng: 117.260762, alt: 1779, heading: 269, pitch: -37 },
-      ])
-
-      //创建Graphic图层
-      var graphicLayer = new mars3d.layer.GraphicLayer()
-      map.addLayer(graphicLayer)
-
-      $('#chkUnderground').change(function () {
-        var val = $(this).is(':checked')
-        graphicLayer.show = val
-      })
-
-      //测试点数据，实际开发时换掉
-      var arrPoints = getRandomPoints(1000)
-
-      //热力图 图层
-      var heatLayer = new mars3d.layer.HeatLayer({
-        positions: arrPoints,
-        //以下为热力图本身的样式参数，可参阅api：https://www.patrick-wied.at/static/heatmapjs/docs.html
-        heatStyle: {
-          radius: 60,
-          blur: 0.85,
-        },
-        //以下为矩形矢量对象的样式参数
-        style: {
-          arc: true, //是否为曲面
-          height: 200.0,
-        },
-        // flyTo: true,
-      })
-      map.addLayer(heatLayer)
-
-      //显示地面对应的点，测试渲染结果的正确性
-      var arrEntity = []
-      for (var i = 0; i < arrPoints.length; i++) {
-        var item = arrPoints[i]
-
-        var primitive = new mars3d.graphic.PointPrimitive({
-          position: [item.lng, item.lat, 90],
-          style: {
-            color: '#ffff00',
-            pixelSize: 7,
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 31.794428, lng: 117.235343, alt: 2351.9, heading: 1.6, pitch: -28.8, roll: 0 },
           },
         })
-        graphicLayer.addGraphic(primitive)
-      }
-      graphicLayer.show = false
-    }
 
-    //获取bbox矩形区域内的count个随机点
-    function getRandomPoints(count) {
-      var xmin = 117.226189,
-        xmax = 117.245831,
-        ymin = 31.828858,
-        ymax = 31.842967
-      var arr = []
-      var arrPoint = turf.randomPoint(count, { bbox: [xmin, ymin, xmax, ymax] }).features //随机点
-      for (var i = 0; i < arrPoint.length; i++) {
-        var item = arrPoint[i].geometry.coordinates
-        var val = Math.floor(Math.random() * 100) //热力值
-        arr.push({ lng: item[0], lat: item[1], value: val })
-      }
-      return arr
-    }
-  </script>
-</body>
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
 
+        map.basemap = 2017 //蓝色底图
+
+        var tilesetLayer = new mars3d.layer.TilesetLayer({
+          url: '//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json',
+          maximumScreenSpaceError: 1,
+          maximumMemoryUsage: 1024,
+          center: { lat: 31.805004, lng: 117.222617, alt: 1457.4, heading: 1.6, pitch: -30.5, roll: 0 },
+          showClickFeature: true,
+          popup: 'all',
+        })
+        map.addLayer(tilesetLayer)
+
+        // 视角切换（分步执行）
+        map.setCameraViewList([
+          { lat: 31.813938, lng: 117.240085, alt: 3243, heading: 357, pitch: -52 },
+          { lat: 31.821728, lng: 117.253605, alt: 1702, heading: 319, pitch: -37 },
+          { lat: 31.836674, lng: 117.260762, alt: 1779, heading: 269, pitch: -37 },
+        ])
+
+        //创建Graphic图层
+        var graphicLayer = new mars3d.layer.GraphicLayer()
+        map.addLayer(graphicLayer)
+
+        $('#chkUnderground').change(function () {
+          var val = $(this).is(':checked')
+          graphicLayer.show = val
+        })
+
+        //测试点数据，实际开发时换掉
+        var arrPoints = getRandomPoints(1000)
+
+        //热力图 图层
+        var heatLayer = new mars3d.layer.HeatLayer({
+          positions: arrPoints,
+          //以下为热力图本身的样式参数，可参阅api：https://www.patrick-wied.at/static/heatmapjs/docs.html
+          heatStyle: {
+            radius: 60,
+            blur: 0.85,
+          },
+          //以下为矩形矢量对象的样式参数
+          style: {
+            arc: true, //是否为曲面
+            height: 200.0,
+          },
+          // flyTo: true,
+        })
+        map.addLayer(heatLayer)
+
+        //显示地面对应的点，测试渲染结果的正确性
+        var arrEntity = []
+        for (var i = 0; i < arrPoints.length; i++) {
+          var item = arrPoints[i]
+
+          var primitive = new mars3d.graphic.PointPrimitive({
+            position: [item.lng, item.lat, 90],
+            style: {
+              color: '#ffff00',
+              pixelSize: 7,
+            },
+          })
+          graphicLayer.addGraphic(primitive)
+        }
+        graphicLayer.show = false
+      }
+
+      //获取bbox矩形区域内的count个随机点
+      function getRandomPoints(count) {
+        var xmin = 117.226189,
+          xmax = 117.245831,
+          ymin = 31.828858,
+          ymax = 31.842967
+        var arr = []
+        var arrPoint = turf.randomPoint(count, { bbox: [xmin, ymin, xmax, ymax] }).features //随机点
+        for (var i = 0; i < arrPoint.length; i++) {
+          var item = arrPoint[i].geometry.coordinates
+          var val = Math.floor(Math.random() * 100) //热力值
+          arr.push({ lng: item[0], lat: item[1], value: val })
+        }
+        return arr
+      }
+    </script>
+  </body>
 </html>

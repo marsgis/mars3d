@@ -101,8 +101,8 @@
         map.addLayer(graphicLayer)
 
         var arrData
-        $.getJSON('//data.mars3d.cn/file/apidemo/mudi.json', function (result) {
-          arrData = result.data
+        queryMudiApiData().then(function (res) {
+          arrData = res.data
           addFeature(graphicLayer, arrData)
         })
 
@@ -114,6 +114,15 @@
 
         $('#btn_start').click(function () {
           getDataSurfaceHeight(arrData)
+        })
+      }
+
+      // 访问后端接口，取数据
+      function queryMudiApiData() {
+        return new Promise(function (resolve, reject) {
+          $.getJSON('//data.mars3d.cn/file/apidemo/mudi.json', function (result) {
+            resolve(result)
+          })
         })
       }
 

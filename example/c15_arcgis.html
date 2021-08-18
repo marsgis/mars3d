@@ -55,13 +55,14 @@
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', {
           scene: {
-            center: { y: 31.026852, x: 117.164195, z: 154181.14, heading: 0, pitch: -63.5, roll: 0 },
+            center: { lat: 30.931953, lng: 117.352307, alt: 207201, heading: 360, pitch: -64 },
           },
           control: {
             baseLayerPicker: true, //basemaps底图切换按钮
             homeButton: true, //视角复位按钮
             sceneModePicker: true, //二三维切换按钮
             defaultContextMenu: true, //右键菜单
+            locationBar: { fps: true }, //状态栏
           },
           terrain: {
             url: 'http://data.mars3d.cn/terrain',

@@ -118,17 +118,22 @@
 
         initUI()
 
-        $.ajax({
-          url: '//data.mars3d.cn/file/apidemo/tle-china.json',
-          dataType: 'json',
-          type: 'get',
-          success: function (data) {
+        queryTleChinaApiData()
+          .then(function (data) {
             tleArr = data.data
             console.log('卫星数量：' + tleArr.length)
-          },
-          error: function (data) {
+          })
+          .catch(function () {
             haoutil.msg('获取空间目标轨道数据异常！')
-          },
+          })
+      }
+
+      // 访问后端接口，取数据
+      function queryTleChinaApiData() {
+        return new Promise(function (resolve, reject) {
+          $.getJSON('//data.mars3d.cn/file/apidemo/tle-china.json', function (result) {
+            resolve(result)
+          })
         })
       }
 
@@ -462,7 +467,7 @@
           positions: data.positions,
           style: {
             width: 6000,
-             cornerType: Cesium.CornerType.MITERED, //指定转角处样式
+            cornerType: Cesium.CornerType.MITERED, //指定转角处样式
             color: '#00ff00',
           },
         })

@@ -1,102 +1,100 @@
 <!-- 2017-12-4 14:24:10 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>谷歌地球企业版【需部署私服】 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>GoogleEarth企业服务  | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"
+    ></script>
 
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
+  <body class="dark">
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
+    <div id="tipView" class="info-tips">(1) 需要自行部署自己的谷歌地球企业版服务后，修改url才能体验。</div>
 
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+      $(document).ready(function () {
+        if (!mars3d.Util.webglreport()) {
+          mars3d.Util.webglerror()
+          return
+        }
+        initMap()
+      })
 
-<body class="dark">
-  <div id="mars3dContainer" class="mars3d-container"></div>
-
-
-  <div id="tipView" class="info-tips">
-    (1) 需要自行部署自己的谷歌地球企业版服务后，修改url才能体验。
-  </div>
-
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
-
-    $(document).ready(function () {
-      if (!mars3d.Util.webglreport()) {
-        mars3d.Util.webglerror()
-        return
-      }
-      initMap()
-    })
-
-    var map
-    function initMap() {
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', {
-        scene: {
-          center: { y: 25.816726, x: 114.165359, z: 3339609.8, heading: 355, pitch: -81, roll: 0 },
-          highDynamicRange: false,
-        },
-        control: {
-          baseLayerPicker: true, //basemaps底图切换按钮
-          homeButton: true, //视角复位按钮
-          sceneModePicker: true, //二三维切换按钮
-          defaultContextMenu: true, //右键菜单
-        },
-        terrain: {
-          type: 'gee',
-          url: 'http://www.earthenterprise.org/3d',
-          // "proxy": "//server.mars3d.cn/proxy/",
-          show: true,
-        },
-        basemaps: [
-          {
-            name: 'GEE地图',
-            icon: 'img/basemaps/osm.png',
+      var map
+      function initMap() {
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', {
+          scene: {
+            center: { lat: 23.54104, lng: 121.083097, alt: 10219674, heading: 355, pitch: -85 },
+            highDynamicRange: false,
+          },
+          control: {
+            baseLayerPicker: true, //basemaps底图切换按钮
+            homeButton: true, //视角复位按钮
+            sceneModePicker: true, //二三维切换按钮
+            defaultContextMenu: true, //右键菜单
+            locationBar: { fps: true }, //状态栏
+          },
+          terrain: {
             type: 'gee',
             url: 'http://www.earthenterprise.org/3d',
             // "proxy": "//server.mars3d.cn/proxy/",
             show: true,
           },
-        ],
-      })
-    }
+          basemaps: [
+            {
+              name: 'GEE地图',
+              icon: 'img/basemaps/osm.png',
+              type: 'gee',
+              url: 'http://www.earthenterprise.org/3d',
+              // "proxy": "//server.mars3d.cn/proxy/",
+              show: true,
+            },
+          ],
+        })
+      }
 
-    function openTipView(content, title) {
-      window.layer.open({
-        type: 1,
-        title: title || '功能 和 已知问题 提示',
-        offset: 'rt',
-        shade: false,
-        skin: 'layer-mars-dialog animation-scale-up',
-        content: content,
-      })
-    }
+      function openTipView(content, title) {
+        window.layer.open({
+          type: 1,
+          title: title || '功能 和 已知问题 提示',
+          offset: 'rt',
+          shade: false,
+          skin: 'layer-mars-dialog animation-scale-up',
+          content: content,
+        })
+      }
 
-    if ($('#tipView').length > 0) {
-      openTipView($('#tipView'))
-    }
-  </script>
-</body>
-
+      if ($('#tipView').length > 0) {
+        openTipView($('#tipView'))
+      }
+    </script>
+  </body>
 </html>

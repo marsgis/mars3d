@@ -1,154 +1,115 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-    <meta name="author" content="火星科技 http://mars3d.cn " />
-    <meta name="apple-touch-fullscreen" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="x5-fullscreen" content="true" />
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-    <!-- 标题及搜索关键字 -->
-    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-    <meta
-      name="description"
-      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
-    />
 
-    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>鹰眼地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn " />
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="x5-fullscreen" content="true" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
 
-    <!--第三方lib-->
-    <script
-      type="text/javascript"
-      src="../lib/include-lib.js"
-      libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars2d,mars3d"
-    ></script>
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+  <title>鹰眼地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-    <link href="css/style.css" rel="stylesheet" />
-  </head>
+  <!--第三方lib-->
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
 
-  <body class="dark">
-    <!--加载前进行操作提示，优化用户体验-->
-    <div id="mask" class="signmask" onclick="removeMask()"></div>
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+<style>
+  .miniMap {
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    bottom: 30px;
+    right: 60px;
+  }
+</style>
 
-    <div id="mars3dContainer" class="mars3d-container"></div>
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-    <script src="./js/common.js"></script>
-    <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+  <div id="mars3dContainer" class="mars3d-container"></div>
 
-      function initMap(options) {
-        //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.Util.merge(options, {
-          scene: {
-            center: { y: 25.389914, x: 119.084961, z: 1179575, heading: 346, pitch: -60, roll: 0 },
-          },
-        })
+  <div id="miniMapContainer" class="miniMap"></div>
 
-        //创建三维地球场景
-        var map = new mars3d.Map('mars3dContainer', mapOptions)
+  <script src="./js/common.js"></script>
+  <script type="text/javascript">
+    'use script' //开发环境建议开启严格模式
 
-        //构造鹰眼地图
-        overMap.init(map)
-      }
+    let map
+    let minMap
+    let extentGraphic
 
-      var overMap = {
-        init: function (map3d) {
-          this.map3d = map3d
-
-          this.mapEle = window.document.createElement('div')
-          this.mapEle.setAttribute('id', 'map2d')
-          this.mapEle.style.height = '150px'
-          this.mapEle.style.width = '200px'
-          this.mapEle.style.position = 'absolute'
-          this.mapEle.style.bottom = '30px'
-          this.mapEle.style.right = '60px'
-          document.body.appendChild(this.mapEle)
-
-          this.showStyle = {
-            color: '#ff7800',
-            weight: 1,
-            fill: true,
-            stroke: true,
-            opacity: 1,
-          }
-          this.hideStyle = {
-            fill: false,
-            opacity: 0,
-          }
-
-          //根据参数创建鹰眼图
-          var map = L.map('map2d', {
-            minZoom: 0,
-            maxZoom: 17,
-            center: [31.827107, 117.240601],
-            zoom: 4,
-            zoomControl: false,
-            attributionControl: false,
-          })
-          L.tileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
-
-          this.map = map
-
-          this.map3d.on(mars3d.EventType.cameraChanged, this.sceneRenderHandler, this)
-          this.map3d.camera.percentageChanged = 0.01
-
-          this.sceneRenderHandler()
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.Util.merge(options, {
+        scene: {
+          center: { lat: 25.389914, lng: 119.084961, alt: 1179575, heading: 346, pitch: -60 },
         },
-        sceneRenderHandler: function () {
-          var extend = this.map3d.getExtent()
+      })
 
-          var corner1 = L.latLng(extend.ymin, extend.xmin),
-            corner2 = L.latLng(extend.ymax, extend.xmax)
-          var bounds = L.latLngBounds(corner1, corner2)
-          if (this.rectangle) {
-            this.rectangle.setBounds(bounds)
-          } else {
-            this.rectangle = L.rectangle(bounds, this.showStyle).addTo(this.map)
-          }
+      //创建三维地球场景
+      map = new mars3d.Map('mars3dContainer', mapOptions)
 
-          if (extend.xmin === -180 && extend.xmax === 180 && extend.ymax === 90 && extend.ymin === -90) {
-            //整个地球在视域内
-            var point = this.map3d.getCenter()
-            this.map.setView([point.lat, point.lng], 0)
-            this.rectangle.setStyle(this.hideStyle)
-          } else {
-            var padBounds = bounds.pad(0.5)
-            this.map.fitBounds(padBounds)
-            this.rectangle.setStyle(this.showStyle)
-          }
-        },
+      //监听视角变化
+      map.camera.percentageChanged = 0.01
+      map.on(mars3d.EventType.cameraChanged, function () {
+        var extend = map.getExtent()
+        extentGraphic.coordinates = Cesium.Rectangle.fromDegrees(extend.xmin, extend.ymin, extend.xmax, extend.ymax)
 
-        //关闭鹰眼图
-        hide: function () {
-          if (this.mapEle) {
-            this.mapEle.style.display = 'none'
-          }
+        minMap.flyToExtent(extend, { duration: 0, scale: 2 })
+      })
+
+      //构造鹰眼地图
+      initMinMap(options)
+    }
+
+    function initMinMap(options) {
+      delete options.control
+      var mapOptions = mars3d.Util.merge(options, {
+        scene: {
+          sceneMode: Cesium.SceneMode.SCENE2D,
         },
-        //打开鹰眼图
-        show: function () {
-          if (this.mapEle) {
-            this.mapEle.style.display = 'block'
+        basemaps: [
+          {
+            "name": "OSM地图",
+            "type": "xyz",
+            "icon": "http://mars3d.cn/example/img/basemaps/osm.png",
+            "url": "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            "subdomains": "abc",
+            "show": true
           }
+        ]
+      })
+
+      //创建三维地球场景
+      minMap = new mars3d.Map('miniMapContainer', mapOptions)
+
+      var extend = map.getExtent()
+      extentGraphic = new mars3d.graphic.RectangleEntity({
+        coordinates: Cesium.Rectangle.fromDegrees(extend.xmin, extend.ymin, extend.xmax, extend.ymax),
+        style: {
+          color: '#fecd78',
+          opacity: 0.2,
+          outline: 1,
+          outlineColor: '#ff7800',
         },
-        //设置矩形框样式
-        setStyle: function (style) {
-          if (!style) {
-            return
-          }
-          this.showStyle = style
-        },
-        destroy: function () {
-          if (this.mapEle) {
-            document.getElementsByTagName('body').removeChild(this.mapEle)
-          }
-          this.map3d.off(mars3d.EventType.cameraChanged, this.sceneRenderHandler, this)
-        },
-      }
-    </script>
-  </body>
+      })
+      minMap.graphicLayer.addGraphic(extentGraphic)
+    }
+  </script>
+</body>
+
 </html>

@@ -467,7 +467,7 @@ var plotEdit = {
           $('#' + parname + attrName).on('input propertychange', function (e) {
             let attrVal = $(this).val()
             if (attrVal.length == 0) {
-              attrVal = '文字'
+              attrVal = ''
             }
             attrVal = attrVal.replace(/\n/g, '<br />')
 

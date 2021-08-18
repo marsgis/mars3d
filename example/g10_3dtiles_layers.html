@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>3dtiles图层 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -38,7 +38,7 @@
     <div id="mars3dContainer" class="mars3d-container"></div>
 
     <!-- 面板 -->
-    <div class="infoview" style="overflow: auto; left: 5px; left: auto; top: 5px;max-height: calc(100% - 90px);">
+    <div class="infoview" style="overflow: auto; left: 5px; left: auto; top: 5px; max-height: calc(100% - 90px)">
       <ul id="treeOverlays" class="ztree"></ul>
     </div>
 
@@ -63,8 +63,24 @@
         //创建三维地球场景
         map = new mars3d.Map('mars3dContainer', mapOptions)
 
-        $.getJSON('config/tileset.json', function (result) {
-          initTree(result.layers)
+        queryTilesetData().then(function (data) {
+          initTree(data.layers)
+        })
+      }
+      //数据获取
+      function queryTilesetData() {
+        return new Promise(function (resolve, reject) {
+          $.ajax({
+            url: 'config/tileset.json',
+            type: 'get',
+            dataType: 'json',
+            success: function (result) {
+              resolve(result)
+            },
+            error: function (data) {
+              reject(data)
+            },
+          })
         })
       }
 

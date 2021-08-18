@@ -130,16 +130,29 @@
 
         map.basemap = 2017
 
-        $.ajax({
-          url: '//data.mars3d.cn/file/apidemo/population.json',
-          type: 'get',
-          dataType: 'json',
-          success: function (data) {
+        queryPopulationApiData()
+          .then(function (data) {
             showData(data)
-          },
-          error: function (data) {
+          })
+          .catch(function (data) {
             console.log('ajax请求出错', data)
-          },
+          })
+      }
+
+      // 访问后端接口，取数据
+      function queryPopulationApiData() {
+        return new Promise(function (resolve, reject) {
+          $.ajax({
+            url: '//data.mars3d.cn/file/apidemo/population.json',
+            type: 'get',
+            dataType: 'json',
+            success: function (result) {
+              resolve(result)
+            },
+            error: function (data) {
+              reject(data)
+            },
+          })
         })
       }
 

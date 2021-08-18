@@ -1,143 +1,152 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="author" content="火星科技 http://mars3d.cn ">
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-        content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>图标点 Entity矢量数据加载 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>图标点 Entity矢量数据加载 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+    ></script>
 
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-  <!--第三方lib-->
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
 
-<body class="dark">
-  <!--加载前进行操作提示，优化用户体验-->
-  <div id="mask" class="signmask" onclick="removeMask()"></div>
+      var map
 
-  <div id="mars3dContainer" class="mars3d-container"></div>
-
-
-
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
-
-    var map
-
-    function initMap(options) {
-      //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {
-        scene: {
-          center: { lat: 20.126986, lng: 115.78076, alt: 4758203, heading: 351, pitch: -77 },
-        },
-      })
-
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
-
-      //创建矢量数据图层
-      var graphicLayer = new mars3d.layer.GraphicLayer()
-      map.addLayer(graphicLayer)
-
-      $.getJSON('//data.mars3d.cn/file/apidemo/mudi-all.json', function (result) {
-        managerEntry(graphicLayer, result.data)
-      })
-    }
-
-    function managerEntry(graphicLayer, arr) {
-      graphicLayer.bindPopup(function (event) {
-        let item = event.graphic.attr
-        var inthtml =
-          '<table style="width: auto;"><tr>' +
-          '<th scope="col" colspan="4"  style="text-align:center;font-size:15px;">' +
-          item.text +
-          '</th></tr><tr>' +
-          '<td >省：</td><td >' +
-          item.province +
-          '</td></tr><tr>' +
-          '<td >市：</td><td >' +
-          item.city +
-          '</td></tr><tr>' +
-          '<td >县/区：</td><td >' +
-          item.district +
-          '</td></tr><tr>' +
-          '<td >地址：</td><td >' +
-          item.address +
-          '</td></tr><tr>' +
-          '<td colspan="4" style="text-align:right;"></td></tr></table>'
-        return inthtml
-      })
-
-      //单击事件
-      graphicLayer.on(mars3d.EventType.click, function (event) {
-        console.log('你单击了', event)
-
-        if (map.camera.positionCartographic.height > 90000) {
-          var graphic = event.graphic
-          var position = graphic.position
-
-          graphicLayer.closePopup()
-          map.flyToPoint(position, {
-            radius: 5000, //距离目标点的距离
-            duration: 4,
-            complete: function (e) {
-              //飞行完成回调方法
-              graphicLayer.openPopup(graphic)
-            },
-          })
-        }
-      })
-
-      for (var i = 0, len = arr.length; i < len; i++) {
-        var item = arr[i]
-        var position = Cesium.Cartesian3.fromDegrees(+item.lng, +item.lat, item.z || 0)
-
-        var primitive = new mars3d.graphic.BillboardPrimitive({
-          position: position,
-          style: {
-            image: 'img/marker/mark3.png',
-            scale: 0.6,
-            horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-            scaleByDistance: new Cesium.NearFarScalar(1.5e2, 1.0, 8.0e6, 0.2),
-            label: {
-              text: item.text,
-              font_size: 17,
-              color: Cesium.Color.AZURE,
-              outline: true,
-              outlineColor: Cesium.Color.BLACK,
-              outlineWidth: 2,
-              horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
-              verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-              pixelOffset: new Cesium.Cartesian2(15, 0), //偏移量
-              distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 90000),
-            },
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 20.126986, lng: 115.78076, alt: 4758203, heading: 351, pitch: -77 },
           },
-          attr: item,
         })
-        graphicLayer.addGraphic(primitive)
-      }
-    }
-  </script>
-</body>
 
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
+
+        //创建矢量数据图层
+        var graphicLayer = new mars3d.layer.GraphicLayer()
+        map.addLayer(graphicLayer)
+
+        queryMudiAllApiData().then(function (res) {
+          managerEntry(graphicLayer, res.data)
+        })
+      }
+
+      // 访问后端接口，取数据
+      function queryMudiAllApiData() {
+        return new Promise(function (resolve, reject) {
+          $.getJSON('//data.mars3d.cn/file/apidemo/mudi-all.json', function (result) {
+            resolve(result)
+          })
+        })
+      }
+
+      function managerEntry(graphicLayer, arr) {
+        graphicLayer.bindPopup(function (event) {
+          let item = event.graphic.attr
+          var inthtml =
+            '<table style="width: auto;"><tr>' +
+            '<th scope="col" colspan="4"  style="text-align:center;font-size:15px;">' +
+            item.text +
+            '</th></tr><tr>' +
+            '<td >省：</td><td >' +
+            item.province +
+            '</td></tr><tr>' +
+            '<td >市：</td><td >' +
+            item.city +
+            '</td></tr><tr>' +
+            '<td >县/区：</td><td >' +
+            item.district +
+            '</td></tr><tr>' +
+            '<td >地址：</td><td >' +
+            item.address +
+            '</td></tr><tr>' +
+            '<td colspan="4" style="text-align:right;"></td></tr></table>'
+          return inthtml
+        })
+
+        //单击事件
+        graphicLayer.on(mars3d.EventType.click, function (event) {
+          console.log('你单击了', event)
+
+          if (map.camera.positionCartographic.height > 90000) {
+            var graphic = event.graphic
+            var position = graphic.position
+
+            graphicLayer.closePopup()
+            map.flyToPoint(position, {
+              radius: 5000, //距离目标点的距离
+              duration: 4,
+              complete: function (e) {
+                //飞行完成回调方法
+                graphicLayer.openPopup(graphic)
+              },
+            })
+          }
+        })
+
+        for (var i = 0, len = arr.length; i < len; i++) {
+          var item = arr[i]
+          var position = Cesium.Cartesian3.fromDegrees(+item.lng, +item.lat, item.z || 0)
+
+          var primitive = new mars3d.graphic.BillboardPrimitive({
+            position: position,
+            style: {
+              image: 'img/marker/mark3.png',
+              scale: 0.6,
+              horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+              verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+              scaleByDistance: new Cesium.NearFarScalar(1.5e2, 1.0, 8.0e6, 0.2),
+              label: {
+                text: item.text,
+                font_size: 17,
+                color: Cesium.Color.AZURE,
+                outline: true,
+                outlineColor: Cesium.Color.BLACK,
+                outlineWidth: 2,
+                horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+                verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                pixelOffset: new Cesium.Cartesian2(15, 0), //偏移量
+                distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 90000),
+              },
+            },
+            attr: item,
+          })
+          graphicLayer.addGraphic(primitive)
+        }
+      }
+    </script>
+  </body>
 </html>

@@ -1,138 +1,137 @@
 <!-- 2017-12-4 14:24:10 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>OGC WMTS服务 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>OGC WMTS服务 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"
+    ></script>
 
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
+  <body class="dark">
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
+    <div class="infoview">
+      <input id="btnAddLayer" type="button" class="btn btn-primary" value="叠加图层" onclick="addLayer()" />
+      <input id="btnRemoveLayer" type="button" class="btn btn-primary" value="移除图层" onclick="removeLayer()" />
+    </div>
 
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+      $(document).ready(function () {
+        if (!mars3d.Util.webglreport()) {
+          mars3d.Util.webglerror()
+          return
+        }
+        initMap()
+      })
 
-<body class="dark">
-  <div id="mars3dContainer" class="mars3d-container"></div>
-
-
-  <div class="infoview">
-    <input id="btnAddLayer" type="button" class="btn btn-primary" value="叠加图层" onclick="addLayer()" />
-    <input id="btnRemoveLayer" type="button" class="btn btn-primary" value="移除图层" onclick="removeLayer()" />
-  </div>
-
-
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
-
-    $(document).ready(function () {
-      if (!mars3d.Util.webglreport()) {
-        mars3d.Util.webglerror()
-        return
-      }
-      initMap()
-    })
-
-    var map
-    function initMap() {
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', {
-        scene: {
-          center: { lat: 25.166264, lng: 111.818785, alt: 9488267, heading: 354, pitch: -84 },
-        },
-        control: {
-          baseLayerPicker: true, //basemaps底图切换按钮
-          homeButton: true, //视角复位按钮
-          sceneModePicker: true, //二三维切换按钮
-          defaultContextMenu: true, //右键菜单
-        },
-        terrain: {
-          url: 'http://data.mars3d.cn/terrain',
-          show: true,
-        },
-        //方式1：在创建地球前的参数中配置
-        basemaps: [
-          {
-            name: '山西天地图',
-            icon: 'img/basemaps/blackMarble.png',
-            type: 'wmts',
-            url: 'http://shanxi.tianditu.gov.cn/service/SX_DOM/wmts',
-            layer: 'WD_DOM',
-            style: 'WD_DOM',
-            format: 'image/tile',
-            tileMatrixLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19'],
-            tileMatrixSetID: 'Matrix_WD_DOM_1',
-            crs: 'EPSG:4326',
-            proxy: '//server.mars3d.cn/proxy/', //代理服务，解决跨域问题
+      var map
+      function initMap() {
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', {
+          scene: {
+            center: { lat: 36.468047, lng: 104.069505, alt: 16801717, heading: 356, pitch: -88 },
+          },
+          control: {
+            baseLayerPicker: true, //basemaps底图切换按钮
+            homeButton: true, //视角复位按钮
+            sceneModePicker: true, //二三维切换按钮
+            defaultContextMenu: true, //右键菜单
+            locationBar: { fps: true }, //状态栏
+          },
+          terrain: {
+            url: 'http://data.mars3d.cn/terrain',
             show: true,
           },
-          {
-            name: '单张图片',
-            icon: 'http://mars3d.cn/example/img/basemaps/offline.png',
-            type: 'image',
-            url: '//data.mars3d.cn/file/img/world/world.jpg',
-            show: false,
-          },
-        ],
-      })
-    }
-
-    //叠加的图层
-    var tileLayer
-
-    function addLayer() {
-      removeLayer()
-
-      //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
-      tileLayer = new mars3d.layer.WmtsLayer({
-        url: '//server.mars3d.cn/geoserver/gwc/service/wmts',
-        layer: 'mars:hfgh',
-        style: '',
-        format: 'image/png',
-        tileMatrixLabels: [...Array(20).keys()].map((level) => 'EPSG:4326:' + level), //会替换tileMatrix参数 config.json中时直接写数组值
-        tileMatrixSetID: 'EPSG:4326',
-        crs: 'EPSG:4326',
-        alpha: 0.8,
-
-        enablePickFeatures: true,
-        pickFeaturesUrl: '//server.mars3d.cn/geoserver/mars/wms',
-        popup: 'all',
-        showClickFeature: true,
-        pickFeatureStyle: {
-          clampToGround: true, //选择的要素样式，同Draw类样式
-          fill: true,
-          color: '#2deaf7',
-          opacity: 0.6,
-        },
-        flyTo: true,
-      })
-      map.addLayer(tileLayer)
-    }
-    function removeLayer() {
-      if (tileLayer) {
-        map.removeLayer(tileLayer, true)
-        tileLayer = null
+          //方式1：在创建地球前的参数中配置
+          basemaps: [
+            {
+              name: '山西天地图',
+              icon: 'img/basemaps/blackMarble.png',
+              type: 'wmts',
+              url: 'http://shanxi.tianditu.gov.cn/service/SX_DOM/wmts',
+              layer: 'WD_DOM',
+              style: 'WD_DOM',
+              format: 'image/tile',
+              tileMatrixLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19'],
+              tileMatrixSetID: 'Matrix_WD_DOM_1',
+              crs: 'EPSG:4326',
+              proxy: '//server.mars3d.cn/proxy/', //代理服务，解决跨域问题
+              show: true,
+            },
+            {
+              name: '单张图片',
+              icon: 'http://mars3d.cn/example/img/basemaps/offline.png',
+              type: 'image',
+              url: '//data.mars3d.cn/file/img/world/world.jpg',
+              show: false,
+            },
+          ],
+        })
       }
-    }
-  </script>
-</body>
 
+      //叠加的图层
+      var tileLayer
+
+      function addLayer() {
+        removeLayer()
+
+        //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+        tileLayer = new mars3d.layer.WmtsLayer({
+          url: '//server.mars3d.cn/geoserver/gwc/service/wmts',
+          layer: 'mars:hfgh',
+          style: '',
+          format: 'image/png',
+          tileMatrixLabels: [...Array(20).keys()].map((level) => 'EPSG:4326:' + level), //会替换tileMatrix参数 config.json中时直接写数组值
+          tileMatrixSetID: 'EPSG:4326',
+          crs: 'EPSG:4326',
+          alpha: 0.8,
+
+          enablePickFeatures: true,
+          pickFeaturesUrl: '//server.mars3d.cn/geoserver/mars/wms',
+          popup: 'all',
+          showClickFeature: true,
+          pickFeatureStyle: {
+            clampToGround: true, //选择的要素样式，同Draw类样式
+            fill: true,
+            color: '#2deaf7',
+            opacity: 0.6,
+          },
+          flyTo: true,
+        })
+        map.addLayer(tileLayer)
+      }
+      function removeLayer() {
+        if (tileLayer) {
+          map.removeLayer(tileLayer, true)
+          tileLayer = null
+        }
+      }
+    </script>
+  </body>
 </html>

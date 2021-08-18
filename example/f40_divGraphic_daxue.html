@@ -90,14 +90,23 @@
         map.addLayer(geoJsonLayer)
 
         //显示高校点
-        $.getJSON('//data.mars3d.cn/file/apidemo/gaoxiao.json', function (result) {
-          addFeature(result)
+        queryGaoXiaoApiData().then(function (res) {
+          addFeature(res)
         })
       }
 
       var pointColorArr = ['#f33349', '#f79a2c', '#f2fa19', '#95e40c', '#1ffee6']
 
       var dataSource
+
+      // 访问后端接口，取数据
+      function queryGaoXiaoApiData() {
+        return new Promise(function (resolve, reject) {
+          $.getJSON('//data.mars3d.cn/file/apidemo/gaoxiao.json', function (result) {
+            resolve(result)
+          })
+        })
+      }
 
       function addFeature(arr) {
         //创建DIV数据图层

@@ -63,13 +63,17 @@
       graphicLayer = new mars3d.layer.GraphicLayer()
       map.addLayer(graphicLayer)
 
-      $.ajax({
-        url: '//data.mars3d.cn/file/apidemo/tower.json',
-        type: 'GET',
-        dataType: 'json',
-        success: function (result) {
-          showData(result.data)
-        },
+      queryTowerApiData().then(function (res) {
+        showData(res.data)
+      })
+    }
+
+    //访问后端接口，取数据
+    function queryTowerApiData() {
+      return new Promise(function (resolve, reject) {
+        $.getJSON('//data.mars3d.cn/file/apidemo/tower.json', function (result) {
+          resolve(result)
+        })
       })
     }
 

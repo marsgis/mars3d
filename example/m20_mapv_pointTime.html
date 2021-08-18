@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>MapV与Cesium融合 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>动态点 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -38,9 +38,7 @@
     <div id="mars3dContainer" class="mars3d-container"></div>
 
     <!-- 面板 -->
-    <div id="tipView" class="info-tips">
-      (1) 在视域变化中部分效果（如点的闪烁）没有融合，可根据实际项目决定是否采用此效果。<br />
-    </div>
+    <div id="tipView" class="info-tips">(1) 在视域变化中部分效果（如点的闪烁）没有融合，可根据实际项目决定是否采用此效果。<br /></div>
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
@@ -61,14 +59,26 @@
 
         map.basemap = 2017 //蓝色底图
 
-        $.ajax({
-          url: '//data.mars3d.cn/file/apidemo/weibo2.json',
-          type: 'GET',
-          dataType: 'json',
-          success: function (rs) {
-            //创建mapv图层
-            createMapvLayer(rs)
-          },
+        queryWeibo2ApiData().then(function (res) {
+          //创建mapv图层
+          createMapvLayer(res)
+        })
+      }
+
+      // 访问后端接口，取数据
+      function queryWeibo2ApiData() {
+        return new Promise(function (resolve, reject) {
+          $.ajax({
+            url: '//data.mars3d.cn/file/apidemo/weibo2.json',
+            type: 'get',
+            dataType: 'json',
+            success: function (result) {
+              resolve(result)
+            },
+            error: function (data) {
+              reject(data)
+            },
+          })
         })
       }
 

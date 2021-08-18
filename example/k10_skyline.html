@@ -1,97 +1,94 @@
 <!-- 2017-12-7 14:56:03 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>天际线描边</title>
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>天际线描边</title>
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,jquery.range,layer,haoutil,turf,mars3d"
+    ></script>
 
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,bootstrap-checkbox,jquery.range,layer,haoutil,turf,mars3d"></script>
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
+  <body class="dark">
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+    <!-- 面板 -->
+    <div class="infoview">
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkSkyline" class="styled" type="checkbox" checked />
+        <label for="chkSkyline"> 开启天际线 </label>
+      </div>
+      <div style="margin-top: 5px">
+        线宽：
+        <input id="lineWidth" type="number" value="3" min="1" step="1" max="10" class="form-control" style="width: 100px" />（像素）
 
-<body class="dark">
-  <div id="mars3dContainer" class="mars3d-container"></div>
-
-  <!-- 面板 -->
-  <div class="infoview">
-    <div class="checkbox checkbox-primary checkbox-inline">
-      <input id="chkSkyline" class="styled" type="checkbox" checked>
-      <label for="chkSkyline">
-        开启天际线
-      </label>
+        <input id="randomCor" class="btn btn-primary" type="button" value="换色" />
+      </div>
     </div>
-    <div style="margin-top: 5px;">
-      线宽：
-      <input id="lineWidth" type="number" value="3" min="1" step="1" max="10" class="form-control"
-        style="width: 100px;" />（像素）
 
-      <input id="randomCor" class="btn btn-primary" type="button" value='换色'>
-    </div>
-  </div>
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
 
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
+      var map
 
-    var map
-
-    function initMap(options) {
-      //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {
-        scene: {
-          center: { lat: 28.441881, lng: 119.482881, alt: 133, heading: 240, pitch: -2 },
-          globe: {
-            depthTestAgainstTerrain: true,
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 28.441881, lng: 119.482881, alt: 133, heading: 240, pitch: -2 },
+            globe: {
+              depthTestAgainstTerrain: true,
+            },
           },
-        },
-      })
+        })
 
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
 
-      //加个模型，效果更NB
-      var tiles3dLayer = new mars3d.layer.TilesetLayer({
-        type: '3dtiles',
-        name: '县城社区',
-        url: '//data.mars3d.cn/3dtiles/qx-shequ/tileset.json',
-        position: { alt: 11.5 },
-        maximumScreenSpaceError: 1,
-        maximumMemoryUsage: 1024,
-        show: true,
-      })
-      map.addLayer(tiles3dLayer)
+        //加个模型，效果更NB
+        var tiles3dLayer = new mars3d.layer.TilesetLayer({
+          type: '3dtiles',
+          name: '县城社区',
+          url: '//data.mars3d.cn/3dtiles/qx-shequ/tileset.json',
+          position: { alt: 11.5 },
+          maximumScreenSpaceError: 1,
+          maximumMemoryUsage: 1024,
+          show: true,
+        })
+        map.addLayer(tiles3dLayer)
 
-      var skyline = new mars3d.thing.Skyline()
-      map.addThing(skyline)
+        var skyline = new mars3d.thing.Skyline()
+        map.addThing(skyline)
 
-      $('#chkSkyline').change(function () {
-        var value = $(this).is(':checked')
-        skyline.enabled = value
-      })
+        $('#chkSkyline').change(function () {
+          var value = $(this).is(':checked')
+          skyline.enabled = value
+        })
 
-      $('#lineWidth').change(function () {
-        var val = Number($(this).val())
-        skyline.width = val
-      })
+        $('#lineWidth').change(function () {
+          var val = Number($(this).val())
+          skyline.width = val
+        })
 
-      $('#randomCor').click(function () {
-        skyline.color = Cesium.Color.fromRandom()
-      })
-    }
-  </script>
-</body>
-
+        $('#randomCor').click(function () {
+          skyline.color = Cesium.Color.fromRandom()
+        })
+      }
+    </script>
+  </body>
 </html>

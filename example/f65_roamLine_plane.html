@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>路线漫游及控制 卫星示例 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>飞行路线 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <script
       type="text/javascript"
@@ -244,14 +244,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 31.842038,
-              x: 117.253723,
-              z: 607.29,
-              heading: 272.9,
-              pitch: -29.1,
-              roll: 0,
-            },
+            center: { lat: 30.859616, lng: 116.296235, alt: 445, heading: 258, pitch: -29 },
           },
           control: {
             animation: true, //是否创建动画小器件，左下角仪表

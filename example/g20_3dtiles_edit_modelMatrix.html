@@ -313,7 +313,7 @@
           var lastData = haoutil.storage.get('3dtiles_edit')
           if (lastData) {
             var item = JSON.parse(lastData)
-            console.log('加载显示历史数据', item)
+            // console.log('加载显示历史数据', item)
 
             $('#txtModel').val(item.url)
             $('#txt_luminanceAtZenith').val(item.luminanceAtZenith || 0.2)
@@ -356,7 +356,7 @@
         var params = getConfig()
         delete params.center
 
-        console.log(params)
+        // console.log(params)
 
         var origin = Cesium.Cartesian3.fromDegrees(117.221579, 31.823746, 35.6)
         var hpr = new Cesium.HeadingPitchRoll(Cesium.Math.toRadians(0), Cesium.Math.toRadians(0), Cesium.Math.toRadians(0))
@@ -531,7 +531,7 @@
         if (params.axis == '') {
           delete params.axis
         }
-        console.log(params)
+        // console.log(params)
 
         haoutil.file.downloadFile('3dtiles图层配置.json', JSON.stringify(params))
       }
@@ -567,41 +567,51 @@
         })
       }
 
-      function updateSceneTree() {
-        $('#viewReset').hide()
-
-        var url = $('#txtModel').val()
-
+      function querySceneTreeData(url) {
         var scenetree = url.substring(0, url.lastIndexOf('/') + 1) + 'scenetree.json'
-        $.ajax({
-          url: scenetree,
-          dataType: 'json',
-          success: function (scene) {
-            var data = []
-            if (scene.scenes) {
-              for (var i = 0; i < scene.scenes.length; i++) {
-                var node = scene.scenes[i]
-                name2text(node)
-                data.push(node)
-              }
-            } else {
-              name2text(scene)
-              data.push(scene)
-            }
+        return new Promise(function (resolve, reject) {
+          $.ajax({
+            url: scenetree,
+            type: 'get',
+            dataType: 'json',
+            success: function (scene) {
+              resolve(scene)
+            },
+            error: function (data) {
+              reject(data)
+            },
+          })
+        })
+      }
 
-            $('#treeOverlays').data('jstree', false).empty()
-            $('#treeOverlays').jstree({
-              core: {
-                data: data,
-                themes: {
-                  name: 'default-dark',
-                  dots: true,
-                  icons: true,
-                },
+      function updateSceneTree(scene) {
+        $('#viewReset').hide()
+        var url = $('#txtModel').val()
+        querySceneTreeData(url).then(function (scene) {
+          var data = []
+          if (scene.scenes) {
+            for (var i = 0; i < scene.scenes.length; i++) {
+              var node = scene.scenes[i]
+              name2text(node)
+              data.push(node)
+            }
+          } else {
+            name2text(scene)
+            data.push(scene)
+          }
+
+          $('#treeOverlays').data('jstree', false).empty()
+          $('#treeOverlays').jstree({
+            core: {
+              data: data,
+              themes: {
+                name: 'default-dark',
+                dots: true,
+                icons: true,
               },
-            })
-            $('#viewReset').show()
-          },
+            },
+          })
+          $('#viewReset').show()
         })
       }
 

@@ -2,7 +2,7 @@
   "label": {
     "name": "文字",
     "style": [
-      { "name": "text", "label": "内容", "type": "textarea", "defval": "文字" },
+      { "name": "text", "label": "内容", "type": "textarea", "defval": "" },
 
       {
         "name": "font_family",

@@ -19,7 +19,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>3dtiles模型矢量叠加单体化 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>分层分户矢量单体化(GeoJson叠加) | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -50,14 +50,7 @@
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
             //此处参数会覆盖config.json中的对应配置
-            center: {
-              y: 31.561722,
-              x: 120.848645,
-              z: 75.58,
-              heading: 52.9,
-              pitch: -43.5,
-              roll: 0.2,
-            },
+            center: { lat: 31.561722, lng: 120.848645, alt: 76, heading: 53, pitch: -43 },
           },
         })
 
@@ -80,11 +73,6 @@
           name: '分层分户单体化',
           url: '//data.mars3d.cn/file/geojson/dth_fcfh.json',
           onCreateGraphic: createDthGraphic, //自定义解析数据
-          dth: {
-            type: 'click', //设置这个属性改为单击后高亮,默认为鼠标移入高亮
-            color: 'rgba(0,255,0,0.5)',
-            buffer: 0.2,
-          },
           popup: 'all',
         })
         map.addLayer(geoJsonLayerDTH)
@@ -108,6 +96,15 @@
             style: {
               height: minHight,
               extrudedHeight: maxHight,
+              //单体化默认显示样式
+              color: 'rgba(255, 255, 255, 0.01)',
+              classification: true,
+              buffer: 1,
+              //单体化鼠标移入或单击后高亮的样式
+              highlight: {
+                type: mars3d.EventType.click,
+                color: 'rgba(0,255,0,0.5)',
+              },
             },
             attr: floorCfg,
           })

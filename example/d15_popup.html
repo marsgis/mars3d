@@ -60,6 +60,16 @@
         bindMapDemo()
         bindLayerDemo()
         bindGraphicDemo()
+
+        // 绑定config.json中对应图层配置的"id"值图层的单击事件（比如下面是id:1987对应图层）
+        // var layerTest = map.getLayer(1987, 'id')
+        // layerTest.on(mars3d.EventType.click, function (event) {
+        //   //单击事件 ，去查数据
+        //   setTimeout(() => {
+        //     //查完数据后调用
+        //     map.openPopup(event.cartesian, '测试popup')
+        //   }, 3000)
+        // })
       }
 
       //1.在map地图上绑定Popup单击弹窗

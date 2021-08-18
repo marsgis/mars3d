@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d,mars3d-widget"
+      include="jquery,font-awesome,bootstrap,toastr,layer,haoutil,mars3d,mars3d-widget"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -56,12 +56,14 @@
         map = new mars3d.Map('mars3dContainer', {
           scene: {
             center: { lat: 31.675177, lng: 117.323257, alt: 81193, heading: 359, pitch: -79 },
+            highDynamicRange: false,
           },
           control: {
             baseLayerPicker: true, //basemaps底图切换按钮
             homeButton: true, //视角复位按钮
             sceneModePicker: true, //二三维切换按钮
             defaultContextMenu: true, //右键菜单
+            locationBar: { fps: true }, //状态栏
           },
           terrain: {
             url: 'http://data.mars3d.cn/terrain',
@@ -120,7 +122,7 @@
         mars3d.widget.activate({
           map: map,
           name: 'POI查询',
-          uri: 'widgets/queryBaiduPOI/widget.js',
+          uri: 'widgets/queryGaodePOI/widget.js',
         })
       }
     </script>

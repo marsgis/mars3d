@@ -1,120 +1,120 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="author" content="火星科技 http://mars3d.cn ">
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>矢量单体化(GeoJson叠加) | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>3dtiles模型矢量叠加单体化 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+    ></script>
 
-  <!--第三方lib-->
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-<body class="dark">
-  <!--加载前进行操作提示，优化用户体验-->
-  <div id="mask" class="signmask" onclick="removeMask()"></div>
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-  <div id="mars3dContainer" class="mars3d-container"></div>
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      'use script' //开发环境建议开启严格模式
 
+      var map
 
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
-
-    var map
-
-    function initMap(options) {
-      //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {
-        scene: {
-          center: {
-            y: 33.589536,
-            x: 119.032216,
-            z: 145.08,
-            heading: 3.1,
-            pitch: -22.9,
-            roll: 0,
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 33.588256, lng: 119.031747, alt: 154, heading: 3, pitch: -23 },
           },
-        },
-      })
+        })
 
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
+        //创建三维地球场景
+        map = new mars3d.Map('mars3dContainer', mapOptions)
 
-      //三维模型
-      var tilesetLayer = new mars3d.layer.TilesetLayer({
-        name: '文庙',
-        type: '3dtiles',
-        url: '//data.mars3d.cn/3dtiles/qx-simiao/tileset.json',
-        position: { alt: 80.6 },
-        maximumScreenSpaceError: 1,
-        maximumMemoryUsage: 1024,
-        show: true,
-      })
-      map.addLayer(tilesetLayer)
+        //三维模型
+        var tilesetLayer = new mars3d.layer.TilesetLayer({
+          name: '文庙',
+          type: '3dtiles',
+          url: '//data.mars3d.cn/3dtiles/qx-simiao/tileset.json',
+          position: { alt: 80.6 },
+          maximumScreenSpaceError: 1,
+          maximumMemoryUsage: 1024,
+          show: true,
+        })
+        map.addLayer(tilesetLayer)
 
-      //单体化图层
-      var geoJsonLayerDTH = new mars3d.layer.GeoJsonLayer({
-        name: '文庙-单体化',
-        url: '//data.mars3d.cn/file/geojson/dth-wm.json',
-        symbol: {
-          styleOptions: {
-            // color: 'rgba(255,0,0,0.2)',
-            label: {
-              text: '{name}',
-              height: 25, //单体化面没有高度，所以中心点文字需要指定一个高度值。
-              opacity: 1,
-              font_size: 22,
-              color: '#ffffff',
-              font_family: '楷体',
-              outline: true,
-              outlineColor: '#000000',
-              outlineWidth: 3,
-              background: false,
-              backgroundColor: '#000000',
-              backgroundOpacity: 0.1,
-              scaleByDistance: true,
-              scaleByDistance_far: 1000,
-              scaleByDistance_farValue: 0.3,
-              scaleByDistance_near: 10,
-              scaleByDistance_nearValue: 1,
+        //单体化图层
+        var geoJsonLayerDTH = new mars3d.layer.GeoJsonLayer({
+          name: '文庙-单体化',
+          url: '//data.mars3d.cn/file/geojson/dth-wm.json',
+          symbol: {
+            type: 'polygonP',
+            styleOptions: {
+              //单体化默认显示样式
+              color: 'rgba(0, 255, 0, 0.2)',
+              clampToGround: true,
+              classification: true,
+              buffer: 1,
+              //单体化鼠标移入或单击后高亮的样式
+              highlight: {
+                // type: mars3d.EventType.click,
+                color: 'rgba(255,255,0,0.3)',
+              },
+
+              label: {
+                text: '{name}',
+                height: 25, //单体化面没有高度，所以中心点文字需要指定一个高度值。
+                opacity: 1,
+                font_size: 22,
+                color: '#ffffff',
+                font_family: '楷体',
+                outline: true,
+                outlineColor: '#000000',
+                outlineWidth: 3,
+                background: false,
+                backgroundColor: '#000000',
+                backgroundOpacity: 0.1,
+                scaleByDistance: true,
+                scaleByDistance_far: 1000,
+                scaleByDistance_farValue: 0.3,
+                scaleByDistance_near: 10,
+                scaleByDistance_nearValue: 1,
+              },
             },
           },
-        },
-        //dth 标识为单体化数据，内部特殊处理
-        dth: {
-          type: 'click', //设置这个属性改为单击后高亮,默认为鼠标移入高亮
-          color: 'rgba(255,255,0,0.3)',
-          buffer: 1.0,
-        },
-        popup: [
-          { field: 'name', name: '房屋名称' },
-          { field: 'jznf', name: '建造年份' },
-          { field: 'ssdw', name: '所属单位' },
-          { field: 'remark', name: '备注信息' },
-        ],
-      })
-      map.addLayer(geoJsonLayerDTH)
-    }
-  </script>
-</body>
-
+          popup: [
+            { field: 'name', name: '房屋名称' },
+            { field: 'jznf', name: '建造年份' },
+            { field: 'ssdw', name: '所属单位' },
+            { field: 'remark', name: '备注信息' },
+          ],
+        })
+        map.addLayer(geoJsonLayerDTH)
+      }
+    </script>
+  </body>
 </html>

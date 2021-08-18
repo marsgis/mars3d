@@ -93,13 +93,8 @@ function initLayerManager(graphicLayer) {
 
     let fileName = file.name
     let fileType = fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length).toLowerCase()
-    if (fileType !== 'json' && fileType !== 'geojson') {
-      window.layer.msg('文件类型不合法,请选择json格式标注文件！')
-      clearSelectFile()
-      return
-    }
 
-    if (window.FileReader) {
+    if (fileType == 'json' || fileType == 'geojson') {
       let reader = new FileReader()
       reader.readAsText(file, 'UTF-8')
       reader.onloadend = function (e) {
@@ -107,22 +102,69 @@ function initLayerManager(graphicLayer) {
         graphicLayer.loadGeoJSON(json, {
           flyTo: true,
         })
-
         clearSelectFile()
       }
+    } else if (fileType == 'kml') {
+      let reader = new FileReader()
+      reader.readAsText(file, 'UTF-8')
+      reader.onloadend = function (e) {
+        let strkml = this.result
+        kgUtil.toGeoJSON(strkml).then((geojoson) => {
+          console.log('kml2geojson', geojoson)
+
+          graphicLayer.loadGeoJSON(geojoson, {
+            flyTo: true,
+            // symbol: function (attr, style, featue) {
+            //   let geoType = featue.geometry?.type
+            //   if (geoType == 'Point') {
+            //     return {
+            //       image: 'img/marker/di3.png',
+            //       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+            //       scale: 0.4,
+            //       label: {
+            //         text: attr.name,
+            //         font_size: 18,
+            //         color: '#ffffff',
+            //         outline: true,
+            //         outlineColor: '#000000',
+            //         pixelOffsetY: -50,
+            //         scaleByDistance: true,
+            //         scaleByDistance_far: 990000,
+            //         scaleByDistance_farValue: 0.3,
+            //         scaleByDistance_near: 10000,
+            //         scaleByDistance_nearValue: 1,
+            //       },
+            //     }
+            //   }
+            //   return style
+            // },
+          })
+          clearSelectFile()
+        })
+        clearSelectFile()
+      }
+    } else if (fileType == 'kmz') {
+      //加载input文件控件的二进制流
+      kgUtil.toGeoJSON(file).then((geojoson) => {
+        console.log('kmz2geojson', geojoson)
+
+        graphicLayer.loadGeoJSON(geojoson, {
+          flyTo: true,
+        })
+        clearSelectFile()
+      })
+    } else {
+      window.layer.msg('暂不支持 ' + fileType + ' 文件类型的数据！')
+      clearSelectFile()
     }
   })
 }
 
 function bindLayerPopup(graphicLayer) {
-  graphicLayer.bindPopup(
-    function (event) {
-      return '我是layer上绑定的Popup'
-    },
-    {
-      anchor: [0, -10],
-    }
-  )
+  graphicLayer.bindPopup(function (event) {
+    let item = event.graphic?.attr
+    return '我是layer上绑定的Popup'
+  })
 }
 
 function bindLayerContextMenu(graphicLayer) {
@@ -235,11 +277,7 @@ function initGraphicManager(graphic) {
   // graphic.bindTooltip('我是graphic上绑定的Tooltip') //.openTooltip()
 
   //绑定Popup
-  graphic
-    .bindPopup('我是graphic上绑定的Popup', {
-      anchor: [0, -10],
-    })
-    .openPopup()
+  graphic.bindPopup('我是graphic上绑定的Popup').openPopup()
 
   //绑定右键菜单
   graphic.bindContextMenu([

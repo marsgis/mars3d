@@ -198,24 +198,25 @@
       }
 
       //加载气象演示数据
-      var arrWind
-
       function loadDemo() {
-        if (arrWind) {
-          showWindPoint(arrWind)
-        } else {
-          $.ajax({
-            type: 'GET',
-            url: '//data.mars3d.cn/file/apidemo/windpoint.json',
-            success: function (res) {
-              arrWind = res.data
-              showWindPoint(arrWind)
-            },
-            error: function (err) {
-              haoutil.msg('实时查询气象信息失败，请稍候再试')
-            },
-          })
-        }
+        queryWindPointApiData().then(function (arr) {
+          showWindPoint(arr)
+        })
+      }
+
+      //访问后端接口，取数据
+      var arrWind
+      function queryWindPointApiData() {
+        return new Promise(function (resolve, reject) {
+          if (arrWind) {
+            resolve(arrWind)
+          } else {
+            $.getJSON('//data.mars3d.cn/file/apidemo/windpoint.json', function (result) {
+              arrWind = result.data
+              resolve(arrWind)
+            })
+          }
+        })
       }
 
       function showWindPoint(arr) {
