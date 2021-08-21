@@ -61,9 +61,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -73,80 +73,80 @@
           },
           layers: [
             {
-              type: 'geojson',
-              name: '道路线',
-              url: '//data.mars3d.cn/file/geojson/hefei-road.json',
+              type: "geojson",
+              name: "道路线",
+              url: "//data.mars3d.cn/file/geojson/hefei-road.json",
               symbol: {
                 styleOptions: {
-                  materialType: 'PolylineGlow',
+                  materialType: "PolylineGlow",
                   glowPower: 0.2,
-                  color: '#FF4500',
+                  color: "#FF4500",
                   width: 12,
                   opacity: 0.8,
                 },
               },
-              popup: '{name}',
+              popup: "{name}",
               show: true,
             },
             {
-              type: 'geojson',
-              name: '河流(面状)',
-              url: '//data.mars3d.cn/file/geojson/hefei-water.json',
+              type: "geojson",
+              name: "河流(面状)",
+              url: "//data.mars3d.cn/file/geojson/hefei-water.json",
               symbol: {
-                type: 'water',
+                type: "water",
                 styleOptions: {
-                  normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
+                  normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
                   frequency: 5000.0, // 控制波数的数字。
                   animationSpeed: 0.05, // 控制水的动画速度的数字。
                   amplitude: 9.0, // 控制水波振幅的数字。
                   specularIntensity: 0.8, // 控制镜面反射强度的数字。
-                  baseWaterColor: '#00baff', // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
-                  blendColor: '#00baff', // 从水中混合到非水域时使用的rgba颜色对象。
+                  baseWaterColor: "#00baff", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
+                  blendColor: "#00baff", // 从水中混合到非水域时使用的rgba颜色对象。
                   // clampToGround: true,
                 },
               },
-              popup: '{name}',
+              popup: "{name}",
               show: true,
             },
           ],
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.basemap = 2017 //切换至蓝色底图
+        map.basemap = 2017; //切换至蓝色底图
 
         //添加参考三维模型
         var tiles3dLayer = new mars3d.layer.TilesetLayer({
-          name: '合肥市建筑物',
-          url: '//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json',
+          name: "合肥市建筑物",
+          url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
           marsJzwStyle: true, //打开建筑物特效（内置Shader代码）
-          showClickFeature: true,
+          highlight: { type: "click", color: "#FFFF00" },
           popup: [
-            { field: 'objectid', name: '编号' },
-            { field: 'name', name: '名称' },
-            { field: 'height', name: '楼高', unit: '米' },
+            { field: "objectid", name: "编号" },
+            { field: "name", name: "名称" },
+            { field: "height", name: "楼高", unit: "米" },
           ],
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
         //构造效果
-        var brightnessEffect = new mars3d.effect.BrightnessEffect()
-        map.addEffect(brightnessEffect)
+        var brightnessEffect = new mars3d.effect.BrightnessEffect();
+        map.addEffect(brightnessEffect);
 
-        $('#chkShowEffect').change(function () {
-          var val = $(this).is(':checked')
+        $("#chkShowEffect").change(function () {
+          var val = $(this).is(":checked");
 
-          brightnessEffect.enabled = val
-        })
+          brightnessEffect.enabled = val;
+        });
 
-        $('#txt_brightness').range({
+        $("#txt_brightness").range({
           onChange: function (value, bfb) {
-            brightnessEffect.brightness = value
+            brightnessEffect.brightness = value;
           },
-        })
+        });
       }
     </script>
   </body>

@@ -40,20 +40,20 @@
     </div>
 
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
       $(document).ready(function () {
         if (!mars3d.Util.webglreport()) {
-          mars3d.Util.webglerror()
-          return
+          mars3d.Util.webglerror();
+          return;
         }
-        initMap()
-      })
+        initMap();
+      });
 
-      var map
+      var map;
       function initMap() {
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', {
+        map = new mars3d.Map("mars3dContainer", {
           scene: {
             center: { lat: 22.43392, lng: 113.23887, alt: 8157553, heading: 354, pitch: -82 },
           },
@@ -65,59 +65,59 @@
             locationBar: { fps: true }, //状态栏
           },
           terrain: {
-            url: 'http://data.mars3d.cn/terrain',
+            url: "http://data.mars3d.cn/terrain",
             show: true,
           },
           //方式1：在创建地球前的参数中配置
           basemaps: [
             {
-              name: '电子地图',
-              icon: 'img/basemaps/google_vec.png',
-              type: 'xyz',
-              url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-              subdomains: 'abc',
+              name: "电子地图",
+              icon: "img/basemaps/google_vec.png",
+              type: "xyz",
+              url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+              subdomains: "abc",
               show: true,
             },
             {
-              name: '影像地图',
-              icon: 'img/basemaps/gaode_img.png',
-              type: 'xyz',
-              url: '//data.mars3d.cn/tile/googleImg/{z}/{x}/{y}.jpg',
+              name: "影像地图",
+              icon: "img/basemaps/gaode_img.png",
+              type: "xyz",
+              url: "//data.mars3d.cn/tile/googleImg/{z}/{x}/{y}.jpg",
               maximumLevel: 12,
             },
             {
-              name: 'EPSG4490影像',
-              icon: 'img/basemaps/tdt_img.png',
-              type: 'xyz',
-              url: 'http://t3.tianditu.gov.cn/img_c/wmts?service=WMTS&version=1.0.0&request=GetTile&tilematrix={z}&layer=img&style=default&tilerow={y}&tilecol={x}&tilematrixset=c&format=tiles&tk=6c99c7793f41fccc4bd595b03711913e',
-              crs: 'EPSG:4490', //标识坐标系
+              name: "EPSG4490影像",
+              icon: "img/basemaps/tdt_img.png",
+              type: "xyz",
+              url: "http://t3.tianditu.gov.cn/img_c/wmts?service=WMTS&version=1.0.0&request=GetTile&tilematrix={z}&layer=img&style=default&tilerow={y}&tilecol={x}&tilematrixset=c&format=tiles&tk=6c99c7793f41fccc4bd595b03711913e",
+              crs: "EPSG:4490", //标识坐标系
             },
           ],
-        })
+        });
       }
 
       //叠加的图层
-      var tileLayer
+      var tileLayer;
 
       function addLayer() {
-        removeLayer()
+        removeLayer();
 
         //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
         tileLayer = new mars3d.layer.XyzLayer({
-          url: '//data.mars3d.cn/tile/dizhiChina/{z}/{x}/{y}.png',
+          url: "//data.mars3d.cn/tile/dizhiChina/{z}/{x}/{y}.png",
           minimumLevel: 0,
           maximumLevel: 10,
           rectangle: { xmin: 69.706929, xmax: 136.560941, ymin: 15.831038, ymax: 52.558005 },
           opacity: 0.7,
           center: { lat: 22.43392, lng: 113.23887, alt: 8157553, heading: 354, pitch: -82 },
           flyTo: true,
-        })
-        map.addLayer(tileLayer)
+        });
+        map.addLayer(tileLayer);
       }
       function removeLayer() {
         if (tileLayer) {
-          map.removeLayer(tileLayer, true)
-          tileLayer = null
+          map.removeLayer(tileLayer, true);
+          tileLayer = null;
         }
       }
     </script>

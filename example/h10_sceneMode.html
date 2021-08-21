@@ -46,9 +46,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -60,35 +60,35 @@
               maximumZoomDistance: 300000000,
             },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //切换场景
-        var lastCameraView
+        var lastCameraView;
+        //切换场景前事件
         map.on(mars3d.EventType.morphStart, function (event) {
-          //切换场景前事件
-          lastCameraView = map.getCameraView()
-        })
+          lastCameraView = map.getCameraView();
+        });
+        //切换场景后事件
         map.on(mars3d.EventType.morphComplete, function (event) {
-          //切换场景后事件
           setTimeout(function () {
-            map.setCameraView(lastCameraView)
-          }, 100)
-        })
+            map.setCameraView(lastCameraView);
+          }, 100);
+        });
 
-        $('#to2d').click(function () {
-          map.scene.morphTo2D()
-        })
+        $("#to2d").click(function () {
+          map.scene.morphTo2D();
+        });
 
-        $('#to3d').click(function () {
-          map.scene.morphTo3D()
-        })
+        $("#to3d").click(function () {
+          map.scene.morphTo3D();
+        });
 
-        $('#toGLB').click(function () {
-          map.scene.morphToColumbusView()
-        })
+        $("#toGLB").click(function () {
+          map.scene.morphToColumbusView();
+        });
       }
     </script>
   </body>

@@ -39,10 +39,18 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var geoJsonLayer
+      $(document).ready(function () {
+        if (!mars3d.Util.webglreport()) {
+          mars3d.Util.webglerror();
+          return;
+        }
+        initMap();
+      });
+
+      var map;
+      var geoJsonLayer;
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
@@ -54,30 +62,30 @@
               maximumZoomDistance: 1000000,
             },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //geojson 合肥边界线
         geoJsonLayer = new mars3d.layer.GeoJsonLayer({
-          url: '//data.mars3d.cn/file/geojson/areas/340100.json',
+          url: "//data.mars3d.cn/file/geojson/areas/340100.json",
           mask: true, //标识为遮罩层【重点参数】
           symbol: {
             styleOptions: {
               fill: true,
-              color: 'rgb(2,26,79)',
+              color: "rgb(2,26,79)",
               opacity: 0.9,
               outline: true,
-              outlineColor: '#39E09B',
+              outlineColor: "#39E09B",
               outlineWidth: 8,
               outlineOpacity: 0.8,
               arcType: Cesium.ArcType.GEODESIC,
               clampToGround: true,
             },
           },
-        })
-        map.addLayer(geoJsonLayer)
+        });
+        map.addLayer(geoJsonLayer);
       }
     </script>
   </body>

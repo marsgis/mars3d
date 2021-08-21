@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>实时动态轨迹路线 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -53,144 +53,153 @@
     <script src="./js/common.js"></script>
 
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var graphicLayer
+      var map;
+      var graphicLayer;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 31.773622,
-              x: 117.077444,
-              z: 5441.49,
-              heading: 359.2,
-              pitch: -57.2,
-              roll: 0,
-            },
+            center: { lat: 31.773622, lng: 117.077444, alt: 5441, heading: 359, pitch: -57 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //演示数据的时间
-        map.clock.currentTime = window.Cesium.JulianDate.fromDate(new Date('2020-11-25 10:10:00'))
+        map.clock.currentTime = window.Cesium.JulianDate.fromDate(new Date("2020-11-25 10:10:00"));
 
         //加载车辆
         queryCarListApiData()
           .then(function (res) {
-            showCarList(res.data)
+            showCarList(res.data);
           })
           .catch(function () {
-            haoutil.msg('查询信息失败')
-          })
+            haoutil.msg("查询信息失败");
+          });
       }
 
       var colors = [
-        'rgb(40, 40, 255)',
-        'rgb(0, 88, 176)',
-        'rgb(0, 128, 255)',
-        'rgb(0, 217, 0)',
-        'rgb(0, 151, 0)',
-        'rgb(255, 199, 83)',
-        'rgb(255, 144, 30)',
-        'rgb(202, 101, 0)',
-        'rgb(255, 0, 0)',
-      ]
+        "rgb(40, 40, 255)",
+        "rgb(0, 88, 176)",
+        "rgb(0, 128, 255)",
+        "rgb(0, 217, 0)",
+        "rgb(0, 151, 0)",
+        "rgb(255, 199, 83)",
+        "rgb(255, 144, 30)",
+        "rgb(202, 101, 0)",
+        "rgb(255, 0, 0)",
+      ];
 
       // 访问car-list.json后端接口，取数据
       function queryCarListApiData() {
         return new Promise(function (resolve, reject) {
-          $.getJSON('//data.mars3d.cn/file/apidemo/car-list.json', function (result) {
-            resolve(result)
-          })
-        })
+          $.ajax({
+            url: "//data.mars3d.cn/file/apidemo/car-list.json",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+              resolve(result);
+            },
+            error: function (data) {
+              reject(data);
+            },
+          });
+        });
       }
       // 访问car-path.json后端接口，取数据
       function queryCarPathApiData() {
         return new Promise(function (resolve, reject) {
-          $.getJSON('//data.mars3d.cn/file/apidemo/car-path.json', function (result) {
-            resolve(result)
-          })
-        })
+          $.ajax({
+            url: "//data.mars3d.cn/file/apidemo/car-path.json",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+              resolve(result);
+            },
+            error: function (data) {
+              reject(data);
+            },
+          });
+        });
       }
 
       function showCarList(arr) {
-        console.log('加载' + arr.length + '条')
+        console.log("加载" + arr.length + "条");
 
         //创建矢量数据图层
-        graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         // 鼠标移入提示信息
         graphicLayer.bindTooltip(function (event) {
-          var data = event.graphic.options
-          return '车辆编号：' + data.id + '<br />车牌号码：' + data.name
-        })
+          var data = event.graphic.options;
+          return "车辆编号：" + data.id + "<br />车牌号码：" + data.name;
+        });
 
         //单击地图空白处
         map.on(mars3d.EventType.clickMap, function (event) {
           if (lastClickCar) {
-            lastClickCar.removeShading('circle')
-            lastClickCar = null
+            lastClickCar.removeShading("circle");
+            lastClickCar = null;
           }
-        })
+        });
 
         // 绑定点击事件
         graphicLayer.on(mars3d.EventType.click, (event, position) => {
-          var car = event.graphic
-          console.log('单击了车辆', car)
+          var car = event.graphic;
+          console.log("单击了车辆", car);
 
           if (lastClickCar) {
             if (lastClickCar === car) {
-              return
+              return;
             } //重复单击，跳出
-            lastClickCar.removeShading('circle')
-            lastClickCar = null
+            lastClickCar.removeShading("circle");
+            lastClickCar = null;
           }
 
           car.addShading({
-            type: 'circle',
+            type: "circle",
             materialType: mars3d.MaterialType.CircleWave,
             speed: 10,
             count: 3,
             gradient: 0.1,
             radius: 50,
-            color: '#ffff00',
+            color: "#ffff00",
             opacity: 0.3,
             show: true,
-          })
-          lastClickCar = car
+          });
+          lastClickCar = car;
 
           //视角定位下
           // car.flyToPoint({ radius: 1000 })
-        })
+        });
 
-        var lastClickCar
+        var lastClickCar;
 
         for (var i = 0, len = arr.length; i < len; i++) {
-          var item = arr[i]
+          var item = arr[i];
 
-          item.show = true
+          item.show = true;
 
-          var modelParam
+          var modelParam;
           switch (item.type) {
             default:
             case 1:
               modelParam = {
                 scale: 2,
-                url: '//data.mars3d.cn/gltf/mars/car/tufangche.glb',
-              }
-              break
+                url: "//data.mars3d.cn/gltf/mars/car/tufangche.glb",
+              };
+              break;
             case 2:
               modelParam = {
                 scale: 1,
-                url: '//data.mars3d.cn/gltf/mars/car/wajueji.glb',
-              }
-              break
+                url: "//data.mars3d.cn/gltf/mars/car/wajueji.glb",
+              };
+              break;
           }
 
           const car = new mars3d.graphic.DynamicRoamLine({
@@ -203,7 +212,7 @@
             },
             shadow: [
               {
-                type: 'polyline',
+                type: "polyline",
                 color: colors[i],
                 width: 2,
                 clampToGround: true,
@@ -211,176 +220,176 @@
                 show: true,
               },
             ],
-          })
-          graphicLayer.addGraphic(car)
+          });
+          graphicLayer.addGraphic(car);
         }
 
-        tabInit(arr)
+        tabInit(arr);
 
         // 定时获取卡车和铲车的列表数据
-        this.createPath()
+        this.createPath();
       }
 
       //取轨迹数据的时间间隔（单位：秒）
-      var timeStep = 10
+      var timeStep = 10;
 
       //首次获取并创建轨迹
       function createPath() {
         //取数据的时间范围，结束时间
-        var date = Cesium.JulianDate.toDate(map.clock.currentTime)
-        var endTime = date.format('yyyy-MM-dd HH:mm:ss')
+        var date = Cesium.JulianDate.toDate(map.clock.currentTime);
+        var endTime = date.format("yyyy-MM-dd HH:mm:ss");
 
         // 修改当前时间回退一分钟，因为数据永远是当前时间之前的。
-        date.setSeconds(date.getSeconds() - 60)
-        map.clock.currentTime = window.Cesium.JulianDate.fromDate(date)
+        date.setSeconds(date.getSeconds() - 60);
+        map.clock.currentTime = window.Cesium.JulianDate.fromDate(date);
 
         //取数据的时间范围，开始时间
-        date.setMinutes(date.getMinutes() - 10) // 初次取一定时间内的数据
-        var beginTime = date.format('yyyy-MM-dd HH:mm:ss')
+        date.setMinutes(date.getMinutes() - 10); // 初次取一定时间内的数据
+        var beginTime = date.format("yyyy-MM-dd HH:mm:ss");
 
         //记录最后一次读取数据的时间
-        this.lastTime = endTime
+        this.lastTime = endTime;
 
         //取数据
-        getPathList(beginTime, endTime)
+        getPathList(beginTime, endTime);
 
         //定时更新
         this.intervalGetData = setInterval(() => {
-          this.updatePath()
-        }, timeStep * 1000)
+          this.updatePath();
+        }, timeStep * 1000);
       }
 
       //后续更新轨迹
       function updatePath() {
-        var beginTime = this.lastTime
+        var beginTime = this.lastTime;
 
-        var date = new Date(beginTime)
-        date.setSeconds(date.getSeconds() + timeStep)
-        var endTime = date.format('yyyy-MM-dd HH:mm:ss')
+        var date = new Date(beginTime);
+        date.setSeconds(date.getSeconds() + timeStep);
+        var endTime = date.format("yyyy-MM-dd HH:mm:ss");
 
-        this.lastTime = endTime
+        this.lastTime = endTime;
 
         //取数据
-        getPathList(beginTime, endTime)
+        getPathList(beginTime, endTime);
       }
 
       //读取车辆gps坐标路径的接口
       function getPathList(beginTime, endTime) {
         queryCarPathApiData()
           .then(function (res) {
-            var listALL = res.data || []
+            var listALL = res.data || [];
 
             //因为读取静态json，为了演示动态，筛选数据内符合时间范围内的数据。
             //真实接口中可以注释下面代码。
-            var d_beginTime = new Date(beginTime)
-            var d_endTime = new Date(endTime)
+            var d_beginTime = new Date(beginTime);
+            var d_endTime = new Date(endTime);
             var list = listALL.filter((item) => {
-              var thistime = new Date(item.time)
-              return thistime >= d_beginTime && thistime <= d_endTime
-            })
+              var thistime = new Date(item.time);
+              return thistime >= d_beginTime && thistime <= d_endTime;
+            });
             //真实接口中可以注释上面代码。
 
-            addLog(`${endTime} 获取到 ${list.length} 条GPS坐标记录`)
+            addLog(`${endTime} 获取到 ${list.length} 条GPS坐标记录`);
 
             //循环车辆
             graphicLayer.eachGraphic((car) => {
               //取出对应车辆的轨迹列表
               var path = list.filter((item) => {
-                return item.id === car.id
-              })
+                return item.id === car.id;
+              });
 
               if (path && path.length > 0) {
                 //更新车辆的轨迹
                 car.updatePath(path, {
-                  timeColumn: 'time',
+                  timeColumn: "time",
                   getPosition: function (item) {
-                    return Cesium.Cartesian3.fromDegrees(parseFloat(item.lon), parseFloat(item.lat), 0)
+                    return Cesium.Cartesian3.fromDegrees(parseFloat(item.lon), parseFloat(item.lat), 0);
                   },
-                })
+                });
                 //addLog(`${car.id} 更新 ${path.length} 条轨迹记录`)
               }
-            })
+            });
           })
           .catch(function () {
-            haoutil.msg('实时查询气象信息失败，请稍候再试')
-          })
+            haoutil.msg("实时查询气象信息失败，请稍候再试");
+          });
       }
 
       function addLog(log) {
-        console.log(log)
+        console.log(log);
 
-        var logView = $('#logView')
-        var oldhtml = logView.html()
+        var logView = $("#logView");
+        var oldhtml = logView.html();
         if (oldhtml.length < 500) {
-          logView.html(oldhtml + log + '<br />')
+          logView.html(oldhtml + log + "<br />");
         } else {
-          logView.html(log + '<br />')
+          logView.html(log + "<br />");
         }
       }
 
       //==================================================
       function tabInit(data) {
-        $('#tableCar').bootstrapTable({
+        $("#tableCar").bootstrapTable({
           data: data,
           pagination: false,
           singleSelect: false,
           checkboxHeader: false,
           columns: [
             {
-              title: '是否显示',
-              field: 'show',
-              align: 'center',
+              title: "是否显示",
+              field: "show",
+              align: "center",
               checkbox: true,
               width: 50,
             },
             {
-              title: '序号',
+              title: "序号",
               sortable: true,
               editable: false,
-              align: 'left',
+              align: "left",
               formatter: function (value, row, index) {
-                return index + 1
+                return index + 1;
               },
             },
             {
-              field: 'name',
-              title: '车牌号',
+              field: "name",
+              title: "车牌号",
             },
             {
-              field: 'type',
-              title: '类型',
+              field: "type",
+              title: "类型",
               formatter: function (value, row, index) {
                 if (value == 1) {
-                  return '土方车'
+                  return "土方车";
                 } else if (value == 2) {
-                  return '挖掘机'
+                  return "挖掘机";
                 }
-                return ''
+                return "";
               },
             },
           ],
           //定位车辆区域
           onClickRow: function (row) {
-            let car = graphicLayer.getGraphicById(row.id)
+            let car = graphicLayer.getGraphicById(row.id);
             if (car) {
-              car.flyToPoint({ radius: 900 })
+              car.flyToPoint({ radius: 900 });
             }
           },
           //勾选隐藏车辆
           onCheck: function (row) {
-            let car = graphicLayer.getGraphicById(row.id)
+            let car = graphicLayer.getGraphicById(row.id);
             if (car) {
-              car.show = true
+              car.show = true;
             }
           },
           //取消勾选显示车辆
           onUncheck: function (row) {
-            let car = graphicLayer.getGraphicById(row.id)
+            let car = graphicLayer.getGraphicById(row.id);
             if (car) {
-              car.show = false
+              car.show = false;
             }
           },
-        })
+        });
       }
     </script>
   </body>

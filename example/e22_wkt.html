@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>WKT解析加载(转GeoJson方式) | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -43,9 +43,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -53,83 +53,91 @@
           scene: {
             center: { lat: -10.999882, lng: -0.258788, alt: 8711459, heading: 10, pitch: -85 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         queryAirPortApiData().then(function (arr) {
-          addOrbitList(arr)
-        })
+          addOrbitList(arr);
+        });
       }
 
       //访问后端接口，取数据
       function queryAirPortApiData() {
         return new Promise(function (resolve, reject) {
-          $.getJSON('//data.mars3d.cn/file/apidemo/airport.json', function (result) {
-            resolve(result)
-          })
-        })
+          $.ajax({
+            url: "//data.mars3d.cn/file/apidemo/airport.json",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+              resolve(result);
+            },
+            error: function (data) {
+              reject(data);
+            },
+          });
+        });
       }
 
       function addOrbitList(arr) {
-        var features = []
+        var features = [];
         for (var i = 0, len = arr.length; i < len; i++) {
-          var item = arr[i]
+          var item = arr[i];
 
-          var geojson = getPoint(item)
+          var geojson = getPoint(item);
           if (geojson) {
-            features.push(geojson)
+            features.push(geojson);
           }
         }
 
         let geoJsonLayer = new mars3d.layer.GeoJsonLayer({
           data: features,
-          crs: 'EPSG:3857', //标识数据的坐标系
+          crs: "EPSG:3857", //标识数据的坐标系
           symbol: {
             styleOptions: {
               randomColor: true,
               outline: true,
-              outlineColor: '#ffffff',
+              outlineColor: "#ffffff",
             },
           },
-          popup: 'all',
+          popup: "all",
           flyTo: true,
-        })
+        });
 
         //绑定事件
         geoJsonLayer.on(mars3d.EventType.load, function (event) {
-          console.log('数据加载完成', event)
-          initTree(event.list, 'airportName')
-        })
+          console.log("数据加载完成", event);
+          initTree(event.list, "airportName");
+        });
         geoJsonLayer.on(mars3d.EventType.click, function (event) {
-          console.log('单击了图层', event)
-        })
+          console.log("单击了图层", event);
+        });
 
-        map.addLayer(geoJsonLayer)
+        map.addLayer(geoJsonLayer);
       }
 
       //提取坐标信息
       function getPoint(item) {
         if (!item.geometry) {
-          return null
+          return null;
         }
 
-        var geojson = Terraformer.WKT.parse(item.geometry) //WKT格式转换geojson
+        var geojson = Terraformer.WKT.parse(item.geometry); //WKT格式转换geojson
 
         return {
-          type: 'Feature',
+          type: "Feature",
           geometry: geojson,
           properties: item,
-        }
+        };
       }
 
       //===========================树控件处理============================
-      var layersObj = {}
+      var layersObj = {};
 
-      function initTree(arr, nameColum = 'name') {
+      function initTree(arr, nameColum = "name") {
         if (!arr || arr.length == 0) {
-          return
+          return;
         }
         //初始化树
         var setting = {
@@ -145,66 +153,66 @@
             onCheck: treeOverlays_onCheck,
             onClick: treeOverlays_onClick,
           },
-        }
+        };
 
-        var zNodes = []
+        var zNodes = [];
         var pnode = {
           id: -1,
-          name: '全部',
-          type: 'group',
+          name: "全部",
+          type: "group",
           open: false,
           checked: true,
-          icon: '../lib/jquery/ztree/css/mars/images/folder.png',
-        }
-        zNodes.push(pnode)
+          icon: "../lib/jquery/ztree/css/mars/images/folder.png",
+        };
+        zNodes.push(pnode);
 
         for (var i = 0, len = arr.length; i < len; i++) {
-          var item = arr[i]
-          var name = item[nameColum] || '未命名'
+          var item = arr[i];
+          var name = item[nameColum] || "未命名";
 
           var node = {
             id: i,
             pId: pnode.id,
             name: name,
             checked: true,
-            icon: '../lib/jquery/ztree/css/mars/images/layer.png',
-          }
-          zNodes.push(node)
+            icon: "../lib/jquery/ztree/css/mars/images/layer.png",
+          };
+          zNodes.push(node);
 
-          layersObj[i] = item.graphic
+          layersObj[i] = item.graphic;
         }
 
-        $.fn.zTree.destroy()
-        $.fn.zTree.init($('#treeOverlays'), setting, zNodes)
+        $.fn.zTree.destroy();
+        $.fn.zTree.init($("#treeOverlays"), setting, zNodes);
       }
 
       function treeOverlays_onCheck(e, treeId) {
-        var zTree = $.fn.zTree.getZTreeObj(treeId)
+        var zTree = $.fn.zTree.getZTreeObj(treeId);
 
         //获得所有改变check状态的节点
-        var changedNodes = zTree.getChangeCheckedNodes()
+        var changedNodes = zTree.getChangeCheckedNodes();
         if (changedNodes) {
           for (var i = 0; i < changedNodes.length; i++) {
-            var treeNode = changedNodes[i]
-            treeNode.checkedOld = treeNode.checked
-            var graphic = layersObj[treeNode.id]
+            var treeNode = changedNodes[i];
+            treeNode.checkedOld = treeNode.checked;
+            var graphic = layersObj[treeNode.id];
             if (graphic == null) {
-              continue
+              continue;
             }
-            let show = treeNode.checked
+            let show = treeNode.checked;
             //处理图层显示隐藏
-            graphic.show = show
+            graphic.show = show;
           }
         }
       }
 
       function treeOverlays_onClick(event, treeId, treeNode) {
-        var graphic = layersObj[treeNode.id]
+        var graphic = layersObj[treeNode.id];
         if (graphic == null) {
-          return
+          return;
         }
 
-        map.flyToGraphic(graphic)
+        map.flyToGraphic(graphic);
       }
     </script>
   </body>

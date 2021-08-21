@@ -19,7 +19,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>视频投放 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>视频2D投射(HLS协议) | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -123,57 +123,50 @@
     </div>
 
     <video id="trailer" style="display: none" muted="muted" autoplay="autoplay" loop="loop" crossorigin="" controls="">
-      <!-- <source src="http:////data.mars3d.cn/file/video/lukou.mp4" type="video/mp4"> -->
+      <!-- <source src="http://data.mars3d.cn/file/video/lukou.mp4" type="video/mp4"> -->
     </video>
 
     <script src="../lib/video/hls/hls.js"></script>
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var videoElement
-      var selectedView
+      var map;
+      var videoElement;
+      var selectedView;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
             //此处参数会覆盖config.json中的对应配置
-            center: {
-              y: 31.843475,
-              x: 117.205447,
-              z: 107.25,
-              heading: 175.1,
-              pitch: -25.7,
-              roll: 0,
-            },
+            center: { lat: 31.844188, lng: 117.205321, alt: 143, heading: 175, pitch: -26 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //添加参考三维模型
         var tiles3dLayer = new mars3d.layer.TilesetLayer({
-          name: '合肥国家大学科技园',
-          url: '//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json',
+          name: "合肥国家大学科技园",
+          url: "//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
           position: { alt: -24 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //2.在layer上绑定监听事件
         graphicLayer.on(mars3d.EventType.click, function (event) {
-          selectedView = event.graphic
-          console.log('监听layer，单击了矢量对象', event)
-        })
+          selectedView = event.graphic;
+          console.log("监听layer，单击了矢量对象", event);
+        });
         // graphicLayer.on(mars3d.EventType.mouseOver, function(event) {
         //   console.log('监听layer，鼠标移入了矢量对象', event)
         // })
@@ -182,9 +175,7 @@
         // })
 
         //可在图层上绑定popup,对所有加到这个图层的矢量数据都生效
-        graphicLayer.bindPopup('我是layer上绑定的Popup', {
-          anchor: [0, -10],
-        })
+        graphicLayer.bindPopup("我是layer上绑定的Popup");
 
         //可在图层上绑定tooltip,对所有加到这个图层的矢量数据都生效
         // graphicLayer.bindTooltip('我是layer上绑定的Tooltip')
@@ -192,52 +183,52 @@
         //可在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
         graphicLayer.bindContextMenu([
           {
-            text: '删除对象',
-            iconCls: 'fa fa-trash-o',
+            text: "删除对象",
+            iconCls: "fa fa-trash-o",
             callback: function (e) {
-              var graphic = e.graphic
+              var graphic = e.graphic;
               if (graphic) {
-                graphicLayer.removeGraphic(graphic)
+                graphicLayer.removeGraphic(graphic);
               }
             },
           },
-        ])
+        ]);
 
         //绑定属性及处理事件
-        bindViewModel()
-        bindEvnet()
+        bindViewModel();
+        bindEvnet();
 
         // var hlsUrl = "http://playertest.longtailvideo.com/adaptive/bipbop/gear4/prog_index.m3u8"
-        var hlsUrl = 'http://ivi.bupt.edu.cn/hls/cctv13.m3u8'
+        var hlsUrl = "http://ivi.bupt.edu.cn/hls/cctv13.m3u8";
 
-        videoElement = document.getElementById('trailer')
+        videoElement = document.getElementById("trailer");
 
         if (window.Hls.isSupported()) {
-          var hls = new window.Hls()
-          hls.loadSource(hlsUrl)
-          hls.attachMedia(videoElement)
+          var hls = new window.Hls();
+          hls.loadSource(hlsUrl);
+          hls.attachMedia(videoElement);
           hls.on(window.Hls.Events.MANIFEST_PARSED, function () {
-            videoElement.play()
-          })
-        } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
-          videoElement.src = hlsUrl
-          videoElement.addEventListener('loadedmetadata', function () {
-            videoElement.play()
-          })
+            videoElement.play();
+          });
+        } else if (videoElement.canPlayType("application/vnd.apple.mpegurl")) {
+          videoElement.src = hlsUrl;
+          videoElement.addEventListener("loadedmetadata", function () {
+            videoElement.play();
+          });
         }
 
         //加一些演示数据
-        addGraphic_01(graphicLayer)
+        addGraphic_01(graphicLayer);
 
-        $('#btnAddVideo').click(function () {
-          addGraphic_Video(graphicLayer)
-        })
+        $("#btnAddVideo").click(function () {
+          addGraphic_Video(graphicLayer);
+        });
 
         //清除图层
-        $('#btnClear').click(function () {
-          graphicLayer.clear()
-          selectedView = null
-        })
+        $("#btnClear").click(function () {
+          graphicLayer.clear();
+          selectedView = null;
+        });
       }
 
       // 加载已配置好的视频（此参数为界面上“打印参数”按钮获取的）
@@ -257,10 +248,10 @@
             stRotationDegree: 0,
           },
           showFrustum: true,
-        })
-        graphicLayer.addGraphic(video2D)
+        });
+        graphicLayer.addGraphic(video2D);
 
-        selectedView = video2D //记录下
+        selectedView = video2D; //记录下
       }
 
       function addGraphic_Video(graphicLayer) {
@@ -271,10 +262,10 @@
             fov: map.scene.camera.frustum.fov,
             dis: viewModel.dis,
           },
-        })
-        graphicLayer.addGraphic(video2D)
+        });
+        graphicLayer.addGraphic(video2D);
 
-        selectedView = video2D //记录下
+        selectedView = video2D; //记录下
       }
 
       //面板参数更新
@@ -283,133 +274,132 @@
         aspectRatio: 2.0,
         dis: 70,
         rotateDeg: 0,
-      }
+      };
 
       //绑定面板的参数监听处理
       function bindViewModel() {
-        Cesium.knockout.track(viewModel) //面板更新监听
+        Cesium.knockout.track(viewModel); //面板更新监听
 
         // Bind the viewModel to the DOM elements of the UI that call for it.
-        var toolbar = document.getElementById('toolbar')
-        Cesium.knockout.applyBindings(viewModel, toolbar)
+        var toolbar = document.getElementById("toolbar");
+        Cesium.knockout.applyBindings(viewModel, toolbar);
 
         // Make the active imagery layer a subscriber of the viewModel.
         function subscribeLayerParameter(name) {
           Cesium.knockout.getObservable(viewModel, name).subscribe(function (newValue) {
-            updateParams()
-          })
+            updateParams();
+          });
         }
-        subscribeLayerParameter('aspectRatio')
-        subscribeLayerParameter('dis')
-        subscribeLayerParameter('fovDegree')
+        subscribeLayerParameter("aspectRatio");
+        subscribeLayerParameter("dis");
+        subscribeLayerParameter("fovDegree");
       }
 
       function updateParams() {
         if (!selectedView) {
-          return
+          return;
         }
 
-        selectedView.aspectRatio = Number(viewModel.aspectRatio)
-        selectedView.dis = Number(viewModel.dis)
-        selectedView.fovDegree = Number(viewModel.fovDegree)
+        selectedView.aspectRatio = Number(viewModel.aspectRatio);
+        selectedView.dis = Number(viewModel.dis);
+        selectedView.fovDegree = Number(viewModel.fovDegree);
       }
 
       function playOrpause() {
-        selectedView.play = !selectedView.play
+        selectedView.play = !selectedView.play;
       }
 
       function bindEvnet() {
-        $('#rotateDeg').change(function () {
+        $("#rotateDeg").change(function () {
           if (!selectedView) {
-            return
+            return;
           }
-          var num = $(this).val() * 1.0
-          selectedView.stRotation = Cesium.Math.toRadians(num)
-        })
+          var num = $(this).val() * 1.0;
+          selectedView.stRotation = Cesium.Math.toRadians(num);
+        });
 
-        $('#showFrustum').click(function () {
+        $("#showFrustum").click(function () {
           if (!selectedView) {
-            return
+            return;
           }
-          var ckd = $(this)[0].checked
-          selectedView.showFrustum = ckd
-        })
+          var ckd = $(this)[0].checked;
+          selectedView.showFrustum = ckd;
+        });
 
-        $('#btnSelCamera').click(function () {
+        $("#btnSelCamera").click(function () {
           if (selectedView == null) {
-            return
+            return;
           }
-
           map.graphicLayer.startDraw({
-            type: 'point',
+            type: "point",
             success: (graphic) => {
-              var point = graphic.point
-              graphic.remove() //删除绘制的点
+              var point = graphic.point;
+              graphic.remove(); //删除绘制的点
 
-              selectedView.position = point
+              selectedView.position = point;
             },
-          })
-        })
+          });
+        });
 
-        $('#btnLocate').click(function () {
+        $("#btnLocate").click(function () {
           if (!selectedView) {
-            return
+            return;
           }
-          selectedView.flyTo()
-        })
-        $('#console').click(function () {
+          selectedView.flyTo();
+        });
+        $("#console").click(function () {
           if (!selectedView) {
-            return
+            return;
           }
 
-          var params = selectedView.toJSON()
-          console.log(JSON.stringify(params))
-        })
+          var params = selectedView.toJSON();
+          console.log(JSON.stringify(params));
+        });
 
         document.addEventListener(
-          'keydown',
+          "keydown",
           function (e) {
             switch (e.keyCode) {
               default:
-                break
-              case 'A'.charCodeAt(0):
-                rotateCamera(mars3d.graphic.Video2D.RatateDirection.LEFT)
-                break
-              case 'D'.charCodeAt(0):
-                rotateCamera(mars3d.graphic.Video2D.RatateDirection.RIGHT)
-                break
-              case 'W'.charCodeAt(0):
-                rotateCamera(mars3d.graphic.Video2D.RatateDirection.TOP)
-                break
-              case 'S'.charCodeAt(0):
-                rotateCamera(mars3d.graphic.Video2D.RatateDirection.BOTTOM)
-                break
-              case 'Q'.charCodeAt(0): //Q键
-                rotateCamera(mars3d.graphic.Video2D.RatateDirection.ALONG)
-                break
-              case 'E'.charCodeAt(0): //E
-                rotateCamera(mars3d.graphic.Video2D.RatateDirection.INVERSE)
-                break
+                break;
+              case "A".charCodeAt(0):
+                rotateCamera(mars3d.graphic.Video2D.RatateDirection.LEFT);
+                break;
+              case "D".charCodeAt(0):
+                rotateCamera(mars3d.graphic.Video2D.RatateDirection.RIGHT);
+                break;
+              case "W".charCodeAt(0):
+                rotateCamera(mars3d.graphic.Video2D.RatateDirection.TOP);
+                break;
+              case "S".charCodeAt(0):
+                rotateCamera(mars3d.graphic.Video2D.RatateDirection.BOTTOM);
+                break;
+              case "Q".charCodeAt(0): //Q键
+                rotateCamera(mars3d.graphic.Video2D.RatateDirection.ALONG);
+                break;
+              case "E".charCodeAt(0): //E
+                rotateCamera(mars3d.graphic.Video2D.RatateDirection.INVERSE);
+                break;
             }
           },
           false
-        )
+        );
       }
 
       //微调视频
       function rotateCamera(dir) {
         if (!selectedView) {
-          return
+          return;
         }
 
-        selectedView.rotateCamera(dir, $('#adjustDeg').val() * 1)
+        selectedView.rotateCamera(dir, $("#adjustDeg").val() * 1);
 
-        var cameraFollow = $('#chkCameraFollow').is(':checked')
+        var cameraFollow = $("#chkCameraFollow").is(":checked");
         if (cameraFollow) {
-          map.camera.direction = selectedView.style.camera.direction
-          map.camera.right = selectedView.style.camera.right
-          map.camera.up = selectedView.style.camera.up
-          map.camera.position = selectedView.position
+          map.camera.direction = selectedView.style.camera.direction;
+          map.camera.right = selectedView.style.camera.right;
+          map.camera.up = selectedView.style.camera.up;
+          map.camera.position = selectedView.position;
         }
       }
     </script>

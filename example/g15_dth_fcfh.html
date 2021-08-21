@@ -40,10 +40,10 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var geoJsonLayerDTH
+      var map;
+      var geoJsonLayerDTH;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -52,44 +52,43 @@
             //此处参数会覆盖config.json中的对应配置
             center: { lat: 31.561722, lng: 120.848645, alt: 76, heading: 53, pitch: -43 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //添加参考三维模型
         var tilesetLayer = new mars3d.layer.TilesetLayer({
-          name: '河道边厂房',
-          url: '//data.mars3d.cn/3dtiles/qx-xiaolou/tileset.json',
+          name: "河道边厂房",
+          url: "//data.mars3d.cn/3dtiles/qx-xiaolou/tileset.json",
           position: { alt: 10.1 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
           show: true,
-        })
-        map.addLayer(tilesetLayer)
+        });
+        map.addLayer(tilesetLayer);
 
         //创建单体化图层
         geoJsonLayerDTH = new mars3d.layer.GeoJsonLayer({
-          name: '分层分户单体化',
-          url: '//data.mars3d.cn/file/geojson/dth_fcfh.json',
+          name: "分层分户单体化",
+          url: "//data.mars3d.cn/file/geojson/dth_fcfh.json",
           onCreateGraphic: createDthGraphic, //自定义解析数据
-          popup: 'all',
-        })
-        map.addLayer(geoJsonLayerDTH)
+          popup: "all",
+        });
+        map.addLayer(geoJsonLayerDTH);
       }
 
       //添加单体化矢量对象
       function createDthGraphic(graphicOptions) {
-        var points = graphicOptions.positions
-        var floor = graphicOptions.attr.floor //楼层层高配置信息
+        var points = graphicOptions.positions;
+        var floor = graphicOptions.attr.floor; //楼层层高配置信息
 
         //循环每一层
-        var arrGraphic
         for (var j = 0, len = floor.length; j < len; j++) {
-          var floorCfg = floor[j]
+          var floorCfg = floor[j];
 
-          var minHight = floorCfg.bottom //当前层的 底部海拔高度
-          var maxHight = floorCfg.top //当前层的 顶部海拔高度
+          var minHight = floorCfg.bottom; //当前层的 底部海拔高度
+          var maxHight = floorCfg.top; //当前层的 顶部海拔高度
 
           var primitive = new mars3d.graphic.PolygonPrimitive({
             positions: points,
@@ -97,18 +96,18 @@
               height: minHight,
               extrudedHeight: maxHight,
               //单体化默认显示样式
-              color: 'rgba(255, 255, 255, 0.01)',
+              color: "rgba(255, 255, 255, 0.01)",
               classification: true,
               buffer: 1,
               //单体化鼠标移入或单击后高亮的样式
               highlight: {
                 type: mars3d.EventType.click,
-                color: 'rgba(0,255,0,0.5)',
+                color: "rgba(0,255,0,0.5)",
               },
             },
             attr: floorCfg,
-          })
-          geoJsonLayerDTH.addGraphic(primitive)
+          });
+          geoJsonLayerDTH.addGraphic(primitive);
         }
       }
     </script>

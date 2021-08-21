@@ -1,106 +1,108 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="author" content="火星科技 http://mars3d.cn ">
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-        content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>竖直飞线 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+    ></script>
 
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
-  <!--第三方lib-->
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/" include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-<body class="dark">
-  <!--加载前进行操作提示，优化用户体验-->
-  <div id="mask" class="signmask" onclick="removeMask()"></div>
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      "use script"; //开发环境建议开启严格模式
 
-  <div id="mars3dContainer" class="mars3d-container"></div>
+      var map;
 
-
-  <!-- 面板 -->
-  <div class="infoview">
-    面板
-  </div>
-
-
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
-
-    var map
-
-    function initMap(options) {
-      //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {
-        scene: {
-          center: { lat: 31.802012, lng: 117.208843, alt: 1268, heading: 35, pitch: -17 },
-        },
-      })
-
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
-
-      map.basemap = 2017 //切换到蓝色底图
-
-      var tilesetLayer = new mars3d.layer.TilesetLayer({
-        url: '//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json',
-        maximumScreenSpaceError: 1,
-        maximumMemoryUsage: 1024,
-        marsJzwStyle: true, //打开建筑物特效（内置Shader代码）
-        center: { y: 31.805004, x: 117.222617, z: 1457.4, heading: 1.6, pitch: -30.5, roll: 0 },
-        showClickFeature: true,
-        popup: 'all',
-      })
-      map.addLayer(tilesetLayer)
-
-      //创建Graphic图层
-      var graphicLayer = new mars3d.layer.GraphicLayer()
-      map.addLayer(graphicLayer)
-
-      for (var j = 0; j < 200; ++j) {
-        var startPt = randomPoint()
-
-        let endPt = startPt.clone()
-        endPt.alt = haoutil.math.random(1000, 2000)
-
-        var primitive = new mars3d.graphic.PolylinePrimitive({
-          positions: [startPt, endPt],
-          style: {
-            width: 1,
-            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlowColor, {
-              color: 'rgb(141,172,172)',
-              speed: haoutil.math.random(10, 20),
-              percent: 0.1,
-              alpha: 0.01,
-            }),
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 31.801072, lng: 117.208356, alt: 1250, heading: 35, pitch: -17 },
           },
-        })
-        graphicLayer.addGraphic(primitive)
-      }
-    }
-    //取区域内的随机图标
-    function randomPoint() {
-      var jd = haoutil.math.random(117.208056 * 1000, 117.25548 * 1000) / 1000
-      var wd = haoutil.math.random(31.816617 * 1000, 31.855756 * 1000) / 1000
-      return new mars3d.LatLngPoint(jd, wd, 100)
-    }
-  </script>
-</body>
+        });
 
+        //创建三维地球场景
+        map = new mars3d.Map("mars3dContainer", mapOptions);
+
+        map.basemap = 2017; //切换到蓝色底图
+
+        var tilesetLayer = new mars3d.layer.TilesetLayer({
+          url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
+          maximumScreenSpaceError: 1,
+          maximumMemoryUsage: 1024,
+          marsJzwStyle: true, //打开建筑物特效（内置Shader代码）
+          center: { lat: 31.801072, lng: 117.208356, alt: 1250, heading: 35, pitch: -17 },
+          popup: "all",
+        });
+        map.addLayer(tilesetLayer);
+
+        //创建Graphic图层
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
+
+        var arrData = [];
+        for (var j = 0; j < 300; ++j) {
+          var startPt = randomPoint();
+
+          let endPt = startPt.clone();
+          endPt.alt = haoutil.math.random(1000, 2000);
+
+          arrData.push({
+            positions: [startPt, endPt],
+            style: {
+              width: 1,
+              material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlowColor, {
+                color: "rgb(141,172,172)",
+                speed: haoutil.math.random(10, 20),
+                percent: 0.1,
+                alpha: 0.01,
+              }),
+            },
+          });
+        }
+
+        //多个线对象的合并渲染。
+        var primitive = new mars3d.graphic.PolylineCombine({
+          instances: arrData,
+        });
+        graphicLayer.addGraphic(primitive);
+      }
+      //取区域内的随机图标
+      function randomPoint() {
+        var jd = haoutil.math.random(117.208056 * 1000, 117.25548 * 1000) / 1000;
+        var wd = haoutil.math.random(31.816617 * 1000, 31.855756 * 1000) / 1000;
+        return new mars3d.LatLngPoint(jd, wd, 100);
+      }
+    </script>
+  </body>
 </html>

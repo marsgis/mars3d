@@ -79,9 +79,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -89,51 +89,51 @@
           scene: {
             center: { lat: 33.591015, lng: 119.032698, alt: 73, heading: 343, pitch: -21 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //添加参考三维模型
         var tiles3dLayer = new mars3d.layer.TilesetLayer({
-          url: '//data.mars3d.cn/3dtiles/qx-simiao/tileset.json',
+          url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
           position: { alt: 80.6 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
           dynamicScreenSpaceError: true,
           cullWithChildrenBounds: false,
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
         //构造效果
-        var depthOfField = new mars3d.effect.DepthOfFieldEffect()
-        map.addEffect(depthOfField)
+        var depthOfField = new mars3d.effect.DepthOfFieldEffect();
+        map.addEffect(depthOfField);
 
-        $('#chkShowEffect').change(function () {
-          var val = $(this).is(':checked')
+        $("#chkShowEffect").change(function () {
+          var val = $(this).is(":checked");
 
-          depthOfField.enabled = val
-        })
-        $('#txt_focalDistance').range({
+          depthOfField.enabled = val;
+        });
+        $("#txt_focalDistance").range({
           onChange: function (value, bfb) {
-            depthOfField.focalDistance = value
+            depthOfField.focalDistance = value;
           },
-        })
-        $('#txt_delta').range({
+        });
+        $("#txt_delta").range({
           onChange: function (value, bfb) {
-            depthOfField.delta = value
+            depthOfField.delta = value;
           },
-        })
-        $('#txt_sigma').range({
+        });
+        $("#txt_sigma").range({
           onChange: function (value, bfb) {
-            depthOfField.sigma = value
+            depthOfField.sigma = value;
           },
-        })
-        $('#txt_stepSize').range({
+        });
+        $("#txt_stepSize").range({
           onChange: function (value, bfb) {
-            depthOfField.stepSize = value
+            depthOfField.stepSize = value;
           },
-        })
+        });
       }
     </script>
   </body>

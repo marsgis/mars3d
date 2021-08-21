@@ -66,10 +66,10 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      let tiles3dLayer
+      var map;
+      let tiles3dLayer;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -81,7 +81,7 @@
             showSkyBox: false,
             showSkyAtmosphere: false,
             fog: false,
-            backgroundColor: 'rgba(0,0,0,0)',
+            backgroundColor: "rgba(0,0,0,0)",
             orderIndependentTranslucency: false,
             contextOptions: { webgl: { alpha: true } }, //允许透明
             globe: {
@@ -95,57 +95,57 @@
               maximumZoomDistance: 200000,
             },
           },
-        })
-        delete mapOptions.control
-        delete mapOptions.terrain
-        delete mapOptions.basemaps
-        delete mapOptions.layers
+        });
+        delete mapOptions.control;
+        delete mapOptions.terrain;
+        delete mapOptions.basemaps;
+        delete mapOptions.layers;
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //历史记录模型地址
-        var lasturl = haoutil.storage.get('g20_onlyModel2')
+        var lasturl = haoutil.storage.get("g20_onlyModel2");
         if (lasturl) {
-          $('#txtModel').val(lasturl)
+          $("#txtModel").val(lasturl);
         }
-        setTimeout(showModel, 1000)
+        setTimeout(showModel, 1000);
       }
 
       function removeLayer() {
         if (tiles3dLayer) {
-          map.removeLayer(tiles3dLayer, true)
-          tiles3dLayer = null
+          map.removeLayer(tiles3dLayer, true);
+          tiles3dLayer = null;
         }
       }
 
       //当前页面业务相关
       function showModel() {
-        removeLayer()
-        var _url = $('#txtModel').val()
-        haoutil.storage.add('g20_onlyModel2', _url)
+        removeLayer();
+        var _url = $("#txtModel").val();
+        haoutil.storage.add("g20_onlyModel2", _url);
 
         tiles3dLayer = new mars3d.layer.TilesetLayer({
           url: _url,
           maximumScreenSpaceError: 1,
           flyTo: true,
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
         //单击事件
         tiles3dLayer.on(mars3d.EventType.load, function (event) {
-          console.log('模型加载完成', event)
+          console.log("模型加载完成", event);
 
           //限定缩放级别
-          map.scene.screenSpaceCameraController.maximumZoomDistance = tiles3dLayer.boundingSphere.radius * 5
+          map.scene.screenSpaceCameraController.maximumZoomDistance = tiles3dLayer.boundingSphere.radius * 5;
 
           //自动贴地处理
-          tiles3dLayer.clampToGround(10)
-        })
+          tiles3dLayer.clampToGround(10);
+        });
       }
 
       function flyTo() {
-        tiles3dLayer.flyTo()
+        tiles3dLayer.flyTo();
       }
     </script>
   </body>

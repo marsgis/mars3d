@@ -38,28 +38,28 @@
     <div id="mars3dContainer" class="mars3d-container"></div>
 
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
       $(document).ready(function () {
         if (!mars3d.Util.webglreport()) {
-          mars3d.Util.webglerror()
-          return
+          mars3d.Util.webglerror();
+          return;
         }
 
         //读取 config.json 配置文件
         mars3d.Resource.fetchJson({
-          url: 'config/config.json',
+          url: "config/config.json",
         }).then(function (json) {
           //构建地图
-          initMap(json.map3d)
+          initMap(json.map3d);
 
           //移除遮罩
-          setTimeout(removeMask, 3000)
-        })
-      })
+          setTimeout(removeMask, 3000);
+        });
+      });
 
       function removeMask() {
-        $('#mask').remove()
+        $("#mask").remove();
       }
 
       function initMap(options) {
@@ -68,10 +68,10 @@
           scene: {
             center: { lat: 11.676709, lng: 117.82576, alt: 4116236, heading: 346, pitch: -60 },
           },
-        })
+        });
 
         //创建三维地球场景
-        var map = new mars3d.Map('mars3dContainer', mapOptions)
+        var map = new mars3d.Map("mars3dContainer", mapOptions);
       }
     </script>
   </body>

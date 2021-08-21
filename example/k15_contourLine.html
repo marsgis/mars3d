@@ -79,6 +79,7 @@
           </td>
           <td>米</td>
         </tr>
+
         <tr>
           <td></td>
           <td>线宽</td>
@@ -133,10 +134,10 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var contourLine
+      var map;
+      var contourLine;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -153,10 +154,10 @@
               enableLighting: false,
             },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         contourLine = new mars3d.thing.ContourLine({
           spacing: 100,
@@ -168,21 +169,21 @@
           colorScheme: {
             elevation: {
               step: [0.0, 0.045, 0.1, 0.15, 0.37, 0.54, 1.0],
-              color: ['#000000', '#2747E0', '#D33B7D', '#D33038', '#FF9742', '#FF9742', '#ffd700', '#ffffff'],
+              color: ["#000000", "#2747E0", "#D33B7D", "#D33038", "#FF9742", "#FF9742", "#ffd700", "#ffffff"],
             },
             slope: {
               step: [0.0, 0.29, 0.5, Math.sqrt(2) / 2, 0.87, 0.91, 1.0],
-              color: ['#000000', '#2747E0', '#D33B7D', '#D33038', '#FF9742', '#FF9742', '#ffd700', '#ffffff'],
+              color: ["#000000", "#2747E0", "#D33B7D", "#D33038", "#FF9742", "#FF9742", "#ffd700", "#ffffff"],
             },
             aspect: {
               step: [0.0, 0.2, 0.4, 0.6, 0.8, 0.9, 1.0],
-              color: ['#000000', '#2747E0', '#D33B7D', '#D33038', '#FF9742', '#FF9742', '#ffd700', '#ffffff'],
+              color: ["#000000", "#2747E0", "#D33B7D", "#D33038", "#FF9742", "#FF9742", "#ffd700", "#ffffff"],
             },
           },
-        })
-        map.addThing(contourLine)
+        });
+        map.addThing(contourLine);
 
-        window.contourLine = contourLine //for test
+        window.contourLine = contourLine; //for test
 
         //演示的示例区域
         let areaItem = contourLine.addArea([
@@ -190,99 +191,99 @@
           [116.23964, 30.946376, 563.02],
           [116.223677, 30.802558, 522.04],
           [115.997891, 30.807484, 440.83],
-        ])
-        addTableItem(areaItem)
+        ]);
+        addTableItem(areaItem);
 
-        $('#chkEnabled').change(function () {
-          var val = $(this).is(':checked')
-          contourLine.contourShow = val
-        })
-        $('input[type=radio][name=shadingMaterials]').change(function () {
-          contourLine.shadingType = this.value
-        })
+        $("#chkEnabled").change(function () {
+          var val = $(this).is(":checked");
+          contourLine.contourShow = val;
+        });
+        $("input[type=radio][name=shadingMaterials]").change(function () {
+          contourLine.shadingType = this.value;
+        });
 
-        $('#txtColor').minicolors({
-          position: 'bottom left',
-          control: 'saturation',
+        $("#txtColor").minicolors({
+          position: "bottom left",
+          control: "saturation",
           change: function (hex) {
-            contourLine.color = Cesium.Color.fromCssColorString(hex)
+            contourLine.color = Cesium.Color.fromCssColorString(hex);
           },
-        })
+        });
 
-        $('#txtSpacing').range({
+        $("#txtSpacing").range({
           onChange: function (value, bfb) {
-            contourLine.spacing = value
+            contourLine.spacing = value;
           },
-        })
+        });
 
-        $('#txtWidth').range({
+        $("#txtWidth").range({
           onChange: function (value, bfb) {
-            contourLine.width = value
+            contourLine.width = value;
           },
-        })
+        });
 
-        $('#btnDraw').click(function () {
+        $("#btnDraw").click(function () {
           map.graphicLayer.startDraw({
-            type: 'polygon',
+            type: "polygon",
             style: {
-              color: '#007be6',
+              color: "#007be6",
               opacity: 0.5,
               outline: false,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.positionsShow
-              map.graphicLayer.clear()
+              var positions = graphic.positionsShow;
+              map.graphicLayer.clear();
 
-              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
+              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))); //打印下边界
 
-              let areaItem = contourLine.addArea(positions)
-              addTableItem(areaItem)
+              let areaItem = contourLine.addArea(positions);
+              addTableItem(areaItem);
             },
-          })
-        })
+          });
+        });
 
-        $('#btnDrawExtent').click(function () {
+        $("#btnDrawExtent").click(function () {
           map.graphicLayer.startDraw({
-            type: 'rectangle',
+            type: "rectangle",
             style: {
-              color: '#007be6',
+              color: "#007be6",
               opacity: 0.8,
               outline: false,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.getOutlinePositions(false)
-              map.graphicLayer.clear()
+              var positions = graphic.getOutlinePositions(false);
+              map.graphicLayer.clear();
 
-              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
+              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))); //打印下边界
 
-              let areaItem = contourLine.addArea(positions)
-              addTableItem(areaItem)
+              let areaItem = contourLine.addArea(positions);
+              addTableItem(areaItem);
             },
-          })
-        })
+          });
+        });
 
-        $('#showElse').change(function () {
-          var val = $(this).is(':checked')
-          contourLine.showElseArea = val
-        })
+        $("#showElse").change(function () {
+          var val = $(this).is(":checked");
+          contourLine.showElseArea = val;
+        });
 
-        $('#clearWJ').click(function () {
-          contourLine.clear()
-          $('#showElse').prop('checked', true)
+        $("#clearWJ").click(function () {
+          contourLine.clear();
+          $("#showElse").prop("checked", true);
 
           // 清除表格
-          var tbody = document.getElementById('tbPoly')
-          tbody.innerHTML = ''
-        })
+          var tbody = document.getElementById("tbPoly");
+          tbody.innerHTML = "";
+        });
       }
 
       // 区域表格添加一行记录
       function addTableItem(item) {
         // 增加tr和td表格
-        var tbody = document.getElementById('tbPoly')
-        var tr = document.createElement('tr')
+        var tbody = document.getElementById("tbPoly");
+        var tr = document.createElement("tr");
         tr.innerHTML = `
           <tr>
             <td>区域${item.id}</td>
@@ -290,19 +291,19 @@
               <a class="flyTo" href="javascript:void(0)" title="飞行定位到区域"><i class="fa fa-send-o"></i></a>&nbsp;&nbsp;
               <a class="remove" href="javascript:void(0)" title="删除区域"><i class="fa fa-trash"></i></a>
             </td>
-          </tr>`
-        tbody.appendChild(tr)
+          </tr>`;
+        tbody.appendChild(tr);
 
         //绑定单击事件 定位
-        tr.querySelector('.flyTo').addEventListener('click', function (e) {
-          map.flyToPositions(item.positions)
-        })
+        tr.querySelector(".flyTo").addEventListener("click", function (e) {
+          map.flyToPositions(item.positions);
+        });
 
         // 移动至绘制区域
-        tr.querySelector('.remove').addEventListener('click', function (e) {
-          contourLine.removeArea(item)
-          tbody.removeChild(tr)
-        })
+        tr.querySelector(".remove").addEventListener("click", function (e) {
+          contourLine.removeArea(item);
+          tbody.removeChild(tr);
+        });
       }
     </script>
   </body>

@@ -63,11 +63,11 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var drawLayer
-      var measure
+      var map;
+      var drawLayer;
+      var measure;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -85,71 +85,71 @@
             timeline: true, //是否显示时间线控件
 
             defaultContextMenu: true, //涉及到多语言的模块：右键菜单
-            compass: { top: '10px', right: '5px' },
-            distanceLegend: { left: '180px', bottom: '30px' },
+            compass: { top: "10px", right: "5px" },
+            distanceLegend: { left: "180px", bottom: "30px" },
             locationBar: {
               fps: true,
               template:
-                '<div>lng:{lng}</div> <div>lat:{lat}</div> <div>alt：{alt} m</div> <div>level：{level}</div><div>heading：{heading}°</div> <div>pitch：{pitch}°</div><div>cameraHeight：{cameraHeight}m</div>',
+                "<div>lng:{lng}</div> <div>lat:{lat}</div> <div>alt：{alt} m</div> <div>level：{level}</div><div>heading：{heading}°</div> <div>pitch：{pitch}°</div><div>cameraHeight：{cameraHeight}m</div>",
             },
           },
           lang: mars3d.LangType.EN, //使用英文
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         var zoom = new mars3d.control.Zoom({
           insertIndex: 1, //插入的位置顺序
-          zoomInClass: 'fa fa-plus',
-          zoomOutClass: 'fa fa-minus',
-        })
-        map.addControl(zoom)
+          zoomInClass: "fa fa-plus",
+          zoomOutClass: "fa fa-minus",
+        });
+        map.addControl(zoom);
 
         //涉及到多语言的模块：标绘提示
         drawLayer = new mars3d.layer.GraphicLayer({
           hasEdit: true,
           isAutoEditing: true, //绘制完成后是否自动激活编辑
-        })
-        map.addLayer(drawLayer)
+        });
+        map.addLayer(drawLayer);
 
         drawLayer.bindContextMenu([
           {
-            text: '删除对象',
-            iconCls: 'fa fa-trash-o',
+            text: "删除对象",
+            iconCls: "fa fa-trash-o",
             callback: function (e) {
-              let graphic = e.graphic
+              let graphic = e.graphic;
               if (!graphic) {
-                return false
+                return false;
               }
               if (graphic) {
-                drawLayer.removeGraphic(graphic)
+                drawLayer.removeGraphic(graphic);
               }
             },
           },
-        ])
+        ]);
 
         //涉及到多语言的模块：图上量算
         measure = new mars3d.thing.Measure({
           //可设置文本样式
           label: {
-            color: '#ffffff',
-            font_family: '楷体',
+            color: "#ffffff",
+            font_family: "楷体",
             font_size: 20,
             background: false,
           },
-        })
-        map.addThing(measure)
+        });
+        map.addThing(measure);
       }
 
       function startDraw(type) {
         drawLayer.startDraw({
           type: type,
           style: {
-            color: '#00ffff',
+            color: "#00ffff",
             opacity: 0.6,
           },
-        })
+        });
       }
     </script>
   </body>

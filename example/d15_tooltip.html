@@ -1,170 +1,315 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="author" content="火星科技 http://mars3d.cn ">
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>Tooltip 鼠标移入信息窗 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>Tooltip鼠标移入弹窗 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+    ></script>
 
+    <link href="css/divGraphic.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
-  <!--第三方lib-->
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-<body class="dark">
-  <!--加载前进行操作提示，优化用户体验-->
-  <div id="mask" class="signmask" onclick="removeMask()"></div>
+    <!-- 面板 -->
+    <div class="infoview">
+      <div>
+        <button id="btnGetCenter" class="btn btn-primary" onclick="bindMapDemo()">Map上直接弹出</button>
+        <button id="btnGetCenter" class="btn btn-primary" onclick="bindLayerDemo()">图层上绑定</button>
+        <button id="btnGetCenter" class="btn btn-primary" onclick="bindLayerDemo2()">图层上预定义配置</button>
+        <button id="btnGetCenter" class="btn btn-primary" onclick="bindLayerTemplateDemo()">自定义模版</button>
+      </div>
+      <div>
+        <button id="btnGetCenter" class="btn btn-primary" onclick="bindGraphicDemo1()">Graphic上绑定</button>
+        <button id="btnGetCenter" class="btn btn-primary" onclick="bindGraphicDemo2()">Graphic上局部刷新</button>
+      </div>
 
-  <div id="mars3dContainer" class="mars3d-container"></div>
+      <!--
+      <span>其他应用示例：</span>
+      <a href="editor.html#f40_cylinder_gdp" target="_blank" class="btn btn-default">自定义模版</a> -->
+    </div>
 
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      "use script"; //开发环境建议开启严格模式
 
+      var map;
+      var graphicLayer;
+      var geoJsonLayer;
 
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {});
 
-    var map
+        //创建三维地球场景
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-    function initMap(options) {
-      //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {})
+        //创建矢量数据图层
+        graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
+        map.on(mars3d.EventType.tooltipOpen, function (event) {
+          let container = event.container; //tooltip对应的DOM
+          console.log("打开了tooltip(全局监听)", event);
+        });
+        map.on(mars3d.EventType.tooltipClose, function (event) {
+          let container = event.container; //tooltip对应的DOM
+          console.log("关闭了tooltip(全局监听)", event);
+        });
 
-      //演示3种不同层次的绑定方式，可以按需使用
-      bindMapDemo()
-      bindLayerDemo()
-      bindGraphicDemo()
-    }
+        bindLayerDemo();
+      }
 
-    //1.在map地图上绑定Tooltip鼠标移入弹窗
-    function bindMapDemo() {
-      //关闭弹窗
-      map.closeTooltip()
+      function removeDemoLayer() {
+        graphicLayer.clear();
 
-      //传入坐标和内容，可以直接任意弹出
-      let position = Cesium.Cartesian3.fromDegrees(116.528227, 30.800005, 302.3)
-      map.openTooltip(position, '我是地图上直接弹出的')
-    }
-
-    //2.在layer图层上绑定Tooltip鼠标移入弹窗
-    function bindLayerDemo() {
-      var graphicLayer = new mars3d.layer.GeoJsonLayer({
-        name: '标绘示例数据',
-        url: '//data.mars3d.cn/file/geojson/mars3d-draw.json',
-      })
-      map.addLayer(graphicLayer)
-
-      //在layer上绑定Tooltip鼠标移入弹窗
-      graphicLayer.bindTooltip(
-        function (event, callback) {
-          let attr = event.graphic.attr
-          return (attr.name || '') + ' 我是layer上绑定的Tooltip'
-        },
-        {
-          anchor: [0, -12], //左右、上下的偏移像素值。
-          onAdd: function (event) {
-            //tooltip的DOM添加到页面的回调方法,特殊需要操作dom的场景下使用（如视频video、echarts等）
-            console.log('打开了tooltip', event)
-          },
-          onRemove: function (event) {
-            //tooltip的DOM从页面移除的回调方法
-            console.log('移除了tooltip', event)
-          },
+        if (geoJsonLayer) {
+          geoJsonLayer.remove(true);
+          geoJsonLayer = null;
         }
-      )
-    }
+      }
 
-    //3.在graphic数据上绑定Tooltip鼠标移入弹窗
-    function bindGraphicDemo() {
-      //创建矢量数据图层
-      let graphicLayer = new mars3d.layer.GraphicLayer()
-      map.addLayer(graphicLayer)
+      //1.在map地图上绑定Tooltip单击弹窗
+      function bindMapDemo() {
+        removeDemoLayer();
 
-      let graphic = new mars3d.graphic.BoxEntity({
-        position: new mars3d.LatLngPoint(116.336525, 31.196721, 323.35),
-        style: {
-          dimensions: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
-          fill: true,
-          color: '#00ff00',
-          opacity: 0.9,
-          label: {
-            text: 'graphic绑定的演示',
-            font_size: 25,
-            font_family: '楷体',
-            color: '#003da6',
-            outline: true,
-            outlineColor: '#bfbfbf',
-            outlineWidth: 2,
+        //关闭弹窗
+        map.closeTooltip();
+
+        //传入坐标和内容，可以直接任意弹出
+        let position = [116.328539, 30.978731, 1521];
+        map.openTooltip(position, "我是地图上直接弹出的");
+      }
+
+      //2.在layer图层上绑定Tooltip单击弹窗
+      function bindLayerDemo() {
+        removeDemoLayer();
+
+        geoJsonLayer = new mars3d.layer.GeoJsonLayer({
+          name: "标绘示例数据",
+          url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
+        });
+        map.addLayer(geoJsonLayer);
+
+        //在layer上绑定Tooltip单击弹窗
+        geoJsonLayer.bindTooltip(function (event) {
+          let attr = event.graphic?.attr;
+          return attr.type + " 我是layer上绑定的Tooltip";
+
+          // return new Promise((resolve) => {
+          //   //这里可以进行后端接口请求数据，setTimeout测试异步
+          //   setTimeout(() => {
+          //     resolve('Promise异步回调显示的弹窗内容信息')
+          //   }, 2000)
+          // })
+        });
+
+        geoJsonLayer.on(mars3d.EventType.tooltipOpen, function (event) {
+          let container = event.container; //tooltip对应的DOM
+          console.log("图层上打开了tooltip", container);
+        });
+        geoJsonLayer.on(mars3d.EventType.tooltipClose, function (event) {
+          let container = event.container; //tooltip对应的DOM
+          console.log("图层上移除了tooltip", container);
+        });
+      }
+
+      //2.在layer图层上预定义Popup单击弹窗
+      function bindLayerDemo2() {
+        removeDemoLayer();
+
+        geoJsonLayer = new mars3d.layer.GeoJsonLayer({
+          name: "标绘示例数据",
+          url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
+          //tooltip按属性字段配置，可以是字符串模板或数组
+          // tooltip: 'all', //显示所有属性，常用于测试
+          // tooltip: '{name} {type}',
+          tooltip: [
+            { field: "id", name: "编码" },
+            { field: "name", name: "名称" },
+            { field: "type", name: "类型" },
+          ],
+        });
+        map.addLayer(geoJsonLayer);
+      }
+
+      //2.在layer图层上绑定Tooltip单击弹窗
+      function bindLayerTemplateDemo() {
+        removeDemoLayer();
+
+        geoJsonLayer = new mars3d.layer.GeoJsonLayer({
+          name: "标绘示例数据",
+          url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
+        });
+        map.addLayer(geoJsonLayer);
+
+        //在layer上绑定Tooltip单击弹窗
+        geoJsonLayer.bindTooltip(
+          function (event) {
+            let attr = event.graphic?.attr;
+            return "我是layer上绑定的自定义模版Tooltip<br />" + attr.type;
+          },
+          {
+            template: `<div class="marsBlackPanel">
+                        <div class="marsBlackPanel-text">{content}</div>
+                      </div>`,
+            horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+            verticalOrigin: Cesium.VerticalOrigin.CENTER,
+          }
+        );
+
+        geoJsonLayer.on(mars3d.EventType.tooltipOpen, function (event) {
+          let container = event.container; //tooltip对应的DOM
+          console.log("图层上打开了tooltip", container);
+        });
+        geoJsonLayer.on(mars3d.EventType.tooltipClose, function (event) {
+          let container = event.container; //tooltip对应的DOM
+          console.log("图层上移除了tooltip", container);
+        });
+      }
+
+      //3.在graphic数据上绑定Tooltip单击弹窗
+      function bindGraphicDemo1() {
+        removeDemoLayer();
+
+        let graphic = new mars3d.graphic.BoxEntity({
+          position: new mars3d.LatLngPoint(116.328539, 30.978731, 1521),
+          style: {
+            dimensions: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
+            fill: true,
+            color: "#00ff00",
+            opacity: 0.9,
+            label: {
+              text: "graphic绑定的演示",
+              font_size: 19,
+              pixelOffsetY: -45,
+              horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+              verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+            },
+          },
+        });
+        graphicLayer.addGraphic(graphic);
+
+        function getInnerHtml(event) {
+          // let attr = event.graphic.attr
+          var inthtml = `<table style="width:280px;">
+                <tr><th scope="col" colspan="4"  style="text-align:center;font-size:15px;">graphic.bindTooltip</th></tr>
+                <tr><td >说明：</td><td >Tooltip鼠标单击信息弹窗 </td></tr>
+                <tr><td >方式：</td><td >可以绑定任意html </td></tr>
+                <tr><td >备注：</td><td >我是graphic上绑定的Tooltip</td></tr>
+              </table>`;
+          return inthtml;
+        }
+
+        //绑定Tooltip
+        graphic.bindTooltip(getInnerHtml).openTooltip();
+
+        graphic.on(mars3d.EventType.tooltipOpen, function (event) {
+          let container = event.container; //tooltip对应的DOM
+          console.log("打开了tooltip", container);
+        });
+        graphic.on(mars3d.EventType.tooltipClose, function (event) {
+          let container = event.container; //tooltip对应的DOM
+          console.log("移除了tooltip", container);
+        });
+      }
+
+      //3.在graphic数据上绑定Tooltip单击弹窗
+      function bindGraphicDemo2() {
+        removeDemoLayer();
+
+        var graphic = new mars3d.graphic.BillboardEntity({
+          position: new mars3d.LatLngPoint(116.328539, 30.978731, 1521),
+          style: {
+            image: "img/marker/di3.png",
+            scale: 0.5,
             horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
             verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+            label: {
+              text: "Tooltip局部更新绑定的演示",
+              font_size: 18,
+              font_family: "楷体",
+              pixelOffsetY: -45,
+              horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+              verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+            },
           },
-        },
-      })
+        });
+        graphicLayer.addGraphic(graphic);
 
-      graphicLayer.addGraphic(graphic)
+        let innerHtml = `<table style="width:280px;">
+                <tr><th scope="col" colspan="4"  style="text-align:center;font-size:15px;">graphic.bindTooltip局部刷新</th></tr>
+                <tr><td >说明：</td><td >Tooltip鼠标单击信息弹窗 </td></tr>
+                <tr><td >方式：</td><td >可以绑定任意html </td></tr>
+                <tr><td >备注：</td><td >我是graphic上绑定的Tooltip</td></tr>
+                <tr><td >时间：</td><td id="tdTime"></td></tr>
+                <tr><td colspan="4" style="text-align:right;cursor: pointer;"><a href="javascript:showXQ()">更多</a></td></tr>
+              </table>`;
+        //绑定Tooltip
+        graphic.bindTooltip(innerHtml, { offsetY: -30 }).openTooltip();
 
-      var inthtml =
-        '<table style="width:280px;">' +
-        '<tr><th scope="col" colspan="4"  style="text-align:center;font-size:15px;">' +
-        name +
-        '</th></tr>' +
-        '<tr><td >说明：</td><td >Tooltip鼠标移入自动弹窗 </td></tr>' +
-        '<tr><td >方式：</td><td >可以绑定任意html </td></tr>' +
-        '<tr><td >备注：</td><td >我是graphic上绑定的Tooltip</td></tr>' +
-        '<tr><td colspan="4" style="text-align:right;"><a href="javascript:showXQ(\'' +
-        name +
-        '\')">更多</a></td></tr></table>'
+        //刷新局部DOM,不影响tooltip面板的其他控件操作
+        graphic.on(mars3d.EventType.postRender, function (event) {
+          let container = event.container; //tooltip对应的DOM
+          let tdTime = container.querySelector("#tdTime");
+          if (tdTime) {
+            var date = new Date().format("yyyy-MM-dd HH:mm:ss S");
+            tdTime.innerHTML = date;
+          }
+        });
 
-      //绑定Tooltip
-      graphic
-        .bindTooltip(inthtml, {
-          anchor: [0, -12], //左右、上下的偏移像素值。
-          onAdd: function (event) {
-            //tooltip的DOM添加到页面的回调方法,特殊需要操作dom的场景下使用（如视频video、echarts等）
-            console.log('打开了tooltip', event)
-          },
-          onRemove: function (event) {
-            //tooltip的DOM从页面移除的回调方法
-            console.log('移除了tooltip', event)
-          },
-        })
-        .openTooltip()
-    }
+        // graphic.on(mars3d.EventType.tooltipOpen, function (event) {
+        //   let container = event.container //tooltip对应的DOM
+        //   console.log('打开了tooltip', container)
+        // })
 
-    //只是为了演示，可以单击详情
-    function showXQ(id) {
-      window.layer.open({
-        type: 2,
-        title: '查看历史',
-        fix: true,
-        shadeClose: true,
-        maxmin: true,
-        area: ['80%', '80%'],
-        content: 'http://marsgis.cn/',
-        skin: 'layer-mars-dialog animation-scale-up',
-        success: function (layero) {},
-      })
-    }
-  </script>
-</body>
+        // graphic.on(mars3d.EventType.tooltipClose, function (event) {
+        //   let container = event.container //tooltip对应的DOM
+        //   console.log('移除了tooltip', container)
+        // })
+      }
 
+      //只是为了演示，可以单击详情
+      function showXQ(id) {
+        window.layer.open({
+          type: 2,
+          title: "查看历史",
+          fix: true,
+          shadeClose: true,
+          maxmin: true,
+          area: ["80%", "80%"],
+          content: "http://marsgis.cn/",
+          skin: "layer-mars-dialog animation-scale-up",
+          success: function (layero) {},
+        });
+      }
+    </script>
+  </body>
 </html>

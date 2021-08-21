@@ -60,9 +60,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -70,25 +70,25 @@
           scene: {
             center: { lat: 25.092295, lng: 102.64431, alt: 2815, heading: 104, pitch: -32 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //固定光照，避免gltf模型随时间存在亮度不一致。
-        map.fixedLight = true
+        map.fixedLight = true;
 
         //加模型
         var tilesetLayer = new mars3d.layer.TilesetLayer({
-          url: '//data.mars3d.cn/3dtiles/qx-xiaoqu/tileset.json',
+          url: "//data.mars3d.cn/3dtiles/qx-xiaoqu/tileset.json",
           maximumScreenSpaceError: 6,
           maximumMemoryUsage: 2048,
-        })
-        map.addLayer(tilesetLayer)
+        });
+        map.addLayer(tilesetLayer);
 
         //限高分析类
         var limitHeight = new mars3d.thing.LimitHeight({
-          color: 'rgba(255,0,0,0.5)',
+          color: "rgba(255,0,0,0.5)",
           height: 80, //限高
           bottomHeight: 1865, //模型地面的海拔高度（单位：米）
           positions: [
@@ -97,65 +97,65 @@
             [102.650108, 25.085209, 0],
             [102.655136, 25.097225, 0],
           ],
-        })
-        map.addThing(limitHeight)
+        });
+        map.addThing(limitHeight);
 
         //自动读取模型的高度，但不一定准确。
         // tilesetLayer.on(mars3d.EventType.load, function (event) {
         //   limitHeight.bottomHeight = mars3d.LatLngPoint.fromCartesian(tilesetLayer.boundingSphere.center).alt
         // })
 
-        $('#btnDraw').click(function () {
-          map.graphicLayer.clear()
+        $("#btnDraw").click(function () {
+          map.graphicLayer.clear();
           map.graphicLayer.startDraw({
-            type: 'polygon',
+            type: "polygon",
             style: {
-              color: '#ffff00',
+              color: "#ffff00",
               opacity: 0.3,
               clampToGround: true,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.positionsShow
-              limitHeight.positions = positions
+              var positions = graphic.positionsShow;
+              limitHeight.positions = positions;
 
-              map.graphicLayer.clear()
-              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
+              map.graphicLayer.clear();
+              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))); //打印下边界
             },
-          })
-        })
+          });
+        });
 
-        $('#btnDrawExtent').click(function () {
-          map.graphicLayer.clear()
+        $("#btnDrawExtent").click(function () {
+          map.graphicLayer.clear();
           map.graphicLayer.startDraw({
-            type: 'rectangle',
+            type: "rectangle",
             style: {
-              color: '#ffff00',
+              color: "#ffff00",
               opacity: 0.3,
               clampToGround: true,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.getOutlinePositions(false)
-              limitHeight.positions = positions
+              var positions = graphic.getOutlinePositions(false);
+              limitHeight.positions = positions;
 
-              map.graphicLayer.clear()
+              map.graphicLayer.clear();
             },
-          })
-        })
+          });
+        });
 
         //滑动条
-        $('#range_currHeight').range({
+        $("#range_currHeight").range({
           onChange: function (value, bfb) {
-            limitHeight.height = value
-            $('#lbl_nowHeight').html(value.toFixed(1))
+            limitHeight.height = value;
+            $("#lbl_nowHeight").html(value.toFixed(1));
           },
-        })
+        });
 
-        $('#btnClear').click(function () {
-          limitHeight.clear()
-          map.graphicLayer.clear()
-        })
+        $("#btnClear").click(function () {
+          limitHeight.clear();
+          map.graphicLayer.clear();
+        });
       }
     </script>
   </body>

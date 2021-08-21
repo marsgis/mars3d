@@ -66,13 +66,13 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      let tiles3dLayer
+      var map;
+      let tiles3dLayer;
 
       function initMap(options) {
-        var color = $('#txtColor').val()
+        var color = $("#txtColor").val();
 
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
@@ -97,29 +97,29 @@
           },
           layers: [
             {
-              name: '网格线',
-              type: 'grid',
-              color: '#ffffff',
+              name: "网格线",
+              type: "grid",
+              color: "#ffffff",
               alpha: 0.03,
               cells: 2,
               show: true,
             },
           ],
-        })
-        delete mapOptions.control
-        delete mapOptions.terrain
-        delete mapOptions.basemaps
+        });
+        delete mapOptions.control;
+        delete mapOptions.terrain;
+        delete mapOptions.basemaps;
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        $('#txtColor').minicolors({
-          position: 'bottom left',
-          control: 'saturation',
+        $("#txtColor").minicolors({
+          position: "bottom left",
+          control: "saturation",
           change: function (color) {
-            var clr = Cesium.Color.fromCssColorString(color)
-            map.scene.backgroundColor = clr //空间背景色
-            map.scene.globe.baseColor = clr //地表背景色
+            var clr = Cesium.Color.fromCssColorString(color);
+            map.scene.backgroundColor = clr; //空间背景色
+            map.scene.globe.baseColor = clr; //地表背景色
 
             // map.setSceneOptions({
             //   backgroundColor: color, //天空背景色
@@ -128,52 +128,52 @@
             //   },
             // })
 
-            $('body').css('background', color)
+            $("body").css("background", color);
           },
-        })
+        });
 
         //历史记录模型地址
-        var lasturl = haoutil.storage.get('g20_onlyModel')
+        var lasturl = haoutil.storage.get("g20_onlyModel");
         if (lasturl) {
-          $('#txtModel').val(lasturl)
+          $("#txtModel").val(lasturl);
         }
-        setTimeout(showModel, 1000)
+        setTimeout(showModel, 1000);
       }
 
       function removeLayer() {
         if (tiles3dLayer) {
-          map.removeLayer(tiles3dLayer, true)
-          tiles3dLayer = null
+          map.removeLayer(tiles3dLayer, true);
+          tiles3dLayer = null;
         }
       }
 
       //当前页面业务相关
       function showModel() {
-        removeLayer()
-        var _url = $('#txtModel').val()
-        haoutil.storage.add('g20_onlyModel', _url)
+        removeLayer();
+        var _url = $("#txtModel").val();
+        haoutil.storage.add("g20_onlyModel", _url);
 
         tiles3dLayer = new mars3d.layer.TilesetLayer({
           url: _url,
           maximumScreenSpaceError: 1,
           flyTo: true,
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
         //单击事件
         tiles3dLayer.on(mars3d.EventType.load, function (event) {
-          console.log('模型加载完成', event)
+          console.log("模型加载完成", event);
 
           //限定缩放级别
-          map.scene.screenSpaceCameraController.maximumZoomDistance = tiles3dLayer.boundingSphere.radius * 5
+          map.scene.screenSpaceCameraController.maximumZoomDistance = tiles3dLayer.boundingSphere.radius * 5;
 
           //自动贴地处理
-          tiles3dLayer.clampToGround(10)
-        })
+          tiles3dLayer.clampToGround(10);
+        });
       }
 
       function flyTo() {
-        tiles3dLayer.flyTo()
+        tiles3dLayer.flyTo();
       }
     </script>
   </body>

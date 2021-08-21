@@ -40,20 +40,20 @@
     </div>
 
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
       $(document).ready(function () {
         if (!mars3d.Util.webglreport()) {
-          mars3d.Util.webglerror()
-          return
+          mars3d.Util.webglerror();
+          return;
         }
-        initMap()
-      })
+        initMap();
+      });
 
-      var map
+      var map;
       function initMap() {
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', {
+        map = new mars3d.Map("mars3dContainer", {
           scene: {
             center: { lat: 31.675177, lng: 117.323257, alt: 81193, heading: 359, pitch: -79 },
             highDynamicRange: false,
@@ -66,54 +66,54 @@
             locationBar: { fps: true }, //状态栏
           },
           terrain: {
-            url: 'http://data.mars3d.cn/terrain',
+            url: "http://data.mars3d.cn/terrain",
             show: true,
           },
           //方式1：在创建地球前的参数中配置
           basemaps: [
             {
-              name: '高德电子',
-              icon: 'img/basemaps/gaode_vec.png',
-              type: 'gaode',
-              layer: 'vec',
+              name: "高德电子",
+              icon: "img/basemaps/gaode_vec.png",
+              type: "gaode",
+              layer: "vec",
               show: true,
             },
             {
-              name: '高德影像',
-              icon: 'img/basemaps/gaode_img.png',
-              type: 'group',
+              name: "高德影像",
+              icon: "img/basemaps/gaode_img.png",
+              type: "group",
               layers: [
-                { name: '底图', type: 'gaode', layer: 'img_d' },
-                { name: '注记', type: 'gaode', layer: 'img_z' },
+                { name: "底图", type: "gaode", layer: "img_d" },
+                { name: "注记", type: "gaode", layer: "img_z" },
               ],
             },
           ],
-        })
+        });
 
         //poi查询栏
-        activatePOIQuery(map)
+        activatePOIQuery(map);
       }
 
       //叠加的图层
-      var tileLayer
+      var tileLayer;
 
       function addLayer() {
-        removeLayer()
+        removeLayer();
 
         //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
         tileLayer = new mars3d.layer.GaodeLayer({
-          layer: 'time',
+          layer: "time",
           minimumTerrainLevel: 4,
           minimumLevel: 4,
-          proxy: '//server.mars3d.cn/proxy/',
-        })
-        map.addLayer(tileLayer)
+          proxy: "//server.mars3d.cn/proxy/",
+        });
+        map.addLayer(tileLayer);
       }
 
       function removeLayer() {
         if (tileLayer) {
-          map.removeLayer(tileLayer, true)
-          tileLayer = null
+          map.removeLayer(tileLayer, true);
+          tileLayer = null;
         }
       }
 
@@ -121,9 +121,9 @@
       function activatePOIQuery(map) {
         mars3d.widget.activate({
           map: map,
-          name: 'POI查询',
-          uri: 'widgets/queryGaodePOI/widget.js',
-        })
+          name: "POI查询",
+          uri: "widgets/queryGaodePOI/widget.js",
+        });
       }
     </script>
   </body>

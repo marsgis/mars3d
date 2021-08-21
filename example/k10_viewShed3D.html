@@ -96,10 +96,10 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var arrViewField = []
+      var map;
+      var arrViewField = [];
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -111,34 +111,34 @@
               depthTestAgainstTerrain: true, //不加无法投射到地形上
             },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //添加参考三维模型
         var tiles3dLayer = new mars3d.layer.TilesetLayer({
-          url: '//data.mars3d.cn/3dtiles/qx-shequ/tileset.json',
+          url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
           position: { alt: 11.5 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
           dynamicScreenSpaceError: true,
           cullWithChildrenBounds: false,
           luminanceAtZenith: 0.6,
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
-        $('#chkDebugFrustum').change(function () {
-          var showFrustum = $(this).is(':checked')
+        $("#chkDebugFrustum").change(function () {
+          var showFrustum = $(this).is(":checked");
 
           for (var i = 0, len = arrViewField.length; i < len; i++) {
-            arrViewField[i].showFrustum = showFrustum
+            arrViewField[i].showFrustum = showFrustum;
           }
-        })
+        });
 
         //添加可视域
-        $('#btnAddPoint').click(function (e) {
-          var showFrustum = $('#chkDebugFrustum').is(':checked')
+        $("#btnAddPoint").click(function (e) {
+          var showFrustum = $("#chkDebugFrustum").is(":checked");
 
           var thisViewField = new mars3d.thing.ViewShed3D({
             horizontalAngle: Number(viewModel.horizontalAngle),
@@ -146,24 +146,24 @@
             distance: Number(viewModel.distance),
             showFrustum: showFrustum,
             offsetHeight: 1.5, //加人的身高等因素，略微抬高一些
-          })
-          map.addThing(thisViewField)
+          });
+          map.addThing(thisViewField);
 
           thisViewField.on(mars3d.EventType.end, function (event) {
-            viewModel.distance = event.distance
-          })
-          arrViewField.push(thisViewField)
-        })
+            viewModel.distance = event.distance;
+          });
+          arrViewField.push(thisViewField);
+        });
 
         //清除
-        $('#btnClear').click(function (e) {
+        $("#btnClear").click(function (e) {
           for (var i = 0, len = arrViewField.length; i < len; i++) {
-            map.removeThing(arrViewField[i], true)
+            map.removeThing(arrViewField[i], true);
           }
-          arrViewField = []
-        })
+          arrViewField = [];
+        });
 
-        bindViewModel()
+        bindViewModel();
       }
 
       //面板参数更新
@@ -171,39 +171,39 @@
         verticalAngle: 90,
         horizontalAngle: 120,
         distance: 10,
-      }
+      };
 
       //绑定面板的参数监听处理
       function bindViewModel() {
-        Cesium.knockout.track(viewModel) //面板更新监听
+        Cesium.knockout.track(viewModel); //面板更新监听
 
         // Bind the viewModel to the DOM elements of the UI that call for it.
-        var toolbar = document.getElementById('toolbar')
-        Cesium.knockout.applyBindings(viewModel, toolbar)
+        var toolbar = document.getElementById("toolbar");
+        Cesium.knockout.applyBindings(viewModel, toolbar);
 
         // Make the active imagery layer a subscriber of the viewModel.
         function subscribeLayerParameter(name) {
           Cesium.knockout.getObservable(viewModel, name).subscribe(function (newValue) {
-            updateParams()
-          })
+            updateParams();
+          });
         }
-        subscribeLayerParameter('verticalAngle')
-        subscribeLayerParameter('horizontalAngle')
-        subscribeLayerParameter('distance')
+        subscribeLayerParameter("verticalAngle");
+        subscribeLayerParameter("horizontalAngle");
+        subscribeLayerParameter("distance");
       }
 
       function updateParams() {
         if (arrViewField.length === 0) {
-          return
+          return;
         }
 
-        var thisViewField = arrViewField[arrViewField.length - 1]
+        var thisViewField = arrViewField[arrViewField.length - 1];
         if (!thisViewField) {
-          return
+          return;
         }
-        thisViewField.distance = Number(viewModel.distance)
-        thisViewField.horizontalAngle = Number(viewModel.horizontalAngle)
-        thisViewField.verticalAngle = Number(viewModel.verticalAngle)
+        thisViewField.distance = Number(viewModel.distance);
+        thisViewField.horizontalAngle = Number(viewModel.horizontalAngle);
+        thisViewField.verticalAngle = Number(viewModel.verticalAngle);
       }
     </script>
   </body>

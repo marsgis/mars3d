@@ -49,9 +49,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -59,17 +59,17 @@
           scene: {
             center: { lat: 31.654436, lng: 117.083883, alt: 759, heading: 316, pitch: -50 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //固定光照，避免gltf模型随时间存在亮度不一致。
-        map.fixedLight = true
+        map.fixedLight = true;
 
         var tilesetLayer = new mars3d.layer.TilesetLayer({
-          name: '石化工厂',
-          url: '//data.mars3d.cn/3dtiles/max-shihua/tileset.json',
+          name: "石化工厂",
+          url: "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
           position: { lng: 117.077158, lat: 31.659116, alt: 24.6 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
@@ -81,13 +81,12 @@
             pitch: -50.1,
             roll: 359.8,
           },
-          showClickFeature: true,
-          popup: 'all',
-        })
-        map.addLayer(tilesetLayer)
+          popup: "all",
+        });
+        map.addLayer(tilesetLayer);
 
         //测试点数据，实际开发时换掉
-        var arrPoints = getRandomPoints(900)
+        var arrPoints = getRandomPoints(900);
 
         //热力图 图层
         var heatLayer = new mars3d.layer.HeatLayer({
@@ -103,8 +102,8 @@
             classificationType: Cesium.ClassificationType.CESIUM_3D_TILE,
             clampToGround: true,
           },
-        })
-        map.addLayer(heatLayer)
+        });
+        map.addLayer(heatLayer);
       }
 
       //获取bbox矩形区域内的count个随机点
@@ -112,17 +111,17 @@
         var xmin = 117.075718,
           xmax = 117.083508,
           ymin = 31.654645,
-          ymax = 31.661744
+          ymax = 31.661744;
 
-        var arr = []
-        var arrPoint = turf.randomPoint(count, { bbox: [xmin, ymin, xmax, ymax] }).features //随机点
+        var arr = [];
+        var arrPoint = turf.randomPoint(count, { bbox: [xmin, ymin, xmax, ymax] }).features; //随机点
         for (var i = 0; i < arrPoint.length; i++) {
-          var item = arrPoint[i].geometry.coordinates
-          var val = Math.floor(Math.random() * 100) //热力值
+          var item = arrPoint[i].geometry.coordinates;
+          var val = Math.floor(Math.random() * 100); //热力值
 
-          arr.push({ lng: item[0], lat: item[1], value: val })
+          arr.push({ lng: item[0], lat: item[1], value: val });
         }
-        return arr
+        return arr;
       }
     </script>
   </body>

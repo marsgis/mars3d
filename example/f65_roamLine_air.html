@@ -28,7 +28,7 @@
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
-    <link href="css/divpoint.css" rel="stylesheet" />
+    <link href="css/divGraphic.css" rel="stylesheet" />
     <style>
       .mp_table {
         width: 100%;
@@ -125,106 +125,106 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var roamLine
+      var map;
+      var roamLine;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.Util.merge(options, {})
+        var mapOptions = mars3d.Util.merge(options, {});
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //参数可以从 基础项目 飞行漫游功能界面操作后保存JSON
         roamLine = new mars3d.graphic.RoamLine({
-          name: '空中漫游',
-          timeField: 'datatime',
+          name: "空中漫游",
+          timeField: "datatime",
           positions: [
-            { lng: 117.217898, lat: 31.80021, alt: 500, datatime: '2021/3/25 0:01:00' },
-            { lng: 117.217535, lat: 31.815032, alt: 500, datatime: '2021/3/25 0:01:30' },
-            { lng: 117.21596, lat: 31.853067, alt: 500, datatime: '2021/3/25 0:02:10' },
+            { lng: 117.217898, lat: 31.80021, alt: 500, datatime: "2021/3/25 0:01:00" },
+            { lng: 117.217535, lat: 31.815032, alt: 500, datatime: "2021/3/25 0:01:30" },
+            { lng: 117.21596, lat: 31.853067, alt: 500, datatime: "2021/3/25 0:02:10" },
           ],
           camera: {
-            type: 'dy',
+            type: "dy",
             followedX: 50,
             followedZ: 10,
           },
           clockLoop: true, //是否循环播放
           interpolation: true, //setInterpolationOptions插值
-        })
-        graphicLayer.addGraphic(roamLine)
+        });
+        graphicLayer.addGraphic(roamLine);
 
         //开始漫游
-        roamLine.start()
+        roamLine.start();
 
-        addDivPoint(roamLine.property)
+        addDivPoint(roamLine.property);
 
         //显示基本信息，名称、总长、总时间
-        $('#td_alltimes').html(haoutil.str.formatTime(roamLine.alltimes))
-        $('#td_alllength').html(haoutil.str.formatLength(roamLine.alllen))
+        $("#td_alltimes").html(haoutil.str.formatTime(roamLine.alltimes));
+        $("#td_alllength").html(haoutil.str.formatLength(roamLine.alllen));
 
         roamLine.on(mars3d.EventType.change, (event) => {
           //面板显示相关信息
-          showRealTimeInfo(event, roamLine.alltimes)
-        })
+          showRealTimeInfo(event, roamLine.alltimes);
+        });
       }
 
       //显示实时坐标和时间
       function showRealTimeInfo(params, _alltime) {
         if (params == null) {
-          return
+          return;
         }
 
-        var val = Math.ceil((params.time * 100) / _alltime)
+        var val = Math.ceil((params.time * 100) / _alltime);
         if (val < 1) {
-          val = 1
+          val = 1;
         }
         if (val > 100) {
-          val = 100
+          val = 100;
         }
 
-        $('.progress-bar')
-          .css('width', val + '%')
-          .attr('aria-valuenow', val)
-          .html(val + '%')
+        $(".progress-bar")
+          .css("width", val + "%")
+          .attr("aria-valuenow", val)
+          .html(val + "%");
 
-        $('#td_jd').html(params.lng)
-        $('#td_wd').html(params.lat)
-        $('#td_gd').html(haoutil.str.formatLength(params.alt))
+        $("#td_jd").html(params.lng);
+        $("#td_wd").html(params.lat);
+        $("#td_gd").html(haoutil.str.formatLength(params.alt));
 
-        $('#td_times').html(haoutil.str.formatTime(params.time))
-        $('#td_length').html(haoutil.str.formatLength(params.len))
+        $("#td_times").html(haoutil.str.formatTime(params.time));
+        $("#td_length").html(haoutil.str.formatLength(params.len));
 
         if (params.hbgd) {
-          $('#td_dmhb').html(haoutil.str.formatLength(params.hbgd))
+          $("#td_dmhb").html(haoutil.str.formatLength(params.hbgd));
         } else {
-          $('#td_dmhb').html('未知')
+          $("#td_dmhb").html("未知");
         }
 
         if (params.ldgd) {
-          $('#td_ldgd').html(haoutil.str.formatLength(params.ldgd))
+          $("#td_ldgd").html(haoutil.str.formatLength(params.ldgd));
         } else {
-          $('#td_ldgd').html('未知')
+          $("#td_ldgd").html("未知");
         }
       }
 
       function addDivPoint(position) {
         //创建DIV数据图层
-        var divLayer = new mars3d.layer.DivLayer()
-        map.addLayer(divLayer)
+        var divLayer = new mars3d.layer.DivLayer();
+        map.addLayer(divLayer);
 
         var graphic = new mars3d.graphic.DivGraphic({
           position: position,
           hasCache: false,
           style: {
-            html: `<div class="divpoint divpoint-theme-29baf1">
-                        <div class="divpoint-wrap">
+            html: `<div class="marsTiltPanel marsTiltPanel-theme-blue">
+                        <div class="marsTiltPanel-wrap">
                             <div class="area">
                                 <div class="arrow-lt"></div>
                                 <div class="b-t"></div>
@@ -258,8 +258,8 @@
                     </div>`,
             scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 100000, 0.1),
           },
-        })
-        divLayer.addGraphic(graphic)
+        });
+        divLayer.addGraphic(graphic);
       }
     </script>
   </body>

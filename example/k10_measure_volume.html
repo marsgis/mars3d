@@ -100,11 +100,11 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var measure
-      var measureVolume
+      var map;
+      var measure;
+      var measureVolume;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -113,19 +113,19 @@
             globe: { depthTestAgainstTerrain: true },
             center: { lat: 30.883785, lng: 116.230883, alt: 8121, heading: 266, pitch: -62 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         measure = new mars3d.thing.Measure({
           label: {
-            color: '#ffffff',
-            font_family: '楷体',
+            color: "#ffffff",
+            font_family: "楷体",
             font_size: 20,
           },
-        })
-        map.addThing(measure)
+        });
+        map.addThing(measure);
 
         //直接传入坐标分析
         measureVolume = measure.volume({
@@ -141,101 +141,101 @@
           ]),
           splitNum: 6,
           height: 450,
-        })
+        });
 
         measure.on(mars3d.EventType.start, function (event) {
-          console.log('开始分析', event)
+          console.log("开始分析", event);
 
-          clearInterResult() //在js/showPolygonInter.js
-          haoutil.loading.show()
+          clearInterResult(); //在js/showPolygonInter.js
+          haoutil.loading.show();
 
           //打印下边界，测试用
-          var coords = mars3d.PointTrans.cartesians2lonlats(event.positions)
-          console.log(JSON.stringify(coords))
-        })
+          var coords = mars3d.PointTrans.cartesians2lonlats(event.positions);
+          console.log(JSON.stringify(coords));
+        });
         measure.on(mars3d.EventType.end, function (event) {
-          console.log('分析完成', event)
-          haoutil.loading.close()
+          console.log("分析完成", event);
+          haoutil.loading.close();
 
-          showHeightVal(event.sourceTarget)
+          showHeightVal(event.sourceTarget);
 
           //显示结果
-          var showResult = $('#chkShowPolygonInter').is(':checked')
+          var showResult = $("#chkShowPolygonInter").is(":checked");
           if (showResult) {
-            showInterResult(event.list) //在js/showPolygonInter.js
+            showInterResult(event.list); //在js/showPolygonInter.js
           }
-        })
+        });
 
-        $('#measure').click(function () {
+        $("#measure").click(function () {
           //手动绘制的方式分析
           measureVolume = measure.volume({
             splitNum: 6, //面内插值次数，控制精度[注意精度越大，分析时间越长]
             // minHeight: 50  //可以设置一个固定的最低高度
-          })
-        })
+          });
+        });
 
-        $('#clear').click(function () {
-          measure.clear()
-          clearInterResult() //在js/showPolygonInter.js
-        })
+        $("#clear").click(function () {
+          measure.clear();
+          clearInterResult(); //在js/showPolygonInter.js
+        });
 
-        $('#txtHeight').change(function () {
-          var num = Number($(this).val())
-          measureVolume.height = num
-          showHeightVal()
-        })
+        $("#txtHeight").change(function () {
+          var num = Number($(this).val());
+          measureVolume.height = num;
+          showHeightVal();
+        });
 
-        $('#txtMinHeight').change(function () {
-          var num = Number($(this).val())
+        $("#txtMinHeight").change(function () {
+          var num = Number($(this).val());
           if (num > measureVolume.height) {
-            haoutil.msg('墙底部高度不能高于基准面高')
-            $('#txtMinHeight').val(measureVolume.minHeight.toFixed(1))
-            return
+            haoutil.msg("墙底部高度不能高于基准面高");
+            $("#txtMinHeight").val(measureVolume.minHeight.toFixed(1));
+            return;
           }
-          measureVolume.minHeight = num
-        })
+          measureVolume.minHeight = num;
+        });
 
-        $('#txtMaxHeight').change(function () {
-          var num = Number($(this).val())
+        $("#txtMaxHeight").change(function () {
+          var num = Number($(this).val());
 
-          var maxHeight = getFixedNum(measureVolume.polygonMaxHeight)
+          var maxHeight = getFixedNum(measureVolume.polygonMaxHeight);
           if (num < maxHeight) {
-            haoutil.msg('墙顶部高度不能低于区域内的地表高' + maxHeight)
-            $('#txtMaxHeight').val(maxHeight)
-            measureVolume.maxHeight = Number(maxHeight)
-            return
+            haoutil.msg("墙顶部高度不能低于区域内的地表高" + maxHeight);
+            $("#txtMaxHeight").val(maxHeight);
+            measureVolume.maxHeight = Number(maxHeight);
+            return;
           }
           if (num < measureVolume.height) {
-            haoutil.msg('墙顶部高度不能低于基准面高')
-            $('#txtMaxHeight').val(measureVolume.maxHeight.toFixed(1))
-            return
+            haoutil.msg("墙顶部高度不能低于基准面高");
+            $("#txtMaxHeight").val(measureVolume.maxHeight.toFixed(1));
+            return;
           }
-          measureVolume.maxHeight = num
-        })
+          measureVolume.maxHeight = num;
+        });
 
-        $('#selHeight').click(function () {
-          measureVolume.selecteHeight(showHeightVal)
-        })
+        $("#selHeight").click(function () {
+          measureVolume.selecteHeight(showHeightVal);
+        });
 
-        $('#chkShowPolygonInter').change(function () {
-          var showResult = $(this).is(':checked')
+        $("#chkShowPolygonInter").change(function () {
+          var showResult = $(this).is(":checked");
 
           if (showResult) {
-            showInterResult(measureVolume.interPolygonObj.list)
+            showInterResult(measureVolume.interPolygonObj.list); //在js/showPolygonInter.js
           } else {
-            clearInterResult()
+            clearInterResult(); //在js/showPolygonInter.js
           }
-        })
+        });
       }
 
       function showHeightVal() {
-        $('#txtHeight').val(measureVolume.height.toFixed(1))
-        $('#txtMinHeight').val(measureVolume.minHeight.toFixed(1))
-        $('#txtMaxHeight').val(getFixedNum(measureVolume.maxHeight))
+        $("#txtHeight").val(measureVolume.height.toFixed(1));
+        $("#txtMinHeight").val(measureVolume.minHeight.toFixed(1));
+        $("#txtMaxHeight").val(getFixedNum(measureVolume.maxHeight));
       }
 
       function getFixedNum(val) {
-        return Math.ceil(val * 10) / 10
+        return Math.ceil(val * 10) / 10;
       }
     </script>
   </body>

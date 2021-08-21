@@ -67,9 +67,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -78,86 +78,86 @@
             //此处参数会覆盖config.json中的对应配置
             center: { lat: 30.841762, lng: 116.26537, alt: 3281, heading: 39, pitch: -63 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
       }
 
       function removeAll() {
-        map.graphicLayer.clear()
-        clearInterResult() //在js/showPolygonInter.js
+        map.graphicLayer.clear();
+        clearInterResult(); //在js/showPolygonInter.js
       }
 
       function interPolygon() {
         map.graphicLayer.startDraw({
-          type: 'polygon',
+          type: "polygon",
           style: {
-            color: '#29cf34',
+            color: "#29cf34",
             opacity: 0.3,
             outline: true,
-            outlineColor: '#ffffff',
+            outlineColor: "#ffffff",
             clampToGround: true,
           },
           success: function (graphic) {
-            var positions = graphic.positionsShow
-            map.graphicLayer.clear()
+            var positions = graphic.positionsShow;
+            map.graphicLayer.clear();
 
-            var splitNum = Number($('#txtSplitNum').val())
+            var splitNum = Number($("#txtSplitNum").val());
             var resultInter = mars3d.PolyUtil.interPolygon({
               scene: map.scene,
               positions: positions,
               splitNum: splitNum, //splitNum插值分割的个数
-            })
+            });
 
-            showInterResult(resultInter.list) //在js/showPolygonInter.js
+            showInterResult(resultInter.list); //在js/showPolygonInter.js
           },
-        })
+        });
       }
 
       function interLine(clampToGround) {
         map.graphicLayer.startDraw({
-          type: 'polyline',
+          type: "polyline",
           style: {
-            color: '#55ff33',
+            color: "#55ff33",
             width: 3,
           },
           success: function (graphic) {
-            var positions = graphic.positionsShow
-            map.graphicLayer.clear()
+            var positions = graphic.positionsShow;
+            map.graphicLayer.clear();
 
-            var splitNum = Number($('#txtSplitLineNum').val())
+            var splitNum = Number($("#txtSplitLineNum").val());
             var arrLine = mars3d.PolyUtil.interLine(positions, {
               splitNum: splitNum, // 插值分割的个数
-            })
+            });
 
-            showInterLineResult(arrLine) //在js/showPolygonInter.js
+            showInterLineResult(arrLine); //在js/showPolygonInter.js
           },
-        })
+        });
       }
 
       function interPolyline(clampToGround) {
         map.graphicLayer.startDraw({
-          type: 'polyline',
+          type: "polyline",
           style: {
-            color: '#55ff33',
+            color: "#55ff33",
             width: 3,
             clampToGround: true,
           },
           success: function (graphic) {
-            var positions = graphic.positionsShow
-            map.graphicLayer.clear()
+            var positions = graphic.positionsShow;
+            map.graphicLayer.clear();
 
-            var splitNum = Number($('#txtSplitLineNum').val())
+            var splitNum = Number($("#txtSplitLineNum").val());
             var arrLine = mars3d.PolyUtil.interPolyline({
               scene: map.scene,
               positions: positions,
               splitNum: splitNum, // 插值分割的个数
-            })
+            });
 
-            showInterLineResult(arrLine) //在js/showPolygonInter.js
+            showInterLineResult(arrLine); //在js/showPolygonInter.js
           },
-        })
+        });
       }
     </script>
   </body>

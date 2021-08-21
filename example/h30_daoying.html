@@ -43,9 +43,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -56,25 +56,25 @@
               depthTestAgainstTerrain: true,
             },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //添加参考三维模型
         var tiles3dLayer = new mars3d.layer.TilesetLayer({
-          url: '//data.mars3d.cn/3dtiles/qx-simiao/tileset.json',
+          url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
           position: { alt: 80.6 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
           dynamicScreenSpaceError: true,
           cullWithChildrenBounds: false,
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
         //倒影效果
-        var invertedEffect = new mars3d.effect.InvertedEffect()
-        map.addEffect(invertedEffect)
+        var invertedEffect = new mars3d.effect.InvertedEffect();
+        map.addEffect(invertedEffect);
       }
     </script>
   </body>

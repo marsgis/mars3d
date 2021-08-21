@@ -1,126 +1,118 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="author" content="火星科技 http://mars3d.cn ">
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-        content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>迁徙效果 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+    ></script>
 
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
-  <!--第三方lib-->
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-<body class="dark">
-  <!--加载前进行操作提示，优化用户体验-->
-  <div id="mask" class="signmask" onclick="removeMask()"></div>
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      "use script"; //开发环境建议开启严格模式
 
-  <div id="mars3dContainer" class="mars3d-container"></div>
+      var map;
 
-
-
-
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
-
-    var map
-
-    function initMap(options) {
-      //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {
-        scene: {
-          center: {
-            y: 27.390195,
-            x: 117.386057,
-            z: 550488.18,
-            heading: 360,
-            pitch: -49.4,
-            roll: 0,
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 27.390195, lng: 117.386057, alt: 550488, heading: 0, pitch: -49 },
           },
-        },
-      })
+        });
 
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
+        //创建三维地球场景
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-      //创建Graphic图层
-      var graphicLayer = new mars3d.layer.GraphicLayer()
-      map.addLayer(graphicLayer)
+        //创建Graphic图层
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
-      var center = Cesium.Cartesian3.fromDegrees(117.257436, 31.838742, 1)
+        var center = Cesium.Cartesian3.fromDegrees(117.257436, 31.838742, 1);
 
-      var graphic = new mars3d.graphic.CircleEntity({
-        name: '合肥市',
-        position: center,
-        style: {
-          radius: 50000.0,
-          material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleWave, {
-            color: '#ff0000',
-            count: 1, //单个圆圈
-            speed: 20,
-          }),
-        },
-      })
-      graphicLayer.addGraphic(graphic)
-
-      var cities = [
-        { name: '六安市', lon: 116.3123, lat: 31.8329 },
-        { name: '安庆市', lon: 116.7517, lat: 30.5255 },
-        { name: '滁州市', lon: 118.1909, lat: 32.536 },
-        { name: '宣城市', lon: 118.8062, lat: 30.6244 },
-        { name: '阜阳市', lon: 115.7629, lat: 32.9919 },
-        { name: '宿州市', lon: 117.5208, lat: 33.6841 },
-        { name: '黄山市', lon: 118.0481, lat: 29.9542 },
-        { name: '巢湖市', lon: 117.7734, lat: 31.4978 },
-        { name: '亳州市', lon: 116.1914, lat: 33.4698 },
-        { name: '池州市', lon: 117.3889, lat: 30.2014 },
-        { name: '蚌埠市', lon: 117.4109, lat: 33.1073 },
-        { name: '芜湖市', lon: 118.3557, lat: 31.0858 },
-        { name: '淮北市', lon: 116.6968, lat: 33.6896 },
-        { name: '淮南市', lon: 116.7847, lat: 32.7722 },
-        { name: '马鞍山市', lon: 118.6304, lat: 31.5363 },
-        { name: '铜陵市', lon: 117.9382, lat: 30.9375 },
-      ]
-
-      var lineMaterial = mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-        image: 'img/textures/lineClr.png',
-        color: new Cesium.Color(255 / 255, 201 / 255, 38 / 255, 1),
-        speed: 10,
-      })
-      for (var i = 0; i < cities.length; i++) {
-        var item = cities[i]
-        var thisPoint = Cesium.Cartesian3.fromDegrees(item.lon, item.lat, 1)
-        var positions = mars3d.PolyUtil.getLinkedPointList(center, thisPoint, 40000, 100) //计算曲线点
-
-        var primitive = new mars3d.graphic.PolylinePrimitive({
-          positions: positions,
+        var graphic = new mars3d.graphic.CircleEntity({
+          name: "合肥市",
+          position: center,
           style: {
-            width: 2,
-            material: lineMaterial, //动画线材质
+            radius: 50000.0,
+            material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleWave, {
+              color: "#ff0000",
+              count: 1, //单个圆圈
+              speed: 20,
+            }),
           },
-        })
-        primitive.bindPopup(`合肥 - ${item.name}`)
-        graphicLayer.addGraphic(primitive)
-      }
-    }
-  </script>
-</body>
+        });
+        graphicLayer.addGraphic(graphic);
 
+        var cities = [
+          { name: "六安市", lon: 116.3123, lat: 31.8329 },
+          { name: "安庆市", lon: 116.7517, lat: 30.5255 },
+          { name: "滁州市", lon: 118.1909, lat: 32.536 },
+          { name: "宣城市", lon: 118.8062, lat: 30.6244 },
+          { name: "阜阳市", lon: 115.7629, lat: 32.9919 },
+          { name: "宿州市", lon: 117.5208, lat: 33.6841 },
+          { name: "黄山市", lon: 118.0481, lat: 29.9542 },
+          { name: "巢湖市", lon: 117.7734, lat: 31.4978 },
+          { name: "亳州市", lon: 116.1914, lat: 33.4698 },
+          { name: "池州市", lon: 117.3889, lat: 30.2014 },
+          { name: "蚌埠市", lon: 117.4109, lat: 33.1073 },
+          { name: "芜湖市", lon: 118.3557, lat: 31.0858 },
+          { name: "淮北市", lon: 116.6968, lat: 33.6896 },
+          { name: "淮南市", lon: 116.7847, lat: 32.7722 },
+          { name: "马鞍山市", lon: 118.6304, lat: 31.5363 },
+          { name: "铜陵市", lon: 117.9382, lat: 30.9375 },
+        ];
+
+        var lineMaterial = mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
+          image: "img/textures/lineClr.png",
+          color: new Cesium.Color(255 / 255, 201 / 255, 38 / 255, 1),
+          speed: 10,
+        });
+        for (var i = 0; i < cities.length; i++) {
+          var item = cities[i];
+          var thisPoint = Cesium.Cartesian3.fromDegrees(item.lon, item.lat, 1);
+          var positions = mars3d.PolyUtil.getLinkedPointList(center, thisPoint, 40000, 100); //计算曲线点
+          var primitive = new mars3d.graphic.PolylinePrimitive({
+            positions: positions,
+            style: {
+              width: 2,
+              material: lineMaterial, //动画线材质
+            },
+          });
+          primitive.bindPopup(`合肥 - ${item.name}`);
+          graphicLayer.addGraphic(primitive);
+        }
+      }
+    </script>
+  </body>
 </html>

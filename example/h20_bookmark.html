@@ -100,7 +100,6 @@
       .bookmarkView table td p {
         display: inline-block;
         width: 160px;
-        /* height: 20px; */
         white-space: nowrap;
         overflow-x: hidden;
         text-overflow: ellipsis;
@@ -151,12 +150,12 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
-      var arrView = []
-      var index = 0
+      var arrView = [];
+      var index = 0;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -164,42 +163,42 @@
           scene: {
             center: { lat: 27.765308, lng: 116.057297, alt: 267, heading: 5, pitch: -48 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //加载历史数据
-        var lastData = haoutil.storage.get('h20_bookmark')
+        var lastData = haoutil.storage.get("h20_bookmark");
         if (lastData) {
-          arrView = JSON.parse(lastData)
-          console.log('加载显示历史数据', arrView)
+          arrView = JSON.parse(lastData);
+          console.log("加载显示历史数据", arrView);
 
           for (var i = 0; i < arrView.length; i++) {
-            let item = arrView[i]
-            addBookmark(item)
+            let item = arrView[i];
+            addBookmark(item);
           }
 
-          $('#addView .no-found').remove()
-          index = arrView[arrView.length - 1].id
+          $("#addView .no-found").remove();
+          index = arrView[arrView.length - 1].id;
         }
 
         // 添加视角
-        $('#addtxtName').click(() => {
-          let name = $('#txtName').val()
+        $("#addtxtName").click(() => {
+          let name = $("#txtName").val();
           if (!name) {
-            haoutil.msg('请输入名称')
-            return
+            haoutil.msg("请输入名称");
+            return;
           }
 
           // 不能使用相同名称
           for (var i = 0; i < arrView.length; i++) {
             if (arrView[i].name == name) {
-              haoutil.msg(name + ' 已存在，请更换名称!')
-              return
+              haoutil.msg(name + " 已存在，请更换名称!");
+              return;
             }
           }
 
@@ -208,25 +207,25 @@
             id: index++,
             name: name,
             center: map.getCameraView(),
-          }
-          arrView.push(item)
+          };
+          arrView.push(item);
 
           // UI处理
-          $('#txtName').val('')
-          $('#addView .no-found').remove()
+          $("#txtName").val("");
+          $("#addView .no-found").remove();
 
           map.expImage({
             download: false,
             width: 300,
             callback: function (image) {
-              item.image = image
-              addBookmark(item)
+              item.image = image;
+              addBookmark(item);
 
               //记录到历史
-              haoutil.storage.add('h20_bookmark', JSON.stringify(arrView))
+              haoutil.storage.add("h20_bookmark", JSON.stringify(arrView));
             },
-          })
-        })
+          });
+        });
       }
 
       function addBookmark(item) {
@@ -236,28 +235,28 @@
                       <div><p>${item.name}</p><i id="deleView-${item.id}" class="fa fa-trash"></i></div>
                       </div>
                     </td>
-                  </tr>`
-        $('#addView').prepend(html)
+                  </tr>`;
+        $("#addView").prepend(html);
 
         //删除视角
-        $('#deleView-' + item.id).click(() => {
+        $("#deleView-" + item.id).click(() => {
           for (var i = 0; i < arrView.length; i++) {
             if (arrView[i].name == item.name) {
-              arrView.splice(i, 1)
-              break
+              arrView.splice(i, 1);
+              break;
             }
           }
-          $('#addView #tr-' + item.id).remove()
+          $("#addView #tr-" + item.id).remove();
 
           if (arrView.length == 0) {
-            $('#addView').append(`<tr><td class='no-found'>没有找到匹配的值</td></tr>`)
+            $("#addView").append(`<tr><td class='no-found'>没有找到匹配的值</td></tr>`);
           }
-        })
+        });
 
         // 飞向视角
-        $('#flyView-' + item.id).click(() => {
-          map.flyToPoint(item.center)
-        })
+        $("#flyView-" + item.id).click(() => {
+          map.centerAt(item.center);
+        });
       }
     </script>
   </body>

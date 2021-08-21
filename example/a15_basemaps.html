@@ -35,19 +35,19 @@
     <div id="mars3dContainer" class="mars3d-container"></div>
 
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
       $(document).ready(function () {
         if (!mars3d.Util.webglreport()) {
-          mars3d.Util.webglerror()
-          return
+          mars3d.Util.webglerror();
+          return;
         }
-        initMap()
-      })
+        initMap();
+      });
 
       function initMap() {
         //在创建地球前的传参中配置basemaps参数
-        var map = new mars3d.Map('mars3dContainer', {
+        var map = new mars3d.Map("mars3dContainer", {
           scene: {
             center: { lat: 14.029537, lng: 105.94238, alt: 4879779, heading: 360, pitch: -66 },
           },
@@ -61,28 +61,28 @@
           },
           basemaps: [
             {
-              name: '天地图影像',
-              icon: 'img/basemaps/tdt_img.png',
-              type: 'tdt',
-              layer: 'img_d',
-              key: ['9ae78c51a0a28f06444d541148496e36'],
+              name: "天地图影像",
+              icon: "img/basemaps/tdt_img.png",
+              type: "tdt",
+              layer: "img_d",
+              key: ["9ae78c51a0a28f06444d541148496e36"],
               show: true,
             },
             {
-              name: '离线地图',
-              icon: 'img/basemaps/mapboxSatellite.png',
-              type: 'xyz',
-              url: '//data.mars3d.cn/tile/googleImg/{z}/{x}/{y}.jpg',
+              name: "离线地图",
+              icon: "img/basemaps/mapboxSatellite.png",
+              type: "xyz",
+              url: "//data.mars3d.cn/tile/googleImg/{z}/{x}/{y}.jpg",
               maximumLevel: 12,
             },
             {
-              name: '单张图片',
-              icon: 'img/basemaps/offline.png',
-              type: 'image',
-              url: '//data.mars3d.cn/file/img/world/world.jpg',
+              name: "单张图片",
+              icon: "img/basemaps/offline.png",
+              type: "image",
+              url: "//data.mars3d.cn/file/img/world/world.jpg",
             },
           ],
-        })
+        });
 
         //根据config配置的id或name属性，更新显示指定的地图底图
         // map.basemap = '离线地图'

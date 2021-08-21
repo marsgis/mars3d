@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>卫星成像范围预报 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>成像范围计算 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -46,7 +46,6 @@
             <input id="txtAngle" type="range" min="1" max="70" step="1" value="10" />
           </div>
         </div>
-
 
         <div class="form-group">
           <label for="txtStartTime" class="col-xs-4 col-sm-4 control-label">开始时间：</label>
@@ -79,7 +78,6 @@
           <input id="btnRemoveAll" type="button" class="btn btn-danger" value="清除所有" />
         </div>
 
-
         <div class="form-group">
           <div class="col-xs-offset-3 col-sm-offset-3 col-xs-9 col-sm-9">
             <div class="checkbox checkbox-primary checkbox-inline">
@@ -92,30 +90,22 @@
             </div>
           </div>
         </div>
-
       </form>
     </div>
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var graphicLayer
+      var map;
+      var graphicLayer;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
             //此处参数会覆盖config.json中的对应配置
-            center: {
-              y: 10,
-              x: 111.833884,
-              z: 15000000,
-              heading: 0,
-              pitch: -90,
-              roll: 0,
-            },
+            center: { lat: 6.148021, lng: 58.982029, alt: 42278441, heading: 220, pitch: -85 },
             cameraController: {
               zoomFactor: 3.0,
               minimumZoomDistance: 1000,
@@ -127,61 +117,61 @@
             animation: true, //是否创建动画小器件，左下角仪表
             timeline: true, //是否显示时间线控件
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
-        graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         graphicLayer.bindPopup(function (event) {
-          var points = event.graphic?.attr?.points
+          var points = event.graphic?.attr?.points;
           if (!points) {
-            return
+            return;
           }
           //单击轨迹连线上的点后，求该点对应的时间
-          var positionDM = event.cartesian
-          var val1 = points[0]
-          var val2 = points[points.length - 1]
+          var positionDM = event.cartesian;
+          var val1 = points[0];
+          var val2 = points[points.length - 1];
 
-          var startTime = Cesium.JulianDate.toDate(val1.time)
-          var endTime = Cesium.JulianDate.toDate(val2.time)
+          var startTime = Cesium.JulianDate.toDate(val1.time);
+          var endTime = Cesium.JulianDate.toDate(val2.time);
 
-          var len1 = Math.abs(Cesium.Cartesian3.distance(positionDM, val1.position))
-          var len2 = Math.abs(Cesium.Cartesian3.distance(positionDM, val2.position))
+          var len1 = Math.abs(Cesium.Cartesian3.distance(positionDM, val1.position));
+          var len2 = Math.abs(Cesium.Cartesian3.distance(positionDM, val2.position));
 
-          var adds = (len1 / (len1 + len2)) * (endTime.getTime() - startTime.getTime()) //求按距离比例的时间增加值
-          var currentTime = new Date(startTime.getTime() + adds)
+          var adds = (len1 / (len1 + len2)) * (endTime.getTime() - startTime.getTime()); //求按距离比例的时间增加值
+          var currentTime = new Date(startTime.getTime() + adds);
 
-          var inthtml = '单击处时间：' + currentTime.format('yyyy-MM-dd HH:mm:ss')
-          return inthtml
-        })
+          var inthtml = "单击处时间：" + currentTime.format("yyyy-MM-dd HH:mm:ss");
+          return inthtml;
+        });
         var weixin = new mars3d.graphic.Satellite({
-          name: 'GAOFEN 1',
-          tle1: '1 39150U 13018A   21180.50843864  .00000088  00000-0  19781-4 0  9997',
-          tle2: '2 39150  97.8300 252.9072 0018449 344.7422  15.3253 14.76581022440650',
+          name: "GAOFEN 1",
+          tle1: "1 39150U 13018A   21180.50843864  .00000088  00000-0  19781-4 0  9997",
+          tle2: "2 39150  97.8300 252.9072 0018449 344.7422  15.3253 14.76581022440650",
           model: {
-            url: '//data.mars3d.cn/gltf/mars/weixin.gltf',
+            url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
             scale: 1,
             minimumPixelSize: 90,
             autoHeading: true,
             show: true,
           },
           label: {
-            color: '#ffffff',
+            color: "#ffffff",
             opacity: 1,
-            font_family: '楷体',
+            font_family: "楷体",
             font_size: 30,
             outline: true,
-            outlineColor: '#000000',
+            outlineColor: "#000000",
             outlineWidth: 3,
             background: true,
-            backgroundColor: '#000000',
+            backgroundColor: "#000000",
             backgroundOpacity: 0.5,
-            font_weight: 'normal',
-            font_style: 'normal',
+            font_weight: "normal",
+            font_style: "normal",
             pixelOffsetX: 0,
             pixelOffsetY: -20,
             scaleByDistance: true,
@@ -195,82 +185,86 @@
             sensorType: mars3d.graphic.SatelliteSensor.Type.Rect,
             angle1: 10,
             angle2: 5,
-            color: '#6ef500',
+            color: "#6ef500",
             show: true,
           },
           path: {
             show: true,
-            color: '#00ff00',
+            color: "#00ff00",
             opacity: 0.5,
             width: 1,
           },
-        })
-        map.graphicLayer.addGraphic(weixin)
+        });
+        map.graphicLayer.addGraphic(weixin);
 
         setTimeout(() => {
           weixin.flyTo({
             radius: 900000, //距离目标点的距离
             pitch: -60, //相机方向
-          })
-        }, 1000)
+          });
+        }, 1000);
 
         //ui相关
-        jeDate('#txtStartTime', {
+        // eslint-disable-next-line no-undef
+        jeDate("#txtStartTime", {
           theme: {
-            bgcolor: '#135b91',
-            pnColor: '#00CCFF',
+            bgcolor: "#135b91",
+            pnColor: "#00CCFF",
           },
-          format: 'YYYY-MM-DD hh:mm:ss',
-        })
-        jeDate('#txtEndTime', {
+          format: "YYYY-MM-DD hh:mm:ss",
+          zIndex: 20210825,
+        });
+        // eslint-disable-next-line no-undef
+        jeDate("#txtEndTime", {
           theme: {
-            bgcolor: '#135b91',
-            pnColor: '#00CCFF',
+            bgcolor: "#135b91",
+            pnColor: "#00CCFF",
           },
-          format: 'YYYY-MM-DD hh:mm:ss',
-        })
+          format: "YYYY-MM-DD hh:mm:ss",
+          zIndex: 20210825,
+        });
 
-        var now = Cesium.JulianDate.toDate(map.clock.currentTime)
-        $('#txtStartTime').val(now.format('yyyy-MM-dd HH:mm:ss'))
+        var now = Cesium.JulianDate.toDate(map.clock.currentTime);
+        $("#txtStartTime").val(now.format("yyyy-MM-dd HH:mm:ss"));
 
-        now.setMinutes(now.getMinutes() + 60)
-        $('#txtEndTime').val(now.format('yyyy-MM-dd HH:mm:ss'))
+        now.setMinutes(now.getMinutes() + 60);
+        $("#txtEndTime").val(now.format("yyyy-MM-dd HH:mm:ss"));
 
-        $('#txtColor').minicolors({
-          position: 'bottom left',
-          control: 'saturation',
+        $("#txtColor").minicolors({
+          position: "bottom left",
+          control: "saturation",
           change: function (hex) {},
-        })
+        });
         map.on(mars3d.EventType.click, function (e) {
-          $('#txtColor').minicolors('hide')
-        })
+          $("#txtColor").minicolors("hide");
+        });
 
-        $('#txtOpacity').range({
+        $("#txtOpacity").range({
           onChange: function (value, bfb) {},
-        })
+        });
 
-        $('#txtAngle').range({
+        $("#txtAngle").range({
           onChange: function (value, bfb) {
-            weixin.angle1 = value
+            weixin.angle1 = value;
           },
-        })
+        });
 
-        $('#chkAngleS').change(function () {
-          var val = $(this).is(':checked')
-          updateVisibleForFaceNouth(true, val)
-        })
+        $("#chkAngleS").change(function () {
+          var val = $(this).is(":checked");
+          updateVisibleForFaceNouth(true, val);
+        });
 
-        $('#chkAngleJ').change(function () {
-          var val = $(this).is(':checked')
-          updateVisibleForFaceNouth(false, val)
-        })
+        $("#chkAngleJ").change(function () {
+          var val = $(this).is(":checked");
+          updateVisibleForFaceNouth(false, val);
+        });
 
-        $('#btnAdd').click(function () {
-          var _starttime = $.trim($('#txtStartTime').val())
-          var _endTime = $.trim($('#txtEndTime').val())
-          var _color = $('#txtColor').val()
-          var _opacity = Number($('#txtOpacity').val())
-          var _angle = Number($('#txtAngle').val())
+        $("#btnAdd").click(function () {
+          var _starttime = $.trim($("#txtStartTime").val());
+          var _endTime = $.trim($("#txtEndTime").val());
+          var _color = $("#txtColor").val();
+          var _opacity = Number($("#txtOpacity").val());
+          var _angle = Number($("#txtAngle").val());
 
           addTimeShading(weixin, {
             startTime: _starttime,
@@ -278,67 +272,67 @@
             color: _color,
             opacity: _opacity,
             angle: _angle,
-          })
-        })
+          });
+        });
 
-        $('#btnRemoveAll').click(function () {
-          graphicLayer.clear()
-        })
+        $("#btnRemoveAll").click(function () {
+          graphicLayer.clear();
+        });
       }
 
       //options参数包含：startTime开始时间，endTime结束时间，angle张开角度，color颜色，opacity透明度
       function addTimeShading(weixin, options) {
-        graphicLayer.clear()
+        graphicLayer.clear();
 
-        let bt = new Date(options.startTime).getTime()
-        let et = new Date(options.endTime).getTime()
+        let bt = new Date(options.startTime).getTime();
+        let et = new Date(options.endTime).getTime();
 
         if (bt >= et) {
-          haoutil.msg('开始时间需要小于结束时间。')
-          return
+          haoutil.msg("开始时间需要小于结束时间。");
+          return;
         }
 
-        var step = 2 * 60000
+        var step = 2 * 60000;
 
-        var points = []
-        var positions = []
+        var points = [];
+        var positions = [];
 
-        var temp_t = bt
+        var temp_t = bt;
         while (temp_t <= et) {
-          var point = weixin.tle.getPoint(temp_t)
+          var point = weixin.tle.getPoint(temp_t);
           if (!point) {
-            break
+            break;
           }
 
-          var ground_pos = Cesium.Cartesian3.fromDegrees(point.lng, point.lat)
-          positions.push(ground_pos)
+          var ground_pos = Cesium.Cartesian3.fromDegrees(point.lng, point.lat);
+          positions.push(ground_pos);
 
-          var time = Cesium.JulianDate.fromDate(new Date(temp_t))
+          var time = Cesium.JulianDate.fromDate(new Date(temp_t));
           points.push({
             position: ground_pos,
             time: time,
             height: point.alt,
-          })
+          });
 
-          temp_t += step
+          temp_t += step;
         }
 
         if (positions.length < 2) {
-          haoutil.msg('没有该时间段内的轨迹数据。')
-          return
+          haoutil.msg("没有该时间段内的轨迹数据。");
+          return;
         }
 
-        var clr = Cesium.Color.fromCssColorString(options.color || '#ff0000').withAlpha(Number(options.opacity || 1.0))
-        clr = Cesium.ColorGeometryInstanceAttribute.fromColor(clr)
+        var clr = Cesium.Color.fromCssColorString(options.color || "#ff0000").withAlpha(Number(options.opacity || 1.0));
+        clr = Cesium.ColorGeometryInstanceAttribute.fromColor(clr);
 
-        var geometryInstancesSG = [] //升轨
-        var geometryInstancesJG = [] //降轨
+        var geometryInstancesSG = []; //升轨
+        var geometryInstancesJG = []; //降轨
         for (var i = 1; i < positions.length; i++) {
-          var position1 = positions[i - 1]
-          var position2 = positions[i]
+          var position1 = positions[i - 1];
+          var position2 = positions[i];
 
-          var height = points[i].height //也可以取position2的高度
-          var shadingWidth = height * Math.tan(Cesium.Math.toRadians(options.angle)) * 2 //根据卫星角度求其带宽度
+          var height = points[i].height; //也可以取position2的高度
+          var shadingWidth = height * Math.tan(Cesium.Math.toRadians(options.angle)) * 2; //根据卫星角度求其带宽度
 
           var instance = new Cesium.GeometryInstance({
             geometry: new Cesium.CorridorGeometry({
@@ -350,18 +344,18 @@
             attributes: {
               color: clr,
             },
-          })
+          });
           //重要：绑定相关属性
           instance.attr = {
             points: [points[i - 1], points[i]],
-          }
+          };
 
-          var hp = mars3d.PointUtil.getHeadingPitchRollForLine(position1, position2)
+          var hp = mars3d.PointUtil.getHeadingPitchRollForLine(position1, position2);
 
           if (hp.heading > 0) {
-            geometryInstancesSG.push(instance)
+            geometryInstancesSG.push(instance);
           } else {
-            geometryInstancesJG.push(instance)
+            geometryInstancesJG.push(instance);
           }
         }
 
@@ -369,18 +363,18 @@
         if (geometryInstancesSG.length > 0) {
           var primitiveSG = new mars3d.graphic.BaseCombine({
             instances: geometryInstancesSG,
-          })
-          primitiveSG.isFaceNouth = true
-          graphicLayer.addGraphic(primitiveSG)
+          });
+          primitiveSG.isFaceNouth = true;
+          graphicLayer.addGraphic(primitiveSG);
         }
 
         //降轨
         if (geometryInstancesJG.length > 0) {
           var primitiveJG = new mars3d.graphic.BaseCombine({
             instances: geometryInstancesJG,
-          })
-          primitiveJG.isFaceNouth = false
-          graphicLayer.addGraphic(primitiveJG)
+          });
+          primitiveJG.isFaceNouth = false;
+          graphicLayer.addGraphic(primitiveJG);
         }
       }
 
@@ -388,12 +382,12 @@
       function updateVisibleForFaceNouth(isFaceNouth, show) {
         graphicLayer.eachGraphic(function (graphic) {
           if (isFaceNouth && graphic.isFaceNouth) {
-            graphic.show = show
+            graphic.show = show;
           }
           if (!isFaceNouth && !graphic.isFaceNouth) {
-            graphic.show = show
+            graphic.show = show;
           }
-        })
+        });
       }
     </script>
   </body>

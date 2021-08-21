@@ -65,10 +65,10 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var measureObj
+      var map;
+      var measureObj;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -76,107 +76,107 @@
           scene: {
             center: { lat: 30.715648, lng: 116.300527, alt: 10727, heading: 3, pitch: -25 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         measureObj = new mars3d.thing.Measure({
           //设置文本样式
           label: {
-            color: '#ffffff',
-            font_family: '楷体',
+            color: "#ffffff",
+            font_family: "楷体",
             font_size: 20,
           },
-        })
-        map.addThing(measureObj)
+        });
+        map.addThing(measureObj);
 
         measureObj.on(mars3d.EventType.start, function (e) {
-          console.log('开始分析', e)
+          console.log("开始分析", e);
           //开始分析前回调(异步)
-          haoutil.loading.show()
-        })
+          haoutil.loading.show();
+        });
         measureObj.on(mars3d.EventType.end, function (e) {
-          console.log('分析结束', e)
+          console.log("分析结束", e);
 
           //分析完成后回调(异步)
-          haoutil.loading.hide()
+          haoutil.loading.hide();
           if (e.graphic?.type === mars3d.graphic.SectionMeasure.type) {
-            setEchartsData(e)
+            setEchartsData(e);
           }
-        })
+        });
 
         measureObj.on(mars3d.EventType.click, function (e) {
           // console.log('单击了对象', e)
-          let result = e.graphic?.measured
+          let result = e.graphic?.measured;
           if (e.graphic?.type === mars3d.graphic.SectionMeasure.type && result) {
-            setEchartsData(result)
+            setEchartsData(result);
           }
-        })
+        });
 
         map.on(mars3d.EventType.click, function (e) {
-          hideTipMarker()
-        })
+          hideTipMarker();
+        });
       }
 
       function removeAll() {
-        $('#sectionChars').hide()
+        $("#sectionChars").hide();
 
-        measureObj.clear()
-        hideTipMarker()
+        measureObj.clear();
+        hideTipMarker();
       }
 
       function measureSection() {
         measureObj.section({
           // maxPointNum:2,
           splitNum: 300, //插值次数
-        })
+        });
       }
 
-      var tipGraphic
+      var tipGraphic;
       function showTipMarker(point, z, inthtml) {
-        var _position_draw = Cesium.Cartesian3.fromDegrees(point.lng, point.lat, z)
+        var _position_draw = Cesium.Cartesian3.fromDegrees(point.lng, point.lat, z);
 
         if (!tipGraphic) {
           tipGraphic = new mars3d.graphic.BillboardEntity({
-            name: '当前点',
+            name: "当前点",
             position: _position_draw,
             style: {
-              image: 'img/marker/mark3.png',
+              image: "img/marker/mark3.png",
               scale: 1,
               horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
               verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
               scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 500000, 0.2),
             },
-          }).addTo(map.graphicLayer)
-          tipGraphic._setPositionsToCallback()
+          }).addTo(map.graphicLayer);
+          tipGraphic._setPositionsToCallback();
         }
-        tipGraphic._position_draw = _position_draw
-        tipGraphic.bindPopup(inthtml).openPopup()
+        tipGraphic._position_draw = _position_draw;
+        tipGraphic.bindPopup(inthtml).openPopup();
       }
 
       function hideTipMarker() {
         if (!tipGraphic) {
-          return
+          return;
         }
-        tipGraphic.remove(true)
-        tipGraphic = null
+        tipGraphic.remove(true);
+        tipGraphic = null;
       }
 
       //图表
-      var myChart1
+      var myChart1;
 
       //剖面分析 图表
       function setEchartsData(data) {
         if (data == null || data.arrPoint == null) {
-          return
+          return;
         }
 
-        var arrPoint = data.arrPoint
+        var arrPoint = data.arrPoint;
 
-        $('#sectionChars').show()
+        $("#sectionChars").show();
         if (myChart1 == null) {
-          myChart1 = echarts.init(document.getElementById('echartsView1'), 'dark')
+          myChart1 = echarts.init(document.getElementById("echartsView1"), "dark");
         }
 
         var option = {
@@ -188,73 +188,73 @@
           },
           dataZoom: [
             {
-              type: 'inside',
+              type: "inside",
               throttle: 50,
             },
           ],
           tooltip: {
-            trigger: 'axis',
+            trigger: "axis",
             //position: function (point, params, dom, rect, size) {
             //    return [10, 20];
             //},
             formatter: function (params) {
-              var inhtml = ''
+              var inhtml = "";
               if (params.length === 0) {
-                hideTipMarker()
-                return inhtml
+                hideTipMarker();
+                return inhtml;
               }
 
-              var hbgd = params[0].value //海拔高度
-              var point = arrPoint[params[0].dataIndex] //所在经纬度
-              var len = haoutil.str.formatLength(Number(params[0].axisValue))
-              var hbgdStr = haoutil.str.formatLength(Number(params[0].value))
+              var hbgd = params[0].value; //海拔高度
+              var point = arrPoint[params[0].dataIndex]; //所在经纬度
+              var len = haoutil.str.formatLength(Number(params[0].axisValue));
+              var hbgdStr = haoutil.str.formatLength(Number(params[0].value));
 
               inhtml = `当前位置<br />
                             距起点：${len}<br />
                             海拔：<span style='color:${params[0].color};'>${hbgdStr}</span><br />
                             经度：${point.lng}<br />
-                            纬度：${point.lat}`
+                            纬度：${point.lat}`;
 
-              showTipMarker(point, hbgd, inhtml)
+              showTipMarker(point, hbgd, inhtml);
 
-              return inhtml
+              return inhtml;
             },
           },
           xAxis: [
             {
-              name: '行程',
-              type: 'category',
+              name: "行程",
+              type: "category",
               boundaryGap: false,
               axisLine: {
                 show: true,
               },
               axisLabel: {
                 show: true,
-                formatter: '{value} 米',
+                formatter: "{value} 米",
               },
               data: data.arrLen,
             },
           ],
           yAxis: [
             {
-              name: '高程',
-              type: 'value',
+              name: "高程",
+              type: "value",
               min: getMinZ(arrPoint),
               axisLabel: {
-                formatter: '{value} 米',
+                formatter: "{value} 米",
               },
             },
           ],
           series: [
             {
-              name: '高程值',
-              type: 'line',
+              name: "高程值",
+              type: "line",
               smooth: true,
-              symbol: 'none',
-              sampling: 'average',
+              symbol: "none",
+              sampling: "average",
               itemStyle: {
                 normal: {
-                  color: 'rgb(255, 70, 131)',
+                  color: "rgb(255, 70, 131)",
                 },
               },
               areaStyle: {
@@ -262,11 +262,11 @@
                   color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                     {
                       offset: 0,
-                      color: 'rgb(255, 158, 68)',
+                      color: "rgb(255, 158, 68)",
                     },
                     {
                       offset: 1,
-                      color: 'rgb(255, 70, 131)',
+                      color: "rgb(255, 70, 131)",
                     },
                   ]),
                 },
@@ -274,24 +274,24 @@
               data: data.arrHB,
             },
           ],
-        }
+        };
 
-        myChart1.setOption(option)
+        myChart1.setOption(option);
       }
 
       function getMinZ(arr) {
-        var minz = 'dataMin'
+        var minz = "dataMin";
         if (arr == null || arr.length === 0) {
-          return minz
+          return minz;
         }
 
-        minz = arr[0].alt
+        minz = arr[0].alt;
         for (var i = 0; i < arr.length; i++) {
           if (arr[i].alt < minz) {
-            minz = arr[i].alt
+            minz = arr[i].alt;
           }
         }
-        return minz
+        return minz;
       }
     </script>
   </body>

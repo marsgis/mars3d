@@ -19,7 +19,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>GeoJSON格式加载 矢量瓦片 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>矢量瓦片方式加载GeoJson | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <script
       type="text/javascript"
@@ -43,9 +43,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -53,38 +53,61 @@
           scene: {
             center: { lat: 27.689337, lng: 118.112448, alt: 762174, heading: 358, pitch: -62 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        //geojson 安徽各市
-        $.ajax({
-          type: 'get',
-          dataType: 'json',
-          url: '//data.mars3d.cn/file/geojson/areas/340000_full.json',
-          success: function (geojson) {
-            showGeoJsonVectorTile(geojson)
-          },
-          error: function (XMLHttpRequest, textStatus, errorThrown) {
-            haoutil.alert('Json文件加载失败！')
-          },
-        })
+        queryBJXLineData()
+          .then(function (geojson) {
+            showBJXLine(geojson.features[0]);
+          })
+          .catch(function () {
+            haoutil.alert("Json文件加载失败！");
+          });
 
-        //geojson 安徽边界线
-        $.ajax({
-          type: 'get',
-          dataType: 'json',
-          url: '//data.mars3d.cn/file/geojson/areas/340000.json',
-          success: function (geojson) {
-            showBJXLine(geojson.features[0])
-          },
-          error: function (XMLHttpRequest, textStatus, errorThrown) {
-            haoutil.alert('Json文件加载失败！')
-          },
-        })
+        queryAreasData()
+          .then(function (geojson) {
+            showGeoJsonVectorTile(geojson);
+          })
+          .catch(function () {
+            haoutil.alert("Json文件加载失败！");
+          });
       }
 
+      //获取安徽各市、边界线数据
+      function queryAreasData() {
+        return new Promise(function (resolve, reject) {
+          //geojson 安徽各市
+          $.ajax({
+            type: "get",
+            dataType: "json",
+            url: "//data.mars3d.cn/file/geojson/areas/340000_full.json",
+            success: function (result) {
+              resolve(result);
+            },
+            error: function (data) {
+              reject(data);
+            },
+          });
+        });
+      }
+      function queryBJXLineData() {
+        return new Promise(function (resolve, reject) {
+          //geojson 安徽边界线
+          $.ajax({
+            type: "get",
+            dataType: "json",
+            url: "//data.mars3d.cn/file/geojson/areas/340000.json",
+            success: function (result) {
+              resolve(result);
+            },
+            error: function (data) {
+              reject(data);
+            },
+          });
+        });
+      }
       //API文档，参考lib\mars3d\thirdParty\weiVectorTile\Document.rar（解压Document.rar）
       function showGeoJsonVectorTile(geojson) {
         var tileLayer = new mars3d.layer.WeiVectorTileLayer({
@@ -97,19 +120,19 @@
             tileCacheSize: 200,
 
             fill: true, //是否填充，仅面数据有效。
-            fillColor: 'rgba(0,255,255,0.1)',
+            fillColor: "rgba(0,255,255,0.1)",
 
             outline: true, //是否显示边，仅面数据有效。
-            outlineColor: 'rgba(138,138,138,1)',
+            outlineColor: "rgba(138,138,138,1)",
             lineWidth: 2,
 
             showMaker: false,
 
             showCenterLabel: true, //是否显示文本，仅对线和面数据有效
-            centerLabelPropertyName: 'name',
-            fontColor: 'rgba(255,255,255,1)',
+            centerLabelPropertyName: "name",
+            fontColor: "rgba(255,255,255,1)",
             fontSize: 23,
-            fontFamily: '楷体',
+            fontFamily: "楷体",
             labelOffsetX: -10,
             labelOffsetY: -5,
           },
@@ -118,50 +141,50 @@
           simplify: false,
           styleFilter: function (feature, style, x, y, level) {
             if (level < 6) {
-              style.fontSize = level * 2
+              style.fontSize = level * 2;
             } else {
-              style.fontSize = 23
+              style.fontSize = 23;
             }
 
-            if (feature.properties && feature.properties.name && feature.properties.name == '合肥市') {
-              style.fillColor = Cesium.Color.YELLOW.withAlpha(0.2)
+            if (feature.properties && feature.properties.name && feature.properties.name == "合肥市") {
+              style.fillColor = Cesium.Color.YELLOW.withAlpha(0.2);
             }
-            return style
+            return style;
           },
           //以下为mars3d参数,API参考http://mars3d.cn/api/BaseTileLayer.html#.ConstructorOptions
-          popup: 'all',
-        })
-        map.addLayer(tileLayer)
+          popup: "all",
+        });
+        map.addLayer(tileLayer);
       }
 
       function showBJXLine(feature) {
-        console.log('边界线', feature)
+        // console.log('边界线', feature)
 
         //缓冲区
         var bufferedOuter = turf.buffer(feature, 2000, {
-          units: 'meters',
-        })
+          units: "meters",
+        });
         var bufferedInner = turf.buffer(feature, 1000, {
-          units: 'meters',
-        })
+          units: "meters",
+        });
 
-        bufferedInner = turf.difference(bufferedInner, feature)
+        bufferedInner = turf.difference(bufferedInner, feature);
 
-        bufferedOuter = turf.difference(bufferedOuter, bufferedInner)
+        bufferedOuter = turf.difference(bufferedOuter, bufferedInner);
 
-        bufferedInner = turf.featureCollection([bufferedInner])
-        bufferedOuter = turf.featureCollection([bufferedOuter])
+        bufferedInner = turf.featureCollection([bufferedInner]);
+        bufferedOuter = turf.featureCollection([bufferedOuter]);
 
         var tileLayer = new mars3d.layer.WeiVectorTileLayer({
           source: bufferedOuter,
           zIndex: 99,
           removeDuplicate: false,
           defaultStyle: {
-            outlineColor: 'rgba(209,204,226,1)',
+            outlineColor: "rgba(209,204,226,1)",
             lineWidth: 2,
             outline: true,
             fill: true,
-            fillColor: 'rgba(209,204,226,1)',
+            fillColor: "rgba(209,204,226,1)",
             tileCacheSize: 200,
             showMaker: false,
             showCenterLabel: false,
@@ -169,19 +192,19 @@
           maximumLevel: 20,
           minimumLevel: 5,
           simplify: false,
-        })
-        map.addLayer(tileLayer)
+        });
+        map.addLayer(tileLayer);
 
         var tileLayer2 = new mars3d.layer.WeiVectorTileLayer({
           source: bufferedInner,
           zIndex: 99,
           removeDuplicate: false,
           defaultStyle: {
-            outlineColor: 'rgba(185,169,199,1)',
+            outlineColor: "rgba(185,169,199,1)",
             lineWidth: 2,
             outline: true,
             fill: true,
-            fillColor: 'rgba(185,169,199,1)',
+            fillColor: "rgba(185,169,199,1)",
             tileCacheSize: 200,
             showMaker: false,
             showCenterLabel: false,
@@ -189,8 +212,8 @@
           maximumLevel: 20,
           minimumLevel: 5,
           simplify: false,
-        })
-        map.addLayer(tileLayer2)
+        });
+        map.addLayer(tileLayer2);
       }
     </script>
   </body>

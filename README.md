@@ -67,6 +67,9 @@
 3. 基础项目(widget模式)[https://github.com/marsgis/mars3d-vue-widget](https://github.com/marsgis/mars3d-vue-widget)
 4. CS桌面程序项目 [https://github.com/marsgis/mars3d-vue-electron](https://github.com/marsgis/mars3d-vue-electron)
 
+
+
+
 ### React技术栈
 1. 最简项目[https://github.com/marsgis/mars3d-react-template](https://github.com/marsgis/mars3d-react-template)
 
@@ -75,6 +78,7 @@
 
 ### 其他Cesium技术栈 
 1. 超图集成示例[https://github.com/marsgis/mars3d-link-supermap](https://github.com/marsgis/mars3d-link-supermap)
+2. Mars3D+超图+Vue版最简项目(NPM版)[https://github.com/marsgis/mars3d-link-supermap-vue](https://github.com/marsgis/mars3d-link-supermap-vue)
 
  
 
@@ -91,6 +95,7 @@
 3. 基础项目(widget模式)[https://gitee.com/marsgis/mars3d-vue-widget](https://gitee.com/marsgis/mars3d-vue-widget)
 4. CS桌面程序项目 [https://gitee.com/marsgis/mars3d-vue-electron](https://gitee.com/marsgis/mars3d-vue-electron)
 
+
 ### React技术栈
 1. 最简项目[https://gitee.com/marsgis/mars3d-react-template](https://gitee.com/marsgis/mars3d-react-template)
 
@@ -99,7 +104,7 @@
 
 ### 其他Cesium技术栈 
 1. 超图集成示例[https://gitee.com/marsgis/mars3d-link-supermap](https://gitee.com/marsgis/mars3d-link-supermap)
-
+2. Mars3D+超图+Vue版最简项目(NPM版)[https://gitee.com/marsgis/mars3d-link-supermap-vue](https://gitee.com/marsgis/mars3d-link-supermap-vue)
 
 
 

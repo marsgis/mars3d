@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>气象流动线 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -39,80 +39,128 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 29.851048,
-              x: 117.477098,
-              z: 1294278.53,
-              heading: 358,
-              pitch: -86.5,
-              roll: 359.9,
-            },
+            center: { lat: 29.851048, lng: 117.477098, alt: 1294279, heading: 358, pitch: -87 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //加载气象
         queryWindPointApiData()
           .then(function (res) {
-            showWindLine(res.data)
+            showWindLine(res.data);
           })
           .catch(function () {
-            haoutil.msg('实时查询气象信息失败，请稍候再试')
-          })
+            haoutil.msg("实时查询气象信息失败，请稍候再试");
+          });
       }
 
       //访问后端接口，取数据
       function queryWindPointApiData() {
         return new Promise(function (resolve, reject) {
-          $.getJSON('//data.mars3d.cn/file/apidemo/windpoint.json', function (result) {
-            resolve(result)
-          })
-        })
+          $.ajax({
+            url: "//data.mars3d.cn/file/apidemo/windpoint.json",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+              resolve(result);
+            },
+            error: function (data) {
+              reject(data);
+            },
+          });
+        });
       }
 
       //流场线
       function showWindLine(arr) {
         //创建Graphic图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
+        graphicLayer.bindTooltip(function (event) {
+          let attr = event.graphic?.attr;
+          if (!attr) {
+            return false;
+          }
+          return mars3d.Util.getTemplateHtml({ title: "线", template: "all", attr: attr });
+        });
+
+        var arrData = [];
+        var radius = 12000;
         var lineMaterial = mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-          image: 'img/textures/ArrowOpacity.png',
-          color: '#00ff00',
+          image: "img/textures/ArrowOpacity.png",
+          color: "#00ff00",
           speed: 30,
-        })
-
-        var radius = 12000
+        });
         for (let i = 0, len = arr.length; i < len; i++) {
-          const item = arr[i]
+          const item = arr[i];
 
-          var position = Cesium.Cartesian3.fromDegrees(item.x, item.y, 0)
-          var angle = 180 - item.dir
+          var position = Cesium.Cartesian3.fromDegrees(item.x, item.y, 0);
+          var angle = 180 - item.dir;
 
-          var pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, angle, radius)
-          pt1 = mars3d.PointUtil.setPositionsHeight(pt1, 0)
+          var pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, angle, radius);
+          pt1 = mars3d.PointUtil.setPositionsHeight(pt1, 0);
 
-          var primitive = new mars3d.graphic.PolylinePrimitive({
+          arrData.push({
             positions: [position, pt1],
             style: {
               width: 8,
               material: lineMaterial, //动画线材质
             },
-          })
-          primitive.bindPopup(`${angle}`)
-          graphicLayer.addGraphic(primitive)
+            attr: item,
+          });
         }
+
+        //多个线对象的合并渲染。
+        var primitive = new mars3d.graphic.PolylineCombine({
+          instances: arrData,
+        });
+        graphicLayer.addGraphic(primitive);
       }
+
+      //按单个线渲染，效率差些
+      // function showWindLine(arr) {
+      //   //创建Graphic图层
+      //   var graphicLayer = new mars3d.layer.GraphicLayer();
+      //   map.addLayer(graphicLayer);
+
+      //   var lineMaterial = mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
+      //     image: "img/textures/ArrowOpacity.png",
+      //     color: "#00ff00",
+      //     speed: 30,
+      //   });
+
+      //   var radius = 12000;
+      //   for (let i = 0, len = arr.length; i < len; i++) {
+      //     const item = arr[i];
+
+      //     var position = Cesium.Cartesian3.fromDegrees(item.x, item.y, 0);
+      //     var angle = 180 - item.dir;
+
+      //     var pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, angle, radius);
+      //     pt1 = mars3d.PointUtil.setPositionsHeight(pt1, 0);
+
+      //     var primitive = new mars3d.graphic.PolylinePrimitive({
+      //       positions: [position, pt1],
+      //       style: {
+      //         width: 8,
+      //         material: lineMaterial, //动画线材质
+      //       },
+      //     });
+      //     primitive.bindPopup(`${angle}`);
+      //     graphicLayer.addGraphic(primitive);
+      //   }
+      // }
     </script>
   </body>
 </html>

@@ -107,10 +107,10 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      let map
-      let graphicLayer
+      let map;
+      let graphicLayer;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -118,113 +118,113 @@
           scene: {
             center: { lat: 31.516143, lng: 117.282937, alt: 46242, heading: 2, pitch: -49 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
         graphicLayer = new mars3d.layer.GraphicLayer({
           hasEdit: true,
           isAutoEditing: true, //绘制完成后是否自动激活编辑
-        })
-        map.addLayer(graphicLayer)
+        });
+        map.addLayer(graphicLayer);
 
         //图层管理的相关处理，代码在\js\graphicManager.js
-        initLayerManager(graphicLayer)
+        initLayerManager(graphicLayer);
 
         //绑定标绘相关事件监听(可以自行加相关代码实现业务需求，此处主要做示例)
         graphicLayer.on(mars3d.EventType.drawStart, function (e) {
-          console.log('开始绘制', e)
-        })
+          console.log("开始绘制", e);
+        });
         graphicLayer.on(mars3d.EventType.drawAddPoint, function (e) {
-          console.log('绘制过程中增加了点', e)
-        })
+          console.log("绘制过程中增加了点", e);
+        });
         graphicLayer.on(mars3d.EventType.drawRemovePoint, function (e) {
-          console.log('绘制过程中删除了点', e)
-        })
+          console.log("绘制过程中删除了点", e);
+        });
 
         graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
-          console.log('创建完成', e)
-        })
+          console.log("创建完成", e);
+        });
         graphicLayer.on(mars3d.EventType.editStart, function (e) {
-          console.log('开始编辑', e)
+          console.log("开始编辑", e);
 
-          startEditing(e.graphic)
-        })
+          startEditing(e.graphic);
+        });
         graphicLayer.on(mars3d.EventType.editMovePoint, function (e) {
-          console.log('编辑修改了点', e)
-          startEditing(e.graphic)
-        })
+          console.log("编辑修改了点", e);
+          startEditing(e.graphic);
+        });
         graphicLayer.on(mars3d.EventType.editRemovePoint, function (e) {
-          console.log('编辑删除了点', e)
+          console.log("编辑删除了点", e);
 
-          startEditing(e.graphic)
-        })
+          startEditing(e.graphic);
+        });
         graphicLayer.on(mars3d.EventType.editStop, function (e) {
-          console.log('停止编辑', e)
+          console.log("停止编辑", e);
 
-          stopEditing()
-        })
+          stopEditing();
+        });
         graphicLayer.on(mars3d.EventType.removeGraphic, function (e) {
-          console.log('删除了对象', e)
+          console.log("删除了对象", e);
 
-          stopEditing()
-        })
+          stopEditing();
+        });
       }
 
       //绘制
       function drawPolygon(type) {
         graphicLayer.startDraw({
           type: type,
-          edittype: 'polygon',
+          edittype: "polygon",
           style: {
-            color: '#ff0000',
+            color: "#ff0000",
             opacity: 0.6,
             clampToGround: true,
           },
-        })
+        });
       }
 
       //绘制(带高度)
       function drawExtrudedPolygon(type) {
         graphicLayer.startDraw({
           type: type,
-          edittype: 'polygon',
+          edittype: "polygon",
           style: {
-            color: '#ffd500',
+            color: "#ffd500",
             opacity: 0.4,
             diffHeight: 300,
           },
-        })
+        });
       }
       //附加：激活属性编辑widget【非必需，可以注释该方法内部代码】
-      var timeTik
+      var timeTik;
 
       function startEditing(graphic) {
         if (!graphic) {
-          return
+          return;
         }
-        clearTimeout(timeTik)
+        clearTimeout(timeTik);
 
-        var plotAttr = mars3d.widget.getClass('widgets/plotAttr/widget.js')
+        var plotAttr = mars3d.widget.getClass("widgets/plotAttr/widget.js");
         if (plotAttr && plotAttr.isActivate) {
-          plotAttr.startEditing(graphic, graphic.coordinates)
+          plotAttr.startEditing(graphic, graphic.coordinates);
         } else {
           mars3d.widget.activate({
             map: map,
-            uri: 'widgets/plotAttr/widget.js',
-            name: '属性编辑',
+            uri: "widgets/plotAttr/widget.js",
+            name: "属性编辑",
             graphic: graphic,
             lonlats: graphic.coordinates,
-          })
+          });
         }
       }
 
       function stopEditing() {
         timeTik = setTimeout(function () {
-          mars3d.widget.disable('widgets/plotAttr/widget.js')
-        }, 200)
+          mars3d.widget.disable("widgets/plotAttr/widget.js");
+        }, 200);
       }
       //附加：激活属性编辑widget【非必需，可以注释该方法内部代码】
     </script>

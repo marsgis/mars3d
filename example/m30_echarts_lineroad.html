@@ -38,52 +38,52 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 30.659712, lng: 120.743737, alt: 12124, heading: 2, pitch: -49 },
+            center: { lat: 30.589203, lng: 120.732051, alt: 18446, heading: 2, pitch: -49 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         queryLineroadApiData().then(function (res) {
           //创建Echarts图层
-          createEchartsLayer(res.data)
-        })
+          createEchartsLayer(res.data);
+        });
       }
 
       // 访问后端接口，取数据
       function queryLineroadApiData() {
         return new Promise(function (resolve, reject) {
-          $.get('//data.mars3d.cn/file/apidemo/lineroad.json', function (result) {
-            resolve(result)
-          })
-        })
+          $.get("//data.mars3d.cn/file/apidemo/lineroad.json", function (result) {
+            resolve(result);
+          });
+        });
       }
 
       function createEchartsLayer(data) {
-        var options = getEchartsOption(data)
-        options.depthTest = false //是否进行计算深度（大数据时，需要关闭）
+        var options = getEchartsOption(data);
+        options.depthTest = false; //是否进行计算深度（大数据时，需要关闭）
 
-        var echartsLayer = new mars3d.layer.EchartsLayer(options)
-        map.addLayer(echartsLayer)
+        var echartsLayer = new mars3d.layer.EchartsLayer(options);
+        map.addLayer(echartsLayer);
       }
 
       function getEchartsOption(data) {
         var option = {
           animation: false,
-          GLMap: {},
+
           visualMap: {
-            type: 'piecewise',
-            left: 'right',
-            top: 'bottom',
+            type: "piecewise",
+            left: "right",
+            top: "bottom",
             /* pieces: [
                     {min: 15}, // 不指定 max，表示 max 为无限大（Infinity）。
                     {min: 12, max: 15},
@@ -96,21 +96,21 @@
             max: 15,
             splitNumber: 5,
             maxOpen: true,
-            color: ['red', 'yellow', 'green'],
+            color: ["red", "yellow", "green"],
             textStyle: {
-              color: '#ffffff',
+              color: "#ffffff",
             },
           },
           tooltip: {
             formatter: function (params, ticket, callback) {
-              return '拥堵指数:' + params.value
+              return "拥堵指数:" + params.value;
             },
-            trigger: 'item',
+            trigger: "item",
           },
           series: [
             {
-              type: 'lines',
-              coordinateSystem: 'GLMap',
+              type: "lines",
+              coordinateSystem: "mars3dMap",
               polyline: true,
               data: data,
               lineStyle: {
@@ -125,13 +125,13 @@
               effect: {
                 show: true,
                 symbolSize: 2,
-                color: 'white',
+                color: "white",
               },
             },
           ],
-        }
+        };
 
-        return option
+        return option;
       }
     </script>
   </body>

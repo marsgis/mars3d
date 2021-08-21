@@ -39,95 +39,101 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { y: 39.290787, x: 116.392459, z: 138820.7, heading: 359.9, pitch: -63.2, roll: 0 },
+            center: { lat: 39.52695, lng: 116.904038, alt: 65014, heading: 321, pitch: -44 },
           },
-        })
+        });
 
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.basemap = 2017 //蓝色底图
+        map.basemap = 2017; //蓝色底图
 
         queryLineroadApiData().then(function (data) {
           //创建Echarts图层
-          createEchartsLayer(data)
-        })
+          createEchartsLayer(data);
+        });
       }
 
       // 访问后端接口，取数据
       function queryLineroadApiData() {
         return new Promise(function (resolve, reject) {
-          $.getJSON('//data.mars3d.cn/file/apidemo/bjgj.json', function (result) {
-            resolve(result)
-          })
-        })
+          $.ajax({
+            url: "//data.mars3d.cn/file/apidemo/bjgj.json",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+              resolve(result);
+            },
+            error: function (data) {
+              reject(data);
+            },
+          });
+        });
       }
 
       function createEchartsLayer(data) {
-        var options = getEchartsOption(data)
-        options.depthTest = false //是否进行计算深度（大数据时，需要关闭）
+        var options = getEchartsOption(data);
+        options.depthTest = false; //是否进行计算深度（大数据时，需要关闭）
 
-        var echartsLayer = new mars3d.layer.EchartsLayer(options)
-        map.addLayer(echartsLayer)
+        var echartsLayer = new mars3d.layer.EchartsLayer(options);
+        map.addLayer(echartsLayer);
 
         $(window).resize(function () {
-          echartsLayer.resize()
-        })
+          echartsLayer.resize();
+        });
       }
 
       function getEchartsOption(data) {
-        var hStep = 300 / (data.length - 1)
         var busLines = [].concat.apply(
-          [],
           data.map(function (busLine, idx) {
-            var prevPt
-            var points = []
+            var prevPt;
+            var points = [];
             for (var i = 0; i < busLine.length; i += 2) {
-              var pt = [busLine[i], busLine[i + 1]]
+              var pt = [busLine[i], busLine[i + 1]];
               if (i > 0) {
-                pt = [prevPt[0] + pt[0], prevPt[1] + pt[1]]
+                pt = [prevPt[0] + pt[0], prevPt[1] + pt[1]];
               }
-              prevPt = pt
+              prevPt = pt;
 
-              var jd = pt[0] / 1e4
-              var wd = pt[1] / 1e4
+              var jd = pt[0] / 1e4;
+              var wd = pt[1] / 1e4;
 
               //百度坐标转高德坐标
-              var point = mars3d.PointTrans.bd2gcj([jd, wd])
-              jd = point[0]
-              wd = point[1]
+              var point = mars3d.PointTrans.bd2gcj([jd, wd]);
+              jd = point[0];
+              wd = point[1];
 
-              points.push([jd, wd])
+              points.push([jd, wd]);
             }
             //console.log(idx + ',' + hStep);
             return {
               coords: points,
               lineStyle: {
                 normal: {
-                  color: echarts.color.modifyHSL('#5A94DF', Math.round(hStep * idx)),
+                  color: echarts.color.modifyHSL("#5A94DF", Math.round((300 / (data.length - 1)) * idx)),
                 },
               },
-            }
+            };
           })
-        )
+        );
 
         //console.log(JSON.stringify(busLines));
 
         var option = {
           animation: false,
-          backgroundColor: 'rgba(17, 19, 42, 0.5)',
-          GLMap: {},
+          backgroundColor: "rgba(17, 19, 42, 0.5)",
+
           series: [
             {
-              type: 'lines',
-              coordinateSystem: 'GLMap',
+              type: "lines",
+              coordinateSystem: "mars3dMap",
               polyline: true,
               data: busLines,
               silent: true,
@@ -143,8 +149,8 @@
               progressive: 200,
             },
             {
-              type: 'lines',
-              coordinateSystem: 'GLMap',
+              type: "lines",
+              coordinateSystem: "mars3dMap",
               polyline: true,
               data: busLines,
               lineStyle: {
@@ -161,8 +167,8 @@
               zlevel: 1,
             },
           ],
-        }
-        return option
+        };
+        return option;
       }
     </script>
   </body>

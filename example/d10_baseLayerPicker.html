@@ -1,202 +1,202 @@
 <!-- 2017-12-4 14:24:12 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>底图切换控制控件 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>底图切换控制控件 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+    ></script>
 
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-<body class="dark">
-  <!--加载前进行操作提示，优化用户体验-->
-  <div id="mask" class="signmask" onclick="removeMask()"></div>
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      "use script"; //开发环境建议开启严格模式
 
-  <div id="mars3dContainer" class="mars3d-container"></div>
+      var map;
 
+      function initMap(mapOptions) {
+        //方式1：按basemaps配置自动生成
+        mapOptions.control = {
+          baseLayerPicker: true, //是否显示图层选择控件
+        };
 
+        //方式2：完全自定义控件的显示内容。
+        // mapOptions.control = {
+        //   baseLayerPicker: true, //是否显示图层选择控件
+        //   imageryProviderViewModels: getImageryProviderArr(), //地图底图
+        //   terrainProviderViewModels: getTerrainProviderViewModelsArr()
+        // }
 
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
-
-    var map
-
-    function initMap(mapOptions) {
-      //方式1：按basemaps配置自动生成
-      mapOptions.control = {
-        baseLayerPicker: true, //是否显示图层选择控件
+        //创建三维地球场景
+        map = new mars3d.Map("mars3dContainer", mapOptions);
       }
 
-      //方式2：完全自定义控件的显示内容。
-      // mapOptions.control = {
-      //   baseLayerPicker: true, //是否显示图层选择控件
-      //   imageryProviderViewModels: getImageryProviderArr(), //地图底图
-      //   terrainProviderViewModels: getTerrainProviderViewModelsArr()
-      // }
+      //获取自定义底图切换
+      function getImageryProviderArr() {
+        var providerViewModels = [];
+        var imgModel;
 
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
-    }
-
-    //获取自定义底图切换
-    function getImageryProviderArr() {
-      var providerViewModels = []
-      var imgModel
-
-      imgModel = new Cesium.ProviderViewModel({
-        name: '本地图片',
-        tooltip: '本地单张图片',
-        iconUrl: 'img/basemaps/esriNationalGeographic.png',
-        category: '标准坐标系',
-        creationFunction: function () {
-          return mars3d.LayerUtil.createImageryProvider({
-            type: 'image',
-            url: '//data.mars3d.cn/file/img/world/world.jpg',
-          })
-        },
-      })
-      providerViewModels.push(imgModel)
-
-      imgModel = new Cesium.ProviderViewModel({
-        name: '天地图影像',
-        tooltip: '天地图全球影像地图服务（国家测绘局）',
-        iconUrl: 'img/basemaps/tdt_img.png',
-        category: '标准坐标系',
-        creationFunction: function () {
-          return [
-            mars3d.LayerUtil.createImageryProvider({
-              type: 'tdt',
-              layer: 'img_d',
-              key: mars3d.Token.tiandituArr,
-            }),
-            mars3d.LayerUtil.createImageryProvider({
-              type: 'tdt',
-              layer: 'img_z',
-              key: mars3d.Token.tiandituArr,
-            }),
-          ]
-        },
-      })
-      providerViewModels.push(imgModel)
-
-      imgModel = new Cesium.ProviderViewModel({
-        name: 'Bing影像',
-        iconUrl: 'img/basemaps/bingAerial.png',
-        tooltip: '微软提供的高清影像地图',
-        category: '标准坐标系',
-        creationFunction: function () {
-          return mars3d.LayerUtil.createImageryProvider({
-            type: 'bing',
-            layer: 'Aerial',
-          })
-        },
-      })
-      providerViewModels.push(imgModel)
-
-      imgModel = new Cesium.ProviderViewModel({
-        name: 'ESRI影像',
-        iconUrl: 'img/basemaps/esriWorldImagery.png',
-        tooltip: 'ESRI提供的高清影像地图',
-        category: '标准坐标系',
-        creationFunction: function () {
-          return mars3d.LayerUtil.createImageryProvider({
-            type: 'arcgis',
-            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
-          })
-        },
-      })
-      providerViewModels.push(imgModel)
-
-      imgModel = new Cesium.ProviderViewModel({
-        name: '谷歌影像',
-        tooltip: '谷歌影像地图服务',
-        iconUrl: 'img/basemaps/google_img.png',
-        category: '国测局偏移坐标系',
-        creationFunction: function () {
-          return [
-            mars3d.LayerUtil.createImageryProvider({ type: 'google', layer: 'img_d' }),
-            mars3d.LayerUtil.createImageryProvider({ type: 'google', layer: 'img_z' }),
-          ]
-        },
-      })
-      providerViewModels.push(imgModel)
-
-      imgModel = new Cesium.ProviderViewModel({
-        name: '高德影像',
-        tooltip: '高德影像地图服务',
-        iconUrl: 'img/basemaps/gaode_img.png',
-        category: '国测局偏移坐标系',
-        creationFunction: function () {
-          return [
-            mars3d.LayerUtil.createImageryProvider({ type: 'gaode', layer: 'img_d' }),
-            mars3d.LayerUtil.createImageryProvider({ type: 'gaode', layer: 'img_z' }),
-          ]
-        },
-      })
-      providerViewModels.push(imgModel)
-
-      return providerViewModels
-    }
-
-    function getTerrainProviderViewModelsArr() {
-      return [
-        new Cesium.ProviderViewModel({
-          name: '无地形',
-          tooltip: 'WGS84标准球体',
-          iconUrl: 'img/basemaps/TerrainEllipsoid.png',
+        imgModel = new Cesium.ProviderViewModel({
+          name: "本地图片",
+          tooltip: "本地单张图片",
+          iconUrl: "img/basemaps/esriNationalGeographic.png",
+          category: "标准坐标系",
           creationFunction: function () {
-            return new Cesium.EllipsoidTerrainProvider({
-              ellipsoid: Cesium.Ellipsoid.WGS84,
-            })
+            return mars3d.LayerUtil.createImageryProvider({
+              type: "image",
+              url: "//data.mars3d.cn/file/img/world/world.jpg",
+            });
           },
-        }),
-        new Cesium.ProviderViewModel({
-          name: '全球地形',
-          tooltip: '由 Cesium官方 提供的高分辨率全球地形',
-          iconUrl: 'img/basemaps/TerrainSTK.png',
-          creationFunction: function () {
-            return Cesium.createWorldTerrain({
-              requestWaterMask: true,
-              requestVertexNormals: true,
-            })
-          },
-        }),
-        new Cesium.ProviderViewModel({
-          name: '中国地形',
-          tooltip: '由 Mars3D 提供的中国国内地形',
-          iconUrl: 'img/basemaps/TerrainSTK.png',
-          creationFunction: function () {
-            return new Cesium.CesiumTerrainProvider({
-              url: 'http://data.mars3d.cn/terrain',
-              requestWaterMask: true,
-              requestVertexNormals: true,
-            })
-          },
-        }),
-      ]
-    }
-  </script>
-</body>
+        });
+        providerViewModels.push(imgModel);
 
+        imgModel = new Cesium.ProviderViewModel({
+          name: "天地图影像",
+          tooltip: "天地图全球影像地图服务（国家测绘局）",
+          iconUrl: "img/basemaps/tdt_img.png",
+          category: "标准坐标系",
+          creationFunction: function () {
+            return [
+              mars3d.LayerUtil.createImageryProvider({
+                type: "tdt",
+                layer: "img_d",
+                key: mars3d.Token.tiandituArr,
+              }),
+              mars3d.LayerUtil.createImageryProvider({
+                type: "tdt",
+                layer: "img_z",
+                key: mars3d.Token.tiandituArr,
+              }),
+            ];
+          },
+        });
+        providerViewModels.push(imgModel);
+
+        imgModel = new Cesium.ProviderViewModel({
+          name: "Bing影像",
+          iconUrl: "img/basemaps/bingAerial.png",
+          tooltip: "微软提供的高清影像地图",
+          category: "标准坐标系",
+          creationFunction: function () {
+            return mars3d.LayerUtil.createImageryProvider({
+              type: "bing",
+              layer: "Aerial",
+            });
+          },
+        });
+        providerViewModels.push(imgModel);
+
+        imgModel = new Cesium.ProviderViewModel({
+          name: "ESRI影像",
+          iconUrl: "img/basemaps/esriWorldImagery.png",
+          tooltip: "ESRI提供的高清影像地图",
+          category: "标准坐标系",
+          creationFunction: function () {
+            return mars3d.LayerUtil.createImageryProvider({
+              type: "arcgis",
+              url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
+            });
+          },
+        });
+        providerViewModels.push(imgModel);
+
+        imgModel = new Cesium.ProviderViewModel({
+          name: "谷歌影像",
+          tooltip: "谷歌影像地图服务",
+          iconUrl: "img/basemaps/google_img.png",
+          category: "国测局偏移坐标系",
+          creationFunction: function () {
+            return [
+              mars3d.LayerUtil.createImageryProvider({ type: "google", layer: "img_d" }),
+              mars3d.LayerUtil.createImageryProvider({ type: "google", layer: "img_z" }),
+            ];
+          },
+        });
+        providerViewModels.push(imgModel);
+
+        imgModel = new Cesium.ProviderViewModel({
+          name: "高德影像",
+          tooltip: "高德影像地图服务",
+          iconUrl: "img/basemaps/gaode_img.png",
+          category: "国测局偏移坐标系",
+          creationFunction: function () {
+            return [
+              mars3d.LayerUtil.createImageryProvider({ type: "gaode", layer: "img_d" }),
+              mars3d.LayerUtil.createImageryProvider({ type: "gaode", layer: "img_z" }),
+            ];
+          },
+        });
+        providerViewModels.push(imgModel);
+
+        return providerViewModels;
+      }
+
+      function getTerrainProviderViewModelsArr() {
+        return [
+          new Cesium.ProviderViewModel({
+            name: "无地形",
+            tooltip: "WGS84标准球体",
+            iconUrl: "img/basemaps/TerrainEllipsoid.png",
+            creationFunction: function () {
+              return new Cesium.EllipsoidTerrainProvider({
+                ellipsoid: Cesium.Ellipsoid.WGS84,
+              });
+            },
+          }),
+          new Cesium.ProviderViewModel({
+            name: "全球地形",
+            tooltip: "由 Cesium官方 提供的高分辨率全球地形",
+            iconUrl: "img/basemaps/TerrainSTK.png",
+            creationFunction: function () {
+              return Cesium.createWorldTerrain({
+                requestWaterMask: true,
+                requestVertexNormals: true,
+              });
+            },
+          }),
+          new Cesium.ProviderViewModel({
+            name: "中国地形",
+            tooltip: "由 Mars3D 提供的中国国内地形",
+            iconUrl: "img/basemaps/TerrainSTK.png",
+            creationFunction: function () {
+              return new Cesium.CesiumTerrainProvider({
+                url: "http://data.mars3d.cn/terrain",
+                requestWaterMask: true,
+                requestVertexNormals: true,
+              });
+            },
+          }),
+        ];
+      }
+    </script>
+  </body>
 </html>

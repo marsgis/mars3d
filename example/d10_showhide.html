@@ -106,9 +106,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -125,109 +125,108 @@
             animation: true, //是否创建动画小器件，左下角仪表
             timeline: true, //是否显示时间线控件
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //显示clock
-        $('#showClock').change(function () {
-          var show = $(this).is(':checked')
-          map.viewer.animation.container.style.display = show ? 'block' : 'none'
+        $("#showClock").change(function () {
+          var show = $(this).is(":checked");
+          map.viewer.animation.container.style.display = show ? "block" : "none";
 
           if (show) {
-            map.controls.locationBar.css({
-              left: '170px',
-            })
+            map.controls.locationBar.setStyle({
+              left: "170px",
+            });
           } else {
-            map.controls.locationBar.css({
-              left: '0px',
-            })
+            map.controls.locationBar.setStyle({
+              left: "0px",
+            });
           }
-        })
+        });
 
         //显示刻度线
-        $('#showTimeLine').change(function () {
-          var show = $(this).is(':checked')
-          map.viewer.timeline.container.style.display = show ? 'block' : 'none'
+        $("#showTimeLine").change(function () {
+          var show = $(this).is(":checked");
+          map.viewer.timeline.container.style.display = show ? "block" : "none";
 
           if (show) {
-            map.controls.locationBar.css({
-              bottom: '25px',
-            })
+            map.controls.locationBar.setStyle({
+              bottom: "25px",
+            });
           } else {
-            map.controls.locationBar.css({
-              bottom: '0px',
-            })
+            map.controls.locationBar.setStyle({
+              bottom: "0px",
+            });
           }
-        })
+        });
 
         //位置信息状态栏
-        $('#showLocation').change(function () {
-          var show = $(this).is(':checked')
+        $("#showLocation").change(function () {
+          var show = $(this).is(":checked");
 
-          map.controls.locationBar.show = show
-        })
+          map.controls.locationBar.show = show;
+        });
 
         //导航球
-        $('#showNav').change(function () {
-          var show = $(this).is(':checked')
+        $("#showNav").change(function () {
+          var show = $(this).is(":checked");
 
-          map.controls.compass.show = show
-        })
+          map.controls.compass.show = show;
+        });
 
         //比例尺
-        $('#showLegend').change(function () {
-          var show = $(this).is(':checked')
-
-          map.controls.distanceLegend.show = show
-        })
+        $("#showLegend").change(function () {
+          var show = $(this).is(":checked");
+          map.controls.distanceLegend.show = show;
+        });
         //显示位置搜索
-        $('#showLocationSearch').change(function () {
-          var show = $(this).is(':checked')
-          map.viewer.geocoder.container.style.display = show ? 'block' : 'none'
-        })
+        $("#showLocationSearch").change(function () {
+          var show = $(this).is(":checked");
+          map.viewer.geocoder.container.style.display = show ? "block" : "none";
+        });
 
         //显示回主页
-        $('#showGoHome').change(function () {
-          var show = $(this).is(':checked')
-          map.viewer.homeButton._element.style.display = show ? 'block' : 'none'
-        })
+        $("#showGoHome").change(function () {
+          var show = $(this).is(":checked");
+          map.viewer.homeButton._element.style.display = show ? "block" : "none";
+        });
 
         //显示三维视图切换
-        $('#showSceneModePicker').change(function () {
-          var show = $(this).is(':checked')
+        $("#showSceneModePicker").change(function () {
+          var show = $(this).is(":checked");
 
           if (show) {
-            $('.cesium-sceneModePicker-wrapper').show()
+            $(".cesium-sceneModePicker-wrapper").show();
           } else {
-            $('.cesium-sceneModePicker-wrapper').hide()
+            $(".cesium-sceneModePicker-wrapper").hide();
           }
-        })
+        });
 
         //显示基础图层切换
-        $('#showBaseLayerPicker').change(function () {
-          var show = $(this).is(':checked')
-          map.viewer.baseLayerPicker._element.style.display = show ? 'block' : 'none'
-        })
+        $("#showBaseLayerPicker").change(function () {
+          var show = $(this).is(":checked");
+          map.viewer.baseLayerPicker._element.style.display = show ? "block" : "none";
+        });
 
         //显示帮助
-        $('#showFullScreen').change(function () {
-          var show = $(this).is(':checked')
-          map.viewer.fullscreenButton.container.style.display = show ? 'block' : 'none'
-        })
+        $("#showFullScreen").change(function () {
+          var show = $(this).is(":checked");
+          map.viewer.fullscreenButton.container.style.display = show ? "block" : "none";
+        });
 
         //VR
-        $('#showVR').change(function () {
-          var show = $(this).is(':checked')
-          map.viewer.vrButton.container.style.display = show ? 'block' : 'none'
-        })
+        $("#showVR").change(function () {
+          var show = $(this).is(":checked");
+          map.viewer.vrButton.container.style.display = show ? "block" : "none";
+        });
 
         //显示帮助
-        $('#showHelpButton').change(function () {
-          var show = $(this).is(':checked')
-          document.getElementsByClassName('cesium-navigationHelpButton-wrapper')[0].style.display = show ? 'block' : 'none'
-        })
+        $("#showHelpButton").change(function () {
+          var show = $(this).is(":checked");
+          document.getElementsByClassName("cesium-navigationHelpButton-wrapper")[0].style.display = show ? "block" : "none";
+        });
       }
     </script>
   </body>

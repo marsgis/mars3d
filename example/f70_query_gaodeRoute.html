@@ -85,16 +85,16 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var routeLayer
-      var gaodeRoute
+      var map;
+      var routeLayer;
+      var gaodeRoute;
 
       //当前页面业务相关
-      var startGraphic, endGraphic
+      var startGraphic, endGraphic;
 
-      var lineGraphic
+      var lineGraphic;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -102,121 +102,121 @@
           scene: {
             center: { lat: 31.797919, lng: 117.281329, alt: 36236, heading: 358, pitch: -81 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
-        routeLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(routeLayer)
+        routeLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(routeLayer);
 
         gaodeRoute = new mars3d.query.GaodeRoute({
           // key: ['ae29a37307840c7ae4a785ac905927e0'],
-        })
+        });
 
-        $('#startPoint').click(function () {
+        $("#startPoint").click(function () {
           if (startGraphic) {
-            startGraphic.remove()
-            startGraphic = null
+            startGraphic.remove();
+            startGraphic = null;
           }
 
           map.graphicLayer.startDraw({
-            type: 'billboard',
+            type: "billboard",
             style: {
-              image: 'img/marker/start.png',
+              image: "img/marker/start.png",
               horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
               verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
             },
             success: function (graphic) {
-              startGraphic = graphic
+              startGraphic = graphic;
 
-              var point = graphic.point
-              point.format()
-              $('#startIpt').val(point.lng + ',' + point.lat)
+              var point = graphic.point;
+              point.format();
+              $("#startIpt").val(point.lng + "," + point.lat);
 
-              queryRoute()
+              queryRoute();
             },
-          })
-        })
-        $('#endPoint').click(function () {
+          });
+        });
+        $("#endPoint").click(function () {
           if (endGraphic) {
-            endGraphic.remove()
-            endGraphic = null
+            endGraphic.remove();
+            endGraphic = null;
           }
 
           map.graphicLayer.startDraw({
-            type: 'billboard',
+            type: "billboard",
             style: {
-              image: 'img/marker/end.png',
+              image: "img/marker/end.png",
               horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
               verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
             },
             success: function (graphic) {
-              endGraphic = graphic
+              endGraphic = graphic;
 
-              var point = graphic.point
-              point.format()
-              $('#endIpt').val(point.lng + ',' + point.lat)
+              var point = graphic.point;
+              point.format();
+              $("#endIpt").val(point.lng + "," + point.lat);
 
-              queryRoute()
+              queryRoute();
             },
-          })
-        })
+          });
+        });
 
         //开始分析
-        $('#FX').click(function () {
+        $("#FX").click(function () {
           if (!startGraphic || !endGraphic) {
-            haoutil.msg('请设置起点和终点')
-            return
+            haoutil.msg("请设置起点和终点");
+            return;
           }
-          queryRoute()
-        })
+          queryRoute();
+        });
 
-        $('#clear').click(function () {
+        $("#clear").click(function () {
           if (startGraphic) {
-            startGraphic.remove()
-            startGraphic = null
+            startGraphic.remove();
+            startGraphic = null;
           }
           if (endGraphic) {
-            endGraphic.remove()
-            endGraphic = null
+            endGraphic.remove();
+            endGraphic = null;
           }
-          $('#startIpt').val('')
-          $('#endIpt').val('')
+          $("#startIpt").val("");
+          $("#endIpt").val("");
 
-          routeLayer.clear()
-          $('.result').hide()
-        })
+          routeLayer.clear();
+          $(".result").hide();
+        });
       }
 
       function queryRoute() {
         if (!startGraphic || !endGraphic) {
-          return
+          return;
         }
 
-        routeLayer.clear()
+        routeLayer.clear();
 
-        haoutil.loading.show()
-        $('.result').hide()
+        haoutil.loading.show();
+        $(".result").hide();
 
-        var type = Number($('#queryType').val()) //GaodeRouteType枚举类型
+        var type = Number($("#queryType").val()); //GaodeRouteType枚举类型
 
         gaodeRoute.query({
           type: type,
           points: [startGraphic.coordinate, endGraphic.coordinate],
           success: function (data) {
-            haoutil.loading.close()
+            haoutil.loading.close();
 
-            let lineFirst = data.paths[0]
-            var points = lineFirst.points
+            let lineFirst = data.paths[0];
+            var points = lineFirst.points;
             if (!points || points.length < 1) {
-              return
+              return;
             }
 
-            var time = haoutil.str.formatTime(lineFirst.allDuration)
-            var distance = haoutil.str.formatLength(lineFirst.allDistance)
-            var html = '<div>总距离：' + distance + '<br/>所需时间：' + time + '</div>'
+            var time = haoutil.str.formatTime(lineFirst.allDuration);
+            var distance = haoutil.str.formatLength(lineFirst.allDistance);
+            var html = "<div>总距离：" + distance + "<br/>所需时间：" + time + "</div>";
 
             let graphic = new mars3d.graphic.PolylineEntity({
               positions: points,
@@ -226,34 +226,34 @@
                 width: 5,
               },
               popup: html,
-            })
-            routeLayer.addGraphic(graphic)
+            });
+            routeLayer.addGraphic(graphic);
 
-            showResult(data)
+            showResult(data);
           },
           error: function (msg) {
-            haoutil.loading.close()
+            haoutil.loading.close();
 
-            window.toastr.error(msg)
+            window.toastr.error(msg);
           },
-        })
+        });
       }
 
       function showResult(data) {
-        $('.result').show()
+        $(".result").show();
 
-        var allTime = haoutil.str.formatTime(data.paths[0].allDuration)
-        var allDistance = haoutil.str.formatLength(data.paths[0].allDistance)
+        var allTime = haoutil.str.formatTime(data.paths[0].allDuration);
+        var allDistance = haoutil.str.formatLength(data.paths[0].allDistance);
 
-        var dhHtml = ''
+        var dhHtml = "";
         for (var i = 0; i < data.paths[0].steps.length; i++) {
-          var item = data.paths[0].steps[i]
-          dhHtml += item.instruction + '；'
+          var item = data.paths[0].steps[i];
+          dhHtml += item.instruction + "；";
         }
-        $('#useTime').html(allTime)
+        $("#useTime").html(allTime);
 
-        $('#allDiatance').html(allDistance)
-        $('#dh').html(dhHtml)
+        $("#allDiatance").html(allDistance);
+        $("#dh").html(dhHtml);
       }
     </script>
   </body>

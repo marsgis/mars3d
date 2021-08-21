@@ -81,18 +81,18 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var routeLayer
-      var gaodeRoute
+      var map;
+      var routeLayer;
+      var gaodeRoute;
 
       //当前页面业务相关
-      var startGraphic
-      var endPointArr
-      var poiLayer
+      var startGraphic;
+      var endPointArr;
+      var poiLayer;
 
-      var $table
+      var $table;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -100,125 +100,125 @@
           scene: {
             center: { lat: 31.812769, lng: 117.250545, alt: 18500, heading: 358, pitch: -81 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
-        routeLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(routeLayer)
+        routeLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(routeLayer);
 
         gaodeRoute = new mars3d.query.GaodeRoute({
           // key: ['ae29a37307840c7ae4a785ac905927e0'],
-        })
+        });
 
-        $table = $('#table')
+        $table = $("#table");
         $table.bootstrapTable({
           height: 300,
           singleSelect: true, //单选
           pagination: false,
-          iconsPrefix: 'fa',
+          iconsPrefix: "fa",
           columns: [
             {
-              field: 'index',
-              title: '序号',
+              field: "index",
+              title: "序号",
               sortable: true,
               editable: false,
-              align: 'left',
+              align: "left",
               formatter: function (value, row, index) {
-                return index + 1
+                return index + 1;
               },
             },
             {
-              field: 'name',
-              title: '目的地',
+              field: "name",
+              title: "目的地",
               sortable: true,
               editable: false,
-              align: 'left',
+              align: "left",
             },
             {
-              field: 'allDistance',
-              title: '总距离',
+              field: "allDistance",
+              title: "总距离",
               sortable: true,
               editable: false,
-              align: 'left',
+              align: "left",
             },
             {
-              field: 'allDuration',
-              title: '时间',
+              field: "allDuration",
+              title: "时间",
               sortable: true,
               editable: false,
-              align: 'left',
+              align: "left",
             },
           ],
           onClickRow: function (item, $element, field) {
-            centerAtRoute(item.graphic)
+            centerAtRoute(item.graphic);
           },
-        })
+        });
 
-        $('#startPoint').click(function () {
+        $("#startPoint").click(function () {
           if (startGraphic) {
-            startGraphic.remove()
-            startGraphic = null
+            startGraphic.remove();
+            startGraphic = null;
           }
 
           map.graphicLayer.startDraw({
-            type: 'billboard',
+            type: "billboard",
             style: {
-              image: 'img/marker/start.png',
+              image: "img/marker/start.png",
               horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
               verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
             },
             success: function (graphic) {
-              startGraphic = graphic
+              startGraphic = graphic;
 
-              var point = graphic.point
-              point.format()
+              var point = graphic.point;
+              point.format();
 
-              $('#startIpt').val(point.lng + ',' + point.lat)
+              $("#startIpt").val(point.lng + "," + point.lat);
             },
-          })
-        })
+          });
+        });
 
         var queryGaodePOI = new mars3d.query.GaodePOI({
           // key: ['ae29a37307840c7ae4a785ac905927e0'],
-        })
+        });
 
         //创建矢量数据图层
-        poiLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(poiLayer)
+        poiLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(poiLayer);
 
         poiLayer.bindPopup(function (event) {
-          var item = event.graphic.attr
+          var item = event.graphic.attr;
 
-          var inHtml = '<div class="mars-popup-titile">' + item.name + '</div><div class="mars-popup-content" >'
-          var type = $.trim(item.type)
-          if (type != '') {
-            inHtml += '<div><label>类别</label>' + type + '</div>'
+          var inHtml = '<div class="mars-popup-titile">' + item.name + '</div><div class="mars-popup-content" >';
+          var type = $.trim(item.type);
+          if (type != "") {
+            inHtml += "<div><label>类别</label>" + type + "</div>";
           }
-          var xzqh = $.trim(item.xzqh)
-          if (xzqh != '') {
-            inHtml += '<div><label>区域</label>' + xzqh + '</div>'
+          var xzqh = $.trim(item.xzqh);
+          if (xzqh != "") {
+            inHtml += "<div><label>区域</label>" + xzqh + "</div>";
           }
-          var tel = $.trim(item.tel)
-          if (tel != '') {
-            inHtml += '<div><label>电话</label>' + tel + '</div>'
+          var tel = $.trim(item.tel);
+          if (tel != "") {
+            inHtml += "<div><label>电话</label>" + tel + "</div>";
           }
-          var address = $.trim(item.address)
-          if (address != '') {
-            inHtml += '<div><label>地址</label>' + address + '</div>'
+          var address = $.trim(item.address);
+          if (address != "") {
+            inHtml += "<div><label>地址</label>" + address + "</div>";
           }
-          inHtml += '</div>'
-          return inHtml
-        })
+          inHtml += "</div>";
+          return inHtml;
+        });
 
-        $('#endPoint').click(function () {
-          haoutil.loading.show()
-          var extent = map.getExtent() //当前视域内
+        $("#endPoint").click(function () {
+          haoutil.loading.show();
+          var extent = map.getExtent(); //当前视域内
 
           queryGaodePOI.queryPolygon({
-            text: '企业',
+            text: "企业",
             polygon: [
               [extent.xmin, extent.ymin],
               [extent.xmin, extent.ymax],
@@ -228,72 +228,72 @@
             page: 1,
             count: 10,
             success: function (res) {
-              haoutil.loading.close()
+              haoutil.loading.close();
 
-              $('#count').html(res.count)
-              addEndPointEntity(res.list)
+              $("#count").html(res.count);
+              addEndPointEntity(res.list);
             },
             error: function (msg, error) {
-              window.toastr.error(msg)
-              haoutil.loading.close()
+              window.toastr.error(msg);
+              haoutil.loading.close();
             },
-          })
-        })
+          });
+        });
 
         //开始分析
-        $('#FX').click(queryRoute)
-        $('#clear').click(clear)
+        $("#FX").click(queryRoute);
+        $("#clear").click(clear);
       }
 
       function queryRoute() {
         if (!startGraphic || !endPointArr || endPointArr.length == 0) {
-          haoutil.msg('请设置起点和查询目的地')
-          return
+          haoutil.msg("请设置起点和查询目的地");
+          return;
         }
 
-        haoutil.loading.show()
-        $('#resultView').hide()
+        haoutil.loading.show();
+        $("#resultView").hide();
 
-        var type = Number($('#queryType').val()) //GaodeRouteType枚举类型
-        var startPoint = startGraphic.coordinate
-        var arr = []
+        var type = Number($("#queryType").val()); //GaodeRouteType枚举类型
+        var startPoint = startGraphic.coordinate;
+        var arr = [];
         for (var i = 0; i < endPointArr.length; i++) {
-          var item = endPointArr[i]
-          arr.push([startPoint, [item.x, item.y]])
+          var item = endPointArr[i];
+          arr.push([startPoint, [item.x, item.y]]);
         }
 
         gaodeRoute.queryArr({
           type: type,
           points: arr,
           success: function (data) {
-            haoutil.loading.close()
+            haoutil.loading.close();
 
-            showRouteResult(data)
+            showRouteResult(data);
           },
           error: function (msg) {
-            haoutil.loading.close()
-            window.toastr.error(msg)
+            haoutil.loading.close();
+            window.toastr.error(msg);
           },
-        })
+        });
       }
 
       function addEndPointEntity(arr) {
-        console.log('查询数据结果', arr)
+        console.log("查询数据结果", arr);
 
-        endPointArr = arr
+        endPointArr = arr;
 
         for (var i = 0; i < arr.length; i++) {
-          var item = arr[i]
+          var item = arr[i];
 
           var graphic = new mars3d.graphic.BillboardEntity({
             position: Cesium.Cartesian3.fromDegrees(item.x, item.y),
             style: {
-              image: 'img/marker/end.png',
+              image: "img/marker/end.png",
               scale: 1,
               clampToGround: true, //贴地
               label: {
                 text: item.name,
-                font: '20px 楷体',
+                font: "20px 楷体",
                 color: Cesium.Color.AZURE,
                 outline: true,
                 outlineColor: Cesium.Color.BLACK,
@@ -306,31 +306,31 @@
               },
             },
             attr: item,
-          })
-          poiLayer.addGraphic(graphic)
+          });
+          poiLayer.addGraphic(graphic);
         }
       }
 
       function showRouteResult(data) {
-        $('#resultView').show()
+        $("#resultView").show();
 
-        var arrTable = []
+        var arrTable = [];
         for (var i = 0; i < data.length; i++) {
-          var item = data[i]
+          var item = data[i];
           if (!item) {
-            continue
+            continue;
           }
 
-          var lnglats = item.points
+          var lnglats = item.points;
           if (!lnglats || lnglats.length < 1) {
-            continue
+            continue;
           }
 
-          var name = endPointArr[i].name
+          var name = endPointArr[i].name;
 
-          var time = haoutil.str.formatTime(item.allDuration)
-          var distance = haoutil.str.formatLength(item.allDistance)
-          var html = '目的地：' + name + '<br/>总距离：' + distance + '<br/>所需时间：' + time + ''
+          var time = haoutil.str.formatTime(item.allDuration);
+          var distance = haoutil.str.formatLength(item.allDistance);
+          var html = "目的地：" + name + "<br/>总距离：" + distance + "<br/>所需时间：" + time + "";
 
           let graphic = new mars3d.graphic.PolylineEntity({
             positions: lnglats,
@@ -342,57 +342,57 @@
               width: 4,
             },
             popup: html,
-          })
-          routeLayer.addGraphic(graphic)
+          });
+          routeLayer.addGraphic(graphic);
 
-          graphic.entityGraphic.material_old = graphic.entityGraphic.material
-          graphic.entityGraphic.width_old = graphic.entityGraphic.width
+          graphic.entityGraphic.material_old = graphic.entityGraphic.material;
+          graphic.entityGraphic.width_old = graphic.entityGraphic.width;
 
           arrTable.push({
             name: name,
             allDistance: distance, //总距离
             allDuration: time, //全部所需时间
             graphic: graphic,
-          })
+          });
         }
 
-        $table.bootstrapTable('load', arrTable)
+        $table.bootstrapTable("load", arrTable);
       }
 
-      var lastRoute
+      var lastRoute;
 
       function centerAtRoute(graphic) {
         if (lastRoute) {
-          lastRoute.entityGraphic.material = lastRoute.entityGraphic.material_old
-          lastRoute.entityGraphic.width = lastRoute.entityGraphic.width_old
+          lastRoute.entityGraphic.material = lastRoute.entityGraphic.material_old;
+          lastRoute.entityGraphic.width = lastRoute.entityGraphic.width_old;
         }
 
         //动画线材质
-        graphic.entityGraphic.width = 5
+        graphic.entityGraphic.width = 5;
         graphic.entityGraphic.material = mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
           color: Cesium.Color.CHARTREUSE,
-          image: 'img/textures/lineClr.png',
+          image: "img/textures/lineClr.png",
           speed: 20,
-        })
+        });
 
-        map.flyToGraphic(graphic)
+        map.flyToGraphic(graphic);
 
-        lastRoute = graphic
+        lastRoute = graphic;
       }
 
       function clear() {
         if (startGraphic) {
-          startGraphic.remove()
-          startGraphic = null
+          startGraphic.remove();
+          startGraphic = null;
         }
-        routeLayer.clear()
-        poiLayer.clear()
+        routeLayer.clear();
+        poiLayer.clear();
 
-        $('#startIpt').val('')
-        $('#endIpt').val('')
+        $("#startIpt").val("");
+        $("#endIpt").val("");
 
-        $('#resultView').hide()
-        $('#count').html('0')
+        $("#resultView").hide();
+        $("#count").html("0");
       }
     </script>
   </body>

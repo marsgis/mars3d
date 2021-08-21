@@ -1,219 +1,211 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="author" content="火星科技 http://mars3d.cn ">
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>道路 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,jquery.range,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+    ></script>
 
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
-  <!--第三方lib-->
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,jquery.range,font-awesome,bootstrap,layer,haoutil,turf,mars3d"></script>
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-<body class="dark">
-  <!--加载前进行操作提示，优化用户体验-->
-  <div id="mask" class="signmask" onclick="removeMask()"></div>
+    <div class="infoview">
+      <span style="color: #cad1d1">建议：顺着道路方向选点，直线时多采集点</span>
 
-  <div id="mars3dContainer" class="mars3d-container"></div>
+      <table class="mars-table">
+        <tr>
+          <td class="nametd">路宽度：</td>
+          <td>
+            <input type="number" class="form-control" id="txtWidth" value="20" />
+          </td>
+        </tr>
 
-  <div class="infoview">
-    <span style="color: #cad1d1;">建议：顺着道路方向选点，直线时多采集点</span>
+        <tr>
+          <td class="nametd">路高度：</td>
+          <td>
+            <input type="number" class="form-control" id="txtHeight" value="1" />
+          </td>
+        </tr>
+        <tr>
+          <td class="nametd">透明度：</td>
+          <td>
+            <input id="txtAlpha" type="range" min="0" max="1" step="0.1" value="1" />
+          </td>
+        </tr>
+        <tr>
+          <td class="nametd"></td>
+          <td>
+            <input id="btnDrawLine" type="button" class="btn btn-primary" value="绘制道路" />
+            <input id="btnClear" type="button" class="btn btn-danger" value="清除" />
+          </td>
+        </tr>
+      </table>
+    </div>
 
-    <table class="mars-table">
-      <tr>
-        <td class="nametd">路宽度：</td>
-        <td>
-          <input type="number" class="form-control " id="txtWidth" value="20">
-        </td>
-      </tr>
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      "use script"; //开发环境建议开启严格模式
 
-      <tr>
-        <td class="nametd">路高度：</td>
-        <td>
-          <input type="number" class="form-control " id="txtHeight" value="1">
-        </td>
-      </tr>
-      <tr>
-        <td class="nametd">透明度：</td>
-        <td>
-          <input id="txtAlpha" type="range" min="0" max="1" step="0.1" value="1">
-        </td>
-      </tr>
-      <tr>
-        <td class="nametd"></td>
-        <td>
-          <input id="btnDrawLine" type="button" class="btn btn-primary" value="绘制道路" />
-          <input id="btnClear" type="button" class="btn btn-danger" value="清除" />
-        </td>
-      </tr>
-    </table>
-  </div>
+      var map;
 
-
-
-
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
-
-    var map
-
-    function initMap(options) {
-      //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {
-        scene: {
-          //此处参数会覆盖config.json中的对应配置
-          center: {
-            y: 31.808127,
-            x: 117.188374,
-            z: 234.03,
-            heading: 94.7,
-            pitch: -15.4,
-            roll: 0.5,
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            //此处参数会覆盖config.json中的对应配置
+            center: { lat: 31.808563, lng: 117.187762, alt: 234, heading: 95, pitch: -15 },
           },
-        },
-      })
+        });
 
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
+        //创建三维地球场景
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-      //创建Graphic图层
-      var graphicLayer = new mars3d.layer.GraphicLayer()
-      map.addLayer(graphicLayer)
+        //创建Graphic图层
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
-      //2.在layer上绑定监听事件
-      graphicLayer.on(mars3d.EventType.click, function (event) {
-        console.log('监听layer，单击了矢量对象', event)
-      })
-      graphicLayer.on(mars3d.EventType.mouseOver, function (event) {
-        console.log('监听layer，鼠标移入了矢量对象', event)
-      })
-      graphicLayer.on(mars3d.EventType.mouseOut, function (event) {
-        console.log('监听layer，鼠标移出了矢量对象', event)
-      })
+        //2.在layer上绑定监听事件
+        graphicLayer.on(mars3d.EventType.click, function (event) {
+          console.log("监听layer，单击了矢量对象", event);
+        });
+        graphicLayer.on(mars3d.EventType.mouseOver, function (event) {
+          console.log("监听layer，鼠标移入了矢量对象", event);
+        });
+        graphicLayer.on(mars3d.EventType.mouseOut, function (event) {
+          console.log("监听layer，鼠标移出了矢量对象", event);
+        });
 
-      //可在图层上绑定popup,对所有加到这个图层的矢量数据都生效
-      graphicLayer.bindPopup('我是layer上绑定的Popup', {
-        anchor: [0, -10],
-      })
+        //可在图层上绑定popup,对所有加到这个图层的矢量数据都生效
+        graphicLayer.bindPopup("我是layer上绑定的Popup");
 
-      //可在图层上绑定tooltip,对所有加到这个图层的矢量数据都生效
-      // graphicLayer.bindTooltip('我是layer上绑定的Tooltip')
+        //可在图层上绑定tooltip,对所有加到这个图层的矢量数据都生效
+        // graphicLayer.bindTooltip('我是layer上绑定的Tooltip')
 
-      //可在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
-      graphicLayer.bindContextMenu([
-        {
-          text: '删除对象',
-          iconCls: 'fa fa-trash-o',
-          callback: function (e) {
-            var primitive = e.graphic
-            if (primitive) {
-              graphicLayer.removeGraphic(primitive)
-            }
+        //可在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
+        graphicLayer.bindContextMenu([
+          {
+            text: "删除对象",
+            iconCls: "fa fa-trash-o",
+            callback: function (e) {
+              var primitive = e.graphic;
+              if (primitive) {
+                graphicLayer.removeGraphic(primitive);
+              }
+            },
           },
-        },
-      ])
+        ]);
 
-      //加一些演示数据
+        //加一些演示数据
 
-      var road = new mars3d.graphic.Road({
-        positions: [
-          [117.181132, 31.814245, 45.95],
-          [117.185542, 31.8125, 43.23],
-          [117.190607, 31.810037, 38.95],
-          [117.195048, 31.807351, 39.03],
-          [117.198338, 31.804961, 39.86],
-          [117.201378, 31.802543, 33.1],
-          [117.204316, 31.80064, 34.33],
-          [117.209094, 31.798011, 33.56],
-          [117.212615, 31.796325, 33.75],
-          [117.216706, 31.794731, 39.96],
-        ],
-        style: {
-          image: './img/textures/road.jpg',
-          width: 15,
-          height: 1,
-        },
-      })
-      graphicLayer.addGraphic(road)
-
-      $('#txtWidth').change(function (e) {
-        if (!road) {
-          return
-        }
-        var value = Number($(this).val())
-        road.width = value
-      })
-      $('#txtHeight').change(function (e) {
-        if (!road) {
-          return
-        }
-        var value = Number($(this).val())
-        road.height = value
-      })
-
-      $('#txtAlpha').range({
-        onChange: function (value, bfb) {
-          if (!road) {
-            return
-          }
-          road.alpha = value
-        },
-      })
-
-      //清除
-      $('#btnClear').click(function (e) {
-        graphicLayer.clear()
-        road = null
-      })
-
-      $('#btnDrawLine').click(function (e) {
-        map.graphicLayer.startDraw({
-          type: 'polyline',
+        var road = new mars3d.graphic.Road({
+          positions: [
+            [117.181132, 31.814245, 45.95],
+            [117.185542, 31.8125, 43.23],
+            [117.190607, 31.810037, 38.95],
+            [117.195048, 31.807351, 39.03],
+            [117.198338, 31.804961, 39.86],
+            [117.201378, 31.802543, 33.1],
+            [117.204316, 31.80064, 34.33],
+            [117.209094, 31.798011, 33.56],
+            [117.212615, 31.796325, 33.75],
+            [117.216706, 31.794731, 39.96],
+          ],
           style: {
-            color: '#55ff33',
-            width: 3,
+            image: "./img/textures/road.jpg",
+            width: 15,
+            height: 1,
           },
-          success: (graphic) => {
-            var points = graphic.points
+        });
+        graphicLayer.addGraphic(road);
 
-            graphic.remove() //删除绘制的线
+        $("#txtWidth").change(function (e) {
+          if (!road) {
+            return;
+          }
+          var value = Number($(this).val());
+          road.width = value;
+        });
+        $("#txtHeight").change(function (e) {
+          if (!road) {
+            return;
+          }
+          var value = Number($(this).val());
+          road.height = value;
+        });
 
-            var width = Number($('#txtWidth').val())
-            var height = Number($('#txtHeight').val())
-            var alpha = Number($('#txtAlpha').val())
-
-            road = new mars3d.graphic.Road({
-              positions: points,
-              style: {
-                image: './img/textures/road.jpg',
-                width: width,
-                height: height,
-                alpha: alpha,
-              },
-            })
-            graphicLayer.addGraphic(road)
+        $("#txtAlpha").range({
+          onChange: function (value, bfb) {
+            if (!road) {
+              return;
+            }
+            road.opacity = value;
           },
-        })
-      })
-    }
-  </script>
-</body>
+        });
+
+        //清除
+        $("#btnClear").click(function (e) {
+          graphicLayer.clear();
+          road = null;
+        });
+
+        $("#btnDrawLine").click(function (e) {
+          map.graphicLayer.startDraw({
+            type: "polyline",
+            style: {
+              color: "#55ff33",
+              width: 3,
+            },
+            success: (graphic) => {
+              var points = graphic.points;
+
+              graphic.remove(); //删除绘制的线
+
+              var width = Number($("#txtWidth").val());
+              var height = Number($("#txtHeight").val());
+              var opacity = Number($("#txtAlpha").val());
+
+              road = new mars3d.graphic.Road({
+                positions: points,
+                style: {
+                  image: "./img/textures/road.jpg",
+                  width: width,
+                  height: height,
+                  opacity: opacity,
+                },
+              });
+              graphicLayer.addGraphic(road);
+            },
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

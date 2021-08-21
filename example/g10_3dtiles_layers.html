@@ -45,9 +45,9 @@
     <script src="./js/common.js"></script>
 
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -58,35 +58,35 @@
           control: {
             baseLayerPicker: false,
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         queryTilesetData().then(function (data) {
-          initTree(data.layers)
-        })
+          initTree(data.layers);
+        });
       }
       //数据获取
       function queryTilesetData() {
         return new Promise(function (resolve, reject) {
           $.ajax({
-            url: 'config/tileset.json',
-            type: 'get',
-            dataType: 'json',
+            url: "config/tileset.json",
+            type: "get",
+            dataType: "json",
             success: function (result) {
-              resolve(result)
+              resolve(result);
             },
             error: function (data) {
-              reject(data)
+              reject(data);
             },
-          })
-        })
+          });
+        });
       }
 
       //===========================树控件处理============================
-      var layers = []
-      var layersObj = {}
+      var layers = [];
+      var layersObj = {};
 
       function initTree(layers) {
         //初始化树
@@ -103,29 +103,29 @@
             onCheck: treeOverlays_onCheck,
             onDblClick: treeOverlays_onDblClick,
           },
-        }
+        };
 
-        var zNodes = []
+        var zNodes = [];
         for (var i = layers.length - 1; i >= 0; i--) {
-          let layer = mars3d.LayerUtil.create(layers[i]) //创建图层
+          let layer = mars3d.LayerUtil.create(layers[i]); //创建图层
 
-          var node = _getNodeConfig(layer)
+          var node = _getNodeConfig(layer);
           if (node) {
-            zNodes.push(node)
+            zNodes.push(node);
           }
         }
-        $.fn.zTree.init($('#treeOverlays'), setting, zNodes)
+        $.fn.zTree.init($("#treeOverlays"), setting, zNodes);
       }
 
       function _getNodeConfig(layer) {
         if (layer == null || layer.options.noLayerManage) {
-          return
+          return;
         }
 
-        var item = layer.options
+        var item = layer.options;
 
-        if (item.name == '未命名') {
-          return
+        if (item.name == "未命名") {
+          return;
         }
 
         var node = {
@@ -133,92 +133,92 @@
           pId: layer.pid,
           name: layer.name,
           uuid: layer.uuid,
-        }
+        };
 
         if (layer.hasEmptyGroup) {
           //空数组
-          node.icon = '../lib/jquery/ztree/css/mars/images/folder.png'
-          node.open = item.open == null ? true : item.open
-          layersObj[node.uuid] = layer
+          node.icon = "../lib/jquery/ztree/css/mars/images/folder.png";
+          node.open = item.open == null ? true : item.open;
+          layersObj[node.uuid] = layer;
         } else if (layer.hasChildLayer) {
           //有子节点的数组
-          node.icon = '../lib/jquery/ztree/css/mars/images/layerGroup.png'
-          node.open = item.open == null ? true : item.open
-          layersObj[node.uuid] = layer
+          node.icon = "../lib/jquery/ztree/css/mars/images/layerGroup.png";
+          node.open = item.open == null ? true : item.open;
+          layersObj[node.uuid] = layer;
         } else {
-          node.icon = '../lib/jquery/ztree/css/mars/images/layer.png'
-          node.checked = layer.isAdded && layer.show
+          node.icon = "../lib/jquery/ztree/css/mars/images/layer.png";
+          node.checked = layer.isAdded && layer.show;
 
           if (layer.parent) {
-            node._parentId = layer.parent.uuid
+            node._parentId = layer.parent.uuid;
           }
 
           //记录图层
-          layersObj[node.uuid] = layer
+          layersObj[node.uuid] = layer;
         }
-        return node
+        return node;
       }
       function treeOverlays_onCheck(e, treeId, chktreeNode) {
-        var treeObj = $.fn.zTree.getZTreeObj(treeId)
+        var treeObj = $.fn.zTree.getZTreeObj(treeId);
         //获得所有改变check状态的节点
-        var changedNodes = treeObj.getChangeCheckedNodes()
+        var changedNodes = treeObj.getChangeCheckedNodes();
         for (var i = changedNodes.length - 1; i >= 0; i--) {
-          var treeNode = changedNodes[i]
-          treeNode.checkedOld = treeNode.checked
-          var layer = layersObj[treeNode.uuid]
+          var treeNode = changedNodes[i];
+          treeNode.checkedOld = treeNode.checked;
+          var layer = layersObj[treeNode.uuid];
           if (layer == null) {
-            continue
+            continue;
           }
 
           //显示隐藏透明度设置view
           if (treeNode.checked) {
-            $('#' + treeNode.tId + '_range').show()
+            $("#" + treeNode.tId + "_range").show();
           } else {
-            $('#' + treeNode.tId + '_range').hide()
+            $("#" + treeNode.tId + "_range").hide();
           }
 
           //特殊处理同目录下的单选的互斥的节点，可在config对应图层节点中配置"radio":true即可
           if (layer.options.radio && treeNode.checked) {
             var nodes = treeObj.getNodesByFilter(
               function (node) {
-                var item = layersObj[node.uuid]
-                return item.options.radio && item.pid == layer.pid && node.uuid != treeNode.uuid
+                var item = layersObj[node.uuid];
+                return item.options.radio && item.pid == layer.pid && node.uuid != treeNode.uuid;
               },
               false,
               treeNode.getParentNode()
-            )
+            );
             for (var nidx = 0; nidx < nodes.length; nidx++) {
-              nodes[nidx].checkedOld = false
-              treeObj.checkNode(nodes[nidx], false, true)
+              nodes[nidx].checkedOld = false;
+              treeObj.checkNode(nodes[nidx], false, true);
 
-              $('#' + nodes[nidx].tId + '_range').hide()
+              $("#" + nodes[nidx].tId + "_range").hide();
 
-              var layertmp = layersObj[nodes[nidx].uuid]
-              layertmp.show = false
+              var layertmp = layersObj[nodes[nidx].uuid];
+              layertmp.show = false;
             }
           }
 
           //处理图层显示隐藏
           if (treeNode._parentId) {
-            var parentLayer = layersObj[treeNode._parentId]
+            var parentLayer = layersObj[treeNode._parentId];
             if (parentLayer) {
-              updateLayerShow(parentLayer, treeNode.checked)
+              updateLayerShow(parentLayer, treeNode.checked);
             }
           } else {
-            updateLayerShow(layer, treeNode.checked)
+            updateLayerShow(layer, treeNode.checked);
           }
         }
       }
 
       //更新图层:显示隐藏状态
       function updateLayerShow(layer, show) {
-        layer.show = show
+        layer.show = show;
 
         if (show) {
           if (!layer.isAdded) {
-            map.addLayer(layer)
+            map.addLayer(layer);
           }
-          layer.flyTo()
+          layer.flyTo();
         } else {
           // if (layer.isAdded) {
           //   map.removeLayer(layer)
@@ -228,13 +228,13 @@
 
       function treeOverlays_onDblClick(event, treeId, treeNode) {
         if (treeNode == null || treeNode.uuid == null) {
-          return
+          return;
         }
-        var layer = layersObj[treeNode.uuid]
+        var layer = layersObj[treeNode.uuid];
         if (layer == null) {
-          return
+          return;
         }
-        layer.flyTo()
+        layer.flyTo();
       }
     </script>
   </body>

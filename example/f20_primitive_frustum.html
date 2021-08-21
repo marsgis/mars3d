@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>Frustum 四棱锥体 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -51,9 +51,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -61,38 +61,38 @@
           scene: {
             center: { lat: 30.808451, lng: 116.295952, alt: 15993, heading: 2, pitch: -29 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //图层管理的相关处理，代码在\js\graphicManager.js
-        initLayerManager(graphicLayer)
+        initLayerManager(graphicLayer);
 
         //加一些演示数据
-        addGraphic_01(graphicLayer)
-        addGraphic_02(graphicLayer)
-        addGraphic_03(graphicLayer)
+        addGraphic_01(graphicLayer);
+        addGraphic_02(graphicLayer);
+        addGraphic_03(graphicLayer);
       }
 
       function addGraphic_01(graphicLayer) {
-        let position = [116.359147, 30.990366, 6000]
+        let position = [116.359147, 30.990366, 6000];
 
         //加个飞机
         var graphicFJ = new mars3d.graphic.ModelPrimitive({
           position: position,
           style: {
-            url: '//data.mars3d.cn/gltf/mars/feiji.glb',
+            url: "//data.mars3d.cn/gltf/mars/feiji.glb",
             scale: 1,
             minimumPixelSize: 50,
             heading: 150,
           },
-        })
-        graphicLayer.addGraphic(graphicFJ)
+        });
+        graphicLayer.addGraphic(graphicFJ);
 
         //四凌锥追踪体
         var graphicFrustum = new mars3d.graphic.FrustumPrimitive({
@@ -101,79 +101,79 @@
           style: {
             angle: 10,
             // length: 4000, //targetPosition存在时无需传
-            color: '#02ff00',
+            color: "#02ff00",
             opacity: 0.4,
             outline: true,
-            outlineColor: '#ffffff',
+            outlineColor: "#ffffff",
             outlineOpacity: 1.0,
           },
           asynchronous: false,
-        })
-        graphicLayer.addGraphic(graphicFrustum)
+        });
+        graphicLayer.addGraphic(graphicFrustum);
 
-        $('#btnSelPoint').click(function () {
+        $("#btnSelPoint").click(function () {
           map.graphicLayer.startDraw({
-            type: 'point',
+            type: "point",
             style: {
               pixelSize: 8,
-              color: '#ffff00',
+              color: "#ffff00",
             },
             success: function (graphic) {
-              var position = graphic.positionShow
-              map.graphicLayer.clear()
+              var position = graphic.positionShow;
+              map.graphicLayer.clear();
 
-              graphicFrustum.targetPosition = position
+              graphicFrustum.targetPosition = position;
             },
-          })
-        })
+          });
+        });
 
-        $('#btnGetRegion').click(function () {
-          var coords = graphicFrustum.getRayEarthPositions()
+        $("#btnGetRegion").click(function () {
+          var coords = graphicFrustum.getRayEarthPositions();
 
           //显示边界点
-          map.graphicLayer.clear()
+          map.graphicLayer.clear();
           coords.forEach(function (item) {
             var primitive = new mars3d.graphic.PointPrimitive({
               position: item,
               style: {
-                color: '#ff0000',
+                color: "#ff0000",
                 pixelSize: 8,
                 outline: true,
-                outlineColor: '#ffffff',
+                outlineColor: "#ffffff",
                 outlineWidth: 2,
                 clampToGround: true,
               },
-            })
-            map.graphicLayer.addGraphic(primitive)
-          })
-        })
+            });
+            map.graphicLayer.addGraphic(primitive);
+          });
+        });
 
-        $('#btnGetCenter').click(function () {
-          map.graphicLayer.clear()
+        $("#btnGetCenter").click(function () {
+          map.graphicLayer.clear();
 
-          var groundPosition = graphicFrustum.groundPosition
+          var groundPosition = graphicFrustum.groundPosition;
           if (!groundPosition) {
-            haoutil.alert('当前与地球无交点')
-            return
+            haoutil.alert("当前与地球无交点");
+            return;
           }
 
           var primitive = new mars3d.graphic.PointPrimitive({
             position: groundPosition,
             style: {
-              color: '#ff0000',
+              color: "#ff0000",
               pixelSize: 8,
               outline: true,
-              outlineColor: '#ffffff',
+              outlineColor: "#ffffff",
               outlineWidth: 2,
               clampToGround: true,
             },
-          })
-          map.graphicLayer.addGraphic(primitive)
-        })
+          });
+          map.graphicLayer.addGraphic(primitive);
+        });
 
-        $('#btnRemoveAll').click(function () {
-          map.graphicLayer.clear()
-        })
+        $("#btnRemoveAll").click(function () {
+          map.graphicLayer.clear();
+        });
       }
 
       function addGraphic_02(graphicLayer) {
@@ -182,15 +182,21 @@
           style: {
             angle: 7,
             length: 4000,
-            color: '#FF0000',
+            color: "#FF0000",
             opacity: 0.4,
             outline: true,
-            outlineColor: '#ffffff',
+            outlineColor: "#ffffff",
             outlineOpacity: 1.0,
+
+            label: { text: "鼠标移入会高亮", pixelOffsetY: -30 },
+            //高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+            highlight: {
+              opacity: 0.8,
+            },
           },
           asynchronous: false,
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
       }
 
       function addGraphic_03(graphicLayer) {
@@ -198,13 +204,13 @@
         var graphicFJ = new mars3d.graphic.ModelPrimitive({
           position: [116.303349, 31.070789, 7000],
           style: {
-            url: '//data.mars3d.cn/gltf/mars/weixin.gltf',
+            url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
             scale: 1,
             minimumPixelSize: 50,
             heading: 70,
           },
-        })
-        graphicLayer.addGraphic(graphicFJ)
+        });
+        graphicLayer.addGraphic(graphicFJ);
 
         var graphic = new mars3d.graphic.FrustumPrimitive({
           position: [116.303349, 31.070789, 7000],
@@ -213,12 +219,12 @@
             angle2: 0.01,
             length: 7000,
             heading: 70,
-            color: '#00ffff',
+            color: "#00ffff",
             opacity: 0.7,
           },
           asynchronous: false,
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
       }
     </script>
   </body>

@@ -74,42 +74,42 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 },
+            center: { lat: 31.61982, lng: 117.230607, alt: 22746, heading: 2, pitch: -49 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建Graphic图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //图层管理的相关处理，代码在\js\graphicManager.js
-        initLayerManager(graphicLayer)
+        initLayerManager(graphicLayer);
 
-        $('#btnAddData').click(function () {
-          graphicLayer.clear()
+        $("#btnAddData").click(function () {
+          graphicLayer.clear();
 
-          haoutil.loading.show()
-          var startTime = new Date().getTime()
+          haoutil.loading.show();
+          var startTime = new Date().getTime();
 
-          var count = Number($('#txtCount').val()) * 10000
+          var count = Number($("#txtCount").val()) * 10000;
 
           for (var j = 0; j < count; ++j) {
-            var position = randomPoint()
-            var pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 45, 500)
-            var pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 135, 500)
-            var pt3 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 225, 500)
-            var pt4 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 315, 500)
+            var position = randomPoint();
+            var pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 45, 500);
+            var pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 135, 500);
+            var pt3 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 225, 500);
+            var pt4 = mars3d.PointUtil.getPositionByDirectionAndLen(position, 315, 500);
 
             var primitive = new mars3d.graphic.PolygonPrimitive({
               positions: [pt1, pt2, pt3, pt4, pt1],
@@ -117,37 +117,37 @@
                 height: haoutil.math.random(30, 4000),
                 color: Cesium.Color.fromRandom().withAlpha(0.7),
               },
-              tooltip: '第' + j + '个',
-            })
-            graphicLayer.addGraphic(primitive)
+              tooltip: "第" + j + "个",
+            });
+            graphicLayer.addGraphic(primitive);
           }
 
-          haoutil.loading.close()
-          var endTime = new Date().getTime()
+          haoutil.loading.close();
+          var endTime = new Date().getTime();
           // 两个时间戳相差的毫秒数
-          var usedTime = (endTime - startTime) / 1000
-          console.log(usedTime)
+          var usedTime = (endTime - startTime) / 1000;
+          console.log(usedTime);
 
-          haoutil.msg('共耗时' + usedTime.toFixed(2) + '秒')
-        })
+          haoutil.msg("共耗时" + usedTime.toFixed(2) + "秒");
+        });
 
         //加一些演示数据
-        addGraphic_a1(graphicLayer)
-        addGraphic_a2(graphicLayer)
-        addGraphic_a3(graphicLayer)
-        addGraphic_a4(graphicLayer)
-        addGraphic_a5(graphicLayer)
-        addGraphic_a6(graphicLayer)
-        addGraphic_a7(graphicLayer)
-        addGraphic_a8(graphicLayer)
-        addGraphic_a9(graphicLayer)
+        addGraphic_a1(graphicLayer);
+        addGraphic_a2(graphicLayer);
+        addGraphic_a3(graphicLayer);
+        addGraphic_a4(graphicLayer);
+        addGraphic_a5(graphicLayer);
+        addGraphic_a6(graphicLayer);
+        addGraphic_a7(graphicLayer);
+        addGraphic_a8(graphicLayer);
+        addGraphic_a9(graphicLayer);
       }
 
       //取区域内的随机图标
       function randomPoint() {
-        var jd = haoutil.math.random(116.955684 * 1000, 117.474003 * 1000) / 1000
-        var wd = haoutil.math.random(31.7576 * 1000, 32.008782 * 1000) / 1000
-        return Cesium.Cartesian3.fromDegrees(jd, wd)
+        var jd = haoutil.math.random(116.955684 * 1000, 117.474003 * 1000) / 1000;
+        var wd = haoutil.math.random(31.7576 * 1000, 32.008782 * 1000) / 1000;
+        return Cesium.Cartesian3.fromDegrees(jd, wd);
       }
 
       function addGraphic_a1(graphicLayer) {
@@ -160,23 +160,23 @@
             [117.216327, 31.79375, 37.49],
           ],
           style: {
-            color: Cesium.Color.CYAN.withAlpha(0.4),
+            color: "#00ffff",
+            opacity: 0.4,
             // clampToGround: true,
             // classificationType: Cesium.ClassificationType.BOTH,
-            label: {
-              text: '我是火星科技',
-              font_size: 18,
-              color: '#ffffff',
-              distanceDisplayCondition: true,
-              distanceDisplayCondition_far: 500000,
-              distanceDisplayCondition_near: 0,
+
+            label: { text: "鼠标移入会高亮" },
+            //高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+            highlight: {
+              // type: mars3d.EventType.click,
+              opacity: 0.8,
             },
           },
-        })
-        graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
+        });
+        graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法
 
         //演示个性化处理graphic，代码在\js\graphicManager.js
-        initGraphicManager(primitive)
+        // initGraphicManager(primitive)
       }
 
       //图片材质
@@ -190,14 +190,23 @@
             [117.183832, 31.814237, 38.76],
           ],
           style: {
-            image: 'img/textures/excavate_bottom_min.jpg',
+            image: "img/textures/excavate_bottom_min.jpg",
+
+            label: {
+              text: "我是火星科技",
+              font_size: 18,
+              color: "#ffffff",
+              distanceDisplayCondition: true,
+              distanceDisplayCondition_far: 500000,
+              distanceDisplayCondition_near: 0,
+            },
           },
-        })
-        graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
+        });
+        graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法
 
         //entity转geojson
-        var geojson = primitive.toGeoJSON()
-        console.log(geojson)
+        var geojson = primitive.toGeoJSON();
+        console.log(geojson);
       }
 
       function addGraphic_a3(graphicLayer) {
@@ -213,17 +222,17 @@
           ],
           style: {
             materialType: mars3d.MaterialType.Water,
-            normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
+            normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
             frequency: 1000.0, // 控制波数的数字。
             animationSpeed: 0.01, // 控制水的动画速度的数字。
             amplitude: 10, // 控制水波振幅的数字。
             specularIntensity: 0.5, // 控制镜面反射强度的数字。
-            baseWaterColor: '#006ab4', // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
-            blendColor: '#006ab4', // 从水中混合到非水域时使用的rgba颜色对象。
+            baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
+            blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
             clampToGround: true,
           },
-        })
-        graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
+        });
+        graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法
       }
 
       //面状：草地面效果
@@ -243,8 +252,8 @@
               patchiness: 1.5, //斑驳
             }),
           },
-        })
-        graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
+        });
+        graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法
       }
 
       //面状：木材面效果
@@ -266,8 +275,8 @@
               grainFrequency: 27.0, //波纹 频率
             }),
           },
-        })
-        graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
+        });
+        graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法
       }
 
       //面状：混合效果
@@ -295,8 +304,8 @@
               frequency: 30.0, //次数
             }),
           },
-        })
-        graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
+        });
+        graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法
       }
 
       //面状： 柏油路面效果
@@ -316,8 +325,8 @@
               roughness: 0.2, //粗糙
             }),
           },
-        })
-        graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
+        });
+        graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法
       }
 
       //面状：碎石面效果
@@ -338,8 +347,8 @@
               frequency: 50.0, //次数
             }),
           },
-        })
-        graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
+        });
+        graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法
       }
 
       function addGraphic_a9(graphicLayer) {
@@ -355,19 +364,19 @@
             height: 50,
             diffHeight: 300,
             material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.PolyGradient, {
-              color: '#3388cc',
+              color: "#3388cc",
               alphaPower: 1.5,
             }),
             label: {
-              text: 'Mars3D平台',
-              font_family: '楷体',
-              color: '#ffff00',
+              text: "Mars3D平台",
+              font_family: "楷体",
+              color: "#ffff00",
               font_size: 18,
               setHeight: 400,
             },
           },
-        })
-        graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
+        });
+        graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法
       }
     </script>
   </body>

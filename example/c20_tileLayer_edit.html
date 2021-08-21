@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="author" content="火星科技 http://mars3d.cn ">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="x5-fullscreen" content="true">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+  <!-- 标题及搜索关键字 -->
+  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,图层,离线,外包,合肥,安徽,中国" />
+  <meta name="description"
+    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 图层  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
+  <title>栅格图层参数设置 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+
+
+  <!--第三方lib-->
+  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
+    include="jquery,font-awesome,jquery.minicolors,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d,font-awesome">
+    </script>
+
+  <link href="css/style.css" rel="stylesheet" />
+  <style>
+    #toolbar input {
+      vertical-align: middle;
+      padding-top: 2px;
+      padding-bottom: 2px;
+    }
+
+    .spanRed {
+      color: red;
+    }
+
+    .mars-table tr td {
+      padding: 5px 6px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .slider-selection {
+      background-image: linear-gradient(to bottom, #86b9e6 0, #86b9e6 100%);
+    }
+  </style>
+</head>
+
+<body class="dark">
+  <!--加载前进行操作提示，优化用户体验-->
+  <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+  <div id="mars3dContainer" class="mars3d-container"></div>
+
+
+  <div id="toolbar" class="infoview infoview-right">
+    <table class="mars-table">
+      <tbody>
+        <tr>
+          <td><span class="spanRed">*</span> 图层URL</td>
+          <td>
+            <input id="txtUrl" type="text" value="" required class="form-control" placeholder="请输入图层URL" />
+          </td>
+
+
+        </tr>
+
+        <tr id="viewSubdomains" disabled hidden>
+          <td>URL子域</td>
+          <td>
+            <input id="txtSubdomains" type="text" value="" class="form-control" onchange="dataUpdate()" />
+          </td>
+        </tr>
+
+        <tr>
+          <td><span class="spanRed">*</span> 类型</td>
+          <td>
+            <select id="txtType" class="selectpicker form-control">
+              <option value="" selected="selected" disabled hidden><span class="spanRed">请选择类型</span></option>
+              <option value="xyz">标准金字塔地图</option>
+              <option value="wms">WMS标准服务</option>
+              <option value="wmts">WMTS标准服务</option>
+              <option value="arcgis">ArcGIS标准服务</option>
+              <option value="arcgis_cache">ArcGIS切片</option>
+              <option value="image">单张图片</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr class="viewLayersParams" style="display: none">
+          <td>图层名</td>
+          <td>
+            <input id="txtLayer" type="text" value="" class="form-control" onchange="dataUpdate()" />
+          </td>
+        </tr>
+        <tr class="viewLayersParams" style="display: none">
+          <td>瓦片格式</td>
+          <td>
+            <select id="txtTileFormat" class="selectpicker form-control">
+              <option value="image/png" selected="selected">png</option>
+              <option value="image/jpeg">jpeg</option>
+            </select>
+          </td>
+        </tr>
+
+
+        <tr>
+          <td>坐标系</td>
+          <td>
+            <select id="txtCrs" class="selectpicker form-control" onchange="dataUpdate()">
+              <option value="" selected="selected">默认</option>
+              <option value="EPSG:3857">EPSG:3857</option>
+              <option value="EPSG:4326">EPSG:4326</option>
+              <option value="EPSG:4490">EPSG:4490</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>国内坐标系</td>
+          <td>
+            <select id="txtChinaCRS" class="selectpicker form-control" onchange="dataUpdate()">
+              <option value="WGS84" selected="selected">标准无偏</option>
+              <option value="GCJ02">国测局偏移</option>
+              <option value="BAIDU">百度偏移</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td>加载层级</td>
+          <td class="slider">
+            <input id="slider_lodLevel" type="text" onchange="dataUpdate()" />
+          </td>
+        </tr>
+
+        <tr title="默认会按加载图层的数据缩放来展示">
+          <td>显示层级</td>
+          <td class="slider">
+            <input id="slider_showLevel" type="text" onchange="dataUpdate()" />
+          </td>
+        </tr>
+
+        <tr>
+          <td>限定范围</td>
+          <td>
+            <input type="text" name="" id="txtRectangle" class="form-control" value="" style="width: 150px;" readonly>
+            <input id="btnStartDraw" type="button" class="btn btn-primary" value="绘制" onclick="onDrawExtent()" />
+            <input id="btnStartClear" type="button" class="btn btn-primary" value="清除" onclick="onClearExtent()" />
+          </td>
+        </tr>
+
+        <tr>
+          <td>透明度</td>
+          <td class="slider">
+            <input id="slider_opacity" type="text" data-slider-min='0' data-slider-max='1' data-slider-step='0.01'
+              data-slider-value="1" />
+          </td>
+        </tr>
+
+        <tr>
+          <td>亮度</td>
+          <td class="slider">
+            <input id="slider_brightness" type="text" data-slider-min='0' data-slider-max='1' data-slider-step='0.01'
+              data-slider-value="1" />
+          </td>
+        </tr>
+
+
+
+        <tr>
+          <td>代理</td>
+          <td class="slider">
+            <div class="checkbox checkbox-primary checkbox-inline" title="解决跨域问题">
+              <input id="chkProxy" class="styled" type="checkbox">
+              <label for="chkProxy">
+                使用代理
+              </label>
+            </div>
+          </td>
+        </tr>
+
+
+        <tr>
+          <td id="tdViewAdd" colspan="2" style="text-align: center;">
+            <input type="button" class="btn btn-primary" value="加载图层" onclick="createTileLayer()" />
+            <input type="button" class="btn btn-primary" value="重置参数" onclick="resetInput()" />
+          </td>
+        </tr>
+        <tr>
+          <td id="tdViewSet" colspan="2" style="text-align: center;display: none;">
+            <input type="button" id="btnToBack" class="btn btn-primary" value="移除图层" onclick="toBack()" />
+            <input type="button" id="btnPreservation" class="btn btn-primary" value="保存参数" onclick="saveBookmark()" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  </div>
+  <script src="./js/common.js"></script>
+  <script>
+    "use script"; //开发环境建议开启严格模式
+
+    var map;
+    var tileLayer;
+
+    // 初始化加载
+    function initMap(options) {
+      //合并属性参数，可覆盖config.json中的对应配置
+      var mapOptions = mars3d.Util.merge(options, {
+        scene: {
+          center: { lat: 24.336939, lng: 108.949729, alt: 14990362, heading: 0, pitch: -90 },
+        },
+        control: {
+          baseLayerPicker: false,
+          infoBox: false,
+        },
+        basemaps: [
+          {
+            name: "单张图片",
+            icon: "img/basemaps/bingmap.png",
+            type: "image",
+            url: "//data.mars3d.cn/file/img/world/world.jpg",
+            show: true,
+          },
+        ],
+        layers: [
+          {
+            name: "瓦片测试信息",
+            type: "tileinfo",
+            color: "rgba(255,255,0,0.6)",
+            show: true,
+          },
+        ],
+      });
+      //创建三维地球场景
+      map = new mars3d.Map("mars3dContainer", mapOptions);
+
+      $("#txtUrl").bind("input propertychange", () => {
+        toBack();
+
+        let url = $("#txtUrl").val().toLowerCase();
+        if (url.indexOf("wms") != -1) {
+          $("#txtType").val("wms");
+        } else if (url.indexOf("wmts") != -1) {
+          $("#txtType").val("wmts");
+        } else if (url.indexOf("_alllayers") != -1) {
+          $("#txtType").val("arcgis_cache");
+        } else if (url.indexOf("arcgis") != -1) {
+          $("#txtType").val("arcgis");
+        } else if (url.indexOf("{x}") != -1 && url.indexOf("{z}") != -1) {
+          $("#txtType").val("xyz");
+        }
+
+        refState();
+      });
+
+      $("#txtType").change(function () {
+        refState();
+      });
+
+      $("#slider_lodLevel")
+        .slider({
+          id: "slider-lodLevel-internal",
+          ticks: [0, 5, 10, 15, 18, 21],
+          ticks_positions: [0, 20, 40, 60, 80, 100],
+          ticks_labels: ["0", "5", "10", "15", "18", "21"],
+          range: true,
+          value: [0, 21],
+        })
+        .on("slide", function () {
+          var lodLevel = $("#slider_lodLevel").slider("getValue");
+          $("#slider_showLevel").slider("setValue", lodLevel);
+        });
+
+      $("#slider_showLevel").slider({
+        id: "slider-showLevel-internal",
+        ticks: [0, 5, 10, 15, 18, 21],
+        ticks_positions: [0, 20, 40, 60, 80, 100],
+        ticks_labels: ["0", "5", "10", "15", "18", "21"],
+        range: true,
+        value: [0, 21],
+      });
+
+      $("#slider_brightness")
+        .slider()
+        .on("slide", function () {
+          if (tileLayer) {
+            tileLayer.brightness = Number($("#slider_brightness").val());
+          }
+        });
+      $("#slider_opacity")
+        .slider()
+        .on("slide", function () {
+          if (tileLayer) {
+            tileLayer.opacity = Number($("#slider_opacity").val());
+          }
+        });
+
+      var lastData = haoutil.storage.get("c20_tileLayer_edit");
+      if (lastData) {
+        var item = JSON.parse(lastData);
+        console.log("加载显示历史数据", item);
+        loadHistoricalData(item);
+      }
+    }
+
+    // 瓦片数据的矩形区域范围
+    function onDrawExtent() {
+      map.graphicLayer.clear();
+      map.graphicLayer.startDraw({
+        type: "rectangle",
+        style: {
+          fill: false,
+          outline: true,
+          outlineWidth: 3,
+          outlineColor: "#ff0000",
+        },
+        success: function (graphic) {
+          var rectangle = mars3d.PolyUtil.formatRectangle(graphic._rectangle_draw);
+          $("#txtRectangle").val(JSON.stringify(rectangle));
+          dataUpdate();
+        },
+      });
+    }
+
+    //清除图层限定范围
+    function onClearExtent() {
+      $("#txtRectangle").val("");
+      map.graphicLayer.clear();
+
+      if (tileLayer) {
+        tileLayer.rectangle = null;
+        tileLayer.options.flyTo = false;
+        tileLayer.reload();
+      }
+    }
+
+    //获取图层所有参数
+    function getLayerOptions(checkData) {
+      let params = {
+        type: $("#txtType").val(), //类型
+        url: $("#txtUrl").val(), //图层url
+        subdomains: $("#txtSubdomains").val(), //url子域
+        layer: $("#txtLayer").val(), //图层名
+
+        crs: $("#txtCrs").val(), //坐标系信息
+        chinaCRS: $("#txtChinaCRS").val(), //国内坐标系
+
+        minimumLevel: Number($("#slider_lodLevel").val().split(",")[0]), //最低层级
+        maximumLevel: Number($("#slider_lodLevel").val().split(",")[1]), //最高层级
+        minimumTerrainLevel: Number($("#slider_showLevel").val().split(",")[0]), //展示影像图层的最小地形细节级别
+        maximumTerrainLevel: Number($("#slider_showLevel").val().split(",")[1]), //展示影像图层的最大地形细节级别
+        brightness: Number($("#slider_brightness").val()), //亮度
+        opacity: Number($("#slider_opacity").val()), //透明度
+      };
+
+      if (params.chinaCRS == "WGS84") {
+        delete params.chinaCRS;
+      }
+      if (params.subdomains == "") {
+        delete params.subdomains;
+      }
+
+      let rectangle = $("#txtRectangle").val();
+      if (rectangle) {
+        params.rectangle = JSON.parse(rectangle);
+      }
+
+      //代理被选中
+      if ($("#chkProxy").is(":checked")) {
+        params.proxy = "//server.mars3d.cn/proxy/";
+      }
+
+      switch (params.type) {
+        default:
+          break;
+        case "wms":
+          params.layers = $("#txtLayer").val();
+          params.parameters = {
+            format: $("#txtTileFormat").val(),
+            transparent: true,
+            //一些不适合UI调的固定参数，可以在下面加上
+          };
+          break;
+        case "wmts":
+          params.layer = $("#txtLayer").val();
+          params.format = $("#txtTileFormat").val();
+
+          //一些不适合UI调的固定参数，可以在下面加上
+          // params.tileMatrixSetID = 'EPSG:4326'
+
+          break;
+      }
+      console.log(params);
+
+      //校验数据
+      if (checkData) {
+        if (!params.url) {
+          return { error: true, msg: "请输入图层URL！" };
+        }
+        if (!params.type) {
+          return { error: true, msg: "请选择图层类型！" };
+        }
+
+        if (params.minimumLevel > params.maximumLevel) {
+          return { error: true, msg: "最低层级的值不得高于最高层级" };
+        }
+        if (params.minimumTerrainLevel > params.maximumTerrainLevel) {
+          return { error: true, msg: "最小细节的值不得高于最大细节" };
+        }
+      }
+      //记录到历史
+      haoutil.storage.add("c20_tileLayer_edit", JSON.stringify(params));
+      return params;
+    }
+
+    // 点击加载图层的方法
+    function createTileLayer() {
+      let params = getLayerOptions(true);
+      //新增图层
+      if (params.error) {
+        haoutil.msg(params.msg);
+        return;
+      }
+
+      //移除原有图层
+      removeLayer();
+
+      console.log("图层参数为", params);
+
+      tileLayer = mars3d.LayerUtil.create({
+        ...params,
+        highlight: {
+          clampToGround: true,
+          fill: true,
+          color: "#2deaf7",
+          opacity: 0.6,
+          outline: true,
+          outlineWidth: 3,
+          outlineColor: "#e000d9",
+          outlineOpacity: 1.0,
+        },
+        popup: "all",
+        flyTo: true,
+      });
+      map.addLayer(tileLayer);
+
+      $("#tdViewAdd").hide();
+      $("#tdViewSet").show();
+    }
+
+    //移除并销毁图层
+    function removeLayer() {
+      if (tileLayer) {
+        map.removeLayer(tileLayer, true);
+        tileLayer = null;
+      }
+    }
+
+    //数据更新
+    function dataUpdate() {
+      if (tileLayer) {
+        let paramsUpdate = getLayerOptions();
+        paramsUpdate.flyTo = false;
+        tileLayer.setOptions(paramsUpdate);
+      }
+    }
+
+    //保存ui中所有的参数
+    function saveBookmark() {
+      var params = getLayerOptions();
+      params.center = map.getCameraView();
+
+      haoutil.file.downloadFile("瓦片图层参数.json", JSON.stringify(params));
+    }
+
+    //单击'返回'按钮执行函数
+    function toBack() {
+      removeLayer();
+
+      $("#tdViewAdd").show();
+      $("#tdViewSet").hide();
+    }
+
+    //加载历史数据
+    function loadHistoricalData(item) {
+      $("#txtUrl").val(item.url);
+      $("#txtType").val(item.type);
+      $("#txtLayer").val(item.layer);
+
+      if (item.rectangle) {
+        $("#txtRectangle").val(JSON.stringify(item.rectangle));
+
+        var graphic = new mars3d.graphic.RectangleEntity({
+          rectangle: Cesium.Rectangle.fromDegrees(item.rectangle.xmin, item.rectangle.ymin, item.rectangle.xmax, item.rectangle.ymax),
+          style: {
+            fill: false,
+            outline: true,
+            outlineWidth: 3,
+            outlineColor: "#ff0000",
+          },
+        });
+        map.graphicLayer.addGraphic(graphic);
+
+        graphic.flyTo({ scale: 1.5 });
+      }
+      $("#txtSubdomains").val(item.subdomains);
+
+      $("#txtCrs").val(item.crs);
+
+      if (item.chinaCRS) {
+        $("#txtChinaCRS").val(item.chinaCRS);
+      }
+
+      $("#slider_brightness").slider("setValue", item.brightness);
+      $("#slider_opacity").slider("setValue", item.opacity);
+      $("#slider_lodLevel").slider("setValue", [item.minimumLevel, item.maximumLevel]);
+      $("#slider_showLevel").slider("setValue", [item.minimumTerrainLevel, item.maximumTerrainLevel]);
+
+      refState();
+    }
+
+    //重置
+    function resetSlider(name) {
+      $(name).slider("setValue", [$(name).slider("getAttribute", "min"), $(name).slider("getAttribute", "max")]);
+    }
+
+    // 参数重置
+    function resetInput() {
+      $("#chkProxy").attr("checked", false); //proxy代理
+
+      $("#txtCrs").find("option").eq(0).prop("selected", true);
+      $("#txtChinaCRS").find("option").eq(0).prop("selected", true);
+
+      $("#txtSubdomains").val(""); //子域名
+      $("#txtRectangle").val("");
+      $("#txtLayer").val(""); //图层名
+      $("#txtTileFormat").val("image/png");
+
+      $("#slider_brightness").slider("setValue", 1); //亮度
+      $("#slider_opacity").slider("setValue", 1); //透明度
+      resetSlider("#slider_lodLevel");
+      resetSlider("#slider_showLevel");
+
+      $("#tdViewAdd").show();
+      $("#tdViewSet").hide();
+
+      //移除原有图层
+      removeLayer();
+      map.graphicLayer.clear();
+    }
+
+    function refState() {
+      let url = $("#txtUrl").val();
+      if (url.indexOf("{s}") != -1) {
+        $("#viewSubdomains").show();
+      } else {
+        $("#viewSubdomains").hide();
+      }
+
+      let type = $("#txtType").val();
+      if (type == "wms") {
+        $(".viewLayersParams").show();
+      } else if (type == "wmts") {
+        $(".viewLayersParams").show();
+      } else {
+        $(".viewLayersParams").hide();
+      }
+    }
+  </script>
+
+</body>
+
+</html>

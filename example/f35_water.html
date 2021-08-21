@@ -1,216 +1,215 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>水域面 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>水域面 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+    ></script>
 
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-  include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-<body class="dark">
-  <!--加载前进行操作提示，优化用户体验-->
-  <div id="mask" class="signmask" onclick="removeMask()"></div>
-
-  <div id="mars3dContainer" class="mars3d-container"></div>
-
-
-
-  <div class="infoview">
-    <div>
-      图层状态：
-      <div class="checkbox checkbox-primary checkbox-inline">
-        <input id="chkPopup" class="styled" type="checkbox" checked>
-        <label for="chkPopup">
-          Popup绑定
-        </label>
-      </div>
-      <div class="checkbox checkbox-primary checkbox-inline">
-        <input id="chkTooltip" class="styled" type="checkbox">
-        <label for="chkTooltip">
-          Tooltip绑定
-        </label>
-      </div>
-      <div class="checkbox checkbox-primary checkbox-inline">
-        <input id="chkContextMenu" class="styled" type="checkbox" checked>
-        <label for="chkContextMenu">
-          右键菜单绑定
-        </label>
+    <div class="infoview">
+      <div>
+        图层状态：
+        <div class="checkbox checkbox-primary checkbox-inline">
+          <input id="chkPopup" class="styled" type="checkbox" checked />
+          <label for="chkPopup"> Popup绑定 </label>
+        </div>
+        <div class="checkbox checkbox-primary checkbox-inline">
+          <input id="chkTooltip" class="styled" type="checkbox" />
+          <label for="chkTooltip"> Tooltip绑定 </label>
+        </div>
+        <div class="checkbox checkbox-primary checkbox-inline">
+          <input id="chkContextMenu" class="styled" type="checkbox" checked />
+          <label for="chkContextMenu"> 右键菜单绑定 </label>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- 图层管理相关处理js -->
-  <script type="text/javascript" src="./js/graphicManager.js"></script>
+    <!-- 图层管理相关处理js -->
+    <script type="text/javascript" src="./js/graphicManager.js"></script>
 
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      "use script"; //开发环境建议开启严格模式
 
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
+      var map;
 
-    var map
-
-    function initMap(options) {
-      //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {
-        scene: {
-          center: { y: 31.81008, x: 117.291538, z: 5537, heading: 282, pitch: -38, roll: 0 },
-        },
-      })
-
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
-
-      //创建Graphic图层
-      var graphicLayer = new mars3d.layer.GraphicLayer()
-      map.addLayer(graphicLayer)
-
-      //图层管理的相关处理，代码在\js\graphicManager.js
-      initLayerManager(graphicLayer)
-
-      //加一些演示数据
-      addGraphic_a1(graphicLayer)
-      addGraphic_a2(graphicLayer)
-      addGraphic_a3(graphicLayer)
-      addGraphic_a4(graphicLayer)
-    }
-
-    function addGraphic_a1(graphicLayer) {
-      var primitive = new mars3d.graphic.Water({
-        positions: [
-          [117.218662, 31.800226, 37.68],
-          [117.227836, 31.800388, 32.98],
-          [117.229831, 31.792927, 37.91],
-          [117.222571, 31.791298, 37.04],
-          [117.216327, 31.79375, 37.49],
-        ],
-        style: {
-          height: 3, //水面高度
-          normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
-          frequency: 8000.0, // 控制波数的数字。
-          animationSpeed: 0.02, // 控制水的动画速度的数字。
-          amplitude: 5.0, // 控制水波振幅的数字。
-          specularIntensity: 0.8, // 控制镜面反射强度的数字。
-          baseWaterColor: '#006ab4', // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
-          blendColor: '#006ab4', // 从水中混合到非水域时使用的rgba颜色对象。
-          opacity: 0.4, //透明度
-          clampToGround: false, //是否贴地
-          label: {
-            text: '我是火星科技',
-            font_size: 18,
-            color: '#ffffff',
-            distanceDisplayCondition: true,
-            distanceDisplayCondition_far: 500000,
-            distanceDisplayCondition_near: 0,
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 31.81008, lng: 117.291538, alt: 5537, heading: 282, pitch: -38 },
           },
-        },
-      })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
+        });
 
-      //演示个性化处理graphic，代码在\js\graphicManager.js
-      initGraphicManager(primitive)
-    }
+        //创建三维地球场景
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-    function addGraphic_a2(graphicLayer) {
-      var primitive = new mars3d.graphic.Water({
-        positions: [
-          [117.187572, 31.823074, 45.53],
-          [117.195377, 31.82418, 43.36],
-          [117.204541, 31.818933, 37.06],
-          [117.19775, 31.809539, 36.59],
-          [117.183832, 31.814237, 38.76],
-        ],
-        style: {
-          height: 3, //水面高度
-          normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
-          frequency: 8000.0, // 控制波数的数字。
-          animationSpeed: 0.02, // 控制水的动画速度的数字。
-          amplitude: 5.0, // 控制水波振幅的数字。
-          specularIntensity: 0.8, // 控制镜面反射强度的数字。
-          baseWaterColor: '#006ab4', // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
-          blendColor: '#006ab4', // 从水中混合到非水域时使用的rgba颜色对象。
-          opacity: 0.4, //透明度
-          clampToGround: true, //是否贴地
-        },
-      })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
+        //创建Graphic图层
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
-      //entity转geojson
-      var geojson = primitive.toGeoJSON()
-      console.log(geojson)
-    }
+        //图层管理的相关处理，代码在\js\graphicManager.js
+        initLayerManager(graphicLayer);
 
-    function addGraphic_a3(graphicLayer) {
-      var primitive = new mars3d.graphic.Water({
-        positions: [
-          [117.216386, 31.815376, 35.16],
-          [117.222533, 31.81729, 29.21],
-          [117.22642, 31.814983, 28.43],
-          [117.22681, 31.810739, 28.55],
-          [117.212868, 31.811302, 34.4],
-          [117.212538, 31.81424, 31.87],
-          [117.214681, 31.81402, 32.97],
-        ],
-        style: {
-          normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
-          frequency: 8000.0, // 控制波数的数字。
-          animationSpeed: 0.02, // 控制水的动画速度的数字。
-          amplitude: 5.0, // 控制水波振幅的数字。
-          specularIntensity: 0.8, // 控制镜面反射强度的数字。
-          baseWaterColor: '#006ab4', // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
-          blendColor: '#006ab4', // 从水中混合到非水域时使用的rgba颜色对象。
-          opacity: 0.4, //透明度
-          clampToGround: false, //是否贴地
-        },
-      })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
-    }
+        //加一些演示数据
+        addGraphic_a1(graphicLayer);
+        addGraphic_a2(graphicLayer);
+        addGraphic_a3(graphicLayer);
+        addGraphic_a4(graphicLayer);
+      }
 
-    function addGraphic_a4(graphicLayer) {
-      var primitive = new mars3d.graphic.Water({
-        positions: [
-          [117.208302, 31.85757],
-          [117.234234, 31.858263],
-          [117.234261, 31.833317],
-          [117.207414, 31.834541],
-          [117.208302, 31.85757],
-        ],
-        style: {
-          height: 100, //水面高度
-          diffHeight: 700,
-          normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
-          frequency: 8000.0, // 控制波数的数字。
-          animationSpeed: 0.02, // 控制水的动画速度的数字。
-          amplitude: 5.0, // 控制水波振幅的数字。
-          specularIntensity: 0.8, // 控制镜面反射强度的数字。
-          baseWaterColor: '#006ab4', // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
-          blendColor: '#006ab4', // 从水中混合到非水域时使用的rgba颜色对象。
-          opacity: 0.4, //透明度
-          clampToGround: false, //是否贴地
-        },
-      })
-      graphicLayer.addGraphic(primitive)//primitive.addTo(graphicLayer)  //另外一种写法
-    }
-  </script>
-</body>
+      function addGraphic_a1(graphicLayer) {
+        var primitive = new mars3d.graphic.Water({
+          positions: [
+            [117.218662, 31.800226, 37.68],
+            [117.227836, 31.800388, 32.98],
+            [117.229831, 31.792927, 37.91],
+            [117.222571, 31.791298, 37.04],
+            [117.216327, 31.79375, 37.49],
+          ],
+          style: {
+            height: 3, //水面高度
+            normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+            frequency: 8000.0, // 控制波数的数字。
+            animationSpeed: 0.02, // 控制水的动画速度的数字。
+            amplitude: 5.0, // 控制水波振幅的数字。
+            specularIntensity: 0.8, // 控制镜面反射强度的数字。
+            baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
+            blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
+            opacity: 0.4, //透明度
+            clampToGround: false, //是否贴地
+            label: {
+              text: "我是火星科技",
+              font_size: 18,
+              color: "#ffffff",
+              distanceDisplayCondition: true,
+              distanceDisplayCondition_far: 500000,
+              distanceDisplayCondition_near: 0,
+            },
+          },
+        });
+        graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法
 
+        //演示个性化处理graphic，代码在\js\graphicManager.js
+        initGraphicManager(primitive);
+      }
+
+      function addGraphic_a2(graphicLayer) {
+        var primitive = new mars3d.graphic.Water({
+          positions: [
+            [117.187572, 31.823074, 45.53],
+            [117.195377, 31.82418, 43.36],
+            [117.204541, 31.818933, 37.06],
+            [117.19775, 31.809539, 36.59],
+            [117.183832, 31.814237, 38.76],
+          ],
+          style: {
+            height: 3, //水面高度
+            normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+            frequency: 8000.0, // 控制波数的数字。
+            animationSpeed: 0.02, // 控制水的动画速度的数字。
+            amplitude: 5.0, // 控制水波振幅的数字。
+            specularIntensity: 0.8, // 控制镜面反射强度的数字。
+            baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
+            blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
+            opacity: 0.4, //透明度
+            clampToGround: true, //是否贴地
+          },
+        });
+        graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法
+
+        //entity转geojson
+        var geojson = primitive.toGeoJSON();
+        console.log(geojson);
+      }
+
+      function addGraphic_a3(graphicLayer) {
+        var primitive = new mars3d.graphic.Water({
+          positions: [
+            [117.216386, 31.815376, 35.16],
+            [117.222533, 31.81729, 29.21],
+            [117.22642, 31.814983, 28.43],
+            [117.22681, 31.810739, 28.55],
+            [117.212868, 31.811302, 34.4],
+            [117.212538, 31.81424, 31.87],
+            [117.214681, 31.81402, 32.97],
+          ],
+          style: {
+            normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+            frequency: 8000.0, // 控制波数的数字。
+            animationSpeed: 0.02, // 控制水的动画速度的数字。
+            amplitude: 5.0, // 控制水波振幅的数字。
+            specularIntensity: 0.8, // 控制镜面反射强度的数字。
+            baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
+            blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
+            opacity: 0.4, //透明度
+            clampToGround: false, //是否贴地
+
+            label: { text: "鼠标移入会高亮" },
+            //高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+            highlight: {
+              opacity: 0.9,
+            },
+          },
+        });
+        graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法
+      }
+
+      function addGraphic_a4(graphicLayer) {
+        var primitive = new mars3d.graphic.Water({
+          positions: [
+            [117.208302, 31.85757],
+            [117.234234, 31.858263],
+            [117.234261, 31.833317],
+            [117.207414, 31.834541],
+            [117.208302, 31.85757],
+          ],
+          style: {
+            height: 100, //水面高度
+            diffHeight: 700,
+            normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
+            frequency: 8000.0, // 控制波数的数字。
+            animationSpeed: 0.02, // 控制水的动画速度的数字。
+            amplitude: 5.0, // 控制水波振幅的数字。
+            specularIntensity: 0.8, // 控制镜面反射强度的数字。
+            baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
+            blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
+            opacity: 0.4, //透明度
+            clampToGround: false, //是否贴地
+          },
+        });
+        graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法
+      }
+    </script>
+  </body>
 </html>

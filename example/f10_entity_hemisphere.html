@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>半球 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>半球、雷达范围 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <script
       type="text/javascript"
@@ -83,9 +83,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -93,40 +93,40 @@
           scene: {
             center: { lat: 30.653865, lng: 116.262622, alt: 54556, heading: 360, pitch: -60 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //图层管理的相关处理，代码在\js\graphicManager.js
-        initLayerManager(graphicLayer)
+        initLayerManager(graphicLayer);
 
         //新增绘制
-        $('#btnStartDraw').click(function () {
+        $("#btnStartDraw").click(function () {
           //开始绘制
           graphicLayer.startDraw({
-            type: 'ellipsoid',
+            type: "ellipsoid",
             style: {
               fill: true,
-              color: '#00ff00',
+              color: "#00ff00",
               opacity: 0.6,
             },
-          })
-        })
+          });
+        });
 
         //加一些演示数据
-        addGraphic_01(graphicLayer)
-        addGraphic_02(graphicLayer)
-        addGraphic_03(graphicLayer)
-        addGraphic_04(graphicLayer)
-        addGraphic_05(graphicLayer)
-        addGraphic_06(graphicLayer)
-        addGraphic_07(graphicLayer)
-        addGraphic_08(graphicLayer)
+        addGraphic_01(graphicLayer);
+        addGraphic_02(graphicLayer);
+        addGraphic_03(graphicLayer);
+        addGraphic_04(graphicLayer);
+        addGraphic_05(graphicLayer);
+        addGraphic_06(graphicLayer);
+        addGraphic_07(graphicLayer);
+        addGraphic_08(graphicLayer);
       }
 
       //
@@ -142,20 +142,25 @@
             slicePartitions: 32,
             outline: true,
             outlineColor: Cesium.Color.YELLOW,
+
+            //高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+            highlight: {
+              outlineColor: Cesium.Color.RED,
+            },
           },
           //添加扫描面
           scanPlane: {
             step: 0.5, //步长
             style: {
-              color: '#ffff00',
+              color: "#ffff00",
               opacity: 0.4,
             },
           },
-        })
-        graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
+        });
+        graphicLayer.addGraphic(graphic); //还可以另外一种写法: graphic.addTo(graphicLayer)
 
         //演示个性化处理graphic，代码在\js\graphicManager.js
-        initGraphicManager(graphic)
+        initGraphicManager(graphic);
       }
 
       //
@@ -174,12 +179,12 @@
           },
           //添加扫描面
           scanPlane: [
-            { step: 0.9, style: { color: '#ffff00', minimumConeDegree: 70.0, maximumConeDegree: 90.0 } },
-            { step: 0.9, style: { heading: 120, color: '#ffff00', minimumConeDegree: 70.0, maximumConeDegree: 90.0 } },
-            { step: 0.9, style: { heading: 240, color: '#ffff00', minimumConeDegree: 70.0, maximumConeDegree: 90.0 } },
+            { step: 0.9, style: { color: "#ffff00", minimumConeDegree: 70.0, maximumConeDegree: 90.0 } },
+            { step: 0.9, style: { heading: 120, color: "#ffff00", minimumConeDegree: 70.0, maximumConeDegree: 90.0 } },
+            { step: 0.9, style: { heading: 240, color: "#ffff00", minimumConeDegree: 70.0, maximumConeDegree: 90.0 } },
           ],
-        })
-        graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
+        });
+        graphicLayer.addGraphic(graphic); //还可以另外一种写法: graphic.addTo(graphicLayer)
       }
 
       function addGraphic_03(graphicLayer) {
@@ -194,8 +199,8 @@
             }),
             outline: false,
           },
-        })
-        graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
+        });
+        graphicLayer.addGraphic(graphic); //还可以另外一种写法: graphic.addTo(graphicLayer)
       }
 
       //
@@ -206,13 +211,13 @@
             radii: 2500,
             maximumConeDegree: 90,
             material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.EllipsoidWave, {
-              color: '#00ffff',
+              color: "#00ffff",
               speed: 5.0,
             }),
             outline: false,
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
       }
 
       //
@@ -227,20 +232,20 @@
             stackPartitions: 32,
             slicePartitions: 32,
             outline: true,
-            outlineColor: '#f33349',
+            outlineColor: "#f33349",
           },
-        })
-        graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
+        });
+        graphicLayer.addGraphic(graphic); //还可以另外一种写法: graphic.addTo(graphicLayer)
 
         //添加扫描面
         graphic.addScanPlane({
-          type: 'roll', //扫描类型
+          type: "roll", //扫描类型
           step: 0.5, //步长
           style: {
             minimumConeDegree: -90.0,
             maximumConeDegree: 90.0,
           },
-        })
+        });
       }
 
       //半圆顶球体
@@ -254,19 +259,19 @@
             outline: true,
             outlineColor: Cesium.Color.BLUE.withAlpha(0.6),
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
 
         //添加扫描面
         graphic.addScanPlane({
-          type: 'pitch', //扫描类型
+          type: "pitch", //扫描类型
           step: 0.5, //步长
           style: {
             roll: 90,
             minimumConeDegree: 0.0,
             maximumConeDegree: 180.0,
           },
-        })
+        });
       }
 
       //含内半径 半圆顶球体
@@ -280,8 +285,8 @@
             color: Cesium.Color.RED.withAlpha(0.3),
             outline: true,
           },
-        })
-        graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
+        });
+        graphicLayer.addGraphic(graphic); //还可以另外一种写法: graphic.addTo(graphicLayer)
 
         //添加扫描面
         graphic.addScanPlane({
@@ -289,7 +294,7 @@
           style: {
             innerRadii: 1000,
           },
-        })
+        });
       }
 
       //被切开的含内半径 半圆顶球体
@@ -304,8 +309,8 @@
             color: Cesium.Color.YELLOW.withAlpha(0.3),
             outline: true,
           },
-        })
-        graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
+        });
+        graphicLayer.addGraphic(graphic); //还可以另外一种写法: graphic.addTo(graphicLayer)
 
         //添加扫描面
         graphic.addScanPlane({
@@ -313,7 +318,7 @@
           style: {
             innerRadii: 1000,
           },
-        })
+        });
       }
     </script>
   </body>

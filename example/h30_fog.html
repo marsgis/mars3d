@@ -71,9 +71,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -81,62 +81,62 @@
           scene: {
             center: { lat: 31.251138, lng: 121.463588, alt: 1730, heading: 111, pitch: -25 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建gltf模型，
         let gltfLayer = new mars3d.layer.ModelLayer({
-          name: '上海浦东',
-          url: '//data.mars3d.cn/gltf/mars/shanghai/scene.gltf',
+          name: "上海浦东",
+          url: "//data.mars3d.cn/gltf/mars/shanghai/scene.gltf",
           style: { scale: 520, heading: 215 }, //style同标绘的model类型
           position: [121.507762, 31.233975, 200],
           center: { lat: 31.251138, lng: 121.463588, alt: 1729.97, heading: 110.7, pitch: -25, roll: 0.2 },
           flyTo: true,
-        })
-        map.addLayer(gltfLayer)
+        });
+        map.addLayer(gltfLayer);
 
         //雾效果
         var fogEffect = new mars3d.effect.FogEffect({
           maxHeight: 20000, //大于此高度后不显示
           fogByDistance: new Cesium.Cartesian4(100, 0.0, 9000, 0.9),
           color: Cesium.Color.WHITE,
-        })
-        map.addEffect(fogEffect)
+        });
+        map.addEffect(fogEffect);
 
-        $('#chkShowEffect').change(function () {
-          var val = $(this).is(':checked')
+        $("#chkShowEffect").change(function () {
+          var val = $(this).is(":checked");
 
-          fogEffect.enabled = val
-        })
+          fogEffect.enabled = val;
+        });
 
-        $('#fogByDistanceX').range({
+        $("#fogByDistanceX").range({
           onChange: function (value, bfb) {
             if (value > fogEffect.fogByDistance.z) {
-              haoutil.msg('近距离不能大于远距离')
-              return
+              haoutil.msg("近距离不能大于远距离");
+              return;
             }
-            fogEffect.fogByDistance.x = value
+            fogEffect.fogByDistance.x = value;
           },
-        })
-        $('#fogByDistanceZ').range({
+        });
+        $("#fogByDistanceZ").range({
           onChange: function (value, bfb) {
             if (value < fogEffect.fogByDistance.x) {
-              haoutil.msg('远距离 不能小于 近距离')
-              return
+              haoutil.msg("远距离 不能小于 近距离");
+              return;
             }
-            fogEffect.fogByDistance.z = value
+            fogEffect.fogByDistance.z = value;
           },
-        })
+        });
 
-        $('#txtColor').minicolors({
-          position: 'bottom left',
-          control: 'saturation',
+        $("#txtColor").minicolors({
+          position: "bottom left",
+          control: "saturation",
           change: function (color, opacity) {
-            fogEffect.color = Cesium.Color.fromCssColorString(color)
+            fogEffect.color = Cesium.Color.fromCssColorString(color);
           },
-        })
+        });
       }
     </script>
   </body>

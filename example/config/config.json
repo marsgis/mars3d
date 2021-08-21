@@ -68,7 +68,8 @@
         "icon": "http://mars3d.cn/example/img/basemaps/tdt_img.png",
         "type": "tdt",
         "layer": "img_d",
-        "key": ["9ae78c51a0a28f06444d541148496e36"]
+        "key": ["9ae78c51a0a28f06444d541148496e36"],
+        "show": true
       },
       {
         "pid": 10,
@@ -122,8 +123,7 @@
         "layers": [
           { "name": "底图", "type": "tencent", "layer": "img_d" },
           { "name": "注记", "type": "tencent", "layer": "img_z" }
-        ],
-        "show": true
+        ]
       },
       {
         "pid": 10,

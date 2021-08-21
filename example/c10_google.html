@@ -44,20 +44,20 @@
     </div>
 
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
       $(document).ready(function () {
         if (!mars3d.Util.webglreport()) {
-          mars3d.Util.webglerror()
-          return
+          mars3d.Util.webglerror();
+          return;
         }
-        initMap()
-      })
+        initMap();
+      });
 
-      var map
+      var map;
       function initMap() {
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', {
+        map = new mars3d.Map("mars3dContainer", {
           scene: {
             center: { lat: 25.816726, lng: 114.165359, alt: 3339610, heading: 356, pitch: -81 },
           },
@@ -69,75 +69,75 @@
             locationBar: { fps: true }, //状态栏
           },
           terrain: {
-            url: 'http://data.mars3d.cn/terrain',
+            url: "http://data.mars3d.cn/terrain",
             show: true,
           },
           //方式1：在创建地球前的参数中配置
           basemaps: [
             {
-              name: '谷歌影像',
-              icon: 'img/basemaps/google_img.png',
-              type: 'xyz',
-              url: 'https://boxa.earthol.com/map.jpg?lyrs=y&gl=cn&x={x}&y={y}&z={z}',
+              name: "谷歌影像",
+              icon: "img/basemaps/google_img.png",
+              type: "xyz",
+              url: "https://boxa.earthol.com/map.jpg?lyrs=y&gl=cn&x={x}&y={y}&z={z}",
               chinaCRS: mars3d.ChinaCRS.GCJ02,
               show: true,
             },
             {
-              name: '谷歌影像(WGS84)',
-              icon: 'img/basemaps/google_img.png',
-              type: 'google',
-              layer: 'img_d',
+              name: "谷歌影像(WGS84)",
+              icon: "img/basemaps/google_img.png",
+              type: "google",
+              layer: "img_d",
               chinaCRS: mars3d.ChinaCRS.WGS84,
             },
             {
-              name: '谷歌影像',
-              icon: 'img/basemaps/esriWorldImagery.png',
-              type: 'group',
+              name: "谷歌影像",
+              icon: "img/basemaps/esriWorldImagery.png",
+              type: "group",
               layers: [
-                { name: '底图', type: 'google', layer: 'img_d', chinaCRS: mars3d.ChinaCRS.GCJ02 },
-                { name: '注记', type: 'google', layer: 'img_d', chinaCRS: mars3d.ChinaCRS.GCJ02 },
+                { name: "底图", type: "google", layer: "img_d", chinaCRS: mars3d.ChinaCRS.GCJ02 },
+                { name: "注记", type: "google", layer: "img_d", chinaCRS: mars3d.ChinaCRS.GCJ02 },
               ],
             },
             {
-              name: '谷歌电子',
-              icon: 'img/basemaps/google_vec.png',
-              type: 'google',
-              layer: 'vec',
+              name: "谷歌电子",
+              icon: "img/basemaps/google_vec.png",
+              type: "google",
+              layer: "vec",
               chinaCRS: mars3d.ChinaCRS.GCJ02,
             },
             {
-              name: '谷歌地形',
-              icon: 'img/basemaps/stamenWatercolor.png',
-              type: 'google',
-              layer: 'ter',
+              name: "谷歌地形",
+              icon: "img/basemaps/stamenWatercolor.png",
+              type: "google",
+              layer: "ter",
               chinaCRS: mars3d.ChinaCRS.GCJ02,
             },
           ],
-        })
+        });
 
         //poi查询栏
-        activatePOIQuery(map)
+        activatePOIQuery(map);
       }
 
       //叠加的图层
-      var tileLayer
+      var tileLayer;
 
       function addLayer() {
-        removeLayer()
+        removeLayer();
 
         //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
         tileLayer = new mars3d.layer.GoogleLayer({
-          name: '谷歌地形',
-          layer: 'ter',
+          name: "谷歌地形",
+          layer: "ter",
           chinaCRS: mars3d.ChinaCRS.GCJ02,
-        })
-        map.addLayer(tileLayer)
+        });
+        map.addLayer(tileLayer);
       }
 
       function removeLayer() {
         if (tileLayer) {
-          map.removeLayer(tileLayer, true)
-          tileLayer = null
+          map.removeLayer(tileLayer, true);
+          tileLayer = null;
         }
       }
 
@@ -145,24 +145,24 @@
       function activatePOIQuery(map) {
         mars3d.widget.activate({
           map: map,
-          name: 'POI查询',
-          uri: 'widgets/queryBaiduPOI/widget.js',
-        })
+          name: "POI查询",
+          uri: "widgets/queryBaiduPOI/widget.js",
+        });
       }
 
       function openTipView(content, title) {
         window.layer.open({
           type: 1,
-          title: title || '功能 和 已知问题 提示',
-          offset: 'rt',
+          title: title || "功能 和 已知问题 提示",
+          offset: "rt",
           shade: false,
-          skin: 'layer-mars-dialog animation-scale-up',
+          skin: "layer-mars-dialog animation-scale-up",
           content: content,
-        })
+        });
       }
 
-      if ($('#tipView').length > 0) {
-        openTipView($('#tipView'))
+      if ($("#tipView").length > 0) {
+        openTipView($("#tipView"));
       }
     </script>
   </body>

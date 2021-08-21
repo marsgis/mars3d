@@ -65,10 +65,10 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var graphicLayer
+      var map;
+      var graphicLayer;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -76,173 +76,174 @@
           scene: {
             center: { lat: 30.83351, lng: 116.354467, alt: 2743, heading: 359, pitch: -52 },
             clock: {
-              currentTime: '2021-01-01 22:00:00',
+              currentTime: "2021-01-01 22:00:00",
             },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //固定光照，避免gltf模型随时间存在亮度不一致。
-        map.fixedLight = true
+        map.fixedLight = true;
 
         this.graphicLayer = new mars3d.layer.GraphicLayer({
           hasEdit: true,
           isAutoEditing: true, //绘制完成后是否自动激活编辑
-        })
-        map.addLayer(graphicLayer)
+        });
+        map.addLayer(graphicLayer);
 
-        var url = haoutil.system.getRequestByName('url')
+        var url = haoutil.system.getRequestByName("url");
         if (url) {
           //url传入模型地址
-          $('#txtModel').val(url)
+          $("#txtModel").val(url);
+          console.log("a");
         } else {
-          var lastData = haoutil.storage.get('gltf_edit')
+          var lastData = haoutil.storage.get("gltf_edit");
           if (lastData) {
             //显示历史数据
-            $('#txtModel').val(lastData)
+            $("#txtModel").val(lastData);
           }
         }
 
-        var globe = map.scene.globe
+        var globe = map.scene.globe;
 
-        $('#chkHasTerrain').change(function () {
-          var isStkTerrain = $(this).is(':checked')
-          map.hasTerrain = isStkTerrain
-        })
-        $('#chkTestTerrain').change(function () {
-          var val = $(this).is(':checked')
-          map.scene.globe.depthTestAgainstTerrain = val
+        $("#chkHasTerrain").change(function () {
+          var isStkTerrain = $(this).is(":checked");
+          map.hasTerrain = isStkTerrain;
+        });
+        $("#chkTestTerrain").change(function () {
+          var val = $(this).is(":checked");
+          map.scene.globe.depthTestAgainstTerrain = val;
           if (val) {
-            toastr.info('深度监测打开后，您将无法看到地下或被地形遮挡的对象。')
+            toastr.info("深度监测打开后，您将无法看到地下或被地形遮挡的对象。");
           }
-        })
-        $('#chk_onlyPickModelPosition').change(function () {
-          var val = $(this).is(':checked')
+        });
+        $("#chk_onlyPickModelPosition").change(function () {
+          var val = $(this).is(":checked");
 
           //控制鼠标只取模型上的点，忽略地形上的点的拾取
-          map.onlyPickModelPosition = val
-        })
+          map.onlyPickModelPosition = val;
+        });
 
         //创建完成，事件监听
         graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
-          var graphic = e.graphic
+          var graphic = e.graphic;
           if (!graphicLayer.isContinued) {
-            startEditing(graphic)
+            startEditing(graphic);
           }
-        })
+        });
 
         //编辑修改了模型
         graphicLayer.on(
           [mars3d.EventType.editStart, mars3d.EventType.editMovePoint, mars3d.EventType.editStyle, mars3d.EventType.editRemovePoint],
           function (e) {
-            var graphic = e.graphic
-            startEditing(graphic)
+            var graphic = e.graphic;
+            startEditing(graphic);
           }
-        )
+        );
 
         //停止编辑修改模型
         graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], function (e) {
-          stopEditing()
-        })
+          stopEditing();
+        });
 
-        $('#btnSave').click(function () {
-          var strResult = graphicLayer.toGeoJSON()
+        $("#btnSave").click(function () {
+          var strResult = graphicLayer.toGeoJSON();
           if (strResult == null) {
-            layer.msg('当前没有标注任何数据，无需保存！')
-            return
+            layer.msg("当前没有标注任何数据，无需保存！");
+            return;
           }
-          haoutil.file.downloadFile('模型标绘.json', JSON.stringify(strResult))
-        })
+          haoutil.file.downloadFile("模型标绘.json", JSON.stringify(strResult));
+        });
 
-        $('#input_plot_file').change(function (e) {
-          var file = this.files[0]
+        $("#input_plot_file").change(function (e) {
+          var file = this.files[0];
 
-          var fileName = file.name
-          var fileType = fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length).toLowerCase()
-          if (fileType != 'json') {
-            layer.msg('文件类型不合法,请选择json格式标注文件！')
-            clearSelectFile()
-            return
+          var fileName = file.name;
+          var fileType = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length).toLowerCase();
+          if (fileType != "json") {
+            layer.msg("文件类型不合法,请选择json格式标注文件！");
+            clearSelectFile();
+            return;
           }
 
           if (window.FileReader) {
-            var reader = new FileReader()
-            reader.readAsText(file, 'UTF-8')
+            var reader = new FileReader();
+            reader.readAsText(file, "UTF-8");
             reader.onloadend = function (e) {
-              var json = this.result
+              var json = this.result;
               graphicLayer.loadGeoJSON(json, {
                 clear: true,
                 flyTo: true,
-              })
+              });
 
-              clearSelectFile()
-            }
+              clearSelectFile();
+            };
           }
-        })
+        });
 
-        $('#btnImpFile').click(function () {
-          $('#input_plot_file').click()
-        })
+        $("#btnImpFile").click(function () {
+          $("#input_plot_file").click();
+        });
       }
 
       function clearSelectFile() {
         if (!window.addEventListener) {
-          document.getElementById('input_plot_file').outerHTML += '' //IE
+          document.getElementById("input_plot_file").outerHTML += ""; //IE
         } else {
-          document.getElementById('input_plot_file').value = '' //FF
+          document.getElementById("input_plot_file").value = ""; //FF
         }
       }
 
       function deleteAll() {
-        graphicLayer.clear()
+        graphicLayer.clear();
       }
 
       function drawModel() {
-        var url = $('#txtModel').val()
-        haoutil.storage.add('gltf_edit', url)
+        var url = $("#txtModel").val();
+        haoutil.storage.add("gltf_edit", url);
 
-        var isProxy = $('#chkProxy').is(':checked')
+        var isProxy = $("#chkProxy").is(":checked");
         if (isProxy) {
-          url = '//server.mars3d.cn/proxy/' + url
+          url = "//server.mars3d.cn/proxy/" + url;
         }
 
         graphicLayer.startDraw({
-          type: 'model',
+          type: "model",
           drawShow: true, //绘制时，是否显示模型，可避免在3dtiles上拾取坐标存在问题。
           // editType: 'point', //编辑方式：只调整四周方向和比例
           style: {
             scale: 1,
             url: url,
           },
-        })
+        });
       }
 
       //附加：激活属性编辑widget【非必需，可以注释该方法内部代码】
-      var timeTik
+      var timeTik;
 
       function startEditing(graphic) {
-        clearTimeout(timeTik)
+        clearTimeout(timeTik);
 
-        var plotAttr = mars3d.widget.getClass('widgets/plotAttr/widget.js')
+        var plotAttr = mars3d.widget.getClass("widgets/plotAttr/widget.js");
         if (plotAttr && plotAttr.isActivate) {
-          plotAttr.startEditing(graphic, graphic.coordinates)
+          plotAttr.startEditing(graphic, graphic.coordinates);
         } else {
           mars3d.widget.activate({
             map: map,
-            uri: 'widgets/plotAttr/widget.js',
-            name: '属性编辑',
+            uri: "widgets/plotAttr/widget.js",
+            name: "属性编辑",
             graphic: graphic,
             lonlats: graphic.coordinates,
-          })
+          });
         }
       }
 
       function stopEditing() {
         timeTik = setTimeout(function () {
-          mars3d.widget.disable('widgets/plotAttr/widget.js')
-        }, 200)
+          mars3d.widget.disable("widgets/plotAttr/widget.js");
+        }, 200);
       }
       //附加：激活属性编辑widget【非必需，可以注释该方法内部代码】
     </script>

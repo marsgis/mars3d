@@ -71,10 +71,10 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var tilesetClip
+      var map;
+      var tilesetClip;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -82,35 +82,35 @@
           scene: {
             center: { lat: 25.074712, lng: 102.65196, alt: 3122, heading: 28, pitch: -41 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //固定光照，避免gltf模型随时间存在亮度不一致。
-        map.fixedLight = true
+        map.fixedLight = true;
 
         //加模型
         var tilesetLayer = new mars3d.layer.TilesetLayer({
-          url: '//data.mars3d.cn/3dtiles/qx-xiaoqu/tileset.json',
+          url: "//data.mars3d.cn/3dtiles/qx-xiaoqu/tileset.json",
           maximumScreenSpaceError: 6,
           maximumMemoryUsage: 2048,
           flyTo: true,
-        })
-        map.addLayer(tilesetLayer)
+        });
+        map.addLayer(tilesetLayer);
 
         tilesetLayer.on(mars3d.EventType.load, function (event) {
           setTimeout(function () {
             tilesetClip.list.forEach((element) => {
-              addTableItem(element)
-            })
-          }, 500)
-        })
+              addTableItem(element);
+            });
+          }, 500);
+        });
 
         //会执行多次，重新加载一次完成后都会回调
         tilesetLayer.on(mars3d.EventType.allTilesLoaded, function (event) {
-          console.log('触发allTilesLoaded事件', event)
-        })
+          console.log("触发allTilesLoaded事件", event);
+        });
 
         //模型开挖处理类
         tilesetClip = new mars3d.thing.TilesetClip({
@@ -121,67 +121,67 @@
             [102.658175, 25.081644, 1865],
             [102.654452, 25.084029, 1865],
           ],
-        })
-        map.addThing(tilesetClip)
+        });
+        map.addThing(tilesetClip);
 
-        $('#clearWJ').click(function () {
-          map.graphicLayer.clear()
-          tilesetClip.clear()
+        $("#clearWJ").click(function () {
+          map.graphicLayer.clear();
+          tilesetClip.clear();
 
           // 清除表格
-          var tbody = document.getElementById('tbPoly')
-          tbody.innerHTML = ''
-        })
+          var tbody = document.getElementById("tbPoly");
+          tbody.innerHTML = "";
+        });
 
-        $('#btnDraw').click(function () {
-          map.graphicLayer.clear()
+        $("#btnDraw").click(function () {
+          map.graphicLayer.clear();
           map.graphicLayer.startDraw({
-            type: 'polygon',
+            type: "polygon",
             style: {
-              color: '#007be6',
+              color: "#007be6",
               opacity: 0.2,
               outline: false,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.positionsShow
-              map.graphicLayer.clear()
+              var positions = graphic.positionsShow;
+              map.graphicLayer.clear();
 
-              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
+              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))); //打印下边界
 
-              let item = tilesetClip.addArea(positions)
-              addTableItem(item)
+              let item = tilesetClip.addArea(positions);
+              addTableItem(item);
             },
-          })
-        })
-        $('#btnDrawExtent').click(function () {
-          map.graphicLayer.clear()
+          });
+        });
+        $("#btnDrawExtent").click(function () {
+          map.graphicLayer.clear();
           map.graphicLayer.startDraw({
-            type: 'rectangle',
+            type: "rectangle",
             style: {
-              color: '#007be6',
+              color: "#007be6",
               opacity: 0.2,
               outline: false,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.getOutlinePositions(false)
-              map.graphicLayer.clear()
+              var positions = graphic.getOutlinePositions(false);
+              map.graphicLayer.clear();
 
-              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
+              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))); //打印下边界
 
-              let item = tilesetClip.addArea(positions)
-              addTableItem(item)
+              let item = tilesetClip.addArea(positions);
+              addTableItem(item);
             },
-          })
-        })
+          });
+        });
       }
 
       // 区域表格添加一行记录
       function addTableItem(item) {
         // 增加tr和td表格
-        var tbody = document.getElementById('tbPoly')
-        var tr = document.createElement('tr')
+        var tbody = document.getElementById("tbPoly");
+        var tr = document.createElement("tr");
         tr.innerHTML = `
           <tr>
             <td>裁剪区${item.id}</td>
@@ -189,19 +189,19 @@
               <a class="flyTo" href="javascript:void(0)" title="飞行定位到区域"><i class="fa fa-send-o"></i></a>&nbsp;&nbsp;
               <a class="remove" href="javascript:void(0)" title="删除区域"><i class="fa fa-trash"></i></a>
             </td>
-          </tr>`
-        tbody.appendChild(tr)
+          </tr>`;
+        tbody.appendChild(tr);
 
         //绑定单击事件 定位
-        tr.querySelector('.flyTo').addEventListener('click', function (e) {
-          map.flyToPositions(item.positions)
-        })
+        tr.querySelector(".flyTo").addEventListener("click", function (e) {
+          map.flyToPositions(item.positions);
+        });
 
         // 移动至绘制区域
-        tr.querySelector('.remove').addEventListener('click', function (e) {
-          tilesetClip.removeArea(item)
-          tbody.removeChild(tr)
-        })
+        tr.querySelector(".remove").addEventListener("click", function (e) {
+          tilesetClip.removeArea(item);
+          tbody.removeChild(tr);
+        });
       }
     </script>
   </body>

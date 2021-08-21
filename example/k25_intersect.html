@@ -44,9 +44,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -55,14 +55,14 @@
             center: { lat: 31.715325, lng: 117.233867, alt: 21228, heading: 2, pitch: -60 },
           },
           layers: [],
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
-        let graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        let graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //面1
         let graphic1 = new mars3d.graphic.PolygonEntity({
@@ -75,12 +75,12 @@
             [117.182288, 31.854164, 35.2],
           ],
           style: {
-            color: '#ff0000',
+            color: "#ff0000",
             opacity: 0.5,
             clampToGround: true,
           },
-        })
-        graphicLayer.addGraphic(graphic1)
+        });
+        graphicLayer.addGraphic(graphic1);
 
         //面2
         let graphic2 = new mars3d.graphic.PolygonEntity({
@@ -92,51 +92,51 @@
             [117.267046, 31.842971, 25.4],
           ],
           style: {
-            color: '#0000FF',
+            color: "#0000FF",
             opacity: 0.5,
             clampToGround: true,
           },
-        })
-        graphicLayer.addGraphic(graphic2)
+        });
+        graphicLayer.addGraphic(graphic2);
 
-        let intersectGraphic
+        let intersectGraphic;
 
-        $('#btnClear').click(function () {
+        $("#btnClear").click(function () {
           if (intersectGraphic) {
-            graphicLayer.removeGraphic(intersectGraphic, true)
-            intersectGraphic = null
+            graphicLayer.removeGraphic(intersectGraphic, true);
+            intersectGraphic = null;
           }
-        })
+        });
 
-        $('#btnSend').click(function () {
+        $("#btnSend").click(function () {
           if (intersectGraphic) {
-            graphicLayer.removeGraphic(intersectGraphic, true)
-            intersectGraphic = null
+            graphicLayer.removeGraphic(intersectGraphic, true);
+            intersectGraphic = null;
           }
 
-          let layer1 = graphic1.toGeoJSON()
-          let layer2 = graphic2.toGeoJSON()
-          console.log('2个面的geojson对象', layer1, layer2)
+          let layer1 = graphic1.toGeoJSON();
+          let layer2 = graphic2.toGeoJSON();
+          console.log("2个面的geojson对象", layer1, layer2);
 
-          let geojson = turf.intersect(layer1, layer2)
+          let geojson = turf.intersect(layer1, layer2);
 
-          intersectGraphic = mars3d.Util.geoJsonToGraphics(geojson)[0]
-          intersectGraphic.type = 'polygon'
+          intersectGraphic = mars3d.Util.geoJsonToGraphics(geojson)[0];
+          intersectGraphic.type = "polygon";
           intersectGraphic.style = {
-            color: '#00ff00',
+            color: "#00ff00",
             opacity: 0.8,
             outline: true,
             outlineWidth: 3,
-            outlineColor: '#ffffff',
+            outlineColor: "#ffffff",
             clampToGround: true,
             label: {
-              text: '我是相交部分',
+              text: "我是相交部分",
               font_size: 18,
-              color: '#000000',
+              color: "#000000",
             },
-          }
-          intersectGraphic = graphicLayer.addGraphic(intersectGraphic)
-        })
+          };
+          intersectGraphic = graphicLayer.addGraphic(intersectGraphic);
+        });
       }
     </script>
   </body>

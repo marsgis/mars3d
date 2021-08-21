@@ -53,9 +53,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -64,13 +64,13 @@
             fxaa: true,
             center: { lat: 33.596051, lng: 119.031383, alt: 359, heading: 180, pitch: -43 },
             globe: {
-              baseColor: '#000',
+              baseColor: "#000",
             },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         // let imageryLayer = map.scene.imageryLayers.get(0)
         // imageryLayer.dayAlpha = 0.1  //白天图层透明值
@@ -78,83 +78,84 @@
 
         //加个模型
         var tilesetLayer = new mars3d.layer.TilesetLayer({
-          url: '//data.mars3d.cn/3dtiles/qx-simiao/tileset.json',
+          url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
           position: { alt: 80.6 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
           shadows: Cesium.ShadowMode.ENABLED,
-        })
-        map.addLayer(tilesetLayer)
+        });
+        map.addLayer(tilesetLayer);
 
         //绑定UI控件相关默认值及事件
-        var today = new Date().format('yyyy-MM-dd')
-        $('#txt_rzfx_Date').val(today)
+        var today = new Date().format("yyyy-MM-dd");
+        $("#txt_rzfx_Date").val(today);
 
-        jeDate('#txt_rzfx_Date', {
-          theme: { bgcolor: '#135b91', pnColor: '#00CCFF' },
-          format: 'YYYY-MM-DD',
-        })
+        // 日期控件
+        this.jeDate("#txt_rzfx_Date", {
+          theme: { bgcolor: "#135b91", pnColor: "#00CCFF" },
+          format: "YYYY-MM-DD",
+        });
 
         //滑动条
-        $('#range_ksy_currTime').range({
+        $("#range_ksy_currTime").range({
           onChange: function (value, bfb) {
-            var dateTime = getCurrTime()
-            shadows.time = dateTime
-            $('#btn_rzfx_btn_rzfx_pause').val('播放')
+            var dateTime = getCurrTime();
+            shadows.time = dateTime;
+            $("#btn_rzfx_btn_rzfx_pause").val("播放");
           },
-        })
+        });
 
-        $('#btn_rzfx_btn_rzfx_pause').click(function () {
+        $("#btn_rzfx_btn_rzfx_pause").click(function () {
           if (shadows.isStart) {
-            shadows.pause()
-            $('#btn_rzfx_btn_rzfx_pause').val('播放')
+            shadows.pause();
+            $("#btn_rzfx_btn_rzfx_pause").val("播放");
           } else {
-            var _date = $('#txt_rzfx_Date').val()
+            var _date = $("#txt_rzfx_Date").val();
 
-            var currentTime = getCurrTime()
-            var startDate = new Date(_date + ' 00:00:00')
-            var endDate = new Date(_date + ' 23:59:59')
+            var currentTime = getCurrTime();
+            var startDate = new Date(_date + " 00:00:00");
+            var endDate = new Date(_date + " 23:59:59");
             if (currentTime >= endDate) {
-              haoutil.msg('开始时间必须小于结束时间！')
-              return
+              haoutil.msg("开始时间必须小于结束时间！");
+              return;
             }
 
-            shadows.start(startDate, endDate, currentTime)
+            shadows.start(startDate, endDate, currentTime);
 
-            $('#btn_rzfx_btn_rzfx_pause').val('暂停')
+            $("#btn_rzfx_btn_rzfx_pause").val("暂停");
           }
-        })
+        });
 
         //日照分析类
         let shadows = new mars3d.thing.Shadows({
           multiplier: 1600,
           time: getCurrTime(),
-        })
-        map.addThing(shadows)
+        });
+        map.addThing(shadows);
 
         shadows.on(mars3d.EventType.change, function (event) {
-          setRZFXNowTime(shadows.time)
-        })
+          setRZFXNowTime(shadows.time);
+        });
       }
 
       function getCurrTime() {
-        var value = Number($('#range_ksy_currTime').val())
+        var value = Number($("#range_ksy_currTime").val());
 
-        var date = $('#txt_rzfx_Date').val()
-        var hours = Number.parseInt(value / 60)
-        var minutes = Number.parseInt(value % 60)
-        var strDateTime = `${date} ${hours}:${minutes}:00`
-        var dateTime = new Date(strDateTime)
-        $('#lbl_rzfx_nowTime').html(dateTime.format('MM月dd日 HH:mm'))
+        var date = $("#txt_rzfx_Date").val();
+        var hours = Number.parseInt(value / 60);
+        var minutes = Number.parseInt(value % 60);
+        var strDateTime = `${date} ${hours}:${minutes}:00`;
+        var dateTime = new Date(strDateTime);
+        $("#lbl_rzfx_nowTime").html(dateTime.format("MM月dd日 HH:mm"));
 
-        return dateTime
+        return dateTime;
       }
 
       function setRZFXNowTime(date) {
-        var currTime = date.getHours() * 60 + date.getMinutes()
-        $('#range_ksy_currTime').val(currTime).change()
+        var currTime = date.getHours() * 60 + date.getMinutes();
+        $("#range_ksy_currTime").val(currTime).change();
 
-        $('#lbl_rzfx_nowTime').html(date.format('MM月dd日 HH:mm'))
+        $("#lbl_rzfx_nowTime").html(date.format("MM月dd日 HH:mm"));
       }
     </script>
   </body>

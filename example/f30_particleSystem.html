@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title> 粒子效果 | 三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -44,30 +44,30 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
             //此处参数会覆盖config.json中的对应配置
-            center: { y: 31.816168, x: 117.222162, z: 169, heading: 110, pitch: -24, roll: 0 },
+            center: { lat: 31.817534, lng: 117.219389, alt: 308, heading: 110, pitch: -24 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建Graphic图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //加一些演示数据
-        addGraphic_a1(graphicLayer)
-        addGraphic_a2(graphicLayer)
-        addGraphic_a3(graphicLayer)
+        addGraphic_a1(graphicLayer);
+        addGraphic_a2(graphicLayer);
+        addGraphic_a3(graphicLayer);
       }
 
       //喷泉效果
@@ -75,7 +75,7 @@
         var particleSystem = new mars3d.graphic.ParticleSystem({
           position: Cesium.Cartesian3.fromDegrees(117.224855, 31.815135, 28.05), //位置
           style: {
-            image: './img/particle/fountain2.png',
+            image: "./img/particle/fountain2.png",
             startColor: new Cesium.Color(1, 1, 1, 0.6), //粒子出生时的颜色
             endColor: new Cesium.Color(0.8, 0.86, 1, 0.4), //当粒子死亡时的颜色
 
@@ -95,9 +95,9 @@
           transZ: 5, //离地高度
           gravity: -3.5, //重力因子，会修改速度矢量以改变方向或速度（基于物理的效果）
           maxHeight: 5000, //超出该高度后不显示粒子效果
-        })
+        });
 
-        graphicLayer.addGraphic(particleSystem)
+        graphicLayer.addGraphic(particleSystem);
       }
 
       //火炬效果
@@ -105,7 +105,7 @@
         var particleSystem = new mars3d.graphic.ParticleSystem({
           position: Cesium.Cartesian3.fromDegrees(117.225518, 31.815549, 28.28), //位置
           style: {
-            image: './img/particle/fire4.png',
+            image: "./img/particle/fire4.png",
             startColor: new Cesium.Color(1, 1, 1, 1), //粒子出生时的颜色
             endColor: new Cesium.Color(0.5, 0, 0, 0), //当粒子死亡时的颜色
             // sizeInMeters: true,
@@ -126,8 +126,8 @@
           transZ: 5, //离地高度
           gravity: 0.0, //重力因子，会修改速度矢量以改变方向或速度（基于物理的效果）
           maxHeight: 5000, //超出该高度后不显示粒子效果
-        })
-        graphicLayer.addGraphic(particleSystem)
+        });
+        graphicLayer.addGraphic(particleSystem);
       }
 
       //动态运行车辆的尾气粒子效果
@@ -140,22 +140,22 @@
           speed: 120,
           model: {
             show: true,
-            url: '//data.mars3d.cn/gltf/mars/qiche.gltf',
+            url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
             scale: 0.2,
           },
           clockLoop: true, //是否循环播放
-        })
-        graphicLayer.addGraphic(roamLine)
+        });
+        graphicLayer.addGraphic(roamLine);
 
         //启动漫游
-        roamLine.start()
+        roamLine.start();
 
         var particleSystem = new mars3d.graphic.ParticleSystem({
           modelMatrix: (time) => {
-            return roamLine.matrix
+            return roamLine.matrix;
           },
           style: {
-            image: './img/particle/smoke.png',
+            image: "./img/particle/smoke.png",
             startColor: Cesium.Color.GREY.withAlpha(0.7), //粒子出生时的颜色
             endColor: Cesium.Color.WHITE.withAlpha(0.0), //当粒子死亡时的颜色
             startScale: 1.0, //粒子出生时的比例，相对于原始大小
@@ -170,8 +170,8 @@
           transX: -4.0,
           transZ: 1.4,
           maxHeight: 1000, //超出该高度后不显示粒子效果
-        })
-        map.graphicLayer.addGraphic(particleSystem)
+        });
+        map.graphicLayer.addGraphic(particleSystem);
       }
     </script>
   </body>

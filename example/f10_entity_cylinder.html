@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>Cylinder 圆锥、圆柱 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>Cylinder 圆锥 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <script
       type="text/javascript"
@@ -83,43 +83,43 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.Util.merge(options, {})
+        var mapOptions = mars3d.Util.merge(options, {});
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //图层管理的相关处理，代码在\js\graphicManager.js
-        initLayerManager(graphicLayer)
+        initLayerManager(graphicLayer);
 
         //新增绘制
-        $('#btnStartDraw').click(function () {
+        $("#btnStartDraw").click(function () {
           //开始绘制
           graphicLayer.startDraw({
-            type: 'cylinder',
+            type: "cylinder",
             style: {
               fill: true,
-              color: '#00ff00',
+              color: "#00ff00",
               opacity: 0.6,
             },
-          })
-        })
+          });
+        });
 
         //加一些演示数据
-        addGraphic_01(graphicLayer)
-        addGraphic_02(graphicLayer)
-        addGraphic_03(graphicLayer)
-        addGraphic_04(graphicLayer)
-        addGraphic_05(graphicLayer)
+        addGraphic_01(graphicLayer);
+        addGraphic_02(graphicLayer);
+        addGraphic_03(graphicLayer);
+        addGraphic_04(graphicLayer);
+        addGraphic_05(graphicLayer);
       }
 
       //
@@ -130,14 +130,14 @@
             length: 2000.0,
             topRadius: 0.0,
             bottomRadius: 1000.0,
-            color: '#ff0000',
+            color: "#ff0000",
             opacity: 0.7,
           },
-        })
-        graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
+        });
+        graphicLayer.addGraphic(graphic); //还可以另外一种写法: graphic.addTo(graphicLayer)
 
         //演示个性化处理graphic，代码在\js\graphicManager.js
-        initGraphicManager(graphic)
+        initGraphicManager(graphic);
       }
 
       //
@@ -149,11 +149,17 @@
             length: 4000.0,
             topRadius: 0.0,
             bottomRadius: 900.0,
-            color: '#00ffff',
-            opacity: 0.7,
+            color: "#00ffff",
+            opacity: 0.3,
+
+            //高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+            highlight: {
+              color: "#00ffff",
+              opacity: 0.7,
+            },
           },
-        })
-        graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
+        });
+        graphicLayer.addGraphic(graphic); //还可以另外一种写法: graphic.addTo(graphicLayer)
       }
 
       function addGraphic_03(graphicLayer) {
@@ -163,14 +169,14 @@
             length: 2000.0,
             topRadius: 0.0,
             bottomRadius: 1000.0,
-            color: '#0000ff',
+            color: "#0000ff",
             opacity: 0.6,
             heading: 45,
             roll: 45,
             pitch: 0,
           },
-        })
-        graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
+        });
+        graphicLayer.addGraphic(graphic); //还可以另外一种写法: graphic.addTo(graphicLayer)
       }
 
       //
@@ -181,57 +187,57 @@
             length: 2000.0,
             topRadius: 1000.0,
             bottomRadius: 1000.0,
-            color: '#ffff00',
+            color: "#ffff00",
             opacity: 0.9,
             label: {
-              text: '我是原始的',
+              text: "我是原始的",
               font_size: 18,
-              color: '#ffffff',
+              color: "#ffffff",
               pixelOffsetY: -50,
               distanceDisplayCondition: true,
               distanceDisplayCondition_far: 500000,
               distanceDisplayCondition_near: 0,
             },
           },
-        })
-        graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
+        });
+        graphicLayer.addGraphic(graphic); //还可以另外一种写法: graphic.addTo(graphicLayer)
 
         //graphic转geojson
-        var geojson = graphic.toGeoJSON()
-        console.log('转换后的geojson', geojson)
-        addGeoJson(geojson, graphicLayer)
+        var geojson = graphic.toGeoJSON();
+        console.log("转换后的geojson", geojson);
+        addGeoJson(geojson, graphicLayer);
       }
 
       //添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
       function addGeoJson(geojson, graphicLayer) {
-        var graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0]
-        delete graphicCopy.attr
+        var graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0];
+        delete graphicCopy.attr;
         //新的坐标
-        graphicCopy.position = [116.301991, 30.933872, 624.03]
-        graphicCopy.style.label = graphicCopy.style.label || {}
-        graphicCopy.style.label.text = '我是转换后生成的'
-        graphicLayer.addGraphic(graphicCopy)
+        graphicCopy.position = [116.301991, 30.933872, 624.03];
+        graphicCopy.style.label = graphicCopy.style.label || {};
+        graphicCopy.style.label.text = "我是转换后生成的";
+        graphicLayer.addGraphic(graphicCopy);
       }
 
       //
       function addGraphic_05(graphicLayer) {
         //添加卫星1
-        var point = new mars3d.LatLngPoint(116.148832, 30.920609, 9000)
+        var point = new mars3d.LatLngPoint(116.148832, 30.920609, 9000);
 
         //添加模型
         var graphicModel = new mars3d.graphic.ModelEntity({
           position: point,
           style: {
-            url: '//data.mars3d.cn/gltf/mars/zhanji.glb',
+            url: "//data.mars3d.cn/gltf/mars/zhanji.glb",
             scale: 1,
             minimumPixelSize: 50,
           },
-        })
-        graphicLayer.addGraphic(graphicModel)
+        });
+        graphicLayer.addGraphic(graphicModel);
 
         //效果1
-        var pointQY = point.clone()
-        pointQY.alt = pointQY.alt / 2
+        var pointQY = point.clone();
+        pointQY.alt = pointQY.alt / 2;
 
         var graphic = new mars3d.graphic.CylinderEntity({
           position: pointQY,
@@ -241,11 +247,11 @@
             bottomRadius: 3000,
             material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.CircleWave, {
               duration: 2000,
-              color: '#02ff00',
+              color: "#02ff00",
             }),
           },
-        })
-        graphicLayer.addGraphic(graphic) //还可以另外一种写法: graphic.addTo(graphicLayer)
+        });
+        graphicLayer.addGraphic(graphic); //还可以另外一种写法: graphic.addTo(graphicLayer)
       }
     </script>
   </body>

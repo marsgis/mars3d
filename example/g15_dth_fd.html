@@ -40,9 +40,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -50,53 +50,53 @@
           scene: {
             center: { lat: 33.588256, lng: 119.031747, alt: 154, heading: 3, pitch: -23 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //三维模型
         var tilesetLayer = new mars3d.layer.TilesetLayer({
-          name: '文庙',
-          type: '3dtiles',
-          url: '//data.mars3d.cn/3dtiles/qx-simiao/tileset.json',
+          name: "文庙",
+          type: "3dtiles",
+          url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
           position: { alt: 80.6 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
           show: true,
-        })
-        map.addLayer(tilesetLayer)
+        });
+        map.addLayer(tilesetLayer);
 
         //单体化图层
         var geoJsonLayerDTH = new mars3d.layer.GeoJsonLayer({
-          name: '文庙-单体化',
-          url: '//data.mars3d.cn/file/geojson/dth-wm.json',
+          name: "文庙-单体化",
+          url: "//data.mars3d.cn/file/geojson/dth-wm.json",
           symbol: {
-            type: 'polygonP',
+            type: "polygonP",
             styleOptions: {
               //单体化默认显示样式
-              color: 'rgba(0, 255, 0, 0.2)',
+              color: "rgba(0, 255, 0, 0.2)",
               clampToGround: true,
               classification: true,
               buffer: 1,
               //单体化鼠标移入或单击后高亮的样式
               highlight: {
                 // type: mars3d.EventType.click,
-                color: 'rgba(255,255,0,0.3)',
+                color: "rgba(255,255,0,0.3)",
               },
 
               label: {
-                text: '{name}',
+                text: "{name}",
                 height: 25, //单体化面没有高度，所以中心点文字需要指定一个高度值。
                 opacity: 1,
                 font_size: 22,
-                color: '#ffffff',
-                font_family: '楷体',
+                color: "#ffffff",
+                font_family: "楷体",
                 outline: true,
-                outlineColor: '#000000',
+                outlineColor: "#000000",
                 outlineWidth: 3,
                 background: false,
-                backgroundColor: '#000000',
+                backgroundColor: "#000000",
                 backgroundOpacity: 0.1,
                 scaleByDistance: true,
                 scaleByDistance_far: 1000,
@@ -107,13 +107,13 @@
             },
           },
           popup: [
-            { field: 'name', name: '房屋名称' },
-            { field: 'jznf', name: '建造年份' },
-            { field: 'ssdw', name: '所属单位' },
-            { field: 'remark', name: '备注信息' },
+            { field: "name", name: "房屋名称" },
+            { field: "jznf", name: "建造年份" },
+            { field: "ssdw", name: "所属单位" },
+            { field: "remark", name: "备注信息" },
           ],
-        })
-        map.addLayer(geoJsonLayerDTH)
+        });
+        map.addLayer(geoJsonLayerDTH);
       }
     </script>
   </body>

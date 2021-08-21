@@ -39,9 +39,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -49,41 +49,41 @@
           scene: {
             center: { lat: 31.255379, lng: 121.459155, alt: 1864, heading: 121, pitch: -26 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.basemap = 2017 //蓝色底图
+        map.basemap = 2017; //蓝色底图
 
         var tiles3dLayer = new mars3d.layer.TilesetLayer({
-          name: '上海市建筑物',
-          url: '//data.mars3d.cn/3dtiles/jzw-shanghai/tileset.json',
+          name: "上海市建筑物",
+          url: "//data.mars3d.cn/3dtiles/jzw-shanghai/tileset.json",
           maximumScreenSpaceError: 3,
           maximumMemoryUsage: 1024,
           style: {
             color: {
               conditions: [
-                ['${floor} >= 300', 'rgba(45, 0, 75, 0.5)'],
-                ['${floor} >= 200', 'rgb(102, 71, 151)'],
-                ['${floor} >= 100', 'rgb(170, 162, 204)'],
-                ['${floor} >= 50', 'rgb(224, 226, 238)'],
-                ['${floor} >= 25', 'rgb(252, 230, 200)'],
-                ['${floor} >= 10', 'rgb(248, 176, 87)'],
-                ['${floor} >= 5', 'rgb(198, 106, 11)'],
-                ['true', 'rgb(127, 59, 8)'],
+                ["${floor} >= 300", "rgba(45, 0, 75, 0.5)"],
+                ["${floor} >= 200", "rgb(102, 71, 151)"],
+                ["${floor} >= 100", "rgb(170, 162, 204)"],
+                ["${floor} >= 50", "rgb(224, 226, 238)"],
+                ["${floor} >= 25", "rgb(252, 230, 200)"],
+                ["${floor} >= 10", "rgb(248, 176, 87)"],
+                ["${floor} >= 5", "rgb(198, 106, 11)"],
+                ["true", "rgb(127, 59, 8)"],
               ],
             },
           },
-          showClickFeature: true,
-          popup: 'all',
-        })
-        map.addLayer(tiles3dLayer)
+          highlight: { type: "click", color: "#FFFF00" },
+          popup: "all",
+        });
+        map.addLayer(tiles3dLayer);
 
         //单击事件
         tiles3dLayer.on(mars3d.EventType.click, function (event) {
-          console.log('单击了3dtiles图层', event)
-        })
+          console.log("单击了3dtiles图层", event);
+        });
       }
     </script>
   </body>

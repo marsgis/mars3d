@@ -40,20 +40,20 @@
     </div>
 
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
       $(document).ready(function () {
         if (!mars3d.Util.webglreport()) {
-          mars3d.Util.webglerror()
-          return
+          mars3d.Util.webglerror();
+          return;
         }
-        initMap()
-      })
+        initMap();
+      });
 
-      var map
+      var map;
       function initMap() {
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', {
+        map = new mars3d.Map("mars3dContainer", {
           scene: {
             center: { lat: 20.328888, lng: 110.051238, alt: 6352112, heading: 356, pitch: -78 },
           },
@@ -65,16 +65,16 @@
             locationBar: { fps: true }, //状态栏
           },
           terrain: {
-            url: 'http://data.mars3d.cn/terrain',
+            url: "http://data.mars3d.cn/terrain",
             show: true,
           },
           //方式1：在创建地球前的参数中配置
           basemaps: [
             {
-              name: 'ArcGIS影像',
-              icon: 'img/basemaps/esriWorldImagery.png',
-              type: 'arcgis_cache',
-              url: '//data.mars3d.cn/arcgis_cache/googleVec/_alllayers/{z}/{y}/{x}.jpg',
+              name: "ArcGIS影像",
+              icon: "img/basemaps/esriWorldImagery.png",
+              type: "arcgis_cache",
+              url: "//data.mars3d.cn/arcgis_cache/googleVec/_alllayers/{z}/{y}/{x}.jpg",
               upperCase: false,
               minimumLevel: 0,
               maximumLevel: 4,
@@ -82,33 +82,33 @@
               show: true,
             },
           ],
-        })
+        });
       }
 
       //叠加的图层
-      var tileLayer
+      var tileLayer;
 
       function addLayer() {
-        removeLayer()
+        removeLayer();
 
-        map.setCameraView({ lat: 31.427562, lng: 117.193707, alt: 97757, heading: 3, pitch: -66 })
+        map.setCameraView({ lat: 31.427562, lng: 117.193707, alt: 97757, heading: 3, pitch: -66 });
 
         //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
         tileLayer = new mars3d.layer.ArcGisCacheLayer({
-          url: '//data.mars3d.cn/arcgis_cache/hfgh/_alllayers/{z}/{y}/{x}.png',
+          url: "//data.mars3d.cn/arcgis_cache/hfgh/_alllayers/{z}/{y}/{x}.png",
           upperCase: false,
           minimumLevel: 1,
           maximumLevel: 17,
           minimumTerrainLevel: 1,
           // "maximumTerrainLevel": 17,
           rectangle: { xmin: 116.846, xmax: 117.642, ymin: 31.533, ymax: 32.185 }, // 控制切片如果在矩形坐标内才显示，如果不在矩形坐标内不显示
-        })
-        map.addLayer(tileLayer)
+        });
+        map.addLayer(tileLayer);
       }
       function removeLayer() {
         if (tileLayer) {
-          map.removeLayer(tileLayer, true)
-          tileLayer = null
+          map.removeLayer(tileLayer, true);
+          tileLayer = null;
         }
       }
     </script>

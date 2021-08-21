@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+      include="jquery,jquery.range,toastr,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -104,9 +104,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -114,158 +114,161 @@
           scene: {
             center: { lat: 25.074712, lng: 102.65196, alt: 3122, heading: 28, pitch: -41 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //固定光照，避免gltf模型随时间存在亮度不一致。
-        map.fixedLight = true
+        map.fixedLight = true;
 
         //加模型
         var tilesetLayer = new mars3d.layer.TilesetLayer({
-          url: '//data.mars3d.cn/3dtiles/qx-xiaoqu/tileset.json',
+          url: "//data.mars3d.cn/3dtiles/qx-xiaoqu/tileset.json",
           maximumScreenSpaceError: 6,
           maximumMemoryUsage: 2048,
           flyTo: true,
-        })
-        map.addLayer(tilesetLayer)
+        });
+        map.addLayer(tilesetLayer);
 
         //会执行多次，重新加载一次完成后都会回调
         tilesetLayer.on(mars3d.EventType.allTilesLoaded, function (event) {
-          console.log('触发allTilesLoaded事件', event)
-        })
+          console.log("触发allTilesLoaded事件", event);
+        });
 
         //模型淹没处理类
         var tilesetFlood = new mars3d.thing.TilesetFlood({
           layer: tilesetLayer,
           floodAll: false,
-        })
-        map.addThing(tilesetFlood)
+        });
+        map.addThing(tilesetFlood);
 
         tilesetFlood.on(mars3d.EventType.start, function (e) {
-          console.log('开始分析', e)
-        })
+          console.log("开始分析", e);
+        });
         tilesetFlood.on(mars3d.EventType.change, function (e) {
-          // console.log('分析中，高度变化了', e)
-          onChangeHeight(e.height)
-        })
+          onChangeHeight(e.height);
+          // console.log("分析中，高度变化了", e);
+        });
         tilesetFlood.on(mars3d.EventType.end, function (e) {
-          console.log('结束分析', e)
-        })
+          console.log("结束分析", e);
+        });
 
         $('input:radio[name="rdoFloodType"]').change(function () {
-          if ($(this).val() === '1') {
-            $('#viewJBFX').hide()
-            tilesetFlood.floodAll = true
+          if ($(this).val() === "1") {
+            $("#viewJBFX").hide();
+            tilesetFlood.floodAll = true;
           } else {
-            $('#viewJBFX').show()
-            tilesetFlood.floodAll = false
+            $("#viewJBFX").show();
+            tilesetFlood.floodAll = false;
           }
-        })
+        });
 
-        $('#btnDraw').click(function () {
-          map.graphicLayer.clear()
+        $("#btnDraw").click(function () {
+          map.graphicLayer.clear();
           map.graphicLayer.startDraw({
-            type: 'polygon',
+            type: "polygon",
             style: {
-              color: '#007be6',
+              color: "#007be6",
               opacity: 0.5,
               outline: false,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.positionsShow
-              tilesetFlood.addArea(positions)
+              var positions = graphic.positionsShow;
+              tilesetFlood.addArea(positions);
 
-              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
+              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))); //打印下边界
               // var result = mars3d.PolyUtil.getHeightRange(positions, map.scene)
               // $('#minHeight').val(Math.ceil(result.minHeight))
               // $('#maxHeight').val(Math.floor(result.maxHeight + 1))
             },
-          })
-        })
-        $('#btnDrawExtent').click(function () {
-          map.graphicLayer.clear()
+          });
+        });
+        $("#btnDrawExtent").click(function () {
+          map.graphicLayer.clear();
           map.graphicLayer.startDraw({
-            type: 'rectangle',
+            type: "rectangle",
             style: {
-              color: '#007be6',
+              color: "#007be6",
               opacity: 0.2,
               outline: false,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.getOutlinePositions(false)
-              tilesetFlood.addArea(positions)
+              var positions = graphic.getOutlinePositions(false);
+              tilesetFlood.addArea(positions);
             },
-          })
-        })
+          });
+        });
 
-        $('#begin').click(function () {
+        $("#begin").click(function () {
           if (!tilesetFlood.floodAll && tilesetFlood.length == 0) {
-            haoutil.msg('请首先绘制分析区域！')
-            return
+            haoutil.msg("请首先绘制分析区域！");
+            return;
           }
-          map.graphicLayer.clear()
+          map.graphicLayer.clear();
 
-          var minValue = Number($('#minHeight').val())
-          var maxValue = Number($('#maxHeight').val())
-          var speed = Number($('#speed').val())
+          var minValue = Number($("#minHeight").val());
+          var maxValue = Number($("#maxHeight").val());
+          var speed = Number($("#speed").val());
+          if (minValue <= 1800) {
+            toastr.info("最低海拔过低，请耐心等候几秒");
+          }
 
-          console.log('当前参数', { minHeight: minValue, maxHeight: maxValue })
+          console.log("当前参数", { minHeight: minValue, maxHeight: maxValue });
 
           tilesetFlood.setOptions({
             minHeight: minValue,
             maxHeight: maxValue,
             speed: speed,
-          })
+          });
 
-          $('#range_currHeight').attr('min', minValue)
-          $('#range_currHeight').attr('max', maxValue)
-          onChangeHeight(minValue)
+          $("#range_currHeight").attr("min", minValue);
+          $("#range_currHeight").attr("max", maxValue);
+          onChangeHeight(minValue);
 
-          $('#paramView').hide()
-          $('#resultView').show()
+          $("#paramView").hide();
+          $("#resultView").show();
 
           setTimeout(() => {
-            $('#btn_start').click() //自动启动
-          }, 500)
-        })
+            $("#btn_start").click(); //自动启动
+          }, 500);
+        });
 
         //滑动条
-        $('#range_currHeight').range({
+        $("#range_currHeight").range({
           onChange: function (value, bfb) {
-            tilesetFlood.height = value
-            $('#lbl_nowHeight').html(value.toFixed(1))
+            tilesetFlood.height = value;
+            $("#lbl_nowHeight").html(value.toFixed(1));
 
-            $('#btn_start').val('自动播放')
+            $("#btn_start").val("自动播放");
           },
-        })
+        });
 
-        $('#btn_start').click(function () {
+        $("#btn_start").click(function () {
           if (tilesetFlood.isStart) {
-            tilesetFlood.stop()
-            $('#btn_start').val('自动播放')
+            tilesetFlood.stop();
+            $("#btn_start").val("自动播放");
           } else {
-            tilesetFlood.start()
-            $('#btn_start').val('暂停')
+            tilesetFlood.start();
+            $("#btn_start").val("暂停");
           }
-        })
+        });
 
-        $('#clearWJ').click(function () {
-          $('#resultView').hide()
-          $('#paramView').show()
-          $('#btn_start').val('自动播放')
+        $("#clearWJ").click(function () {
+          $("#resultView").hide();
+          $("#paramView").show();
+          $("#btn_start").val("自动播放");
 
-          tilesetFlood.clear()
-          map.graphicLayer.clear()
-        })
+          tilesetFlood.clear();
+          map.graphicLayer.clear();
+        });
       }
 
       function onChangeHeight(height) {
-        $('#range_currHeight').val(height).change()
-        $('#lbl_nowHeight').html(height.toFixed(1))
+        $("#range_currHeight").val(height).change();
+        $("#lbl_nowHeight").html(height.toFixed(1));
       }
     </script>
   </body>

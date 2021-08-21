@@ -90,7 +90,7 @@
       }
 
       .mp_select:after {
-        content: '';
+        content: "";
         width: 0;
         height: 0;
         overflow: hidden;
@@ -221,7 +221,7 @@
         <tr class="jiaodu_2_angele">
           <td class="nametd">pitch值（前后）</td>
           <td>
-            <input id="model_pitch" type="range" min="-90" max="90" step="0.01" value="20" title="倾角pitch" />
+            <input id="model_pitch" type="range" min="-90" max="90" step="0.01" value="0" title="倾角pitch" />
           </td>
         </tr>
         <tr class="jiaodu_2_angele">
@@ -286,43 +286,34 @@
       </table>
     </div>
 
-    <div id="tipView" class="info-tips">
-      (1) 不支持对地形的求交，目前仅对椭球体做投射。 <br />
-    </div>
+    <div id="tipView" class="info-tips">(1) 不支持对地形的求交，目前仅对椭球体做投射。 <br /></div>
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var roamLine
+      var map;
+      var roamLine;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 31.344715,
-              x: 115.783073,
-              z: 10055.81,
-              heading: 158.4,
-              pitch: -54.6,
-              roll: 0.1,
-            },
+            center: { lat: 31.344715, lng: 115.783073, alt: 10056, heading: 158, pitch: -55 },
             globe: {
-              depthTestAgainstTerrain: true,
+              // depthTestAgainstTerrain: true,
             },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.hasTerrain = false
+        map.hasTerrain = false;
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //该数据可以从 基础项目 飞行漫游功能界面操作后保存JSON
         var flydata = {
@@ -334,22 +325,22 @@
             [115.711031, 31.216472, 4000],
           ],
           model: {
-            url: '//data.mars3d.cn/gltf/mars/zhanji.glb',
+            url: "//data.mars3d.cn/gltf/mars/zhanji.glb",
             scale: 0.01,
             minimumPixelSize: 100,
             show: true,
           },
           path: {
-            color: '#ffff00',
+            color: "#ffff00",
             width: 3,
             show: true,
           },
           shadow: {
-            type: 'wall',
+            type: "wall",
             show: true,
           },
           camera: {
-            type: 'zy',
+            type: "zy",
             followedX: 50,
             followedZ: 10,
           },
@@ -357,132 +348,130 @@
           interpolation: false,
           showGroundHeight: true,
           clampToGround: false,
-        }
+        };
 
-        roamLine = new mars3d.graphic.RoamLine(flydata)
-        graphicLayer.addGraphic(roamLine)
+        roamLine = new mars3d.graphic.RoamLine(flydata);
+        graphicLayer.addGraphic(roamLine);
 
         //启动漫游
-        roamLine.start()
+        roamLine.start();
 
-        testShading()
+        testShading();
 
-        initUI()
+        initUI();
 
         if (map.viewer.timeline) {
-          map.viewer.timeline.zoomTo(roamLine.startTime, roamLine.stopTime)
+          map.viewer.timeline.zoomTo(roamLine.startTime, roamLine.stopTime);
         }
 
         //显示基本信息，名称、总长、总时间
-        $('#td_alltimes').html(haoutil.str.formatTime(roamLine.alltimes))
-        $('#td_alllength').html(haoutil.str.formatLength(roamLine.alllen))
+        $("#td_alltimes").html(haoutil.str.formatTime(roamLine.alltimes));
+        $("#td_alllength").html(haoutil.str.formatLength(roamLine.alllen));
 
         roamLine.on(mars3d.EventType.change, (event) => {
           //面板显示相关信息
-          showRealTimeInfo(event)
-        })
+          showRealTimeInfo(event);
+        });
       }
 
       function initUI() {
         //模型方向
         // $(".jiaodu_2_angele").hide();
         $('input:radio[name="jiaodu"]').change(function () {
-          var isAuto = $(this).val() === '1'
+          var isAuto = $(this).val() === "1";
           if (isAuto) {
-            $('.jiaodu_2_angele').hide()
+            $(".jiaodu_2_angele").hide();
           } else {
-            $('.jiaodu_2_angele').show()
+            $(".jiaodu_2_angele").show();
           }
 
-          updateModel(isAuto)
-        })
+          updateModel(isAuto);
+        });
         //滑动条
-        $('#model_pitch').range({
+        $("#model_pitch").range({
           onChange: function (value, bfb) {
-            updateModel()
+            updateModel();
           },
-        })
-        $('#model_roll').range({
+        });
+        $("#model_roll").range({
           onChange: function (value, bfb) {
-            updateModel()
+            updateModel();
           },
-        })
+        });
 
-        updateModel(false)
+        updateModel(false);
       }
 
       function updateModel(isAuto) {
-        var pitch = Number($('#model_pitch').val())
-        var roll = Number($('#model_roll').val())
+        var pitch = Number($("#model_pitch").val());
+        var roll = Number($("#model_roll").val());
 
         roamLine.updateAngle(isAuto, {
           pitch: pitch,
           roll: roll,
-        })
+        });
       }
 
       //显示实时坐标和时间
       function showRealTimeInfo(params) {
         if (params == null) {
-          return
+          return;
         }
 
-        var val = Math.ceil((params.time * 100) / roamLine.alltimes)
+        var val = Math.ceil((params.time * 100) / roamLine.alltimes);
         if (val < 1) {
-          val = 1
+          val = 1;
         }
         if (val > 100) {
-          val = 100
+          val = 100;
         }
 
-        $('.progress-bar')
-          .css('width', val + '%')
-          .attr('aria-valuenow', val)
-          .html(val + '%')
+        $(".progress-bar")
+          .css("width", val + "%")
+          .attr("aria-valuenow", val)
+          .html(val + "%");
 
-        $('#td_jd').html(params.lng)
-        $('#td_wd').html(params.lat)
-        $('#td_gd').html(haoutil.str.formatLength(params.alt))
+        $("#td_jd").html(params.lng);
+        $("#td_wd").html(params.lat);
+        $("#td_gd").html(haoutil.str.formatLength(params.alt));
 
-        $('#td_times').html(haoutil.str.formatTime(params.time))
-        $('#td_length').html(haoutil.str.formatLength(params.len))
+        $("#td_times").html(haoutil.str.formatTime(params.time));
+        $("#td_length").html(haoutil.str.formatLength(params.len));
 
         if (params.hbgd) {
-          $('#td_dmhb').html(haoutil.str.formatLength(params.hbgd))
+          $("#td_dmhb").html(haoutil.str.formatLength(params.hbgd));
         } else {
-          $('#td_dmhb').html('未知')
+          $("#td_dmhb").html("未知");
         }
 
         if (params.ldgd) {
-          $('#td_ldgd').html(haoutil.str.formatLength(params.ldgd))
+          $("#td_ldgd").html(haoutil.str.formatLength(params.ldgd));
         } else {
-          $('#td_ldgd').html('未知')
+          $("#td_ldgd").html("未知");
         }
       }
 
-      function testShading() {
-        //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+      var groundLayer; //地面投影图层
 
+      function testShading() {
         //卫星朝向的中线地面点
         let line1 = new mars3d.graphic.PolylineEntity({
           positions: new Cesium.CallbackProperty(function (time) {
             var pt1 = roamLine.position,
-              pt2 = centerPosion
+              pt2 = centerPosion;
             if (!pt1 || !pt2) {
-              return []
+              return [];
             }
 
-            return [pt1, pt2]
+            return [pt1, pt2];
           }, false),
           style: {
             width: 2,
-            color: '#ff0000',
+            color: "#ff0000",
             arcType: Cesium.ArcType.NONE,
           },
-        })
-        graphicLayer.addGraphic(line1)
+        });
+        map.graphicLayer.addGraphic(line1);
 
         //卫星边线2点
         let graphicTriangle = new mars3d.graphic.PolylineEntity({
@@ -490,137 +479,108 @@
             var positions = getFourShadingPosition({
               angle: 2.4,
               angle2: 1.4,
-            })
-            return positions
+            });
+            return positions;
           }, false),
           style: {
             width: 2,
-            color: '#0000ff',
+            color: "#0000ff",
             clampToGround: true,
           },
-        })
-        graphicLayer.addGraphic(graphicTriangle)
+        });
+        map.graphicLayer.addGraphic(graphicTriangle);
+
+        //创建矢量数据图层
+        groundLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(groundLayer);
 
         setInterval(function () {
           if (!map.clock.shouldAnimate || !thisPositions) {
-            return
+            return;
           }
+          addPolygon();
+        }, 1500);
 
-          addPolygon()
-        }, 1500)
-
-        $('#btnClear').click(function () {
-          removeAllPolygon()
-        })
+        $("#btnClear").click(function () {
+          groundLayer.clear();
+        });
       }
 
       //获取地面的四棱台投影面
-      var thisPositions
-      var centerPosion
+      var thisPositions;
+      var centerPosion;
 
       function getFourShadingPosition(opts) {
         //位置
-        var pt1 = roamLine.position
+        var pt1 = roamLine.position;
         if (!pt1) {
-          return
+          return;
         }
 
-        var ellipsoid = map.scene.globe.ellipsoid
+        var ellipsoid = map.scene.globe.ellipsoid;
 
         //张角
-        var angle1 = Cesium.Math.toRadians(opts.angle) / 2
+        var angle1 = Cesium.Math.toRadians(opts.angle) / 2;
 
-        var heading = Cesium.defaultValue(opts.heading, roamLine.heading)
-        var pitch = Cesium.defaultValue(opts.pitch, roamLine.pitch)
-        var roll = Cesium.defaultValue(opts.heading, roamLine.roll)
-
-        // var ptLeft1 = mars3d.PointUtil.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch, roll + angle1), true, ellipsoid);
-        // var ptRight1 = mars3d.PointUtil.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch, roll - angle1), true, ellipsoid);
-        // if (!ptLeft1 || !ptRight1) return
-        // thisPositions = [ptLeft1, ptRight1]
+        var heading = Cesium.Math.toRadians(Cesium.defaultValue(opts.heading, roamLine.heading));
+        var pitch = Cesium.Math.toRadians(Cesium.defaultValue(opts.pitch, roamLine.pitch));
+        var roll = Cesium.Math.toRadians(Cesium.defaultValue(opts.heading, roamLine.roll));
 
         //张角
-        var angle2 = Cesium.Math.toRadians(opts.angle2) / 2
+        var angle2 = Cesium.Math.toRadians(opts.angle2) / 2;
 
-        var ptLeft1 = mars3d.PointUtil.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch + angle2, roll + angle1), true, ellipsoid)
+        var ptLeft1 = mars3d.PointUtil.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch + angle2, roll + angle1), true, ellipsoid);
         if (!ptLeft1) {
-          return
+          return;
         }
 
-        var ptRight1 = mars3d.PointUtil.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch + angle2, roll - angle1), true, ellipsoid)
+        var ptRight1 = mars3d.PointUtil.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch + angle2, roll - angle1), true, ellipsoid);
         if (!ptRight1) {
-          return
+          return;
         }
 
-        var ptRight2 = mars3d.PointUtil.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch - angle2, roll - angle1), true, ellipsoid)
+        var ptRight2 = mars3d.PointUtil.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch - angle2, roll - angle1), true, ellipsoid);
         if (!ptRight2) {
-          return
+          return;
         }
 
-        var ptLeft2 = mars3d.PointUtil.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch - angle2, roll + angle1), true, ellipsoid)
+        var ptLeft2 = mars3d.PointUtil.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch - angle2, roll + angle1), true, ellipsoid);
         if (!ptLeft2) {
-          return
+          return;
         }
 
-        var ptLeft = Cesium.Cartesian3.midpoint(ptLeft1, ptLeft2, new Cesium.Cartesian3())
-        var ptRight = Cesium.Cartesian3.midpoint(ptRight1, ptRight2, new Cesium.Cartesian3())
-        thisPositions = [ptLeft, ptRight]
+        var ptLeft = Cesium.Cartesian3.midpoint(ptLeft1, ptLeft2, new Cesium.Cartesian3());
+        var ptRight = Cesium.Cartesian3.midpoint(ptRight1, ptRight2, new Cesium.Cartesian3());
+        thisPositions = [ptLeft, ptRight];
 
-        centerPosion = Cesium.Cartesian3.midpoint(ptLeft, ptRight, new Cesium.Cartesian3())
+        centerPosion = Cesium.Cartesian3.midpoint(ptLeft, ptRight, new Cesium.Cartesian3());
 
-        return [ptLeft1, ptRight1, ptRight2, ptLeft2, ptLeft1]
+        return [ptLeft1, ptRight1, ptRight2, ptLeft2, ptLeft1];
       }
 
-      var arrImagingAreaPrimitive = []
-      var lastPositions
+      var lastPositions;
 
       function addPolygon() {
         if (lastPositions == null) {
-          lastPositions = thisPositions
-          return
+          lastPositions = thisPositions;
+          return;
         }
+        var positions = [lastPositions[0], lastPositions[1], thisPositions[1], thisPositions[0]];
+        lastPositions = thisPositions;
 
-        var positions = [lastPositions[0], lastPositions[1], thisPositions[1], thisPositions[0]]
-        lastPositions = thisPositions
-
-        var redPolygonInstance = new Cesium.GeometryInstance({
-          geometry: Cesium.PolygonGeometry.fromPositions({
-            positions: positions,
-            vertexFormat: Cesium.PerInstanceColorAppearance.VERTEX_FORMAT,
-          }),
-          attributes: {
-            color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.RED.withAlpha(0.3)),
+        var primitive = new mars3d.graphic.PolygonPrimitive({
+          positions: positions,
+          style: {
+            color: "#ff0000",
+            opacity: 0.3,
           },
-        })
+        });
+        groundLayer.addGraphic(primitive);
 
-        if (arrImagingAreaPrimitive.length > 2000) {
-          $(arrImagingAreaPrimitive).each(function (i, item) {
-            map.scene.primitives.remove(item)
-          })
-          arrImagingAreaPrimitive = []
+        if (groundLayer.length > 2000) {
+          groundLayer.clear();
         }
-
-        var primitiveImagingArea = map.scene.primitives.add(
-          new Cesium.GroundPrimitive({
-            //GroundPrimitive        Primitive
-            geometryInstances: [redPolygonInstance],
-            appearance: new Cesium.PerInstanceColorAppearance({
-              closed: true,
-              translucent: true,
-            }),
-          })
-        )
-        arrImagingAreaPrimitive.push(primitiveImagingArea)
-
-        return primitiveImagingArea
       }
-
-      function removeAllPolygon() {
-        $(arrImagingAreaPrimitive).each(function (i, item) {
-          map.scene.primitives.remove(item)
-        })
-        arrImagingAreaPrimitive = []
-      }
-    </script>
+     </script>
   </body>
 </html>

@@ -19,7 +19,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>LOD分层分块动态加大数据矢量数据 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>矢量数据Lod加载 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <script
       type="text/javascript"
@@ -39,8 +39,8 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
-      var map
+      "use script"; //开发环境建议开启严格模式
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -48,59 +48,67 @@
           scene: {
             center: { lat: 30.563158, lng: 116.329235, alt: 16165, heading: 0, pitch: -45 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         var lodGraphicLayer = new mars3d.layer.LodGraphicLayer({
-          IdField: 'id', //数据的唯一主键 字段名称
+          IdField: "id", //数据的唯一主键 字段名称
           minimumLevel: 11, //限定层级，只加载该层级下的数据。[与效率相关的重要参数]
           debuggerTileInfo: true,
           //根据LOD分块信息去请求对应的Tile瓦块内的数据
           queryGridData: (grid, callback) => {
-            var url = '//server.mars3d.cn/server/pointRandom/'
-            $.ajax({
-              url: url,
-              data: {
-                xmin: grid.extent.xmin,
-                ymin: grid.extent.ymin,
-                xmax: grid.extent.xmax,
-                ymax: grid.extent.ymax,
-                count: 5,
-              },
-              type: 'get',
-              dataType: 'json',
-              success: function (data) {
-                callback(grid, data) //执行回调，回传数据
-              },
-              error: function (data) {
-                console.log('ajax请求出错', data)
-              },
-            })
+            queryGraphicLayerData(grid.extent).then(function (data) {
+              callback(grid, data); //执行回调，回传数据
+            });
           },
           //根据 attr属性 创建 矢量对象[必须返回Graphic对象]
           createGraphic(grid, attr) {
-            let height = mars3d.PointUtil.getSurfaceHeight(map.scene, Cesium.Cartesian3.fromDegrees(attr.x, attr.y))
+            let height = mars3d.PointUtil.getSurfaceHeight(map.scene, Cesium.Cartesian3.fromDegrees(attr.x, attr.y));
 
             var graphic = new mars3d.graphic.ModelPrimitive({
               position: [attr.x, attr.y, height],
               style: {
-                url: '//data.mars3d.cn/gltf/mars/leida.glb',
+                url: "//data.mars3d.cn/gltf/mars/leida.glb",
                 scale: 1,
                 minimumPixelSize: 40,
               },
-            })
-            lodGraphicLayer.addGraphic(graphic)
+            });
+            lodGraphicLayer.addGraphic(graphic);
 
-            return graphic
+            return graphic;
           },
-        })
-        map.addLayer(lodGraphicLayer)
+        });
+        map.addLayer(lodGraphicLayer);
 
         lodGraphicLayer.on(mars3d.EventType.click, (event) => {
-          console.log('你单击了对象', event)
-        })
+          console.log("你单击了对象", event);
+        });
+      }
+
+      function queryGraphicLayerData(extent) {
+        return new Promise(function (resolve, reject) {
+          $.ajax({
+            url: "//server.mars3d.cn/server/pointRandom/",
+            type: "get",
+            dataType: "json",
+            data: {
+              xmin: extent.xmin,
+              ymin: extent.ymin,
+              xmax: extent.xmax,
+              ymax: extent.ymax,
+              count: 5,
+            },
+            success: function (result) {
+              resolve(result);
+            },
+            error: function (data) {
+              console.log("数据获取失败");
+              reject(data);
+            },
+          });
+        });
       }
     </script>
   </body>

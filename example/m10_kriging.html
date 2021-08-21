@@ -40,9 +40,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -50,13 +50,13 @@
           scene: {
             center: { lat: 24.018309, lng: 109.414236, alt: 8607884, heading: 356, pitch: -82 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         queryTemperatureData().then(function (geojson) {
-          var image = loadkriging(geojson.features, kriging_bounds, kriging_colors) //kriging_bounds, kriging_colors在js/temperature_data.js中定义
+          var image = loadkriging(geojson.features, kriging_bounds, kriging_colors); //kriging_bounds, kriging_colors在js/temperature_data.js中定义
           var tileLayer = new mars3d.layer.ImageLayer({
             url: image,
             rectangle: {
@@ -66,53 +66,53 @@
               ymax: 53.5693,
             },
             alpha: 0.4,
-          })
-          map.addLayer(tileLayer)
-        })
+          });
+          map.addLayer(tileLayer);
+        });
       }
 
       //数据获取
       function queryTemperatureData() {
         return new Promise(function (resolve, reject) {
           $.ajax({
-            url: '//data.mars3d.cn/file/geojson/temperature.json',
-            type: 'get',
-            dataType: 'json',
+            url: "//data.mars3d.cn/file/geojson/temperature.json",
+            type: "get",
+            dataType: "json",
             success: function (result) {
-              resolve(result)
+              resolve(result);
             },
             error: function (data) {
-              reject(data)
+              reject(data);
             },
-          })
-        })
+          });
+        });
       }
 
       //根据 克里金法 插值绘制图片
       function loadkriging(tempture, bounds, colors) {
-        var canvas = document.createElement('canvas')
-        canvas.width = 2000
-        canvas.height = 2000
+        var canvas = document.createElement("canvas");
+        canvas.width = 2000;
+        canvas.height = 2000;
 
-        var t = []
-        var x = []
-        var y = []
+        var t = [];
+        var x = [];
+        var y = [];
         for (var i = 0, len = tempture.length; i < len; i++) {
-          t.push(tempture[i].properties.Temperatur) // 权重值
-          x.push(tempture[i].geometry.coordinates[0]) // x
-          y.push(tempture[i].geometry.coordinates[1]) // y
+          t.push(tempture[i].properties.Temperatur); // 权重值
+          x.push(tempture[i].geometry.coordinates[0]); // x
+          y.push(tempture[i].geometry.coordinates[1]); // y
         }
         //1.用克里金训练一个variogram对象
-        var variogram = kriging.train(t, x, y, 'exponential', 0, 100)
+        var variogram = kriging.train(t, x, y, "exponential", 0, 100);
 
         //2.使用刚才的variogram对象使polygons描述的地理位置内的格网元素具备不一样的预测值；
         //bounds:普通的geojson格式的面的格式的coordinates。
-        var grid = kriging.grid(bounds, variogram, 0.05)
+        var grid = kriging.grid(bounds, variogram, 0.05);
         //3.将得到的格网预测值渲染到canvas画布上
-        kriging.plot(canvas, grid, [73.4766, 135.088], [18.1055, 53.5693], colors)
+        kriging.plot(canvas, grid, [73.4766, 135.088], [18.1055, 53.5693], colors);
 
-        var image = canvas.toDataURL('image/png')
-        return image
+        var image = canvas.toDataURL("image/png");
+        return image;
       }
     </script>
   </body>

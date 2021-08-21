@@ -101,17 +101,17 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var poiLayer
-      var queryGaodePOI
+      var map;
+      var poiLayer;
+      var queryGaodePOI;
 
-      var drawGraphic //限定区域
+      var drawGraphic; //限定区域
 
-      var $table
-      var bootstrapList = [] //查询结果
-      var lastQueryOptions //上一次请求参数，用于 下一页使用
+      var $table;
+      var bootstrapList = []; //查询结果
+      var lastQueryOptions; //上一次请求参数，用于 下一页使用
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -119,152 +119,152 @@
           scene: {
             center: { lat: 31.797919, lng: 117.281329, alt: 36236, heading: 358, pitch: -81 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
-        poiLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(poiLayer)
+        poiLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(poiLayer);
 
         poiLayer.bindPopup(function (event) {
-          var item = event.graphic.attr
+          var item = event.graphic.attr;
 
-          var inHtml = '<div class="mars-popup-titile">' + item.name + '</div><div class="mars-popup-content" >'
-          var type = $.trim(item.type)
-          if (type != '') {
-            inHtml += '<div><label>类别</label>' + type + '</div>'
+          var inHtml = '<div class="mars-popup-titile">' + item.name + '</div><div class="mars-popup-content" >';
+          var type = $.trim(item.type);
+          if (type != "") {
+            inHtml += "<div><label>类别</label>" + type + "</div>";
           }
-          var xzqh = $.trim(item.xzqh)
-          if (xzqh != '') {
-            inHtml += '<div><label>区域</label>' + xzqh + '</div>'
+          var xzqh = $.trim(item.xzqh);
+          if (xzqh != "") {
+            inHtml += "<div><label>区域</label>" + xzqh + "</div>";
           }
-          var tel = $.trim(item.tel)
-          if (tel != '') {
-            inHtml += '<div><label>电话</label>' + tel + '</div>'
+          var tel = $.trim(item.tel);
+          if (tel != "") {
+            inHtml += "<div><label>电话</label>" + tel + "</div>";
           }
-          var address = $.trim(item.address)
-          if (address != '') {
-            inHtml += '<div><label>地址</label>' + address + '</div>'
+          var address = $.trim(item.address);
+          if (address != "") {
+            inHtml += "<div><label>地址</label>" + address + "</div>";
           }
-          inHtml += '</div>'
-          return inHtml
-        })
+          inHtml += "</div>";
+          return inHtml;
+        });
 
         queryGaodePOI = new mars3d.query.GaodePOI({
           // key: ['ae29a37307840c7ae4a785ac905927e0'],
-        })
+        });
 
-        bindViewEvent()
+        bindViewEvent();
       }
 
       function bindViewEvent() {
-        $('#txtCity').citypicker({
+        $("#txtCity").citypicker({
           simple: true,
-          level: 'city',
-          province: '安徽省',
-          city: '合肥市',
+          level: "city",
+          province: "安徽省",
+          city: "合肥市",
           //district: '蜀山区',
-        })
+        });
 
-        $table = $('#table')
+        $table = $("#table");
         $table.bootstrapTable({
           height: 300,
           singleSelect: true, //单选
           pagination: false,
-          iconsPrefix: 'fa',
+          iconsPrefix: "fa",
           columns: [
             {
-              title: '序号',
+              title: "序号",
               sortable: true,
               editable: false,
-              align: 'left',
+              align: "left",
               formatter: function (value, row, index) {
-                return index + 1
+                return index + 1;
               },
             },
             {
-              field: 'name',
-              title: '企业名称',
+              field: "name",
+              title: "企业名称",
             },
             {
-              field: 'address',
-              title: '地址',
+              field: "address",
+              title: "地址",
             },
             {
-              field: 'tel',
-              title: '联系电话',
+              field: "tel",
+              title: "联系电话",
               sortable: true,
               editable: false,
-              align: 'left',
+              align: "left",
               formatter: function (value, row) {
                 if (value) {
-                  return value
+                  return value;
                 } else {
-                  return ''
+                  return "";
                 }
               },
             },
           ],
           onClickRow: function (item, $element, field) {
-            var graphic = item._graphic
+            var graphic = item._graphic;
             if (graphic == null) {
-              toastr.warning(item.name + ' 无经纬度坐标信息！')
-              return
+              toastr.warning(item.name + " 无经纬度坐标信息！");
+              return;
             }
-            var position = graphic.positionShow
-            poiLayer.closePopup()
+            var position = graphic.positionShow;
+            poiLayer.closePopup();
 
             map.flyToPoint(position, {
               radius: 2000, //距离目标点的距离
               duration: 3,
               complete: function (e) {
                 //飞行完成回调方法
-                poiLayer.openPopup(graphic)
+                poiLayer.openPopup(graphic);
               },
-            })
+            });
           },
-        })
+        });
 
-        var selectType
+        var selectType;
         $('input:radio[name="queryContent"]').change(function () {
-          selectType = $(this).val()
+          selectType = $(this).val();
 
           switch (selectType) {
             default:
               //按城市
-              $('.queryByCity').show()
-              $('.queryByDraw').hide()
-              break
-            case '2': //当前视角范围
-              $('.queryByCity').hide()
-              $('.queryByDraw').hide()
-              break
-            case '3': //按范围
-              $('.queryByCity').hide()
-              $('.queryByDraw').show()
-              break
+              $(".queryByCity").show();
+              $(".queryByDraw").hide();
+              break;
+            case "2": //当前视角范围
+              $(".queryByCity").hide();
+              $(".queryByDraw").hide();
+              break;
+            case "3": //按范围
+              $(".queryByCity").hide();
+              $(".queryByDraw").show();
+              break;
           }
-        })
+        });
 
-        $('#query').click(function () {
-          clearAll(selectType == '3')
-          bootstrapList = []
+        $("#query").click(function () {
+          clearAll(selectType == "3");
+          bootstrapList = [];
           switch (selectType) {
             default:
               //按城市
               //var dnnm = $('#txtCity').data('citypicker').getCode()
-              var dmmc = $('#txtCity').data('citypicker').getName()
+              var dmmc = $("#txtCity").data("citypicker").getName();
 
               loadData({
                 page: 1,
                 city: dmmc,
                 citylimit: true,
-              })
-              break
-            case '2': //当前视角范围
-              var extent = map.getExtent()
+              });
+              break;
+            case "2": //当前视角范围
+              var extent = map.getExtent();
               loadData({
                 page: 1,
                 polygon: [
@@ -274,153 +274,153 @@
                   [extent.xmax, extent.ymin],
                 ],
                 limit: true,
-              })
-              break
-            case '3': //按范围
+              });
+              break;
+            case "3": //按范围
               if (!drawGraphic) {
-                toastr.warning('请绘制限定范围！')
-                return
+                toastr.warning("请绘制限定范围！");
+                return;
               }
               loadData({
                 page: 1,
                 graphic: drawGraphic,
                 limit: true,
-              })
-              break
+              });
+              break;
           }
-        })
+        });
 
         //框选查询 矩形
-        $('#drawRectangle').click(function () {
-          clearAll()
+        $("#drawRectangle").click(function () {
+          clearAll();
           map.graphicLayer.startDraw({
-            type: 'rectangle',
+            type: "rectangle",
             style: {
-              color: '#00FF00',
+              color: "#00FF00",
               opacity: 0.3,
               outline: true,
-              outlineColor: '#ffffff',
+              outlineColor: "#ffffff",
               clampToGround: true,
             },
             success: function (graphic) {
-              drawGraphic = graphic
+              drawGraphic = graphic;
             },
-          })
-        })
+          });
+        });
 
         //框选查询   多边
-        $('#drawPolygon').click(function () {
-          clearAll()
+        $("#drawPolygon").click(function () {
+          clearAll();
           map.graphicLayer.startDraw({
-            type: 'polygon',
+            type: "polygon",
             style: {
-              color: '#00FF00',
+              color: "#00FF00",
               opacity: 0.3,
               outline: true,
-              outlineColor: '#ffffff',
+              outlineColor: "#ffffff",
               clampToGround: true,
             },
             success: function (graphic) {
-              drawGraphic = graphic
+              drawGraphic = graphic;
             },
-          })
-        })
+          });
+        });
 
         //框选查询   圆
-        $('#drawCircle').click(function () {
-          clearAll()
+        $("#drawCircle").click(function () {
+          clearAll();
           map.graphicLayer.startDraw({
-            type: 'circle',
+            type: "circle",
             style: {
-              color: '#00FF00',
+              color: "#00FF00",
               opacity: 0.3,
               outline: true,
-              outlineColor: '#ffffff',
+              outlineColor: "#ffffff",
               clampToGround: true,
             },
             success: function (graphic) {
-              drawGraphic = graphic
+              drawGraphic = graphic;
             },
-          })
-        })
+          });
+        });
 
-        $('#removeAll').click(function () {
-          clearAll()
-        })
+        $("#removeAll").click(function () {
+          clearAll();
+        });
 
         //加载更多- 下一页
-        $('#loadMore').click(function () {
+        $("#loadMore").click(function () {
           if (!lastQueryOptions) {
-            return
+            return;
           }
 
-          lastQueryOptions.page++
-          loadData(lastQueryOptions)
-        })
+          lastQueryOptions.page++;
+          loadData(lastQueryOptions);
+        });
       }
 
       function loadData(queryOptions) {
-        var queryVal = $.trim($('#queryText').val())
+        var queryVal = $.trim($("#queryText").val());
         if (queryVal.length == 0) {
-          haoutil.msg('请输入 名称 关键字筛选数据！')
-          return
+          haoutil.msg("请输入 名称 关键字筛选数据！");
+          return;
         }
-        haoutil.loading.show()
+        haoutil.loading.show();
 
         lastQueryOptions = {
           ...queryOptions,
           count: 25, //count 每页数量
           text: queryVal,
           success: function (res) {
-            $('#resultView').show()
-            var data = res.list
-            bootstrapList = bootstrapList.concat(data)
-            $table.bootstrapTable('append', data)
-            $('#count').html(bootstrapList.length)
-            $('#allcount').html(res.allcount)
+            $("#resultView").show();
+            var data = res.list;
+            bootstrapList = bootstrapList.concat(data);
+            $table.bootstrapTable("append", data);
+            $("#count").html(bootstrapList.length);
+            $("#allcount").html(res.allcount);
             if (bootstrapList.length >= res.allcount || res.allcount < 25 || data.length == 0) {
-              $('#loadMore').hide()
+              $("#loadMore").hide();
             } else {
-              $('#loadMore').show()
+              $("#loadMore").show();
             }
-            addGraphics(data)
-            haoutil.loading.close()
+            addGraphics(data);
+            haoutil.loading.close();
           },
           error: function (msg, error) {
-            window.toastr.error(msg)
-            haoutil.loading.close()
+            window.toastr.error(msg);
+            haoutil.loading.close();
           },
-        }
-        queryGaodePOI.query(lastQueryOptions)
+        };
+        queryGaodePOI.query(lastQueryOptions);
       }
 
       function clearAll(noClearDraw) {
-        lastQueryOptions = null
+        lastQueryOptions = null;
 
-        bootstrapList = []
-        $table.bootstrapTable('load', bootstrapList)
+        bootstrapList = [];
+        $table.bootstrapTable("load", bootstrapList);
 
-        $('#resultView').hide()
-        $('#loadMore').hide()
+        $("#resultView").hide();
+        $("#loadMore").hide();
 
-        poiLayer.clear()
+        poiLayer.clear();
 
         if (!noClearDraw) {
-          drawGraphic = null
-          map.graphicLayer.clear()
+          drawGraphic = null;
+          map.graphicLayer.clear();
         }
       }
 
       function addGraphics(arr) {
-        console.log('查询数据结果', arr)
+        console.log("查询数据结果", arr);
 
         for (var i = 0; i < arr.length; i++) {
-          var item = arr[i]
+          var item = arr[i];
 
           var graphic = new mars3d.graphic.BillboardEntity({
             position: Cesium.Cartesian3.fromDegrees(item.x, item.y),
             style: {
-              image: 'img/marker/mark3.png',
+              image: "img/marker/mark3.png",
               scale: 1,
               scaleByDistance: true,
               scaleByDistance_far: 20000,
@@ -430,7 +430,7 @@
               clampToGround: true, //贴地
               label: {
                 text: item.name,
-                font: '20px 楷体',
+                font: "20px 楷体",
                 color: Cesium.Color.AZURE,
                 outline: true,
                 outlineColor: Cesium.Color.BLACK,
@@ -443,10 +443,10 @@
               },
             },
             attr: item,
-          })
-          poiLayer.addGraphic(graphic)
+          });
+          poiLayer.addGraphic(graphic);
 
-          item._graphic = graphic
+          item._graphic = graphic;
         }
       }
     </script>

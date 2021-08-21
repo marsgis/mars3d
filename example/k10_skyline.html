@@ -42,9 +42,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -55,39 +55,39 @@
               depthTestAgainstTerrain: true,
             },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        //加个模型，效果更NB
+        //加个模型，观看效果更佳
         var tiles3dLayer = new mars3d.layer.TilesetLayer({
-          type: '3dtiles',
-          name: '县城社区',
-          url: '//data.mars3d.cn/3dtiles/qx-shequ/tileset.json',
+          type: "3dtiles",
+          name: "县城社区",
+          url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
           position: { alt: 11.5 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
           show: true,
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
-        var skyline = new mars3d.thing.Skyline()
-        map.addThing(skyline)
+        var skyline = new mars3d.thing.Skyline();
+        map.addThing(skyline);
 
-        $('#chkSkyline').change(function () {
-          var value = $(this).is(':checked')
-          skyline.enabled = value
-        })
+        $("#chkSkyline").change(function () {
+          var value = $(this).is(":checked");
+          skyline.enabled = value;
+        });
 
-        $('#lineWidth').change(function () {
-          var val = Number($(this).val())
-          skyline.width = val
-        })
+        $("#lineWidth").change(function () {
+          var val = Number($(this).val());
+          skyline.width = val;
+        });
 
-        $('#randomCor').click(function () {
-          skyline.color = Cesium.Color.fromRandom()
-        })
+        $("#randomCor").click(function () {
+          skyline.color = Cesium.Color.fromRandom();
+        });
       }
     </script>
   </body>

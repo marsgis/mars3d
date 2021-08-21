@@ -64,9 +64,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -77,35 +77,38 @@
               depthTestAgainstTerrain: true,
             },
           },
+          control: {
+            infoBox: false,
+          },
           layers: [
             {
               id: 1987,
-              name: '教学楼',
-              type: '3dtiles',
-              url: '//data.mars3d.cn/3dtiles/bim-daxue/tileset.json',
+              name: "教学楼",
+              type: "3dtiles",
+              url: "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
               position: { lng: 117.251229, lat: 31.844015, alt: 31.2 },
               maximumScreenSpaceError: 16,
               maximumMemoryUsage: 1024,
-              showClickFeature: true,
-              pickFeatureStyle: {
-                color: '#00FF00',
+              highlight: {
+                type: mars3d.EventType.click, //默认为鼠标移入高亮，也可以指定click单击高亮
+                color: "#00FF00",
               },
-              popup: 'all',
+              popup: "all",
               show: true,
             },
           ],
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         // BIM模型处理
-        const layerWorkBIM = map.getLayer(1987, 'id')
+        const layerWorkBIM = map.getLayer(1987, "id");
 
         //单击事件
         layerWorkBIM.on(mars3d.EventType.click, function (event) {
-          console.log('单击了3dtiles图层', event)
-        })
+          console.log("单击了3dtiles图层", event);
+        });
 
         //模型裁剪
         var tilesetPlanClip = new mars3d.thing.TilesetPlanClip({
@@ -115,10 +118,10 @@
           clipOutSide: false,
           edgeColor: Cesium.Color.GREY,
           edgeWidth: 2.0,
-        })
-        map.addThing(tilesetPlanClip)
+        });
+        map.addThing(tilesetPlanClip);
 
-        //挖地区域
+        //挖地区域---负一楼
         var terrainPlanClip = new mars3d.thing.TerrainPlanClip({
           positions: [
             [117.251176, 31.843707, 28.24],
@@ -127,44 +130,44 @@
             [117.251176, 31.844216, 28.24],
           ],
           diffHeight: 10, //高度
-          image: './img/textures/excavate_side_min.jpg', //边界墙材质
-          imageBottom: './img/textures/excavate_bottom_min.jpg', //底部区域材质
+          image: "./img/textures/excavate_side_min.jpg", //边界墙材质
+          imageBottom: "./img/textures/excavate_bottom_min.jpg", //底部区域材质
           splitNum: 50, //wall边界插值数
-        })
-        map.addThing(terrainPlanClip)
+        });
+        map.addThing(terrainPlanClip);
 
-        $('#btnShowAll').click(function () {
-          terrainPlanClip.show = false
-          tilesetPlanClip.distance = 100
-        })
+        $("#btnShowAll").click(function () {
+          terrainPlanClip.show = false;
+          tilesetPlanClip.distance = 100;
+        });
 
-        $('#btnShowD1').click(function () {
-          terrainPlanClip.show = true
-          tilesetPlanClip.distance = -3.6
-        })
-        $('#btnShowF1').click(function () {
-          terrainPlanClip.show = false
-          tilesetPlanClip.distance = 0.4
-        })
+        $("#btnShowD1").click(function () {
+          terrainPlanClip.show = true;
+          tilesetPlanClip.distance = -3.6;
+        });
+        $("#btnShowF1").click(function () {
+          terrainPlanClip.show = false;
+          tilesetPlanClip.distance = 0.4;
+        });
 
-        $('#btnShowF2').click(function () {
-          terrainPlanClip.show = false
-          tilesetPlanClip.distance = 3.5
-        })
-        $('#btnShowF3').click(function () {
-          terrainPlanClip.show = false
-          tilesetPlanClip.distance = 8.4
-        })
+        $("#btnShowF2").click(function () {
+          terrainPlanClip.show = false;
+          tilesetPlanClip.distance = 3.5;
+        });
+        $("#btnShowF3").click(function () {
+          terrainPlanClip.show = false;
+          tilesetPlanClip.distance = 8.4;
+        });
 
-        $('#btnShowF4').click(function () {
-          terrainPlanClip.show = false
-          tilesetPlanClip.distance = 12.4
-        })
+        $("#btnShowF4").click(function () {
+          terrainPlanClip.show = false;
+          tilesetPlanClip.distance = 12.4;
+        });
 
-        $('#btnShowF5').click(function () {
-          terrainPlanClip.show = false
-          tilesetPlanClip.distance = 16.4
-        })
+        $("#btnShowF5").click(function () {
+          terrainPlanClip.show = false;
+          tilesetPlanClip.distance = 16.4;
+        });
 
         //键盘漫游
         map.keyboardRoam.setOptions({
@@ -173,20 +176,20 @@
           rotateStep: 0.3, //相机围绕目标点旋转速率，0.3-2.0
           minPitch: 0.1, //最小仰角  0-1
           maxPitch: 0.95, //最大仰角  0-1
-        })
-        map.keyboardRoam.enabled = true //开启键盘漫游
+        });
+        map.keyboardRoam.enabled = true; //开启键盘漫游
       }
 
       function centerAtDX1() {
-        map.setCameraView({ lat: 31.843703, lng: 117.251038, alt: 33, heading: 50, pitch: -6 })
+        map.setCameraView({ lat: 31.843703, lng: 117.251038, alt: 33, heading: 50, pitch: -6 });
       }
 
       function centerAtDX2() {
-        map.setCameraView({ lat: 31.843816, lng: 117.250978, alt: 34, heading: 308, pitch: -8 })
+        map.setCameraView({ lat: 31.843816, lng: 117.250978, alt: 34, heading: 308, pitch: -8 });
       }
 
       function centerAtDX3() {
-        map.setCameraView({ lat: 31.843789, lng: 117.251188, alt: 42, heading: 6, pitch: -31 })
+        map.setCameraView({ lat: 31.843789, lng: 117.251188, alt: 42, heading: 6, pitch: -31 });
       }
     </script>
   </body>

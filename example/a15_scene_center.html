@@ -47,9 +47,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -57,34 +57,34 @@
           scene: {
             center: { lat: 25.389914, lng: 119.084961, alt: 1179575, heading: 346, pitch: -60 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //1可以通过右键菜单"查看当前视角"来获取center参数后，拷贝到配置中
 
         //2也可以通过下面方法获取center参数
-        var center = map.getCameraView()
-        console.log(JSON.stringify(center))
+        var center = map.getCameraView();
+        console.log(JSON.stringify(center));
 
         //可以通过centerAt切换视角
-        map.setCameraView(center)
+        map.setCameraView(center);
       }
 
       function changeView1() {
-        map.setCameraView({ lat: 39.904128, lng: 116.391643, alt: 1054, heading: 356, pitch: -39 })
+        map.setCameraView({ lat: 39.904128, lng: 116.391643, alt: 1054, heading: 356, pitch: -39 });
       }
 
       function changeView2() {
-        map.setCameraView({ lat: 28.13059, lng: 86.835138, alt: 7627, heading: 148, pitch: -7 })
+        map.setCameraView({ lat: 28.13059, lng: 86.835138, alt: 7627, heading: 148, pitch: -7 });
       }
       function changeView3() {
-        map.setCameraView({ lat: 34.57029, lng: 110.041612, alt: 1288, heading: 168, pitch: -7 })
+        map.setCameraView({ lat: 34.57029, lng: 110.041612, alt: 1288, heading: 168, pitch: -7 });
       }
 
       function changeView4() {
-        map.setCameraView({ lat: 30.847409, lng: 115.832396, alt: 1541, heading: 116, pitch: -7 })
+        map.setCameraView({ lat: 30.847409, lng: 115.832396, alt: 1541, heading: 116, pitch: -7 });
       }
     </script>
   </body>

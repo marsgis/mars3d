@@ -39,9 +39,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -54,39 +54,39 @@
             sceneModePicker: false,
             vrButton: false,
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         let toolButton = new mars3d.control.ToolButton({
-          title: '示例按钮1',
-          icon: 'fa fa-crop',
+          title: "示例按钮1",
+          icon: "fa fa-crop",
           insertIndex: 1, //插入的位置顺序, 1是home按钮后面
           click: (event) => {
-            haoutil.msg('单击了控件1按钮，回调中想干啥就干啥~')
+            haoutil.msg("单击了控件1按钮，回调中想干啥就干啥~");
           },
-        })
-        map.addControl(toolButton)
+        });
+        map.addControl(toolButton);
 
         let toolButton2 = new mars3d.control.ToolButton({
-          title: '示例按钮2',
-          icon: 'fa fa-street-view',
+          title: "示例按钮2",
+          icon: "fa fa-street-view",
           insertIndex: 0, //插入的位置顺序
           click: (event) => {
-            haoutil.msg('单击了控件2按钮，回调中想干啥就干啥~')
+            haoutil.msg("单击了控件2按钮，回调中想干啥就干啥~");
           },
-        })
-        map.addControl(toolButton2)
+        });
+        map.addControl(toolButton2);
 
         let toolButton3 = new mars3d.control.ToolButton({
-          title: '示例按钮3',
-          icon: 'fa fa-server',
+          title: "示例按钮3",
+          icon: "fa fa-server",
           click: (event) => {
-            haoutil.msg('单击了控件3按钮，回调中想干啥就干啥~')
+            haoutil.msg("单击了控件3按钮，回调中想干啥就干啥~");
           },
-        })
-        map.addControl(toolButton3)
+        });
+        map.addControl(toolButton3);
       }
     </script>
   </body>

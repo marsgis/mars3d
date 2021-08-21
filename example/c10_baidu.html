@@ -40,20 +40,20 @@
     </div>
 
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
       $(document).ready(function () {
         if (!mars3d.Util.webglreport()) {
-          mars3d.Util.webglerror()
-          return
+          mars3d.Util.webglerror();
+          return;
         }
-        initMap()
-      })
+        initMap();
+      });
 
-      var map
+      var map;
       function initMap() {
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', {
+        map = new mars3d.Map("mars3dContainer", {
           scene: {
             center: { lat: 31.675177, lng: 117.323257, alt: 81193, heading: 359, pitch: -79 },
             highDynamicRange: false,
@@ -66,71 +66,71 @@
             locationBar: { fps: true }, //状态栏
           },
           terrain: {
-            url: 'http://data.mars3d.cn/terrain',
+            url: "http://data.mars3d.cn/terrain",
             show: true,
           },
           //方式1：在创建地球前的参数中配置
           basemaps: [
             {
-              name: '百度电子',
-              icon: 'img/basemaps/gaode_vec.png',
-              type: 'baidu',
-              layer: 'vec',
+              name: "百度电子",
+              icon: "img/basemaps/gaode_vec.png",
+              type: "baidu",
+              layer: "vec",
               show: true,
             },
             {
-              name: '百度影像',
-              icon: 'img/basemaps/gaode_img.png',
-              type: 'group',
+              name: "百度影像",
+              icon: "img/basemaps/gaode_img.png",
+              type: "group",
               layers: [
-                { name: '底图', type: 'baidu', layer: 'img_d' },
-                { name: '注记', type: 'baidu', layer: 'img_z' },
+                { name: "底图", type: "baidu", layer: "img_d" },
+                { name: "注记", type: "baidu", layer: "img_z" },
               ],
             },
             {
-              name: '百度深蓝色',
-              icon: 'img/basemaps/bd-c-midnight.png',
-              type: 'baidu',
-              layer: 'custom',
-              style: 'midnight',
+              name: "百度深蓝色",
+              icon: "img/basemaps/bd-c-midnight.png",
+              type: "baidu",
+              layer: "custom",
+              style: "midnight",
             },
             {
-              name: '百度黑色',
-              icon: 'img/basemaps/bd-c-dark.png',
-              type: 'baidu',
-              layer: 'custom',
-              style: 'dark',
+              name: "百度黑色",
+              icon: "img/basemaps/bd-c-dark.png",
+              type: "baidu",
+              layer: "custom",
+              style: "dark",
             },
             {
-              name: '离线百度瓦片(示例)',
-              icon: 'img/basemaps/arcgis.png',
-              type: 'baidu',
-              url: '//data.mars3d.cn/tile/baiduVec/{z}/{x}/{y}.jpg',
+              name: "离线百度瓦片(示例)",
+              icon: "img/basemaps/arcgis.png",
+              type: "baidu",
+              url: "//data.mars3d.cn/tile/baiduVec/{z}/{x}/{y}.jpg",
               maximumLevel: 12,
             },
           ],
-        })
+        });
 
         //poi查询栏
-        activatePOIQuery(map)
+        activatePOIQuery(map);
       }
 
       //叠加的图层
-      var tileLayer
+      var tileLayer;
 
       function addLayer() {
-        removeLayer()
+        removeLayer();
 
         //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
         tileLayer = new mars3d.layer.BaiduLayer({
-          layer: 'time',
-        })
-        map.addLayer(tileLayer)
+          layer: "time",
+        });
+        map.addLayer(tileLayer);
       }
       function removeLayer() {
         if (tileLayer) {
-          map.removeLayer(tileLayer, true)
-          tileLayer = null
+          map.removeLayer(tileLayer, true);
+          tileLayer = null;
         }
       }
 
@@ -138,9 +138,9 @@
       function activatePOIQuery(map) {
         mars3d.widget.activate({
           map: map,
-          name: 'POI查询',
-          uri: 'widgets/queryBaiduPOI/widget.js',
-        })
+          name: "POI查询",
+          uri: "widgets/queryBaiduPOI/widget.js",
+        });
       }
     </script>
   </body>

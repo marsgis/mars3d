@@ -55,10 +55,10 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var sightline
+      var map;
+      var sightline;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -69,90 +69,90 @@
               depthTestAgainstTerrain: false,
             },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         sightline = new mars3d.thing.Sightline({
-          depthFailColor: Cesium.Color.fromCssColorString('#db2c8f'),
-        })
-        map.addThing(sightline)
+          depthFailColor: Cesium.Color.fromCssColorString("#db2c8f"),
+        });
+        map.addThing(sightline);
       }
 
       function drawCircle() {
-        map.graphicLayer.clear()
+        map.graphicLayer.clear();
         map.graphicLayer.startDraw({
-          type: 'circle',
+          type: "circle",
           style: {
-            color: '#ffff00',
+            color: "#ffff00",
             opacity: 0.2,
             clampToGround: true,
           },
           success: function (graphic) {
             //绘制成功后回调
 
-            var center = graphic.positionShow
-            center = mars3d.PointUtil.addPositionsHeight(center, 1.5) //加人的身高等因素，略微抬高一些
+            var center = graphic.positionShow;
+            center = mars3d.PointUtil.addPositionsHeight(center, 1.5); //加人的身高等因素，略微抬高一些
 
-            var targetPoints = graphic.getOutlinePositions(false, 45)
+            var targetPoints = graphic.getOutlinePositions(false, 45);
 
-            map.graphicLayer.clear()
+            map.graphicLayer.clear();
 
-            var targetArr = []
+            var targetArr = [];
             for (var i = 0; i < targetPoints.length; i++) {
-              var targetPoint = targetPoints[i]
-              targetPoint = mars3d.PointUtil.getSurfacePosition(map.scene, targetPoint)
-              sightline.add(center, targetPoint)
+              var targetPoint = targetPoints[i];
+              targetPoint = mars3d.PointUtil.getSurfacePosition(map.scene, targetPoint);
+              sightline.add(center, targetPoint);
             }
 
-            createPoint(center, true)
+            createPoint(center, true);
           },
-        })
+        });
       }
 
       function drawLine() {
-        map.graphicLayer.clear()
+        map.graphicLayer.clear();
         map.graphicLayer.startDraw({
-          type: 'polyline',
+          type: "polyline",
           maxPointNum: 2,
           style: {
-            color: '#55ff33',
+            color: "#55ff33",
             width: 3,
           },
           success: function (graphic) {
             //绘制成功后回调
-            var positions = graphic.positionsShow
-            map.graphicLayer.clear()
+            var positions = graphic.positionsShow;
+            map.graphicLayer.clear();
 
-            var center = positions[0]
-            var targetPoint = positions[1]
-            sightline.add(center, targetPoint, { offsetHeight: 1.5 }) //1.5是加人的身高等因素，略微抬高一些
+            var center = positions[0];
+            var targetPoint = positions[1];
+            sightline.add(center, targetPoint, { offsetHeight: 1.5 }); //1.5是加人的身高等因素，略微抬高一些
 
-            createPoint(center, true)
-            createPoint(targetPoint, false)
+            createPoint(center, true);
+            createPoint(targetPoint, false);
           },
-        })
+        });
       }
 
       function clearAll() {
-        sightline.clear()
-        map.graphicLayer.clear()
+        sightline.clear();
+        map.graphicLayer.clear();
       }
 
       function createPoint(position, isFirst) {
         var graphic = new mars3d.graphic.PointEntity({
           position: position,
           style: {
-            color: Cesium.Color.fromCssColorString('#3388ff'),
+            color: Cesium.Color.fromCssColorString("#3388ff"),
             pixelSize: 6,
-            outlineColor: Cesium.Color.fromCssColorString('#ffffff'),
+            outlineColor: Cesium.Color.fromCssColorString("#ffffff"),
             outlineWidth: 2,
             scaleByDistance: new Cesium.NearFarScalar(1.5e2, 1.0, 8.0e6, 0.2),
             label: {
-              text: isFirst ? '观察位置' : '目标点',
+              text: isFirst ? "观察位置" : "目标点",
               font_size: 17,
-              font_family: '楷体',
+              font_family: "楷体",
               color: Cesium.Color.AZURE,
               outline: true,
               outlineColor: Cesium.Color.BLACK,
@@ -163,10 +163,10 @@
               distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 2000000),
             },
           },
-        })
-        map.graphicLayer.addGraphic(graphic)
+        });
+        map.graphicLayer.addGraphic(graphic);
 
-        return graphic
+        return graphic;
       }
     </script>
   </body>

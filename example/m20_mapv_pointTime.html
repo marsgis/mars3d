@@ -42,9 +42,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -52,61 +52,61 @@
           scene: {
             center: { lat: 21.004037, lng: 107.525781, alt: 10103609, heading: 356, pitch: -83 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.basemap = 2017 //蓝色底图
+        map.basemap = 2017; //蓝色底图
 
         queryWeibo2ApiData().then(function (res) {
           //创建mapv图层
-          createMapvLayer(res)
-        })
+          createMapvLayer(res);
+        });
       }
 
       // 访问后端接口，取数据
       function queryWeibo2ApiData() {
         return new Promise(function (resolve, reject) {
           $.ajax({
-            url: '//data.mars3d.cn/file/apidemo/weibo2.json',
-            type: 'get',
-            dataType: 'json',
+            url: "//data.mars3d.cn/file/apidemo/weibo2.json",
+            type: "get",
+            dataType: "json",
             success: function (result) {
-              resolve(result)
+              resolve(result);
             },
             error: function (data) {
-              reject(data)
+              reject(data);
             },
-          })
-        })
+          });
+        });
       }
 
       function createMapvLayer(rs) {
-        var data = []
+        var data = [];
         for (var i = 0; i < rs[0].length; i++) {
-          var geoCoord = rs[0][i].geoCoord
+          var geoCoord = rs[0][i].geoCoord;
           data.push({
             geometry: {
-              type: 'Point',
+              type: "Point",
               coordinates: geoCoord,
             },
             time: Math.random() * 10,
-          })
+          });
         }
 
         var options = {
-          fillStyle: 'rgba(255, 250, 50, 0.6)',
+          fillStyle: "rgba(255, 250, 50, 0.6)",
           //shadowColor: 'rgba(255, 250, 50, 0.5)',
           //shadowBlur: 3,
           updateCallback: function (time) {
-            time = time.toFixed(2)
-            $('#time').html('时间' + time)
+            time = time.toFixed(2);
+            $("#time").html("时间" + time);
           },
           size: 3,
-          draw: 'simple',
+          draw: "simple",
           animation: {
-            type: 'time',
+            type: "time",
             stepsRange: {
               start: 0,
               end: 10,
@@ -114,12 +114,12 @@
             trails: 1,
             duration: 6,
           },
-        }
-        var dataSet = new mapv.DataSet(data)
+        };
+        var dataSet = new this.mapv.DataSet(data);
 
         //创建MapV图层
-        var mapVLayer = new mars3d.layer.MapVLayer(options, dataSet)
-        map.addLayer(mapVLayer)
+        var mapVLayer = new mars3d.layer.MapVLayer(options, dataSet);
+        map.addLayer(mapVLayer);
       }
     </script>
   </body>

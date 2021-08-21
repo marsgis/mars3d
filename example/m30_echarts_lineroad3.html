@@ -38,83 +38,77 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
             //此处参数会覆盖config.json中的对应配置
-            center: {
-              y: 31.323317,
-              x: 117.36754,
-              z: 72386.61,
-              heading: 357,
-              pitch: -51.4,
-              roll: 360,
-            },
+            center: { lat: 31.221432, lng: 117.334074, alt: 77377, heading: 357, pitch: -51 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         var queryMapserver = new mars3d.query.QueryArcServer({
-          url: '//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/33',
-        })
+          url: "//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/33",
+        });
+        // 按指定类别自动查询
         queryMapserver.query({
           page: false,
           success: (result) => {
             if (result.count == 0) {
-              haoutil.msg('未查询到相关记录！')
-              return
+              haoutil.msg("未查询到相关记录！");
+              return;
             }
-            let featureCollection = result.geojson
-            var busLines = []
+            let featureCollection = result.geojson;
+            var busLines = [];
             for (let i = 0; i < featureCollection.features.length; i++) {
-              var feature = featureCollection.features[i]
+              var feature = featureCollection.features[i];
               if (feature == null || feature.geometry == null || feature.geometry.coordinates == null || feature.geometry.coordinates.length == 0) {
-                continue
+                continue;
               }
 
-              var hStep = 1 / feature.geometry.coordinates.length
+              var hStep = 1 / feature.geometry.coordinates.length;
               //console.log(i + ',' + hStep);
               busLines.push({
                 coords: feature.geometry.coordinates,
                 lineStyle: {
                   normal: {
-                    color: echarts.color.modifyHSL('#5A94DF', Math.round(hStep * i)),
+                    color: echarts.color.modifyHSL("#5A94DF", Math.round(hStep * i)),
                   },
                 },
-              })
+              });
             }
             //创建Echarts图层
-            createEchartsLayer(busLines)
+            createEchartsLayer(busLines);
           },
           error: (error, msg) => {
-            console.log('服务访问错误', error)
-            haoutil.alert(msg, '服务访问错误')
+            console.log("服务访问错误", error);
+            haoutil.alert(msg, "服务访问错误");
           },
-        })
+        });
       }
 
       function createEchartsLayer(busLines) {
-        var options = getEchartsOption(busLines)
-        var echartsLayer = new mars3d.layer.EchartsLayer(options)
-        map.addLayer(echartsLayer)
+        var options = getEchartsOption(busLines);
+        var echartsLayer = new mars3d.layer.EchartsLayer(options);
+        map.addLayer(echartsLayer);
       }
 
       function getEchartsOption(busLines) {
         var option = {
           animation: false,
-          backgroundColor: 'rgba(17, 19, 42, 0.5)',
-          GLMap: {},
+          backgroundColor: "rgba(17, 19, 42, 0.5)",
+
           series: [
             {
-              type: 'lines',
-              coordinateSystem: 'GLMap',
+              type: "lines",
+              coordinateSystem: "mars3dMap",
               polyline: true,
               data: busLines,
               silent: true,
@@ -130,8 +124,8 @@
               progressive: 200,
             },
             {
-              type: 'lines',
-              coordinateSystem: 'GLMap',
+              type: "lines",
+              coordinateSystem: "mars3dMap",
               polyline: true,
               data: busLines,
               lineStyle: {
@@ -148,8 +142,8 @@
               zlevel: 1,
             },
           ],
-        }
-        return option
+        };
+        return option;
       }
     </script>
   </body>

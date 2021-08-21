@@ -19,7 +19,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>OSMBuilding 城市模型 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>立体建筑物GeoJson图层 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -110,77 +110,77 @@
     <script src="./js/common.js"></script>
     <script src="./js/e20_geojson_buildings.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 31.797851, lng: 117.227383, alt: 2008, heading: 360, pitch: -31 },
+            center: { lat: 31.747855, lng: 117.250137, alt: 4401, heading: 360, pitch: -31 },
           },
           terrain: { show: false },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.basemap = 2017 //蓝色底图
+        map.basemap = 2017; //蓝色底图
 
-        initEcharts()
+        initEcharts();
 
-        window.toastr.info('文件数据较大，正在加载数据，请稍等片刻……')
-        haoutil.loading.show()
+        window.toastr.info("文件数据较大，正在加载数据，请稍等片刻……");
+        haoutil.loading.show();
 
         var colorHash = {
-          10: '#FFEDA0',
-          15: '#FED976',
-          20: '#FEB24C',
-          25: '#FD8D3C',
-          30: '#FC4E2A',
-          35: '#E31A1C',
-          40: '#BD0026',
-          450000: '#800026',
-        }
+          10: "#FFEDA0",
+          15: "#FED976",
+          20: "#FEB24C",
+          25: "#FD8D3C",
+          30: "#FC4E2A",
+          35: "#E31A1C",
+          40: "#BD0026",
+          450000: "#800026",
+        };
 
         var geoJsonLayer = new mars3d.layer.GeoJsonLayer({
-          name: '建筑物面',
-          url: '//data.mars3d.cn/file/geojson/buildings-hf.json',
+          name: "建筑物面",
+          url: "//data.mars3d.cn/file/geojson/buildings-hf.json",
           symbol: {
-            type: 'polygonCombine', //大数据面类型，效率高
+            type: "polygonCombine", //大数据面类型，效率高
             styleOptions: {
-              color: '#0d3685',
+              color: "#0d3685",
               opacity: 1.0,
               outline: false,
             },
             callback: function (attr, styleOpt) {
-              var floor = Number(attr.floor || 1)
-              var diffHeight = floor * 5
+              var floor = Number(attr.floor || 1);
+              var diffHeight = floor * 5;
               for (var key in colorHash) {
                 if (floor <= parseInt(key)) {
-                  return { height: 0, diffHeight: diffHeight, color: colorHash[key] }
+                  return { height: 0, diffHeight: diffHeight, color: colorHash[key] };
                 }
               }
-              return { height: 0, diffHeight: diffHeight }
+              return { height: 0, diffHeight: diffHeight };
             },
           },
-          popup: 'all',
-        })
-        map.addLayer(geoJsonLayer)
+          popup: "all",
+        });
+        map.addLayer(geoJsonLayer);
 
         //绑定事件
         geoJsonLayer.on(mars3d.EventType.load, function (event) {
-          console.log('数据加载完成', event)
+          console.log("数据加载完成", event);
 
-          haoutil.loading.hide() //关闭
-        })
+          haoutil.loading.hide(); //关闭
+        });
 
         //在layer上绑定监听事件
         geoJsonLayer.on(mars3d.EventType.click, function (event) {
-          let pickedItem = event.graphic.attr
-          console.log('单击了合并对象中的单个值为', pickedItem)
-        })
+          let pickedItem = event.graphic.attr;
+          console.log("单击了合并对象中的单个值为", pickedItem);
+        });
       }
     </script>
   </body>

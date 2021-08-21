@@ -39,77 +39,71 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.Util.merge(options, {})
+        var mapOptions = mars3d.Util.merge(options, {});
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建mapv图层
-        createMapvLayer()
+        createMapvLayer();
       }
 
       function createMapvLayer() {
         // 构造数据
-        var positions = []
-        var geojson = []
-        var randomCount = 300
+        var positions = [];
+        var geojson = [];
+        var randomCount = 300;
         while (randomCount--) {
-          var point = randomPoint()
-          positions.push(Cesium.Cartesian3.fromDegrees(point[0], point[1]))
+          //取区域内的随机点
+          var point = [haoutil.math.random(113 * 1000, 119 * 1000) / 1000, haoutil.math.random(28 * 1000, 35 * 1000) / 1000];
+
+          positions.push(Cesium.Cartesian3.fromDegrees(point[0], point[1]));
 
           geojson.push({
             geometry: {
-              type: 'Point',
+              type: "Point",
               coordinates: point,
             },
             count: 30 * Math.random(),
-          })
+          });
         }
         map.camera.flyTo({
           destination: Cesium.Rectangle.fromCartesianArray(positions),
-        })
+        });
 
         //mapv图层参数
         var options = {
-          fillStyle: 'rgba(55, 50, 250, 0.8)',
-          shadowColor: 'rgba(255, 250, 50, 1)',
+          fillStyle: "rgba(55, 50, 250, 0.8)",
+          shadowColor: "rgba(255, 250, 50, 1)",
           shadowBlur: 20,
           size: 40,
           globalAlpha: 0.5,
           label: {
             show: true,
-            fillStyle: 'white',
+            fillStyle: "white",
             // shadowColor: 'yellow',
             // font: '20px Arial',
             // shadowBlur: 10,
           },
           gradient: {
-            0.25: 'rgb(0,0,255)',
-            0.55: 'rgb(0,255,0)',
-            0.85: 'yellow',
-            1.0: 'rgb(255,0,0)',
+            0.25: "rgb(0,0,255)",
+            0.55: "rgb(0,255,0)",
+            0.85: "yellow",
+            1.0: "rgb(255,0,0)",
           },
-          draw: 'grid',
-        }
-        var dataSet = new mapv.DataSet(geojson)
+          draw: "grid",
+        };
+        var dataSet = new this.mapv.DataSet(geojson);
 
         //创建MapV图层
-        var mapVLayer = new mars3d.layer.MapVLayer(options, dataSet)
-        map.addLayer(mapVLayer)
-      }
-
-      //取区域内的随机点
-      function randomPoint() {
-        var jd = haoutil.math.random(113 * 1000, 119 * 1000) / 1000
-        var wd = haoutil.math.random(28 * 1000, 35 * 1000) / 1000
-
-        return [jd, wd]
+        var mapVLayer = new mars3d.layer.MapVLayer(options, dataSet);
+        map.addLayer(mapVLayer);
       }
     </script>
   </body>

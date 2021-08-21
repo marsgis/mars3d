@@ -34,24 +34,24 @@
     <div id="mars3dContainer" class="mars3d-container"></div>
 
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
       $(document).ready(function () {
         if (!mars3d.Util.webglreport()) {
-          mars3d.Util.webglerror()
-          return
+          mars3d.Util.webglerror();
+          return;
         }
-        initMap()
-      })
+        initMap();
+      });
 
-      var map
+      var map;
       function initMap() {
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', {
+        map = new mars3d.Map("mars3dContainer", {
           scene: {
             center: { lat: 20.758452, lng: 108.198353, alt: 7733736, heading: 358, pitch: -82 },
             globe: {
-              baseColor: '#ffffff',
+              baseColor: "#ffffff",
             },
             highDynamicRange: false,
           },
@@ -63,25 +63,25 @@
             locationBar: { fps: true }, //状态栏
           },
           terrain: {
-            url: 'http://data.mars3d.cn/terrain',
+            url: "http://data.mars3d.cn/terrain",
             show: true,
           },
           //方式1：在创建地球前的参数中配置
           basemaps: [
             {
-              name: 'OSM开源地图',
-              icon: 'img/basemaps/osm.png',
-              type: 'mvt',
-              url: 'https://a.tiles.mapbox.com/v4/mapbox.mapbox-streets-v6/{z}/{x}/{y}.vector.pbf?access_token={k}',
+              name: "OSM开源地图",
+              icon: "img/basemaps/osm.png",
+              type: "mvt",
+              url: "https://a.tiles.mapbox.com/v4/mapbox.mapbox-streets-v6/{z}/{x}/{y}.vector.pbf?access_token={k}",
               key: mars3d.Token.mapbox,
-              style: 'mapbox-streets-v6',
+              style: "mapbox-streets-v6",
               show: true,
             },
           ],
-        })
+        });
 
         //poi查询栏
-        activatePOIQuery(map)
+        activatePOIQuery(map);
 
         //另外的实现方式可以参考：https://github.com/robbo1975/MapboxVectorTileImageryProvider
       }
@@ -90,9 +90,9 @@
       function activatePOIQuery(map) {
         mars3d.widget.activate({
           map: map,
-          name: 'POI查询',
-          uri: 'widgets/queryBaiduPOI/widget.js',
-        })
+          name: "POI查询",
+          uri: "widgets/queryBaiduPOI/widget.js",
+        });
       }
     </script>
   </body>

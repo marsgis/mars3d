@@ -73,6 +73,13 @@
 
         <input id="input_draw_file" type="file" accept=".json,.geojson" style="display: none" />
       </div>
+
+      <div>
+        方法演示：
+        <input id="btnStartBounce" type="button" class="btn btn-default" value="开始弹跳" />
+        <input id="btnStartBounce2" type="button" class="btn btn-default" value="开始弹跳(自动停止)" />
+        <input id="btnStopBounce" type="button" class="btn btn-default" value="停止弹跳" />
+      </div>
     </div>
 
     <!-- 切换视角到模型或地形（山区）的快捷按钮 -->
@@ -83,120 +90,152 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.Util.merge(options, {})
+        var mapOptions = mars3d.Util.merge(options, {});
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //图层管理的相关处理，代码在\js\graphicManager.js
-        initLayerManager(graphicLayer)
+        initLayerManager(graphicLayer);
 
-        $('#btnStartDraw').click(function () {
+        $("#btnStartDraw").click(function () {
           graphicLayer.startDraw({
-            type: 'billboard',
+            type: "billboard",
             style: {
-              image: 'img/marker/mark1.png',
+              image: "img/marker/mark1.png",
               horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
               verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
               label: {
                 //不需要文字时，去掉label配置即可
-                text: '可以同时支持文字',
+                text: "可以同时支持文字",
                 font_size: 30,
-                color: '#ffffff',
+                color: "#ffffff",
                 outline: true,
-                outlineColor: '#000000',
+                outlineColor: "#000000",
                 pixelOffsetY: -50,
               },
             },
-          })
-        })
+          });
+        });
+
+        $("#btnStartBounce").click(function () {
+          graphicLayer.eachGraphic((graphic) => {
+            if (graphic.startBounce) {
+              graphic.startBounce();
+            }
+          });
+        });
+        $("#btnStartBounce2").click(function () {
+          graphicLayer.eachGraphic((graphic) => {
+            if (graphic.startBounce) {
+              graphic.startBounce({
+                autoStop: true,
+                step: 2,
+                maxHeight: 90,
+              });
+            }
+          });
+        });
+        $("#btnStopBounce").click(function () {
+          graphicLayer.eachGraphic((graphic) => {
+            if (graphic.stopBounce) {
+              graphic.stopBounce();
+            }
+          });
+        });
 
         //加一些演示数据
-        addGraphic_a1(graphicLayer)
-        addGraphic_a2(graphicLayer)
-        addGraphic_a3(graphicLayer)
-        addGraphic_04(graphicLayer)
+        addGraphic_a1(graphicLayer);
+        addGraphic_a2(graphicLayer);
+        addGraphic_a3(graphicLayer);
+        addGraphic_04(graphicLayer);
       }
 
       function addGraphic_a1(graphicLayer) {
         var graphic = new mars3d.graphic.BillboardEntity({
-          name: '根据视距缩放图标',
+          name: "根据视距缩放图标",
           position: new mars3d.LatLngPoint(116.301798, 30.835848, 915),
           style: {
-            image: 'img/marker/mark3.png',
+            image: "img/marker/mark3.png",
             scale: 1,
             horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
             verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
             scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 500000, 0.1),
             label: {
-              text: '我是原始的',
+              text: "我是原始的",
               font_size: 18,
-              color: '#ffffff',
+              color: "#ffffff",
               pixelOffsetY: -40,
               distanceDisplayCondition: true,
               distanceDisplayCondition_far: 500000,
               distanceDisplayCondition_near: 0,
             },
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
 
         //演示个性化处理graphic，代码在\js\graphicManager.js
-        initGraphicManager(graphic)
+        initGraphicManager(graphic);
 
         //graphic转geojson
-        var geojson = graphic.toGeoJSON()
-        console.log('转换后的geojson', geojson)
-        addGeoJson(geojson, graphicLayer)
+        var geojson = graphic.toGeoJSON();
+        console.log("转换后的geojson", geojson);
+        addGeoJson(geojson, graphicLayer);
       }
 
       //添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
       function addGeoJson(geojson, graphicLayer) {
-        var graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0]
-        delete graphicCopy.attr
+        var graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0];
+        delete graphicCopy.attr;
         //新的坐标
-        graphicCopy.position = [116.33493, 30.822064, 644.43]
-        graphicCopy.style.label = graphicCopy.style.label || {}
-        graphicCopy.style.label.text = '我是转换后生成的'
-        graphicLayer.addGraphic(graphicCopy)
+        graphicCopy.position = [116.33493, 30.822064, 644.43];
+        graphicCopy.style.label = graphicCopy.style.label || {};
+        graphicCopy.style.label.text = "我是转换后生成的";
+        graphicLayer.addGraphic(graphicCopy);
       }
 
       function addGraphic_a2(graphicLayer) {
         var graphic = new mars3d.graphic.BillboardEntity({
-          name: '贴地图标',
+          name: "贴地图标",
           position: [116.39224, 30.902853],
           style: {
-            image: 'img/marker/mark2.png',
-            scale: 1,
+            image: "img/marker/di3.png",
+            scale: 0.5,
             horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
             verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
             clampToGround: true,
+
+            label: { text: "鼠标移入会放大", pixelOffsetY: -50 },
+            //高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+            highlight: {
+              scale: 0.8,
+            },
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
       }
 
       function addGraphic_a3(graphicLayer) {
         var graphic = new mars3d.graphic.BillboardEntity({
-          name: '绿色自定义图标',
+          name: "绿色自定义图标",
           position: [116.340443, 30.882935, 389.88],
           style: {
-            image: 'img/marker/symbol1.png',
+            image: "img/marker/symbol1.png",
             scale: 1,
             pixelOffset: new Cesium.Cartesian2(0, -6), //偏移量
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
       }
 
       function addGraphic_04(graphicLayer) {
@@ -207,33 +246,33 @@
           [116.392083, 30.852692, 616],
           [116.413892, 30.869853, 486.4],
           [116.515749, 30.868033, 669.6],
-        ])
+        ]);
 
         var graphic = new mars3d.graphic.BillboardEntity({
           position: propertyFJ,
           orientation: new Cesium.VelocityOrientationProperty(propertyFJ),
           style: {
-            image: 'img/marker/huojian.svg',
+            image: "img/marker/huojian.svg",
             scale: 0.5,
             alignedAxis: new Cesium.VelocityVectorProperty(propertyFJ, true),
           },
           hasEdit: false,
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
       }
 
       //计算演示的SampledPositionProperty轨迹
       function getSampledPositionProperty(points) {
-        let property = new Cesium.SampledPositionProperty()
+        let property = new Cesium.SampledPositionProperty();
 
-        let start = map.clock.currentTime
-        let positions = mars3d.LatLngArray.toCartesians(points)
+        let start = map.clock.currentTime;
+        let positions = mars3d.LatLngArray.toCartesians(points);
         for (let i = 0; i < positions.length; i++) {
-          let time = Cesium.JulianDate.addSeconds(start, i * 20, new Cesium.JulianDate())
-          let position = positions[i]
-          property.addSample(time, position)
+          let time = Cesium.JulianDate.addSeconds(start, i * 20, new Cesium.JulianDate());
+          let position = positions[i];
+          property.addSample(time, position);
         }
-        return property
+        return property;
       }
     </script>
   </body>

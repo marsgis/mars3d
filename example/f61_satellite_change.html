@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>卫星过境动态展示 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -50,7 +50,7 @@
       }
 
       .closeAction:after {
-        content: '';
+        content: "";
         position: absolute;
         right: -28px;
         top: 0;
@@ -107,22 +107,16 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
+      var drawGraphic;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 12.845055,
-              x: 112.931363,
-              z: 24286797.17,
-              heading: 3.4,
-              pitch: -89.6,
-              roll: 0,
-            },
+            center: { lat: -13.151771, lng: 55.60413, alt: 30233027, heading: 154, pitch: -89 },
             cameraController: {
               zoomFactor: 3.0,
               minimumZoomDistance: 1,
@@ -137,29 +131,29 @@
             animation: true, //是否创建动画小器件，左下角仪表
             timeline: true, //是否显示时间线控件
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         graphicLayer.on(mars3d.EventType.click, function (event) {
-          console.log('单击了卫星', event)
-        })
+          console.log("单击了卫星", event);
+        });
         graphicLayer.on(mars3d.EventType.change, function (event) {
           //位置变化事件
-          processInArea(event.graphic)
-        })
+          processInArea(event.graphic);
+        });
 
         var weixin = new mars3d.graphic.Satellite({
-          name: 'GAOFEN 1',
-          tle1: '1 39150U 13018A   21180.50843864  .00000088  00000-0  19781-4 0  9997',
-          tle2: '2 39150  97.8300 252.9072 0018449 344.7422  15.3253 14.76581022440650',
+          name: "GAOFEN 1",
+          tle1: "1 39150U 13018A   21180.50843864  .00000088  00000-0  19781-4 0  9997",
+          tle2: "2 39150  97.8300 252.9072 0018449 344.7422  15.3253 14.76581022440650",
           model: {
-            url: '//data.mars3d.cn/gltf/mars/weixin.gltf',
+            url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
             show: true,
           },
           cone: {
@@ -167,126 +161,125 @@
             show: false,
           },
           label: {
-            font_family: '楷体',
+            font_family: "楷体",
             font_size: 30,
             show: true,
           },
           path: {
             show: true,
           },
-        })
-        graphicLayer.addGraphic(weixin)
+        });
 
-        weixin._lastInPoly = false
+        graphicLayer.addGraphic(weixin);
+
+        weixin._lastInPoly = false;
 
         setTimeout(() => {
-          var position = weixin.position
+          var position = weixin.position;
           if (position) {
             map.flyToPoint(position, {
               radius: 900000, //距离目标点的距离
               pitch: -60, //相机方向
-            })
+            });
           }
-        }, 3000)
+        }, 3000);
 
-        $('.closePanel').click(function () {
-          $(this).hide(300)
-          $('.openPanel').show(300)
-        })
+        $(".closePanel").click(function () {
+          $(this).hide(300);
+          $(".openPanel").show(300);
+        });
 
-        $('.closeAction').click(function () {
-          $('.openPanel').hide(300)
-          $('.closePanel').show()
-        })
+        $(".closeAction").click(function () {
+          $(".openPanel").hide(300);
+          $(".closePanel").show();
+        });
 
         //框选查询 矩形
-        $('#drawRectangle').click(function () {
+        $("#drawRectangle").click(function () {
           map.graphicLayer.startDraw({
-            type: 'rectangle',
+            type: "rectangle",
             style: {
-              color: '#ffff00',
+              color: "#ffff00",
               opacity: 0.2,
               outline: true,
-              outlineColor: '#ffffff',
+              outlineColor: "#ffffff",
               outlineWidth: 2,
             },
             success: function (graphic) {
-              drawGraphic = graphic
+              drawGraphic = graphic;
             },
-          })
-        })
+          });
+        });
         //框选查询   多边
-        $('#drawPolygon').click(function () {
+        $("#drawPolygon").click(function () {
           map.graphicLayer.startDraw({
-            type: 'polygon',
+            type: "polygon",
             style: {
-              color: '#ffff00',
+              color: "#ffff00",
               opacity: 0.2,
               outline: true,
-              outlineColor: '#ffffff',
+              outlineColor: "#ffffff",
               outlineWidth: 2,
             },
             success: function (graphic) {
-              drawGraphic = graphic
+              drawGraphic = graphic;
             },
-          })
-        })
+          });
+        });
         //框选查询   圆
-        $('#drawCircle').click(function () {
+        $("#drawCircle").click(function () {
           map.graphicLayer.startDraw({
-            type: 'circle',
+            type: "circle",
             style: {
-              color: '#ffff00',
+              color: "#ffff00",
               opacity: 0.2,
               outline: true,
-              outlineColor: '#ffffff',
+              outlineColor: "#ffffff",
               outlineWidth: 2,
             },
             success: function (graphic) {
-              drawGraphic = graphic
+              drawGraphic = graphic;
             },
-          })
-        })
+          });
+        });
 
-        $('#drawClear').click(function () {
-          map.graphicLayer.clear()
-          drawGraphic = null
-        })
+        $("#drawClear").click(function () {
+          map.graphicLayer.clear();
+          drawGraphic = null;
+        });
       }
-
-      var drawGraphic
 
       //判断卫星是否在面内
       function processInArea(weixin) {
         if (!drawGraphic) {
-          weixin._lastInPoly = false
-          weixin.coneShow = false //关闭视锥体
-          $('#videoView').hide() //关闭视频面板
-          return
+          weixin._lastInPoly = false;
+          weixin.coneShow = false; //关闭视锥体
+          $("#videoView").hide(); //关闭视频面板
+          return;
         }
 
-        var position = weixin.position
+        var position = weixin.position;
         if (!position) {
-          return
+          return;
         }
 
-        var thisIsInPoly = drawGraphic.isInPoly(position)
+        var thisIsInPoly = drawGraphic.isInPoly(position);
         if (thisIsInPoly !== weixin._lastInPoly) {
           if (thisIsInPoly) {
             //开始进入区域内
-            console.log(weixin.name + '开始进入区域内')
+            console.log(weixin.name + "开始进入区域内");
 
-            weixin.coneShow = true //打开视锥体
-            $('#videoView').show() //打开视频面板
+            weixin.coneShow = true; //打开视锥体
+            $("#videoView").show(); //打开视频面板
           } else {
             //离开区域
-            console.log(weixin.name + '离开区域')
+            console.log(weixin.name + "离开区域");
 
-            weixin.coneShow = false //关闭视锥体
-            $('#videoView').hide() //关闭视频面板
+            weixin.coneShow = false; //关闭视锥体
+            $("#videoView").hide(); //关闭视频面板
           }
 
-          weixin._lastInPoly = thisIsInPoly
+          weixin._lastInPoly = thisIsInPoly;
         }
       }
     </script>

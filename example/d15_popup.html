@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>Popup单击弹窗 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>Popup鼠标单击信息窗 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -28,6 +28,7 @@
       include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
     ></script>
 
+    <link href="css/divGraphic.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
   </head>
 
@@ -39,166 +40,277 @@
 
     <!-- 面板 -->
     <div class="infoview">
+      <div>
+        <button id="btnGetCenter" class="btn btn-primary" onclick="bindMapDemo()">Map上直接弹出</button>
+        <button id="btnGetCenter" class="btn btn-primary" onclick="bindLayerDemo()">图层上绑定</button>
+        <button id="btnGetCenter" class="btn btn-primary" onclick="bindLayerDemo2()">图层上预定义配置</button>
+        <button id="btnGetCenter" class="btn btn-primary" onclick="bindLayerTemplateDemo()">自定义模版</button>
+      </div>
+      <div>
+        <button id="btnGetCenter" class="btn btn-primary" onclick="bindGraphicDemo1()">Graphic上绑定</button>
+        <button id="btnGetCenter" class="btn btn-primary" onclick="bindGraphicDemo2()">Graphic上局部刷新</button>
+      </div>
+
+      <!--
       <span>其他应用示例：</span>
-      <a href="editor.html#f40_cylinder_gdp" target="_blank" class="btn btn-default">自定义模版</a>
+      <a href="editor.html#f40_cylinder_gdp" target="_blank" class="btn btn-default">自定义模版</a> -->
     </div>
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
+      var graphicLayer;
+      var geoJsonLayer;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.Util.merge(options, {})
+        var mapOptions = mars3d.Util.merge(options, {});
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        //演示3种不同层次的绑定方式，可以按需使用
-        bindMapDemo()
-        bindLayerDemo()
-        bindGraphicDemo()
+        //创建矢量数据图层
+        graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
-        // 绑定config.json中对应图层配置的"id"值图层的单击事件（比如下面是id:1987对应图层）
-        // var layerTest = map.getLayer(1987, 'id')
-        // layerTest.on(mars3d.EventType.click, function (event) {
-        //   //单击事件 ，去查数据
-        //   setTimeout(() => {
-        //     //查完数据后调用
-        //     map.openPopup(event.cartesian, '测试popup')
-        //   }, 3000)
-        // })
+        map.on(mars3d.EventType.popupOpen, function (event) {
+          let container = event.container; //popup对应的DOM
+          console.log("打开了popup(全局监听)", event);
+        });
+        map.on(mars3d.EventType.popupClose, function (event) {
+          let container = event.container; //popup对应的DOM
+          console.log("关闭了popup(全局监听)", event);
+        });
+
+        bindLayerDemo();
+      }
+
+      function removeDemoLayer() {
+        graphicLayer.clear();
+
+        if (geoJsonLayer) {
+          geoJsonLayer.remove(true);
+          geoJsonLayer = null;
+        }
       }
 
       //1.在map地图上绑定Popup单击弹窗
       function bindMapDemo() {
+        removeDemoLayer();
+
         //关闭弹窗
-        map.closePopup()
+        map.closePopup();
 
         //传入坐标和内容，可以直接任意弹出
-        let position = Cesium.Cartesian3.fromDegrees(116.528227, 30.800005, 302.3)
-        map.openPopup(position, '我是地图上直接弹出的')
+        let position = [116.328539, 30.978731, 1521];
+        map.openPopup(position, "我是地图上直接弹出的");
       }
 
       //2.在layer图层上绑定Popup单击弹窗
       function bindLayerDemo() {
-        var graphicLayer = new mars3d.layer.GeoJsonLayer({
-          name: '标绘示例数据',
-          url: '//data.mars3d.cn/file/geojson/mars3d-draw.json',
-        })
-        map.addLayer(graphicLayer)
+        removeDemoLayer();
+
+        geoJsonLayer = new mars3d.layer.GeoJsonLayer({
+          name: "标绘示例数据",
+          url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
+        });
+        map.addLayer(geoJsonLayer);
 
         //在layer上绑定Popup单击弹窗
-        graphicLayer.bindPopup(
-          function (event) {
-            let attr = event.graphic.attr
-            return attr.name + ' 我是layer上绑定的Popup'
+        geoJsonLayer.bindPopup(function (event) {
+          let attr = event.graphic?.attr;
+          return attr.type + " 我是layer上绑定的Popup";
 
-            // return new Promise((resolve) => {
-            //   //这里可以进行后端接口请求数据，setTimeout测试异步
-            //   setTimeout(() => {
-            //     resolve('Promise异步回调显示的弹窗内容信息')
-            //   }, 2000)
-            // })
+          // return new Promise((resolve) => {
+          //   //这里可以进行后端接口请求数据，setTimeout测试异步
+          //   setTimeout(() => {
+          //     resolve('Promise异步回调显示的弹窗内容信息')
+          //   }, 2000)
+          // })
+        });
+
+        geoJsonLayer.on(mars3d.EventType.popupOpen, function (event) {
+          let container = event.container; //popup对应的DOM
+          console.log("图层上打开了popup", container);
+        });
+        geoJsonLayer.on(mars3d.EventType.popupClose, function (event) {
+          let container = event.container; //popup对应的DOM
+          console.log("图层上移除了popup", container);
+        });
+      }
+
+      //2.在layer图层上预定义Popup单击弹窗
+      function bindLayerDemo2() {
+        removeDemoLayer();
+
+        geoJsonLayer = new mars3d.layer.GeoJsonLayer({
+          name: "标绘示例数据",
+          url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
+          //popup按属性字段配置，可以是字符串模板或数组
+          // popup: 'all', //显示所有属性，常用于测试
+          // popup: '{name} {type}',
+          popup: [
+            { field: "id", name: "编码" },
+            { field: "name", name: "名称" },
+            { field: "type", name: "类型" },
+          ],
+        });
+        map.addLayer(geoJsonLayer);
+      }
+
+      //2.在layer图层上绑定Popup单击弹窗
+      function bindLayerTemplateDemo() {
+        removeDemoLayer();
+
+        geoJsonLayer = new mars3d.layer.GeoJsonLayer({
+          name: "标绘示例数据",
+          url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
+        });
+        map.addLayer(geoJsonLayer);
+
+        //在layer上绑定Popup单击弹窗
+        geoJsonLayer.bindPopup(
+          function (event) {
+            let attr = event.graphic?.attr;
+            return "我是layer上绑定的自定义模版Popup<br />" + attr.type;
           },
           {
-            anchor: [0, -12], //左右、上下的偏移像素值。
-            onAdd: function (event) {
-              //popup的DOM添加到页面的回调方法,特殊需要操作dom的场景下使用（如视频video、echarts等）
-              console.log('打开了popup', event)
-            },
-            onRemove: function (event) {
-              //popup的DOM从页面移除的回调方法
-              console.log('移除了popup', event)
-            },
+            template: `<div class="marsBlackPanel animation-spaceInDown">
+                        <div class="marsBlackPanel-text">{content}</div>
+                        <span class="mars3d-popup-close-button closeButton" >×</span>
+                      </div>`,
+            horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+            verticalOrigin: Cesium.VerticalOrigin.CENTER,
           }
-        )
+        );
 
-        //bindPopup支持异步回调事件的方式，以下为示例
-        // function(event, callback) {
-        //   //这里发送事件，setTimeout测试异步
-        //   setTimeout(function () {
-        //     callback("异步回调显示的弹窗内容信息");
-        //   }, 500)
-        // }
+        geoJsonLayer.on(mars3d.EventType.popupOpen, function (event) {
+          let container = event.container; //popup对应的DOM
+          console.log("图层上打开了popup", container);
+        });
+        geoJsonLayer.on(mars3d.EventType.popupClose, function (event) {
+          let container = event.container; //popup对应的DOM
+          console.log("图层上移除了popup", container);
+        });
       }
 
       //3.在graphic数据上绑定Popup单击弹窗
-      function bindGraphicDemo() {
-        //创建矢量数据图层
-        let graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+      function bindGraphicDemo1() {
+        removeDemoLayer();
 
         let graphic = new mars3d.graphic.BoxEntity({
-          position: new mars3d.LatLngPoint(116.336525, 31.196721, 323.35),
+          position: new mars3d.LatLngPoint(116.328539, 30.978731, 1521),
           style: {
             dimensions: new Cesium.Cartesian3(2000.0, 2000.0, 2000.0),
             fill: true,
-            color: '#00ff00',
+            color: "#00ff00",
             opacity: 0.9,
             label: {
-              text: 'graphic绑定的演示',
-              font_size: 25,
-              font_family: '楷体',
-              color: '#003da6',
-              outline: true,
-              outlineColor: '#bfbfbf',
-              outlineWidth: 2,
+              text: "graphic绑定的演示",
+              font_size: 19,
+              pixelOffsetY: -45,
               horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
               verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
             },
           },
-        })
-
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
 
         function getInnerHtml(event) {
           // let attr = event.graphic.attr
-          var date = new Date().format('yyyy-MM-dd HH:mm:ss S')
           var inthtml = `<table style="width:280px;">
-          <tr><th scope="col" colspan="4"  style="text-align:center;font-size:15px;">graphic.bindPopup</th></tr>
-          <tr><td >说明：</td><td >Popup鼠标单击信息弹窗 </td></tr>
-          <tr><td >方式：</td><td >可以绑定任意html </td></tr>
-          <tr><td >备注：</td><td >我是graphic上绑定的Popup</td></tr>
-          <tr><td >时间：</td><td >${date}</td></tr>
-          <tr><td colspan="4" style="text-align:right;"><a href="javascript:showXQ()">更多</a></td></tr>
-        </table>`
-
-          return inthtml
+                <tr><th scope="col" colspan="4"  style="text-align:center;font-size:15px;">graphic.bindPopup</th></tr>
+                <tr><td >说明：</td><td >Popup鼠标单击信息弹窗 </td></tr>
+                <tr><td >方式：</td><td >可以绑定任意html </td></tr>
+                <tr><td >备注：</td><td >我是graphic上绑定的Popup</td></tr>
+                <tr><td colspan="4" style="text-align:right;cursor: pointer;"><a href="javascript:showXQ()">更多</a></td></tr>
+              </table>`;
+          return inthtml;
         }
 
         //绑定Popup
-        graphic
-          .bindPopup(getInnerHtml, {
-            anchor: [0, -12], //左右、上下的偏移像素值。
-            timeRender: true, //实时刷新popup内的内容。
-            onAdd: function (event) {
-              //popup的DOM添加到页面的回调方法,特殊需要操作dom的场景下使用（如视频video、echarts等）
-              console.log('打开了popup', event)
+        graphic.bindPopup(getInnerHtml).openPopup();
+
+        graphic.on(mars3d.EventType.popupOpen, function (event) {
+          let container = event.container; //popup对应的DOM
+          console.log("打开了popup", container);
+        });
+        graphic.on(mars3d.EventType.popupClose, function (event) {
+          let container = event.container; //popup对应的DOM
+          console.log("移除了popup", container);
+        });
+      }
+
+      //3.在graphic数据上绑定Popup单击弹窗
+      function bindGraphicDemo2() {
+        removeDemoLayer();
+
+        var graphic = new mars3d.graphic.BillboardEntity({
+          position: new mars3d.LatLngPoint(116.328539, 30.978731, 1521),
+          style: {
+            image: "img/marker/di3.png",
+            scale: 0.5,
+            horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+            label: {
+              text: "Popup局部更新绑定的演示",
+              font_size: 18,
+              font_family: "楷体",
+              pixelOffsetY: -45,
+              horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+              verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
             },
-            onRemove: function (event) {
-              //popup的DOM从页面移除的回调方法
-              console.log('移除了popup', event)
-            },
-          })
-          .openPopup()
+          },
+        });
+        graphicLayer.addGraphic(graphic);
+
+        let innerHtml = `<table style="width:280px;">
+                <tr><th scope="col" colspan="4"  style="text-align:center;font-size:15px;">graphic.bindPopup局部刷新</th></tr>
+                <tr><td >说明：</td><td >Popup鼠标单击信息弹窗 </td></tr>
+                <tr><td >方式：</td><td >可以绑定任意html </td></tr>
+                <tr><td >备注：</td><td >我是graphic上绑定的Popup</td></tr>
+                <tr><td >时间：</td><td id="tdTime"></td></tr>
+                <tr><td colspan="4" style="text-align:right;cursor: pointer;"><a href="javascript:showXQ()">更多</a></td></tr>
+              </table>`;
+        //绑定Popup
+        graphic.bindPopup(innerHtml, { offsetY: -30 }).openPopup();
+
+        //刷新局部DOM,不影响popup面板的其他控件操作
+        graphic.on(mars3d.EventType.postRender, function (event) {
+          let container = event.container; //popup对应的DOM
+          let tdTime = container.querySelector("#tdTime");
+          if (tdTime) {
+            var date = new Date().format("yyyy-MM-dd HH:mm:ss S");
+            tdTime.innerHTML = date;
+          }
+        });
+
+        // graphic.on(mars3d.EventType.popupOpen, function (event) {
+        //   let container = event.container //popup对应的DOM
+        //   console.log('打开了popup', container)
+        // })
+
+        // graphic.on(mars3d.EventType.popupClose, function (event) {
+        //   let container = event.container //popup对应的DOM
+        //   console.log('移除了popup', container)
+        // })
       }
 
       //只是为了演示，可以单击详情
       function showXQ(id) {
         window.layer.open({
           type: 2,
-          title: '查看历史',
+          title: "查看历史",
           fix: true,
           shadeClose: true,
           maxmin: true,
-          area: ['80%', '80%'],
-          content: 'http://marsgis.cn/',
-          skin: 'layer-mars-dialog animation-scale-up',
+          area: ["80%", "80%"],
+          content: "http://marsgis.cn/",
+          skin: "layer-mars-dialog animation-scale-up",
           success: function (layero) {},
-        })
+        });
       }
     </script>
   </body>

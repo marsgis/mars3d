@@ -51,116 +51,116 @@
 
   <script src="./js/common.js"></script>
   <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
+    "use script"; //开发环境建议开启严格模式
 
-    var map
-    var graphicLayer
+    var map;
+    var graphicLayer;
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {})
+      var mapOptions = mars3d.Util.merge(options, {});
 
       //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
+      map = new mars3d.Map("mars3dContainer", mapOptions);
 
       graphicLayer = new mars3d.layer.GraphicLayer({
         hasEdit: true,
         isAutoEditing: true, //绘制完成后是否自动激活编辑
-      })
-      map.addLayer(graphicLayer)
+      });
+      map.addLayer(graphicLayer);
 
       graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
-        updateBuffer(e.graphic)
-      })
+        updateBuffer(e.graphic);
+      });
       graphicLayer.on(mars3d.EventType.editMovePoint, function (e) {
-        updateBuffer(e.graphic)
-      })
+        updateBuffer(e.graphic);
+      });
 
-      $('#txtRadius').change(function (e) {
+      $("#txtRadius").change(function (e) {
         if (lastgeojson) {
-          updateBuffer()
+          updateBuffer();
         }
-      })
+      });
     }
 
     function drawPoint() {
-      deleteAll()
+      deleteAll();
 
       graphicLayer.startDraw({
-        type: 'point',
+        type: "point",
         style: {
           pixelSize: 12,
-          color: '#ffff00',
+          color: "#ffff00",
         },
-      })
+      });
     }
 
     function drawPolyline() {
-      deleteAll()
+      deleteAll();
 
       graphicLayer.startDraw({
-        type: 'polyline',
+        type: "polyline",
         style: {
-          color: '#ffff00',
+          color: "#ffff00",
           width: 3,
           clampToGround: true,
         },
-      })
+      });
     }
 
     function drawPolygon() {
-      deleteAll()
+      deleteAll();
 
       graphicLayer.startDraw({
-        type: 'polygon',
+        type: "polygon",
         style: {
-          color: '#ffff00',
+          color: "#ffff00",
           outline: true,
-          outlineColor: '#f0ce22',
+          outlineColor: "#f0ce22",
           outlineWidth: 4,
           opacity: 0.5,
           clampToGround: true,
         },
-      })
+      });
     }
 
     function deleteAll() {
-      graphicLayer.clear()
-      map.graphicLayer.clear()
-      lastgeojson = null
+      graphicLayer.clear();
+      map.graphicLayer.clear();
+      lastgeojson = null;
     }
 
-    var lastgeojson
+    var lastgeojson;
 
     function updateBuffer(graphic) {
-      var width = Number($('#txtRadius').val()) * 1000 //km
+      var width = Number($("#txtRadius").val()) * 1000; //km
 
-      var buffere
+      var buffere;
       try {
-        var geojson = graphic ? graphic.toGeoJSON() : lastgeojson
-        geojson.properties = {}
+        var geojson = graphic ? graphic.toGeoJSON() : lastgeojson;
+        geojson.properties = {};
         // console.log('geojson', geojson)
 
-        buffere = mars3d.PolyUtil.buffer(geojson, width)
+        buffere = mars3d.PolyUtil.buffer(geojson, width);
 
-        lastgeojson = geojson
+        lastgeojson = geojson;
       } catch (e) {
-        console.log('缓冲分析异常', e)
+        console.log("缓冲分析异常", e);
       }
       if (!buffere) {
-        return
+        return;
       }
 
       let graphicsOptions = mars3d.Util.geoJsonToGraphics(buffere, {
-        type: 'polygon',
+        type: "polygon",
         style: {
-          color: 'rgba(255,0,0,0.4)',
+          color: "rgba(255,0,0,0.4)",
           clampToGround: true,
         },
-      })
+      });
 
-      map.graphicLayer.clear()
-      map.graphicLayer.addGraphic(graphicsOptions)
+      map.graphicLayer.clear();
+      map.graphicLayer.addGraphic(graphicsOptions);
     }
   </script>
 </body>

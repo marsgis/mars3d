@@ -262,24 +262,24 @@
     </div>
 
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       $(document).ready(function () {
         if (!mars3d.Util.webglreport()) {
-          mars3d.Util.webglerror()
-          return
+          mars3d.Util.webglerror();
+          return;
         }
 
         //读取 config.json 配置文件
         mars3d.Resource.fetchJson({
-          url: 'config/config.json',
+          url: "config/config.json",
         }).then(function (json) {
           //构建地图
-          initMap(json.map3d)
-        })
-      })
+          initMap(json.map3d);
+        });
+      });
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -287,95 +287,95 @@
           scene: {
             center: { lat: 43.260076, lng: 59.511019, alt: 28590990, heading: 0, pitch: -90 },
           },
-        })
+        });
 
-        console.log('地图构建参数', mapOptions)
+        console.log("地图构建参数", mapOptions);
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //空间背景颜色
-        $('#colorStyle').minicolors({
-          position: 'bottom left',
-          control: 'saturation',
-          format: 'rgb',
+        $("#colorStyle").minicolors({
+          position: "bottom left",
+          control: "saturation",
+          format: "rgb",
           change: function (color, opacity) {
-            setSceneOptions('backgroundColor', color)
+            setSceneOptions("backgroundColor", color);
           },
-        })
+        });
 
         //地球背景颜色
-        $('#baseColor').minicolors({
-          position: 'bottom left',
-          control: 'saturation',
-          format: 'rgb',
-          value: '#546a53',
+        $("#baseColor").minicolors({
+          position: "bottom left",
+          control: "saturation",
+          format: "rgb",
+          value: "#546a53",
           change: function (color, opacity) {
-            setSceneGlobeOptions('baseColor', color)
+            setSceneGlobeOptions("baseColor", color);
           },
-        })
+        });
 
-        $('#sceneMode').change(function () {
-          let name = Number($(this).val())
-          setSceneOptions('sceneMode', name)
-        })
+        $("#sceneMode").change(function () {
+          let name = Number($(this).val());
+          setSceneOptions("sceneMode", name);
+        });
 
         //地形夸张倍数
-        $('#terrain').range({
+        $("#terrain").range({
           onChange: function (value, bfb) {
-            setSceneGlobeOptions('terrainExaggeration', value)
+            setSceneGlobeOptions("terrainExaggeration", value);
           },
-        })
+        });
 
         // 鼠标滚轮放大步长参数
-        $('#zoomFactor').range({
+        $("#zoomFactor").range({
           onChange: function (set, bfb) {
-            let keys = $('#zoomFactor').attr('data-name')
-            setSceneCameraControllerOptions(keys, set)
+            let keys = $("#zoomFactor").attr("data-name");
+            setSceneCameraControllerOptions(keys, set);
           },
-        })
+        });
 
         //变焦时相机位置的最小量级
-        $('#minimumZoom').range({
+        $("#minimumZoom").range({
           onChange: function (min, bfb) {
-            let keys = $('#minimumZoom').attr('data-name')
-            setSceneCameraControllerOptions(keys, min)
+            let keys = $("#minimumZoom").attr("data-name");
+            setSceneCameraControllerOptions(keys, min);
           },
-        })
+        });
 
         //变焦时相机位置的最大量级
-        $('#maximumZoom').range({
+        $("#maximumZoom").range({
           onChange: function (max, bfb) {
-            let key = $('#maximumZoom').attr('data-name')
-            setSceneCameraControllerOptions(key, max)
+            let key = $("#maximumZoom").attr("data-name");
+            setSceneCameraControllerOptions(key, max);
           },
-        })
+        });
 
         // 低于此高度时绕鼠标键绕圈，大于时绕视图中心点绕圈 默认值为80000
-        $('#minimumCollision').range({
+        $("#minimumCollision").range({
           onChange: function (hight, bfb) {
-            let num = $('#minimumCollision').attr('data-name')
-            setSceneCameraControllerOptions(num, hight)
+            let num = $("#minimumCollision").attr("data-name");
+            setSceneCameraControllerOptions(num, hight);
           },
-        })
+        });
       }
 
       function setSceneOptions(name, value) {
-        var options = {}
-        options[name] = value
-        map.setSceneOptions(options)
+        var options = {};
+        options[name] = value;
+        map.setSceneOptions(options);
       }
 
       function setSceneGlobeOptions(name, value) {
-        var options = { globe: {} }
-        options.globe[name] = value
-        map.setSceneOptions(options)
+        var options = { globe: {} };
+        options.globe[name] = value;
+        map.setSceneOptions(options);
       }
 
       function setSceneCameraControllerOptions(name, value) {
-        var options = { cameraController: {} }
-        options.cameraController[name] = value
-        map.setSceneOptions(options)
+        var options = { cameraController: {} };
+        options.cameraController[name] = value;
+        map.setSceneOptions(options);
       }
     </script>
   </body>

@@ -45,25 +45,25 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.Util.merge(options, {})
+        var mapOptions = mars3d.Util.merge(options, {});
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        $('#btnStart').click(startAnimation)
-        $('#btnStop').click(stopAnimation)
+        $("#btnStart").click(startAnimation);
+        $("#btnStop").click(stopAnimation);
 
-        startAnimation()
+        startAnimation();
       }
 
       function startAnimation() {
-        map.flyHome({ duration: 0 })
+        map.flyHome({ duration: 0 });
 
         //开场动画
         map.openFlyAnimation({
@@ -72,11 +72,11 @@
           callback: function () {
             //动画播放完成后回调
           },
-        })
+        });
       }
 
       function stopAnimation() {
-        map.camera.cancelFlight()
+        map.camera.cancelFlight();
       }
     </script>
   </body>

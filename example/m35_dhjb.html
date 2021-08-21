@@ -40,7 +40,7 @@
         font-size: 28px;
       }
 
-      .divpoint1 {
+      .marsImgPanel1 {
         position: relative;
         width: 200px;
         height: 134px;
@@ -65,7 +65,7 @@
         animation-name: mymove;
       }
 
-      .divpoint1 .title {
+      .marsImgPanel1 .title {
         position: relative;
         top: 20px;
         left: 70px;
@@ -114,9 +114,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -124,61 +124,62 @@
           scene: {
             center: { lat: 36.045934, lng: 113.942816, alt: 1663, heading: 2, pitch: -25 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        initUI()
-        initEditorJS()
+        initUI();
+        initEditorJS();
       }
 
       //UI界面相关
       function initUI() {
-        $('#btn_start').click(function () {
-          dataWork.start()
-        })
+        $("#btn_start").click(function () {
+          dataWork.start();
+        });
 
-        $('#btn_pause').click(function () {
-          dataWork.pause()
-        })
+        $("#btn_pause").click(function () {
+          dataWork.pause();
+        });
 
-        $('#btn_proceed').click(function () {
-          dataWork.proceed()
-        })
+        $("#btn_proceed").click(function () {
+          dataWork.proceed();
+        });
 
-        $('#btn_stop').click(function () {
-          dataWork.stop()
-        })
+        $("#btn_stop").click(function () {
+          dataWork.stop();
+        });
 
         map.on(
           mars3d.EventType.keydown,
           (event) => {
+            console.log(event);
             switch (event.keyCode) {
               default:
-                break
-              case '1'.charCodeAt(0): //播放、暂停切换
+                break;
+              case "1".charCodeAt(0): //播放、暂停切换
                 if (dataWork._isStart) {
-                  $('#btn_pause').click()
+                  $("#btn_pause").click();
                 } else {
-                  $('#btn_proceed').click()
+                  $("#btn_proceed").click();
                 }
-                break
-              case '2'.charCodeAt(0): //停止
-                $('#btn_stop').click()
-                break
-              case '3'.charCodeAt(0): //绑定和解绑键盘(控制器)控制
-                map.keyboardRoam.enabled = !map.keyboardRoam.enabled
+                break;
+              case "2".charCodeAt(0): //停止
+                $("#btn_stop").click();
+                break;
+              case "3".charCodeAt(0): //绑定和解绑键盘(控制器)控制
+                map.keyboardRoam.enabled = !map.keyboardRoam.enabled;
                 if (map.keyboardRoam.enabled) {
-                  haoutil.msg('已开启键盘控制')
+                  haoutil.msg("已开启键盘控制");
                 } else {
-                  haoutil.msg('已关闭键盘控制，您可以鼠标进行操作了！')
+                  haoutil.msg("已关闭键盘控制，您可以鼠标进行操作了！");
                 }
-                break
+                break;
             }
           },
           this
-        )
+        );
       }
     </script>
   </body>

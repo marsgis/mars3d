@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>雷达跟踪椎体 动态效果 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>ConicSensor 圆椎体(任意方向) | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -42,7 +42,7 @@
       <div style="width: 100%; text-align: center; font-size: 16px">参数设置</div>
       <table class="mars-table">
         <tr>
-          <td class="nametd"></td>
+          <td class="nametd">圆锥体</td>
           <td>
             <div class="checkbox checkbox-primary checkbox-inline">
               <input id="chkShow" class="styled" type="checkbox" checked />
@@ -95,60 +95,53 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 23.775606,
-              x: 116.715649,
-              z: 1868684.2,
-              heading: 354.9,
-              pitch: -65.3,
-              roll: 0,
-            },
+            center: { lat: 23.729961, lng: 116.284734, alt: 1868672, heading: 355, pitch: -65 },
             cameraController: {
               constrainedAxis: false, //解除在南北极区域鼠标操作限制
             },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //移除2.5D视图
-        var arr = $('.cesium-sceneModePicker-wrapper').children()
+        var arr = $(".cesium-sceneModePicker-wrapper").children();
         if (arr.length > 3) {
-          arr[3].remove()
+          arr[3].remove();
         }
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //加个模型
         var graphic = new mars3d.graphic.ModelEntity({
-          name: '地面站模型',
+          name: "地面站模型",
           position: [117.170264, 31.840312, 258],
           style: {
-            url: '//data.mars3d.cn/gltf/mars/leida.glb',
+            url: "//data.mars3d.cn/gltf/mars/leida.glb",
             scale: 1,
             minimumPixelSize: 40,
             clampToGround: true,
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
 
         //参数
-        var heading = Number($('#model_heading').val())
-        var pitch = Number($('#model_pitch').val())
-        var roll = Number($('#model_roll').val())
-        var angle = Number($('#model_angle1').val())
-        var length = Number($('#model_length').val())
+        var heading = Number($("#model_heading").val());
+        var pitch = Number($("#model_pitch").val());
+        var roll = Number($("#model_roll").val());
+        var angle = Number($("#model_angle1").val());
+        var length = Number($("#model_length").val());
 
         //圆锥体
         var conicSensor = new mars3d.graphic.ConicSensor({
@@ -163,67 +156,67 @@
             heading: heading,
             pitch: pitch,
             roll: roll,
-            color: 'rgba(255,0,0,0.4)',
-            outlineColor: 'rgba(255,255,255,0.9)',
+            color: "rgba(255,0,0,0.4)",
+            outlineColor: "rgba(255,255,255,0.9)",
           },
-        })
-        graphicLayer.addGraphic(conicSensor)
+        });
+        graphicLayer.addGraphic(conicSensor);
 
         //测试连接线
         let testLine = new mars3d.graphic.PolylineEntity({
           positions: new Cesium.CallbackProperty(function (time) {
-            var localEnd = conicSensor.rayPosition
+            var localEnd = conicSensor.rayPosition;
             if (!localEnd) {
-              return []
+              return [];
             }
-            return [conicSensor.position, localEnd]
+            return [conicSensor.position, localEnd];
           }, false),
           style: {
             arcType: Cesium.ArcType.NONE,
             material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolylineDash, {
-              color: '#ff0000',
+              color: "#ff0000",
             }),
             width: 1,
           },
-        })
-        graphicLayer.addGraphic(testLine)
+        });
+        graphicLayer.addGraphic(testLine);
 
         //滑动条
-        $('#model_heading').range({
+        $("#model_heading").range({
           onChange: function (value, bfb) {
-            conicSensor.heading = value
+            conicSensor.heading = value;
           },
-        })
-        $('#model_pitch').range({
+        });
+        $("#model_pitch").range({
           onChange: function (value, bfb) {
-            conicSensor.pitch = value
+            conicSensor.pitch = value;
           },
-        })
-        $('#model_roll').range({
+        });
+        $("#model_roll").range({
           onChange: function (value, bfb) {
-            conicSensor.roll = value
+            conicSensor.roll = value;
           },
-        })
+        });
 
-        $('#model_angle1').range({
+        $("#model_angle1").range({
           onChange: function (value, bfb) {
-            conicSensor.angle = value
+            conicSensor.angle = value;
           },
-        })
+        });
 
-        $('#model_length').change(function () {
-          conicSensor.length = Number($(this).val())
-        })
+        $("#model_length").change(function () {
+          conicSensor.length = Number($(this).val());
+        });
 
-        $('#chkShowTop').change(function () {
-          var val = $(this).is(':checked')
-          conicSensor.topShow = val
-        })
-        $('#chkShow').change(function () {
-          var val = $(this).is(':checked')
-          conicSensor.show = val
-          testLine.show = val
-        })
+        $("#chkShowTop").change(function () {
+          var val = $(this).is(":checked");
+          conicSensor.topShow = val;
+        });
+        $("#chkShow").change(function () {
+          var val = $(this).is(":checked");
+          conicSensor.show = val;
+          testLine.show = val;
+        });
       }
     </script>
   </body>

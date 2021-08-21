@@ -103,11 +103,11 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var tileLayer
-      var graphicLayer
+      var map;
+      var tileLayer;
+      var graphicLayer;
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
@@ -115,123 +115,125 @@
             center: { lat: 31.676218, lng: 117.251248, alt: 27740, heading: 1, pitch: -63 },
           },
           control: {
-            compass: { bottom: '320px', right: '5px' },
+            compass: { bottom: "320px", right: "5px" },
           },
-        })
+        });
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
-        map.basemap = '腾讯电子'
+        map = new mars3d.Map("mars3dContainer", mapOptions);
+        map.basemap = "腾讯电子";
 
         //矢量图层数据
-        graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //叠加的图层
         tileLayer = new mars3d.layer.BaiduLayer({
-          layer: 'streetview',
+          layer: "streetview",
           show: false,
-        })
-        map.addLayer(tileLayer)
+        });
+        map.addLayer(tileLayer);
+
+        splitScreen();
 
         //显示或影藏tileLayer图层
-        $('#btnStreet').click(function () {
+        $("#btnStreet").click(function () {
           if (markerStreet) {
-            graphicLayer.removeGraphic(markerStreet, true)
-            markerStreet = null
+            graphicLayer.removeGraphic(markerStreet, true);
+            markerStreet = null;
           }
 
           if (tileLayer.show) {
-            map.off(mars3d.EventType.click, onClickMap)
-            tileLayer.show = false
+            map.off(mars3d.EventType.click, onClickMap);
+            tileLayer.show = false;
 
             if (typeView != 0) {
-              viewTo3d()
+              viewTo3d();
             }
 
-            $('#btnStreet').css('border', '1px solid rgba(128, 128, 128, 0.5)')
-            $('#viewQH').hide()
+            $("#btnStreet").css("border", "1px solid rgba(128, 128, 128, 0.5)");
+            $("#viewQH").hide();
           } else {
-            tileLayer.show = true
-            $('#btnStreet').css('border', '4px solid rgba(54, 108, 179, 0.5)')
-            $('#viewQH').show()
+            tileLayer.show = true;
+            $("#btnStreet").css("border", "4px solid rgba(54, 108, 179, 0.5)");
+            $("#viewQH").show();
 
             graphicLayer.startDraw({
-              type: 'billboard',
+              type: "billboard",
               style: {
-                image: 'img/marker/street.png',
+                image: "img/marker/street.png",
                 horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
                 verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
                 label: {
                   font_size: 30,
-                  color: '#ffffff',
+                  color: "#ffffff",
                   outline: true,
-                  outlineColor: '#000000',
+                  outlineColor: "#000000",
                   pixelOffsetY: -50,
                 },
               },
               success: function (graphic) {
-                markerStreet = graphic
+                markerStreet = graphic;
               },
-            })
+            });
 
-            map.on(mars3d.EventType.click, onClickMap)
+            map.on(mars3d.EventType.click, onClickMap);
           }
-        })
+        });
       }
 
-      let typeView = 0
+      let typeView = 0;
 
       //3d显示
       function viewTo3d() {
-        typeView = 0
-        $('#centerDiv').hide()
-        $('#centerDiv3D').css({ width: '100%' }).show()
+        typeView = 0;
+        $("#centerDiv").hide();
+        $("#centerDiv3D").css({ width: "100%" }).show();
       }
 
       //街景显示
       function streetscape() {
-        typeView = 1
-        $('#centerDiv3D').hide()
-        $('#centerDiv').css({ width: '100%' }).show()
+        typeView = 1;
+        $("#centerDiv3D").hide();
+        $("#centerDiv").css({ width: "100%" }).show();
       }
 
       //分屏显示
       function splitScreen() {
-        typeView = 2
-        $('#centerDiv').css({ width: '50%' }).show()
-        $('#centerDiv3D').css({ width: '50%' }).show()
+        typeView = 2;
+        $("#centerDiv").css({ width: "50%" }).show();
+        $("#centerDiv3D").css({ width: "50%" }).show();
       }
 
       function onClickMap(event) {
-        let point = mars3d.LatLngPoint.fromCartesian(event.cartesian)
+        let point = mars3d.LatLngPoint.fromCartesian(event.cartesian);
 
-        let rightFrame = document.getElementById('streeScape')
-        rightFrame.contentWindow.setPosition(point)
+        let rightFrame = document.getElementById("streeScape");
+        rightFrame.contentWindow.setPosition(point);
 
         if (typeView == 0) {
-          streetscape()
+          streetscape();
         }
       }
 
-      let markerStreet
+      let markerStreet;
       function updateMarker(position) {
         if (markerStreet) {
-          markerStreet.position = position
+          markerStreet.position = position;
         } else {
           markerStreet = new mars3d.graphic.BillboardEntity({
             position: position,
             style: {
-              image: 'img/marker/street.png',
+              image: "img/marker/street.png",
               scale: 1,
               horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
               verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
               clampToGround: true,
             },
-          })
-          graphicLayer.addGraphic(markerStreet)
+          });
+          graphicLayer.addGraphic(markerStreet);
         }
 
-        map.flyToGraphic(markerStreet, { radius: 800 })
+        map.flyToGraphic(markerStreet, { radius: 800 });
       }
     </script>
   </body>

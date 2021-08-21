@@ -93,117 +93,119 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.Util.merge(options, {})
+        var mapOptions = mars3d.Util.merge(options, {});
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //固定光照，避免gltf模型随时间存在亮度不一致。
-        map.fixedLight = true
+        map.fixedLight = true;
 
-        $('#chkHasTerrain').change(function () {
-          var isStkTerrain = $(this).is(':checked')
-          map.hasTerrain = isStkTerrain
-        })
+        $("#chkHasTerrain").change(function () {
+          var isStkTerrain = $(this).is(":checked");
+          map.hasTerrain = isStkTerrain;
+        });
 
-        $('#chkTestTerrain').change(function () {
-          var val = $(this).is(':checked')
-          map.scene.globe.depthTestAgainstTerrain = val
-        })
-        $('.benStep').click(function () {
-          $('.active').removeClass('active')
-          $(this).addClass('active')
+        $("#chkTestTerrain").change(function () {
+          var val = $(this).is(":checked");
+          map.scene.globe.depthTestAgainstTerrain = val;
+        });
+        $(".benStep").click(function () {
+          $(".active").removeClass("active");
+          $(this).addClass("active");
 
-          step = Number($(this).val())
-        })
+          step = Number($(this).val());
+        });
 
         //url传入模型地址
-        var url = haoutil.system.getRequestByName('url')
+        var url = haoutil.system.getRequestByName("url");
         if (url) {
-          $('#txtModel').val(url)
+          $("#txtModel").val(url);
         } else {
           //历史记录模型地址
-          var lasturl = haoutil.storage.get('g20_3dtiles_move')
+          var lasturl = haoutil.storage.get("g20_3dtiles_move");
           if (lasturl) {
-            $('#txtModel').val(lasturl)
+            $("#txtModel").val(lasturl);
           }
         }
-        setTimeout(showModel, 1000)
+        setTimeout(showModel, 1000);
       }
 
-      var x = 0
-      var y = 0
-      var z = 0
-      var step = 1
-      let tiles3dLayer
+      var x = 0;
+      var y = 0;
+      var z = 0;
+      var step = 1;
+      let tiles3dLayer;
 
       function removeLayer() {
         if (tiles3dLayer) {
-          map.basemap = 2021 //切换到默认卫星底图
+          map.basemap = 2021; //切换到默认卫星底图
 
-          map.removeLayer(tiles3dLayer, true)
-          tiles3dLayer = null
+          map.removeLayer(tiles3dLayer, true);
+          tiles3dLayer = null;
         }
       }
 
       //当前页面业务相关
       function showModel() {
-        removeLayer()
+        removeLayer();
 
-        var _url = $('#txtModel').val()
-        haoutil.storage.add('g20_3dtiles_move', _url)
+        var _url = $("#txtModel").val();
+        haoutil.storage.add("g20_3dtiles_move", _url);
 
         tiles3dLayer = new mars3d.layer.TilesetLayer({
           url: _url,
           maximumScreenSpaceError: 1,
-          showClickFeature: true,
-          pickFeatureStyle: {
-            color: '#00FF00',
+
+          //高亮时的样式
+          highlight: {
+            type: mars3d.EventType.click, //默认为鼠标移入高亮，也可以指定click单击高亮
+            color: "#00FF00",
           },
-          popup: 'all',
+          popup: "all",
           flyTo: true,
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
         //加载完成事件
         tiles3dLayer.on(mars3d.EventType.load, function (event) {
-          console.log('模型加载完成', event)
-        })
+          console.log("模型加载完成", event);
+        });
       }
 
       function change(type) {
         switch (type) {
           default:
           case 0:
-            x += step
-            break
+            x += step;
+            break;
           case 1:
-            x -= step
-            break
+            x -= step;
+            break;
           case 2:
-            y += step
-            break
+            y += step;
+            break;
           case 3:
-            y -= step
-            break
+            y -= step;
+            break;
           case 4:
-            z += step
-            break
+            z += step;
+            break;
           case 5:
-            z -= step
-            break
+            z -= step;
+            break;
         }
-        $('#lbl-result').html('x:' + x.toFixed(1) + ' y:' + y.toFixed(1) + ' z:' + z.toFixed(1))
+        $("#lbl-result").html("x:" + x.toFixed(1) + " y:" + y.toFixed(1) + " z:" + z.toFixed(1));
 
         //创建平移矩阵方法二
-        var translation = Cesium.Cartesian3.fromArray([x, y, z])
-        tiles3dLayer.tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation)
+        var translation = Cesium.Cartesian3.fromArray([x, y, z]);
+        tiles3dLayer.tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
       }
     </script>
   </body>

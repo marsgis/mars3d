@@ -124,10 +124,10 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var roamLine
+      var map;
+      var roamLine;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -136,18 +136,18 @@
             animation: true, //是否创建动画小器件，左下角仪表
             timeline: true, //是否显示时间线控件
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //该数据可以从 基础项目 飞行漫游功能界面操作后单个路线的 保存JSON
         var flydata = {
-          name: '贴地表表面漫游',
+          name: "贴地表表面漫游",
           speed: 160,
           positions: [
             [116.043233, 30.845286, 392.48],
@@ -165,66 +165,75 @@
           //   minimumPixelSize: 50,
           // },
           model: {
-            url: '//data.mars3d.cn/gltf/mars/jingche/jingche.gltf',
+            url: "//data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
             heading: 90,
             minimumPixelSize: 50,
             show: true,
           },
           path: {
-            color: '#ffff00',
+            color: "#ffff00",
             width: 3,
             show: true,
           },
           camera: {
-            type: 'gs',
+            type: "gs",
             pitch: -30,
             radius: 500,
           },
           interpolation: true, //是否setInterpolationOptions插值
           clockLoop: true, //是否循环播放
-        }
+        };
 
-        roamLine = new mars3d.graphic.RoamLine(flydata)
-        graphicLayer.addGraphic(roamLine)
+        roamLine = new mars3d.graphic.RoamLine(flydata);
+        graphicLayer.addGraphic(roamLine);
 
-        roamLine.bindPopup(
-          function (event) {
-            var params = event?.target?.info
-            if (!params) {
-              return '即将开始漫游'
-            }
-            let roamLine = event.target
+        roamLine.bindPopup(`<div style="width: 200px">
+            <div>总 距 离：<span id="lblAllLen"> </span></div>
+            <div>总 时 间：<span id="lblAllTime"> </span></div>
+            <div>开始时间：<span id="lblStartTime"> </span></div>
+            <div>剩余时间：<span id="lblRemainTime"> </span></div>
+            <div>剩余距离：<span id="lblRemainLen"> </span></div>
+          </div>`);
 
-            var html =
-              '<div style="width:200px;">' +
-              '总距离：' +
-              haoutil.str.formatLength(roamLine.alllen) +
-              '<br/>' +
-              '总时间：' +
-              haoutil.str.formatTime(roamLine.alltimes / map.clock.multiplier) +
-              '<br/>' +
-              '开始时间：' +
-              Cesium.JulianDate.toDate(roamLine.startTime).format('yyyy-M-d HH:mm:ss') +
-              '<br/>' +
-              '剩余时间：' +
-              haoutil.str.formatTime((roamLine.alltimes - params.time) / map.clock.multiplier) +
-              '<br/>' +
-              '剩余距离：' +
-              haoutil.str.formatLength(roamLine.alllen - params.len) +
-              ' <br/>' +
-              '</div>'
-            return html
-          },
-          {
-            anchor: [0, -20], //左右、上下的偏移像素值。
-            timeRender: true, //实时更新html
+        //刷新局部DOM,不影响popup面板的其他控件操作
+        roamLine.on(mars3d.EventType.postRender, function (event) {
+          let container = event.container; //popup对应的DOM
+
+          var params = roamLine?.info;
+          if (!params) {
+            return;
           }
-        )
+
+          let lblAllLen = container.querySelector("#lblAllLen");
+          if (lblAllLen) {
+            lblAllLen.innerHTML = haoutil.str.formatLength(roamLine.alllen);
+          }
+
+          let lblAllTime = container.querySelector("#lblAllTime");
+          if (lblAllTime) {
+            lblAllTime.innerHTML = haoutil.str.formatTime(roamLine.alltimes / map.clock.multiplier);
+          }
+
+          let lblStartTime = container.querySelector("#lblStartTime");
+          if (lblStartTime) {
+            lblStartTime.innerHTML = Cesium.JulianDate.toDate(roamLine.startTime).format("yyyy-M-d HH:mm:ss");
+          }
+
+          let lblRemainTime = container.querySelector("#lblRemainTime");
+          if (lblRemainTime) {
+            lblRemainTime.innerHTML = haoutil.str.formatTime((roamLine.alltimes - params.time) / map.clock.multiplier);
+          }
+
+          let lblRemainLen = container.querySelector("#lblRemainLen");
+          if (lblRemainLen) {
+            lblRemainLen.innerHTML = haoutil.str.formatLength(roamLine.alllen - params.len);
+          }
+        });
 
         roamLine.on(mars3d.EventType.change, (event) => {
           //面板显示相关信息
-          showRealTimeInfo(event)
-        })
+          showRealTimeInfo(event);
+        });
 
         //不贴地时，直接开始
         // startFly()
@@ -233,60 +242,60 @@
         roamLine.clampToGround(function (e) {
           //异步计算完成贴地后再启动
           //贴地后的路线值为flyLine.points
-          startFly()
-        })
+          startFly();
+        });
       }
 
       function startFly() {
         //启动漫游
-        roamLine.start()
+        roamLine.start();
 
         //显示popup
-        roamLine.openPopup()
+        roamLine.openPopup();
 
         //显示基本信息，名称、总长、总时间
-        $('#td_alltimes').html(haoutil.str.formatTime(roamLine.alltimes))
-        $('#td_alllength').html(haoutil.str.formatLength(roamLine.alllen))
+        $("#td_alltimes").html(haoutil.str.formatTime(roamLine.alltimes));
+        $("#td_alllength").html(haoutil.str.formatLength(roamLine.alllen));
 
-        addParticleSystem(roamLine)
+        addParticleSystem(roamLine);
       }
 
       //显示实时坐标和时间
       function showRealTimeInfo(params) {
         if (params == null) {
-          return
+          return;
         }
 
-        var val = Math.ceil((params.time * 100) / roamLine.alltimes)
+        var val = Math.ceil((params.time * 100) / roamLine.alltimes);
         if (val < 1) {
-          val = 1
+          val = 1;
         }
         if (val > 100) {
-          val = 100
+          val = 100;
         }
 
-        $('.progress-bar')
-          .css('width', val + '%')
-          .attr('aria-valuenow', val)
-          .html(val + '%')
+        $(".progress-bar")
+          .css("width", val + "%")
+          .attr("aria-valuenow", val)
+          .html(val + "%");
 
-        $('#td_jd').html(params.lng)
-        $('#td_wd').html(params.lat)
-        $('#td_gd').html(haoutil.str.formatLength(params.alt))
+        $("#td_jd").html(params.lng);
+        $("#td_wd").html(params.lat);
+        $("#td_gd").html(haoutil.str.formatLength(params.alt));
 
-        $('#td_times').html(haoutil.str.formatTime(params.time))
-        $('#td_length').html(haoutil.str.formatLength(params.len))
+        $("#td_times").html(haoutil.str.formatTime(params.time));
+        $("#td_length").html(haoutil.str.formatLength(params.len));
 
         if (params.hbgd) {
-          $('#td_dmhb').html(haoutil.str.formatLength(params.hbgd))
+          $("#td_dmhb").html(haoutil.str.formatLength(params.hbgd));
         } else {
-          $('#td_dmhb').html('未知')
+          $("#td_dmhb").html("未知");
         }
 
         if (params.ldgd) {
-          $('#td_ldgd').html(haoutil.str.formatLength(params.ldgd))
+          $("#td_ldgd").html(haoutil.str.formatLength(params.ldgd));
         } else {
-          $('#td_ldgd').html('未知')
+          $("#td_ldgd").html("未知");
         }
       }
 
@@ -294,10 +303,10 @@
       function addParticleSystem(target) {
         var particleSystem = new mars3d.graphic.ParticleSystem({
           modelMatrix: (time) => {
-            return target.matrix
+            return target.matrix;
           },
           style: {
-            image: './img/particle/smoke.png',
+            image: "./img/particle/smoke.png",
             startColor: Cesium.Color.GREY.withAlpha(0.7), //粒子出生时的颜色
             endColor: Cesium.Color.WHITE.withAlpha(0.0), //当粒子死亡时的颜色
             startScale: 1.0, //粒子出生时的比例，相对于原始大小
@@ -312,8 +321,8 @@
           transX: -4.0,
           transZ: 1.4,
           maxHeight: 1000, //超出该高度后不显示粒子效果
-        })
-        map.graphicLayer.addGraphic(particleSystem)
+        });
+        map.graphicLayer.addGraphic(particleSystem);
       }
     </script>
   </body>

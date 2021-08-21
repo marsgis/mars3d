@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>民航航线(OD线) | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -39,9 +39,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -49,57 +49,69 @@
           scene: {
             center: { lat: 14.773411, lng: 110.816311, alt: 7117001, heading: 356, pitch: -75 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.basemap = '黑色底图'
+        map.basemap = "黑色底图";
 
-        Cesium.Resource.fetchJson('//data.mars3d.cn/file/apidemo/flights.json').then(function (data) {
+        Cesium.Resource.fetchJson("//data.mars3d.cn/file/apidemo/flights.json").then(function (data) {
           var airports = data.airports.map(function (item) {
             return {
+              name: item[0],
+              country: item[2],
               point: Cesium.Cartesian3.fromDegrees(item[3], item[4]),
-            }
-          })
+            };
+          });
 
-          var routesGroupByAirline = {}
+          var routesGroupByAirline = {};
           data.routes.forEach(function (route) {
-            var airline = data.airlines[route[0]]
-            var airlineName = airline[0]
+            var airline = data.airlines[route[0]];
+            var airlineName = airline[0];
             if (!routesGroupByAirline[airlineName]) {
-              routesGroupByAirline[airlineName] = []
+              routesGroupByAirline[airlineName] = [];
             }
-            routesGroupByAirline[airlineName].push(route)
-          })
+            routesGroupByAirline[airlineName].push(route);
+          });
 
-          var routes = routesGroupByAirline['Air China']
+          var routes = routesGroupByAirline["Air China"];
 
-          var routePaths = []
+          var routePaths = [];
           routes.forEach(function (route, index) {
-            routePaths.push({
-              startPoint: airports[route[1]].point,
-              endPoint: airports[route[2]].point,
-            })
-          })
+            let start = airports[route[1]];
+            let end = airports[route[2]];
 
-          initPath(routePaths)
-        })
+            routePaths.push({
+              startName: start.name,
+              startPoint: start.point,
+              endName: end.name,
+              endPoint: end.point,
+            });
+          });
+
+          initPath(routePaths);
+        });
       }
 
       function initPath(routePaths) {
         //创建Graphic图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
-        routePaths.forEach(function (item, index) {
-          if (index > 500) {
-            return
+        graphicLayer.bindPopup(function (event) {
+          let attr = event.graphic?.attr;
+          if (!attr) {
+            return false;
           }
+          return mars3d.Util.getTemplateHtml({ title: "航线", template: "{startName} - {endName}", attr: attr });
+        });
 
-          let positions = mars3d.PolyUtil.getLinkedPointList(item.startPoint, item.endPoint, 5000, 30)
+        var arrData = [];
+        routePaths.forEach(function (item, index) {
+          let positions = mars3d.PolyUtil.getLinkedPointList(item.startPoint, item.endPoint, 5000, 30);
 
-          var graphic = new mars3d.graphic.PolylinePrimitive({
+          arrData.push({
             positions: positions,
             style: {
               width: 2.0,
@@ -111,10 +123,42 @@
                 bidirectional: 2,
               }),
             },
-          })
-          graphicLayer.addGraphic(graphic)
-        })
+            attr: item,
+          });
+        });
+
+        //多个线对象的合并渲染。
+        var primitive = new mars3d.graphic.PolylineCombine({
+          instances: arrData,
+        });
+        graphicLayer.addGraphic(primitive);
       }
+
+      //按单个线渲染，效率差些
+      // function initPath(routePaths) {
+      //   //创建Graphic图层
+      //   var graphicLayer = new mars3d.layer.GraphicLayer();
+      //   map.addLayer(graphicLayer);
+
+      //   routePaths.forEach(function (item, index) {
+      //     let positions = mars3d.PolyUtil.getLinkedPointList(item.startPoint, item.endPoint, 5000, 30);
+
+      //     var graphic = new mars3d.graphic.PolylinePrimitive({
+      //       positions: positions,
+      //       style: {
+      //         width: 2.0,
+      //         material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.ODLine, {
+      //           color: new Cesium.Color(0.8 * Math.random() + 0.2, 0.5 * Math.random() + 0.5, 0.1, 1.0),
+      //           bgColor: new Cesium.Color(0.8, 0.8, 0.2, 0.2),
+      //           startTime: 10.0 * Math.random(),
+      //           speed: 2 + 1.0 * Math.random(),
+      //           bidirectional: 2,
+      //         }),
+      //       },
+      //     });
+      //     graphicLayer.addGraphic(graphic);
+      //   });
+      // }
     </script>
   </body>
 </html>

@@ -1,170 +1,169 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="x5-fullscreen" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
 
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
-  <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>Corridor 走廊 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-  <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico">
-  <title>Corridor 走廊 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+    ></script>
 
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
 
-  <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/"
-    include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"></script>
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
 
-  <link href="css/style.css" rel="stylesheet" />
-</head>
+    <div id="mars3dContainer" class="mars3d-container"></div>
 
-<body class="dark">
-  <!--加载前进行操作提示，优化用户体验-->
-  <div id="mask" class="signmask" onclick="removeMask()"></div>
-
-  <div id="mars3dContainer" class="mars3d-container"></div>
-
-
-
-  <div class="infoview">
-    <div>
-      图层状态：
-      <div class="checkbox checkbox-primary checkbox-inline">
-        <input id="chkPopup" class="styled" type="checkbox" checked>
-        <label for="chkPopup">
-          Popup绑定
-        </label>
-      </div>
-      <div class="checkbox checkbox-primary checkbox-inline">
-        <input id="chkTooltip" class="styled" type="checkbox">
-        <label for="chkTooltip">
-          Tooltip绑定
-        </label>
-      </div>
-      <div class="checkbox checkbox-primary checkbox-inline">
-        <input id="chkContextMenu" class="styled" type="checkbox" checked>
-        <label for="chkContextMenu">
-          右键菜单绑定
-        </label>
+    <div class="infoview">
+      <div>
+        图层状态：
+        <div class="checkbox checkbox-primary checkbox-inline">
+          <input id="chkPopup" class="styled" type="checkbox" checked />
+          <label for="chkPopup"> Popup绑定 </label>
+        </div>
+        <div class="checkbox checkbox-primary checkbox-inline">
+          <input id="chkTooltip" class="styled" type="checkbox" />
+          <label for="chkTooltip"> Tooltip绑定 </label>
+        </div>
+        <div class="checkbox checkbox-primary checkbox-inline">
+          <input id="chkContextMenu" class="styled" type="checkbox" checked />
+          <label for="chkContextMenu"> 右键菜单绑定 </label>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- 图层管理相关处理js -->
-  <script type="text/javascript" src="./js/graphicManager.js"></script>
+    <!-- 图层管理相关处理js -->
+    <script type="text/javascript" src="./js/graphicManager.js"></script>
 
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      "use script"; //开发环境建议开启严格模式
 
+      var map;
 
-  <script src="./js/common.js"></script>
-  <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
-
-    var map
-
-    function initMap(options) {
-      //合并属性参数，可覆盖config.json中的对应配置
-      var mapOptions = mars3d.Util.merge(options, {
-        scene: {
-          center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 },
-        },
-      })
-
-      //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
-
-      //创建Graphic图层
-      var graphicLayer = new mars3d.layer.GraphicLayer()
-      map.addLayer(graphicLayer)
-
-      //图层管理的相关处理，代码在\js\graphicManager.js
-      initLayerManager(graphicLayer)
-
-      //加一些演示数据
-      addGraphic_a1(graphicLayer)
-      addGraphic_a2(graphicLayer)
-      addGraphic_a3(graphicLayer)
-    }
-
-    function addGraphic_a1(graphicLayer) {
-      var primitive = new mars3d.graphic.CorridorPrimitive({
-        positions: [
-          [117.220337, 31.832987, 42.8],
-          [117.279826, 31.804185, 34.5],
-          [117.28621, 31.801059, 24.6],
-        ],
-        style: {
-          width: 500,
-          color: '#ffff00',
-          opacity: 0.6,
-          label: {
-            text: '我是条带',
-            font_size: 18,
-            color: '#ffffff',
-            distanceDisplayCondition: true,
-            distanceDisplayCondition_far: 500000,
-            distanceDisplayCondition_near: 0,
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 31.608821, lng: 117.255084, alt: 32429, heading: 2, pitch: -49 },
           },
-        },
-      })
-      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
+        });
 
-      //演示个性化处理graphic，代码在\js\graphicManager.js
-      initGraphicManager(primitive)
-    }
+        //创建三维地球场景
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-    function addGraphic_a2(graphicLayer) {
-      var primitive = new mars3d.graphic.CorridorPrimitive({
-        positions: [
-          [117.172852, 31.862736, 33.69],
-          [117.251461, 31.856011, 26.44],
-          [117.270843, 31.899808, 21.61],
-        ],
-        style: {
-          width: 300.0,
-          height: 200.0,
-          diffHeight: 600,
-          cornerType: Cesium.CornerType.MITERED,
-          color: Cesium.Color.BLUE.withAlpha(0.5),
-        },
-      })
-      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
+        //创建Graphic图层
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
-      //entity转geojson
-      var geojson = primitive.toGeoJSON()
-      console.log(geojson)
-    }
+        //图层管理的相关处理，代码在\js\graphicManager.js
+        initLayerManager(graphicLayer);
 
-    function addGraphic_a3(graphicLayer) {
-      var primitive = new mars3d.graphic.CorridorPrimitive({
-        positions: [
-          [117.358187, 31.838662, 12.23],
-          [117.312357, 31.83323, 12.47],
-        ],
-        style: {
-          height: 200.0,
-          width: 200.0,
-          cornerType: Cesium.CornerType.MITERED,
-          material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-            image: './img/textures/arrow2.png',
-            axisY: false,
-            repeat: new Cesium.Cartesian2(20.0, 1.0),
-            color: '#ffff00',
-            speed: 60,
-          }),
-        },
-      })
-      graphicLayer.addGraphic(primitive) //primitive.addTo(graphicLayer)  //另外一种写法
-    }
-  </script>
-</body>
+        //加一些演示数据
+        addGraphic_a1(graphicLayer);
+        addGraphic_a2(graphicLayer);
+        addGraphic_a3(graphicLayer);
+      }
 
+      function addGraphic_a1(graphicLayer) {
+        var primitive = new mars3d.graphic.CorridorPrimitive({
+          positions: [
+            [117.220337, 31.832987, 42.8],
+            [117.279826, 31.804185, 34.5],
+            [117.28621, 31.801059, 24.6],
+          ],
+          style: {
+            width: 500,
+            color: "#ffff00",
+            opacity: 0.5,
+
+            label: { text: "鼠标移入会高亮", pixelOffsetY: -30 },
+            //高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+            highlight: {
+              opacity: 0.9,
+            },
+          },
+        });
+        graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法
+
+        //演示个性化处理graphic，代码在\js\graphicManager.js
+        initGraphicManager(primitive);
+      }
+
+      function addGraphic_a2(graphicLayer) {
+        var primitive = new mars3d.graphic.CorridorPrimitive({
+          positions: [
+            [117.172852, 31.862736, 33.69],
+            [117.251461, 31.856011, 26.44],
+            [117.270843, 31.899808, 21.61],
+          ],
+          style: {
+            width: 300.0,
+            height: 200.0,
+            diffHeight: 600,
+            cornerType: Cesium.CornerType.MITERED,
+            color: Cesium.Color.BLUE.withAlpha(0.5),
+
+            label: {
+              text: "我是条带",
+              font_size: 18,
+              color: "#ffffff",
+              distanceDisplayCondition: true,
+              distanceDisplayCondition_far: 500000,
+              distanceDisplayCondition_near: 0,
+            },
+          },
+        });
+        graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法
+
+        //entity转geojson
+        var geojson = primitive.toGeoJSON();
+        console.log(geojson);
+      }
+
+      function addGraphic_a3(graphicLayer) {
+        var primitive = new mars3d.graphic.CorridorPrimitive({
+          positions: [
+            [117.358187, 31.838662, 12.23],
+            [117.312357, 31.83323, 12.47],
+          ],
+          style: {
+            height: 200.0,
+            width: 200.0,
+            cornerType: Cesium.CornerType.MITERED,
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
+              image: "./img/textures/arrow2.png",
+              axisY: false,
+              repeat: new Cesium.Cartesian2(20.0, 1.0),
+              color: "#ffff00",
+              speed: 60,
+            }),
+          },
+        });
+        graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法
+      }
+    </script>
+  </body>
 </html>

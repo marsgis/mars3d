@@ -54,16 +54,16 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.Util.merge(options, {})
+        var mapOptions = mars3d.Util.merge(options, {});
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         var cameraHistory = new mars3d.thing.CameraHistory({
           limit: {
@@ -73,17 +73,17 @@
             debugExtent: true,
           },
           maxCacheCount: 999,
-        })
-        map.addThing(cameraHistory)
+        });
+        map.addThing(cameraHistory);
 
         cameraHistory.on(mars3d.EventType.change, function (event) {
-          $('#lblAll').html(event.count)
-        })
+          $("#lblAll").html(event.count);
+        });
 
-        $('#chkUnderground').change(function () {
-          var val = $(this).is(':checked')
-          cameraHistory.debugExtent = val
-        })
+        $("#chkUnderground").change(function () {
+          var val = $(this).is(":checked");
+          cameraHistory.debugExtent = val;
+        });
       }
     </script>
   </body>

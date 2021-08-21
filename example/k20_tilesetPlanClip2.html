@@ -63,21 +63,21 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.Util.merge(options, {})
+        var mapOptions = mars3d.Util.merge(options, {});
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //加模型
         var tilesetLayer = new mars3d.layer.TilesetLayer({
-          name: '县城社区',
-          url: '//data.mars3d.cn/3dtiles/qx-shequ/tileset.json',
+          name: "县城社区",
+          url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
           position: { alt: 11.5 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
@@ -88,81 +88,82 @@
           luminanceAtZenith: 0.6,
           center: { lat: 28.440675, lng: 119.487735, alt: 639, heading: 269, pitch: -38 },
           flyTo: true,
-        })
-        map.addLayer(tilesetLayer)
+        });
+        map.addLayer(tilesetLayer);
 
+        // 3d模型裁剪
         var tilesetPlanClip = new mars3d.thing.TilesetPlanClip({
           layer: tilesetLayer,
           clipOutSide: false,
           edgeColor: Cesium.Color.GREY,
           edgeWidth: 2.0,
-        })
-        map.addThing(tilesetPlanClip)
+        });
+        map.addThing(tilesetPlanClip);
 
-        $('#btnClear').click(function () {
-          tilesetPlanClip.clear()
-        })
+        $("#btnClear").click(function () {
+          tilesetPlanClip.clear();
+        });
 
-        $('#btnDrawPoly').click(function () {
-          tilesetPlanClip.clear()
-
+        $("#btnDrawPoly").click(function () {
+          tilesetPlanClip.clear();
           map.graphicLayer.startDraw({
-            type: 'polygon',
+            type: "polygon",
             style: {
-              color: '#007be6',
+              color: "#007be6",
               opacity: 0.5,
               clampToGround: true,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.positionsShow
-              map.graphicLayer.clear()
+              var positions = graphic.positionsShow;
+              map.graphicLayer.clear();
 
-              tilesetPlanClip.positions = positions
+              // 加入positions才能使3d裁剪确定位置，生效
+              tilesetPlanClip.positions = positions;
             },
-          })
-        })
+          });
+        });
 
-        $('#btnDrawPoly2').click(function () {
-          tilesetPlanClip.clear()
+        $("#btnDrawPoly2").click(function () {
+          tilesetPlanClip.clear();
 
           map.graphicLayer.startDraw({
-            type: 'polygon',
+            type: "polygon",
             style: {
-              color: '#007be6',
+              color: "#007be6",
               opacity: 0.5,
               clampToGround: true,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.positionsShow
-              map.graphicLayer.clear()
+              var positions = graphic.positionsShow;
+              map.graphicLayer.clear();
 
-              tilesetPlanClip.clipOutSide = true
-              tilesetPlanClip.positions = positions
+              tilesetPlanClip.clipOutSide = true;
+              tilesetPlanClip.positions = positions;
             },
-          })
-        })
+          });
+        });
 
-        $('#btnDrawExtent').click(function () {
-          tilesetPlanClip.clear()
+        $("#btnDrawExtent").click(function () {
+          tilesetPlanClip.clear();
           map.graphicLayer.startDraw({
-            type: 'rectangle',
+            type: "rectangle",
             style: {
-              color: '#007be6',
+              color: "#007be6",
               opacity: 0.8,
               outline: false,
               // clampToGround: true
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.getOutlinePositions(false)
-              map.graphicLayer.clear()
+              var positions = graphic.getOutlinePositions(false);
+              map.graphicLayer.clear();
 
-              tilesetPlanClip.positions = positions
+              tilesetPlanClip.positions = positions;
             },
-          })
-        })
+          });
+        });
       }
     </script>
   </body>

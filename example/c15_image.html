@@ -40,20 +40,20 @@
     </div>
 
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
       $(document).ready(function () {
         if (!mars3d.Util.webglreport()) {
-          mars3d.Util.webglerror()
-          return
+          mars3d.Util.webglerror();
+          return;
         }
-        initMap()
-      })
+        initMap();
+      });
 
-      var map
+      var map;
       function initMap() {
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', {
+        map = new mars3d.Map("mars3dContainer", {
           scene: {
             center: { lat: 27.374349, lng: 116.120223, alt: 21694582, heading: 0, pitch: -88 },
             highDynamicRange: false,
@@ -65,52 +65,52 @@
             defaultContextMenu: true, //右键菜单
           },
           terrain: {
-            url: '//data.mars3d.cn/terrain',
+            url: "//data.mars3d.cn/terrain",
             show: true,
           },
           //方式1：在创建地球前的参数中配置
           basemaps: [
             {
-              name: '单张图片',
-              icon: 'img/basemaps/bingmap.png',
-              type: 'image',
-              url: '//data.mars3d.cn/file/img/world/world.jpg',
+              name: "单张图片",
+              icon: "img/basemaps/bingmap.png",
+              type: "image",
+              url: "//data.mars3d.cn/file/img/world/world.jpg",
             },
             {
-              name: '夜晚图片',
-              icon: 'img/basemaps/blackMarble.png',
-              type: 'image',
-              url: '//data.mars3d.cn/file/img/world/night.jpg',
+              name: "夜晚图片",
+              icon: "img/basemaps/blackMarble.png",
+              type: "image",
+              url: "//data.mars3d.cn/file/img/world/night.jpg",
             },
             {
-              name: '蓝色底图',
-              icon: 'img/basemaps/bd-c-midnight.png',
-              type: 'image',
-              url: '//data.mars3d.cn/file/img/world/blue.jpg',
+              name: "蓝色底图",
+              icon: "img/basemaps/bd-c-midnight.png",
+              type: "image",
+              url: "//data.mars3d.cn/file/img/world/blue.jpg",
               show: true,
             },
           ],
-        })
+        });
       }
 
       //叠加的图层
-      var tileLayer
+      var tileLayer;
 
       function addLayer() {
-        removeLayer()
+        removeLayer();
 
         //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
         tileLayer = new mars3d.layer.ImageLayer({
-          url: '//data.mars3d.cn//file/img/radar/201906211112.PNG',
+          url: "//data.mars3d.cn//file/img/radar/201906211112.PNG",
           rectangle: { xmin: 73.16895, xmax: 134.86816, ymin: 12.2023, ymax: 54.11485 },
           alpha: 0.7,
-        })
-        map.addLayer(tileLayer)
+        });
+        map.addLayer(tileLayer);
       }
       function removeLayer() {
         if (tileLayer) {
-          map.removeLayer(tileLayer, true)
-          tileLayer = null
+          map.removeLayer(tileLayer, true);
+          tileLayer = null;
         }
       }
     </script>

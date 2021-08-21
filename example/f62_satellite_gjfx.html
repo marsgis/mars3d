@@ -19,7 +19,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>卫星过境 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>卫星过境分析 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <script
       type="text/javascript"
@@ -75,39 +75,32 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var graphicLayer
+      var map;
+      var graphicLayer;
 
-      var tleArr
-      var drawGraphic
-      var $table
+      var tleArr;
+      var drawGraphic;
+      var $table;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 21.102844,
-              x: 108.441169,
-              z: 4426844.43,
-              heading: 356.4,
-              pitch: -76.9,
-              roll: 0.1,
-            },
+            center: { lat: 21.105826, lng: 108.202174, alt: 4426845, heading: 356, pitch: -77 },
             cameraController: {
               constrainedAxis: false, //解除在南北极区域鼠标操作限制
             },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
-        graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //加载示例数据
         // eslint-disable-next-line prettier/prettier
@@ -116,235 +109,248 @@
         // $('#txtEndTime').val(hostiryData.endDate) //结束时间
         // drawGraphic = map.graphicLayer.loadGeoJSON(hostiryData.geojson)[0]
 
-        initUI()
+        initUI();
 
         queryTleChinaApiData()
           .then(function (data) {
-            tleArr = data.data
-            console.log('卫星数量：' + tleArr.length)
+            tleArr = data.data;
+            console.log("卫星数量：" + tleArr.length);
           })
           .catch(function () {
-            haoutil.msg('获取空间目标轨道数据异常！')
-          })
+            haoutil.msg("获取空间目标轨道数据异常！");
+          });
       }
 
       // 访问后端接口，取数据
       function queryTleChinaApiData() {
         return new Promise(function (resolve, reject) {
-          $.getJSON('//data.mars3d.cn/file/apidemo/tle-china.json', function (result) {
-            resolve(result)
-          })
-        })
+          $.ajax({
+            url: "//data.mars3d.cn/file/apidemo/tle-china.json",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+              resolve(result);
+            },
+            error: function (data) {
+              reject(data);
+            },
+          });
+        });
       }
 
       function initUI() {
-        jeDate('#txtStartTime', {
+        // eslint-disable-next-line no-undef
+        jeDate("#txtStartTime", {
           theme: {
-            bgcolor: '#135b91',
-            pnColor: '#00CCFF',
+            bgcolor: "#135b91",
+            pnColor: "#00CCFF",
           },
-          format: 'YYYY-MM-DD hh:mm:ss',
-        })
-        jeDate('#txtEndTime', {
+          format: "YYYY-MM-DD hh:mm:ss",
+          zIndex: 20210825,
+        });
+        // eslint-disable-next-line no-undef
+        jeDate("#txtEndTime", {
           theme: {
-            bgcolor: '#135b91',
-            pnColor: '#00CCFF',
+            bgcolor: "#135b91",
+            pnColor: "#00CCFF",
           },
-          format: 'YYYY-MM-DD hh:mm:ss',
-        })
+          format: "YYYY-MM-DD hh:mm:ss",
+          zIndex: 20210825,
+        });
 
-        var now = Cesium.JulianDate.toDate(map.clock.currentTime)
-        $('#txtStartTime').val(now.format('yyyy-MM-dd HH:mm:ss'))
+        var now = Cesium.JulianDate.toDate(map.clock.currentTime);
+        $("#txtStartTime").val(now.format("yyyy-MM-dd HH:mm:ss"));
 
-        now.setMinutes(now.getMinutes() + 60)
-        $('#txtEndTime').val(now.format('yyyy-MM-dd HH:mm:ss'))
+        now.setMinutes(now.getMinutes() + 60);
+        $("#txtEndTime").val(now.format("yyyy-MM-dd HH:mm:ss"));
 
         //框选查询 矩形
-        $('#drawRectangle').click(function () {
-          map.graphicLayer.clear()
+        $("#drawRectangle").click(function () {
+          map.graphicLayer.clear();
           map.graphicLayer.startDraw({
-            type: 'rectangle',
+            type: "rectangle",
             style: {
-              color: '#ffff00',
+              color: "#ffff00",
               opacity: 0.2,
               outline: true,
-              outlineColor: '#ffffff',
+              outlineColor: "#ffffff",
             },
             success: function (graphic) {
-              drawGraphic = graphic
+              drawGraphic = graphic;
             },
-          })
-        })
+          });
+        });
         //框选查询   多边
-        $('#drawPolygon').click(function () {
-          map.graphicLayer.clear()
+        $("#drawPolygon").click(function () {
+          map.graphicLayer.clear();
           map.graphicLayer.startDraw({
-            type: 'polygon',
+            type: "polygon",
             style: {
-              color: '#ffff00',
+              color: "#ffff00",
               opacity: 0.2,
               outline: true,
-              outlineColor: '#ffffff',
+              outlineColor: "#ffffff",
             },
             success: function (graphic) {
-              drawGraphic = graphic
+              drawGraphic = graphic;
             },
-          })
-        })
+          });
+        });
         //框选查询   圆
-        $('#drawCircle').click(function () {
-          map.graphicLayer.clear()
+        $("#drawCircle").click(function () {
+          map.graphicLayer.clear();
           map.graphicLayer.startDraw({
-            type: 'circle',
+            type: "circle",
             style: {
-              color: '#ffff00',
+              color: "#ffff00",
               opacity: 0.2,
               outline: true,
-              outlineColor: '#ffffff',
+              outlineColor: "#ffffff",
             },
             success: function (graphic) {
-              drawGraphic = graphic
+              drawGraphic = graphic;
             },
-          })
-        })
+          });
+        });
 
-        $('#drawClear').click(function () {
-          map.graphicLayer.clear()
-          drawGraphic = null
-        })
+        $("#drawClear").click(function () {
+          map.graphicLayer.clear();
+          drawGraphic = null;
+        });
 
-        $table = $('#table')
+        $table = $("#table");
         $table.bootstrapTable({
           height: 300,
           singleSelect: true, //单选
           pagination: false,
-          iconsPrefix: 'fa',
+          iconsPrefix: "fa",
           columns: [
             {
-              field: 'name',
-              title: '卫星名称',
+              field: "name",
+              title: "卫星名称",
               sortable: true,
               editable: false,
-              align: 'left',
+              align: "left",
             },
             {
-              field: 'inTime',
-              title: '进入时间',
+              field: "inTime",
+              title: "进入时间",
               sortable: true,
               editable: false,
-              align: 'left',
+              align: "left",
             },
             {
-              field: 'outTime',
-              title: '飞出时间',
+              field: "outTime",
+              title: "飞出时间",
               sortable: true,
               editable: false,
-              align: 'left',
+              align: "left",
             },
             {
-              field: 'often',
-              title: '飞行时长',
+              field: "often",
+              title: "飞行时长",
               sortable: true,
               editable: false,
-              align: 'left',
+              align: "left",
             },
             {
-              field: 'distance',
-              title: '飞行距离',
+              field: "distance",
+              title: "飞行距离",
               sortable: true,
               editable: false,
-              align: 'left',
+              align: "left",
             },
           ],
           onClickRow: function (item, $element, field) {
-            var graphic = item._graphic
+            var graphic = item._graphic;
             if (graphic == null) {
-              toastr.warning(item.name + ' 无经纬度坐标信息！')
-              return
+              // eslint-disable-next-line no-undef
+              toastr.warning(item.name + " 无经纬度坐标信息！");
+              return;
             }
-            graphic.flyTo()
+            graphic.flyTo();
           },
-        })
+        });
       }
 
       //清除效果
       function clearResult() {
-        $table.bootstrapTable('load', [])
-        graphicLayer.clear()
+        $table.bootstrapTable("load", []);
+        graphicLayer.clear();
       }
 
       //================卫星过境===================================
 
       //颜色
-      var pointClr = Cesium.Color.fromCssColorString('#ff0000').withAlpha(0.7)
+      var pointClr = Cesium.Color.fromCssColorString("#ff0000").withAlpha(0.7);
 
       function startFX() {
-        clearResult()
+        clearResult();
 
         if (!drawGraphic) {
-          haoutil.msg('请先在图上绘制区域')
-          return
+          haoutil.msg("请先在图上绘制区域");
+          return;
         }
 
-        var startDate = new Date($('#txtStartTime').val()) //开始时间
-        var endDate = new Date($('#txtEndTime').val()) //结束时间
+        var startDate = new Date($("#txtStartTime").val()); //开始时间
+        var endDate = new Date($("#txtEndTime").val()); //结束时间
 
-        var startTimes = startDate.getTime()
-        var endTimes = endDate.getTime()
+        var startTimes = startDate.getTime();
+        var endTimes = endDate.getTime();
 
         //记录参数值
         console.log(
           JSON.stringify({
-            startDate: startDate.format('yyyy-MM-dd HH:mm:ss'),
-            endDate: endDate.format('yyyy-MM-dd HH:mm:ss'),
+            startDate: startDate.format("yyyy-MM-dd HH:mm:ss"),
+            endDate: endDate.format("yyyy-MM-dd HH:mm:ss"),
             geojson: drawGraphic.toGeoJSON(),
           })
-        )
+        );
 
         //范围相关信息
         var options = {
           startTimes: startTimes,
           endTimes: endTimes,
           graphic: drawGraphic,
-        }
+        };
 
         //分析卫星位置
-        var newSatelliteArr = [] //存储飞过指定范围的卫星的数据
+        var newSatelliteArr = []; //存储飞过指定范围的卫星的数据
         for (var ind = 0; ind < tleArr.length; ind++) {
-          var item = tleArr[ind]
-          var arr = fxOneSatellite(item, options)
+          var item = tleArr[ind];
+          var arr = fxOneSatellite(item, options);
 
           if (arr.length == 0) {
-            continue
+            continue;
           }
 
-          item.inAreaPath = arr
-          newSatelliteArr.push(item)
+          item.inAreaPath = arr;
+          newSatelliteArr.push(item);
         }
 
-        showResult(newSatelliteArr)
+        showResult(newSatelliteArr);
       }
 
       function fxOneSatellite(item, options) {
-        var inAreaPath = []
-        var lastObj = null
+        var inAreaPath = [];
+        var lastObj = null;
 
-        var graphic = options.graphic
-        var startTimes = options.startTimes
-        var endTimes = options.endTimes
-        var step = 10 * 1000 //插值数
+        var graphic = options.graphic;
+        var startTimes = options.startTimes;
+        var endTimes = options.endTimes;
+        var step = 10 * 1000; //插值数
 
-        var nowTime = startTimes
-        var position
+        var nowTime = startTimes;
+        var position;
         while (nowTime <= endTimes) {
           //根据时间计算卫星的位置
-          let position = mars3d.Tle.getEcfPosition(item.tle1, item.tle2, nowTime)
+          let position = mars3d.Tle.getEcfPosition(item.tle1, item.tle2, nowTime);
           if (!position) {
-            break
+            break;
           }
 
           //显示点[参考比较结果是否正确]
-          var timeStr = new Date(nowTime).format('yyyy-MM-dd HH:mm:ss')
+          var timeStr = new Date(nowTime).format("yyyy-MM-dd HH:mm:ss");
           var primitive = new mars3d.graphic.PointPrimitive({
             position: position,
             style: {
@@ -353,11 +359,11 @@
             },
             attr: item,
             tooltip: `编号：${item.norad} <br />卫星：${item.name} <br />时间：${timeStr}`,
-          })
-          graphicLayer.addGraphic(primitive)
+          });
+          graphicLayer.addGraphic(primitive);
 
           //判断是卫星否在缓冲区内
-          var isInPoly = graphic.isInPoly(position)
+          var isInPoly = graphic.isInPoly(position);
 
           // console.log(`${item.name},时间：${timeStr},结果：${isInPoly}`);
 
@@ -368,8 +374,8 @@
               lastTime: lastObj.time,
               time: nowTime,
               position: position,
-              inOrOut: 'in',
-            })
+              inOrOut: "in",
+            });
           }
 
           if (lastObj && lastObj.isInPoly && !isInPoly) {
@@ -379,17 +385,17 @@
               lastPosition: lastObj.position,
               lastTime: lastObj.time,
               time: nowTime,
-              inOrOut: 'out',
-            })
-            break
+              inOrOut: "out",
+            });
+            break;
           }
 
           lastObj = {
             position: position,
             isInPoly: isInPoly,
             time: nowTime,
-          }
-          nowTime += step
+          };
+          nowTime += step;
         }
 
         if (lastObj && lastObj.isInPoly) {
@@ -399,46 +405,46 @@
             lastPosition: lastObj.position,
             lastTime: lastObj.time,
             time: nowTime,
-            inOrOut: 'out',
-          })
+            inOrOut: "out",
+          });
         }
 
-        return inAreaPath
+        return inAreaPath;
       }
 
       //=====================结果展示==================================
 
       function showResult(newSatelliteArr) {
         //显示卫星条带
-        var tableList = []
+        var tableList = [];
 
         for (var ind = 0; ind < newSatelliteArr.length; ind++) {
-          var item = newSatelliteArr[ind]
-          var inAreaPath = item.inAreaPath
+          var item = newSatelliteArr[ind];
+          var inAreaPath = item.inAreaPath;
           if (inAreaPath.length < 2) {
-            continue
+            continue;
           }
 
-          var index = 0
-          if (inAreaPath[0].inOrOut == 'out') {
+          var index = 0;
+          if (inAreaPath[0].inOrOut == "out") {
             //保证从进入 开始计算
-            index = 1
+            index = 1;
           }
 
           for (var i = index; i < inAreaPath.length; i = i + 2) {
-            var positions = []
-            var inTime
-            var outTime
-            if (inAreaPath[i].inOrOut == 'in' && inAreaPath[i + 1].inOrOut == 'out') {
-              var inAttr = inAreaPath[i]
-              var outAttr = inAreaPath[i + 1]
+            var positions = [];
+            var inTime;
+            var outTime;
+            if (inAreaPath[i].inOrOut == "in" && inAreaPath[i + 1].inOrOut == "out") {
+              var inAttr = inAreaPath[i];
+              var outAttr = inAreaPath[i + 1];
               if (inAttr?.lastPosition) {
-                inTime = new Date(inAttr.lastTime).format('yyyy-M-d HH:mm:ss')
-                positions.push(inAttr.lastPosition)
+                inTime = new Date(inAttr.lastTime).format("yyyy-M-d HH:mm:ss");
+                positions.push(inAttr.lastPosition);
               }
               if (outAttr?.position) {
-                positions.push(outAttr.position)
-                outTime = new Date(outAttr.time).format('yyyy-M-d HH:mm:ss')
+                positions.push(outAttr.position);
+                outTime = new Date(outAttr.time).format("yyyy-M-d HH:mm:ss");
               }
               if (positions.length > 1) {
                 var data = {
@@ -448,19 +454,19 @@
                   outTime: outTime,
                   often: haoutil.str.formatTime((outAttr.time - inAttr.lastTime) / 1000),
                   distance: haoutil.str.formatLength(Cesium.Cartesian3.distance(positions[1], positions[0])),
-                }
-                tableList.push(data)
-                showCorridor(data)
+                };
+                tableList.push(data);
+                showCorridor(data);
               }
             }
           }
         }
-        $table.bootstrapTable('load', tableList)
+        $table.bootstrapTable("load", tableList);
 
-        haoutil.msg('分析完成，共' + tableList.length + '条过境记录')
+        haoutil.msg("分析完成，共" + tableList.length + "条过境记录");
       }
 
-      var corridor = []
+      var corridor = [];
 
       function showCorridor(data) {
         var primitive = new mars3d.graphic.CorridorPrimitive({
@@ -468,33 +474,33 @@
           style: {
             width: 6000,
             cornerType: Cesium.CornerType.MITERED, //指定转角处样式
-            color: '#00ff00',
+            color: "#00ff00",
           },
-        })
-        graphicLayer.addGraphic(primitive)
+        });
+        graphicLayer.addGraphic(primitive);
 
         var inthtml =
           '<table style="width:280px;">' +
           '<tr><th scope="col" colspan="4"  style="text-align:center;font-size:15px;">信息</th></tr>' +
-          '<tr><td >卫星名称：</td><td >' +
+          "<tr><td >卫星名称：</td><td >" +
           data.name +
-          ' </td></tr>' +
-          '<tr><td >进入时间：</td><td >' +
+          " </td></tr>" +
+          "<tr><td >进入时间：</td><td >" +
           data.inTime +
-          ' </td></tr>' +
-          '<tr><td >飞出时间：</td><td >' +
+          " </td></tr>" +
+          "<tr><td >飞出时间：</td><td >" +
           data.outTime +
-          ' </td></tr>' +
-          '<tr><td >过境时长：</td><td >' +
+          " </td></tr>" +
+          "<tr><td >过境时长：</td><td >" +
           data.often +
-          ' </td></tr>' +
-          '<tr><td >过境距离：</td><td >' +
+          " </td></tr>" +
+          "<tr><td >过境距离：</td><td >" +
           data.distance +
-          ' </td></tr>' +
-          '</table>'
-        primitive.bindPopup(inthtml)
+          " </td></tr>" +
+          "</table>";
+        primitive.bindPopup(inthtml);
 
-        data._graphic = primitive
+        data._graphic = primitive;
       }
     </script>
   </body>

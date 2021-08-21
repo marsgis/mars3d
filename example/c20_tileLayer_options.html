@@ -109,7 +109,7 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -123,17 +123,17 @@
           basemaps: [],
           layers: [
             {
-              name: '单张图片',
-              icon: 'img/basemaps/bingmap.png',
-              type: 'image',
-              url: '//data.mars3d.cn/file/img/world/world.jpg',
+              name: "单张图片",
+              icon: "img/basemaps/bingmap.png",
+              type: "image",
+              url: "//data.mars3d.cn/file/img/world/world.jpg",
               show: true,
             },
           ],
-        })
+        });
 
         //创建三维地球场景
-        var map = new mars3d.Map('mars3dContainer', mapOptions)
+        var map = new mars3d.Map("mars3dContainer", mapOptions);
 
         // The viewModel tracks the state of our mini application.
         var viewModel = {
@@ -143,32 +143,32 @@
           saturation: 1, //饱和度
           gamma: 0.2, //伽马值
           opacity: 1, //透明度
-        }
+        };
 
         //添加图层
         var tileLayer = new mars3d.layer.GaodeLayer({
-          layer: 'vec',
+          layer: "vec",
           ...viewModel,
-        })
-        map.addLayer(tileLayer)
+        });
+        map.addLayer(tileLayer);
 
         // Convert the viewModel members into knockout observables.
-        Cesium.knockout.track(viewModel)
-        var toolbar = document.getElementById('toolbar')
-        Cesium.knockout.applyBindings(viewModel, toolbar)
+        Cesium.knockout.track(viewModel);
+        var toolbar = document.getElementById("toolbar");
+        Cesium.knockout.applyBindings(viewModel, toolbar);
 
         // Make the active imagery layer a subscriber of the viewModel.
         function subscribeLayerParameter(name) {
           Cesium.knockout.getObservable(viewModel, name).subscribe(function (newValue) {
-            tileLayer[name] = newValue
-          })
+            tileLayer[name] = newValue;
+          });
         }
-        subscribeLayerParameter('brightness')
-        subscribeLayerParameter('contrast')
-        subscribeLayerParameter('hue')
-        subscribeLayerParameter('saturation')
-        subscribeLayerParameter('gamma')
-        subscribeLayerParameter('opacity')
+        subscribeLayerParameter("brightness");
+        subscribeLayerParameter("contrast");
+        subscribeLayerParameter("hue");
+        subscribeLayerParameter("saturation");
+        subscribeLayerParameter("gamma");
+        subscribeLayerParameter("opacity");
       }
     </script>
   </body>

@@ -82,10 +82,10 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var canvasWindLayer
+      var map;
+      var canvasWindLayer;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -93,118 +93,118 @@
           scene: {
             center: { lat: 17.262069, lng: 118.610529, alt: 21466323, heading: 359, pitch: -89 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.basemap = 2017 //蓝色底图
+        map.basemap = 2017; //蓝色底图
 
         //风场
         canvasWindLayer = new mars3d.layer.CanvasWindLayer({
-          color: '#ffffff', //颜色
+          color: "#ffffff", //颜色
           frameRate: 20, //每秒刷新次数
           speedRate: 60, //风前进速率
           particlesNumber: 5000,
           maxAge: 120,
           lineWidth: 1,
-        })
-        map.addLayer(canvasWindLayer)
+        });
+        map.addLayer(canvasWindLayer);
 
         //滑动条
-        $('#txt_count').range({
+        $("#txt_count").range({
           onChange: function (value, bfb) {
-            canvasWindLayer.particlesNumber = value
+            canvasWindLayer.particlesNumber = value;
           },
-        })
-        $('#txt_age').range({
+        });
+        $("#txt_age").range({
           onChange: function (value, bfb) {
-            canvasWindLayer.maxAge = value
+            canvasWindLayer.maxAge = value;
           },
-        })
-        $('#txt_speed').range({
+        });
+        $("#txt_speed").range({
           onChange: function (value, bfb) {
-            canvasWindLayer.speedRate = value
+            canvasWindLayer.speedRate = value;
           },
-        })
-        $('#txt_linewidth').range({
+        });
+        $("#txt_linewidth").range({
           onChange: function (value, bfb) {
-            canvasWindLayer.lineWidth = value
+            canvasWindLayer.lineWidth = value;
           },
-        })
+        });
 
-        $('#txtColor').minicolors({
-          position: 'bottom left',
-          control: 'saturation',
+        $("#txtColor").minicolors({
+          position: "bottom left",
+          control: "saturation",
           change: function (hex) {
-            canvasWindLayer.color = hex
+            canvasWindLayer.color = hex;
           },
-        })
+        });
 
-        loadEarthData()
+        loadEarthData();
       }
 
       //加载全球数据
-      var earthWindData
+      var earthWindData;
 
       function loadEarthData() {
-        map.flyHome()
+        map.flyHome();
 
-        canvasWindLayer.speedRate = 50
-        canvasWindLayer.reverseY = false //false时表示 纬度顺序从大到小
+        canvasWindLayer.speedRate = 50;
+        canvasWindLayer.reverseY = false; //false时表示 纬度顺序从大到小
 
         queryWindyuvApiData()
           .then(function (res) {
-            earthWindData = res
-            canvasWindLayer.data = earthWindData
+            earthWindData = res;
+            canvasWindLayer.data = earthWindData;
           })
           .catch(function (err) {
-            console.log('请求数据失败!', err)
-          })
+            console.log("请求数据失败!", err);
+          });
       }
 
       //加载气象
-      var dongnanWindData
+      var dongnanWindData;
 
       // 访问windyuv.json后端接口，取数据
       function queryWindyuvApiData() {
         return new Promise(function (resolve, reject) {
           if (earthWindData) {
-            canvasWindLayer.data = earthWindData
+            canvasWindLayer.data = earthWindData;
           } else {
             $.ajax({
-              url: '//data.mars3d.cn/file/apidemo/windyuv.json',
-              type: 'get',
-              dataType: 'json',
+              url: "//data.mars3d.cn/file/apidemo/windyuv.json",
+              type: "get",
+              dataType: "json",
               success: function (result) {
-                resolve(result)
+                resolve(result);
               },
               error: function (data) {
-                reject(data)
+                reject(data);
               },
-            })
+            });
           }
-        })
+        });
       }
       // 访问windpoint.json后端接口，取数据
       function queryWindpointApiData() {
         return new Promise(function (resolve, reject) {
           if (dongnanWindData) {
-            canvasWindLayer.data = dongnanWindData
+            canvasWindLayer.data = dongnanWindData;
           } else {
             $.ajax({
-              url: '//data.mars3d.cn/file/apidemo/windpoint.json',
-              type: 'get',
-              dataType: 'json',
+              url: "//data.mars3d.cn/file/apidemo/windpoint.json",
+              type: "get",
+              dataType: "json",
               success: function (result) {
-                resolve(result)
+                resolve(result);
               },
               error: function (data) {
-                reject(data)
+                reject(data);
               },
-            })
+            });
           }
-        })
+        });
       }
 
       function loadDongnanData() {
@@ -215,59 +215,59 @@
           heading: 0,
           pitch: -90,
           roll: 0,
-        })
+        });
 
-        canvasWindLayer.speedRate = 85
-        canvasWindLayer.reverseY = true //true时表示 纬度顺序从小到到大
+        canvasWindLayer.speedRate = 85;
+        canvasWindLayer.reverseY = true; //true时表示 纬度顺序从小到到大
 
         queryWindpointApiData()
           .then(function (res) {
-            dongnanWindData = convertWindData(res.data)
-            canvasWindLayer.data = dongnanWindData
+            dongnanWindData = convertWindData(res.data);
+            canvasWindLayer.data = dongnanWindData;
           })
           .catch(function (err) {
-            haoutil.msg('实时查询气象信息失败，请稍候再试')
-          })
+            haoutil.msg("实时查询气象信息失败，请稍候再试");
+          });
       }
 
       //将数据转换为需要的格式:风向转UV
       function convertWindData(arr) {
-        var arrU = []
-        var arrV = []
+        var arrU = [];
+        var arrV = [];
 
-        var xmin = arr[0].x
-        var xmax = arr[0].x
-        var ymin = arr[0].y
-        var ymax = arr[0].y
+        var xmin = arr[0].x;
+        var xmax = arr[0].x;
+        var ymin = arr[0].y;
+        var ymax = arr[0].y;
 
         // 风向是以y轴正方向为零度顺时针转，0度表示北风。90度表示东风。
         // u表示经度方向上的风，u为正，表示西风，从西边吹来的风。
         // v表示纬度方向上的风，v为正，表示南风，从南边吹来的风。
         for (let i = 0, len = arr.length; i < len; i++) {
-          const item = arr[i]
+          const item = arr[i];
 
           if (xmin > item.x) {
-            xmin = item.x
+            xmin = item.x;
           }
           if (xmax < item.x) {
-            xmax = item.x
+            xmax = item.x;
           }
           if (ymin > item.y) {
-            ymin = item.y
+            ymin = item.y;
           }
           if (ymax < item.y) {
-            ymax = item.y
+            ymax = item.y;
           }
 
-          var u = mars3d.WindUtil.getU(item.speed, item.dir)
-          arrU.push(u)
+          var u = mars3d.WindUtil.getU(item.speed, item.dir);
+          arrU.push(u);
 
-          var v = mars3d.WindUtil.getV(item.speed, item.dir)
-          arrV.push(v)
+          var v = mars3d.WindUtil.getV(item.speed, item.dir);
+          arrV.push(v);
         }
 
-        var rows = getKeyNumCount(arr, 'y') //计算 行数
-        var cols = getKeyNumCount(arr, 'x') //计算 列数
+        var rows = getKeyNumCount(arr, "y"); //计算 行数
+        var cols = getKeyNumCount(arr, "x"); //计算 列数
 
         return {
           xmin: xmin,
@@ -278,20 +278,20 @@
           cols: cols,
           udata: arrU, //横向风速
           vdata: arrV, //纵向风速
-        }
+        };
       }
 
       function getKeyNumCount(arr, key) {
-        var obj = {}
+        var obj = {};
         arr.forEach((item) => {
-          obj[item[key]] = true
-        })
+          obj[item[key]] = true;
+        });
 
-        var count = 0
+        var count = 0;
         for (let col in obj) {
-          count++
+          count++;
         }
-        return count
+        return count;
       }
     </script>
   </body>

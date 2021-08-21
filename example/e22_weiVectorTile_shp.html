@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>shp格式文件数据加载 矢量瓦片 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>矢量瓦片方式加载Shp 矢量瓦片 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <script
       type="text/javascript"
@@ -42,9 +42,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       //API文档，参考lib\mars3d\thirdParty\weiVectorTile\Document.rar（解压Document.rar）
 
@@ -54,22 +54,22 @@
           scene: {
             center: { lat: 31.364038, lng: 117.242974, alt: 66680, heading: 2, pitch: -54 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //shp 国界线
         Cesium.when.all(
           [
-            Cesium.Resource.fetchBlob('//data.mars3d.cn/file/shp/hefei_xz.shp'),
-            Cesium.Resource.fetchBlob('//data.mars3d.cn/file/shp/hefei_xz.dbf'),
-            Cesium.Resource.fetchBlob('//data.mars3d.cn/file/shp/hefei_xz.prj'),
+            Cesium.Resource.fetchBlob("//data.mars3d.cn/file/shp/hefei_xz.shp"),
+            Cesium.Resource.fetchBlob("//data.mars3d.cn/file/shp/hefei_xz.dbf"),
+            Cesium.Resource.fetchBlob("//data.mars3d.cn/file/shp/hefei_xz.prj"),
           ],
           function (files) {
-            files[0].name = 'hefei_xz.shp'
-            files[1].name = 'hefei_xz.dbf'
-            files[2].name = 'hefei_xz.prj'
+            files[0].name = "hefei_xz.shp";
+            files[1].name = "hefei_xz.dbf";
+            files[2].name = "hefei_xz.prj";
 
             var tileLayer = new mars3d.layer.WeiVectorTileLayer({
               source: files,
@@ -80,10 +80,10 @@
                 tileCacheSize: 200,
 
                 fill: true, //是否填充，仅面数据有效。
-                fillColor: 'rgba(255,255,255,0.01)',
+                fillColor: "rgba(255,255,255,0.01)",
 
                 outline: true, //是否显示边，仅面数据有效。
-                outlineColor: 'rgba(209,204,226,1)',
+                outlineColor: "rgba(209,204,226,1)",
                 // lineDash: [3, 10],
                 lineWidth: 2,
 
@@ -102,11 +102,11 @@
               simplify: false,
               allowPick: true, //允许单击
               //以下为mars3d参数,API参考http://mars3d.cn/api/BaseTileLayer.html#.ConstructorOptions
-              popup: '{NAME}',
-            })
-            map.addLayer(tileLayer)
+              popup: "{NAME}",
+            });
+            map.addLayer(tileLayer);
           }
-        )
+        );
       }
     </script>
   </body>

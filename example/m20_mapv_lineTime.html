@@ -39,9 +39,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -49,71 +49,70 @@
           scene: {
             center: { lat: 31.665038, lng: 117.26431, alt: 40054, heading: 360, pitch: -62 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.basemap = 2017 //蓝色底图
-		
+        map.basemap = 2017; //蓝色底图
+
         queryMapvLayerData().then(function (data) {
-          createMapvLayer(data.features)
-        })
+          createMapvLayer(data.features);
+        });
       }
-	  
-	  
+
       function queryMapvLayerData() {
         return new Promise(function (resolve, reject) {
           $.ajax({
-            url: '//data.mars3d.cn/file/geojson/hefei-road.json',
-            type: 'GET',
-            dataType: 'json',
+            url: "//data.mars3d.cn/file/geojson/hefei-road.json",
+            type: "GET",
+            dataType: "json",
             success: function (rs) {
-              resolve(rs)
+              resolve(rs);
             },
             error: function (data) {
-              reject(data)
+              reject(data);
             },
-          })
-        })
+          });
+        });
       }
 
       //创建mapv图层
       function createMapvLayer(rs) {
-        var timeData = []
-        let arr = mars3d.Util.geoJsonToGraphics(rs) //解析geojson
+        var timeData = [];
+        let arr = mars3d.Util.geoJsonToGraphics(rs); //解析geojson
         for (let i = 0; i < arr.length; i++) {
-          let item = arr[i]
+          let item = arr[i];
 
           for (let j = 0; j < item.positions.length; j++) {
             timeData.push({
               geometry: {
-                type: 'Point',
+                type: "Point",
                 coordinates: item.positions[j],
               },
               count: 1,
               time: j,
-            })
+            });
           }
         }
 
         var options1 = {
-          strokeStyle: 'rgba(53,57,255,0.5)',
-          shadowColor: 'rgba(53,57,255,0.2)',
+          strokeStyle: "rgba(53,57,255,0.5)",
+          shadowColor: "rgba(53,57,255,0.2)",
           shadowBlur: 3,
           lineWidth: 3.0,
-          draw: 'simple',
+          draw: "simple",
           depthTest: false,
-        }
-        var dataSet1 = new mapv.DataSet(rs)
+        };
+        var dataSet1 = new this.mapv.DataSet(rs);
 
         //创建MapV图层  线图层
-        var mapVLayer1 = new mars3d.layer.MapVLayer(options1, dataSet1)
-        map.addLayer(mapVLayer1)
+        var mapVLayer1 = new mars3d.layer.MapVLayer(options1, dataSet1);
+        map.addLayer(mapVLayer1);
 
         var options2 = {
-          fillStyle: 'rgba(255, 250, 250, 0.2)',
-          globalCompositeOperation: 'lighter',
+          fillStyle: "rgba(255, 250, 250, 0.2)",
+          globalCompositeOperation: "lighter",
           size: 1.5,
           animation: {
             stepsRange: {
@@ -123,14 +122,14 @@
             trails: 3,
             duration: 5,
           },
-          draw: 'simple',
+          draw: "simple",
           depthTest: false,
-        }
-        var dataSet2 = new mapv.DataSet(timeData)
+        };
+        var dataSet2 = new this.mapv.DataSet(timeData);
 
         //创建MapV图层  动态轨迹图层
-        var mapVLayer2 = new mars3d.layer.MapVLayer(options2, dataSet2)
-        map.addLayer(mapVLayer2)
+        var mapVLayer2 = new mars3d.layer.MapVLayer(options2, dataSet2);
+        map.addLayer(mapVLayer2);
       }
     </script>
   </body>

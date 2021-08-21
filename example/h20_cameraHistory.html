@@ -53,46 +53,46 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.Util.merge(options, {})
+        var mapOptions = mars3d.Util.merge(options, {});
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        var cameraHistory = new mars3d.thing.CameraHistory()
-        map.addThing(cameraHistory)
+        var cameraHistory = new mars3d.thing.CameraHistory();
+        map.addThing(cameraHistory);
 
         cameraHistory.on(mars3d.EventType.change, function (event) {
-          $('#lblAll').html(event.count)
-          $('#lblStep').html(event.index + 1)
-        })
+          $("#lblAll").html(event.count);
+          $("#lblStep").html(event.index + 1);
+        });
 
-        $('#last').click(function () {
-          var result = cameraHistory.goLast()
+        $("#last").click(function () {
+          var result = cameraHistory.goLast();
 
           if (!result) {
-            haoutil.msg('当前已是第一条记录了')
+            haoutil.msg("当前已是第一条记录了");
           }
-        })
+        });
 
-        $('#next').click(function () {
-          var result = cameraHistory.goNext()
+        $("#next").click(function () {
+          var result = cameraHistory.goNext();
           if (!result) {
-            haoutil.msg('当前已是最后一条记录了')
+            haoutil.msg("当前已是最后一条记录了");
           }
-        })
+        });
 
-        $('#now').click(function () {
-          var result = cameraHistory.goNow()
+        $("#now").click(function () {
+          var result = cameraHistory.goNow();
           if (!result) {
-            haoutil.msg('当前已是最后一条记录了')
+            haoutil.msg("当前已是最后一条记录了");
           }
-        })
+        });
       }
     </script>
   </body>

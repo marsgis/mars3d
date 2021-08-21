@@ -40,10 +40,10 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var primitives //存放数据的图层
+      var map;
+      var primitives; //存放数据的图层
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -51,39 +51,38 @@
           scene: {
             center: { lat: 31.561722, lng: 120.848645, alt: 76, heading: 53, pitch: -43 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //添加参考三维模型
         var tiles3dLayer = new mars3d.layer.TilesetLayer({
-          name: '河道边厂房',
-          url: '//data.mars3d.cn/3dtiles/qx-xiaolou/tileset.json',
+          name: "河道边厂房",
+          url: "//data.mars3d.cn/3dtiles/qx-xiaolou/tileset.json",
           position: { alt: 10.1 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
         var tiles3dLayerDT = new mars3d.layer.TilesetLayer({
-          name: '河道边厂房-单体',
-          url: '//data.mars3d.cn/3dtiles/qx-xiaolou-dth/tileset.json',
+          name: "河道边厂房-单体",
+          url: "//data.mars3d.cn/3dtiles/qx-xiaolou-dth/tileset.json",
           position: { alt: 16.8 },
           classificationType: Cesium.ClassificationType.CESIUM_3D_TILE,
           style: {
-            color: 'rgba(255, 255, 255, 0.01)',
+            color: "rgba(255, 255, 255, 0.01)",
           },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
-          showMoveFeature: true,
-          pickFeatureStyle: {
-            color: '#00ff00',
-            opacity: 0.2,
+          highlight: {
+            color: "#00ff00",
+            opacity: 0.4,
           },
-          popup: 'all',
-        })
-        map.addLayer(tiles3dLayerDT)
+          popup: "all",
+        });
+        map.addLayer(tiles3dLayerDT);
       }
     </script>
   </body>

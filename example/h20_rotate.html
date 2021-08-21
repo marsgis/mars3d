@@ -67,9 +67,9 @@
 
   <script src="./js/common.js"></script>
   <script type="text/javascript">
-    'use script' //开发环境建议开启严格模式
+    "use script"; //开发环境建议开启严格模式
 
-    var map
+    var map;
 
     function initMap(options) {
       //合并属性参数，可覆盖config.json中的对应配置
@@ -80,99 +80,100 @@
             multiplier: 200, //速度
           },
         },
-      })
+      });
 
       //创建三维地球场景
-      map = new mars3d.Map('mars3dContainer', mapOptions)
+      map = new mars3d.Map("mars3dContainer", mapOptions);
 
       //按shift键+鼠标左键 拖拽 地球到合适区域，通过下面代码获取视角参数，拷贝到mapOptions的center参数中。
-      let center = map.getCameraView({ simplify: false })
+      let center = map.getCameraView({ simplify: false });
 
-      $('#btnStart').click(function () {
-        startRotate()
-      })
+      $("#btnStart").click(function () {
+        startRotate();
+      });
 
-      $('#btnStop').click(function () {
-        stopRotate()
-      })
+      $("#btnStop").click(function () {
+        stopRotate();
+      });
 
-      startRotate()
+      startRotate();
 
       //加点演示的矢量数据
-      addGraphics()
+      addGraphics();
 
       //下侧的按钮
       btnbar.init([
         {
-          name: '公司简介',
+          name: "公司简介",
           click: function () {
-            haoutil.msg('你单击了功能按钮-公司简介')
+            haoutil.msg("你单击了功能按钮-公司简介");
           },
         },
         {
-          name: '公司产品',
+          name: "公司产品",
           click: function () {
-            haoutil.msg('你单击了功能按钮-公司产品')
+            haoutil.msg("你单击了功能按钮-公司产品");
           },
         },
 
         {
-          name: '公司项目',
+          name: "公司项目",
           click: function () {
-            haoutil.msg('你单击了功能按钮-公司项目')
+            haoutil.msg("你单击了功能按钮-公司项目");
           },
         },
-      ])
+      ]);
     }
 
     function startRotate() {
-      stopRotate()
+      stopRotate();
 
-      previousTime = map.clock.currentTime.secondsOfDay
-      map.on(mars3d.EventType.clockTick, map_onClockTick)
+      previousTime = map.clock.currentTime.secondsOfDay;
+      map.on(mars3d.EventType.clockTick, map_onClockTick);
     }
 
     function stopRotate() {
-      map.off(mars3d.EventType.clockTick, map_onClockTick)
+      map.off(mars3d.EventType.clockTick, map_onClockTick);
     }
 
-    var previousTime
+    var previousTime;
 
+    // 地球旋转
     function map_onClockTick(clock) {
-      var spinRate = 1
+      var spinRate = 1;
 
-      var currentTime = map.clock.currentTime.secondsOfDay
-      var delta = (currentTime - previousTime) / 1000
-      previousTime = currentTime
-      map.scene.camera.rotate(Cesium.Cartesian3.UNIT_Z, -spinRate * delta)
+      var currentTime = map.clock.currentTime.secondsOfDay;
+      var delta = (currentTime - previousTime) / 1000;
+      previousTime = currentTime;
+      map.scene.camera.rotate(Cesium.Cartesian3.UNIT_Z, -spinRate * delta);
     }
 
     function addGraphics() {
-      var center = Cesium.Cartesian3.fromDegrees(117.203932, 31.856794, 31.8)
+      var center = Cesium.Cartesian3.fromDegrees(117.203932, 31.856794, 31.8);
       //公司位置 矢量对象标记
       var lightCone = new mars3d.graphic.LightCone({
         position: center,
         style: {
-          color: 'rgba(0,255,255,0.9)',
+          color: "rgba(0,255,255,0.9)",
           radius: 80000, //底部半径
           height: 1000000, //椎体高度
         },
         show: true,
-      })
-      map.graphicLayer.addGraphic(lightCone)
+      });
+      map.graphicLayer.addGraphic(lightCone);
 
       queryAreasData().then(function (geojson) {
-        let arr = mars3d.Util.geoJsonToGraphics(geojson) //解析geojson
+        let arr = mars3d.Util.geoJsonToGraphics(geojson); //解析geojson
         var lineMaterial = mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-          image: 'img/textures/lineClr.png',
+          image: "img/textures/lineClr.png",
           color: new Cesium.Color(255 / 255, 201 / 255, 38 / 255, 0.5),
           speed: 9,
-        })
+        });
         for (let i = 0; i < arr.length; i++) {
-          let item = arr[i].attr
+          let item = arr[i].attr;
           if (item.name) {
-            var thisPoint = Cesium.Cartesian3.fromDegrees(item.center[0], item.center[1])
-            var positions = mars3d.PolyUtil.getLinkedPointList(center, thisPoint, 40000, 100) //计算曲线点
+            var thisPoint = Cesium.Cartesian3.fromDegrees(item.center[0], item.center[1]);
+            var positions = mars3d.PolyUtil.getLinkedPointList(center, thisPoint, 40000, 100); //计算曲线点
             var primitive = new mars3d.graphic.PolylinePrimitive({
               positions: positions,
               style: {
@@ -180,28 +181,28 @@
                 material: lineMaterial, //动画线材质
               },
               attr: item,
-            })
-            primitive.bindTooltip(`合肥 - ${item.name}`)
-            map.graphicLayer.addGraphic(primitive)
+            });
+            primitive.bindTooltip(`合肥 - ${item.name}`);
+            map.graphicLayer.addGraphic(primitive);
           }
         }
-      })
+      });
     }
 
     function queryAreasData() {
       return new Promise(function (resolve, reject) {
         $.ajax({
-          url: '//data.mars3d.cn/file/geojson/areas/100000_full.json',
-          type: 'get',
-          dataType: 'json',
+          url: "//data.mars3d.cn/file/geojson/areas/100000_full.json",
+          type: "get",
+          dataType: "json",
           success: function (geojson) {
-            resolve(geojson)
+            resolve(geojson);
           },
           error: function (data) {
-            reject(data)
+            reject(data);
           },
-        })
-      })
+        });
+      });
     }
   </script>
 </body>

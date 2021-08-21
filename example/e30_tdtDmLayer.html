@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>三维地名服务 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -44,36 +44,29 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 23.816631,
-              x: 111.688366,
-              z: 4605984.38,
-              heading: 355.5,
-              pitch: -80.2,
-              roll: 0.1,
-            },
+            center: { lat: 23.816631, lng: 111.688366, alt: 4605984, heading: 355, pitch: -80 },
           },
           terrain: {
             show: false,
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //天地图 三维地名服务图层
         var tdtDmLayer = new mars3d.layer.TdtDmLayer({
           key: mars3d.Token.tianditu,
-        })
-        map.addLayer(tdtDmLayer)
+        });
+        map.addLayer(tdtDmLayer);
       }
     </script>
   </body>

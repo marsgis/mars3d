@@ -100,49 +100,49 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
       //最佳的二三维联动是：https://github.com/openlayers/ol-cesium
 
-      var map3d
+      var map3d;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.Util.merge(options, {})
+        var mapOptions = mars3d.Util.merge(options, {});
 
         //创建三维地球场景
-        map3d = new mars3d.Map('mars3dContainer', mapOptions)
+        map3d = new mars3d.Map("mars3dContainer", mapOptions);
 
-        haoutil.loading.show()
+        haoutil.loading.show();
 
         queryConfigData()
           .then(function (config) {
-            mapManager.createMap2D('map', config.map)
-            mapManager.bind3D(map3d)
-            mapManager.viewTo23D() //默认
-            haoutil.loading.hide()
+            mapManager.createMap2D("map", config.map);
+            mapManager.bind3D(map3d);
+            mapManager.viewTo23D(); //默认
+            haoutil.loading.hide();
           })
           .catch(function (XMLHttpRequest, textStatus, errorThrown) {
-            haoutil.loading.hide()
-            haoutil.alert('config 文件加载失败！')
-          })
+            haoutil.loading.hide();
+            haoutil.alert("config 文件加载失败！");
+          });
       }
 
       function queryConfigData() {
         return new Promise(function (resolve, reject) {
           $.ajax({
-            url: 'http://mars2d.cn/example/config/wgs84.json',
-            type: 'get',
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
+            url: "http://mars2d.cn/example/config/wgs84.json",
+            type: "get",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
             success: function (config) {
-              resolve(config)
+              resolve(config);
             },
             error: function (data) {
-              reject(data)
+              reject(data);
             },
-          })
-        })
+          });
+        });
       }
 
       //二三维地图联动控制
@@ -150,84 +150,84 @@
         map2d: null, //leaflet map 对象
         map3d: null, //cesium map3d对象
         createMap2D: function (id, jsondata) {
-          var that = this
+          var that = this;
           L.mars.createMap({
             id: id,
             data: jsondata,
             success: function (map, gisdata, jsondata) {
-              that.map2d = map
-              that.bind2dEvent(map)
+              that.map2d = map;
+              that.bind2dEvent(map);
             },
-          })
+          });
         },
         bind3D: function (map3d) {
-          this.map3d = map3d
-          this.bind3dEvent()
-          this._map_extentChangeHandler()
+          this.map3d = map3d;
+          this.bind3dEvent();
+          this._map_extentChangeHandler();
         },
         viewTo2d: function () {
-          $('#centerDiv3D').hide()
-          $('#centerDiv').css({ width: '100%' }).show()
+          $("#centerDiv3D").hide();
+          $("#centerDiv").css({ width: "100%" }).show();
           if (this.map2d) {
-            this.map2d.invalidateSize(false)
+            this.map2d.invalidateSize(false);
           }
         },
         viewTo3d: function () {
-          $('#centerDiv').hide()
-          $('#centerDiv3D').css({ width: '100%' }).show()
+          $("#centerDiv").hide();
+          $("#centerDiv3D").css({ width: "100%" }).show();
         },
         viewTo23D: function () {
-          $('#centerDiv').css({ width: '50%' }).show()
-          $('#centerDiv3D').css({ width: '50%' }).show()
+          $("#centerDiv").css({ width: "50%" }).show();
+          $("#centerDiv3D").css({ width: "50%" }).show();
           if (this.map2d) {
-            this.map2d.invalidateSize(false)
+            this.map2d.invalidateSize(false);
           }
         },
         //二维地图变化事件
         bind2dEvent: function () {
-          this.map2d.on('drag', this._map_extentChangeHandler, this)
-          this.map2d.on('zoomend', this._map_extentChangeHandler, this)
+          this.map2d.on("drag", this._map_extentChangeHandler, this);
+          this.map2d.on("zoomend", this._map_extentChangeHandler, this);
         },
         unbind2dEvent: function () {
-          this.map2d.off('drag', this._map_extentChangeHandler, this)
-          this.map2d.off('zoomend', this._map_extentChangeHandler, this)
+          this.map2d.off("drag", this._map_extentChangeHandler, this);
+          this.map2d.off("zoomend", this._map_extentChangeHandler, this);
         },
         _map_extentChangeHandler: function (e) {
-          var bounds = this.map2d.getBounds()
+          var bounds = this.map2d.getBounds();
           var extent = {
             xmin: bounds.getWest(),
             xmax: bounds.getEast(),
             ymin: bounds.getSouth(),
             ymax: bounds.getNorth(),
-          }
-          console.log(`'二维地图变化了，区域： ${JSON.stringify(extent)} `)
+          };
+          console.log(`'二维地图变化了，区域： ${JSON.stringify(extent)} `);
 
-          this.unbind3dEvent()
+          this.unbind3dEvent();
           this.map3d.camera.setView({
             destination: Cesium.Rectangle.fromDegrees(extent.xmin, extent.ymin, extent.xmax, extent.ymax),
-          })
-          this.bind3dEvent()
+          });
+          this.bind3dEvent();
         },
         //三维地图相机移动结束事件
         bind3dEvent: function () {
-          this.map3d.on(mars3d.EventType.cameraChanged, this.camera_moveEndHandler, this)
+          this.map3d.on(mars3d.EventType.cameraChanged, this.camera_moveEndHandler, this);
         },
         unbind3dEvent: function () {
-          this.map3d.off(mars3d.EventType.cameraChanged, this.camera_moveEndHandler, this)
+          this.map3d.off(mars3d.EventType.cameraChanged, this.camera_moveEndHandler, this);
         },
         camera_moveEndHandler: function (e) {
           // 范围对象
-          var point = this.map3d.getCenter()
-          var level = this.map3d.level
-          console.log(`'三维地图变化了，位置： ${point.toString()},层级 ${level} `)
+          var point = this.map3d.getCenter();
+          var level = this.map3d.level;
+          console.log(`'三维地图变化了，位置： ${point.toString()},层级 ${level} `);
 
-          this.unbind2dEvent()
+          this.unbind2dEvent();
 
-          this.map2d.setView([point.lat, point.lng], level, { animate: false })
+          this.map2d.setView([point.lat, point.lng], level, { animate: false });
 
-          this.bind2dEvent()
+          this.bind2dEvent();
         },
-      }
+      };
     </script>
   </body>
 </html>

@@ -69,14 +69,14 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var queryMapserver
-      var geoJsonLayer
+      var map;
+      var queryMapserver;
+      var geoJsonLayer;
 
-      var drawGraphic
-      var $table
+      var drawGraphic;
+      var $table;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -84,22 +84,22 @@
           scene: {
             center: { lat: 31.79536, lng: 117.255222, alt: 16294, heading: 358, pitch: -76 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         queryMapserver = new mars3d.query.QueryGeoServer({
-          url: '//server.mars3d.cn/geoserver/mars/wfs',
-          layer: 'mars:hfjy',
+          url: "//server.mars3d.cn/geoserver/mars/wfs",
+          layer: "mars:hfjy",
           maxFeatures: 200,
-        })
+        });
 
         //用于显示查询结果（geojson）的图层
         geoJsonLayer = new mars3d.layer.GeoJsonLayer({
           symbol: {
             styleOptions: {
-              image: 'img/marker/mark3.png',
+              image: "img/marker/mark3.png",
               scale: 1,
               scaleByDistance: true,
               scaleByDistance_far: 20000,
@@ -108,11 +108,11 @@
               scaleByDistance_nearValue: 1,
               clampToGround: true,
               label: {
-                text: '{项目名称}',
+                text: "{项目名称}",
                 font_size: 25,
-                color: '#ffffff',
+                color: "#ffffff",
                 outline: true,
-                outlineColor: '#000000',
+                outlineColor: "#000000",
                 pixelOffsetY: -25,
                 scaleByDistance: true,
                 scaleByDistance_far: 80000,
@@ -125,77 +125,77 @@
               },
             },
           },
-          popup: 'all',
-        })
-        map.addLayer(geoJsonLayer)
+          popup: "all",
+        });
+        map.addLayer(geoJsonLayer);
 
-        geoJsonLayer.on(mars3d.EventType.load, geoJsonLayer_onLoadHandler)
+        geoJsonLayer.on(mars3d.EventType.load, geoJsonLayer_onLoadHandler);
 
         //框选查询   多边
-        $('#drawPolygon').click(function () {
-          clearAll()
+        $("#drawPolygon").click(function () {
+          clearAll();
           map.graphicLayer.startDraw({
-            type: 'polygon',
+            type: "polygon",
             style: {
-              color: '#00FF00',
+              color: "#00FF00",
               opacity: 0.3,
               outline: true,
-              outlineColor: '#ffffff',
+              outlineColor: "#ffffff",
               clampToGround: true,
             },
             success: function (graphic) {
-              drawGraphic = graphic
+              drawGraphic = graphic;
             },
-          })
-        })
+          });
+        });
 
         //框选查询 矩形
-        $('#drawRectangle').click(function () {
-          clearAll()
+        $("#drawRectangle").click(function () {
+          clearAll();
           map.graphicLayer.startDraw({
-            type: 'rectangle',
+            type: "rectangle",
             style: {
-              color: '#00FF00',
+              color: "#00FF00",
               opacity: 0.3,
               outline: true,
-              outlineColor: '#ffffff',
+              outlineColor: "#ffffff",
               clampToGround: true,
             },
             success: function (graphic) {
-              drawGraphic = graphic
+              drawGraphic = graphic;
             },
-          })
-        })
+          });
+        });
 
         //框选查询   圆
-        $('#drawCircle').click(function () {
-          clearAll()
+        $("#drawCircle").click(function () {
+          clearAll();
           map.graphicLayer.startDraw({
-            type: 'circle',
+            type: "circle",
             style: {
-              color: '#00FF00',
+              color: "#00FF00",
               opacity: 0.3,
               outline: true,
-              outlineColor: '#ffffff',
+              outlineColor: "#ffffff",
               clampToGround: true,
             },
             success: function (graphic) {
-              drawGraphic = graphic
+              drawGraphic = graphic;
             },
-          })
-        })
+          });
+        });
 
-        $('#removeAll').click(function () {
-          clearAll()
-        })
-        $('#query').click(function () {
-          queryData()
-        })
+        $("#removeAll").click(function () {
+          clearAll();
+        });
+        $("#query").click(function () {
+          queryData();
+        });
 
-        $table = $('#table')
+        $table = $("#table");
         $table.bootstrapTable({
           singleSelect: true, //单选
-          iconsPrefix: 'fa',
+          iconsPrefix: "fa",
           pagination: true,
           showPaginationSwitch: false,
           pageNumber: 1,
@@ -203,87 +203,87 @@
           pageList: [5, 10, 20, 50, 100],
           columns: [
             {
-              title: '', //序号
+              title: "", //序号
               sortable: false,
-              align: 'center',
+              align: "center",
               width: 50,
               formatter: function (value, row, index) {
-                return index + 1
+                return index + 1;
               },
             },
             {
-              field: '项目名称',
-              title: '名称',
+              field: "项目名称",
+              title: "名称",
               sortable: true,
               width: 100,
             },
             {
-              field: '设施类型',
-              title: '类型',
+              field: "设施类型",
+              title: "类型",
               sortable: true,
-              align: 'center',
+              align: "center",
               width: 70,
             },
             {
-              field: '具体位置',
-              title: '地址',
+              field: "具体位置",
+              title: "地址",
               sortable: true,
               formatter: function (value, row) {
                 if (value) {
-                  return value
+                  return value;
                 } else {
-                  return ''
+                  return "";
                 }
               },
             },
           ],
           onClickRow: function (item, $element, field) {
-            var graphic = item.graphic
+            var graphic = item.graphic;
             if (graphic == null) {
-              toastr.warning(item.name + ' 无经纬度坐标信息！')
-              return
+              toastr.warning(item.name + " 无经纬度坐标信息！");
+              return;
             }
-            graphic.flyTo({ radius: 1000 })
+            graphic.flyTo({ radius: 1000 });
           },
-        })
+        });
       }
 
       function clearAll(noClearDraw) {
-        $('#resultView').hide()
+        $("#resultView").hide();
 
-        drawGraphic = null
-        map.graphicLayer.clear()
-        geoJsonLayer.clear()
+        drawGraphic = null;
+        map.graphicLayer.clear();
+        geoJsonLayer.clear();
       }
 
       function queryData() {
-        $('#resultView').hide()
+        $("#resultView").hide();
 
-        var queryVal = $.trim($('#queryText').val())
+        var queryVal = $.trim($("#queryText").val());
 
         queryMapserver.query({
-          column: '项目名称',
+          column: "项目名称",
           text: queryVal,
           graphic: drawGraphic,
           success: (result) => {
             if (result.count == 0) {
-              haoutil.msg('未查询到相关记录！')
-              return
+              haoutil.msg("未查询到相关记录！");
+              return;
             } else {
-              haoutil.msg('共查询到 ' + result.count + ' 条记录！')
+              haoutil.msg("共查询到 " + result.count + " 条记录！");
             }
-            geoJsonLayer.load({ data: result.geojson })
+            geoJsonLayer.load({ data: result.geojson });
           },
           error: (error, msg) => {
-            console.log('服务访问错误', error)
-            haoutil.alert(msg, '服务访问错误')
+            console.log("服务访问错误", error);
+            haoutil.alert(msg, "服务访问错误");
           },
-        })
+        });
       }
 
       function geoJsonLayer_onLoadHandler(event) {
-        $table.bootstrapTable('load', event.list)
-        $('#resultView').show()
+        $table.bootstrapTable("load", event.list);
+        $("#resultView").show();
       }
     </script>
   </body>

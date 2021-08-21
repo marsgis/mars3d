@@ -84,62 +84,62 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-
+      var map;
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 },
+            center: { lat: 31.473861, lng: 117.225929, alt: 52974, heading: 2, pitch: -49 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //图层管理的相关处理，代码在\js\graphicManager.js
-        initLayerManager(graphicLayer)
+        initLayerManager(graphicLayer);
 
         //新增绘制
-        $('#btnStartDraw').click(function () {
+        $("#btnStartDraw").click(function () {
           //开始绘制
           graphicLayer.startDraw({
-            type: 'wall',
+            type: "wall",
             style: {
-              color: '#55ff33',
+              color: "#55ff33",
               opacity: 0.8,
               diffHeight: 800,
             },
-          })
-        })
-        $('#btnStartDrawClosure').click(function () {
+          });
+        });
+        $("#btnStartDrawClosure").click(function () {
           //开始绘制
           graphicLayer.startDraw({
-            type: 'wall',
+            type: "wall",
             style: {
-              color: '#55ff33',
+              color: "#55ff33",
               opacity: 0.8,
               diffHeight: 800,
               closure: true,
             },
-          })
-        })
+          });
+        });
 
         //加一些演示数据
-        addGraphic_a1(graphicLayer)
-        addGraphic_a2(graphicLayer)
-        addGraphic_a3(graphicLayer)
-        addGraphic_a4(graphicLayer)
-        addGraphic_a5(graphicLayer)
-        addGraphic_a6(graphicLayer)
-        addGraphic_a7(graphicLayer)
-        addGraphic_a8(graphicLayer)
+        addGraphic_a1(graphicLayer);
+        addGraphic_a2(graphicLayer);
+        addGraphic_a3(graphicLayer);
+        addGraphic_a4(graphicLayer);
+        addGraphic_a5(graphicLayer);
+        addGraphic_a6(graphicLayer);
+        addGraphic_a7(graphicLayer);
+        addGraphic_a8(graphicLayer);
+        addGraphic_a9(graphicLayer);
       }
 
       function addGraphic_a1(graphicLayer) {
@@ -163,17 +163,17 @@
             diffHeight: 500,
             //动画线材质
             material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
-              image: 'img/textures/fence.png',
-              color: '#00ff00',
+              image: "img/textures/fence.png",
+              color: "#00ff00",
               speed: 10,
               axisY: true,
             }),
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
 
         //演示个性化处理graphic，代码在\js\graphicManager.js
-        initGraphicManager(graphic)
+        initGraphicManager(graphic);
       }
 
       function addGraphic_a2(graphicLayer) {
@@ -189,14 +189,14 @@
             diffHeight: 500,
             //动画线材质
             material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
-              image: 'img/textures/arrow.png',
+              image: "img/textures/arrow.png",
               color: Cesium.Color.CHARTREUSE,
               repeat: new Cesium.Cartesian2(30, 1),
               speed: 20,
             }),
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
       }
 
       function addGraphic_a3(graphicLayer) {
@@ -205,7 +205,7 @@
           position: Cesium.Cartesian3.fromDegrees(117.276257, 31.866351, 19.57),
           radius: 1200, //半径
           count: 50, //共返回(count*4)个点
-        })
+        });
 
         var graphic = new mars3d.graphic.WallEntity({
           positions: positions,
@@ -214,14 +214,14 @@
             closure: true,
             //动画线材质
             material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
-              image: 'img/textures/fence.png',
-              color: '#00ffff',
+              image: "img/textures/fence.png",
+              color: "#00ffff",
               speed: 10,
               axisY: true,
             }),
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
       }
 
       function addGraphic_a4(graphicLayer) {
@@ -234,16 +234,16 @@
             diffHeight: 700,
             material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
               //动画线材质
-              image: 'img/textures/fence.png',
+              image: "img/textures/fence.png",
               axisY: true,
-              color: '#ff0000',
-              image2: 'img/textures/tanhao.png',
-              color2: '#ffff00',
+              color: "#ff0000",
+              image2: "img/textures/tanhao.png",
+              color2: "#ffff00",
               speed: 10,
             }),
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
       }
 
       function addGraphic_a5(graphicLayer) {
@@ -255,40 +255,40 @@
           ],
           style: {
             diffHeight: 200,
-            color: '#00ffff',
-            opacity: 0.9,
+            color: "#00ffff",
+            opacity: 0.4,
             label: {
-              text: '我是原始的',
+              text: "我是原始的",
               font_size: 18,
-              color: '#ffffff',
+              color: "#ffffff",
               distanceDisplayCondition: true,
               distanceDisplayCondition_far: 500000,
               distanceDisplayCondition_near: 0,
             },
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
 
         //graphic转geojson
-        var geojson = graphic.toGeoJSON()
-        console.log('转换后的geojson', geojson)
-        addGeoJson(geojson, graphicLayer)
+        var geojson = graphic.toGeoJSON();
+        console.log("转换后的geojson", geojson);
+        addGeoJson(geojson, graphicLayer);
       }
 
       //添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
       function addGeoJson(geojson, graphicLayer) {
-        var graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0]
-        delete graphicCopy.attr
+        var graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0];
+        delete graphicCopy.attr;
         //新的坐标
         graphicCopy.positions = [
           [117.105938, 31.883825, 43.6],
           [117.125006, 31.876243, 42.6],
           [117.135525, 31.882068, 39],
           [117.151507, 31.874259, 39.7],
-        ]
-        graphicCopy.style.label = graphicCopy.style.label || {}
-        graphicCopy.style.label.text = '我是转换后生成的'
-        graphicLayer.addGraphic(graphicCopy)
+        ];
+        graphicCopy.style.label = graphicCopy.style.label || {};
+        graphicCopy.style.label.text = "我是转换后生成的";
+        graphicLayer.addGraphic(graphicCopy);
       }
 
       function addGraphic_a6(graphicLayer) {
@@ -302,17 +302,39 @@
             diffHeight: 400,
             material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
               //动画线材质
-              image: 'img/textures/arrow.png',
-              color: '#00eba8',
+              image: "img/textures/arrow.png",
+              color: "#00eba8",
               repeat: new Cesium.Cartesian2(20, 1),
               speed: 20,
             }),
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
       }
 
       function addGraphic_a7(graphicLayer) {
+        var graphic = new mars3d.graphic.WallEntity({
+          positions: [
+            [117.192113, 31.80998, 32.2],
+            [117.228145, 31.792757, 26.7],
+            [117.2717, 31.798397, 20.7],
+          ],
+          style: {
+            diffHeight: 500,
+            color: "#00ffff",
+            opacity: 0.4,
+
+            label: { text: "鼠标移入会高亮", pixelOffsetY: -30 },
+            //高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+            highlight: {
+              opacity: 0.8,
+            },
+          },
+        });
+        graphicLayer.addGraphic(graphic);
+      }
+
+      function addGraphic_a8(graphicLayer) {
         var graphic = new mars3d.graphic.WallEntity({
           positions: [
             [117.206138, 31.877321],
@@ -325,8 +347,8 @@
               transparent: false,
             }),
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
       }
 
       //纹理图绘制
@@ -335,58 +357,73 @@
           // elevationRamp = { 0.0: "blue", 0.1: "cyan", 0.37: "lime", 0.54: "yellow", 1: "red" };
           // elevationRamp = { 0.0: '#000000', 0.045: '#2747E0', 0.1: '#D33B7D', 0.15: '#D32738', 0.37: '#FF9742', 0.54: '#ffd700', 1.0: '#ffffff' }
           elevationRamp = {
-            0.0: '#FFEDA0',
-            0.05: '#FED976',
-            0.1: '#FEB24C',
-            0.15: '#FD8D3C',
-            0.37: '#FC4E2A',
-            0.54: '#E31A1C',
-            0.7: '#BD0026',
-            1.0: '#800026',
-          }
+            0.0: "#FFEDA0",
+            0.05: "#FED976",
+            0.1: "#FEB24C",
+            0.15: "#FD8D3C",
+            0.37: "#FC4E2A",
+            0.54: "#E31A1C",
+            0.7: "#BD0026",
+            1.0: "#800026",
+          };
         }
 
-        var canvas = document.createElement('canvas')
-        canvas.width = 1
-        canvas.height = 100
+        var canvas = document.createElement("canvas");
+        canvas.width = 1;
+        canvas.height = 100;
 
-        var ctx = canvas.getContext('2d')
-        var grd = ctx.createLinearGradient(0, 0, 0, 100)
+        var ctx = canvas.getContext("2d");
+        var grd = ctx.createLinearGradient(0, 0, 0, 100);
         for (var key in elevationRamp) {
-          grd.addColorStop(1 - Number(key), elevationRamp[key])
+          grd.addColorStop(1 - Number(key), elevationRamp[key]);
         }
 
-        ctx.fillStyle = grd
-        ctx.fillRect(0, 0, 1, 100) //参数：左上角x  左上角y  宽度width  高度height
-        return canvas.toDataURL()
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, 1, 100); //参数：左上角x  左上角y  宽度width  高度height
+        return canvas.toDataURL();
       }
 
-      function addGraphic_a8(graphicLayer) {
-        //显示合肥市边界
-        $.getJSON('//data.mars3d.cn/file/geojson/areas/340100.json', function (geojson) {
-          let arr = mars3d.Util.geoJsonToGraphics(geojson) //解析geojson
+      //边界墙绘制
+      function addGraphic_a9(graphicLayer) {
+        queryAreasData().then(function (data) {
+          let arr = mars3d.Util.geoJsonToGraphics(data); //解析geojson
           for (let i = 0; i < arr.length; i++) {
-            let item = arr[i]
-
+            let item = arr[i];
             var graphic = new mars3d.graphic.WallEntity({
               positions: item.positions,
               style: {
                 diffHeight: 3000,
                 material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
-                  image: 'img/textures/fence.png',
-                  color: '#bdf700',
+                  image: "img/textures/fence.png",
+                  color: "#bdf700",
                   repeat: new Cesium.Cartesian2(5, 1),
                   axisY: true, //方向，true时上下，false左右
                   speed: 10,
                 }),
               },
               attr: item.attr,
-            })
-            graphicLayer.addGraphic(graphic)
-
-            graphic.bindTooltip('合肥欢迎您 - 火星科技')
+            });
+            graphicLayer.addGraphic(graphic);
+            graphic.bindTooltip("合肥欢迎您 - 火星科技");
           }
-        })
+        });
+      }
+
+      //边界墙绘制 - 数据获取
+      function queryAreasData() {
+        return new Promise(function (resolve, reject) {
+          $.ajax({
+            url: "//data.mars3d.cn/file/geojson/areas/340100.json",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+              resolve(result);
+            },
+            error: function (data) {
+              reject(data);
+            },
+          });
+        });
       }
     </script>
   </body>

@@ -39,9 +39,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -49,109 +49,70 @@
           scene: {
             center: { lat: 29.808307, lng: 110.597446, alt: 7852846, heading: 353, pitch: -86 },
           },
-        })
+        });
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         queryWeiboApiData().then(function (res) {
           //创建mapv图层
-          createMapvLayer(res)
-        })
+          createMapvLayer(res);
+        });
       }
 
       // 访问后端接口，取数据
       function queryWeiboApiData() {
         return new Promise(function (resolve, reject) {
           $.ajax({
-            url: '//data.mars3d.cn/file/apidemo/weibo.json',
-            type: 'get',
-            dataType: 'json',
+            url: "//data.mars3d.cn/file/apidemo/weibo.json",
+            type: "get",
+            dataType: "json",
             success: function (result) {
-              resolve(result)
+              resolve(result);
             },
             error: function (data) {
-              reject(data)
+              reject(data);
             },
-          })
-        })
+          });
+        });
       }
 
       function createMapvLayer(rs) {
-        var data1 = []
-        var data2 = []
-        var data3 = []
-        var data4 = []
+        var data1 = [];
+        var data2 = [];
+        var data3 = [];
+        var data4 = [];
         for (let i = 0; i < rs[0].length; i++) {
-          let geoCoord = rs[0][i].geoCoord
+          let geoCoord = rs[0][i].geoCoord;
           data1.push({
             geometry: {
-              type: 'Point',
+              type: "Point",
               coordinates: geoCoord,
             },
-          })
+          });
         }
 
         for (let i = 0; i < rs[1].length; i++) {
-          let geoCoord = rs[1][i].geoCoord
+          let geoCoord = rs[1][i].geoCoord;
           data2.push({
             geometry: {
-              type: 'Point',
+              type: "Point",
               coordinates: geoCoord,
             },
             time: Math.random() * 10,
-          })
+          });
         }
 
         for (let i = 0; i < rs[2].length; i++) {
-          let geoCoord = rs[2][i].geoCoord
+          let geoCoord = rs[2][i].geoCoord;
           data3.push({
             geometry: {
-              type: 'Point',
+              type: "Point",
               coordinates: geoCoord,
             },
-          })
+          });
         }
 
-        var options1 = {
-          fillStyle: 'rgba(200, 200, 0, 0.8)',
-          bigData: 'Point',
-          size: 0.7,
-          draw: 'simple',
-          depthTest: false,
-        }
-        var dataSet1 = new mapv.DataSet(data1)
-        //创建MapV图层
-        var mapVLayer1 = new mars3d.layer.MapVLayer(options1, dataSet1)
-        map.addLayer(mapVLayer1)
-
-        var options2 = {
-          fillStyle: 'rgba(255, 250, 0, 0.8)',
-          size: 0.7,
-          bigData: 'Point',
-          draw: 'simple',
-          depthTest: false,
-        }
-        var dataSet2 = new mapv.DataSet(data2)
-        //创建MapV图层
-        var mapVLayer2 = new mars3d.layer.MapVLayer(options2, dataSet2)
-        map.addLayer(mapVLayer2)
-
-        var options3 = {
-          fillStyle: 'rgba(255, 250, 250, 0.6)',
-          size: 0.7,
-          bigData: 'Point',
-          draw: 'simple',
-          depthTest: false,
-        }
-        var dataSet3 = new mapv.DataSet(data3)
-        var mapVLayer3 = new mars3d.layer.MapVLayer(options3, dataSet3)
-        map.addLayer(mapVLayer3)
-
-        var options4 = {
-          fillStyle: 'rgba(255, 250, 250, 0.9)',
-          size: 1.1,
-          draw: 'simple',
-          bigData: 'Point',
+        var animation = {
           animation: {
             stepsRange: {
               start: 0,
@@ -160,13 +121,26 @@
             trails: 1,
             duration: 6,
           },
-          depthTest: false,
-        }
-        var dataSet4 = new mapv.DataSet(data2)
+        };
+        addMapvLayer(data1, "rgba(200, 200, 0, 0.8)", 0.7);
+        addMapvLayer(data2, "rgba(255, 250, 0, 0.8)", 0.7);
+        addMapvLayer(data3, "rgba(255, 250, 250, 0.6)", 0.7);
+        addMapvLayer(data2, "rgba(255, 250, 250, 0.9)", 1.1, animation);
+      }
 
+      function addMapvLayer(data, color, size, animation) {
+        var options1 = {
+          fillStyle: color,
+          bigData: "Point",
+          size: size,
+          draw: "simple",
+          depthTest: false,
+          ...animation,
+        };
+        var dataSet = new this.mapv.DataSet(data);
         //创建MapV图层
-        var mapVLayer4 = new mars3d.layer.MapVLayer(options4, dataSet4)
-        map.addLayer(mapVLayer4)
+        var mapVLayer = new mars3d.layer.MapVLayer(options1, dataSet);
+        map.addLayer(mapVLayer);
       }
     </script>
   </body>

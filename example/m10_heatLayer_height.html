@@ -72,32 +72,32 @@
     <script src="./js/m10_heatLayer_height.js"></script>
 
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
-        initCharts()
+        initCharts(); //在m10_heatLayer_height.js中引入
 
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
             center: { lat: 31.80232, lng: 117.206907, alt: 1996, heading: 39, pitch: -22 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.basemap = 2017 //蓝色底图
+        map.basemap = 2017; //蓝色底图
 
         //图层1
-        var arrPoints = getRandomPoints(1000) //测试点数据，实际开发时换掉
-        showHeatMap(arrPoints, 300)
+        var arrPoints = getRandomPoints(1000); //测试点数据，实际开发时换掉
+        showHeatMap(arrPoints, 300);
 
         //图层2
-        var arrPoints2 = getRandomPoints(1000) //测试点数据，实际开发时换掉
-        showHeatMap(arrPoints2, 800)
+        var arrPoints2 = getRandomPoints(1000); //测试点数据，实际开发时换掉
+        showHeatMap(arrPoints2, 800);
       }
 
       function showHeatMap(arrPoints, height) {
@@ -113,12 +113,12 @@
           style: {
             height: height,
           },
-        })
-        map.addLayer(heatLayer)
+        });
+        map.addLayer(heatLayer);
 
-        $('#btnUpdate').click(function () {
-          heatLayer.positions = getRandomPoints(1000)
-        })
+        $("#btnUpdate").click(function () {
+          heatLayer.positions = getRandomPoints(1000);
+        });
       }
 
       //获取bbox矩形区域内的count个随机点
@@ -126,15 +126,15 @@
         var xmin = 117.226189,
           xmax = 117.245831,
           ymin = 31.828858,
-          ymax = 31.842967
-        var arr = []
-        var arrPoint = turf.randomPoint(count, { bbox: [xmin, ymin, xmax, ymax] }).features //随机点
+          ymax = 31.842967;
+        var arr = [];
+        var arrPoint = turf.randomPoint(count, { bbox: [xmin, ymin, xmax, ymax] }).features; //随机点
         for (var i = 0; i < arrPoint.length; i++) {
-          var item = arrPoint[i].geometry.coordinates
-          var val = Math.floor(Math.random() * 100) //热力值
-          arr.push({ lng: item[0], lat: item[1], value: val })
+          var item = arrPoint[i].geometry.coordinates;
+          var val = Math.floor(Math.random() * 100); //热力值
+          arr.push({ lng: item[0], lat: item[1], value: val });
         }
-        return arr
+        return arr;
       }
     </script>
   </body>

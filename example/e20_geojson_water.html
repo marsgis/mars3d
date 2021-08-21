@@ -19,7 +19,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>水域图层 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>水域GeoJson图层 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <script
       type="text/javascript"
@@ -50,17 +50,18 @@
       </div>
 
       <div class="input-group text-right">
-        <input id="btnOpenZm" type="button" class="btn btn-primary" value="开启" />
-        <input id="btnCloseZm" type="button" class="btn btn-primary" value="关闭" />
+        <input id="btnOpenZm" type="button" class="btn btn-primary" value="开启" onclick="openZm()" />
+        <input id="btnCloseZm" type="button" class="btn btn-primary" value="关闭" onclick="closeZm()" />
       </div>
     </div>
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-
+      var map;
+      var graphic;
+      var waterLayer;
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
@@ -69,29 +70,29 @@
           },
           layers: [
             {
-              type: '3dtiles',
-              name: '整体模型',
-              url: '//data.mars3d.cn/3dtiles/max-fsdzm/tileset.json',
+              type: "3dtiles",
+              name: "整体模型",
+              url: "//data.mars3d.cn/3dtiles/max-fsdzm/tileset.json",
               position: { alt: 15.2 },
               maximumScreenSpaceError: 1,
               maximumMemoryUsage: 1024,
               show: true,
             },
             {
-              type: 'geojson',
-              name: '河流(面状)',
-              url: '//data.mars3d.cn/file/geojson/hedao-nei.json',
+              type: "geojson",
+              name: "河流(面状)",
+              url: "//data.mars3d.cn/file/geojson/hedao-nei.json",
               symbol: {
-                type: 'water',
+                type: "water",
                 styleOptions: {
                   height: 17, //水面高度
-                  normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
+                  normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
                   frequency: 8000.0, // 控制波数的数字。
                   animationSpeed: 0.02, // 控制水的动画速度的数字。
                   amplitude: 5.0, // 控制水波振幅的数字。
                   specularIntensity: 0.8, // 控制镜面反射强度的数字。
-                  baseWaterColor: '#006ab4', // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
-                  blendColor: '#006ab4', // 从水中混合到非水域时使用的rgba颜色对象。
+                  baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
+                  blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
                   opacity: 0.4, //透明度
                   clampToGround: false, //是否贴地
                 },
@@ -99,135 +100,140 @@
               show: true,
             },
           ],
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        var waterLayer = new mars3d.layer.GeoJsonLayer({
-          name: '河流(面状)',
-          url: '//data.mars3d.cn/file/geojson/hedao-wai.json',
+        waterLayer = new mars3d.layer.GeoJsonLayer({
+          name: "河流(面状)",
+          url: "//data.mars3d.cn/file/geojson/hedao-wai.json",
           symbol: {
-            type: 'water',
+            type: "water",
             styleOptions: {
               height: 16, //水面高度
-              normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
+              normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
               frequency: 8000.0, // 控制波数的数字。
               animationSpeed: 0.02, // 控制水的动画速度的数字。
               amplitude: 5.0, // 控制水波振幅的数字。
               specularIntensity: 0.8, // 控制镜面反射强度的数字。
-              baseWaterColor: '#006ab4', // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
-              blendColor: '#006ab4', // 从水中混合到非水域时使用的rgba颜色对象。
+              baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
+              blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
               opacity: 0.4, //透明度
               clampToGround: false, //是否贴地
             },
           },
-        })
-        map.addLayer(waterLayer)
+        });
+        map.addLayer(waterLayer);
 
         //绑定事件
         waterLayer.on(mars3d.EventType.load, function (event) {
-          console.log('数据加载完成', event)
-        })
+          console.log("数据加载完成", event);
+        });
         waterLayer.on(mars3d.EventType.click, function (event) {
-          console.log('单击了', event)
-        })
+          console.log("单击了", event);
+        });
 
         //闸门的控制
-        var graphic = new mars3d.graphic.ModelEntity({
-          name: '闸门',
+        graphic = new mars3d.graphic.ModelEntity({
+          name: "闸门",
           position: [121.479813, 29.791278, 16],
           style: {
-            url: '//data.mars3d.cn/gltf/mars/zhamen.glb',
+            url: "//data.mars3d.cn/gltf/mars/zhamen.glb",
             heading: 105,
           },
-        })
-        map.graphicLayer.addGraphic(graphic)
+        });
+        map.graphicLayer.addGraphic(graphic);
+      }
 
-        var minHeight = 16
-        var timeInv
+      var minHeight = 16;
+      var timeInv;
 
-        function updateHeight(height) {
-          graphic.height = height
-          waterLayer.eachGraphic((graphic) => {
-            graphic.updateHeight(height) //水域高度变化
-          })
+      //高度更新
+      function updateHeight(height) {
+        graphic.height = height; //阀门高度
+        waterLayer.eachGraphic((graphic) => {
+          graphic.updateHeight(height); //水域高度变化
+        });
+      }
+
+      //参数保护
+      function submitHeight() {
+        let mi = Number($("#txt_zmmi").val());
+        if (mi > 4) {
+          haoutil.msg("高度值太大，请设置高度范围在0到4米之间");
+          return true;
+        }
+        if (mi <= 0) {
+          haoutil.msg("请设置高度范围在0到4米之间");
+          return true;
         }
 
-        function submitHeight() {
-          let mi = Number($('#txt_zmmi').val())
-          if (mi > 4) {
-            haoutil.msg('高度值太大，请设置高度范围在0到4米之间')
-            return true
-          }
-          if (mi <= 0) {
-            haoutil.msg('请设置高度范围在0到4米之间')
-            return true
-          }
+        let time = Number($("#txt_zmmiao").val());
+        if (time > 10 || time <= 0) {
+          haoutil.msg("建议时长范围在 0~10 秒之间");
+          return true;
+        }
+        return false;
+      }
 
-          let time = Number($('#txt_zmmiao').val())
-          if (time > 10 || time <= 0) {
-            haoutil.msg('建议时长范围在 0~10 秒之间')
-            return true
-          }
-          return false
+      //开启阀门
+      function openZm() {
+        if (submitHeight()) {
+          return;
         }
 
-        $('#btnOpenZm').click(() => {
-          if (submitHeight()) {
-            return
+        var time = Number($("#txt_zmmiao").val());
+        var mi = Number($("#txt_zmmi").val());
+
+        var thisHeight = minHeight; //当前高度
+        var endHeight = mi + minHeight; //结束高度
+
+        var step = time / 0.1; //步长
+        var stepHeight = (endHeight - thisHeight) / step; //每次阀门、水面上移高度
+
+        //再次点击"开启"时从当前位置开启
+        updateHeight(thisHeight);
+
+        clearInterval(timeInv);
+        timeInv = setInterval(() => {
+          thisHeight += stepHeight; //上移后的当前高度,相当于时实更新
+
+          if (thisHeight >= endHeight) {
+            thisHeight = endHeight;
+            clearInterval(timeInv); //清除定时器,当前阀门的高度值等于结束时阀门的高度值时，停止上移，关闭定时器
           }
+          updateHeight(thisHeight);
+        }, 100);
+      }
 
-          var time = Number($('#txt_zmmiao').val())
-          var mi = Number($('#txt_zmmi').val())
+      //关闭阀门
+      function closeZm() {
+        if (submitHeight()) {
+          return; //return 之后就会直接结束这个函数，不会在往下走
+        }
 
-          var thisHeight = minHeight
-          var endHeight = mi + minHeight
+        var time = Number($("#txt_zmmiao").val());
+        var mi = Number($("#txt_zmmi").val());
 
-          var step = time / 0.1
-          var stepHeight = (endHeight - thisHeight) / step
+        var thisHeight = mi + minHeight;
+        var endHeight = minHeight;
 
-          updateHeight(thisHeight)
+        var step = time / 0.1;
+        var stepHeight = (endHeight - thisHeight) / step;
 
-          clearInterval(timeInv)
-          timeInv = setInterval(() => {
-            thisHeight += stepHeight
+        updateHeight(thisHeight);
 
-            if (thisHeight >= endHeight) {
-              thisHeight = endHeight
-              clearInterval(timeInv)
-            }
-            updateHeight(thisHeight)
-          }, 200)
-        })
+        clearInterval(timeInv);
+        timeInv = setInterval(() => {
+          thisHeight += stepHeight;
 
-        $('#btnCloseZm').click(() => {
-          if (submitHeight()) {
-            return //return 之后就会直接结束这个函数，不会在往下走
+          if (thisHeight <= endHeight) {
+            thisHeight = endHeight;
+            clearInterval(timeInv);
           }
-
-          var time = Number($('#txt_zmmiao').val())
-          var mi = Number($('#txt_zmmi').val())
-
-          var thisHeight = mi + minHeight
-          var endHeight = minHeight
-
-          var step = time / 0.1
-          var stepHeight = (endHeight - thisHeight) / step
-
-          updateHeight(thisHeight)
-
-          clearInterval(timeInv)
-          timeInv = setInterval(() => {
-            thisHeight += stepHeight
-
-            if (thisHeight <= endHeight) {
-              thisHeight = endHeight
-              clearInterval(timeInv)
-            }
-            updateHeight(thisHeight)
-          }, 200)
-        })
+          updateHeight(thisHeight);
+        }, 200);
       }
     </script>
   </body>

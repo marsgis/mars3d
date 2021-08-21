@@ -19,7 +19,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>arcgis featureserver 矢量服务加载 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>ArcGIS WFS图层 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <script
       type="text/javascript"
@@ -39,44 +39,37 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 31.810597,
-              x: 117.220617,
-              z: 1038.28,
-              heading: 13.2,
-              pitch: -30.4,
-              roll: 0.1,
-            },
+            center: { lat: 31.810597, lng: 117.220617, alt: 1038, heading: 13, pitch: -30 },
           },
           //方式1：在创建地球前的参数中配置
           layers: [
             {
-              name: '兴趣点',
-              type: 'arcgis_wfs',
-              url: '//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/1',
-              where: ' 1=1 ',
+              name: "兴趣点",
+              type: "arcgis_wfs",
+              url: "//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/1",
+              where: " 1=1 ",
               minimumLevel: 16,
               symbol: {
-                type: 'billboardP',
+                type: "billboardP",
                 styleOptions: {
-                  image: 'img/marker/mark3.png',
+                  image: "img/marker/mark3.png",
                   scale: 0.7,
                   verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
                   clampToGround: true,
                   label: {
-                    text: '{NAME}',
+                    text: "{NAME}",
                     font_size: 15,
-                    color: '#ffffff',
+                    color: "#ffffff",
                     outline: true,
-                    outlineColor: '#000000',
+                    outlineColor: "#000000",
                     pixelOffsetY: -30,
                     distanceDisplayCondition: true,
                     distanceDisplayCondition_far: 1500,
@@ -84,93 +77,93 @@
                   },
                 },
               },
-              popup: '名称：{NAME}<br />地址：{address}',
+              popup: "名称：{NAME}<br />地址：{address}",
               show: true,
             },
           ],
-        })
-        delete mapOptions.terrain
+        });
+        delete mapOptions.terrain;
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.basemap = 2017 //蓝色底图
+        map.basemap = 2017; //蓝色底图
 
         //添加演示图层
-        addArcGisWFSLayer1()
-        addArcGisWFSLayer2()
+        addArcGisWFSLayer1();
+        addArcGisWFSLayer2();
       }
 
       //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
       function addArcGisWFSLayer1() {
-        var changeLevel = 15
+        var changeLevel = 15;
 
         //瓦片图，对比参考用
         var tileLayer = new mars3d.layer.ArcGisLayer({
-          name: '瓦片图层',
-          url: '//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer',
-          layers: '37',
-          popup: '名称：{NAME}<br />层数：{floor}',
+          name: "瓦片图层",
+          url: "//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer",
+          layers: "37",
+          popup: "数据：瓦片图层<br />名称：{NAME}<br />层数：{floor}",
           maximumLevel: changeLevel - 1,
           maximumTerrainLevel: changeLevel - 1,
-        })
-        map.addLayer(tileLayer)
+        });
+        map.addLayer(tileLayer);
 
         //动态矢量图
         var wfsLayer = new mars3d.layer.ArcGisWfsLayer({
-          name: '建筑物面矢量图层',
-          url: '//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/37',
+          name: "建筑物面矢量图层",
+          url: "//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/37",
           where: " NAME like '%合肥%' ",
           minimumLevel: changeLevel,
           symbol: {
-            type: 'polygonP',
+            type: "polygonP",
             styleOptions: {
-              color: '#FED976',
+              color: "#FED976",
               outline: false,
               opacity: 1,
             },
           },
           buildings: {
-            cloumn: 'floor',
+            cloumn: "floor",
           },
           debuggerTileInfo: false,
-          popup: '名称：{NAME}<br />层数：{floor}',
-        })
-        map.addLayer(wfsLayer)
+          popup: "数据：矢量图层<br />名称：{NAME}<br />层数：{floor}",
+        });
+        map.addLayer(wfsLayer);
 
         //绑定事件
         wfsLayer.on(mars3d.EventType.loadConfig, function (event) {
-          console.log('加载完成服务信息', event)
-        })
+          console.log("加载完成服务信息", event);
+        });
 
         wfsLayer.on(mars3d.EventType.click, function (event) {
-          console.log('单击了图层', event)
-        })
-        window.wfsLayer = wfsLayer
+          console.log("单击了图层", event);
+        });
+        window.wfsLayer = wfsLayer;
 
         setTimeout(function () {
           //测试更换条件
-          wfsLayer.setWhere(' 1=1 ')
-        }, 10000)
+          wfsLayer.setWhere(" 1=1 ");
+        }, 10000);
       }
 
       //适合少于1000条的少量数据，一次性请求加载
       function addArcGisWFSLayer2() {
         //一次性加载的wfs图层
         var wfsLayer = new mars3d.layer.ArcGisWfsSingleLayer({
-          name: '合肥边界线',
-          url: '//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/41',
+          name: "合肥边界线",
+          url: "//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/41",
           symbol: {
-            type: 'polyline',
+            type: "polyline",
             styleOptions: {
-              color: '#39E09B',
+              color: "#39E09B",
               width: 8,
               opacity: 0.8,
             },
           },
-          popup: 'all',
-        })
-        map.addLayer(wfsLayer)
+          popup: "all",
+        });
+        map.addLayer(wfsLayer);
       }
     </script>
   </body>

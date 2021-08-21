@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>3D Tiles 三维模型 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>3D Tiles 三维模型图层 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <script
       type="text/javascript"
@@ -30,7 +30,7 @@
     <link href="css/style.css" rel="stylesheet" />
     <style>
       .cesium-viewer-cesiumInspectorContainer {
-          top: 68px;
+        top: 68px;
       }
     </style>
   </head>
@@ -84,12 +84,12 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      let map
+      let map;
 
-      if (haoutil.system.getRequestByName('data')) {
-        $('#viewBtn').remove()
+      if (haoutil.system.getRequestByName("data")) {
+        $("#viewBtn").remove();
       }
 
       function initMap(options) {
@@ -110,99 +110,99 @@
             infoBox: false,
           },
           layers: [],
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //固定光照，避免gltf模型随时间存在亮度不一致。
-        map.fixedLight = true
+        map.fixedLight = true;
 
         //调试面板
-        map.viewer.extend(Cesium.viewerCesiumInspectorMixin)
-        map.scene.globe.depthTestAgainstTerrain = false
+        map.viewer.extend(Cesium.viewerCesiumInspectorMixin);
+        map.scene.globe.depthTestAgainstTerrain = false;
 
         //针对不同终端的优化配置
         if (haoutil.system.isPCBroswer()) {
           // Cesium 1.61以后会默认关闭反走样，对于桌面端而言还是开启得好，
-          map.scene.postProcessStages.fxaa.enabled = true
+          map.scene.postProcessStages.fxaa.enabled = true;
 
           //鼠标滚轮放大的步长参数
-          map.scene.screenSpaceCameraController._zoomFactor = 2.0
+          map.scene.screenSpaceCameraController._zoomFactor = 2.0;
 
           //IE浏览器优化
-          if (window.navigator.userAgent.toLowerCase().indexOf('msie') >= 0) {
-            map.viewer.targetFrameRate = 20 //限制帧率
-            map.viewer.requestRenderMode = true //取消实时渲染
+          if (window.navigator.userAgent.toLowerCase().indexOf("msie") >= 0) {
+            map.viewer.targetFrameRate = 20; //限制帧率
+            map.viewer.requestRenderMode = true; //取消实时渲染
           }
         } else {
           //鼠标滚轮放大的步长参数
-          map.scene.screenSpaceCameraController._zoomFactor = 5.0
+          map.scene.screenSpaceCameraController._zoomFactor = 5.0;
 
           //移动设备上禁掉以下几个选项，可以相对更加流畅
-          map.viewer.requestRenderMode = true //取消实时渲染
-          map.scene.fog.enabled = false
-          map.scene.skyAtmosphere.show = false
-          map.scene.globe.showGroundAtmosphere = false
+          map.viewer.requestRenderMode = true; //取消实时渲染
+          map.scene.fog.enabled = false;
+          map.scene.skyAtmosphere.show = false;
+          map.scene.globe.showGroundAtmosphere = false;
         }
 
-        $('#chkTestTerrain').change(function () {
-          var val = $(this).is(':checked')
-          map.scene.globe.depthTestAgainstTerrain = val
-        })
-        $('#chkWireframe').change(function () {
-          var val = $(this).is(':checked')
+        $("#chkTestTerrain").change(function () {
+          var val = $(this).is(":checked");
+          map.scene.globe.depthTestAgainstTerrain = val;
+        });
+        $("#chkWireframe").change(function () {
+          var val = $(this).is(":checked");
 
           //三角网
-          tiles3dLayer.tileset.debugWireframe = val
-        })
-        $('#chkBoundbox').change(function () {
-          var val = $(this).is(':checked')
+          tiles3dLayer.tileset.debugWireframe = val;
+        });
+        $("#chkBoundbox").change(function () {
+          var val = $(this).is(":checked");
 
           //包围盒
-          tiles3dLayer.tileset.debugShowBoundingVolume = val
-        })
-        $('#chkGfirstperson').change(function () {
-          var val = $(this).is(':checked')
+          tiles3dLayer.tileset.debugShowBoundingVolume = val;
+        });
+        $("#chkGfirstperson").change(function () {
+          var val = $(this).is(":checked");
           // 键盘漫游
-          map.keyboardRoam.enabled = val
-        })
+          map.keyboardRoam.enabled = val;
+        });
 
-        var type = haoutil.system.getRequestByName('data')
+        var type = haoutil.system.getRequestByName("data");
         switch (type) {
           default:
-          case 'qx-shequ':
-            showQxShequDemo()
-            break
-          case 'qx-simiao':
-            showQxSimiaoDemo()
-            break
-          case 'jzw-hefei':
-            showJzwHefeiDemo()
-            break
-          case 'max-shihua':
-            showMaxShihuaDemo()
-            break
-          case 'bim-qiaoliang':
-            showBimQiaoliangDemo()
-            break
-          case 'bim-ditiezhan':
-            showBimDitiezhanDemo()
-            break
+          case "qx-shequ":
+            showQxShequDemo();
+            break;
+          case "qx-simiao":
+            showQxSimiaoDemo();
+            break;
+          case "jzw-hefei":
+            showJzwHefeiDemo();
+            break;
+          case "max-shihua":
+            showMaxShihuaDemo();
+            break;
+          case "bim-qiaoliang":
+            showBimQiaoliangDemo();
+            break;
+          case "bim-ditiezhan":
+            showBimDitiezhanDemo();
+            break;
         }
       }
 
-      let tiles3dLayer
+      let tiles3dLayer;
 
       function removeLayer() {
-        $('#chkWireframe').prop('checked', false)
-        $('#chkBoundbox').prop('checked', false)
+        $("#chkWireframe").prop("checked", false);
+        $("#chkBoundbox").prop("checked", false);
 
         if (tiles3dLayer) {
-          map.basemap = 2021 //切换到默认影像底图
+          map.basemap = 2021; //切换到默认影像底图
 
-          map.removeLayer(tiles3dLayer, true)
-          tiles3dLayer = null
+          map.removeLayer(tiles3dLayer, true);
+          tiles3dLayer = null;
         }
       }
 
@@ -217,11 +217,11 @@
 
       //示例：倾斜摄影 县城社区
       function showQxShequDemo() {
-        removeLayer()
+        removeLayer();
 
         tiles3dLayer = new mars3d.layer.TilesetLayer({
-          name: '县城社区',
-          url: '//data.mars3d.cn/3dtiles/qx-shequ/tileset.json',
+          name: "县城社区",
+          url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
           position: { alt: 11.5 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
@@ -231,31 +231,30 @@
           preferLeaves: true,
           center: { lat: 28.439577, lng: 119.476925, alt: 229, heading: 57, pitch: -29 },
           flyTo: true,
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
         //加载的事件 只执行一次
         tiles3dLayer.on(mars3d.EventType.initialTilesLoaded, function (event) {
-          console.log('触发initialTilesLoaded事件', event)
-        })
+          console.log("触发initialTilesLoaded事件", event);
+        });
 
         //会执行多次，重新加载一次完成后都会回调
         tiles3dLayer.on(mars3d.EventType.allTilesLoaded, function (event) {
-          console.log('触发allTilesLoaded事件', event)
-        })
+          console.log("触发allTilesLoaded事件", event);
+        });
       }
 
       //示例：倾斜摄影 景区文庙
       function showQxSimiaoDemo() {
-        removeLayer()
+        removeLayer();
 
         tiles3dLayer = new mars3d.layer.TilesetLayer({
-          name: '文庙',
-          url: '//data.mars3d.cn/3dtiles/qx-simiao/tileset.json',
+          name: "文庙",
+          url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
           position: { alt: 80.6 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
-          // "showClickFeature": false,
           // "skipLevelOfDetail": true,
           // "loadSiblings": true,
           // "cullRequestsWhileMoving": true,
@@ -272,56 +271,55 @@
             roll: 0,
           },
           flyTo: true,
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
         //加载的事件 只执行一次
         tiles3dLayer.on(mars3d.EventType.initialTilesLoaded, function (event) {
-          console.log('触发initialTilesLoaded事件', event)
-        })
+          console.log("触发initialTilesLoaded事件", event);
+        });
 
         //会执行多次，重新加载一次完成后都会回调
         tiles3dLayer.on(mars3d.EventType.allTilesLoaded, function (event) {
-          console.log('触发allTilesLoaded事件', event)
-        })
+          console.log("触发allTilesLoaded事件", event);
+        });
       }
 
       //示例：城市白膜建筑物 合肥市区
       function showJzwHefeiDemo() {
-        removeLayer()
+        removeLayer();
 
-        map.basemap = 2017 //切换到蓝色底图
+        map.basemap = 2017; //切换到蓝色底图
 
         tiles3dLayer = new mars3d.layer.TilesetLayer({
-          name: '合肥市建筑物',
-          url: '//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json',
+          name: "合肥市建筑物",
+          url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
           marsJzwStyle: true, //打开建筑物特效（内置Shader代码）
-          showClickFeature: true,
           popup: [
-            { field: 'objectid', name: '编号' },
-            { field: 'name', name: '名称' },
-            { field: 'height', name: '楼高', unit: '米' },
+            { field: "objectid", name: "编号" },
+            { field: "name", name: "名称" },
+            { field: "height", name: "楼高", unit: "米" },
           ],
           center: { lat: 31.795311, lng: 117.206139, alt: 1833, heading: 29, pitch: -26 },
           flyTo: true,
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
         //单击事件
         tiles3dLayer.on(mars3d.EventType.click, function (event) {
-          console.log('单击了3dtiles图层', event)
-        })
+          console.log("单击了3dtiles图层", event);
+        });
       }
 
       //示例：人工建模 石化工厂
       function showMaxShihuaDemo() {
-        removeLayer()
+        removeLayer();
 
         tiles3dLayer = new mars3d.layer.TilesetLayer({
-          name: '石化工厂',
-          url: '//data.mars3d.cn/3dtiles/max-shihua/tileset.json',
+          name: "石化工厂",
+          url: "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
           position: { lng: 117.077158, lat: 31.659116, alt: 24.6 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
@@ -336,26 +334,25 @@
           preloadWhenHidden: true,
           //以上为优化的参数
 
-          showClickFeature: true,
-          popup: 'all',
+          popup: "all",
           center: { lat: 31.653047, lng: 117.084439, alt: 354, heading: 319, pitch: -23 },
           flyTo: true,
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
         //单击事件
         tiles3dLayer.on(mars3d.EventType.click, function (event) {
-          console.log('单击了3dtiles图层', event)
-        })
+          console.log("单击了3dtiles图层", event);
+        });
       }
 
       //示例：BIM 桥梁
       function showBimQiaoliangDemo() {
-        removeLayer()
+        removeLayer();
 
         tiles3dLayer = new mars3d.layer.TilesetLayer({
-          name: '桥梁',
-          url: '//data.mars3d.cn/3dtiles/bim-qiaoliang/tileset.json',
+          name: "桥梁",
+          url: "//data.mars3d.cn/3dtiles/bim-qiaoliang/tileset.json",
 
           //以下参数可以参考用于3dtiles总数据大，清晰度过高情况下进行性能优化。这不是一个通用的解决方案，但可以以此为参考。
           maximumScreenSpaceError: 16, // 【重要】数值加大，能让最终成像变模糊
@@ -373,51 +370,54 @@
 
           position: { lng: 117.096906, lat: 31.851564, alt: 45 },
           rotation: { z: 17.5 },
-          showClickFeature: true,
-          pickFeatureStyle: {
-            color: '#00FF00',
+          highlight: {
+            type: mars3d.EventType.click, //默认为鼠标移入高亮，也可以指定click单击高亮
+            color: "#00FF00",
           },
           // popup: 'all',
           center: { lat: 31.8503, lng: 117.101008, alt: 307.73, heading: 291, pitch: -30, roll: 0 },
           flyTo: true,
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
         //可以绑定Popup弹窗，回调方法中任意处理
         tiles3dLayer.bindPopup(function (event) {
-          var attr = event.graphic.attr
-          return mars3d.Util.getTemplateHtml({ title: '桥梁', template: 'all', attr: attr })
-        })
+          var attr = event.graphic.attr;
+          return mars3d.Util.getTemplateHtml({ title: "桥梁", template: "all", attr: attr });
+        });
 
         //单击事件
         tiles3dLayer.on(mars3d.EventType.click, function (event) {
-          console.log('单击了3dtiles图层', event)
-        })
+          console.log("单击了3dtiles图层", event);
+        });
       }
 
       //示例：BIM 桥梁
       function showBimDitiezhanDemo() {
-        removeLayer()
+        removeLayer();
 
         tiles3dLayer = new mars3d.layer.TilesetLayer({
-          name: '轻轨地铁站',
-          url: '//data.mars3d.cn/3dtiles/bim-ditiezhan/tileset.json',
+          name: "轻轨地铁站",
+          url: "//data.mars3d.cn/3dtiles/bim-ditiezhan/tileset.json",
           maximumScreenSpaceError: 16,
           maximumMemoryUsage: 1024,
           position: { lng: 117.203994, lat: 31.857999, alt: 28.9 },
           rotation: { z: 168.1 },
-          showClickFeature: true,
-          pickFeatureStyle: { color: '#00FF00' },
-          popup: 'all',
+
+          highlight: {
+            type: "click",
+            color: "#00FF00",
+          },
+          popup: "all",
           center: { lat: 31.856358, lng: 117.204451, alt: 148, heading: 350, pitch: -30 },
           flyTo: true,
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
         //单击事件
         tiles3dLayer.on(mars3d.EventType.click, function (event) {
-          console.log('单击了3dtiles图层', event)
-        })
+          console.log("单击了3dtiles图层", event);
+        });
       }
     </script>
   </body>

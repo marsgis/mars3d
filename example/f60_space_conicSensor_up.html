@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>单目标雷达范围 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>ConicSensor 圆椎体(固定竖立朝上) | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -42,7 +42,7 @@
       <div style="width: 100%; text-align: center; font-size: 16px">参数设置</div>
       <table class="mars-table">
         <tr>
-          <td class="nametd"></td>
+          <td class="nametd">圆椎体</td>
           <td>
             <div class="checkbox checkbox-primary checkbox-inline">
               <input id="chkShow" class="styled" type="checkbox" checked />
@@ -85,55 +85,48 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
             //此处参数会覆盖config.json中的对应配置
-            center: {
-              y: 26.294038,
-              x: 122.406652,
-              z: 1295397.49,
-              heading: 326.8,
-              pitch: -58.5,
-              roll: 359.6,
-            },
+            center: { lat: 25.987821, lng: 122.076928, alt: 1295307, heading: 327, pitch: -59 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //移除2.5D视图
-        var arr = $('.cesium-sceneModePicker-wrapper').children()
+        var arr = $(".cesium-sceneModePicker-wrapper").children();
         if (arr.length > 3) {
-          arr[3].remove()
+          arr[3].remove();
         }
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //加个模型
         var graphic = new mars3d.graphic.ModelEntity({
-          name: '地面站模型',
+          name: "地面站模型",
           position: [117.170264, 31.840312, 258],
           style: {
-            url: '//data.mars3d.cn/gltf/mars/leida.glb',
+            url: "//data.mars3d.cn/gltf/mars/leida.glb",
             scale: 1,
             minimumPixelSize: 40,
             clampToGround: true,
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
 
         //参数
-        var angle = Number($('#model_angle1').val())
-        var length = Number($('#model_length').val())
+        var angle = Number($("#model_angle1").val());
+        var length = Number($("#model_length").val());
 
         //圆锥体
         var conicSensor = new mars3d.graphic.ConicSensor({
@@ -141,37 +134,37 @@
           style: {
             angle: angle,
             length: length,
-            color: 'rgba(255,0,0,0.4)',
-            outlineColor: 'rgba(255,255,255,0.9)',
+            color: "rgba(255,0,0,0.4)",
+            outlineColor: "rgba(255,255,255,0.9)",
           },
-        })
-        graphicLayer.addGraphic(conicSensor)
+        });
+        graphicLayer.addGraphic(conicSensor);
 
         //滑动条
-        $('#model_angle1').range({
+        $("#model_angle1").range({
           onChange: function (value, bfb) {
-            conicSensor.angle = value
+            conicSensor.angle = value;
           },
-        })
+        });
 
-        $('#model_length').change(function () {
-          conicSensor.length = Number($(this).val())
-        })
+        $("#model_length").change(function () {
+          conicSensor.length = Number($(this).val());
+        });
 
-        $('#chkShowTop').change(function () {
-          var val = $(this).is(':checked')
-          conicSensor.topShow = val
-        })
+        $("#chkShowTop").change(function () {
+          var val = $(this).is(":checked");
+          conicSensor.topShow = val;
+        });
 
-        $('#chkGroundArea').change(function () {
-          var val = $(this).is(':checked')
-          conicSensor.shadowShow = val
-        })
+        $("#chkGroundArea").change(function () {
+          var val = $(this).is(":checked");
+          conicSensor.shadowShow = val;
+        });
 
-        $('#chkShow').change(function () {
-          var val = $(this).is(':checked')
-          conicSensor.show = val
-        })
+        $("#chkShow").change(function () {
+          var val = $(this).is(":checked");
+          conicSensor.show = val;
+        });
       }
     </script>
   </body>

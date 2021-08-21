@@ -38,9 +38,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -48,19 +48,19 @@
           scene: {
             center: { lat: 14.986428, lng: 113.87451, alt: 3519007, heading: 353, pitch: -69 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建Echarts图层
-        createEchartsLayer()
+        createEchartsLayer();
       }
 
       function createEchartsLayer() {
-        var options = getEchartsOption()
-        var echartsLayer = new mars3d.layer.EchartsLayer(options)
-        map.addLayer(echartsLayer)
+        var options = getEchartsOption();
+        var echartsLayer = new mars3d.layer.EchartsLayer(options);
+        map.addLayer(echartsLayer);
       }
 
       function getEchartsOption(data) {
@@ -69,313 +69,313 @@
             {
               itemStyle: {
                 normal: {
-                  color: '#58B3CC',
+                  color: "#58B3CC",
                 },
               },
-              name: '\u8087\u5e86',
+              name: "\u8087\u5e86",
               value: [112.47, 23.05, 2],
               symbolSize: 1,
             },
             {
               itemStyle: {
                 normal: {
-                  color: '#58B3CC',
+                  color: "#58B3CC",
                 },
               },
-              name: '\u5fb7\u9633',
+              name: "\u5fb7\u9633",
               value: [104.38, 31.13, 2],
               symbolSize: 1,
             },
             {
               itemStyle: {
                 normal: {
-                  color: '#58B3CC',
+                  color: "#58B3CC",
                 },
               },
-              name: '\u8861\u9633',
+              name: "\u8861\u9633",
               value: [112.57, 26.9, 2],
               symbolSize: 1,
             },
             {
               itemStyle: {
                 normal: {
-                  color: '#58B3CC',
+                  color: "#58B3CC",
                 },
               },
-              name: '\u6069\u65bd',
+              name: "\u6069\u65bd",
               value: [109.47, 30.3, 2],
               symbolSize: 1,
             },
             {
               itemStyle: {
                 normal: {
-                  color: '#58B3CC',
+                  color: "#58B3CC",
                 },
               },
-              name: '\u54b8\u9633',
+              name: "\u54b8\u9633",
               value: [108.7, 34.33, 2],
               symbolSize: 1.0,
             },
             {
               itemStyle: {
                 normal: {
-                  color: '#58B3CC',
+                  color: "#58B3CC",
                 },
               },
-              name: '\u8302\u540d',
+              name: "\u8302\u540d",
               value: [110.92, 21.67, 2],
               symbolSize: 1,
             },
             {
               itemStyle: {
                 normal: {
-                  color: '#58B3CC',
+                  color: "#58B3CC",
                 },
               },
-              name: '\u91cd\u5e86',
+              name: "\u91cd\u5e86",
               value: [106.55, 29.57, 2],
               symbolSize: 8.0,
             },
             {
               itemStyle: {
                 normal: {
-                  color: '#58B3CC',
+                  color: "#58B3CC",
                 },
               },
-              name: '\u6b66\u6c49',
+              name: "\u6b66\u6c49",
               value: [114.3, 30.6, 2],
               symbolSize: 11.0,
             },
             {
               itemStyle: {
                 normal: {
-                  color: '#58B3CC',
+                  color: "#58B3CC",
                 },
               },
-              name: '\u6c88\u9633',
+              name: "\u6c88\u9633",
               value: [123.43, 41.8, 2],
               symbolSize: 1,
             },
             {
               itemStyle: {
                 normal: {
-                  color: '#58B3CC',
+                  color: "#58B3CC",
                 },
               },
-              name: '\u6d77\u53e3',
+              name: "\u6d77\u53e3",
               value: [110.32, 20.03, 2],
               symbolSize: 1,
             },
             {
               itemStyle: {
                 normal: {
-                  color: '#58B3CC',
+                  color: "#58B3CC",
                 },
               },
-              name: '\u4e0a\u6d77',
+              name: "\u4e0a\u6d77",
               value: [121.47, 31.23, 2],
               symbolSize: 5.0,
             },
             {
               itemStyle: {
                 normal: {
-                  color: '#58B3CC',
+                  color: "#58B3CC",
                 },
               },
-              name: '\u5e7f\u5dde',
+              name: "\u5e7f\u5dde",
               value: [113.5107, 23.2196, 2],
               symbolSize: 5.0,
             },
             {
               itemStyle: {
                 normal: {
-                  color: '#58B3CC',
+                  color: "#58B3CC",
                 },
               },
-              name: '\u8346\u95e8',
+              name: "\u8346\u95e8",
               value: [112.2, 31.03, 2],
               symbolSize: 1,
             },
           ],
           movelines: [
             {
-              toName: '\u91cd\u5e86',
-              fromName: '\u54b8\u9633',
+              toName: "\u91cd\u5e86",
+              fromName: "\u54b8\u9633",
               coords: [
                 [108.7, 34.33],
                 [106.55, 29.57],
               ],
             },
             {
-              toName: '\u4e0a\u6d77',
-              fromName: '\u91cd\u5e86',
+              toName: "\u4e0a\u6d77",
+              fromName: "\u91cd\u5e86",
               coords: [
                 [106.55, 29.57],
                 [121.47, 31.23],
               ],
             },
             {
-              toName: '\u91cd\u5e86',
-              fromName: '\u6b66\u6c49',
+              toName: "\u91cd\u5e86",
+              fromName: "\u6b66\u6c49",
               coords: [
                 [114.3, 30.6],
                 [106.55, 29.57],
               ],
             },
             {
-              toName: '\u5fb7\u9633',
-              fromName: '\u6b66\u6c49',
+              toName: "\u5fb7\u9633",
+              fromName: "\u6b66\u6c49",
               coords: [
                 [114.3, 30.6],
                 [104.38, 31.13],
               ],
             },
             {
-              toName: '\u4e0a\u6d77',
-              fromName: '\u6b66\u6c49',
+              toName: "\u4e0a\u6d77",
+              fromName: "\u6b66\u6c49",
               coords: [
                 [114.3, 30.6],
                 [121.47, 31.23],
               ],
             },
             {
-              toName: '\u8087\u5e86',
-              fromName: '\u4e0a\u6d77',
+              toName: "\u8087\u5e86",
+              fromName: "\u4e0a\u6d77",
               coords: [
                 [121.47, 31.23],
                 [112.47, 23.05],
               ],
             },
             {
-              toName: '\u8861\u9633',
-              fromName: '\u4e0a\u6d77',
+              toName: "\u8861\u9633",
+              fromName: "\u4e0a\u6d77",
               coords: [
                 [121.47, 31.23],
                 [112.57, 26.9],
               ],
             },
             {
-              toName: '\u6069\u65bd',
-              fromName: '\u4e0a\u6d77',
+              toName: "\u6069\u65bd",
+              fromName: "\u4e0a\u6d77",
               coords: [
                 [121.47, 31.23],
                 [109.47, 30.3],
               ],
             },
             {
-              toName: '\u8302\u540d',
-              fromName: '\u4e0a\u6d77',
+              toName: "\u8302\u540d",
+              fromName: "\u4e0a\u6d77",
               coords: [
                 [121.47, 31.23],
                 [110.92, 21.67],
               ],
             },
             {
-              toName: '\u6b66\u6c49',
-              fromName: '\u4e0a\u6d77',
+              toName: "\u6b66\u6c49",
+              fromName: "\u4e0a\u6d77",
               coords: [
                 [121.47, 31.23],
                 [114.3, 30.6],
               ],
             },
             {
-              toName: '\u6d77\u53e3',
-              fromName: '\u4e0a\u6d77',
+              toName: "\u6d77\u53e3",
+              fromName: "\u4e0a\u6d77",
               coords: [
                 [121.47, 31.23],
                 [110.32, 20.03],
               ],
             },
             {
-              toName: '\u5e7f\u5dde',
-              fromName: '\u4e0a\u6d77',
+              toName: "\u5e7f\u5dde",
+              fromName: "\u4e0a\u6d77",
               coords: [
                 [121.47, 31.23],
                 [113.5107, 23.2196],
               ],
             },
             {
-              toName: '\u8346\u95e8',
-              fromName: '\u4e0a\u6d77',
+              toName: "\u8346\u95e8",
+              fromName: "\u4e0a\u6d77",
               coords: [
                 [121.47, 31.23],
                 [112.2, 31.03],
               ],
             },
             {
-              toName: '\u4e0a\u6d77',
-              fromName: '\u5e7f\u5dde',
+              toName: "\u4e0a\u6d77",
+              fromName: "\u5e7f\u5dde",
               coords: [
                 [113.5107, 23.2196],
                 [121.47, 31.23],
               ],
             },
             {
-              toName: '\u6c88\u9633',
-              fromName: '\u5e7f\u5dde',
+              toName: "\u6c88\u9633",
+              fromName: "\u5e7f\u5dde",
               coords: [
                 [113.5107, 23.2196],
                 [123.43, 41.8],
               ],
             },
           ],
-        }
+        };
         var option = {
           animation: false,
-          GLMap: {},
-          backgroundColor: 'rgba(17, 19, 42, 0.4)',
+
+          backgroundColor: "rgba(17, 19, 42, 0.4)",
           title: {
-            text: '火星科技物流运输图',
-            left: 'center',
+            text: "火星科技物流运输图",
+            left: "center",
             textStyle: {
-              color: '#fff',
+              color: "#fff",
             },
           },
           legend: {
             show: false,
-            orient: 'vertical',
-            top: 'bottom',
-            left: 'right',
-            data: ['地点', '线路'],
+            orient: "vertical",
+            top: "bottom",
+            left: "right",
+            data: ["地点", "线路"],
             textStyle: {
-              color: '#fff',
+              color: "#fff",
             },
           },
           series: [
             {
-              name: '地点',
-              type: 'effectScatter',
-              coordinateSystem: 'GLMap',
+              name: "地点",
+              type: "effectScatter",
+              coordinateSystem: "mars3dMap",
               zlevel: 2,
               rippleEffect: {
-                brushType: 'stroke',
+                brushType: "stroke",
               },
               label: {
                 emphasis: {
                   show: true,
-                  position: 'right',
-                  formatter: '{b}',
+                  position: "right",
+                  formatter: "{b}",
                 },
               },
               symbolSize: 2,
-              showEffectOn: 'render',
+              showEffectOn: "render",
               itemStyle: {
                 normal: {
-                  color: '#46bee9',
+                  color: "#46bee9",
                 },
               },
               data: allData.citys,
             },
             {
-              name: '线路',
-              type: 'lines',
-              coordinateSystem: 'GLMap',
+              name: "线路",
+              type: "lines",
+              coordinateSystem: "mars3dMap",
               zlevel: 2,
               large: true,
               effect: {
                 show: true,
                 constantSpeed: 30,
-                symbol: 'pin',
+                symbol: "pin",
                 symbolSize: 4,
                 trailLength: 0,
               },
@@ -389,11 +389,11 @@
                     [
                       {
                         offset: 0,
-                        color: '#58B3CC',
+                        color: "#58B3CC",
                       },
                       {
                         offset: 1,
-                        color: '#F58158',
+                        color: "#F58158",
                       },
                     ],
                     false
@@ -406,8 +406,8 @@
               data: allData.movelines,
             },
           ],
-        }
-        return option
+        };
+        return option;
       }
     </script>
   </body>

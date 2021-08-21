@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>散点图 态势| Echarts扩展支持 | 三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>流向动态效果| Echarts扩展支持 | 三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -38,68 +38,68 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
             center: { lat: 16.123872, lng: 87.846618, alt: 29824697, heading: 360, pitch: -90 },
-            sceneMode: 2,
+            sceneMode: 2, //2d地图展示
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.basemap = '蓝色底图'
+        map.basemap = "蓝色底图";
 
         //创建Echarts图层
-        createEchartsLayer()
+        createEchartsLayer();
       }
 
       function createEchartsLayer() {
-        var options = getEchartsOption()
-        var echartsLayer = new mars3d.layer.EchartsLayer(options)
-        map.addLayer(echartsLayer)
+        var options = getEchartsOption();
+        var echartsLayer = new mars3d.layer.EchartsLayer(options);
+        map.addLayer(echartsLayer);
 
         $(window).resize(function () {
-          echartsLayer.resize()
-        })
+          echartsLayer.resize();
+        });
       }
 
       function getEchartsOption() {
         let options = {
           animation: false,
-          GLMap: {},
-          visualMap: { min: 0, max: 15, bottom: '5%', right: '5%', itemHeight: 30, show: true },
+
+          visualMap: { min: 0, max: 15, bottom: "5%", right: "5%", itemHeight: 30, show: true },
           series: [
             {
-              type: 'effectScatter',
-              coordinateSystem: 'GLMap',
-              showEffectOn: 'render',
+              type: "effectScatter",
+              coordinateSystem: "mars3dMap",
+              showEffectOn: "render",
               zlevel: 0,
-              rippleEffect: { period: 15, scale: 4, brushType: 'fill' },
-              label: { normal: { show: true, formatter: '{b}', position: 'top', offset: [5, 0], color: '#1DE9B6' }, emphasis: { show: true } },
-              symbol: 'circle',
-              itemStyle: { normal: { show: true, shadowBlur: 10, shadowColor: '#333' } },
+              rippleEffect: { period: 15, scale: 4, brushType: "fill" },
+              label: { normal: { show: true, formatter: "{b}", position: "top", offset: [5, 0], color: "#1DE9B6" }, emphasis: { show: true } },
+              symbol: "circle",
+              itemStyle: { normal: { show: true, shadowBlur: 10, shadowColor: "#333" } },
               data: [
-                { key: '中国', name: '中国', latitudeAndLongitude: '110.094854,34.525002', counts: 15, value: [110.094854, 34.525002, 15] },
-                { key: '澳大利亚', name: '澳大利亚', latitudeAndLongitude: '150.993137,-33.675509', counts: 6, value: [150.993137, -33.675509, 6] },
-                { key: '蒙古', name: '蒙古', latitudeAndLongitude: '106.731711, 48.056936', counts: 3, value: [106.731711, 48.056936, 3] },
-                { key: '泰国', name: '泰国', latitudeAndLongitude: '100.52901, 13.814341', counts: 3, value: [100.52901, 13.814341, 3] },
-                { key: '韩国', name: '韩国', latitudeAndLongitude: '126.928257, 37.617069', counts: 3, value: [126.928257, 37.617069, 3] },
-                { key: '匈牙利', name: '匈牙利', latitudeAndLongitude: '17.108519,48.179162', counts: 3, value: [17.108519, 48.179162, 3] },
-                { key: '阿联酋', name: '阿联酋', latitudeAndLongitude: '55.269441,25.204514', counts: 3, value: [55.269441, 25.204514, 3] },
+                { key: "中国", name: "中国", latitudeAndLongitude: "110.094854,34.525002", counts: 15, value: [110.094854, 34.525002, 15] },
+                { key: "澳大利亚", name: "澳大利亚", latitudeAndLongitude: "150.993137,-33.675509", counts: 6, value: [150.993137, -33.675509, 6] },
+                { key: "蒙古", name: "蒙古", latitudeAndLongitude: "106.731711, 48.056936", counts: 3, value: [106.731711, 48.056936, 3] },
+                { key: "泰国", name: "泰国", latitudeAndLongitude: "100.52901, 13.814341", counts: 3, value: [100.52901, 13.814341, 3] },
+                { key: "韩国", name: "韩国", latitudeAndLongitude: "126.928257, 37.617069", counts: 3, value: [126.928257, 37.617069, 3] },
+                { key: "匈牙利", name: "匈牙利", latitudeAndLongitude: "17.108519,48.179162", counts: 3, value: [17.108519, 48.179162, 3] },
+                { key: "阿联酋", name: "阿联酋", latitudeAndLongitude: "55.269441,25.204514", counts: 3, value: [55.269441, 25.204514, 3] },
               ],
             },
             {
-              type: 'lines',
-              coordinateSystem: 'GLMap',
+              type: "lines",
+              coordinateSystem: "mars3dMap",
               zlevel: 0,
-              effect: { show: true, period: 4, trailLength: 0.2, symbol: 'arrow', symbolSize: 5 },
+              effect: { show: true, period: 4, trailLength: 0.2, symbol: "arrow", symbolSize: 5 },
               lineStyle: { normal: { width: 1, opacity: 1, curveness: 0.3 } },
               data: [
                 {
@@ -161,8 +161,8 @@
               ],
             },
           ],
-        }
-        return options
+        };
+        return options;
       }
     </script>
   </body>

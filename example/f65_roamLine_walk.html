@@ -28,6 +28,7 @@
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
+    <link href="css/divGraphic.css" rel="stylesheet" />
     <style>
       .mp_table {
         width: 100%;
@@ -122,12 +123,28 @@
       </table>
     </div>
 
+
+    <div id="popupContent"  class="marsBlackPanel animation-spaceInDown">
+      <div class="marsBlackPanel-text">
+        <div style="width: 200px;text-align:left;">
+          <div>总 距 离：<span id="lblAllLen"> </span></div>
+          <div>总 时 间：<span id="lblAllTime"> </span></div>
+          <div>开始时间：<span id="lblStartTime"> </span></div>
+          <div>剩余时间：<span id="lblRemainTime"> </span></div>
+          <div>剩余距离：<span id="lblRemainLen"> </span></div>
+        </div>
+      </div>
+      <span class="mars3d-popup-close-button closeButton" >×</span>
+    </div>
+
+
+
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var roamLine
+      var map;
+      var roamLine;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -136,18 +153,18 @@
             animation: true, //是否创建动画小器件，左下角仪表
             timeline: true, //是否显示时间线控件
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //该数据可以从 基础项目 飞行漫游功能界面操作后单个路线的 保存JSON
         var flydata = {
-          name: '步行路线',
+          name: "步行路线",
           speed: 40,
           positions: [
             [117.220356, 31.833959, 43.67],
@@ -163,15 +180,15 @@
           ],
           model: {
             show: true,
-            url: '//data.mars3d.cn/gltf/mars/man/walk.gltf',
+            url: "//data.mars3d.cn/gltf/mars/man/walk.gltf",
             scale: 5,
             minimumPixelSize: 50,
           },
           shadow: [
             {
-              type: 'circle',
+              type: "circle",
               radius: 10,
-              color: '#ffff00',
+              color: "#ffff00",
               opacity: 0.3,
               materialType: mars3d.MaterialType.CircleWave,
               speed: 10,
@@ -181,64 +198,67 @@
             },
           ],
           camera: {
-            type: 'gs',
+            type: "gs",
             radius: 300,
           },
           clockRange: Cesium.ClockRange.CLAMPED, //CLAMPED到达终点后停止
           pauseTime: 0.5,
-        }
+        };
 
-        roamLine = new mars3d.graphic.RoamLine(flydata)
-        graphicLayer.addGraphic(roamLine)
+        roamLine = new mars3d.graphic.RoamLine(flydata);
+        graphicLayer.addGraphic(roamLine);
 
         roamLine.on(mars3d.EventType.endItem, function (event) {
-          console.log('已漫游过点：' + event.index, event)
-        })
+          console.log("已漫游过点：" + event.index, event);
+        });
         roamLine.on(mars3d.EventType.end, function (event) {
-          console.log('漫游结束', event)
-        })
+          console.log("漫游结束", event);
+        });
 
         roamLine.on(mars3d.EventType.change, (event) => {
           //面板显示相关信息
-          showRealTimeInfo(event)
-        })
+          showRealTimeInfo(event);
+        });
 
-        roamLine.bindPopup(
-          function (event) {
-            var params = event?.target?.info
-            if (!params) {
-              return '即将开始漫游'
-            }
-            let roamLine = event.target
+        roamLine.bindPopup(document.getElementById("popupContent"), { offsetY: -40 });
 
-            var html =
-              '<div style="width:200px;">' +
-              '总距离：' +
-              haoutil.str.formatLength(roamLine.alllen) +
-              '<br/>' +
-              '总时间：' +
-              haoutil.str.formatTime(roamLine.alltimes / map.clock.multiplier) +
-              '<br/>' +
-              '开始时间：' +
-              Cesium.JulianDate.toDate(roamLine.startTime).format('yyyy-M-d HH:mm:ss') +
-              '<br/>' +
-              '剩余时间：' +
-              haoutil.str.formatTime((roamLine.alltimes - params.time) / map.clock.multiplier) +
-              '<br/>' +
-              '剩余距离：' +
-              haoutil.str.formatLength(roamLine.alllen - params.len) +
-              ' <br/>' +
-              '</div>'
-            return html
-          },
-          {
-            anchor: [0, -20], //左右、上下的偏移像素值。
-            timeRender: true, //实时更新html
+        //刷新局部DOM,不影响popup面板的其他控件操作
+        roamLine.on(mars3d.EventType.postRender, function (event) {
+          let container = event.container; //popup对应的DOM
+
+          var params = roamLine?.info;
+          if (!params) {
+            return;
           }
-        )
+
+          let lblAllLen = container.querySelector("#lblAllLen");
+          if (lblAllLen) {
+            lblAllLen.innerHTML = haoutil.str.formatLength(roamLine.alllen);
+          }
+
+          let lblAllTime = container.querySelector("#lblAllTime");
+          if (lblAllTime) {
+            lblAllTime.innerHTML = haoutil.str.formatTime(roamLine.alltimes / map.clock.multiplier);
+          }
+
+          let lblStartTime = container.querySelector("#lblStartTime");
+          if (lblStartTime) {
+            lblStartTime.innerHTML = Cesium.JulianDate.toDate(roamLine.startTime).format("yyyy-M-d HH:mm:ss");
+          }
+
+          let lblRemainTime = container.querySelector("#lblRemainTime");
+          if (lblRemainTime) {
+            lblRemainTime.innerHTML = haoutil.str.formatTime((roamLine.alltimes - params.time) / map.clock.multiplier);
+          }
+
+          let lblRemainLen = container.querySelector("#lblRemainLen");
+          if (lblRemainLen) {
+            lblRemainLen.innerHTML = haoutil.str.formatLength(roamLine.alllen - params.len);
+          }
+        });
 
         //不贴地时，直接开始
-        startFly()
+        startFly();
 
         //贴地时，异步计算完成后开始
         // roamLine.clampToGround(function (e) {//异步计算完成贴地后再启动
@@ -249,52 +269,52 @@
 
       function startFly() {
         //启动漫游
-        roamLine.start()
+        roamLine.start();
 
         //显示popup
-        roamLine.openPopup()
+        roamLine.openPopup();
 
         //显示基本信息，名称、总长、总时间
-        $('#td_alltimes').html(haoutil.str.formatTime(roamLine.alltimes))
-        $('#td_alllength').html(haoutil.str.formatLength(roamLine.alllen))
+        $("#td_alltimes").html(haoutil.str.formatTime(roamLine.alltimes));
+        $("#td_alllength").html(haoutil.str.formatLength(roamLine.alllen));
       }
 
       //显示实时坐标和时间
       function showRealTimeInfo(params) {
         if (params == null) {
-          return
+          return;
         }
-
-        var val = Math.ceil((params.time * 100) / roamLine.alltimes)
+        // console.log(params);
+        var val = Math.ceil((params.time * 100) / roamLine.alltimes);
         if (val < 1) {
-          val = 1
+          val = 1;
         }
         if (val > 100) {
-          val = 100
+          val = 100;
         }
 
-        $('.progress-bar')
-          .css('width', val + '%')
-          .attr('aria-valuenow', val)
-          .html(val + '%')
+        $(".progress-bar")
+          .css("width", val + "%")
+          .attr("aria-valuenow", val)
+          .html(val + "%");
 
-        $('#td_jd').html(params.lng)
-        $('#td_wd').html(params.lat)
-        $('#td_gd').html(haoutil.str.formatLength(params.alt))
+        $("#td_jd").html(params.lng);
+        $("#td_wd").html(params.lat);
+        $("#td_gd").html(haoutil.str.formatLength(params.alt));
 
-        $('#td_times').html(haoutil.str.formatTime(params.time))
-        $('#td_length').html(haoutil.str.formatLength(params.len))
+        $("#td_times").html(haoutil.str.formatTime(params.time));
+        $("#td_length").html(haoutil.str.formatLength(params.len));
 
         if (params.hbgd) {
-          $('#td_dmhb').html(haoutil.str.formatLength(params.hbgd))
+          $("#td_dmhb").html(haoutil.str.formatLength(params.hbgd));
         } else {
-          $('#td_dmhb').html('未知')
+          $("#td_dmhb").html("未知");
         }
 
         if (params.ldgd) {
-          $('#td_ldgd').html(haoutil.str.formatLength(params.ldgd))
+          $("#td_ldgd").html(haoutil.str.formatLength(params.ldgd));
         } else {
-          $('#td_ldgd').html('未知')
+          $("#td_ldgd").html("未知");
         }
       }
     </script>

@@ -37,20 +37,20 @@
     <div id="tipView" class="info-tips">(1) 需要自行部署自己的谷歌地球企业版服务后，修改url才能体验。</div>
 
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
       $(document).ready(function () {
         if (!mars3d.Util.webglreport()) {
-          mars3d.Util.webglerror()
-          return
+          mars3d.Util.webglerror();
+          return;
         }
-        initMap()
-      })
+        initMap();
+      });
 
-      var map
+      var map;
       function initMap() {
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', {
+        map = new mars3d.Map("mars3dContainer", {
           scene: {
             center: { lat: 23.54104, lng: 121.083097, alt: 10219674, heading: 355, pitch: -85 },
             highDynamicRange: false,
@@ -63,37 +63,37 @@
             locationBar: { fps: true }, //状态栏
           },
           terrain: {
-            type: 'gee',
-            url: 'http://www.earthenterprise.org/3d',
+            type: "gee",
+            url: "http://www.earthenterprise.org/3d",
             // "proxy": "//server.mars3d.cn/proxy/",
             show: true,
           },
           basemaps: [
             {
-              name: 'GEE地图',
-              icon: 'img/basemaps/osm.png',
-              type: 'gee',
-              url: 'http://www.earthenterprise.org/3d',
+              name: "GEE地图",
+              icon: "img/basemaps/osm.png",
+              type: "gee",
+              url: "http://www.earthenterprise.org/3d",
               // "proxy": "//server.mars3d.cn/proxy/",
               show: true,
             },
           ],
-        })
+        });
       }
 
       function openTipView(content, title) {
         window.layer.open({
           type: 1,
-          title: title || '功能 和 已知问题 提示',
-          offset: 'rt',
+          title: title || "功能 和 已知问题 提示",
+          offset: "rt",
           shade: false,
-          skin: 'layer-mars-dialog animation-scale-up',
+          skin: "layer-mars-dialog animation-scale-up",
           content: content,
-        })
+        });
       }
 
-      if ($('#tipView').length > 0) {
-        openTipView($('#tipView'))
+      if ($("#tipView").length > 0) {
+        openTipView($("#tipView"));
       }
     </script>
   </body>

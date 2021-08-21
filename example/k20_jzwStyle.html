@@ -43,7 +43,8 @@
           <td>style样式：</td>
           <td>
             <input type="button" class="btn btn-primary" value="原始样式" onclick="setStyle1()" />
-            <input type="button" class="btn btn-primary" value="动态特效" onclick="setStyle2()" />
+            <input type="button" class="btn btn-primary" value="动态特效1" onclick="setStyle2()" title="该方式依赖mars3d修改的cesium库" />
+            <input type="button" class="btn btn-primary" value="动态特效2" onclick="setStyle3()" title="该方式不修改Cesium源码" />
           </td>
         </tr>
         <tr>
@@ -80,10 +81,10 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var tiles3dLayer
+      var map;
+      var tiles3dLayer;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -93,193 +94,230 @@
           },
           layers: [
             {
-              type: 'geojson',
-              name: '道路线',
-              url: '//data.mars3d.cn/file/geojson/hefei-road.json',
+              type: "geojson",
+              name: "道路线",
+              url: "//data.mars3d.cn/file/geojson/hefei-road.json",
               symbol: {
                 styleOptions: {
-                  materialType: 'PolylineGlow',
+                  materialType: "PolylineGlow",
                   glowPower: 0.2,
-                  color: '#FF4500',
+                  color: "#FF4500",
                   width: 12,
                   opacity: 0.8,
                 },
               },
-              popup: '{name}',
+              popup: "{name}",
               show: true,
             },
             {
-              type: 'geojson',
-              name: '河流(面状)',
-              url: '//data.mars3d.cn/file/geojson/hefei-water.json',
+              type: "geojson",
+              name: "河流(面状)",
+              url: "//data.mars3d.cn/file/geojson/hefei-water.json",
               symbol: {
-                type: 'water',
+                type: "water",
                 styleOptions: {
-                  normalMap: 'img/textures/waterNormals.jpg', // 水正常扰动的法线图
+                  normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
                   frequency: 5000.0, // 控制波数的数字。
                   animationSpeed: 0.05, // 控制水的动画速度的数字。
                   amplitude: 9.0, // 控制水波振幅的数字。
                   specularIntensity: 0.8, // 控制镜面反射强度的数字。
-                  baseWaterColor: '#00baff', // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
-                  blendColor: '#00baff', // 从水中混合到非水域时使用的rgba颜色对象。
+                  baseWaterColor: "#00baff", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
+                  blendColor: "#00baff", // 从水中混合到非水域时使用的rgba颜色对象。
                   // clampToGround: true,
                 },
               },
-              popup: '{name}',
+              popup: "{name}",
               show: true,
             },
           ],
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.basemap = 2017 //切换到蓝色底图
+        map.basemap = 2017; //切换到蓝色底图
 
         map.scene.light = new Cesium.DirectionalLight({
           direction: map.scene.camera.direction,
-        })
+        });
         map.on(mars3d.EventType.cameraMoveEnd, function (event) {
-          map.scene.light.direction = map.scene.camera.direction
-        })
+          map.scene.light.direction = map.scene.camera.direction;
+        });
 
         var bloomEffect = new mars3d.effect.BloomEffect({
           enabled: false,
-        })
-        map.addEffect(bloomEffect)
+        });
+        map.addEffect(bloomEffect);
 
-        $('#chkBloom').change(function () {
-          var val = $(this).is(':checked')
-          bloomEffect.enabled = val
-        })
+        $("#chkBloom").change(function () {
+          var val = $(this).is(":checked");
+          bloomEffect.enabled = val;
+        });
 
         var brightnessEffect = new mars3d.effect.BrightnessEffect({
           enabled: true,
-          brightness: Number($('#alpha').val()),
-        })
-        map.addEffect(brightnessEffect)
+          brightness: Number($("#alpha").val()),
+        });
+        map.addEffect(brightnessEffect);
 
-        $('#chkBrightness').change(function () {
-          var val = $(this).is(':checked')
-          brightnessEffect.enabled = val
-        })
-        $('#alpha').range({
+        $("#chkBrightness").change(function () {
+          var val = $(this).is(":checked");
+          brightnessEffect.enabled = val;
+        });
+        $("#alpha").range({
           onChange: function (value, bfb) {
-            brightnessEffect.brightness = value
+            brightnessEffect.brightness = value;
           },
-        })
+        });
 
         //加光照
-        $('#chkShadows').change(function () {
-          var val = $(this).is(':checked')
-          map.viewer.shadows = val
+        $("#chkShadows").change(function () {
+          var val = $(this).is(":checked");
+          map.viewer.shadows = val;
 
           if (val) {
             setTimeout(function () {
               //光照沿着相机方向
-              map.scene.shadowMap._lightCamera = map.scene.camera
-            }, 500)
+              map.scene.shadowMap._lightCamera = map.scene.camera;
+            }, 500);
           }
-        })
+        });
 
-        $('#txtColor').minicolors({
-          position: 'bottom left',
-          control: 'saturation',
-          format: 'rgb',
+        $("#txtColor").minicolors({
+          position: "bottom left",
+          control: "saturation",
+          format: "rgb",
           opacity: 0.9,
           change: function (color, opacity) {
-            console.log(color + ',' + opacity)
+            console.log(color + "," + opacity);
 
             tiles3dLayer.style = new Cesium.Cesium3DTileStyle({
               color: {
-                conditions: [['true', color]],
+                conditions: [["true", color]],
               },
-            })
+            });
           },
-        })
+        });
 
-        setStyle2()
+        setStyle2();
       }
 
       function setStyle1() {
         if (tiles3dLayer) {
-          tiles3dLayer.remove()
+          tiles3dLayer.remove();
         }
 
         //模型
         tiles3dLayer = new mars3d.layer.TilesetLayer({
-          type: '3dtiles',
-          name: '合肥市建筑物',
-          url: '//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json',
+          type: "3dtiles",
+          name: "合肥市建筑物",
+          url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
-          // "style": {
-          //     "color": {
-          //         "conditions": [
-          //             ["${height} >= 300", "rgba(45, 0, 75, 0.5)"],
-          //             ["${height} >= 200", "rgb(102, 71, 151)"],
-          //             ["${height} >= 100", "rgb(170, 162, 204)"],
-          //             ["${height} >= 50", "rgb(224, 226, 238)"],
-          //             ["${height} >= 30", "rgb(252, 230, 200)"],
-          //             ["${height} >= 20", "rgb(248, 176, 87)"],
-          //             ["${height} >= 10", "rgb(198, 106, 11)"],
-          //             ["true", "rgb(127, 59, 8)"]
-          //         ]
-          //     }
-          // },
-          showClickFeature: true,
           popup: [
-            { field: 'objectid', name: '编号' },
-            { field: 'name', name: '名称' },
-            { field: 'height', name: '楼高', unit: '米' },
+            { field: "objectid", name: "编号" },
+            { field: "name", name: "名称" },
+            { field: "height", name: "楼高", unit: "米" },
           ],
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
       }
 
       function setStyle2() {
         if (tiles3dLayer) {
-          tiles3dLayer.remove()
+          tiles3dLayer.remove();
         }
 
         //自定义特效 Shader
         var fragmentShader = `
           // 注意shader中写浮点数是，一定要带小数点，否则会报错，比如0需要写成0.0，1要写成1.0
           float _baseHeight = 0.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
-          float _heightRange = 120.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange) 默认是 0-60米
+          float _heightRange = 120.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
           float _glowRange = 200.0; // 光环的移动范围(高度)
 
           // 建筑基础色
           float mars_height = v_stcVertex.z - _baseHeight;
           float mars_a11 = fract(czm_frameNumber / 120.0) * 3.14159265 * 2.0;
           float mars_a12 = mars_height / _heightRange + sin(mars_a11) * 0.1;
-          gl_FragColor *= vec4(mars_a12, mars_a12, mars_a12, 1.0);
+          gl_FragColor *= vec4(vec3(mars_a12), 1.0);// 渐变
 
           // 动态光环
-          float mars_a13 = fract(czm_frameNumber / 360.0);
+          float time = fract(czm_frameNumber / 360.0);
+          time = abs(time - 0.5) * 2.0;
           float mars_h = clamp(mars_height / _glowRange, 0.0, 1.0);
-          mars_a13 = abs(mars_a13 - 0.5) * 2.0;
-          float mars_diff = step(0.005, abs(mars_h - mars_a13));
+          float mars_diff = step(0.005, abs(mars_h - time));
           gl_FragColor.rgb += gl_FragColor.rgb * (1.0 - mars_diff);
-       `
+       `;
 
         tiles3dLayer = new mars3d.layer.TilesetLayer({
-          name: '合肥市建筑物',
-          url: '//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json',
+          name: "合肥市建筑物",
+          url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
           // marsJzwStyle: true, //打开建筑物特效（内置Shader代码）
           marsJzwStyle: fragmentShader, //字符串值时，表示使用该字符串定义的自定义Shader
-          showClickFeature: true,
           popup: [
-            { field: 'objectid', name: '编号' },
-            { field: 'name', name: '名称' },
-            { field: 'height', name: '楼高', unit: '米' },
+            { field: "objectid", name: "编号" },
+            { field: "name", name: "名称" },
+            { field: "height", name: "楼高", unit: "米" },
           ],
           center: { lat: 31.841018, lng: 117.252932, alt: 1346, heading: 38, pitch: -26 },
           flyTo: true,
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
+      }
+
+      //不改动cesium源码版本的建筑物样式
+      function setStyle3() {
+        if (tiles3dLayer) {
+          tiles3dLayer.remove();
+        }
+
+        tiles3dLayer = new mars3d.layer.TilesetLayer({
+          name: "合肥市建筑物",
+          url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
+          maximumScreenSpaceError: 1,
+          maximumMemoryUsage: 1024,
+          style: {
+            color: {
+              conditions: [["true", "rgba(16, 119, 209, 1)"]],
+            },
+          },
+          popup: "all",
+          center: { lat: 31.841018, lng: 117.252932, alt: 1346, heading: 38, pitch: -26 },
+          flyTo: true,
+        });
+        map.addLayer(tiles3dLayer);
+
+        let fragmentShader = `
+            varying vec3 v_positionEC;
+            uniform vec4 u_baseColorFactor;
+
+            void main(void){
+                vec4 position = czm_inverseModelView * vec4(v_positionEC,1); // 位置
+
+                // 注意shader中写浮点数是，一定要带小数点，否则会报错，比如0需要写成0.0，1要写成1.0
+                float _baseHeight = 0.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
+                float _heightRange = 120.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
+                float _glowRange = 200.0; // 光环的移动范围(高度)
+
+                // 建筑基础色
+                float mars_height = position.z - _baseHeight;
+                float mars_a11 = fract(czm_frameNumber / 120.0) * 3.14159265 * 2.0;
+                float mars_a12 = mars_height / _heightRange + sin(mars_a11) * 0.1;
+                gl_FragColor = u_baseColorFactor; // 颜色
+                gl_FragColor *= vec4(vec3(mars_a12), 1.0);// 渐变
+
+                // 动态光环
+                float time = fract(czm_frameNumber / 360.0);
+                time = abs(time - 0.5) * 2.0;
+                float mars_h = clamp(mars_height / _glowRange, 0.0, 1.0);
+                float mars_diff = step(0.005, abs(mars_h - time));
+                gl_FragColor.rgb += gl_FragColor.rgb * (1.0 - mars_diff);
+            } `;
+
+        //不改动cesium源码版本的建筑物样式
+        tiles3dLayer.setCustomShader(fragmentShader);
       }
     </script>
   </body>

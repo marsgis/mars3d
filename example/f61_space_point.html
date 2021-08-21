@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>外太空物 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -220,24 +220,17 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var graphicLayer
-      var allCount
+      var map;
+      var graphicLayer;
+      var allCount;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 10,
-              x: 111.833884,
-              z: 150000000,
-              heading: 0,
-              pitch: -90,
-              roll: 0,
-            },
+            center: { lat: 29.646563, lng: 96.25028, alt: 150004581, heading: 352, pitch: -90 },
             cameraController: {
               zoomFactor: 3.0,
               minimumZoomDistance: 1,
@@ -252,71 +245,79 @@
             animation: true, //是否创建动画小器件，左下角仪表
             timeline: true, //是否显示时间线控件
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        initUI()
+        initUI();
 
         queryTleApiData()
           .then(function (res) {
-            let arr = res.list
-            initData(arr)
+            let arr = res.list;
+            initData(arr);
           })
           .catch(function () {
-            haoutil.msg('获取空间目标轨道数据异常！')
-          })
+            haoutil.msg("获取空间目标轨道数据异常！");
+          });
       }
 
       // 访问后端接口，取数据
       function queryTleApiData() {
         return new Promise(function (resolve, reject) {
-          $.getJSON('//data.mars3d.cn/file/apidemo/tle.json', function (result) {
-            resolve(result)
-          })
-        })
+          $.ajax({
+            url: "//data.mars3d.cn/file/apidemo/tle.json",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+              resolve(result);
+            },
+            error: function (data) {
+              reject(data);
+            },
+          });
+        });
       }
 
       function initData(arr) {
-        allCount = arr.length
-        haoutil.msg('当前外太空物数量: ' + allCount)
+        allCount = arr.length;
+        haoutil.msg("当前外太空物数量: " + allCount);
 
         //创建Graphic图层
-        graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //单击地图空白处
         map.on(mars3d.EventType.clickMap, function (event) {
-          highlightSatellite()
-        })
+          highlightSatellite();
+        });
 
         graphicLayer.on(mars3d.EventType.click, function (event) {
-          console.log('单击了卫星', event)
+          console.log("单击了卫星", event);
           //单击事件
-          highlightSatellite(event.graphic)
-        })
+          highlightSatellite(event.graphic);
+        });
 
         for (let i = 0; i < arr.length; i++) {
-          let item = arr[i]
+          let item = arr[i];
 
           let style = {
             pixelSize: 3,
-            color: 'rgba(0,255,0,0.4)',
-          }
+            color: "rgba(0,255,0,0.4)",
+          };
 
           //转为属性，方便使用
           if (item.info) {
-            item.cospar = item.info[0]
-            item.name = item.info[1]
-            item.country = item.info[2]
-            item.period = item.info[3]
-            item.inclination = item.info[4]
-            item.apogee = item.info[5]
-            item.perigee = item.info[6]
-            item.size = item.info[7]
-            item.launch = new Date(item.info[8])
-            delete item.info
+            item.cospar = item.info[0];
+            item.name = item.info[1];
+            item.country = item.info[2];
+            item.period = item.info[3];
+            item.inclination = item.info[4];
+            item.apogee = item.info[5];
+            item.perigee = item.info[6];
+            item.size = item.info[7];
+            item.launch = new Date(item.info[8]);
+            delete item.info;
 
             // if (item.country == 'PRC') {
             //   //中国的卫星
@@ -324,7 +325,7 @@
             //   style.color = 'rgba(0,255,255,0.6)'
             // }
           } else {
-            item.name = ''
+            item.name = "";
           }
 
           var primitive = new mars3d.graphic.PointPrimitive({
@@ -332,83 +333,83 @@
             // position: mars3d.Tle.getEcfPosition(item.tle1, item.tle2, time) //计算卫星位置
             style: style,
             attr: item,
-          })
-          graphicLayer.addGraphic(primitive)
+          });
+          graphicLayer.addGraphic(primitive);
         }
 
-        startWorker(arr)
+        startWorker(arr);
       }
 
       //采用多线程来计算卫星位置
-      var worker
+      var worker;
       function startWorker(arr) {
-        worker = new Worker('./js/tleWorker.js')
+        worker = new Worker("./js/tleWorker.js");
         worker.onmessage = function (event) {
-          let positionObj = event.data.positionObj
+          let positionObj = event.data.positionObj;
           // console.log('接收到数据', positionObj)
 
           for (var id in positionObj) {
-            let item = positionObj[id]
+            let item = positionObj[id];
             if (!item) {
-              continue
+              continue;
             }
 
-            let graphic = graphicLayer.getGraphicById(id)
-            graphic.position = new Cesium.Cartesian3(item.x, item.y, item.z)
+            let graphic = graphicLayer.getGraphicById(id);
+            graphic.position = new Cesium.Cartesian3(item.x, item.y, item.z);
           }
 
           //循环继续发送请求消息
           worker.postMessage({
             time: Cesium.JulianDate.toDate(map.clock.currentTime),
             list: arr,
-          })
-        }
+          });
+        };
 
         //主线程调用worker.postMessage()方法，向 Worker 发消息。
         worker.postMessage({
           time: Cesium.JulianDate.toDate(map.clock.currentTime),
           list: arr,
-        })
+        });
       }
 
-      var lastSelectWX
+      var lastSelectWX;
       function highlightSatellite(satelliteObj) {
         if (lastSelectWX) {
-          $('#pointInfo').hide()
-          $('#viewContorUi').show()
+          $("#pointInfo").hide();
+          $("#viewContorUi").show();
           //重置上次选中的轨道样式
-          lastSelectWX.remove(true)
-          lastSelectWX = null
+          lastSelectWX.remove(true);
+          lastSelectWX = null;
         }
 
         if (satelliteObj) {
-          let item = satelliteObj.attr
-          showInfo(item)
+          let item = satelliteObj.attr;
+          showInfo(item);
 
           //高亮选中的轨道样式
           var weixin = new mars3d.graphic.Satellite({
             tle1: item.tle1,
             tle2: item.tle2,
             model: {
-              url: '//data.mars3d.cn/gltf/mars/weixin.gltf',
+              url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
               scale: 1,
               autoHeading: true,
               minimumPixelSize: 50,
               show: item.name ? true : false,
             },
             label: {
-              color: '#ffffff',
+              color: "#ffffff",
               opacity: 1,
-              font_family: '楷体',
+              font_family: "楷体",
               font_size: 30,
               outline: true,
-              outlineColor: '#000000',
+              outlineColor: "#000000",
               outlineWidth: 3,
               background: true,
-              backgroundColor: '#000000',
+              backgroundColor: "#000000",
               backgroundOpacity: 0.5,
-              font_weight: 'normal',
-              font_style: 'normal',
+              font_weight: "normal",
+              font_style: "normal",
               pixelOffsetX: 0,
               pixelOffsetY: -20,
               scaleByDistance: true,
@@ -420,244 +421,248 @@
             },
             path: {
               show: true,
-              color: '#e2e2e2',
+              color: "#e2e2e2",
               opacity: 0.8,
               width: 1,
             },
-          })
-          map.graphicLayer.addGraphic(weixin)
-          lastSelectWX = weixin
+          });
+          map.graphicLayer.addGraphic(weixin);
+          lastSelectWX = weixin;
         }
       }
 
       function showInfo(attr) {
         if (!attr.name) {
-          return
+          return;
         }
 
-        $('#pointInfo').show()
-        $('#viewContorUi').hide()
+        $("#pointInfo").show();
+        $("#viewContorUi").hide();
 
-        $('#td_name').html(attr.name)
-        $('#td_norad').html(attr.id)
-        $('#td_cospar').html(attr.cospar)
-        $('#td_country').html(attr.country)
-        $('#td_period').html(mars3d.Util.formatNum(attr.period, 2) + ' 分钟')
-        $('#td_inclination').html(attr.inclination + '°')
-        $('#td_apogee').html(mars3d.Util.formatNum(attr.apogee, 0) + ' km')
-        $('#td_perigee').html(mars3d.Util.formatNum(attr.perigee, 0) + ' km')
-        $('#td_size').html(attr.size)
-        $('#td_launch').html(attr.launch.format('yyyy-MM-dd'))
+        $("#td_name").html(attr.name);
+        $("#td_norad").html(attr.id);
+        $("#td_cospar").html(attr.cospar);
+        $("#td_country").html(attr.country);
+        $("#td_period").html(mars3d.Util.formatNum(attr.period, 2) + " 分钟");
+        $("#td_inclination").html(attr.inclination + "°");
+        $("#td_apogee").html(mars3d.Util.formatNum(attr.apogee, 0) + " km");
+        $("#td_perigee").html(mars3d.Util.formatNum(attr.perigee, 0) + " km");
+        $("#td_size").html(attr.size);
+        $("#td_launch").html(attr.launch.format("yyyy-MM-dd"));
 
-        $('#link_n2yo').attr('href', 'https://www.n2yo.com/satellite/?s=' + attr.id)
-        $('#link_tle').attr('href', 'https://celestrak.com/satcat/tle.php?CATNR=' + attr.id)
+        $("#link_n2yo").attr("href", "https://www.n2yo.com/satellite/?s=" + attr.id);
+        $("#link_tle").attr("href", "https://celestrak.com/satcat/tle.php?CATNR=" + attr.id);
       }
 
       // Orbital altitude definitions.
-      var LOW_ORBIT = 2000
-      var GEOSYNCHRONOUS_ORBIT = 35786
+      var LOW_ORBIT = 2000;
+      var GEOSYNCHRONOUS_ORBIT = 35786;
 
       function initUI() {
-        $('#selXilie').change(function () {
-          selectSatellites()
-        })
-        $('#selGuidao').change(function () {
-          var val = $(this).val()
+        $("#selXilie").change(function () {
+          selectSatellites();
+        });
+        $("#selGuidao").change(function () {
+          var val = $(this).val();
           switch (val) {
             default:
-              $('#slider-apogee').slider('setValue', [$('#slider-apogee').slider('getAttribute', 'min'), $('#slider-apogee').slider('getAttribute', 'max')])
-              $('#slider-perigee').slider('setValue', [
-                $('#slider-perigee').slider('getAttribute', 'min'),
-                $('#slider-perigee').slider('getAttribute', 'max'),
-              ])
-              $('#slider-inclination').slider('setValue', [
-                $('#slider-inclination').slider('getAttribute', 'min'),
-                $('#slider-inclination').slider('getAttribute', 'max'),
-              ])
-              break
-            case 'low':
-              $('#slider-apogee').slider('setValue', [$('#slider-apogee').slider('getAttribute', 'min'), LOW_ORBIT])
-              $('#slider-perigee').slider('setValue', [$('#slider-perigee').slider('getAttribute', 'min'), LOW_ORBIT])
-              break
-            case 'medium':
-              $('#slider-apogee').slider('setValue', [LOW_ORBIT, GEOSYNCHRONOUS_ORBIT])
-              $('#slider-perigee').slider('setValue', [LOW_ORBIT, GEOSYNCHRONOUS_ORBIT])
-              break
-            case 'geosynchronous':
-              $('#slider-apogee').slider('setValue', [GEOSYNCHRONOUS_ORBIT * 0.98, GEOSYNCHRONOUS_ORBIT * 1.02])
-              $('#slider-perigee').slider('setValue', [GEOSYNCHRONOUS_ORBIT * 0.98, GEOSYNCHRONOUS_ORBIT * 1.02])
-              break
-            case 'geostationary':
-              $('#slider-apogee').slider('setValue', [GEOSYNCHRONOUS_ORBIT * 0.98, GEOSYNCHRONOUS_ORBIT * 1.02])
-              $('#slider-perigee').slider('setValue', [GEOSYNCHRONOUS_ORBIT * 0.98, GEOSYNCHRONOUS_ORBIT * 1.02])
-              $('#slider-inclination').slider('setValue', [0, 1])
-              break
-            case 'high':
-              $('#slider-apogee').slider('setValue', [GEOSYNCHRONOUS_ORBIT * 1.02, $('#slider-apogee').slider('getAttribute', 'max')])
-              $('#slider-perigee').slider('setValue', [GEOSYNCHRONOUS_ORBIT * 1.02, $('#slider-perigee').slider('getAttribute', 'max')])
-              break
+              $("#slider-apogee").slider("setValue", [
+                $("#slider-apogee").slider("getAttribute", "min"),
+                $("#slider-apogee").slider("getAttribute", "max"),
+              ]);
+              $("#slider-perigee").slider("setValue", [
+                $("#slider-perigee").slider("getAttribute", "min"),
+                $("#slider-perigee").slider("getAttribute", "max"),
+              ]);
+              $("#slider-inclination").slider("setValue", [
+                $("#slider-inclination").slider("getAttribute", "min"),
+                $("#slider-inclination").slider("getAttribute", "max"),
+              ]);
+              break;
+            case "low":
+              $("#slider-apogee").slider("setValue", [$("#slider-apogee").slider("getAttribute", "min"), LOW_ORBIT]);
+              $("#slider-perigee").slider("setValue", [$("#slider-perigee").slider("getAttribute", "min"), LOW_ORBIT]);
+              break;
+            case "medium":
+              $("#slider-apogee").slider("setValue", [LOW_ORBIT, GEOSYNCHRONOUS_ORBIT]);
+              $("#slider-perigee").slider("setValue", [LOW_ORBIT, GEOSYNCHRONOUS_ORBIT]);
+              break;
+            case "geosynchronous":
+              $("#slider-apogee").slider("setValue", [GEOSYNCHRONOUS_ORBIT * 0.98, GEOSYNCHRONOUS_ORBIT * 1.02]);
+              $("#slider-perigee").slider("setValue", [GEOSYNCHRONOUS_ORBIT * 0.98, GEOSYNCHRONOUS_ORBIT * 1.02]);
+              break;
+            case "geostationary":
+              $("#slider-apogee").slider("setValue", [GEOSYNCHRONOUS_ORBIT * 0.98, GEOSYNCHRONOUS_ORBIT * 1.02]);
+              $("#slider-perigee").slider("setValue", [GEOSYNCHRONOUS_ORBIT * 0.98, GEOSYNCHRONOUS_ORBIT * 1.02]);
+              $("#slider-inclination").slider("setValue", [0, 1]);
+              break;
+            case "high":
+              $("#slider-apogee").slider("setValue", [GEOSYNCHRONOUS_ORBIT * 1.02, $("#slider-apogee").slider("getAttribute", "max")]);
+              $("#slider-perigee").slider("setValue", [GEOSYNCHRONOUS_ORBIT * 1.02, $("#slider-perigee").slider("getAttribute", "max")]);
+              break;
           }
-          selectSatellites()
-        })
-        $('#selCountry').change(function () {
-          selectSatellites()
-        })
-        $('#selType').change(function () {
-          selectSatellites()
-        })
+          selectSatellites();
+        });
+        $("#selCountry").change(function () {
+          selectSatellites();
+        });
+        $("#selType").change(function () {
+          selectSatellites();
+        });
 
-        $('#chkSizeSmall').change(function () {
-          selectSatellites()
-        })
-        $('#chkSizeMedium').change(function () {
-          selectSatellites()
-        })
-        $('#chkSizeLarge').change(function () {
-          selectSatellites()
-        })
+        $("#chkSizeSmall").change(function () {
+          selectSatellites();
+        });
+        $("#chkSizeMedium").change(function () {
+          selectSatellites();
+        });
+        $("#chkSizeLarge").change(function () {
+          selectSatellites();
+        });
 
-        $('#slider-launchdate')
+        $("#slider-launchdate")
           .slider({
-            id: 'slider-launchdate-internal',
+            id: "slider-launchdate-internal",
             ticks: [1950, 1960, 1970, 1980, 1990, 2000, 2010, 2021],
             ticks_labels: ["'50", "'60", "'70", "'80", "'90", "'00", "'10", "'20"],
             range: true,
             value: [1950, 2021],
           })
-          .slider()
-          .on('slideStop', function () {
-            selectSatellites()
-          })
+          .on("slideStop", function () {
+            selectSatellites();
+          });
 
-        $('#slider-period')
+        $("#slider-period")
           .slider({
-            id: 'slider-period-internal',
+            id: "slider-period-internal",
             ticks: [0, 100, 200, 1000, 10000, 60000],
             ticks_positions: [0, 20, 40, 60, 80, 100],
-            ticks_labels: ['0', '100', '200', '1k', '1w', '6w'],
+            ticks_labels: ["0", "100", "200", "1k", "1w", "6w"],
             range: true,
             value: [0, 60000],
           })
-          .slider()
-          .on('slideStop', function () {
-            selectSatellites()
-          })
+          .on("slideStop", function () {
+            selectSatellites();
+          });
 
-        $('#slider-inclination')
+        $("#slider-inclination")
           .slider({
-            id: 'slider-inclination-internal',
+            id: "slider-inclination-internal",
             ticks: [0, 30, 60, 90, 120, 150],
             ticks_positions: [0, 20, 40, 60, 80, 100],
-            ticks_labels: ['0°', '30°', '60°', '90°', '120°', '150°'],
+            ticks_labels: ["0°", "30°", "60°", "90°", "120°", "150°"],
             range: true,
             value: [0, 150],
           })
-          .slider()
-          .on('slideStop', function () {
-            selectSatellites()
-          })
+          .on("slideStop", function () {
+            selectSatellites();
+          });
 
         //远地点高度
-        $('#slider-apogee')
+        $("#slider-apogee")
           .slider({
-            id: 'slider-apogee-internal',
+            id: "slider-apogee-internal",
             ticks: [0, 1000, 2000, 5000, 10000, 600000],
             ticks_positions: [0, 20, 40, 60, 80, 100],
-            ticks_labels: ['0', '1km', '2km', '5km', '10km', '600km'],
+            ticks_labels: ["0", "1km", "2km", "5km", "10km", "600km"],
             range: true,
             value: [0, 600000],
           })
-          .slider()
-          .on('slideStop', function () {
-            selectSatellites()
-          })
+          .on("slideStop", function () {
+            selectSatellites();
+          });
 
         //近地点高度
-        $('#slider-perigee')
+        $("#slider-perigee")
           .slider({
-            id: 'slider-perigee-internal',
+            id: "slider-perigee-internal",
             ticks: [0, 1000, 2000, 5000, 10000, 500000],
             ticks_positions: [0, 20, 40, 60, 80, 100],
-            ticks_labels: ['0', '1km', '2km', '5km', '10km', '500km'],
+            ticks_labels: ["0", "1km", "2km", "5km", "10km", "500km"],
             range: true,
             value: [0, 500000],
           })
-          .slider()
-          .on('slideStop', function () {
-            selectSatellites()
-          })
+          .on("slideStop", function () {
+            selectSatellites();
+          });
       }
 
       function resetUI() {
-        $('#selXilie').val('')
-        $('#selCountry').val('')
-        $('#selType').val('')
-        $('#selGuidao').val('')
+        $("#selXilie").val("");
+        $("#selCountry").val("");
+        $("#selType").val("");
+        $("#selGuidao").val("");
 
-        $('#chkSizeSmall').attr('checked', 'checked')
-        $('#chkSizeMedium').attr('checked', 'checked')
-        $('#chkSizeLarge').attr('checked', 'checked')
+        $("#chkSizeSmall").attr("checked", "checked");
+        $("#chkSizeMedium").attr("checked", "checked");
+        $("#chkSizeLarge").attr("checked", "checked");
 
-        resetSlider('#slider-launchdate')
-        resetSlider('#slider-period')
-        resetSlider('#slider-inclination')
-        resetSlider('#slider-apogee')
-        resetSlider('#slider-perigee')
+        resetSlider("#slider-launchdate");
+        resetSlider("#slider-period");
+        resetSlider("#slider-inclination");
+        resetSlider("#slider-apogee");
+        resetSlider("#slider-perigee");
 
         //循环所有卫星
         graphicLayer.eachGraphic(function (graphic) {
           if (graphic.selected) {
             graphic.setStyle({
               pixelSize: 3,
-              color: 'rgba(0,255,0,0.4)',
-            })
-            graphic.selected = false
+              color: "rgba(0,255,0,0.4)",
+            });
+            graphic.selected = false;
           }
-        })
+        });
       }
 
       function resetSlider(name) {
-        $(name).slider('setValue', [$(name).slider('getAttribute', 'min'), $(name).slider('getAttribute', 'max')])
+        $(name).slider("setValue", [$(name).slider("getAttribute", "min"), $(name).slider("getAttribute", "max")]);
       }
 
       // Well known satellite constellations.
-      // eslint-disable-next-line prettier/prettier
-      var GPS = [20959, 22877, 23953, 24876, 25933, 26360, 26407, 26605, 26690, 27663, 27704, 28129, 28190, 28361, 28474, 28874, 29486, 29601, 32260, 32384, 32711,35752, 36585, 37753, 38833, 39166, 39533, 39741, 40105, 40294, 40534]
-      // eslint-disable-next-line prettier/prettier
-      var GLONASS = [ 28915, 29672, 29670, 29671, 32276, 32275, 32393, 32395, 36111, 36112, 36113, 36400, 36402, 36401, 37139, 37138, 37137, 37829, 37869, 37867, 37868, 39155, 39620, 40001]
-      var INMARSAT = [20918, 21149, 21814, 21940, 23839, 24307, 24674, 24819, 25153, 28628, 28899, 33278, 40384, 39476]
-      var LANDSAT = [25682, 39084]
-      var DIGITALGLOBE = [25919, 32060, 33331, 35946, 40115]
+      var GPS = [
+        // eslint-disable-next-line prettier/prettier
+        20959, 22877, 23953, 24876, 25933, 26360, 26407, 26605, 26690, 27663, 27704, 28129, 28190, 28361, 28474, 28874, 29486, 29601, 32260, 32384,
+        32711, 35752, 36585, 37753, 38833, 39166, 39533, 39741, 40105, 40294, 40534,
+      ];
+      var GLONASS = [
+        // eslint-disable-next-line prettier/prettier
+        28915, 29672, 29670, 29671, 32276, 32275, 32393, 32395, 36111, 36112, 36113, 36400, 36402, 36401, 37139, 37138, 37137, 37829, 37869, 37867,
+        37868, 39155, 39620, 40001,
+      ];
+      var INMARSAT = [20918, 21149, 21814, 21940, 23839, 24307, 24674, 24819, 25153, 28628, 28899, 33278, 40384, 39476];
+      var LANDSAT = [25682, 39084];
+      var DIGITALGLOBE = [25919, 32060, 33331, 35946, 40115];
 
       // 判断卫星数据
       function selectSatellites(options = {}) {
-        var xilie = $('#selXilie').val() //系列卫星
-        var country = $('#selCountry').val() //所属国家
-        var type = $('#selType').val() //对象类型
+        var xilie = $("#selXilie").val(); //系列卫星
+        var country = $("#selCountry").val(); //所属国家
+        var type = $("#selType").val(); //对象类型
 
-        var sizeSmall = $('#chkSizeSmall').is(':checked')
-        var sizeMedium = $('#chkSizeMedium').is(':checked')
-        var sizeLarge = $('#chkSizeLarge').is(':checked')
+        var sizeSmall = $("#chkSizeSmall").is(":checked");
+        var sizeMedium = $("#chkSizeMedium").is(":checked");
+        var sizeLarge = $("#chkSizeLarge").is(":checked");
 
-        var val1 = $('#slider-launchdate').slider('getValue')
-        var val2 = $('#slider-period').slider('getValue')
-        var val3 = $('#slider-inclination').slider('getValue')
-        var val4 = $('#slider-apogee').slider('getValue')
-        var val5 = $('#slider-perigee').slider('getValue')
+        var val1 = $("#slider-launchdate").slider("getValue");
+        var val2 = $("#slider-period").slider("getValue");
+        var val3 = $("#slider-inclination").slider("getValue");
+        var val4 = $("#slider-apogee").slider("getValue");
+        var val5 = $("#slider-perigee").slider("getValue");
 
-        var min1 = $('#slider-launchdate').slider('getAttribute', 'min')
-        var min2 = $('#slider-period').slider('getAttribute', 'min')
-        var min3 = $('#slider-inclination').slider('getAttribute', 'min')
-        var min4 = $('#slider-apogee').slider('getAttribute', 'min')
-        var min5 = $('#slider-perigee').slider('getAttribute', 'min')
+        var min1 = $("#slider-launchdate").slider("getAttribute", "min");
+        var min2 = $("#slider-period").slider("getAttribute", "min");
+        var min3 = $("#slider-inclination").slider("getAttribute", "min");
+        var min4 = $("#slider-apogee").slider("getAttribute", "min");
+        var min5 = $("#slider-perigee").slider("getAttribute", "min");
 
-        var max1 = $('#slider-launchdate').slider('getAttribute', 'max')
-        var max2 = $('#slider-period').slider('getAttribute', 'max')
-        var max3 = $('#slider-inclination').slider('getAttribute', 'max')
-        var max4 = $('#slider-apogee').slider('getAttribute', 'max')
-        var max5 = $('#slider-perigee').slider('getAttribute', 'max')
+        var max1 = $("#slider-launchdate").slider("getAttribute", "max");
+        var max2 = $("#slider-period").slider("getAttribute", "max");
+        var max3 = $("#slider-inclination").slider("getAttribute", "max");
+        var max4 = $("#slider-apogee").slider("getAttribute", "max");
+        var max5 = $("#slider-perigee").slider("getAttribute", "max");
 
-        let selCount = 0
+        let selCount = 0;
 
         //循环所有卫星
         graphicLayer.eachGraphic(function (graphic) {
@@ -665,54 +670,54 @@
           if (graphic.selected) {
             graphic.setStyle({
               pixelSize: 3,
-              color: 'rgba(0,255,0,0.4)',
-            })
-            graphic.selected = false
+              color: "rgba(0,255,0,0.4)",
+            });
+            graphic.selected = false;
           }
 
-          let attr = graphic.attr //卫星的属性
+          let attr = graphic.attr; //卫星的属性
 
           //系列卫星时
           if (xilie) {
-            let selected
+            let selected;
             switch (xilie) {
-              case 'gps':
-                selected = GPS.indexOf(attr.id) !== -1
-                break
-              case 'bd':
-                selected = attr.name.indexOf('BD') !== -1 || attr.name.indexOf('BEIDOU') !== -1
-                break
-              case 'glonass':
-                selected = GLONASS.indexOf(attr.id) !== -1
-                break
-              case 'inmarsat':
-                selected = INMARSAT.indexOf(attr.id) !== -1
-                break
-              case 'landsat':
-                selected = LANDSAT.indexOf(attr.id) !== -1
-                break
-              case 'digitalglobe':
-                selected = DIGITALGLOBE.indexOf(attr.id) !== -1
-                break
+              case "gps":
+                selected = GPS.indexOf(attr.id) !== -1;
+                break;
+              case "bd":
+                selected = attr.name.indexOf("BD") !== -1 || attr.name.indexOf("BEIDOU") !== -1;
+                break;
+              case "glonass":
+                selected = GLONASS.indexOf(attr.id) !== -1;
+                break;
+              case "inmarsat":
+                selected = INMARSAT.indexOf(attr.id) !== -1;
+                break;
+              case "landsat":
+                selected = LANDSAT.indexOf(attr.id) !== -1;
+                break;
+              case "digitalglobe":
+                selected = DIGITALGLOBE.indexOf(attr.id) !== -1;
+                break;
             }
             if (!selected) {
-              return
+              return;
             }
           }
 
           //国家
           if (country && country !== attr.country) {
-            return
+            return;
           }
 
           //类型的判断
           if (type) {
-            let name = attr.name
-            if (type === 'junk' && name.indexOf(' DEB') === -1 && name.indexOf(' R/B') === -1) {
-              return
+            let name = attr.name;
+            if (type === "junk" && name.indexOf(" DEB") === -1 && name.indexOf(" R/B") === -1) {
+              return;
             }
-            if (type === 'satellite' && (name.indexOf(' DEB') !== -1 || name.indexOf(' R/B') !== -1)) {
-              return
+            if (type === "satellite" && (name.indexOf(" DEB") !== -1 || name.indexOf(" R/B") !== -1)) {
+              return;
             }
           }
 
@@ -720,14 +725,14 @@
           if (sizeSmall && sizeMedium && sizeLarge) {
             //全选中时不判断
           } else {
-            if (sizeSmall && 'SMALL' != attr.size) {
-              return
+            if (sizeSmall && "SMALL" != attr.size) {
+              return;
             }
-            if (sizeMedium && 'MEDIUM' != attr.size) {
-              return
+            if (sizeMedium && "MEDIUM" != attr.size) {
+              return;
             }
-            if (sizeLarge && 'LARGE' != attr.size) {
-              return
+            if (sizeLarge && "LARGE" != attr.size) {
+              return;
             }
           }
 
@@ -735,67 +740,67 @@
           // Launch date
           if (val1[0] !== min1 || val1[1] !== max1) {
             if (!attr.launch) {
-              return
+              return;
             }
 
-            var y = attr.launch.getFullYear()
+            var y = attr.launch.getFullYear();
             if (y <= val1[0] || y >= val1[1]) {
-              return
+              return;
             }
           }
 
           // Orbital period
           if (val2[0] !== min2 || val2[1] !== max2) {
             if (!attr.period) {
-              return
+              return;
             }
             if (attr.period < val2[0] || attr.period > val2[1]) {
-              return
+              return;
             }
           }
 
           // Inclination
           if (val3[0] !== min3 || val3[1] !== max3) {
             if (!attr.inclination) {
-              return
+              return;
             }
             if (attr.inclination < val3[0] || attr.inclination > val3[1]) {
-              return
+              return;
             }
           }
 
           // Apogee
           if (val4[0] !== min4 || val4[1] !== max4) {
             if (!attr.apogee) {
-              return
+              return;
             }
             if (attr.apogee < val4[0] || attr.apogee > val4[1]) {
-              return
+              return;
             }
           }
 
           // Perigee
           if (val5[0] !== min5 || val5[1] !== max5) {
             if (!attr.perigee) {
-              return
+              return;
             }
             if (attr.perigee < val5[0] || attr.perigee > val5[1]) {
-              return
+              return;
             }
           }
 
           //将筛选到的数据修改为红色
           if (!graphic.selected) {
-            graphic.selected = true
+            graphic.selected = true;
             graphic.setStyle({
               pixelSize: 7,
-              color: 'rgba(255,0,0,1.0)',
-            })
+              color: "rgba(255,0,0,1.0)",
+            });
           }
-          selCount++
-        })
+          selCount++;
+        });
 
-        haoutil.msg(`${allCount}个对象中，有 ${selCount} 个符合条件`)
+        haoutil.msg(`${allCount}个对象中，有 ${selCount} 个符合条件`);
       }
     </script>
   </body>

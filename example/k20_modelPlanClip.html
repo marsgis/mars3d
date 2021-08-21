@@ -93,9 +93,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -104,27 +104,27 @@
             center: { lat: 31.841619, lng: 117.140395, alt: 1259, heading: 90, pitch: -51 },
             fxaa: true,
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //固定光照，避免gltf模型随时间存在亮度不一致。
-        map.fixedLight = true
+        map.fixedLight = true;
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //加模型
         var graphic = new mars3d.graphic.ModelEntity({
           position: [117.150365, 31.841954, 50.26],
           style: {
-            url: '//data.mars3d.cn/gltf/mars/dikuai/d1.gltf',
+            url: "//data.mars3d.cn/gltf/mars/dikuai/d1.gltf",
             scale: 1,
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
 
         var modelPlanClip = new mars3d.thing.ModelPlanClip({
           graphic: graphic,
@@ -132,123 +132,123 @@
           clipOutSide: false,
           edgeColor: Cesium.Color.GREY,
           edgeWidth: 2.0,
-        })
-        map.addThing(modelPlanClip)
+        });
+        map.addThing(modelPlanClip);
 
-        $('#btnClear').click(function () {
-          modelPlanClip.clear()
-        })
+        $("#btnClear").click(function () {
+          modelPlanClip.clear();
+        });
 
-        $('#txtDistance').change(function () {
-          var value = Number($(this).val())
-          modelPlanClip.distance = value
-        })
-        $('#rangeDistance').range({
+        $("#txtDistance").change(function () {
+          var value = Number($(this).val());
+          modelPlanClip.distance = value;
+        });
+        $("#rangeDistance").range({
           onChange: function (value, bfb) {
-            $('#txtDistance').val(value.toFixed(1))
-            modelPlanClip.distance = value
+            $("#txtDistance").val(value.toFixed(1));
+            modelPlanClip.distance = value;
           },
-        })
+        });
 
-        $('#btnClipping1').click(function () {
-          modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.Z
-        })
-        $('#btnClipping2').click(function () {
-          modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.ZR
-        })
-        $('#btnClipping3').click(function () {
-          modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.XR
-        })
-        $('#btnClipping4').click(function () {
-          modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.X
-        })
-        $('#btnClipping5').click(function () {
-          modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.Y
-        })
-        $('#btnClipping6').click(function () {
-          modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.YR
-        })
+        $("#btnClipping1").click(function () {
+          modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.Z;
+        });
+        $("#btnClipping2").click(function () {
+          modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.ZR;
+        });
+        $("#btnClipping3").click(function () {
+          modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.XR;
+        });
+        $("#btnClipping4").click(function () {
+          modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.X;
+        });
+        $("#btnClipping5").click(function () {
+          modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.Y;
+        });
+        $("#btnClipping6").click(function () {
+          modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.YR;
+        });
 
-        $('#btnDrawExtent').click(function () {
-          modelPlanClip.clear()
+        $("#btnDrawExtent").click(function () {
+          modelPlanClip.clear();
           map.graphicLayer.startDraw({
-            type: 'rectangle',
+            type: "rectangle",
             style: {
-              color: '#007be6',
+              color: "#007be6",
               opacity: 0.8,
               outline: false,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.getOutlinePositions(false)
-              map.graphicLayer.clear()
+              var positions = graphic.getOutlinePositions(false);
+              map.graphicLayer.clear();
 
-              modelPlanClip.positions = positions
+              modelPlanClip.positions = positions;
             },
-          })
-        })
+          });
+        });
 
-        $('#btnDrawPoly').click(function () {
-          modelPlanClip.clear()
+        $("#btnDrawPoly").click(function () {
+          modelPlanClip.clear();
 
           map.graphicLayer.startDraw({
-            type: 'polygon',
+            type: "polygon",
             style: {
-              color: '#007be6',
+              color: "#007be6",
               opacity: 0.5,
               clampToGround: true,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.positionsShow
-              map.graphicLayer.clear()
+              var positions = graphic.positionsShow;
+              map.graphicLayer.clear();
 
-              modelPlanClip.positions = positions
+              modelPlanClip.positions = positions;
             },
-          })
-        })
+          });
+        });
 
-        $('#btnDrawPoly2').click(function () {
-          modelPlanClip.clear()
+        $("#btnDrawPoly2").click(function () {
+          modelPlanClip.clear();
 
           map.graphicLayer.startDraw({
-            type: 'polygon',
+            type: "polygon",
             style: {
-              color: '#007be6',
+              color: "#007be6",
               opacity: 0.5,
               clampToGround: true,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.positionsShow
-              map.graphicLayer.clear()
+              var positions = graphic.positionsShow;
+              map.graphicLayer.clear();
 
-              modelPlanClip.clipOutSide = true
-              modelPlanClip.positions = positions
+              modelPlanClip.clipOutSide = true;
+              modelPlanClip.positions = positions;
             },
-          })
-        })
+          });
+        });
 
-        $('#btnDrawLine').click(function () {
-          modelPlanClip.clear()
+        $("#btnDrawLine").click(function () {
+          modelPlanClip.clear();
 
           map.graphicLayer.startDraw({
-            type: 'polyline',
+            type: "polyline",
             maxPointNum: 2,
             style: {
-              color: '#007be6',
+              color: "#007be6",
               opacity: 0.8,
               outline: false,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.positionsShow
-              map.graphicLayer.clear()
+              var positions = graphic.positionsShow;
+              map.graphicLayer.clear();
 
-              modelPlanClip.positions = positions
+              modelPlanClip.positions = positions;
             },
-          })
-        })
+          });
+        });
       }
     </script>
   </body>

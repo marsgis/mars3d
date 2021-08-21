@@ -60,9 +60,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -82,36 +82,38 @@
               allowTextureFilterAnisotropic: true,
             },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.scene.skyAtmosphere.hueShift = -0.8
-        map.scene.skyAtmosphere.saturationShift = -0.7
-        map.scene.skyAtmosphere.brightnessShift = -0.33
-        map.scene.fog.density = 0.001
-        map.scene.fog.minimumBrightness = 0.8
+        // 大气层外光圈
+        map.scene.skyAtmosphere.hueShift = -0.8;
+        map.scene.skyAtmosphere.saturationShift = -0.7;
+        map.scene.skyAtmosphere.brightnessShift = -0.33;
+        // 雾化效果
+        map.scene.fog.density = 0.001;
+        map.scene.fog.minimumBrightness = 0.8;
 
         //雨效果
         var rainEffect = new mars3d.effect.RainEffect({
           speed: 10,
-        })
-        map.addEffect(rainEffect)
+        });
+        map.addEffect(rainEffect);
 
-        $('#chkShowEffect').change(function () {
-          var val = $(this).is(':checked')
+        $("#chkShowEffect").change(function () {
+          var val = $(this).is(":checked");
 
-          rainEffect.enabled = val
-        })
+          rainEffect.enabled = val;
+        });
 
-        $('#rainSpeed').range({
+        $("#rainSpeed").range({
           onChange: function (value, bfb) {
             if (rainEffect) {
-              rainEffect.speed = value
+              rainEffect.speed = value;
             }
           },
-        })
+        });
       }
     </script>
   </body>

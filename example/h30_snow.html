@@ -66,9 +66,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -79,57 +79,57 @@
               depthTestAgainstTerrain: true,
             },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //添加参考三维模型
         var tiles3dLayer = new mars3d.layer.TilesetLayer({
-          url: '//data.mars3d.cn/3dtiles/qx-simiao/tileset.json',
+          url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
           position: { alt: 80.6 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
           dynamicScreenSpaceError: true,
           cullWithChildrenBounds: false,
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
         //====================下雪效果=====================
         var snowEffect = new mars3d.effect.SnowEffect({
           speed: 10,
-        })
-        map.addEffect(snowEffect)
+        });
+        map.addEffect(snowEffect);
 
-        $('#chkSnow').change(function () {
-          var val = $(this).is(':checked')
-          snowEffect.enabled = val
-        })
-        $('#snowSpeed').range({
+        $("#chkSnow").change(function () {
+          var val = $(this).is(":checked");
+          snowEffect.enabled = val;
+        });
+        $("#snowSpeed").range({
           onChange: function (value, bfb) {
             if (snowEffect) {
-              snowEffect.speed = value
+              snowEffect.speed = value;
             }
           },
-        })
+        });
 
         //====================地面积雪效果=====================
         var snowCover = new mars3d.effect.SnowCoverEffect({
           maxHeight: 8000, //大于此高度后不显示
-          alpha: Number($('#alpha').val()),
-        })
-        map.addEffect(snowCover)
+          alpha: Number($("#alpha").val()),
+        });
+        map.addEffect(snowCover);
 
-        $('#chkSnowCover').change(function () {
-          var val = $(this).is(':checked')
-          snowCover.enabled = val
-        })
+        $("#chkSnowCover").change(function () {
+          var val = $(this).is(":checked");
+          snowCover.enabled = val;
+        });
 
-        $('#alpha').range({
+        $("#alpha").range({
           onChange: function (value, bfb) {
-            snowCover.alpha = Number(value)
+            snowCover.alpha = Number(value);
           },
-        })
+        });
       }
     </script>
   </body>

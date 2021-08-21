@@ -71,39 +71,39 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { y: 31.516143, x: 117.282937, z: 46241.86, heading: 2.2, pitch: -48.7, roll: 0 },
+            center: { lat: 31.51363, lng: 117.278891, alt: 46241, heading: 2, pitch: -49 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建Graphic图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //图层管理的相关处理，代码在\js\graphicManager.js
-        initLayerManager(graphicLayer)
+        initLayerManager(graphicLayer);
 
-        $('#btnAddData').click(function () {
-          graphicLayer.clear()
+        $("#btnAddData").click(function () {
+          graphicLayer.clear();
 
-          haoutil.loading.show()
-          var startTime = new Date().getTime()
+          haoutil.loading.show();
+          var startTime = new Date().getTime();
 
-          var count = Number($('#txtCount').val()) * 10000
+          var count = Number($("#txtCount").val()) * 10000;
 
           for (var j = 0; j < count; ++j) {
-            var position = randomPoint()
-            var pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, haoutil.math.random(0, 360), 600)
+            var position = randomPoint();
+            var pt1 = mars3d.PointUtil.getPositionByDirectionAndLen(position, haoutil.math.random(0, 360), 600);
 
             var primitive = new mars3d.graphic.PolylinePrimitive({
               positions: [pt1, position],
@@ -111,54 +111,54 @@
                 width: 4,
                 color: Cesium.Color.fromRandom().withAlpha(0.9),
               },
-              tooltip: '第' + j + '个',
-            })
-            graphicLayer.addGraphic(primitive)
+              tooltip: "第" + j + "个",
+            });
+            graphicLayer.addGraphic(primitive);
           }
 
-          haoutil.loading.close()
-          var endTime = new Date().getTime()
+          haoutil.loading.close();
+          var endTime = new Date().getTime();
           // 两个时间戳相差的毫秒数
-          var usedTime = (endTime - startTime) / 1000
-          console.log(usedTime)
+          var usedTime = (endTime - startTime) / 1000;
+          console.log(usedTime);
 
-          haoutil.msg('共耗时' + usedTime.toFixed(2) + '秒')
-        })
+          haoutil.msg("共耗时" + usedTime.toFixed(2) + "秒");
+        });
 
         //加一些演示数据
-        addGraphic_a1(graphicLayer)
-        addGraphic_a2(graphicLayer)
-        addGraphic_a3(graphicLayer)
-        addGraphic_a4(graphicLayer)
-        addGraphic_a5(graphicLayer)
-        addGraphic_a6(graphicLayer)
-        addGraphic_a7(graphicLayer)
-        addGraphic_a8(graphicLayer)
-        addGraphic_a9(graphicLayer)
+        addGraphic_a1(graphicLayer);
+        addGraphic_a2(graphicLayer);
+        addGraphic_a3(graphicLayer);
+        addGraphic_a4(graphicLayer);
+        addGraphic_a5(graphicLayer);
+        addGraphic_a6(graphicLayer);
+        addGraphic_a7(graphicLayer);
+        addGraphic_a8(graphicLayer);
+        addGraphic_a9(graphicLayer);
       }
 
       //取区域内的随机图标
       function randomPoint() {
-        var jd = haoutil.math.random(116.955684 * 1000, 117.474003 * 1000) / 1000
-        var wd = haoutil.math.random(31.7576 * 1000, 32.008782 * 1000) / 1000
-        var height = haoutil.math.random(700, 5000)
-        return Cesium.Cartesian3.fromDegrees(jd, wd, height)
+        var jd = haoutil.math.random(116.955684 * 1000, 117.474003 * 1000) / 1000;
+        var wd = haoutil.math.random(31.7576 * 1000, 32.008782 * 1000) / 1000;
+        var height = haoutil.math.random(700, 5000);
+        return Cesium.Cartesian3.fromDegrees(jd, wd, height);
       }
 
       function addGraphic_a1(graphicLayer) {
         var primitive = new mars3d.graphic.PolylinePrimitive({
           positions: [
-            [117.220337, 31.832987, 42.8],
-            [117.220242, 31.835234, 45.6],
-            [117.216263, 31.835251, 39.3],
-            [117.217219, 31.819929, 35.8],
-            [117.223096, 31.818342, 29.8],
-            [117.249686, 31.818964, 40.1],
-            [117.263171, 31.816664, 35.2],
-            [117.278695, 31.816107, 35.5],
-            [117.279826, 31.804185, 34.5],
-            [117.286308, 31.804112, 29.2],
-            [117.28621, 31.801059, 24.6],
+            [117.220337, 31.832987],
+            [117.220242, 31.835234],
+            [117.216263, 31.835251],
+            [117.217219, 31.819929],
+            [117.223096, 31.818342],
+            [117.249686, 31.818964],
+            [117.263171, 31.816664],
+            [117.278695, 31.816107],
+            [117.279826, 31.804185],
+            [117.286308, 31.804112],
+            [117.28621, 31.801059],
           ],
           style: {
             width: 4,
@@ -166,13 +166,22 @@
               color: Cesium.Color.CHARTREUSE,
               speed: 5,
             }),
+            clampToGround: true,
+
+            label: {
+              text: "我是线",
+              font_size: 18,
+              color: "#ffffff",
+              distanceDisplayCondition: true,
+              distanceDisplayCondition_far: 500000,
+              distanceDisplayCondition_near: 0,
+            },
           },
-        })
-        graphicLayer.addGraphic(primitive)
-        //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+        });
+        graphicLayer.addGraphic(primitive);
 
         //演示个性化处理graphic，代码在\js\graphicManager.js
-        initGraphicManager(primitive)
+        initGraphicManager(primitive);
       }
 
       function addGraphic_a2(graphicLayer) {
@@ -186,22 +195,20 @@
             materialType: mars3d.MaterialType.PolylineDash, //虚线
             dashLength: 20,
             color: Cesium.Color.RED,
-            label: {
-              text: '我是线',
-              font_size: 18,
-              color: '#ffffff',
-              distanceDisplayCondition: true,
-              distanceDisplayCondition_far: 500000,
-              distanceDisplayCondition_near: 0,
+
+            label: { text: "鼠标移入会高亮" },
+            //高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+            highlight: {
+              // type: mars3d.EventType.click,
+              materialType: mars3d.MaterialType.Color,
             },
           },
-        })
-        graphicLayer.addGraphic(primitive)
-        //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+        });
+        graphicLayer.addGraphic(primitive);
 
         //entity转geojson
-        var geojson = primitive.toGeoJSON()
-        console.log(geojson)
+        var geojson = primitive.toGeoJSON();
+        console.log(geojson);
       }
 
       function addGraphic_a3(graphicLayer) {
@@ -213,15 +220,14 @@
           style: {
             width: 5,
             material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlowColor, {
-              color: '#FFFF00',
+              color: "#FFFF00",
               speed: 10,
               percent: 0.15,
               alpha: 0.2,
             }),
           },
-        })
-        graphicLayer.addGraphic(primitive)
-        //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+        });
+        graphicLayer.addGraphic(primitive);
       }
 
       function addGraphic_a4(graphicLayer) {
@@ -233,14 +239,13 @@
           style: {
             width: 5,
             material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-              color: '#1a9850',
-              image: 'img/textures/ArrowOpacity.png',
+              color: "#1a9850",
+              image: "img/textures/ArrowOpacity.png",
               speed: 10,
             }),
           },
-        })
-        graphicLayer.addGraphic(primitive)
-        //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+        });
+        graphicLayer.addGraphic(primitive);
       }
 
       function addGraphic_a5(graphicLayer) {
@@ -253,16 +258,15 @@
           style: {
             width: 5,
             material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-              image: './img/textures/arrow2.png',
+              image: "./img/textures/arrow2.png",
               axisY: false,
               repeat: new Cesium.Cartesian2(20.0, 1.0),
-              color: '#ffff00',
+              color: "#ffff00",
               speed: 40,
             }),
           },
-        })
-        graphicLayer.addGraphic(primitive)
-        //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+        });
+        graphicLayer.addGraphic(primitive);
       }
 
       function addGraphic_a6(graphicLayer) {
@@ -274,20 +278,19 @@
           style: {
             width: 3,
             material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.ODLine, {
-              color: '#FF0000',
+              color: "#FF0000",
               speed: 5 + 1.0 * Math.random(),
               startTime: Math.random(),
             }),
           },
-        })
-        graphicLayer.addGraphic(primitive)
-        //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+        });
+        graphicLayer.addGraphic(primitive);
       }
 
       function addGraphic_a7(graphicLayer) {
-        var startPoint = Cesium.Cartesian3.fromDegrees(117.025419, 32.00651, 51.2)
-        var endPoint = Cesium.Cartesian3.fromDegrees(117.323963, 32.050384, 33.8)
-        var positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 20000, 50) //计算曲线点
+        var startPoint = Cesium.Cartesian3.fromDegrees(117.025419, 32.00651, 51.2);
+        var endPoint = Cesium.Cartesian3.fromDegrees(117.323963, 32.050384, 33.8);
+        var positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 20000, 50); //计算曲线点
 
         var primitive = new mars3d.graphic.PolylinePrimitive({
           positions: positions,
@@ -295,13 +298,12 @@
             width: 5,
             material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
               color: Cesium.Color.CHARTREUSE,
-              image: 'img/textures/lineClr.png',
+              image: "img/textures/lineClr.png",
               speed: 15,
             }),
           },
-        })
-        graphicLayer.addGraphic(primitive)
-        //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+        });
+        graphicLayer.addGraphic(primitive);
       }
 
       function addGraphic_a8(graphicLayer) {
@@ -320,9 +322,8 @@
               speed: 5,
             }),
           },
-        })
-        graphicLayer.addGraphic(primitive)
-        //primitive.addTo(graphicLayer)  //还可以另外一种写法,看个人习惯选用，内部都一样
+        });
+        graphicLayer.addGraphic(primitive);
       }
 
       function addGraphic_a9(graphicLayer) {
@@ -335,14 +336,14 @@
           style: {
             width: 5,
             material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlowColor, {
-              color: '#00ffff',
+              color: "#00ffff",
               speed: 10,
               percent: 0.15,
               alpha: 0.2,
             }),
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
       }
     </script>
   </body>

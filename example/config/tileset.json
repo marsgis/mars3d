@@ -10,7 +10,7 @@
       "maximumScreenSpaceError": 1,
       "maximumMemoryUsage": 1024,
       "marsJzwStyle": true,
-      "showClickFeature": true,
+      "highlight": { "type": "click", "color": "#FFFF00" },
       "popup": [
         { "field": "objectid", "name": "编号" },
         { "field": "name", "name": "名称" },
@@ -39,7 +39,7 @@
           ]
         }
       },
-      "showClickFeature": true,
+      "highlight": { "type": "click", "color": "#FFFF00" },
       "popup": [
         { "field": "name", "name": "名称" },
         { "field": "floor", "name": "楼层" }
@@ -53,8 +53,7 @@
       "name": "大学教学楼",
       "url": "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
       "position": { "lng": 117.251229, "lat": 31.844015, "alt": 31.2 },
-      "showClickFeature": true,
-      "pickFeatureStyle": { "color": "#FFFF00" },
+      "highlight": { "type": "click", "color": "#FFFF00" },
       "popup": "all",
       "scenetree": "scenetree.json",
       "center": { "lat": 31.842516, "lng": 117.25107, "alt": 145, "heading": 8, "pitch": -39 }
@@ -66,8 +65,7 @@
       "url": "//data.mars3d.cn/3dtiles/bim-ditiezhan/tileset.json",
       "position": { "lng": 117.203994, "lat": 31.857999, "alt": 28.9 },
       "rotation": { "z": 168.1 },
-      "showClickFeature": true,
-      "pickFeatureStyle": { "color": "#00FF00" },
+      "highlight": { "type": "click", "color": "#00FF00" },
       "popup": "all",
       "scenetree": "scenetree.json",
       "center": { "lat": 31.856125, "lng": 117.204513, "alt": 155, "heading": 350, "pitch": -31 }
@@ -92,8 +90,7 @@
       "preloadWhenHidden": true,
       "center": { "lat": 31.849357, "lng": 117.099194, "alt": 306.2, "heading": 327.1, "pitch": -30.9 },
       "scenetree": "scenetree.json",
-      "showClickFeature": true,
-      "pickFeatureStyle": { "color": "#00FF00" },
+      "highlight": { "type": "click", "color": "#00FF00" },
       "popup": "all"
     },
     { "id": 2020, "pid": 20, "name": "人工建模", "type": "group" },
@@ -104,7 +101,7 @@
       "url": "//data.mars3d.cn/3dtiles/max-fcfh/tileset.json",
       "maximumScreenSpaceError": 1,
       "maximumMemoryUsage": 1024,
-      "showClickFeature": true,
+      "highlight": { "type": "click", "color": "#00FF00" },
       "popup": "all",
       "scenetree": "scenetree.json",
       "center": { "lat": 31.831874, "lng": 117.220976, "alt": 236, "heading": 354, "pitch": -41 }
@@ -118,7 +115,7 @@
       "rotation": { "z": 116.2 },
       "maximumScreenSpaceError": 1,
       "maximumMemoryUsage": 1024,
-      "showClickFeature": true,
+      "highlight": { "type": "click", "color": "#00FF00" },
       "popup": "all",
       "scenetree": "scenetree.json",
       "center": { "lat": 31.816176, "lng": 117.097985, "alt": 516, "heading": 270, "pitch": -55 }
@@ -133,7 +130,7 @@
       "rotation": { "z": 336.7 },
       "maximumScreenSpaceError": 2,
       "maximumMemoryUsage": 1024,
-      "showClickFeature": true,
+      "highlight": { "type": "click", "color": "#ffff00" },
       "popup": "all",
       "center": { "lat": 31.838821, "lng": 117.216402, "alt": 461, "heading": 0, "pitch": -46 },
       "msg": "演示数据，地下数据拖动时会在地面漂移"
@@ -147,7 +144,7 @@
       "position": { "lng": 117.077158, "lat": 31.659116, "alt": 24.6 },
       "maximumScreenSpaceError": 1,
       "maximumMemoryUsage": 1024,
-      "showClickFeature": true,
+      "highlight": { "type": "click", "color": "#00FF00" },
       "popup": "all",
       "scenetree": "scenetree.json",
       "center": { "lat": 31.654916, "lng": 117.08278, "alt": 279, "heading": 316, "pitch": -29 }
@@ -251,11 +248,7 @@
           "position": { "alt": 16.8 },
           "maximumScreenSpaceError": 1,
           "maximumMemoryUsage": 1024,
-          "showMoveFeature": true,
-          "pickFeatureStyle": {
-            "color": "#00ff00",
-            "opacity": 0.2
-          },
+          "highlight": { "color": "#00ff00", "opacity": 0.2 },
           "popup": "all"
         },
         {
@@ -279,7 +272,18 @@
           "type": "geojson",
           "name": "文庙-单体化",
           "url": " //data.mars3d.cn/file/geojson/dth-wm.json",
-          "dth": { "buffer": 1, "color": "#ffff00", "opacity": 0.5 },
+          "symbol": {
+            "type": "polygonP",
+            "styleOptions": {
+              "color": "rgba(255, 255, 255, 0.01)",
+              "clampToGround": true,
+              "classification": true,
+              "buffer": 1,
+              "highlight": {
+                "color": "rgba(255,255,0,0.5)"
+              }
+            }
+          },
           "popup": [
             { "field": "name", "name": "房屋名称" },
             { "field": "jznf", "name": "建造年份" },

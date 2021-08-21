@@ -39,10 +39,10 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      let graphicLayer
+      var map;
+      let graphicLayer;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -57,15 +57,15 @@
               roll: 2.3,
             },
           },
-        })
-        delete mapOptions.terrain
+        });
+        delete mapOptions.terrain;
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
-        graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //飞行区域边界线
         let graphic = new mars3d.graphic.PolygonEntity({
@@ -77,29 +77,29 @@
             [116.069898, 31.303655],
           ],
           style: {
-            color: '#ffff00',
+            color: "#ffff00",
             outline: true,
             outlineWidth: 3,
-            outlineColor: '#00ff00',
+            outlineColor: "#00ff00",
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
 
-        graphic.highlight({
-          time: 8, //闪烁时长（秒）
+        graphic.startFlicker({
+          time: 3, //闪烁时长（秒）
           onEnd: function () {
             //结束后自动移除
-            graphic.style = { fill: false }
+            graphic.style = { fill: false };
 
-            work4HP.activate() //闪烁结束后开始飞行
+            work4HP.activate(); //闪烁结束后开始飞行
           },
-        })
+        });
       }
 
       //功能4
       var work4HP = {
         flySpeed: 600, //飞行速度
-        psNum: 400,
+        psNum: 400, //投射间隔路程
         frameNum: 0,
         arr4LinePrimitive: [],
         arrColor: [new Cesium.Color(1.0, 0.0, 0.0, 0.3), new Cesium.Color(0.0, 1.0, 0, 0.3), new Cesium.Color(0.0, 0.0, 1, 0.3)],
@@ -107,7 +107,7 @@
         activate() {
           //飞行路线
           this.roamLine = new mars3d.graphic.RoamLine({
-            name: '无人机航拍',
+            name: "无人机航拍",
             speed: this.flySpeed,
             positions: [
               [116.077374, 31.294215, 1000],
@@ -118,22 +118,24 @@
               [116.100465, 31.320893, 1000],
             ],
             model: {
-              url: '//data.mars3d.cn/gltf/mars/wrj.glb',
+              url: "//data.mars3d.cn/gltf/mars/wrj.glb",
               scale: 0.02,
               minimumPixelSize: 50,
               show: true,
             },
             path: {
-              color: '#ffff00',
+              color: "#ffff00",
               width: 3,
               isAll: false,
               show: true,
             },
             clockLoop: false, //是否循环播放
-          })
-          graphicLayer.addGraphic(this.roamLine)
+          });
+          graphicLayer.addGraphic(this.roamLine);
 
-          this.roamLine.start()
+          this.roamLine.start();
+
+          this.roamLine.on(mars3d.EventType.end, this.disable, this);
 
           //视角切换（分步执行）
           map.setCameraViewList([
@@ -163,37 +165,38 @@
               pitch: -55.7,
               roll: 357.5,
             },
-          ])
+          ]);
 
-          this.stepNum = Math.floor(this.psNum / (this.flySpeed / 100))
-          map.on(mars3d.EventType.clockTick, this.clock_onTick, this)
+          this.stepNum = Math.floor(this.psNum / (this.flySpeed / 100)); //时间 = 路程 / 速度
+          map.on(mars3d.EventType.clockTick, this.clock_onTick, this); //时钟跳动 每秒钟执行一次函数 场景事件
         },
         clock_onTick(e) {
           if (!map.clock.shouldAnimate) {
-            return
+            return;
           }
-          this.frameNum++
+          this.frameNum++;
 
           //当前的路线中的点位
-          var currIndex = this.roamLine.indexForFlyOK
+          var currIndex = this.roamLine.indexForFlyOK; //当前飞行的线路,共五条线，从零开始
 
           if (currIndex % 2 == 0) {
             if (this.frameNum % this.stepNum == 0) {
               //计算方向
-              var p1, p2
+              var p1, p2;
               if (currIndex == 0 || !currIndex) {
-                p1 = this.roamLine.positions[0]
-                p2 = this.roamLine.positions[1]
+                p1 = this.roamLine.positions[0];
+                p2 = this.roamLine.positions[1];
               } else {
-                p1 = this.roamLine.positions[currIndex + 1]
-                p2 = this.roamLine.positions[currIndex]
+                p1 = this.roamLine.positions[currIndex + 1];
+                p2 = this.roamLine.positions[currIndex];
               }
               if (!p1 || !p2) {
-                return
+                return;
               }
-
-              var hpr = mars3d.PointUtil.getHeadingPitchRollForLine(p1, p2)
-              var heading = Cesium.Math.toDegrees(hpr.heading)
+              // 获取起点坐标到终点坐标的 Heading Pitch Roll方向角度值
+              var hpr = mars3d.PointUtil.getHeadingPitchRollForLine(p1, p2); //hpr.heading -- 是2.
+              // 将弧度转换为度  hpr.heading--方向对于当前线路是斜的
+              var heading = Cesium.Math.toDegrees(hpr.heading); //heading -- 是143.
 
               //添加四棱锥体线
               var graphicFrustum = new mars3d.graphic.FrustumPrimitive({
@@ -205,29 +208,29 @@
                   length: Cesium.Cartographic.fromCartesian(this.roamLine.position).height,
                   fill: false,
                   outline: true,
-                  outlineColor: '#ffffff',
+                  outlineColor: "#ffffff",
                   outlineOpacity: 1.0,
                 },
                 asynchronous: false,
                 flat: true,
-              })
-              graphicLayer.addGraphic(graphicFrustum)
+              });
+              graphicLayer.addGraphic(graphicFrustum);
 
-              this.arr4LinePrimitive.push(graphicFrustum)
+              this.arr4LinePrimitive.push(graphicFrustum);
             }
             if (this.frameNum % this.stepNum == 10) {
-              //移除四棱锥体线
+              //移除四棱锥体线 保持只有一个椎体线
               if (this.arr4LinePrimitive.length > 0) {
-                graphicLayer.removeGraphic(this.arr4LinePrimitive.shift())
+                graphicLayer.removeGraphic(this.arr4LinePrimitive.shift());
               }
             }
           }
 
           if (this.frameNum % this.stepNum == 0 && currIndex % 2 == 0) {
             if (this.arr4LinePrimitive.length > 0) {
-              let graphicFrustum = this.arr4LinePrimitive[this.arr4LinePrimitive.length - 1]
+              let graphicFrustum = this.arr4LinePrimitive[this.arr4LinePrimitive.length - 1];
               //地面的4个顶点坐标
-              let positions = graphicFrustum.getRayEarthPositions()
+              let positions = graphicFrustum.getRayEarthPositions();
               //添加地面矩形
               var primitive = new mars3d.graphic.PolygonPrimitive({
                 positions: positions,
@@ -235,22 +238,20 @@
                   color: this.arrColor[graphicLayer.length % this.arrColor.length],
                   zIndex: graphicLayer.length,
                 },
-              })
-              graphicLayer.addGraphic(primitive)
+              });
+              graphicLayer.addGraphic(primitive);
             }
           }
         },
         //释放功能
         disable() {
-          map.clock.onTick.removeEventListener(this.clock_onTick, this)
-          this.roamLine.stop()
+          map.off(mars3d.EventType.clockTick, this.clock_onTick, this); //时钟跳动 每秒钟执行一次函数 场景事件
+          this.roamLine.stop();
 
-          graphicLayer.clear()
-
-          this.arr4LinePrimitive = []
-          this.frameNum = 0
+          this.arr4LinePrimitive = [];
+          this.frameNum = 0;
         },
-      }
+      };
     </script>
   </body>
 </html>

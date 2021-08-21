@@ -32,7 +32,7 @@
         width: 100%;
         height: 100%;
         margin: 0;
-        font-family: '微软雅黑';
+        font-family: "微软雅黑";
       }
       #streetscapeMap {
         width: 100%;
@@ -46,37 +46,37 @@
 
     <!--页面js-->
     <script>
-      var panorama
+      var panorama;
 
       $(document).ready(function () {
-        var request = haoutil.system.getRequest()
+        var request = haoutil.system.getRequest();
 
-        var baiduMpt = new BMap.Point(request.lng, request.lat)
+        var baiduMpt = new BMap.Point(request.lng, request.lat);
 
-        var map = new BMap.Map('streetscapeMap')
-        map.centerAndZoom(baiduMpt, 15)
-        map.addTileLayer(new BMap.PanoramaCoverageLayer())
+        var map = new BMap.Map("streetscapeMap");
+        map.centerAndZoom(baiduMpt, 15);
+        map.addTileLayer(new BMap.PanoramaCoverageLayer());
 
-        panorama = new BMap.Panorama('streetscapeMap')
-        panorama.setPosition(baiduMpt) //根据经纬度坐标展示全景图
-        panorama.setPov({ heading: -40, pitch: 6 })
-        panorama.addEventListener('position_changed', function (e) {
+        panorama = new BMap.Panorama("streetscapeMap");
+        panorama.setPosition(baiduMpt); //根据经纬度坐标展示全景图
+        panorama.setPov({ heading: -40, pitch: 6 });
+        panorama.addEventListener("position_changed", function (e) {
           //全景图位置改变后，普通地图中心点也随之改变
-          var pos = panorama.getPosition() //街景变换返回触发的回调函数
+          var pos = panorama.getPosition(); //街景变换返回触发的回调函数
 
           if (parent) {
-            pos = parent.mars3d.PointTrans.bd2wgs([pos.lng, pos.lat])
-            parent.updateMarker({ lng: pos[0], lat: pos[1] })
+            pos = parent.mars3d.PointTrans.bd2wgs([pos.lng, pos.lat]);
+            parent.updateMarker({ lng: pos[0], lat: pos[1] });
           }
 
           // var pov = panorama.getPov()
-        })
-      })
+        });
+      });
 
       //外部传入坐标，更新街景
       function setPosition(point) {
-        let bdPoint = parent.mars3d.PointTrans.wgs2bd([point.lng, point.lat])
-        panorama.setPosition(new BMap.Point(bdPoint[0], bdPoint[1])) //根据经纬度坐标展示全景图
+        let bdPoint = parent.mars3d.PointTrans.wgs2bd([point.lng, point.lat]);
+        panorama.setPosition(new BMap.Point(bdPoint[0], bdPoint[1])); //根据经纬度坐标展示全景图
       }
     </script>
   </body>

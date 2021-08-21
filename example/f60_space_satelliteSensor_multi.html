@@ -144,86 +144,79 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
-      var satelliteSensor
-      var satelliteSensor2
-      var modelGraphic
+      var satelliteSensor;
+      var satelliteSensor2;
+      var modelGraphic;
 
-      var reverse = true //z轴方向，true朝向空中，false朝向地心
-      var converter = Cesium.Transforms.eastNorthUpToFixedFrame
+      var reverse = true; //z轴方向，true朝向空中，false朝向地心
+      var converter = Cesium.Transforms.eastNorthUpToFixedFrame;
       // var converter = Cesium.Transforms.localFrameToFixedFrameGenerator('east', 'south')
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: -7.063371,
-              x: 69.568074,
-              z: 33508816,
-              heading: 357.8,
-              pitch: -82.3,
-              roll: 0,
-            },
+            center: { lat: 20.217716, lng: 82.229053, alt: 38911656, heading: 10, pitch: -90 },
             cameraController: {
               maximumZoomDistance: 9000000000,
               constrainedAxis: false, //解除在南北极区域鼠标操作限制
             },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //移除2.5D视图
-        var arr = $('.cesium-sceneModePicker-wrapper').children()
+        var arr = $(".cesium-sceneModePicker-wrapper").children();
         if (arr.length > 3) {
-          arr[3].remove()
+          arr[3].remove();
         }
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //测试位置
-        $('#model_x').val(117.169969)
-        $('#model_y').val(31.840886)
-        $('#model_z').val(5000000)
+        $("#model_x").val(117.169969);
+        $("#model_y").val(31.840886);
+        $("#model_z").val(5000000);
 
         //参数
-        var x = Number($('#model_x').val())
-        var y = Number($('#model_y').val())
-        var z = Number($('#model_z').val())
+        var x = Number($("#model_x").val());
+        var y = Number($("#model_y").val());
+        var z = Number($("#model_z").val());
 
-        var heading = Number($('#model_heading').val())
-        var pitch = Number($('#model_pitch').val())
-        var roll = Number($('#model_roll').val())
+        var heading = Number($("#model_heading").val());
+        var pitch = Number($("#model_pitch").val());
+        var roll = Number($("#model_roll").val());
 
-        var angle1 = Number($('#model_angle1').val()) //半张角
-        var angle2 = Number($('#model_angle2').val()) //半张角
+        var angle1 = Number($("#model_angle1").val()); //半张角
+        var angle2 = Number($("#model_angle2").val()); //半张角
 
-        var position = Cesium.Cartesian3.fromDegrees(x, y, z)
+        var position = Cesium.Cartesian3.fromDegrees(x, y, z);
 
         //加个模型
         modelGraphic = new mars3d.graphic.ModelEntity({
-          name: '卫星模型',
+          name: "卫星模型",
           position: position,
           style: {
-            url: '//data.mars3d.cn/gltf/mars/weixin.gltf',
+            url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
             scale: 1,
             minimumPixelSize: 150,
             heading: heading,
             pitch: pitch,
             roll: roll,
           },
-        })
-        graphicLayer.addGraphic(modelGraphic)
+        });
+        graphicLayer.addGraphic(modelGraphic);
 
         //打开3个轴进行显示对比
-        modelGraphic.debugAxis = true
+        modelGraphic.debugAxis = true;
 
         //视锥体
         satelliteSensor = new mars3d.graphic.SatelliteSensor({
@@ -235,12 +228,12 @@
             heading: heading, //角度值
             pitch: pitch,
             roll: roll,
-            color: 'rgba(0,255,255,0.7)',
+            color: "rgba(0,255,255,0.7)",
           },
           fixedFrameTransform: converter,
           reverse: reverse,
-        })
-        graphicLayer.addGraphic(satelliteSensor)
+        });
+        graphicLayer.addGraphic(satelliteSensor);
 
         //视锥体
         satelliteSensor2 = new mars3d.graphic.SatelliteSensor({
@@ -252,159 +245,159 @@
             heading: heading, //弧度值
             pitch: -pitch,
             roll: roll,
-            color: 'rgba(255,255,0,0.7)',
+            color: "rgba(255,255,0,0.7)",
           },
           fixedFrameTransform: converter,
           reverse: reverse,
-        })
-        graphicLayer.addGraphic(satelliteSensor2)
+        });
+        graphicLayer.addGraphic(satelliteSensor2);
 
-        $('#chkShowModelMatrix').change(function () {
-          var val = $(this).is(':checked')
-          modelGraphic.debugAxis = val
-        })
-        $('#modelMatrixLength').change(function () {
-          var value = Number($(this).val())
-          modelGraphic.debugAxisLength = value * 1000
-        })
+        $("#chkShowModelMatrix").change(function () {
+          var val = $(this).is(":checked");
+          modelGraphic.debugAxis = val;
+        });
+        $("#modelMatrixLength").change(function () {
+          var value = Number($(this).val());
+          modelGraphic.debugAxisLength = value * 1000;
+        });
 
-        $('#chkShowCone').change(function () {
-          var val = $(this).is(':checked')
-          satelliteSensor.show = val
-          satelliteSensor2.show = val
+        $("#chkShowCone").change(function () {
+          var val = $(this).is(":checked");
+          satelliteSensor.show = val;
+          satelliteSensor2.show = val;
 
           if (val) {
-            $('.coneEntityAttr').show()
+            $(".coneEntityAttr").show();
           } else {
-            $('.coneEntityAttr').hide()
+            $(".coneEntityAttr").hide();
           }
-        })
+        });
 
-        $('#chkUnderground').click(function () {
-          satelliteSensor.rayEllipsoid = $(this)[0].checked
-          satelliteSensor2.rayEllipsoid = $(this)[0].checked
-        })
+        $("#chkUnderground").click(function () {
+          satelliteSensor.rayEllipsoid = $(this)[0].checked;
+          satelliteSensor2.rayEllipsoid = $(this)[0].checked;
+        });
 
         //滑动条
-        $('#model_heading').range({
+        $("#model_heading").range({
           onChange: function (value, bfb) {
-            $('#model_heading_2').val(value)
+            $("#model_heading_2").val(value);
 
-            modelGraphic.heading = value
-            satelliteSensor.heading = value
-            satelliteSensor2.heading = satelliteSensor.heading
+            modelGraphic.heading = value;
+            satelliteSensor.heading = value;
+            satelliteSensor2.heading = satelliteSensor.heading;
           },
-        })
-        $('#model_heading_2').change(function () {
-          var value = Number($(this).val())
-          $('#model_heading').val(value)
+        });
+        $("#model_heading_2").change(function () {
+          var value = Number($(this).val());
+          $("#model_heading").val(value);
 
-          modelGraphic.heading = value
-          satelliteSensor.heading = value
-          satelliteSensor2.heading = satelliteSensor.heading
-        })
+          modelGraphic.heading = value;
+          satelliteSensor.heading = value;
+          satelliteSensor2.heading = satelliteSensor.heading;
+        });
 
-        $('#model_pitch').range({
+        $("#model_pitch").range({
           onChange: function (value, bfb) {
-            $('#model_pitch_2').val(value)
+            $("#model_pitch_2").val(value);
 
-            modelGraphic.pitch = value
-            satelliteSensor.pitch = value
-            satelliteSensor2.pitch = -satelliteSensor.pitch
+            modelGraphic.pitch = value;
+            satelliteSensor.pitch = value;
+            satelliteSensor2.pitch = -satelliteSensor.pitch;
           },
-        })
-        $('#model_pitch_2').change(function () {
-          var value = Number($(this).val())
-          $('#model_pitch').val(value)
+        });
+        $("#model_pitch_2").change(function () {
+          var value = Number($(this).val());
+          $("#model_pitch").val(value);
 
-          modelGraphic.pitch = value
-          satelliteSensor.pitch = value
-          satelliteSensor2.pitch = -satelliteSensor.pitch
-        })
+          modelGraphic.pitch = value;
+          satelliteSensor.pitch = value;
+          satelliteSensor2.pitch = -satelliteSensor.pitch;
+        });
 
-        $('#model_roll').range({
+        $("#model_roll").range({
           onChange: function (value, bfb) {
-            $('#model_roll_2').val(value)
+            $("#model_roll_2").val(value);
 
-            modelGraphic.roll = value
-            satelliteSensor.roll = value
-            satelliteSensor2.roll = satelliteSensor.roll
+            modelGraphic.roll = value;
+            satelliteSensor.roll = value;
+            satelliteSensor2.roll = satelliteSensor.roll;
           },
-        })
-        $('#model_roll_2').change(function () {
-          var value = Number($(this).val())
-          $('#model_roll').val(value)
+        });
+        $("#model_roll_2").change(function () {
+          var value = Number($(this).val());
+          $("#model_roll").val(value);
 
-          modelGraphic.roll = value
-          satelliteSensor.roll = value
-          satelliteSensor2.roll = satelliteSensor.roll
-        })
+          modelGraphic.roll = value;
+          satelliteSensor.roll = value;
+          satelliteSensor2.roll = satelliteSensor.roll;
+        });
 
-        $('#model_angle1').range({
+        $("#model_angle1").range({
           onChange: function (value, bfb) {
-            $('#model_angle1_2').val(value)
-            satelliteSensor.angle1 = value
-            satelliteSensor2.angle1 = value
+            $("#model_angle1_2").val(value);
+            satelliteSensor.angle1 = value;
+            satelliteSensor2.angle1 = value;
           },
-        })
-        $('#model_angle1_2').change(function () {
-          var value = Number($(this).val())
-          $('#model_angle1').val(value)
-          satelliteSensor.angle1 = value
-          satelliteSensor2.angle1 = value
-        })
+        });
+        $("#model_angle1_2").change(function () {
+          var value = Number($(this).val());
+          $("#model_angle1").val(value);
+          satelliteSensor.angle1 = value;
+          satelliteSensor2.angle1 = value;
+        });
 
-        $('#model_angle2').range({
+        $("#model_angle2").range({
           onChange: function (value, bfb) {
-            $('#model_angle2_2').val(value)
-            satelliteSensor.angle2 = value
-            satelliteSensor2.angle2 = value
+            $("#model_angle2_2").val(value);
+            satelliteSensor.angle2 = value;
+            satelliteSensor2.angle2 = value;
           },
-        })
-        $('#model_angle2_2').change(function () {
-          var value = Number($(this).val())
-          $('#model_angle2').val(value)
-          satelliteSensor.angle2 = value
-          satelliteSensor2.angle2 = value
-        })
+        });
+        $("#model_angle2_2").change(function () {
+          var value = Number($(this).val());
+          $("#model_angle2").val(value);
+          satelliteSensor.angle2 = value;
+          satelliteSensor2.angle2 = value;
+        });
 
-        $('#model_x').change(function () {
-          updatePosition()
-        })
-        $('#model_y').change(function () {
-          updatePosition()
-        })
-        $('#model_z').change(function () {
-          updatePosition()
-        })
+        $("#model_x").change(function () {
+          updatePosition();
+        });
+        $("#model_y").change(function () {
+          updatePosition();
+        });
+        $("#model_z").change(function () {
+          updatePosition();
+        });
 
-        $('input[type=radio][name=shadingMaterials]').change(function () {
-          var sensorType
-          if (this.value === '1') {
-            sensorType = mars3d.graphic.SatelliteSensor.Type.Conic
-            $('#tr_angle2').hide()
+        $("input[type=radio][name=shadingMaterials]").change(function () {
+          var sensorType;
+          if (this.value === "1") {
+            sensorType = mars3d.graphic.SatelliteSensor.Type.Conic;
+            $("#tr_angle2").hide();
           } else {
-            sensorType = mars3d.graphic.SatelliteSensor.Type.Rect
-            $('#tr_angle2').show()
+            sensorType = mars3d.graphic.SatelliteSensor.Type.Rect;
+            $("#tr_angle2").show();
           }
-          satelliteSensor.sensorType = sensorType
-          satelliteSensor2.sensorType = sensorType
-        })
+          satelliteSensor.sensorType = sensorType;
+          satelliteSensor2.sensorType = sensorType;
+        });
       }
 
       function updatePosition() {
-        var x = Number($('#model_x').val())
-        var y = Number($('#model_y').val())
-        var z = Number($('#model_z').val())
-        var position = Cesium.Cartesian3.fromDegrees(x, y, z)
+        var x = Number($("#model_x").val());
+        var y = Number($("#model_y").val());
+        var z = Number($("#model_z").val());
+        var position = Cesium.Cartesian3.fromDegrees(x, y, z);
 
-        modelGraphic.position = position
-        satelliteSensor.position = position
-        satelliteSensor2.position = position
+        modelGraphic.position = position;
+        satelliteSensor.position = position;
+        satelliteSensor2.position = position;
       }
 
       function locate() {
-        map.flyToGraphic(modelGraphic, { radius: modelGraphic.height * 2 })
+        map.flyToGraphic(modelGraphic, { radius: modelGraphic.height * 2 });
       }
     </script>
   </body>

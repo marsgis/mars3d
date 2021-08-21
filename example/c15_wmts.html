@@ -40,20 +40,20 @@
     </div>
 
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
       $(document).ready(function () {
         if (!mars3d.Util.webglreport()) {
-          mars3d.Util.webglerror()
-          return
+          mars3d.Util.webglerror();
+          return;
         }
-        initMap()
-      })
+        initMap();
+      });
 
-      var map
+      var map;
       function initMap() {
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', {
+        map = new mars3d.Map("mars3dContainer", {
           scene: {
             center: { lat: 36.468047, lng: 104.069505, alt: 16801717, heading: 356, pitch: -88 },
           },
@@ -65,71 +65,70 @@
             locationBar: { fps: true }, //状态栏
           },
           terrain: {
-            url: 'http://data.mars3d.cn/terrain',
+            url: "http://data.mars3d.cn/terrain",
             show: true,
           },
           //方式1：在创建地球前的参数中配置
           basemaps: [
             {
-              name: '山西天地图',
-              icon: 'img/basemaps/blackMarble.png',
-              type: 'wmts',
-              url: 'http://shanxi.tianditu.gov.cn/service/SX_DOM/wmts',
-              layer: 'WD_DOM',
-              style: 'WD_DOM',
-              format: 'image/tile',
-              tileMatrixLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19'],
-              tileMatrixSetID: 'Matrix_WD_DOM_1',
-              crs: 'EPSG:4326',
-              proxy: '//server.mars3d.cn/proxy/', //代理服务，解决跨域问题
+              name: "山西天地图",
+              icon: "img/basemaps/blackMarble.png",
+              type: "wmts",
+              url: "http://shanxi.tianditu.gov.cn/service/SX_DOM/wmts",
+              layer: "WD_DOM",
+              format: "image/tile",
+              tileMatrixSetID: "Matrix_WD_DOM_1",
+              crs: "EPSG:4490",
+              proxy: "//server.mars3d.cn/proxy/", //代理服务，解决跨域问题
               show: true,
             },
             {
-              name: '单张图片',
-              icon: 'http://mars3d.cn/example/img/basemaps/offline.png',
-              type: 'image',
-              url: '//data.mars3d.cn/file/img/world/world.jpg',
+              name: "单张图片",
+              icon: "http://mars3d.cn/example/img/basemaps/offline.png",
+              type: "image",
+              url: "//data.mars3d.cn/file/img/world/world.jpg",
               show: false,
             },
           ],
-        })
+        });
       }
 
       //叠加的图层
-      var tileLayer
+      var tileLayer;
 
       function addLayer() {
-        removeLayer()
+        removeLayer();
 
         //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
         tileLayer = new mars3d.layer.WmtsLayer({
-          url: '//server.mars3d.cn/geoserver/gwc/service/wmts',
-          layer: 'mars:hfgh',
-          style: '',
-          format: 'image/png',
-          tileMatrixLabels: [...Array(20).keys()].map((level) => 'EPSG:4326:' + level), //会替换tileMatrix参数 config.json中时直接写数组值
-          tileMatrixSetID: 'EPSG:4326',
-          crs: 'EPSG:4326',
+          url: "//server.mars3d.cn/geoserver/gwc/service/wmts",
+          layer: "mars:hfgh",
+          format: "image/png",
+          tileMatrixSetID: "EPSG:4326",
+          crs: "EPSG:4326",
           alpha: 0.8,
 
-          enablePickFeatures: true,
-          pickFeaturesUrl: '//server.mars3d.cn/geoserver/mars/wms',
-          popup: 'all',
-          showClickFeature: true,
-          pickFeatureStyle: {
-            clampToGround: true, //选择的要素样式，同Draw类样式
-            fill: true,
-            color: '#2deaf7',
-            opacity: 0.6,
+          pickFeaturesUrl: "//server.mars3d.cn/geoserver/mars/wms",
+          popup: "all",
+          highlight: {
+            type: "wallP",
+            diffHeight: 100,
+            material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
+              image: "img/textures/fence.png",
+              color: "#ffff00",
+              speed: 10, //速度，建议取值范围1-100
+              axisY: true,
+            }),
           },
+
           flyTo: true,
-        })
-        map.addLayer(tileLayer)
+        });
+        map.addLayer(tileLayer);
       }
       function removeLayer() {
         if (tileLayer) {
-          map.removeLayer(tileLayer, true)
-          tileLayer = null
+          map.removeLayer(tileLayer, true);
+          tileLayer = null;
         }
       }
     </script>

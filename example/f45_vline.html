@@ -111,77 +111,77 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
       function initMap(options) {
         //Echart图表 f45_vline.js
-        initEcharts()
+        initEcharts();
 
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
             center: { lat: 3.74685, lng: 103.588387, alt: 14532035, heading: 0, pitch: -86 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.basemap = 2017
+        map.basemap = 2017;
 
         queryPopulationApiData()
           .then(function (data) {
-            showData(data)
+            showData(data);
           })
           .catch(function (data) {
-            console.log('ajax请求出错', data)
-          })
+            console.log("ajax请求出错", data);
+          });
       }
 
       // 访问后端接口，取数据
       function queryPopulationApiData() {
         return new Promise(function (resolve, reject) {
           $.ajax({
-            url: '//data.mars3d.cn/file/apidemo/population.json',
-            type: 'get',
-            dataType: 'json',
+            url: "//data.mars3d.cn/file/apidemo/population.json",
+            type: "get",
+            dataType: "json",
             success: function (result) {
-              resolve(result)
+              resolve(result);
             },
             error: function (data) {
-              reject(data)
+              reject(data);
             },
-          })
-        })
+          });
+        });
       }
 
       function showData(data) {
-        let heightScale = 2000000
+        let heightScale = 2000000;
 
         for (let x = 0; x < 1; x++) {
-          let series = data[x]
-          let seriesName = series[0]
-          let coordinates = series[1]
+          let series = data[x];
+          let seriesName = series[0];
+          let coordinates = series[1];
 
           //创建Graphic图层
-          let graphicLayer = new mars3d.layer.GraphicLayer()
-          map.addLayer(graphicLayer)
+          let graphicLayer = new mars3d.layer.GraphicLayer();
+          map.addLayer(graphicLayer);
 
           //Now loop over each coordinate in the series and create
           for (let i = 0; i < coordinates.length; i += 3) {
-            let latitude = coordinates[i]
-            let longitude = coordinates[i + 1]
-            let height = coordinates[i + 2]
+            let latitude = coordinates[i];
+            let longitude = coordinates[i + 1];
+            let height = coordinates[i + 2];
 
             //Ignore lines of zero height.
             if (height === 0) {
-              continue
+              continue;
             }
 
-            let color = Cesium.Color.fromHsl(0.6 - height * 0.5, 1.0, 0.5)
-            let surfacePosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, 0)
-            let heightPosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, height * heightScale)
+            let color = Cesium.Color.fromHsl(0.6 - height * 0.5, 1.0, 0.5);
+            let surfacePosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, 0);
+            let heightPosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, height * heightScale);
 
             let primitive = new mars3d.graphic.PolylineEntity({
               positions: [surfacePosition, heightPosition],
@@ -189,8 +189,8 @@
                 width: 4,
                 color: color,
               },
-            })
-            graphicLayer.addGraphic(primitive)
+            });
+            graphicLayer.addGraphic(primitive);
           }
         }
       }

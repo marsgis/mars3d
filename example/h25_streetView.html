@@ -63,16 +63,16 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
-        var mapOptions = mars3d.Util.merge(options, {})
+        var mapOptions = mars3d.Util.merge(options, {});
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         var streetView = new mars3d.thing.StreetView({
           rotateSpeed: 30, //右键拖动的移动度数，旋转的方向和速度，正负控制方向。
@@ -82,18 +82,18 @@
           heightStep: 0.2, //升高或降低相机高度比例，当前相机高度的比例
           moveStep: 0.1, //左键双击定位的移动比例，当前视距的比例
           moveDuration: 3, //左键双击定位动画时长，不指定时cesium内部自动计算的
-        })
-        map.addThing(streetView)
+        });
+        map.addThing(streetView);
 
         $('input:radio[name="shadingMaterials"]').change(function () {
-          if ($(this).val() === '1') {
-            streetView.enabled = true
-            $('#czsmView').show()
+          if ($(this).val() === "1") {
+            streetView.enabled = true;
+            $("#czsmView").show();
           } else {
-            streetView.enabled = false
-            $('#czsmView').hide()
+            streetView.enabled = false;
+            $("#czsmView").hide();
           }
-        })
+        });
       }
     </script>
   </body>

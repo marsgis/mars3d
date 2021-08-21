@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>Model 小模型 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>点对象动态位置 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <script
       type="text/javascript"
@@ -37,33 +37,28 @@
     <div id="mars3dContainer" class="mars3d-container"></div>
 
     <div class="infoview">
+      图层状态：
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkShow" class="styled" type="checkbox" checked />
+        <label for="chkShow"> 显示隐藏 </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkPopup" class="styled" type="checkbox" checked />
+        <label for="chkPopup"> Popup绑定 </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkTooltip" class="styled" type="checkbox" />
+        <label for="chkTooltip"> Tooltip绑定 </label>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkContextMenu" class="styled" type="checkbox" checked />
+        <label for="chkContextMenu"> 右键菜单绑定 </label>
+      </div>
 
-        图层状态：
-        <div class="checkbox checkbox-primary checkbox-inline">
-          <input id="chkShow" class="styled" type="checkbox" checked />
-          <label for="chkShow"> 显示隐藏 </label>
-        </div>
-        <div class="checkbox checkbox-primary checkbox-inline">
-          <input id="chkPopup" class="styled" type="checkbox" checked />
-          <label for="chkPopup"> Popup绑定 </label>
-        </div>
-        <div class="checkbox checkbox-primary checkbox-inline">
-          <input id="chkTooltip" class="styled" type="checkbox" />
-          <label for="chkTooltip"> Tooltip绑定 </label>
-        </div>
-        <div class="checkbox checkbox-primary checkbox-inline">
-          <input id="chkContextMenu" class="styled" type="checkbox" checked />
-          <label for="chkContextMenu"> 右键菜单绑定 </label>
-        </div>
-
-        &nbsp;&nbsp;
-        &nbsp;&nbsp;
+      &nbsp;&nbsp; &nbsp;&nbsp;
 
       <a href="editor.html#f10_entity_dynamic_3dtiles" target="_blank" class="btn btn-default">动态贴模型示例</a>
-
     </div>
-
-
 
     <!-- 切换视角到模型或地形（山区）的快捷按钮 -->
     <script type="text/javascript" src="js/center_terrain_3dtiles.js"></script>
@@ -73,9 +68,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -84,94 +79,103 @@
             fxaa: true,
             center: { lat: 31.754913, lng: 117.248572, alt: 6220, heading: 357, pitch: -31 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.basemap = 2017 //蓝色底图
+        map.basemap = 2017; //蓝色底图
 
         //固定光照，避免gltf模型随时间存在亮度不一致。
-        map.fixedLight = true
+        map.fixedLight = true;
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //图层管理的相关处理，代码在\js\graphicManager.js
-        initLayerManager(graphicLayer)
+        initLayerManager(graphicLayer);
 
         //加一些演示数据
         for (let i = 0; i < 20; i++) {
           let graphic = new mars3d.graphic.ModelEntity({
             style: {
-              url: '//data.mars3d.cn/gltf/mars/qiche.gltf',
+              url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
               scale: 0.5,
               minimumPixelSize: 20,
+
+              //高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+              highlight: {
+                type: mars3d.EventType.click,
+                silhouette: true,
+                silhouetteColor: "#ff0000",
+                silhouetteSize: 4,
+              },
+
               label: {
                 //不需要文字时，去掉label配置即可
-                text: '皖A000' + i,
+                text: "皖A000" + i,
                 font_size: 16,
-                color: '#ffffff',
+                color: "#ffffff",
                 outline: true,
-                outlineColor: '#000000',
+                outlineColor: "#000000",
                 pixelOffsetY: -20,
                 distanceDisplayCondition: true,
                 distanceDisplayCondition_far: 50000,
                 distanceDisplayCondition_near: 0,
               },
             },
-          })
-          graphicLayer.addGraphic(graphic)
+          });
+          graphicLayer.addGraphic(graphic);
         }
         for (let i = 0; i < 20; i++) {
           let graphic = new mars3d.graphic.BillboardEntity({
             style: {
-              image: 'img/marker/mark3.png',
+              image: "img/marker/mark3.png",
               scale: 0.6,
               horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
               verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
               scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 500000, 0.1),
             },
-          })
-          graphicLayer.addGraphic(graphic)
+          });
+          graphicLayer.addGraphic(graphic);
         }
         for (let i = 0; i < 3; i++) {
           let graphic = new mars3d.graphic.DivUpLabel({
             style: {
-              text: '火星科技',
-              color: '#fff',
+              text: "火星科技",
+              color: "#fff",
               font_size: 13,
-              font_family: '微软雅黑',
+              font_family: "微软雅黑",
               lineHeight: 20,
               circleSize: 5,
               distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 100000),
             },
-          })
-          graphicLayer.addGraphic(graphic)
+          });
+          graphicLayer.addGraphic(graphic);
         }
 
         //设置动态位置
         graphicLayer.eachGraphic((graphic) => {
-          graphic.addDynamicPosition(randomPoint())
-        })
+          graphic.addDynamicPosition(randomPoint());
+        });
         graphicLayer.eachGraphic((graphic) => {
-          graphic.addDynamicPosition(randomPoint(), 20)
-        })
+          graphic.addDynamicPosition(randomPoint(), 20);
+        });
 
         //定时更新动态位置（setInterval为演示）
         setInterval(() => {
           graphicLayer.eachGraphic((graphic) => {
-            graphic.addDynamicPosition(randomPoint(), 20)
-          })
-        }, 20000)
+            graphic.addDynamicPosition(randomPoint(), 20);
+          });
+        }, 20000);
       }
 
       //取区域内的随机图标
       function randomPoint() {
-        var jd = haoutil.math.random(117.207666 * 1000, 117.287241 * 1000) / 1000
-        var wd = haoutil.math.random(31.817099 * 1000, 31.876848 * 1000) / 1000
-        return Cesium.Cartesian3.fromDegrees(jd, wd, 30)
+        var jd = haoutil.math.random(117.207666 * 1000, 117.287241 * 1000) / 1000;
+        var wd = haoutil.math.random(31.817099 * 1000, 31.876848 * 1000) / 1000;
+        return Cesium.Cartesian3.fromDegrees(jd, wd, 30);
       }
     </script>
   </body>

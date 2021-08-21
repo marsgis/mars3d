@@ -52,9 +52,9 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
@@ -66,123 +66,123 @@
               maximumZoomDistance: 50000000,
             },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         map.scene.skyBox = new Cesium.SkyBox({
           sources: {
-            negativeX: 'img/skybox/6/tycho2t3_80_mx.jpg',
-            negativeY: 'img/skybox/6/tycho2t3_80_my.jpg',
-            negativeZ: 'img/skybox/6/tycho2t3_80_mz.jpg',
-            positiveX: 'img/skybox/6/tycho2t3_80_px.jpg',
-            positiveY: 'img/skybox/6/tycho2t3_80_py.jpg',
-            positiveZ: 'img/skybox/6/tycho2t3_80_pz.jpg',
+            negativeX: "img/skybox/6/tycho2t3_80_mx.jpg",
+            negativeY: "img/skybox/6/tycho2t3_80_my.jpg",
+            negativeZ: "img/skybox/6/tycho2t3_80_mz.jpg",
+            positiveX: "img/skybox/6/tycho2t3_80_px.jpg",
+            positiveY: "img/skybox/6/tycho2t3_80_py.jpg",
+            positiveZ: "img/skybox/6/tycho2t3_80_pz.jpg",
           },
-        })
+        });
 
-        $('#bntShow1').click(function () {
-          $('.active').removeClass('active')
-          $(this).addClass('active')
-
-          //修改天空盒
-          map.scene.skyBox = new Cesium.SkyBox({
-            sources: {
-              negativeX: 'img/skybox/1/tycho2t3_80_mx.jpg',
-              negativeY: 'img/skybox/1/tycho2t3_80_my.jpg',
-              negativeZ: 'img/skybox/1/tycho2t3_80_mz.jpg',
-              positiveX: 'img/skybox/1/tycho2t3_80_px.jpg',
-              positiveY: 'img/skybox/1/tycho2t3_80_py.jpg',
-              positiveZ: 'img/skybox/1/tycho2t3_80_pz.jpg',
-            },
-          })
-        })
-
-        $('#bntShow2').click(function () {
-          $('.active').removeClass('active')
-          $(this).addClass('active')
+        $("#bntShow1").click(function () {
+          $(".active").removeClass("active");
+          $(this).addClass("active");
 
           //修改天空盒
           map.scene.skyBox = new Cesium.SkyBox({
             sources: {
-              negativeX: 'img/skybox/2/tycho2t3_80_mx.jpg',
-              negativeY: 'img/skybox/2/tycho2t3_80_my.jpg',
-              negativeZ: 'img/skybox/2/tycho2t3_80_mz.jpg',
-              positiveX: 'img/skybox/2/tycho2t3_80_px.jpg',
-              positiveY: 'img/skybox/2/tycho2t3_80_py.jpg',
-              positiveZ: 'img/skybox/2/tycho2t3_80_pz.jpg',
+              negativeX: "img/skybox/1/tycho2t3_80_mx.jpg",
+              negativeY: "img/skybox/1/tycho2t3_80_my.jpg",
+              negativeZ: "img/skybox/1/tycho2t3_80_mz.jpg",
+              positiveX: "img/skybox/1/tycho2t3_80_px.jpg",
+              positiveY: "img/skybox/1/tycho2t3_80_py.jpg",
+              positiveZ: "img/skybox/1/tycho2t3_80_pz.jpg",
             },
-          })
-        })
+          });
+        });
 
-        $('#bntShow3').click(function () {
-          $('.active').removeClass('active')
-          $(this).addClass('active')
+        $("#bntShow2").click(function () {
+          $(".active").removeClass("active");
+          $(this).addClass("active");
 
           //修改天空盒
           map.scene.skyBox = new Cesium.SkyBox({
             sources: {
-              negativeX: 'img/skybox/3/tycho2t3_80_mx.jpg',
-              negativeY: 'img/skybox/3/tycho2t3_80_my.jpg',
-              negativeZ: 'img/skybox/3/tycho2t3_80_mz.jpg',
-              positiveX: 'img/skybox/3/tycho2t3_80_px.jpg',
-              positiveY: 'img/skybox/3/tycho2t3_80_py.jpg',
-              positiveZ: 'img/skybox/3/tycho2t3_80_pz.jpg',
+              negativeX: "img/skybox/2/tycho2t3_80_mx.jpg",
+              negativeY: "img/skybox/2/tycho2t3_80_my.jpg",
+              negativeZ: "img/skybox/2/tycho2t3_80_mz.jpg",
+              positiveX: "img/skybox/2/tycho2t3_80_px.jpg",
+              positiveY: "img/skybox/2/tycho2t3_80_py.jpg",
+              positiveZ: "img/skybox/2/tycho2t3_80_pz.jpg",
             },
-          })
-        })
+          });
+        });
 
-        $('#bntShow4').click(function () {
-          $('.active').removeClass('active')
-          $(this).addClass('active')
+        $("#bntShow3").click(function () {
+          $(".active").removeClass("active");
+          $(this).addClass("active");
 
           //修改天空盒
           map.scene.skyBox = new Cesium.SkyBox({
             sources: {
-              negativeX: 'img/skybox/4/tycho2t3_80_mx.jpg',
-              negativeY: 'img/skybox/4/tycho2t3_80_my.jpg',
-              negativeZ: 'img/skybox/4/tycho2t3_80_mz.jpg',
-              positiveX: 'img/skybox/4/tycho2t3_80_px.jpg',
-              positiveY: 'img/skybox/4/tycho2t3_80_py.jpg',
-              positiveZ: 'img/skybox/4/tycho2t3_80_pz.jpg',
+              negativeX: "img/skybox/3/tycho2t3_80_mx.jpg",
+              negativeY: "img/skybox/3/tycho2t3_80_my.jpg",
+              negativeZ: "img/skybox/3/tycho2t3_80_mz.jpg",
+              positiveX: "img/skybox/3/tycho2t3_80_px.jpg",
+              positiveY: "img/skybox/3/tycho2t3_80_py.jpg",
+              positiveZ: "img/skybox/3/tycho2t3_80_pz.jpg",
             },
-          })
-        })
+          });
+        });
 
-        $('#bntShow5').click(function () {
-          $('.active').removeClass('active')
-          $(this).addClass('active')
+        $("#bntShow4").click(function () {
+          $(".active").removeClass("active");
+          $(this).addClass("active");
 
           //修改天空盒
           map.scene.skyBox = new Cesium.SkyBox({
             sources: {
-              negativeX: 'img/skybox/5/tycho2t3_80_mx.jpg',
-              negativeY: 'img/skybox/5/tycho2t3_80_my.jpg',
-              negativeZ: 'img/skybox/5/tycho2t3_80_mz.jpg',
-              positiveX: 'img/skybox/5/tycho2t3_80_px.jpg',
-              positiveY: 'img/skybox/5/tycho2t3_80_py.jpg',
-              positiveZ: 'img/skybox/5/tycho2t3_80_pz.jpg',
+              negativeX: "img/skybox/4/tycho2t3_80_mx.jpg",
+              negativeY: "img/skybox/4/tycho2t3_80_my.jpg",
+              negativeZ: "img/skybox/4/tycho2t3_80_mz.jpg",
+              positiveX: "img/skybox/4/tycho2t3_80_px.jpg",
+              positiveY: "img/skybox/4/tycho2t3_80_py.jpg",
+              positiveZ: "img/skybox/4/tycho2t3_80_pz.jpg",
             },
-          })
-        })
+          });
+        });
 
-        $('#bntShow6').click(function () {
-          $('.active').removeClass('active')
-          $(this).addClass('active')
+        $("#bntShow5").click(function () {
+          $(".active").removeClass("active");
+          $(this).addClass("active");
 
           //修改天空盒
           map.scene.skyBox = new Cesium.SkyBox({
             sources: {
-              negativeX: 'img/skybox/6/tycho2t3_80_mx.jpg',
-              negativeY: 'img/skybox/6/tycho2t3_80_my.jpg',
-              negativeZ: 'img/skybox/6/tycho2t3_80_mz.jpg',
-              positiveX: 'img/skybox/6/tycho2t3_80_px.jpg',
-              positiveY: 'img/skybox/6/tycho2t3_80_py.jpg',
-              positiveZ: 'img/skybox/6/tycho2t3_80_pz.jpg',
+              negativeX: "img/skybox/5/tycho2t3_80_mx.jpg",
+              negativeY: "img/skybox/5/tycho2t3_80_my.jpg",
+              negativeZ: "img/skybox/5/tycho2t3_80_mz.jpg",
+              positiveX: "img/skybox/5/tycho2t3_80_px.jpg",
+              positiveY: "img/skybox/5/tycho2t3_80_py.jpg",
+              positiveZ: "img/skybox/5/tycho2t3_80_pz.jpg",
             },
-          })
-        })
+          });
+        });
+
+        $("#bntShow6").click(function () {
+          $(".active").removeClass("active");
+          $(this).addClass("active");
+
+          //修改天空盒
+          map.scene.skyBox = new Cesium.SkyBox({
+            sources: {
+              negativeX: "img/skybox/6/tycho2t3_80_mx.jpg",
+              negativeY: "img/skybox/6/tycho2t3_80_my.jpg",
+              negativeZ: "img/skybox/6/tycho2t3_80_mz.jpg",
+              positiveX: "img/skybox/6/tycho2t3_80_px.jpg",
+              positiveY: "img/skybox/6/tycho2t3_80_py.jpg",
+              positiveZ: "img/skybox/6/tycho2t3_80_pz.jpg",
+            },
+          });
+        });
       }
     </script>
   </body>

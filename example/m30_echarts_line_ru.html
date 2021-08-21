@@ -39,45 +39,39 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 26.197302,
-              x: 112.783136,
-              z: 5933910.9,
-              heading: 355.6,
-              pitch: -80.3,
-            },
+            center: { lat: 26.197302, lng: 112.783136, alt: 5933911, heading: 356, pitch: -80 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建Echarts图层
-        createEchartsLayer()
+        createEchartsLayer();
       }
 
       function createEchartsLayer() {
-        var geoCoorddata = {
+        /*var geoCoorddata = {
           武汉: [114.30539299999998, 30.593099],
           深圳: [114.05786499999999, 22.543096],
           北京: [116.40739499999995, 39.904211],
           阿克苏: [80.26338699999997, 41.167548],
-        }
+        };*/
 
-        var options = getEchartsOption(geoCoorddata)
-        var echartsLayer = new mars3d.layer.EchartsLayer(options)
-        map.addLayer(echartsLayer)
+        var options = getEchartsOption();
+        var echartsLayer = new mars3d.layer.EchartsLayer(options);
+        map.addLayer(echartsLayer);
       }
 
-      function getEchartsOption(data) {
+      function getEchartsOption() {
         var geoCoordMap = {
           上海: [121.4648, 31.2891],
           东莞: [113.8953, 22.901],
@@ -196,227 +190,231 @@
           阳泉: [113.4778, 38.0951],
           青岛: [120.4651, 36.3373],
           韶关: [113.7964, 24.7028],
-        }
+        };
 
         var BJData = [
           [
             {
-              name: '北京',
+              name: "北京",
               value: 100,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
           [
             {
-              name: '上海',
+              name: "上海",
               value: 30,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
           [
             {
-              name: '广州',
+              name: "广州",
               value: 20,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
           [
             {
-              name: '大连',
+              name: "大连",
               value: 10,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
           [
             {
-              name: '青岛',
+              name: "青岛",
               value: 20,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
           [
             {
-              name: '石家庄',
+              name: "石家庄",
               value: 20,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
           [
             {
-              name: '南昌',
+              name: "南昌",
               value: 10,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
           [
             {
-              name: '合肥',
+              name: "合肥",
               value: 30,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
           [
             {
-              name: '呼和浩特',
+              name: "呼和浩特",
               value: 10,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
           [
             {
-              name: '宿州',
+              name: "宿州",
               value: 10,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
           [
             {
-              name: '曲阜',
+              name: "曲阜",
               value: 10,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
           [
             {
-              name: '杭州',
+              name: "杭州",
               value: 10,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
           [
             {
-              name: '武汉',
+              name: "武汉",
               value: 10,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
           [
             {
-              name: '深圳',
+              name: "深圳",
               value: 10,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
           [
             {
-              name: '珠海',
+              name: "珠海",
               value: 10,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
           [
             {
-              name: '福州',
+              name: "福州",
               value: 20,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
           [
             {
-              name: '西安',
+              name: "西安",
               value: 60,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
           [
             {
-              name: '赣州',
+              name: "赣州",
               value: 10,
             },
             {
-              name: '无锡',
+              name: "无锡",
             },
           ],
-        ]
+        ];
 
         //var planePath = 'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z';
 
         var convertData = function (data) {
-          var res = []
+          var res = [];
           for (var i = 0; i < data.length; i++) {
-            var dataItem = data[i]
-            var fromCoord = geoCoordMap[dataItem[0].name]
-            var toCoord = geoCoordMap[dataItem[1].name]
+            var dataItem = data[i];
+            var fromCoord = geoCoordMap[dataItem[0].name];
+            var toCoord = geoCoordMap[dataItem[1].name];
             if (fromCoord && toCoord) {
               res.push({
                 fromName: dataItem[0].name,
                 toName: dataItem[1].name,
                 coords: [fromCoord, toCoord],
-              })
+              });
             }
           }
-          return res
-        }
+          return res;
+        };
 
-        var covertColor = function (data) {
-          var value = data[1].value
-          var result = 'aqua'
-          if (value > 80) {
-            result = '#ff3333'
-          } else if (value > 60) {
-            result = 'orange'
-          } else if (value > 40) {
-            result = 'yellow'
-          } else if (value > 20) {
-            result = 'lime'
-          }
-          return result
-        }
+        // var covertColor = function (data) {
+        //   data.map(function (dataItem) {
+        //     console.log(dataItem[0]);
+        //     let value = dataItem[0].value;
+        //     let color = "red";
 
-        var color = ['#56e88c', '#ffa022', '#46bee9']
-        var series = []
-        ;[['北京', BJData]].forEach(function (item, i) {
+        //     if (value > 80) {
+        //       color = "red";
+        //     } else if (value > 60) {
+        //       color = "#56e88c";
+        //     } else if (value > 40) {
+        //       color = "#ffa022";
+        //     } else if (value > 20) {
+        //       color = "#46bee9";
+        //     }
+        //     return color;
+        //   });
+        // };
+
+        var series = [];
+        [["北京", BJData]].forEach(function (item, i) {
           series.push(
             {
-              name: item[2],
-              type: 'lines',
-              coordinateSystem: 'GLMap',
+              name: item[0],
+              type: "lines",
+              coordinateSystem: "mars3dMap",
               zlevel: 2,
               effect: {
                 show: true,
                 period: 6,
                 trailLength: 0.1,
                 //            symbol: planePath,
-                symbol: 'arrow',
+                symbol: "arrow",
                 symbolSize: 5,
               },
               lineStyle: {
                 normal: {
-                  color: '#60ff44',
+                  // color: covertColor(item[1]), // TODO : 无法奏效
+                  color: "#56e88c",
                   width: 1,
                   opacity: 0.4,
                   curveness: 0.2,
@@ -426,36 +424,36 @@
             },
             {
               //       name: item[1],
-              type: 'effectScatter',
-              coordinateSystem: 'GLMap',
+              type: "effectScatter",
+              coordinateSystem: "mars3dMap",
               zlevel: 2,
               rippleEffect: {
-                brushType: 'stroke',
+                brushType: "stroke",
               },
               label: {
                 normal: {
                   show: true,
-                  position: 'right',
-                  formatter: '{b}',
+                  position: "right",
+                  formatter: "{b}",
                 },
               },
               symbolSize: function (val) {
-                return 3 + val[2] / 10
+                return 3 + val[2] / 10;
               },
               itemStyle: {
                 normal: {
-                  color: '#60ff44',
+                  color: "#60ff44",
                 },
               },
               data: item[1].map(function (dataItem) {
                 return {
                   name: dataItem[0].name,
                   value: geoCoordMap[dataItem[0].name].concat([dataItem[0].value]),
-                }
+                };
               }),
             }
-          )
-        })
+          );
+        });
 
         var option = {
           animation: false,
@@ -468,12 +466,12 @@
           //    }
           //},
           tooltip: {
-            trigger: 'item',
+            trigger: "item",
           },
-          GLMap: {},
+
           series: series,
-        }
-        return option
+        };
+        return option;
       }
     </script>
   </body>

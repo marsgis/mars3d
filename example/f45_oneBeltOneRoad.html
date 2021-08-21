@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>三维地图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>一带一路 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -139,73 +139,74 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: {
-              y: 26.163233,
-              x: 77.849567,
-              z: 17754541.07,
-              heading: 360,
-              pitch: -90,
-              roll: 0,
-            },
+            center: { lat: 26.163233, lng: 77.849567, alt: 17754541, heading: 360, pitch: -90 },
             sceneMode: 2,
           },
           terrain: false,
           layers: [],
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.basemap = 2017 //蓝色底图
+        map.basemap = 2017; //蓝色底图
 
         //加载数据
         queryoneBeltOneRoadApiData()
           .then(function (res) {
             showRoad(res.data.land, {
-              name: '丝绸之路经济带',
+              name: "丝绸之路经济带",
               color: Cesium.Color.CORAL,
-            })
+            });
 
             showRoad(res.data.sea, {
-              name: '21世纪海上丝绸之路',
+              name: "21世纪海上丝绸之路",
               color: Cesium.Color.DEEPSKYBLUE,
-            })
+            });
           })
           .catch(function () {
-            haoutil.msg('实时查询信息失败，请稍候再试')
-          })
+            haoutil.msg("实时查询信息失败，请稍候再试");
+          });
       }
 
       //访问后端接口，取数据
       function queryoneBeltOneRoadApiData() {
         return new Promise(function (resolve, reject) {
-          $.getJSON('//data.mars3d.cn/file/apidemo/oneBeltOneRoad.json', function (result) {
-            resolve(result)
-          })
-        })
+          $.ajax({
+            url: "//data.mars3d.cn/file/apidemo/oneBeltOneRoad.json",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+              resolve(result);
+            },
+            error: function (data) {
+              reject(data);
+            },
+          });
+        });
       }
 
       function showRoad(arr, options) {
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
-        const arrPosition = []
+        const arrPosition = [];
         for (let i = 0; i < arr.length; i += 1) {
-          const item = arr[i]
+          const item = arr[i];
 
-          const position = Cesium.Cartesian3.fromDegrees(item.x, item.y)
-          item.position = position
+          const position = Cesium.Cartesian3.fromDegrees(item.x, item.y);
+          item.position = position;
 
-          arrPosition.push(position)
+          arrPosition.push(position);
 
           // 创建点
           if (item.icon) {
@@ -213,14 +214,14 @@
               name: item.name,
               position: position,
               style: {
-                image: 'img/country/' + item.icon,
+                image: "img/country/" + item.icon,
                 scale: 0.7,
                 horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
                 verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
                 label: {
                   text: item.name,
                   font_size: 17,
-                  font_family: '楷体',
+                  font_family: "楷体",
                   color: Cesium.Color.WHITE,
                   outline: true,
                   outlineColor: Cesium.Color.BLACK,
@@ -230,38 +231,34 @@
                   pixelOffset: new Cesium.Cartesian2(0, -30),
                 },
               },
-            })
-            graphicLayer.addGraphic(billboardPrimitive)
+            });
+            graphicLayer.addGraphic(billboardPrimitive);
 
-            billboardPrimitive.bindPopup(
-              `<div class="mars-load-location">
+            let html = `<div class="mars-load-location">
               ${item.continent} - ${item.country} - <i style="color: #00ffff;">${item.name}</i>
-            </div>`,
-              {
-                anchor: [0, -25],
-              }
-            )
+            </div>`;
+            billboardPrimitive.bindPopup(html);
           }
         }
 
-        var positions = mars3d.PolyUtil.getBezierCurve(arrPosition)
-        positions.push(arrPosition[arrPosition.length - 1])
+        var positions = mars3d.PolyUtil.getBezierCurve(arrPosition);
+        positions.push(arrPosition[arrPosition.length - 1]);
 
         var primitive = new mars3d.graphic.PolylinePrimitive({
           positions: positions,
           style: {
             width: 4,
             material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
-              image: 'img/textures/LinkPulse.png',
+              image: "img/textures/LinkPulse.png",
               color: options.color,
               repeat: new Cesium.Cartesian2(10.0, 1.0),
               speed: 2,
             }),
           },
-        })
-        graphicLayer.addGraphic(primitive)
+        });
+        graphicLayer.addGraphic(primitive);
 
-        primitive.bindTooltip(options.name)
+        primitive.bindTooltip(options.name);
       }
     </script>
   </body>

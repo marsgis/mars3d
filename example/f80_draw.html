@@ -138,10 +138,10 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var graphicLayer
+      var map;
+      var graphicLayer;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -149,90 +149,90 @@
           control: {
             infoBox: false,
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         graphicLayer = new mars3d.layer.GraphicLayer({
           hasEdit: true,
           isAutoEditing: true, //绘制完成后是否自动激活编辑
-        })
-        map.addLayer(graphicLayer)
+        });
+        map.addLayer(graphicLayer);
 
         //图层管理的相关处理，代码在\js\graphicManager.js
-        window.initLayerManager(graphicLayer)
+        window.initLayerManager(graphicLayer);
 
-        graphicLayer.unbindPopup()
+        graphicLayer.unbindPopup();
 
         //绑定标绘相关事件监听(可以自行加相关代码实现业务需求，此处主要做示例)
         graphicLayer.on(mars3d.EventType.drawStart, function (e) {
-          console.log('开始绘制', e)
-        })
+          console.log("开始绘制", e);
+        });
         graphicLayer.on(mars3d.EventType.drawAddPoint, function (e) {
-          console.log('绘制过程中增加了点', e)
-        })
+          console.log("绘制过程中增加了点", e);
+        });
         graphicLayer.on(mars3d.EventType.drawRemovePoint, function (e) {
-          console.log('绘制过程中删除了点', e)
-        })
+          console.log("绘制过程中删除了点", e);
+        });
 
         graphicLayer.on(mars3d.EventType.drawCreated, function (e) {
-          console.log('创建完成', e)
-        })
+          console.log("创建完成", e);
+        });
         graphicLayer.on(mars3d.EventType.editStart, function (e) {
-          console.log('开始编辑', e)
+          console.log("开始编辑", e);
 
-          startEditing(e.graphic)
-        })
+          startEditing(e.graphic);
+        });
         graphicLayer.on(mars3d.EventType.editMovePoint, function (e) {
-          console.log('编辑修改了点', e)
-          startEditing(e.graphic)
-        })
+          console.log("编辑修改了点", e);
+          startEditing(e.graphic);
+        });
         graphicLayer.on(mars3d.EventType.editRemovePoint, function (e) {
-          console.log('编辑删除了点', e)
+          console.log("编辑删除了点", e);
 
-          startEditing(e.graphic)
-        })
+          startEditing(e.graphic);
+        });
         graphicLayer.on(mars3d.EventType.editStop, function (e) {
-          console.log('停止编辑', e)
+          console.log("停止编辑", e);
 
-          stopEditing()
-        })
+          stopEditing();
+        });
         graphicLayer.on(mars3d.EventType.removeGraphic, function (e) {
-          console.log('删除了对象', e)
+          console.log("删除了对象", e);
 
-          stopEditing()
-        })
+          stopEditing();
+        });
 
-        $('#chk_onlyPickModelPosition').change(function () {
-          var val = $(this).is(':checked')
+        $("#chk_onlyPickModelPosition").change(function () {
+          var val = $(this).is(":checked");
 
           //控制鼠标只取模型上的点，忽略地形上的点的拾取
-          map.onlyPickModelPosition = val
-        })
+          map.onlyPickModelPosition = val;
+        });
 
-        $('#btnSaveKML').click(function () {
+        $("#btnSaveKML").click(function () {
           if (graphicLayer.length === 0) {
-            window.layer.msg('当前没有标注任何数据，无需保存！')
-            return
+            window.layer.msg("当前没有标注任何数据，无需保存！");
+            return;
           }
-          var strResult = toKML()
-          haoutil.file.downloadFile('我的标注.kml', strResult)
-        })
+          var strResult = toKML();
+          haoutil.file.downloadFile("我的标注.kml", strResult);
+        });
 
-        $('#btnSaveWKT').click(function () {
+        $("#btnSaveWKT").click(function () {
           if (graphicLayer.length === 0) {
-            window.layer.msg('当前没有标注任何数据，无需保存！')
-            return
+            window.layer.msg("当前没有标注任何数据，无需保存！");
+            return;
           }
-          var strResult = toWKT()
-          haoutil.file.downloadFile('我的标注wkt.txt', JSON.stringify(strResult))
-        })
+          var strResult = toWKT();
+          haoutil.file.downloadFile("我的标注wkt.txt", JSON.stringify(strResult));
+        });
 
-        if (location.hostname !== '127.0.0.1' && location.hostname !== 'localhost') {
-	        queryDrawData().then(function (data) {
-	          graphicLayer.loadGeoJSON(data, { clear: true, flyTo: true })
-	        })
+        if (location.hostname !== "127.0.0.1" && location.hostname !== "localhost") {
+          queryDrawData().then(function (data) {
+            graphicLayer.loadGeoJSON(data, { clear: true, flyTo: true });
+          });
         }
       }
 
@@ -241,320 +241,320 @@
         //加载历史演示数据
         return new Promise(function (resolve, reject) {
           $.ajax({
-            url: '//data.mars3d.cn/file/geojson/mars3d-draw.json',
-            type: 'get',
-            dataType: 'json',
+            url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
+            type: "get",
+            dataType: "json",
             success: function (result) {
-              resolve(result)
+              resolve(result);
             },
             error: function (data) {
-              reject(data)
+              reject(data);
             },
-          })
-        })
+          });
+        });
       }
 
       function drawPoint() {
         graphicLayer.startDraw({
-          type: 'point',
+          type: "point",
           style: {
             pixelSize: 12,
-            color: '#3388ff',
+            color: "#3388ff",
             label: {
               //不需要文字时，去掉label配置即可
-              text: '可以同时支持文字',
+              text: "可以同时支持文字",
               font_size: 20,
-              color: '#ffffff',
+              color: "#ffffff",
               outline: true,
-              outlineColor: '#000000',
+              outlineColor: "#000000",
               pixelOffsetY: -20,
             },
           },
-        })
+        });
       }
 
       function drawMarker() {
         graphicLayer.startDraw({
-          type: 'billboard',
+          type: "billboard",
           style: {
-            image: 'img/marker/mark1.png',
+            image: "img/marker/mark1.png",
             horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
             verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
             label: {
               //不需要文字时，去掉label配置即可
-              text: '可以同时支持文字',
+              text: "可以同时支持文字",
               font_size: 26,
-              color: '#ffffff',
+              color: "#ffffff",
               outline: true,
-              outlineColor: '#000000',
+              outlineColor: "#000000",
               pixelOffsetY: -60,
             },
           },
-        })
+        });
       }
 
       function drawLabel() {
         graphicLayer.startDraw({
-          type: 'label',
+          type: "label",
           style: {
-            text: '火星科技三维地球',
-            color: '#0081c2',
+            text: "火星科技三维地球",
+            color: "#0081c2",
             font_size: 50,
             outline: true,
-            outlineColor: '#ffffff',
+            outlineColor: "#ffffff",
             outlineWidth: 2,
           },
-        })
+        });
       }
 
       function drawModel() {
         graphicLayer.startDraw({
-          type: 'model',
+          type: "model",
           style: {
             scale: 10,
-            url: '//data.mars3d.cn/gltf/mars/firedrill/xiaofangche.gltf',
+            url: "//data.mars3d.cn/gltf/mars/firedrill/xiaofangche.gltf",
           },
-        })
+        });
       }
 
       function drawPolyline(clampToGround) {
         graphicLayer.startDraw({
-          type: 'polyline',
+          type: "polyline",
           // maxPointNum: 2,  //限定最大点数，可以绘制2个点的线，自动结束
           style: {
-            color: clampToGround ? '#ffff00' : '#3388ff',
+            color: clampToGround ? "#ffff00" : "#3388ff",
             width: 3,
             clampToGround: clampToGround,
           },
-        })
+        });
       }
 
       function drawPolygon(clampToGround) {
         graphicLayer.startDraw({
-          type: 'polygon',
+          type: "polygon",
           style: {
-            color: clampToGround ? '#ffff00' : '#3388ff',
+            color: clampToGround ? "#ffff00" : "#3388ff",
             opacity: 0.5,
             outline: true,
-            outlineColor: '#ffffff',
+            outlineColor: "#ffffff",
             outlineWidth: 2.0,
             clampToGround: clampToGround,
           },
-        })
+        });
       }
 
       function drawCurve(clampToGround) {
         graphicLayer.startDraw({
-          type: 'curve',
+          type: "curve",
           style: {
-            color: clampToGround ? '#ffff00' : '#3388ff',
+            color: clampToGround ? "#ffff00" : "#3388ff",
             width: 3,
             clampToGround: clampToGround,
           },
-        })
+        });
       }
 
       function drawCorridor(clampToGround) {
         graphicLayer.startDraw({
-          type: 'corridor',
+          type: "corridor",
           style: {
-            color: clampToGround ? '#ffff00' : '#3388ff',
+            color: clampToGround ? "#ffff00" : "#3388ff",
             opacity: 0.6,
             width: 500,
             clampToGround: clampToGround,
           },
-        })
+        });
       }
 
       function drawEllipse(clampToGround) {
         graphicLayer.startDraw({
-          type: 'circle',
+          type: "circle",
           style: {
-            color: clampToGround ? '#ffff00' : '#3388ff',
+            color: clampToGround ? "#ffff00" : "#3388ff",
             opacity: 0.6,
             outline: true,
-            outlineColor: '#ffffff',
+            outlineColor: "#ffffff",
             outlineWidth: 2.0,
             clampToGround: clampToGround,
           },
-        })
+        });
       }
 
       function drawRectangle(clampToGround) {
         graphicLayer.startDraw({
-          type: 'rectangle',
+          type: "rectangle",
           style: {
-            color: clampToGround ? '#ffff00' : '#3388ff',
+            color: clampToGround ? "#ffff00" : "#3388ff",
             opacity: 0.6,
             outline: true,
-            outlineColor: '#ffffff',
+            outlineColor: "#ffffff",
             outlineWidth: 2.0,
             clampToGround: clampToGround,
           },
-        })
+        });
       }
 
       function draPlane() {
         graphicLayer.startDraw({
-          type: 'plane',
+          type: "plane",
           style: {
-            color: '#00ff00',
+            color: "#00ff00",
             opacity: 0.8,
-            plane_normal: 'x',
+            plane_normal: "x",
             dimensions_x: 1000.0,
             dimensions_y: 1000.0,
           },
-        })
+        });
       }
 
       function draWall(closure) {
         graphicLayer.startDraw({
-          type: 'wall',
+          type: "wall",
           style: {
-            color: '#00ff00',
+            color: "#00ff00",
             opacity: 0.8,
             diffHeight: 400,
             closure: closure, //是否闭合
           },
-        })
+        });
       }
 
       function drawBox() {
         graphicLayer.startDraw({
-          type: 'box',
+          type: "box",
           style: {
-            color: '#00ff00',
+            color: "#00ff00",
             opacity: 0.6,
             dimensions_x: 1000.0,
             dimensions_y: 1000.0,
             dimensions_z: 1000.0,
           },
-        })
+        });
       }
 
       function drawCylinder() {
         graphicLayer.startDraw({
-          type: 'cylinder',
+          type: "cylinder",
           style: {
             fill: true,
-            color: '#00ff00',
+            color: "#00ff00",
             opacity: 0.6,
             length: 1000,
           },
-        })
+        });
       }
 
       function drawEllipsoid() {
         graphicLayer.startDraw({
-          type: 'ellipsoid',
+          type: "ellipsoid",
           style: {
             fill: true,
-            color: '#00ff00',
+            color: "#00ff00",
             opacity: 0.6,
           },
-        })
+        });
       }
 
       function drawExtrudedPolygon() {
         graphicLayer.startDraw({
-          type: 'polygon',
+          type: "polygon",
           style: {
-            color: '#00ff00',
+            color: "#00ff00",
             opacity: 0.6,
             diffHeight: 300,
           },
-        })
+        });
       }
 
       function drawExtrudedRectangle() {
         graphicLayer.startDraw({
-          type: 'rectangle',
+          type: "rectangle",
           style: {
-            color: '#00ff00',
+            color: "#00ff00",
             opacity: 0.6,
             diffHeight: 300,
           },
-        })
+        });
       }
 
       function drawExtrudedCircle() {
         graphicLayer.startDraw({
-          type: 'circle',
+          type: "circle",
           style: {
-            color: '#00ff00',
+            color: "#00ff00",
             opacity: 0.6,
             diffHeight: 300,
           },
-        })
+        });
       }
 
       function toKML() {
-        var geojsonObject = graphicLayer.toGeoJSON()
+        var geojsonObject = graphicLayer.toGeoJSON();
         if (geojsonObject == null) {
-          return null
+          return null;
         }
 
-        geojsonObject = haoutil.system.clone(geojsonObject)
+        geojsonObject = haoutil.system.clone(geojsonObject);
 
         var kml = kgUtil.toKml(geojsonObject, {
-          name: 'Mars3D标绘数据',
-          documentName: 'Mars3D标绘数据文件',
-          documentDescription: '标绘数据 by mars3d.cn',
+          name: "Mars3D标绘数据",
+          documentName: "Mars3D标绘数据文件",
+          documentDescription: "标绘数据 by mars3d.cn",
           simplestyle: true,
-        })
+        });
 
-        return kml
+        return kml;
       }
 
       function toWKT() {
-        var geojsonObject = graphicLayer.toGeoJSON()
+        var geojsonObject = graphicLayer.toGeoJSON();
         if (geojsonObject == null) {
-          return null
+          return null;
         }
-        geojsonObject = haoutil.system.clone(geojsonObject)
+        geojsonObject = haoutil.system.clone(geojsonObject);
 
-        var arrWKT = []
-        var index = 0
+        var arrWKT = [];
+        var index = 0;
         geojsonObject.features.forEach((feature) => {
-          var attr = feature.properties
-          var style = feature.properties.style
+          var attr = feature.properties;
+          var style = feature.properties.style;
 
-          var wkt = Terraformer.WKT.convert(feature.geometry) //geojson转换WKT格式 ,terraformer库
+          var wkt = Terraformer.WKT.convert(feature.geometry); //geojson转换WKT格式 ,terraformer库
           arrWKT.push({
             id: ++index,
-            name: attr.name || '',
-            remark: attr.remark || '',
+            name: attr.name || "",
+            remark: attr.remark || "",
             style: style,
             wkt: wkt,
-          })
-        })
-        return arrWKT
+          });
+        });
+        return arrWKT;
       }
 
       //附加：激活属性编辑widget【非必需，可以注释该方法内部代码】
-      var timeTik
+      var timeTik;
 
       function startEditing(graphic) {
-        clearTimeout(timeTik)
+        clearTimeout(timeTik);
 
-        var plotAttr = mars3d.widget.getClass('widgets/plotAttr/widget.js')
+        var plotAttr = mars3d.widget.getClass("widgets/plotAttr/widget.js");
         if (plotAttr && plotAttr.isActivate) {
-          plotAttr.startEditing(graphic, graphic.coordinates)
+          plotAttr.startEditing(graphic, graphic.coordinates);
         } else {
           mars3d.widget.activate({
             map: map,
-            uri: 'widgets/plotAttr/widget.js',
-            name: '属性编辑',
+            uri: "widgets/plotAttr/widget.js",
+            name: "属性编辑",
             graphic: graphic,
             lonlats: graphic.coordinates,
-          })
+          });
         }
       }
 
       function stopEditing() {
         timeTik = setTimeout(function () {
-          mars3d.widget.disable('widgets/plotAttr/widget.js')
-        }, 200)
+          mars3d.widget.disable("widgets/plotAttr/widget.js");
+        }, 200);
       }
       //附加：激活属性编辑widget【非必需，可以注释该方法内部代码】
     </script>

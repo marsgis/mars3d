@@ -94,10 +94,10 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var terrainClip
+      var map;
+      var terrainClip;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -106,20 +106,20 @@
             center: { lat: 30.827414, lng: 116.378229, alt: 16933, heading: 360, pitch: -56 },
             highDynamicRange: true,
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        var height = Number($('#txtHeight').val())
+        var height = Number($("#txtHeight").val());
 
         terrainClip = new mars3d.thing.TerrainClip({
           diffHeight: height, //井的深度
-          image: './img/textures/excavate_side_min.jpg',
-          imageBottom: './img/textures/excavate_bottom_min.jpg',
+          image: "./img/textures/excavate_side_min.jpg",
+          imageBottom: "./img/textures/excavate_bottom_min.jpg",
           splitNum: 80, //井边界插值数
-        })
-        map.addThing(terrainClip)
+        });
+        map.addThing(terrainClip);
 
         let areaItem = terrainClip.addArea(
           [
@@ -129,8 +129,8 @@
             [116.334222, 30.944509, 645.46],
           ],
           { diffHeight: 900 }
-        )
-        addTableItem(areaItem)
+        );
+        addTableItem(areaItem);
 
         let areaItem2 = terrainClip.addArea(
           [
@@ -146,87 +146,87 @@
             [116.387022, 30.933539, 700.65],
           ],
           { diffHeight: 200 }
-        )
-        addTableItem(areaItem2)
+        );
+        addTableItem(areaItem2);
 
-        $('#chkTestTerrain').change(function () {
-          var val = $(this).is(':checked')
-          map.scene.globe.depthTestAgainstTerrain = val
-        })
+        $("#chkTestTerrain").change(function () {
+          var val = $(this).is(":checked");
+          map.scene.globe.depthTestAgainstTerrain = val;
+        });
 
-        $('#chkClippingPlanes').change(function () {
-          var val = $(this).is(':checked')
-          terrainClip.enabled = val
-        })
-        $('#chkUnionClippingRegions').change(function () {
-          var val = $(this).is(':checked')
-          terrainClip.clipOutSide = val
-        })
+        $("#chkClippingPlanes").change(function () {
+          var val = $(this).is(":checked");
+          terrainClip.enabled = val;
+        });
+        $("#chkUnionClippingRegions").change(function () {
+          var val = $(this).is(":checked");
+          terrainClip.clipOutSide = val;
+        });
 
-        $('#txtHeight').change(function () {
-          var num = Number($(this).val())
-          terrainClip.diffHeight = num
-        })
+        $("#txtHeight").change(function () {
+          var num = Number($(this).val());
+          terrainClip.diffHeight = num;
+        });
 
-        $('#clearWJ').click(function () {
-          terrainClip.clear() //清除挖地区域
+        $("#clearWJ").click(function () {
+          terrainClip.clear(); //清除挖地区域
 
-          $('#chkUnionClippingRegions').prop('checked', false)
-          $('#chkClippingPlanes').prop('checked', true)
+          $("#chkUnionClippingRegions").prop("checked", false);
+          $("#chkClippingPlanes").prop("checked", true);
 
           // 清除表格
-          var tbody = document.getElementById('tbPoly')
-          tbody.innerHTML = ''
-        })
+          var tbody = document.getElementById("tbPoly");
+          tbody.innerHTML = "";
+        });
 
-        $('#btnDraw').click(function () {
+        $("#btnDraw").click(function () {
           map.graphicLayer.startDraw({
-            type: 'polygon',
+            type: "polygon",
             style: {
-              color: '#007be6',
+              color: "#007be6",
               opacity: 0.5,
               outline: false,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.positionsShow
-              map.graphicLayer.clear()
+              var positions = graphic.positionsShow;
+              map.graphicLayer.clear();
 
-              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
+              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))); //打印下边界
 
-              let areaItem = terrainClip.addArea(positions)
-              addTableItem(areaItem)
+              let areaItem = terrainClip.addArea(positions);
+              addTableItem(areaItem);
             },
-          })
-        })
+          });
+        });
 
-        $('#btnDrawExtent').click(function () {
+        $("#btnDrawExtent").click(function () {
           map.graphicLayer.startDraw({
-            type: 'rectangle',
+            type: "rectangle",
             style: {
-              color: '#007be6',
+              color: "#007be6",
               opacity: 0.8,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.getOutlinePositions(false)
-              map.graphicLayer.clear()
+              var positions = graphic.getOutlinePositions(false);
+              map.graphicLayer.clear();
 
-              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
+              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))); //打印下边界
 
               //挖地区域
-              let areaItem = terrainClip.addArea(positions)
-              addTableItem(areaItem)
+              let areaItem = terrainClip.addArea(positions);
+              addTableItem(areaItem);
             },
-          })
-        })
+          });
+        });
       }
 
       // 区域表格添加一行记录
       function addTableItem(item) {
         // 增加tr和td表格
-        var tbody = document.getElementById('tbPoly')
-        var tr = document.createElement('tr')
+        var tbody = document.getElementById("tbPoly");
+        var tr = document.createElement("tr");
         tr.innerHTML = `
           <tr>
             <td>开挖区${item.id}</td>
@@ -234,19 +234,19 @@
               <a class="flyTo" href="javascript:void(0)" title="飞行定位到区域"><i class="fa fa-send-o"></i></a>&nbsp;&nbsp;
               <a class="remove" href="javascript:void(0)" title="删除区域"><i class="fa fa-trash"></i></a>
             </td>
-          </tr>`
-        tbody.appendChild(tr)
+          </tr>`;
+        tbody.appendChild(tr);
 
         //绑定单击事件 定位
-        tr.querySelector('.flyTo').addEventListener('click', function (e) {
-          map.flyToPositions(item.positions)
-        })
+        tr.querySelector(".flyTo").addEventListener("click", function (e) {
+          map.flyToPositions(item.positions);
+        });
 
         // 移动至绘制区域
-        tr.querySelector('.remove').addEventListener('click', function (e) {
-          terrainClip.removeArea(item)
-          tbody.removeChild(tr)
-        })
+        tr.querySelector(".remove").addEventListener("click", function (e) {
+          terrainClip.removeArea(item);
+          tbody.removeChild(tr);
+        });
       }
     </script>
   </body>

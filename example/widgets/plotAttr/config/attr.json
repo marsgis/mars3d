@@ -2,7 +2,7 @@
   "label": {
     "name": "文字",
     "style": [
-      { "name": "text", "label": "内容", "type": "textarea", "defval": "" },
+      { "name": "text", "label": "内容", "type": "textarea", "defval": "文字" },
 
       {
         "name": "font_family",
@@ -347,15 +347,15 @@
         "type": "combobox",
         "defval": "Color",
         "data": [
-          { "text": "纯色", "value": "Color", "impact": ["color", "opacity"]  },
-          { "text": "网格", "value": "Grid", "impact": ["color", "opacity","cellAlpha", "lineCount", "lineThickness"] },
+          { "text": "纯色", "value": "Color", "impact": ["color", "opacity"] },
+          { "text": "网格", "value": "Grid", "impact": ["color", "opacity", "cellAlpha", "lineCount", "lineThickness"] },
           { "text": "条纹", "value": "Stripe", "impact": ["repeat", "evenColor", "oddColor"] },
           { "text": "棋盘", "value": "Checkerboard", "impact": ["repeat", "evenColor", "oddColor"] },
           { "text": "图片", "value": "Image", "impact": ["image", "opacity"] },
-          { "text": "波纹效果", "value": "CircleWave", "impact": ["color", "opacity","speed", "count", "gradient"] },
-          { "text": "放大扫描线", "value": "ScanLine", "impact": ["color", "opacity","speed"] },
-          { "text": "雷达线", "value": "RadarLine", "impact": ["color", "opacity","speed"] },
-          { "text": "波纹雷达", "value": "RadarWave", "impact": ["color", "opacity","speed"] }
+          { "text": "波纹效果", "value": "CircleWave", "impact": ["color", "opacity", "speed", "count", "gradient"] },
+          { "text": "放大扫描线", "value": "ScanLine", "impact": ["color", "opacity", "speed"] },
+          { "text": "雷达线", "value": "RadarLine", "impact": ["color", "opacity", "speed"] },
+          { "text": "波纹雷达", "value": "RadarWave", "impact": ["color", "opacity", "speed"] }
         ]
       },
       { "name": "speed", "label": "速度", "type": "number", "defval": 10.0 },
@@ -411,10 +411,10 @@
         "defval": "Color",
         "data": [
           { "text": "纯色", "value": "Color", "impact": ["color", "opacity"] },
-          { "text": "波纹", "value": "CircleWave", "impact": ["color", "opacity","speed", "count", "gradient"] },
+          { "text": "波纹", "value": "CircleWave", "impact": ["color", "opacity", "speed", "count", "gradient"] },
           { "text": "网格", "value": "Grid", "impact": ["cellAlpha", "lineCount", "lineThickness"] },
-          { "text": "条纹", "value": "Stripe", "impact": ["color", "opacity","repeat", "evenColor", "oddColor"] },
-          { "text": "棋盘", "value": "Checkerboard", "impact": ["color", "opacity","repeat", "evenColor", "oddColor"] },
+          { "text": "条纹", "value": "Stripe", "impact": ["color", "opacity", "repeat", "evenColor", "oddColor"] },
+          { "text": "棋盘", "value": "Checkerboard", "impact": ["color", "opacity", "repeat", "evenColor", "oddColor"] },
           { "text": "图片", "value": "Image", "impact": ["image", "opacity"] }
         ]
       },
@@ -526,18 +526,18 @@
       { "name": "pitch", "label": "俯仰角", "type": "number", "defval": 0.0 },
       { "name": "roll", "label": "翻滚角", "type": "number", "defval": 0.0 },
 
-      { "name": "fill", "label": "是否填充", "type": "radio", "defval": true, "impact": ["materialType","color", "opacity"] },
+      { "name": "fill", "label": "是否填充", "type": "radio", "defval": true, "impact": ["materialType", "color", "opacity"] },
       {
         "name": "materialType",
         "label": "填充类型",
         "type": "combobox",
         "defval": "Color",
         "data": [
-          { "text": "纯色", "value": "Color", "impact": ["color", "opacity"]  },
+          { "text": "纯色", "value": "Color", "impact": ["color", "opacity"] },
           { "text": "网格", "value": "Grid", "impact": ["cellAlpha", "lineCount", "lineThickness"] },
           { "text": "条纹", "value": "Stripe", "impact": ["repeat", "evenColor", "oddColor"] },
-          { "text": "波纹", "value": "EllipsoidWave", "impact": ["color", "opacity","speed"]  },
-          { "text": "电弧", "value": "EllipsoidElectric", "impact": ["color", "opacity","speed"] }
+          { "text": "波纹", "value": "EllipsoidWave", "impact": ["color", "opacity", "speed"] },
+          { "text": "电弧", "value": "EllipsoidElectric", "impact": ["color", "opacity", "speed"] }
         ]
       },
       { "name": "lineCount", "label": "网格数量", "type": "number", "defval": 8.0 },
@@ -593,15 +593,15 @@
       { "name": "pitch", "label": "俯仰角", "type": "number", "defval": 0.0 },
       { "name": "roll", "label": "翻滚角", "type": "number", "defval": 0.0 },
 
-      { "name": "fill", "label": "是否填充", "type": "radio", "defval": true, "impact": ["materialType","color", "opacity"] },
+      { "name": "fill", "label": "是否填充", "type": "radio", "defval": true, "impact": ["materialType", "color", "opacity"] },
       {
         "name": "materialType",
         "label": "填充类型",
         "type": "combobox",
         "defval": "Color",
         "data": [
-          { "text": "纯色", "value": "Color", "impact": ["color", "opacity"]  },
-          { "text": "网格", "value": "Grid", "impact": ["color", "opacity","cellAlpha", "lineCount", "lineThickness"] },
+          { "text": "纯色", "value": "Color", "impact": ["color", "opacity"] },
+          { "text": "网格", "value": "Grid", "impact": ["color", "opacity", "cellAlpha", "lineCount", "lineThickness"] },
           { "text": "条纹", "value": "Stripe", "impact": ["repeat", "evenColor", "oddColor"] },
           { "text": "棋盘", "value": "Checkerboard", "impact": ["repeat", "evenColor", "oddColor"] }
         ]
@@ -646,15 +646,15 @@
       { "name": "pitch", "label": "俯仰角", "type": "number", "defval": 0.0 },
       { "name": "roll", "label": "翻滚角", "type": "number", "defval": 0.0 },
 
-      { "name": "fill", "label": "是否填充", "type": "radio", "defval": true, "impact": ["materialType","color", "opacity"] },
+      { "name": "fill", "label": "是否填充", "type": "radio", "defval": true, "impact": ["materialType", "color", "opacity"] },
       {
         "name": "materialType",
         "label": "填充类型",
         "type": "combobox",
         "defval": "Color",
         "data": [
-          { "text": "纯色", "value": "Color" , "impact": ["color", "opacity"] },
-          { "text": "网格", "value": "Grid", "impact": ["color", "opacity","cellAlpha", "lineCount", "lineThickness"] },
+          { "text": "纯色", "value": "Color", "impact": ["color", "opacity"] },
+          { "text": "网格", "value": "Grid", "impact": ["color", "opacity", "cellAlpha", "lineCount", "lineThickness"] },
           { "text": "条纹", "value": "Stripe", "impact": ["repeat", "evenColor", "oddColor"] },
           { "text": "棋盘", "value": "Checkerboard", "impact": ["repeat", "evenColor", "oddColor"] }
         ]
@@ -701,7 +701,7 @@
           { "text": "实线", "value": "Color" },
           { "text": "虚线", "value": "PolylineDash", "impact": ["dashLength"] },
           { "text": "衬色线", "value": "PolylineOutline", "impact": ["outlineColor", "outlineWidth"] },
-          { "text": "光晕", "value": "PolylineGlow" , "impact": ["glowPower"]},
+          { "text": "光晕", "value": "PolylineGlow", "impact": ["glowPower"] },
           { "text": "箭头", "value": "PolylineArrow" },
           { "text": "流动线", "value": "LineFlow", "impact": ["speed", "image", "repeat"] },
           { "text": "OD线", "value": "ODLine", "impact": ["speed"] },
@@ -712,7 +712,7 @@
       { "name": "dashLength", "label": "虚线间长", "type": "number", "defval": 16.0 },
       { "name": "outlineColor", "label": "衬色颜色", "type": "color", "defval": "#ffffff" },
       { "name": "outlineWidth", "label": "衬色宽度", "type": "number", "defval": 2.0 },
-      { "name": "glowPower", "label": "高亮强度", "type": "number", "defval":0.25 },
+      { "name": "glowPower", "label": "高亮强度", "type": "number", "defval": 0.25 },
       { "name": "image", "label": "图片", "type": "label", "defval": "img/textures/lineClr.png" },
       { "name": "speed", "label": "速度", "type": "number", "defval": 10.0 },
       { "name": "repeat", "label": "数量", "type": "number", "defval": 1 },
@@ -785,11 +785,11 @@
         "type": "combobox",
         "defval": "Color",
         "data": [
-          { "text": "纯色", "value": "Color" , "impact": ["color", "opacity"]},
-          { "text": "流动效果", "value": "LineFlow", "impact": ["color", "opacity","speed", "image", "repeat_x", "repeat_y", "axisY"] },
-          { "text": "走马灯效果", "value": "WallScroll", "impact": ["color", "opacity","speed", "image", "count"] },
-          { "text": "文本", "value": "Text", "impact": ["color", "opacity","text", "font_size", "font_weight", "font_family", "font_style"] },
-          { "text": "网格", "value": "Grid", "impact": ["color", "opacity","cellAlpha", "lineCount", "lineThickness"] },
+          { "text": "纯色", "value": "Color", "impact": ["color", "opacity"] },
+          { "text": "流动效果", "value": "LineFlow", "impact": ["color", "opacity", "speed", "image", "repeat_x", "repeat_y", "axisY"] },
+          { "text": "走马灯效果", "value": "WallScroll", "impact": ["color", "opacity", "speed", "image", "count"] },
+          { "text": "文本", "value": "Text", "impact": ["color", "opacity", "text", "font_size", "font_weight", "font_family", "font_style"] },
+          { "text": "网格", "value": "Grid", "impact": ["color", "opacity", "cellAlpha", "lineCount", "lineThickness"] },
           { "text": "条纹", "value": "Stripe", "impact": ["repeat", "evenColor", "oddColor"] },
           { "text": "棋盘", "value": "Checkerboard", "impact": ["repeat", "evenColor", "oddColor"] }
         ]
@@ -933,8 +933,8 @@
         "type": "combobox",
         "defval": "Color",
         "data": [
-          { "text": "纯色", "value": "Color", "impact": ["color", "opacity"]  },
-          { "text": "网格", "value": "Grid", "impact": ["color", "opacity","cellAlpha", "lineCount", "lineThickness"] },
+          { "text": "纯色", "value": "Color", "impact": ["color", "opacity"] },
+          { "text": "网格", "value": "Grid", "impact": ["color", "opacity", "cellAlpha", "lineCount", "lineThickness"] },
           { "text": "条纹", "value": "Stripe", "impact": ["repeat", "evenColor", "oddColor"] },
           { "text": "棋盘", "value": "Checkerboard", "impact": ["repeat", "evenColor", "oddColor"] },
           { "text": "图片", "value": "Image", "impact": ["image", "opacity"] }
@@ -980,18 +980,18 @@
     "style": [
       { "name": "diffHeight", "label": "立体高度", "type": "number", "defval": 0.0 },
 
-      { "name": "fill", "label": "是否填充", "type": "radio", "defval": true, "impact": ["materialType","color", "opacity"] },
+      { "name": "fill", "label": "是否填充", "type": "radio", "defval": true, "impact": ["materialType", "color", "opacity"] },
       {
         "name": "materialType",
         "label": "填充类型",
         "type": "combobox",
         "defval": "Color",
         "data": [
-          { "text": "纯色", "value": "Color", "impact": ["color", "opacity"]  },
-          { "text": "网格", "value": "Grid", "impact": ["color", "opacity","cellAlpha", "lineCount", "lineThickness"] },
+          { "text": "纯色", "value": "Color", "impact": ["color", "opacity"] },
+          { "text": "网格", "value": "Grid", "impact": ["color", "opacity", "cellAlpha", "lineCount", "lineThickness"] },
           { "text": "条纹", "value": "Stripe", "impact": ["repeat", "evenColor", "oddColor"] },
           { "text": "棋盘", "value": "Checkerboard", "impact": ["repeat", "evenColor", "oddColor"] },
-          { "text": "图片", "value": "Image", "impact": ["opacity","image"] }
+          { "text": "图片", "value": "Image", "impact": ["opacity", "image"] }
         ]
       },
       { "name": "lineCount", "label": "网格数量", "type": "number", "defval": 8.0 },

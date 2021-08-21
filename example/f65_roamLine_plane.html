@@ -235,10 +235,10 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var roamLine
+      var map;
+      var roamLine;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -250,18 +250,18 @@
             animation: true, //是否创建动画小器件，左下角仪表
             timeline: true, //是否显示时间线控件
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //该数据可以从 基础项目 飞行漫游功能界面操作后保存JSON
         var flydata = {
-          name: '飞机航线',
+          name: "飞机航线",
           speed: 100,
           showStop: true,
           positions: [
@@ -362,13 +362,13 @@
           ],
           model: {
             show: true,
-            url: '//data.mars3d.cn/gltf/mars/MQ-9-Predator.glb',
+            url: "//data.mars3d.cn/gltf/mars/MQ-9-Predator.glb",
             scale: 1,
             minimumPixelSize: 100,
           },
           path: {
             show: true,
-            color: '#ffff00',
+            color: "#ffff00",
             opacity: 0.5,
             width: 1,
             isAll: false,
@@ -376,51 +376,51 @@
           shadow: [
             {
               show: true,
-              type: 'wall',
+              type: "wall",
               surface: true,
             },
           ],
           camera: {
-            type: 'gs',
+            type: "gs",
             heading: 30,
             radius: 500,
           },
           // "clockLoop": true,      //是否循环播放
           clockRange: Cesium.ClockRange.CLAMPED, //CLAMPED 到达终止时间后停止
-        }
+        };
 
-        roamLine = new mars3d.graphic.RoamLine(flydata)
-        graphicLayer.addGraphic(roamLine)
+        roamLine = new mars3d.graphic.RoamLine(flydata);
+        graphicLayer.addGraphic(roamLine);
 
-        $('#btnStart').click(function () {
+        $("#btnStart").click(function () {
           //启动漫游
           if (roamLine.isStart) {
-            roamLine.proceed() //继续
+            roamLine.proceed(); //继续
           } else {
-            roamLine.start()
+            roamLine.start();
           }
-          $('#btnPause').show()
-        })
-        $('#btnPause').hide()
-        $('#btnPause').click(function () {
+          $("#btnPause").show();
+        });
+        $("#btnPause").hide();
+        $("#btnPause").click(function () {
           if (roamLine.isPause) {
-            roamLine.proceed() //继续
-            $(this).val('暂停')
+            roamLine.proceed(); //继续
+            $(this).val("暂停");
           } else {
-            roamLine.pause() //暂停
-            $(this).val('继续')
+            roamLine.pause(); //暂停
+            $(this).val("继续");
           }
-        })
+        });
 
-        $('#btnStop').click(function () {
-          roamLine.stop()
-          $('#btnPause').hide()
-        })
+        $("#btnStop").click(function () {
+          roamLine.stop();
+          $("#btnPause").hide();
+        });
 
-        initUI()
+        initUI();
 
         if (map.viewer.timeline) {
-          map.viewer.timeline.zoomTo(roamLine.startTime, roamLine.stopTime)
+          map.viewer.timeline.zoomTo(roamLine.startTime, roamLine.stopTime);
         }
 
         //显示基本信息，名称、总长、总时间
@@ -428,177 +428,177 @@
           name: roamLine.name,
           alllen: roamLine.alllen,
           alltime: roamLine.alltimes,
-        })
+        });
 
         roamLine.on(mars3d.EventType.change, (event) => {
           //面板显示相关信息
-          showRealTimeInfo(event)
-        })
+          showRealTimeInfo(event);
+        });
       }
 
       function initUI() {
-        $('#cameraType').attr('data-value', roamLine.options.camera.type)
-        $('#followedX').val(roamLine.options.camera.followedX)
-        $('#followedZ').val(roamLine.options.camera.followedZ)
-        $('#offsetZ').val(roamLine.options.camera.offsetZ || 0)
-        $('#offsetY').val(roamLine.options.camera.offsetY || 0)
-        $('#offsetX').val(roamLine.options.camera.offsetX || 0)
+        $("#cameraType").attr("data-value", roamLine.options.camera.type);
+        $("#followedX").val(roamLine.options.camera.followedX);
+        $("#followedZ").val(roamLine.options.camera.followedZ);
+        $("#offsetZ").val(roamLine.options.camera.offsetZ || 0);
+        $("#offsetY").val(roamLine.options.camera.offsetY || 0);
+        $("#offsetX").val(roamLine.options.camera.offsetX || 0);
 
         //改变视角模式
-        $('#cameraType').select() //绑定样式
-        $('#cameraType').change(function () {
-          $('#tr_followedX').hide()
-          $('#tr_followedZ').hide()
+        $("#cameraType").select(); //绑定样式
+        $("#cameraType").change(function () {
+          $("#tr_followedX").hide();
+          $("#tr_followedZ").hide();
 
-          var attrVal = $(this).attr('data-value')
+          var attrVal = $(this).attr("data-value");
           switch (attrVal) {
             default:
-              break
-            case 'gs': //
-              $('#tr_followedX').show()
-              break
-            case 'dy': //锁定第一视角
-              $('#tr_followedX').show()
-              $('#tr_followedZ').show()
+              break;
+            case "gs": //
+              $("#tr_followedX").show();
+              break;
+            case "dy": //锁定第一视角
+              $("#tr_followedX").show();
+              $("#tr_followedZ").show();
 
-              $('#followedX').val(200)
-              $('#followedZ').val(50)
-              $('#offsetZ').val(0)
-              $('#offsetY').val(0)
-              $('#offsetX').val(0)
+              $("#followedX").val(200);
+              $("#followedZ").val(50);
+              $("#offsetZ").val(0);
+              $("#offsetY").val(0);
+              $("#offsetX").val(0);
 
-              break
-            case 'sd': //锁定上帝视角
-              $('#tr_followedZ').show()
+              break;
+            case "sd": //锁定上帝视角
+              $("#tr_followedZ").show();
 
-              var followedZ = Number($('#followedZ').val())
+              var followedZ = Number($("#followedZ").val());
               if (followedZ < 500) {
-                $('#followedZ').val(500)
+                $("#followedZ").val(500);
               }
-              break
+              break;
           }
-          updateCameraSetting()
-        })
-        $('#cameraType').change()
+          updateCameraSetting();
+        });
+        $("#cameraType").change();
 
         //第一视角
-        $('#followedX').change(function () {
-          updateCameraSetting()
-        })
-        $('#followedZ').change(function () {
-          updateCameraSetting()
-        })
-        $('#offsetY').change(function () {
-          updateCameraSetting()
-        })
-        $('#offsetZ').change(function () {
-          updateCameraSetting()
-        })
-        $('#offsetX').change(function () {
-          updateCameraSetting()
-        })
+        $("#followedX").change(function () {
+          updateCameraSetting();
+        });
+        $("#followedZ").change(function () {
+          updateCameraSetting();
+        });
+        $("#offsetY").change(function () {
+          updateCameraSetting();
+        });
+        $("#offsetZ").change(function () {
+          updateCameraSetting();
+        });
+        $("#offsetX").change(function () {
+          updateCameraSetting();
+        });
 
         //模型方向
-        $('.jiaodu_2_angele').hide()
+        $(".jiaodu_2_angele").hide();
         $('input:radio[name="jiaodu"]').change(function () {
-          var isAuto = $(this).val() === '1'
+          var isAuto = $(this).val() === "1";
           if (isAuto) {
-            $('.jiaodu_2_angele').hide()
+            $(".jiaodu_2_angele").hide();
           } else {
-            $('.jiaodu_2_angele').show()
+            $(".jiaodu_2_angele").show();
           }
 
-          updateModel(isAuto)
-        })
+          updateModel(isAuto);
+        });
         //滑动条
-        $('#model_pitch').range({
+        $("#model_pitch").range({
           onChange: function (value, bfb) {
-            updateModel()
+            updateModel();
           },
-        })
-        $('#model_roll').range({
+        });
+        $("#model_roll").range({
           onChange: function (value, bfb) {
-            updateModel()
+            updateModel();
           },
-        })
+        });
       }
 
       function updateModel(isAuto) {
-        var pitch = Number($('#model_pitch').val())
-        var roll = Number($('#model_roll').val())
+        var pitch = Number($("#model_pitch").val());
+        var roll = Number($("#model_roll").val());
 
         roamLine.updateAngle(isAuto, {
           pitch: pitch,
           roll: roll,
-        })
+        });
       }
 
       //改变视角模式
       function updateCameraSetting() {
-        var cameraType = $('#cameraType').attr('data-value')
-        var followedX = Number($('#followedX').val())
-        var followedZ = Number($('#followedZ').val())
-        var offsetZ = Number($('#offsetZ').val())
-        var offsetY = Number($('#offsetY').val())
-        var offsetX = Number($('#offsetX').val())
+        var cameraType = $("#cameraType").attr("data-value");
+        var followedX = Number($("#followedX").val());
+        var followedZ = Number($("#followedZ").val());
+        var offsetZ = Number($("#offsetZ").val());
+        var offsetY = Number($("#offsetY").val());
+        var offsetX = Number($("#offsetX").val());
 
         roamLine.setCameraOptions({
           type: cameraType,
-          radius: cameraType == 'gs' ? followedX : 0,
+          radius: cameraType == "gs" ? followedX : 0,
           followedX: followedX,
           followedZ: followedZ,
           offsetZ: offsetZ,
           offsetY: offsetY,
           offsetX: offsetX,
-        })
+        });
       }
 
       //显示基本信息，名称、总长、总时间
-      var _alltime = 100
+      var _alltime = 100;
 
       function showAllInfo(params) {
-        _alltime = params.alltime
+        _alltime = params.alltime;
 
-        $('#td_alltimes').html(haoutil.str.formatTime(params.alltime))
-        $('#td_alllength').html(haoutil.str.formatLength(params.alllen))
+        $("#td_alltimes").html(haoutil.str.formatTime(params.alltime));
+        $("#td_alllength").html(haoutil.str.formatLength(params.alllen));
       }
 
       //显示实时坐标和时间
       function showRealTimeInfo(params) {
         if (params == null) {
-          return
+          return;
         }
 
-        var val = Math.ceil((params.time * 100) / _alltime)
+        var val = Math.ceil((params.time * 100) / _alltime);
         if (val < 1) {
-          val = 1
+          val = 1;
         }
         if (val > 100) {
-          val = 100
+          val = 100;
         }
 
-        $('.progress-bar')
-          .css('width', val + '%')
-          .attr('aria-valuenow', val)
-          .html(val + '%')
+        $(".progress-bar")
+          .css("width", val + "%")
+          .attr("aria-valuenow", val)
+          .html(val + "%");
 
-        $('#td_jd').html(params.lng)
-        $('#td_wd').html(params.lat)
-        $('#td_gd').html(haoutil.str.formatLength(params.alt))
+        $("#td_jd").html(params.lng);
+        $("#td_wd").html(params.lat);
+        $("#td_gd").html(haoutil.str.formatLength(params.alt));
 
-        $('#td_times').html(haoutil.str.formatTime(params.time))
-        $('#td_length').html(haoutil.str.formatLength(params.len))
+        $("#td_times").html(haoutil.str.formatTime(params.time));
+        $("#td_length").html(haoutil.str.formatLength(params.len));
 
         if (params.hbgd) {
-          $('#td_dmhb').html(haoutil.str.formatLength(params.hbgd))
+          $("#td_dmhb").html(haoutil.str.formatLength(params.hbgd));
         } else {
-          $('#td_dmhb').html('未知')
+          $("#td_dmhb").html("未知");
         }
 
         if (params.ldgd) {
-          $('#td_ldgd').html(haoutil.str.formatLength(params.ldgd))
+          $("#td_ldgd").html(haoutil.str.formatLength(params.ldgd));
         } else {
-          $('#td_ldgd').html('未知')
+          $("#td_ldgd").html("未知");
         }
       }
     </script>

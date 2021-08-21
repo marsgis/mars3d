@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>控件 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>浮动监控点 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -79,9 +79,9 @@
     <script src="./js/common.js"></script>
 
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -89,31 +89,31 @@
           scene: {
             center: { lat: 31.649617, lng: 117.081721, alt: 444, heading: 348, pitch: -25 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         // 加载石化工厂模型
         let tiles3dLayer = new mars3d.layer.TilesetLayer({
-          name: '石化工厂',
-          url: 'http://data.mars3d.cn/3dtiles/max-shihua/tileset.json',
+          name: "石化工厂",
+          url: "http://data.mars3d.cn/3dtiles/max-shihua/tileset.json",
           position: { lng: 117.077158, lat: 31.659116, alt: 24.6 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
-          popup: 'all',
-        })
-        map.addLayer(tiles3dLayer)
+          popup: "all",
+        });
+        map.addLayer(tiles3dLayer);
 
         //创建DIV数据图层
-        var graphicLayer = new mars3d.layer.DivLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.DivLayer();
+        map.addLayer(graphicLayer);
 
         //添加数据
-        addGraphic(graphicLayer, [117.077531, 31.6578, 49.5])
-        addGraphic(graphicLayer, [117.079078, 31.658993, 88.4])
-        addGraphic(graphicLayer, [117.080323, 31.657841, 57.8])
-        addGraphic(graphicLayer, [117.07918, 31.656492, 43.2])
+        addGraphic(graphicLayer, [117.077531, 31.6578, 49.5]);
+        addGraphic(graphicLayer, [117.079078, 31.658993, 88.4]);
+        addGraphic(graphicLayer, [117.080323, 31.657841, 57.8]);
+        addGraphic(graphicLayer, [117.07918, 31.656492, 43.2]);
       }
 
       function addGraphic(graphicLayer, position) {
@@ -129,8 +129,8 @@
             offsetX: -16,
             distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 100000),
           },
-        })
-        graphicLayer.addGraphic(graphicImg)
+        });
+        graphicLayer.addGraphic(graphicImg);
       }
     </script>
   </body>

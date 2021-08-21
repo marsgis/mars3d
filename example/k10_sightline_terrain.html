@@ -86,14 +86,14 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
-      var sightline
+      var map;
+      var sightline;
 
-      var positionSXT
-      var positionDM
-      var positionJD //与地面的交点
+      var positionSXT;
+      var positionDM;
+      var positionJD; //与地面的交点
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -102,196 +102,196 @@
             //此处参数会覆盖config.json中的对应配置
             center: { lat: 30.841574, lng: 116.18792, alt: 6828, heading: 215, pitch: -28 },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        sightline = new mars3d.thing.Sightline()
-        map.addThing(sightline)
+        sightline = new mars3d.thing.Sightline();
+        map.addThing(sightline);
 
         sightline.on(mars3d.EventType.end, function (e) {
-          positionJD = e.position
-        })
+          positionJD = e.position;
+        });
 
         //测试数据
-        positionSXT = Cesium.Cartesian3.fromDegrees(116.144409, 30.744228, 1045)
+        positionSXT = Cesium.Cartesian3.fromDegrees(116.144409, 30.744228, 1045);
 
         var graphicSXT = new mars3d.graphic.PointEntity({
           position: positionSXT,
           style: {
-            color: '#ffff00',
+            color: "#ffff00",
             pixelSize: 8,
             label: {
-              text: '摄像头',
+              text: "摄像头",
               font_size: 20,
-              color: '#ffffff',
+              color: "#ffffff",
               outline: true,
-              outlineColor: '#000000',
+              outlineColor: "#000000",
               pixelOffsetY: -20,
             },
           },
-        })
-        map.graphicLayer.addGraphic(graphicSXT)
-        updateModel()
+        });
+        map.graphicLayer.addGraphic(graphicSXT);
+        updateModel();
 
         //滑动条
-        $('#model_heading').range({
+        $("#model_heading").range({
           onChange: function (value, bfb) {
-            $('#model_heading_2').val(value)
-            updateModel()
+            $("#model_heading_2").val(value);
+            updateModel();
           },
-        })
-        $('#model_heading_2').change(function () {
-          var value = Number($(this).val())
-          $('#model_heading').val(value)
-          updateModel()
-        })
+        });
+        $("#model_heading_2").change(function () {
+          var value = Number($(this).val());
+          $("#model_heading").val(value);
+          updateModel();
+        });
 
-        $('#model_pitch').range({
+        $("#model_pitch").range({
           onChange: function (value, bfb) {
-            $('#model_pitch_2').val(value)
-            updateModel()
+            $("#model_pitch_2").val(value);
+            updateModel();
           },
-        })
-        $('#model_pitch_2').change(function () {
-          var value = Number($(this).val())
-          $('#model_pitch').val(value)
-          updateModel()
-        })
+        });
+        $("#model_pitch_2").change(function () {
+          var value = Number($(this).val());
+          $("#model_pitch").val(value);
+          updateModel();
+        });
 
-        $('#model_roll').range({
+        $("#model_roll").range({
           onChange: function (value, bfb) {
-            $('#model_roll_2').val(value)
-            updateModel()
+            $("#model_roll_2").val(value);
+            updateModel();
           },
-        })
-        $('#model_roll_2').change(function () {
-          var value = Number($(this).val())
-          $('#model_roll').val(value)
-          updateModel()
-        })
+        });
+        $("#model_roll_2").change(function () {
+          var value = Number($(this).val());
+          $("#model_roll").val(value);
+          updateModel();
+        });
 
-        $('#chkTestTerrain').change(function () {
-          var val = $(this).is(':checked')
-          map.scene.globe.depthTestAgainstTerrain = val
+        $("#chkTestTerrain").change(function () {
+          var val = $(this).is(":checked");
+          map.scene.globe.depthTestAgainstTerrain = val;
           if (val) {
-            haoutil.msg('深度监测打开后，您将无法看到地下或被地形遮挡的对象。')
+            haoutil.msg("深度监测打开后，您将无法看到地下或被地形遮挡的对象。");
           }
-        })
+        });
 
         //创建矢量数据图层
-        var graphicLayer = new mars3d.layer.GraphicLayer()
-        map.addLayer(graphicLayer)
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
         //地面点
         var graphic = new mars3d.graphic.PointEntity({
           position: new Cesium.CallbackProperty(function (time) {
-            return positionDM
+            return positionDM;
           }, false),
           style: {
-            color: '#0000ff',
+            color: "#0000ff",
             pixelSize: 7,
-            outlineColor: '#ffffff',
+            outlineColor: "#ffffff",
             outlineWidth: 2,
             label: {
-              text: '目标参考点',
+              text: "目标参考点",
               font_size: 18,
-              color: '#ffffff',
+              color: "#ffffff",
               pixelOffsetY: -10,
               distanceDisplayCondition: true,
               distanceDisplayCondition_far: 500000,
               distanceDisplayCondition_near: 0,
             },
           },
-        })
-        graphicLayer.addGraphic(graphic)
+        });
+        graphicLayer.addGraphic(graphic);
 
         var graphicJD = new mars3d.graphic.PointEntity({
           position: new Cesium.CallbackProperty(function (time) {
-            return positionJD
+            return positionJD;
           }, false),
           style: {
-            color: '#00ff00',
+            color: "#00ff00",
             pixelSize: 8,
-            outlineColor: '#ffffff',
+            outlineColor: "#ffffff",
             outlineWidth: 2,
           },
-        })
-        graphicJD.bindTooltip('与地形地面的交点')
-        graphicLayer.addGraphic(graphicJD)
+        });
+        graphicJD.bindTooltip("与地形地面的交点");
+        graphicLayer.addGraphic(graphicJD);
 
         //摄像头朝向的地面点连线
         let graphicLine = new mars3d.graphic.PolylineEntity({
           positions: new Cesium.CallbackProperty(function (time) {
             if (!positionSXT || !positionDM || positionJD != null) {
-              return []
+              return [];
             }
-            return [positionSXT, positionDM]
+            return [positionSXT, positionDM];
           }, false),
           style: {
             width: 2,
             arcType: Cesium.ArcType.NONE,
-            color: '#ffff00',
+            color: "#ffff00",
           },
-        })
-        graphicLayer.addGraphic(graphicLine)
+        });
+        graphicLayer.addGraphic(graphicLine);
 
-        $('#btnSePoint').click(function (e) {
-          map.graphicLayer.clear()
+        $("#btnSePoint").click(function (e) {
+          map.graphicLayer.clear();
           map.graphicLayer.startDraw({
-            type: 'point',
+            type: "point",
             style: {
               pixelSize: 8,
-              color: '#ffff00',
+              color: "#ffff00",
               label: {
-                text: '摄像头',
+                text: "摄像头",
                 font_size: 20,
-                color: '#ffffff',
+                color: "#ffffff",
                 outline: true,
-                outlineColor: '#000000',
+                outlineColor: "#000000",
                 pixelOffsetY: -20,
               },
             },
             success: function (graphic) {
-              positionSXT = graphic.positionShow
-              positionSXT = mars3d.PointUtil.addPositionsHeight(positionSXT, 5.0) //增加杆子高度
+              positionSXT = graphic.positionShow;
+              positionSXT = mars3d.PointUtil.addPositionsHeight(positionSXT, 5.0); //增加杆子高度
 
-              updateModel()
+              updateModel();
             },
-          })
-        })
+          });
+        });
 
-        $('#btnGetCenter').click(function () {
+        $("#btnGetCenter").click(function () {
           if (!positionSXT || !positionDM) {
-            return []
+            return [];
           }
 
-          sightline.clear()
-          sightline.addAsync(positionSXT, positionDM)
-        })
+          sightline.clear();
+          sightline.addAsync(positionSXT, positionDM);
+        });
       }
 
       function updateModel() {
         if (!positionSXT) {
-          return
+          return;
         }
 
-        var heading = Cesium.Math.toRadians(Number($('#model_heading').val()))
-        var pitch = Cesium.Math.toRadians(Number($('#model_pitch').val()))
-        var roll = Cesium.Math.toRadians(Number($('#model_roll').val()))
+        var heading = Cesium.Math.toRadians(Number($("#model_heading").val()));
+        var pitch = Cesium.Math.toRadians(Number($("#model_pitch").val()));
+        var roll = Cesium.Math.toRadians(Number($("#model_roll").val()));
 
-        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll)
-        positionDM = mars3d.PointUtil.getRayEarthPosition(positionSXT, hpr, true, map.scene.globe.ellipsoid)
+        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+        positionDM = mars3d.PointUtil.getRayEarthPosition(positionSXT, hpr, true, map.scene.globe.ellipsoid);
 
         if (!positionDM) {
           //与地面无交点时
-          positionDM = mars3d.PointUtil.getPositionByHprAndLen(positionSXT, hpr, 5000)
+          positionDM = mars3d.PointUtil.getPositionByHprAndLen(positionSXT, hpr, 5000);
         }
 
-        sightline.clear()
+        sightline.clear();
 
-        positionJD = null
+        positionJD = null;
       }
     </script>
   </body>

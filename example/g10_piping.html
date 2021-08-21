@@ -83,57 +83,57 @@
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
-      'use script' //开发环境建议开启严格模式
+      "use script"; //开发环境建议开启严格模式
 
-      var map
+      var map;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
             center: { lat: 31.839437, lng: 117.216104, alt: 554, heading: 359, pitch: -55 },
-            baseColor: 'rgba(0,0,0.0,0.5)',
+            baseColor: "rgba(0,0,0.0,0.5)",
             globe: {
               depthTestAgainstTerrain: true,
             },
           },
-        })
+        });
 
         //创建三维地球场景
-        map = new mars3d.Map('mars3dContainer', mapOptions)
+        map = new mars3d.Map("mars3dContainer", mapOptions);
 
         // 加个模型
         var tiles3dLayer = new mars3d.layer.TilesetLayer({
-          name: '地下管网',
-          url: '//data.mars3d.cn/3dtiles/max-piping/tileset.json',
+          name: "地下管网",
+          url: "//data.mars3d.cn/3dtiles/max-piping/tileset.json",
           position: { lng: 117.215457, lat: 31.843363, alt: -3.6 },
           rotation: { z: 336.7 },
           maximumScreenSpaceError: 2,
           maximumMemoryUsage: 1024,
-          showClickFeature: true,
-          popup: 'all',
+          highlight: { type: "click", color: "#FFFF00" },
+          popup: "all",
           center: { lat: 31.838081, lng: 117.216584, alt: 406, heading: 1, pitch: -34 },
-        })
-        map.addLayer(tiles3dLayer)
+        });
+        map.addLayer(tiles3dLayer);
 
         //地下模式
         var underground = new mars3d.thing.Underground({
-          alpha: Number($('#alpha').val()),
-          enabled: $('#chkUnderground').is(':checked'),
-        })
-        map.addThing(underground)
+          alpha: Number($("#alpha").val()),
+          enabled: $("#chkUnderground").is(":checked"),
+        });
+        map.addThing(underground);
 
-        $('#chkUnderground').change(function () {
-          var val = $(this).is(':checked')
+        $("#chkUnderground").change(function () {
+          var val = $(this).is(":checked");
 
-          underground.enabled = val
-        })
+          underground.enabled = val;
+        });
 
-        $('#alpha').range({
+        $("#alpha").range({
           onChange: function (value, bfb) {
-            underground.alpha = value
+            underground.alpha = value;
           },
-        })
+        });
 
         //挖地区域
         var terrainPlanClip = new mars3d.thing.TerrainPlanClip({
@@ -143,76 +143,76 @@
             [117.217764, 31.843312, 42.63],
             [117.214769, 31.843312, 42.63],
           ],
-          diffHeight: Number($('#txtHeight').val()), //高度
-          image: './img/textures/excavate_side_min.jpg', //边界墙材质
-          imageBottom: './img/textures/excavate_bottom_min.jpg', //底部区域材质
+          diffHeight: Number($("#txtHeight").val()), //高度
+          image: "./img/textures/excavate_side_min.jpg", //边界墙材质
+          imageBottom: "./img/textures/excavate_bottom_min.jpg", //底部区域材质
           splitNum: 50, //wall边界插值数
-        })
-        map.addThing(terrainPlanClip)
+        });
+        map.addThing(terrainPlanClip);
 
-        $('#chkTestTerrain').change(function () {
-          var val = $(this).is(':checked')
-          map.scene.globe.depthTestAgainstTerrain = val
-        })
+        $("#chkTestTerrain").change(function () {
+          var val = $(this).is(":checked");
+          map.scene.globe.depthTestAgainstTerrain = val;
+        });
 
-        $('#chkClippingPlanes').change(function () {
-          var val = $(this).is(':checked')
-          terrainPlanClip.enabled = val
-        })
-        $('#txtHeight').change(function () {
-          var num = Number($(this).val())
-          terrainPlanClip.height = num
-        })
+        $("#chkClippingPlanes").change(function () {
+          var val = $(this).is(":checked");
+          terrainPlanClip.enabled = val;
+        });
+        $("#txtHeight").change(function () {
+          var num = Number($(this).val());
+          terrainPlanClip.height = num;
+        });
 
-        $('#clearWJ').click(function () {
-          terrainPlanClip.clear() //清除挖地区域
-        })
+        $("#clearWJ").click(function () {
+          terrainPlanClip.clear(); //清除挖地区域
+        });
 
-        $('#btnDraw').click(function () {
-          terrainPlanClip.clear() //清除挖地区域
+        $("#btnDraw").click(function () {
+          terrainPlanClip.clear(); //清除挖地区域
 
           map.graphicLayer.startDraw({
-            type: 'polygon',
+            type: "polygon",
             style: {
-              color: '#007be6',
+              color: "#007be6",
               opacity: 0.5,
               clampToGround: true,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.positionsShow
-              map.graphicLayer.clear()
+              var positions = graphic.positionsShow;
+              map.graphicLayer.clear();
 
-              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
+              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))); //打印下边界
 
               //挖地区域
-              terrainPlanClip.positions = positions
+              terrainPlanClip.positions = positions;
             },
-          })
-        })
+          });
+        });
 
-        $('#btnDrawExtent').click(function () {
-          terrainPlanClip.clear() //清除挖地区域
+        $("#btnDrawExtent").click(function () {
+          terrainPlanClip.clear(); //清除挖地区域
 
           map.graphicLayer.startDraw({
-            type: 'rectangle',
+            type: "rectangle",
             style: {
-              color: '#007be6',
+              color: "#007be6",
               opacity: 0.8,
               outline: false,
             },
             success: function (graphic) {
               //绘制成功后回调
-              var positions = graphic.getOutlinePositions(false)
-              map.graphicLayer.clear()
+              var positions = graphic.getOutlinePositions(false);
+              map.graphicLayer.clear();
 
-              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))) //打印下边界
+              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))); //打印下边界
 
               //挖地区域
-              terrainPlanClip.positions = positions
+              terrainPlanClip.positions = positions;
             },
-          })
-        })
+          });
+        });
       }
 
       function centerAtDX1() {
@@ -223,7 +223,7 @@
           heading: 0,
           pitch: -59.3,
           roll: 0,
-        })
+        });
       }
 
       function centerAtDX2() {
@@ -234,7 +234,7 @@
           heading: 40.6,
           pitch: 15.7,
           roll: 0.1,
-        })
+        });
       }
     </script>
   </body>
