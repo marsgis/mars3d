@@ -26,7 +26,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.minicolors,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,admui,turf,mars3d"
+      include="jquery,jquery.minicolors,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,admui,turf,mars3d,localforage"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -134,9 +134,11 @@
 
         //历史记录模型地址
         var lasturl = haoutil.storage.get("g20_onlyModel");
-        if (lasturl) {
-          $("#txtModel").val(lasturl);
-        }
+        localforage
+          .getItem("g20_onlyModel")
+          .then(function (lasturl) {
+            $("#txtModel").val(lasturl);
+          });
         setTimeout(showModel, 1000);
       }
 
@@ -151,7 +153,7 @@
       function showModel() {
         removeLayer();
         var _url = $("#txtModel").val();
-        haoutil.storage.add("g20_onlyModel", _url);
+        localforage.setItem("g20_onlyModel", _url);
 
         tiles3dLayer = new mars3d.layer.TilesetLayer({
           url: _url,

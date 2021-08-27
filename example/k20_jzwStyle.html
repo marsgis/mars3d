@@ -90,7 +90,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 31.841018, lng: 117.252932, alt: 1346, heading: 38, pitch: -26 },
+            center: { lat: 31.868646, lng: 117.249678, alt: 1485, heading: 110, pitch: -40 },
           },
           layers: [
             {
@@ -104,9 +104,11 @@
                   color: "#FF4500",
                   width: 12,
                   opacity: 0.8,
+                  // clampToGround: true,
                 },
               },
               popup: "{name}",
+              zIndex: 20,
               show: true,
             },
             {
@@ -127,6 +129,7 @@
                 },
               },
               popup: "{name}",
+              zIndex: 10,
               show: true,
             },
           ],
@@ -232,8 +235,8 @@
         var fragmentShader = `
           // 注意shader中写浮点数是，一定要带小数点，否则会报错，比如0需要写成0.0，1要写成1.0
           float _baseHeight = 0.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
-          float _heightRange = 120.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
-          float _glowRange = 200.0; // 光环的移动范围(高度)
+          float _heightRange = 80.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
+          float _glowRange = 100.0; // 光环的移动范围(高度)
 
           // 建筑基础色
           float mars_height = v_stcVertex.z - _baseHeight;
@@ -261,8 +264,6 @@
             { field: "name", name: "名称" },
             { field: "height", name: "楼高", unit: "米" },
           ],
-          center: { lat: 31.841018, lng: 117.252932, alt: 1346, heading: 38, pitch: -26 },
-          flyTo: true,
         });
         map.addLayer(tiles3dLayer);
       }
@@ -284,8 +285,6 @@
             },
           },
           popup: "all",
-          center: { lat: 31.841018, lng: 117.252932, alt: 1346, heading: 38, pitch: -26 },
-          flyTo: true,
         });
         map.addLayer(tiles3dLayer);
 
@@ -298,8 +297,8 @@
 
                 // 注意shader中写浮点数是，一定要带小数点，否则会报错，比如0需要写成0.0，1要写成1.0
                 float _baseHeight = 0.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
-                float _heightRange = 120.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
-                float _glowRange = 200.0; // 光环的移动范围(高度)
+                float _heightRange = 80.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
+                float _glowRange = 100.0; // 光环的移动范围(高度)
 
                 // 建筑基础色
                 float mars_height = position.z - _baseHeight;

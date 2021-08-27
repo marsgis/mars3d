@@ -26,7 +26,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,web-icons,bootstrap,bootstrap-select,bootstrap-checkbox,toastr,jquery.range,jstree,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,web-icons,bootstrap,bootstrap-select,bootstrap-checkbox,toastr,jquery.range,jstree,layer,haoutil,turf,mars3d,localforage"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -310,31 +310,32 @@
           $("#txtModel").val(url);
         } else {
           //加载历史数据
-          var lastData = haoutil.storage.get("g20_3dtiles_edit_modelMatrix");
-          if (lastData) {
-            var item = JSON.parse(lastData);
-            // console.log('加载显示历史数据', item)
+          localforage
+            .getItem("g20_3dtiles_edit_modelMatrix")
+            .then(function (item) {
+              $("#txtModel").val(item.url);
+              $("#txt_luminanceAtZenith").val(item.luminanceAtZenith || 0.2);
+              $("#txt_maximumScreenSpaceError").val(item.maximumScreenSpaceError || 16);
+              $("#txt_scale").val(item.scale || 1);
+              $("#txt_axis").selectpicker("val", item.axis || "");
 
-            $("#txtModel").val(item.url);
-            $("#txt_luminanceAtZenith").val(item.luminanceAtZenith || 0.2);
-            $("#txt_maximumScreenSpaceError").val(item.maximumScreenSpaceError || 16);
-            $("#txt_scale").val(item.scale || 1);
-            $("#txt_axis").selectpicker("val", item.axis || "");
+              item.position = item.position || {};
+              $("#txt_x").val(item.position.lng || 0);
+              $("#txt_y").val(item.position.lat || 0);
+              $("#txt_z").val(item.position.alt || 0);
 
-            item.position = item.position || {};
-            $("#txt_x").val(item.position.lng || 0);
-            $("#txt_y").val(item.position.lat || 0);
-            $("#txt_z").val(item.position.alt || 0);
+              item.rotation = item.rotation || {};
+              $("#txt_rotation_x").val(item.rotation.x || 0);
+              $("#txt_rotation_y").val(item.rotation.y || 0);
+              $("#txt_rotation_z").val(item.rotation.z || 0);
 
-            item.rotation = item.rotation || {};
-            $("#txt_rotation_x").val(item.rotation.x || 0);
-            $("#txt_rotation_y").val(item.rotation.y || 0);
-            $("#txt_rotation_z").val(item.rotation.z || 0);
-
-            if (item.center) {
-              map.setCameraView(item.center);
-            }
-          }
+              if (item.center) {
+                map.setCameraView(item.center);
+              }
+            })
+            .catch(function (err) {
+              console.log(err);
+            });
         }
 
         setTimeout(showModel, 1000);
@@ -481,7 +482,6 @@
           params.rotation = params.rotation || {};
           params.rotation.y = rotation_y;
         }
-
         var rotation_z = mars3d.Util.formatNum($("#txt_rotation_z").val(), 1);
         if (rotation_z) {
           params.rotation = params.rotation || {};
@@ -506,10 +506,8 @@
         if (isProxy) {
           params.proxy = "//server.mars3d.cn/proxy/";
         }
-
         //记录到历史
-        haoutil.storage.add("g20_3dtiles_edit_modelMatrix", JSON.stringify(params));
-
+        localforage.setItem("g20_3dtiles_edit_modelMatrix", params);
         return params;
       }
 

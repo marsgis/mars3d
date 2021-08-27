@@ -39,25 +39,25 @@
 
     <!-- 面板 -->
     <div class="infoview">
-      提示：默认语言为中文简体，可以切换到 English 等。
+      Tip: The default language is Chinese中文简体, you can switch to English, etc.
       <div>
-        标绘：
-        <input type="button" class="btn btn-primary" value="点" onclick=" startDraw('point')" />
-        <input type="button" class="btn btn-primary" value="线" onclick=" startDraw('polyline')" />
-        <input type="button" class="btn btn-primary" value="面" onclick=" startDraw('polygon')" />
-        <input type="button" class="btn btn-primary" value="圆" onclick="startDraw('circle')" />
-        <input type="button" class="btn btn-primary" value="矩形" onclick="startDraw('rectangle')" />
-        <input type="button" class="btn btn-primary" value="墙" onclick=" startDraw('wall')" />
-        <input type="button" class="btn btn-primary" value="圆锥" onclick="startDraw('cylinder')" />
+        Plot:
+        <input type="button" class="btn btn-primary" value="point" onclick=" startDraw('point')" />
+        <input type="button" class="btn btn-primary" value="polyline" onclick=" startDraw('polyline')" />
+        <input type="button" class="btn btn-primary" value="polygon" onclick=" startDraw('polygon')" />
+        <input type="button" class="btn btn-primary" value="circle" onclick="startDraw('circle')" />
+        <input type="button" class="btn btn-primary" value="rectangle" onclick="startDraw('rectangle')" />
+        <input type="button" class="btn btn-primary" value="wall" onclick=" startDraw('wall')" />
+        <input type="button" class="btn btn-primary" value="cylinder" onclick="startDraw('cylinder')" />
       </div>
 
       <div>
-        量算：
-        <input type="button" class="btn btn-primary" value="空间距离" onclick=" measure.distance()" />
-        <input type="button" class="btn btn-primary" value="水平面积" onclick=" measure.area()" />
-        <input type="button" class="btn btn-primary" value="三角高度" onclick="measure.heightTriangle()" />
-        <input type="button" class="btn btn-primary" value="坐标测量" onclick="measure.point()" />
-        <input type="button" class="btn btn-primary" value="方位角" onclick="measure.angle()" />
+        Measurement:
+        <input type="button" class="btn btn-primary" value="distance" onclick=" measure.distance()" />
+        <input type="button" class="btn btn-primary" value="area" onclick=" measure.area()" />
+        <input type="button" class="btn btn-primary" value="height" onclick="measure.heightTriangle()" />
+        <input type="button" class="btn btn-primary" value="coordinate" onclick="measure.point()" />
+        <input type="button" class="btn btn-primary" value="angle" onclick="measure.angle()" />
       </div>
     </div>
 
@@ -115,15 +115,25 @@
 
         drawLayer.bindContextMenu([
           {
-            text: "删除对象",
+            text: map.getLangText("_删除"),
             iconCls: "fa fa-trash-o",
+            show: (event) => {
+              let graphic = event.graphic;
+              if (!graphic || graphic.isDestroy) {
+                return false;
+              } else {
+                return true;
+              }
+            },
             callback: function (e) {
               let graphic = e.graphic;
               if (!graphic) {
-                return false;
+                return;
               }
-              if (graphic) {
-                drawLayer.removeGraphic(graphic);
+              let parent = graphic._parent; //右击是编辑点时
+              drawLayer.removeGraphic(graphic);
+              if (parent) {
+                drawLayer.removeGraphic(parent);
               }
             },
           },

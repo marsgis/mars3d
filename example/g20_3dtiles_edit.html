@@ -26,7 +26,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,web-icons,bootstrap,bootstrap-select,bootstrap-checkbox,toastr,jquery.range,jstree,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,web-icons,bootstrap,bootstrap-select,bootstrap-checkbox,toastr,jquery.range,jstree,layer,haoutil,turf,mars3d,localforage"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -314,11 +314,9 @@
           $("#txtModel").val(url);
         } else {
           //加载历史数据
-          var lastData = haoutil.storage.get("3dtiles_edit");
-          if (lastData) {
-            var item = JSON.parse(lastData);
-            console.log("加载显示历史数据", item);
 
+          localforage.getItem("g20_3dtiles_edit").then(function (item) {
+            console.log("加载显示历史数据", item);
             $("#txtModel").val(item.url);
             $("#txt_luminanceAtZenith").val(item.luminanceAtZenith || 0.2);
             $("#txt_maximumScreenSpaceError").val(item.maximumScreenSpaceError || 16);
@@ -338,7 +336,7 @@
             if (item.center) {
               map.setCameraView(item.center);
             }
-          }
+          });
         }
 
         setTimeout(showModel, 1000);
@@ -519,7 +517,7 @@
         }
 
         //记录到历史
-        haoutil.storage.add("3dtiles_edit", JSON.stringify(params));
+        localforage.setItem("g20_3dtiles_edit", params);
 
         return params;
       }

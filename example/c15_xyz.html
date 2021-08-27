@@ -42,6 +42,25 @@
     <script type="text/javascript">
       "use script"; //开发环境建议开启严格模式
 
+      //xyz图层url所支持的字符串模版:
+      // {z}: 切片方案中切片的级别。零级是四叉树金字塔的根。
+      // {x}:切片方案中的图块X坐标，其中0是最西端的图块。
+      // {y}: 切片方案中的图块Y坐标，其中0是最北的图块。
+      // {s}:可用的子域之一，用于克服浏览器对每个主机的并发请求数的限制。
+      // {reverseX}: 切片方案中的图块X坐标，其中0是最东的图块。
+      // {reverseY}:切片方案中的图块Y坐标，其中0是最南端的图块。
+      // {reverseZ}:在切片方案中切片的级别，其中级别0是四叉树金字塔的最大级别。为了使用reverseZ，必须定义maximumLevel。
+      // {westDegrees}: 瓦片图块在测地角度上的西边缘。
+      // {southDegrees}:瓦片图块在测地角度上的南边缘。
+      // {eastDegrees}:以大地测量度表示的图块的东边缘。
+      // {northDegrees}: 瓦片图块在测地角度上的北边缘。
+      // {westProjected}:图块方案的墨卡托投影坐标中图块的西边缘。
+      // {southProjected}: 图块方案的墨卡托投影坐标中图块的南边缘。
+      // {eastProjected}: :图块方案的墨卡托投影坐标中图块的东边缘。
+      // {northProjected}:图块方案的墨卡托投影坐标中图块的北边缘。
+      // {width}:每个图块的宽度（以像素为单位）。
+      // {height}: 每个图块的高度（以像素为单位）。
+
       $(document).ready(function () {
         if (!mars3d.Util.webglreport()) {
           mars3d.Util.webglerror();

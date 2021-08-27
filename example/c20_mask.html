@@ -41,14 +41,6 @@
     <script type="text/javascript">
       "use script"; //开发环境建议开启严格模式
 
-      $(document).ready(function () {
-        if (!mars3d.Util.webglreport()) {
-          mars3d.Util.webglerror();
-          return;
-        }
-        initMap();
-      });
-
       var map;
       var geoJsonLayer;
       function initMap(options) {

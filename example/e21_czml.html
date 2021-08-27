@@ -125,14 +125,18 @@
         });
       }
 
+      let tiles3dLayer;
+
       //示例：
       function showQicheDemo() {
         removeLayer();
 
+        map.setCameraView({ lat: 40.893923, lng: 121.917192, alt: 691, heading: 64, pitch: -46 });
+
         czmlLayer = new mars3d.layer.CzmlLayer({
           name: "汽车",
           url: "//data.mars3d.cn/file/czml/car.czml",
-          flyTo: true,
+          // flyTo: true,
         });
         map.addLayer(czmlLayer);
 

@@ -334,11 +334,18 @@
           preloadWhenHidden: true,
           //以上为优化的参数
 
-          popup: "all",
+          // popup: "all",
           center: { lat: 31.653047, lng: 117.084439, alt: 354, heading: 319, pitch: -23 },
           flyTo: true,
         });
         map.addLayer(tiles3dLayer);
+
+        //可以绑定Popup弹窗，回调方法中任意处理
+        tiles3dLayer.bindPopup(function (event) {
+          var attr = event.graphic.attr;
+          attr["视频"] = `<video src='http://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style="width: 300px;" ></video>`;
+          return mars3d.Util.getTemplateHtml({ title: "石化工厂", template: "all", attr: attr });
+        });
 
         //单击事件
         tiles3dLayer.on(mars3d.EventType.click, function (event) {

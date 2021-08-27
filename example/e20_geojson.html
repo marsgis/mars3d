@@ -45,9 +45,12 @@
       <input type="button" class="btn btn-primary" value="合肥区域面" onclick="showAnhuiDemo()" />
       <input type="button" class="btn btn-primary" value="合肥边界墙" onclick="showAnhui2Demo()" />
       <input type="button" class="btn btn-primary" value="规划面" onclick="showGuihuaDemo()" />
-      <input type="button" class="btn btn-primary" value="立体建筑物" onclick="showJianzhuwuDemo()" />
-      <input type="button" class="btn btn-primary" value="单体化面" onclick="showDantihuaDemo()" />
       <input type="button" class="btn btn-primary" value="世界各国" onclick="showWorldDemo()" />
+
+      <br />
+      <input type="button" class="btn btn-primary" value="立体建筑物" onclick="showJianzhuwuDemo()" />
+      <input type="button" class="btn btn-primary" value="分层分户楼栋" onclick="showJianzhuwuFcDemo()" />
+      <input type="button" class="btn btn-primary" value="单体化面" onclick="showDantihuaDemo()" />
     </div>
 
     <div class="infoview" style="overflow: auto; right: 5px; left: auto; top: 50px; max-height: 90%">
@@ -322,6 +325,47 @@
           },
           center: { lat: 31.928659, lng: 120.420654, alt: 838, heading: 344, pitch: -42 },
           popup: "all",
+          flyTo: true,
+        });
+        map.addLayer(geoJsonLayer);
+
+        //绑定事件
+        geoJsonLayer.on(mars3d.EventType.load, function (event) {
+          console.log("数据加载完成", event);
+          initTree(event.list);
+        });
+      }
+
+      //示例： 分层分户立体建筑物
+      function showJianzhuwuFcDemo() {
+        removeLayer();
+
+        geoJsonLayer = new mars3d.layer.GeoJsonLayer({
+          name: "分层分户建筑物面",
+          url: "//data.mars3d.cn/file/geojson/huxing.json",
+          symbol: {
+            styleOptions: {
+              color: "#ffffff",
+              opacity: 0.2,
+              outline: true,
+              outlineColor: "#63AEFF",
+              outlineOpacity: 0.3,
+
+              highlight: {
+                type: "click",
+                color: "#00ffff",
+                opacity: 0.6,
+              },
+            },
+            callback: function (attr, styleOpt) {
+              var flrH = attr.floorh || 0; //底面高度
+              var lyrH = attr.layerh || 0; //楼层高度
+
+              return { height: flrH, diffHeight: lyrH };
+            },
+          },
+          // popup: "all",
+          center: { lat: 31.821524, lng: 117.179329, alt: 255, heading: 25, pitch: -48 },
           flyTo: true,
         });
         map.addLayer(geoJsonLayer);

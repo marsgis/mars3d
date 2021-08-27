@@ -164,8 +164,9 @@ function initLayerManager(graphicLayer) {
 
 function bindLayerPopup(graphicLayer) {
   graphicLayer.bindPopup(function (event) {
-    let item = event.graphic?.attr;
-    return "我是layer上绑定的Popup";
+    let attr = event.graphic?.attr || {};
+    attr.test1 = "测试属性";
+    return mars3d.Util.getTemplateHtml({ title: "layer上绑定的Popup", template: "all", attr: attr });
   });
 }
 
@@ -173,7 +174,7 @@ function bindLayerContextMenu(graphicLayer) {
   graphicLayer.bindContextMenu([
     {
       text: "开始编辑对象",
-      iconCls: "fa fa-trash-o",
+      iconCls: "fa fa-edit",
       show: function (e) {
         let graphic = e.graphic;
         if (!graphic || !graphic.startEditing) {
@@ -193,7 +194,7 @@ function bindLayerContextMenu(graphicLayer) {
     },
     {
       text: "停止编辑对象",
-      iconCls: "fa fa-trash-o",
+      iconCls: "fa fa-edit",
       show: function (e) {
         let graphic = e.graphic;
         if (!graphic) {
@@ -214,14 +215,20 @@ function bindLayerContextMenu(graphicLayer) {
     {
       text: "删除对象",
       iconCls: "fa fa-trash-o",
+      show: (event) => {
+        let graphic = event.graphic;
+        if (!graphic || graphic.isDestroy) {
+          return false;
+        } else {
+          return true;
+        }
+      },
       callback: function (e) {
         let graphic = e.graphic;
         if (!graphic) {
-          return false;
+          return;
         }
-        if (graphic) {
-          graphicLayer.removeGraphic(graphic);
-        }
+        graphicLayer.removeGraphic(graphic);
       },
     },
     {
@@ -319,7 +326,21 @@ function initGraphicManager(graphic) {
   // graphic.bindTooltip('我是graphic上绑定的Tooltip') //.openTooltip()
 
   //绑定Popup
-  graphic.bindPopup("我是graphic上绑定的Popup").openPopup();
+
+  var inthtml = `<table style="width: auto;">
+            <tr>
+              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">我是graphic上绑定的Popup </th>
+            </tr>
+            <tr>
+              <td>属性：</td>
+              <td>这只是测试信息，可以任意html</td>
+            </tr>
+            <tr>
+              <td>视频：</td>
+              <td><video src='http://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style="width: 300px;" ></video></td>
+            </tr>
+          </table>`;
+  graphic.bindPopup(inthtml).openPopup();
 
   //绑定右键菜单
   graphic.bindContextMenu([

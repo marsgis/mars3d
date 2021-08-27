@@ -87,24 +87,31 @@
           if (!item) {
             return false;
           }
-          var inthtml =
-            '<table style="width: auto;"><tr>' +
-            '<th scope="col" colspan="4"  style="text-align:center;font-size:15px;">' +
-            item.text +
-            "</th></tr><tr>" +
-            "<td >省：</td><td >" +
-            item.province +
-            "</td></tr><tr>" +
-            "<td >市：</td><td >" +
-            item.city +
-            "</td></tr><tr>" +
-            "<td >县/区：</td><td >" +
-            item.district +
-            "</td></tr><tr>" +
-            "<td >地址：</td><td >" +
-            item.address +
-            "</td></tr><tr>" +
-            '<td colspan="4" style="text-align:right;"></td></tr></table>';
+          var inthtml = `<table style="width: auto;">
+                  <tr>
+                    <th scope="col" colspan="2" style="text-align:center;font-size:15px;">${item.text} </th>
+                  </tr>
+                  <tr>
+                    <td>省：</td>
+                    <td>${item.province}</td>
+                  </tr>
+                  <tr>
+                    <td>市：</td>
+                    <td>${item.city}</td>
+                  </tr>
+                  <tr>
+                    <td>县/区：</td>
+                    <td>${item.district}</td>
+                  </tr>
+                  <tr>
+                    <td>地址：</td>
+                    <td>${item.address}</td>
+                  </tr>
+                  <tr>
+                    <td>视频：</td>
+                    <td><video src='http://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style="width: 300px;" ></video></td>
+                  </tr>
+                </table>`;
           return inthtml;
         });
 
@@ -115,14 +122,11 @@
           if (map.camera.positionCartographic.height > 90000) {
             var graphic = event.graphic;
             var position = graphic.position;
-
-            graphicLayer.closePopup();
             map.flyToPoint(position, {
               radius: 5000, //距离目标点的距离
               duration: 4,
               complete: function (e) {
                 //飞行完成回调方法
-                graphicLayer.openPopup(graphic);
               },
             });
           }

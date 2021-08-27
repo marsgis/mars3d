@@ -54,10 +54,6 @@
         <input id="chkContextMenu" class="styled" type="checkbox" checked />
         <label for="chkContextMenu"> 右键菜单绑定 </label>
       </div>
-
-      &nbsp;&nbsp; &nbsp;&nbsp;
-
-      <a href="editor.html#f10_entity_dynamic_3dtiles" target="_blank" class="btn btn-default">动态贴模型示例</a>
     </div>
 
     <!-- 切换视角到模型或地形（山区）的快捷按钮 -->
@@ -98,7 +94,7 @@
 
         //加一些演示数据
         for (let i = 0; i < 20; i++) {
-          let graphic = new mars3d.graphic.ModelEntity({
+          let graphic = new mars3d.graphic.ModelPrimitive({
             attr: { index: i },
             style: {
               url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
@@ -128,13 +124,10 @@
             },
           });
           graphicLayer.addGraphic(graphic);
-
-          // graphic.on(mars3d.EventType.stop, function (event) {
-          //   console.log("已停止运行", event.target?.attr);
-          // });
         }
+
         for (let i = 0; i < 20; i++) {
-          let graphic = new mars3d.graphic.BillboardEntity({
+          let graphic = new mars3d.graphic.BillboardPrimitive({
             style: {
               image: "img/marker/mark3.png",
               scale: 0.6,
@@ -145,16 +138,14 @@
           });
           graphicLayer.addGraphic(graphic);
         }
-        for (let i = 0; i < 3; i++) {
-          let graphic = new mars3d.graphic.DivUpLabel({
+
+        for (let i = 0; i < 10; i++) {
+          let graphic = new mars3d.graphic.PointPrimitive({
             style: {
-              text: "火星科技",
-              color: "#fff",
-              font_size: 13,
-              font_family: "微软雅黑",
-              lineHeight: 20,
-              circleSize: 5,
-              distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 100000),
+              color: "#00ffff",
+              pixelSize: 6,
+              outlineColor: "#ffffff",
+              outlineWidth: 2,
             },
           });
           graphicLayer.addGraphic(graphic);

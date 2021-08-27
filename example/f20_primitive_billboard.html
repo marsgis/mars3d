@@ -189,6 +189,7 @@
             image: "img/marker/symbol1.png",
             scale: 1,
             pixelOffset: new Cesium.Cartesian2(0, -6), //偏移量
+            distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 500000),
           },
         });
         graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法

@@ -11,7 +11,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,web-icons,bootstrap,bootstrap-checkbox,layer,toastr,haoutil,turf,mars3d,mars3d-widget"
+      include="jquery,font-awesome,web-icons,bootstrap,bootstrap-checkbox,layer,toastr,haoutil,turf,mars3d,mars3d-widget,localforage"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -99,11 +99,10 @@
           $("#txtModel").val(url);
           console.log("a");
         } else {
-          var lastData = haoutil.storage.get("gltf_edit");
-          if (lastData) {
             //显示历史数据
-            $("#txtModel").val(lastData);
-          }
+          localforage.getItem("g05_draw_gltf").then(function (value) {
+            $("#txtModel").val(value);
+          });
         }
 
         var globe = map.scene.globe;
@@ -202,7 +201,7 @@
 
       function drawModel() {
         var url = $("#txtModel").val();
-        haoutil.storage.add("gltf_edit", url);
+        localforage.setItem("g05_draw_gltf", url);
 
         var isProxy = $("#chkProxy").is(":checked");
         if (isProxy) {

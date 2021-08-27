@@ -82,6 +82,8 @@
         //创建三维地球场景
         map = new mars3d.Map("mars3dContainer", mapOptions);
 
+        map.basemap = 2017; //蓝色底图
+
         //固定光照，避免gltf模型随时间存在亮度不一致。
         map.fixedLight = true;
 
@@ -224,6 +226,33 @@
           },
         });
         graphicLayer.addGraphic(primitive); //primitive.addTo(graphicLayer)  //另外一种写法
+
+        //手动按需启动动画
+        primitive.on(mars3d.EventType.load, function (event) {
+          let model = event.model;
+
+          //参考API: http://mars3d.cn/api/cesium/ModelAnimationCollection.html
+          model.activeAnimations.addAll({
+            multiplier: 0.5, // Play at half-speed
+            loop: Cesium.ModelAnimationLoop.REPEAT, // Loop the animations
+          });
+
+          // var animation = model.activeAnimations.add({
+          //   index: 0, //第一个叶子
+          //   multiplier: 0.5, // Play at double speed
+          //   loop: Cesium.ModelAnimationLoop.REPEAT, // Loop the animation
+          // });
+
+          // animation.start.addEventListener(function (model, animation) {
+          //   console.log("Animation started: " + animation.name);
+          // });
+          // animation.update.addEventListener(function (model, animation, time) {
+          //   console.log("Animation updated: " + animation.name + ". glTF animation time: " + time);
+          // });
+          // animation.stop.addEventListener(function (model, animation) {
+          //   console.log("Animation stopped: " + animation.name);
+          // });
+        });
       }
 
       function addGraphic_a3(graphicLayer) {

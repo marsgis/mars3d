@@ -705,7 +705,7 @@
             },
             {
               "name": "点对象动态位置",
-              "version": "2.1",
+              "version": "3.0",
               "thumbnail": "f10_entity_dynamic.gif",
               "fileName": "f10_entity_dynamic"
             },
@@ -846,6 +846,12 @@
               "version": "3.0",
               "thumbnail": "f20_primitive_modelCombine.jpg",
               "fileName": "f20_primitive_modelCombine"
+            },
+            {
+              "name": "点对象动态位置",
+              "version": "3.1",
+              "thumbnail": "f20_primitive_dynamic.gif",
+              "fileName": "f20_primitive_dynamic"
             },
             {
               "name": "Polyline 线",

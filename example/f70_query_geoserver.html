@@ -92,7 +92,6 @@
         queryMapserver = new mars3d.query.QueryGeoServer({
           url: "//server.mars3d.cn/geoserver/mars/wfs",
           layer: "mars:hfjy",
-          maxFeatures: 200,
         });
 
         //用于显示查询结果（geojson）的图层
@@ -265,6 +264,7 @@
           column: "项目名称",
           text: queryVal,
           graphic: drawGraphic,
+          // maxFeatures: 200,
           success: (result) => {
             if (result.count == 0) {
               haoutil.msg("未查询到相关记录！");

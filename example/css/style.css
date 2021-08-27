@@ -474,3 +474,16 @@ html {
   -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.35);
   background-color: rgba(0, 0, 0, 0.5);
 }
+
+
+/* 测试专用*/
+/* #mars3dContainer {
+  position:absolute;
+  left: 300px;
+  top:100px;
+  bottom: 10px;
+  right: 10px;
+  height: auto;
+  width:  auto;
+}
+*/

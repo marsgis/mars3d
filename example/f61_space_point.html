@@ -93,20 +93,9 @@
           </td>
         </tr>
         <tr title="雷达截面">
-          <td>大小尺寸</td>
+          <td>雷达截面</td>
           <td>
-            <div class="checkbox checkbox-primary checkbox-inline">
-              <input id="chkSizeSmall" class="styled" type="checkbox" checked />
-              <label for="chkSizeSmall"> 小型 </label>
-            </div>
-            <div class="checkbox checkbox-primary checkbox-inline">
-              <input id="chkSizeMedium" class="styled" type="checkbox" checked />
-              <label for="chkSizeMedium"> 中型 </label>
-            </div>
-            <div class="checkbox checkbox-primary checkbox-inline">
-              <input id="chkSizeLarge" class="styled" type="checkbox" checked />
-              <label for="chkSizeLarge"> 大型 </label>
-            </div>
+            <input id="slider-rcs" type="text" />
           </td>
         </tr>
         <tr>
@@ -173,7 +162,7 @@
           <td id="td_name"></td>
         </tr>
         <tr title="北美空防司令部目录号">
-          <td class="nametd">北美空防目录号</td>
+          <td class="nametd">目录号</td>
           <td id="td_norad"></td>
         </tr>
         <tr title="空间研委会编号">
@@ -181,38 +170,62 @@
           <td id="td_cospar"></td>
         </tr>
         <tr>
-          <td class="nametd">国家</td>
+          <td class="nametd">对象类型</td>
+          <td id="td_type"></td>
+        </tr>
+        <tr>
+          <td class="nametd">操作状态</td>
+          <td id="td_status"></td>
+        </tr>
+        <tr>
+          <td class="nametd">所有者/国家</td>
           <td id="td_country"></td>
         </tr>
         <tr>
-          <td class="nametd">周期</td>
+          <td class="nametd">发射日期</td>
+          <td id="td_launchDate"></td>
+        </tr>
+        <tr>
+          <td class="nametd">发射地点</td>
+          <td id="td_launchSite"></td>
+        </tr>
+        <tr id="viewDecay">
+          <td class="nametd">衰减日期</td>
+          <td id="td_decayDate"></td>
+        </tr>
+        <tr>
+          <td class="nametd">轨道周期[分钟]</td>
           <td id="td_period"></td>
         </tr>
         <tr>
-          <td class="nametd">倾角</td>
+          <td class="nametd">倾角[度]</td>
           <td id="td_inclination"></td>
         </tr>
         <tr>
-          <td class="nametd">远地点高度</td>
+          <td class="nametd">远地点高度[公里]</td>
           <td id="td_apogee"></td>
         </tr>
         <tr>
-          <td class="nametd">近地点高度</td>
+          <td class="nametd">近地点高度[公里]</td>
           <td id="td_perigee"></td>
         </tr>
         <tr>
-          <td class="nametd">尺寸</td>
-          <td id="td_size"></td>
+          <td class="nametd">雷达截面</td>
+          <td id="td_rcs"></td>
         </tr>
         <tr>
-          <td class="nametd">发射</td>
-          <td id="td_launch"></td>
+          <td class="nametd">轨道中心</td>
+          <td id="td_orbitCenter"></td>
         </tr>
+        <tr>
+          <td class="nametd">轨道类型</td>
+          <td id="td_orbitType"></td>
+        </tr>
+
         <tr>
           <td class="nametd">更多资料</td>
           <td>
-            <a id="link_n2yo" href="" class="rc-vertical" target="_blank">N2YO</a>
-            <a id="link_tle" href="" class="rc-vertical" target="_blank">TLE</a>
+            <a id="link_n2yo" href="" class="rc-vertical" target="_blank">N2YO...</a>
           </td>
         </tr>
       </table>
@@ -234,7 +247,7 @@
             cameraController: {
               zoomFactor: 3.0,
               minimumZoomDistance: 1,
-              maximumZoomDistance: 300000000,
+              maximumZoomDistance: 500000000,
               constrainedAxis: false, //解除在南北极区域鼠标操作限制
             },
             clock: {
@@ -246,15 +259,27 @@
             timeline: true, //是否显示时间线控件
           },
         });
+        delete mapOptions.terrain;
 
         //创建三维地球场景
         map = new mars3d.Map("mars3dContainer", mapOptions);
 
+        //修改天空盒
+        map.scene.skyBox = new Cesium.SkyBox({
+          sources: {
+            negativeX: "img/skybox/5/tycho2t3_80_mx.jpg",
+            negativeY: "img/skybox/5/tycho2t3_80_my.jpg",
+            negativeZ: "img/skybox/5/tycho2t3_80_mz.jpg",
+            positiveX: "img/skybox/5/tycho2t3_80_px.jpg",
+            positiveY: "img/skybox/5/tycho2t3_80_py.jpg",
+            positiveZ: "img/skybox/5/tycho2t3_80_pz.jpg",
+          },
+        });
+
         initUI();
 
         queryTleApiData()
-          .then(function (res) {
-            let arr = res.list;
+          .then(function (arr) {
             initData(arr);
           })
           .catch(function () {
@@ -270,7 +295,7 @@
             type: "get",
             dataType: "json",
             success: function (result) {
-              resolve(result);
+              resolve(result.list);
             },
             error: function (data) {
               reject(data);
@@ -302,49 +327,51 @@
           let item = arr[i];
 
           let style = {
-            pixelSize: 3,
-            color: "rgba(0,255,0,0.4)",
+            pixelSize: 5,
+            color: "rgba(0,255,0,0.6)",
+            outlineWidth: 1,
+            outlineColor: "#000000",
+            scaleByDistance: new Cesium.NearFarScalar(20000000, 1.0, 150000000, 0.4),
           };
 
           //转为属性，方便使用
           if (item.info) {
-            item.cospar = item.info[0];
-            item.name = item.info[1];
-            item.country = item.info[2];
-            item.period = item.info[3];
-            item.inclination = item.info[4];
-            item.apogee = item.info[5];
-            item.perigee = item.info[6];
-            item.size = item.info[7];
-            item.launch = new Date(item.info[8]);
-            delete item.info;
+            item.cospar = item.info[0]; // 国际代号
+            item.type = item.info[1]; //对象类型
+            item.status = item.info[2]; // 操作状态代码
+            item.country = item.info[3]; //所有权(国家)
+            item.launchDate = item.info[4] && new Date(item.info[4]); //发射日期
+            item.launchSite = item.info[5]; //发射地点
+            item.decayDate = item.info[6]; // 衰减日期
+            item.period = item.info[7]; // 轨道周期[分钟]
+            item.inclination = item.info[8]; //	倾角[度]
+            item.apogee = item.info[9]; //远地点高度[公里]
+            item.perigee = item.info[10]; //近地点高度[公里]
+            item.rcs = item.info[11]; //雷达截面
+            // item.dataStatus = item.info[12]; // 数据状态码
+            item.orbitCenter = item.info[13]; // 轨道中心
+            item.orbitType = item.info[14]; // 轨道类型
 
-            // if (item.country == 'PRC') {
-            //   //中国的卫星
-            //   style.pixelSize = 4
-            //   style.color = 'rgba(0,255,255,0.6)'
-            // }
-          } else {
-            item.name = "";
+            delete item.info;
           }
 
           var primitive = new mars3d.graphic.PointPrimitive({
             id: item.id,
-            // position: mars3d.Tle.getEcfPosition(item.tle1, item.tle2, time) //计算卫星位置
             style: style,
             attr: item,
           });
           graphicLayer.addGraphic(primitive);
         }
 
-        startWorker(arr);
+        initWorker(arr);
       }
 
       //采用多线程来计算卫星位置
       var worker;
-      function startWorker(arr) {
+      function initWorker(arr) {
         worker = new Worker("./js/tleWorker.js");
         worker.onmessage = function (event) {
+          let time = event.data.time;
           let positionObj = event.data.positionObj;
           // console.log('接收到数据', positionObj)
 
@@ -355,19 +382,26 @@
             }
 
             let graphic = graphicLayer.getGraphicById(id);
-            graphic.position = new Cesium.Cartesian3(item.x, item.y, item.z);
+            if (graphic) {
+              graphic.position = new Cesium.Cartesian3(item.x, item.y, item.z);
+            }
           }
 
           //循环继续发送请求消息
-          worker.postMessage({
-            time: Cesium.JulianDate.toDate(map.clock.currentTime),
-            list: arr,
-          });
+          postWorkerMessage(arr);
         };
 
         //主线程调用worker.postMessage()方法，向 Worker 发消息。
+        postWorkerMessage(arr);
+      }
+
+      function postWorkerMessage(arr) {
+        //取数据的时间范围，开始时间
+        let date = Cesium.JulianDate.toDate(map.clock.currentTime);
+
+        //主线程调用worker.postMessage()方法，向 Worker 发消息。
         worker.postMessage({
-          time: Cesium.JulianDate.toDate(map.clock.currentTime),
+          time: date,
           list: arr,
         });
       }
@@ -442,16 +476,29 @@
         $("#td_name").html(attr.name);
         $("#td_norad").html(attr.id);
         $("#td_cospar").html(attr.cospar);
-        $("#td_country").html(attr.country);
+        $("#td_type").html(attr.type);
+        $("#td_status").html(getStatusName(attr.status));
+        $("#td_country").html(getCountryName(attr.country));
+        if (attr.launchDate) {
+          $("#td_launchDate").html(attr.launchDate.format("yyyy-MM-dd"));
+        }
+        $("#td_launchSite").html(getLaunchSiteName(attr.launchSite));
+        if (attr.status == "D") {
+          $("#td_decayDate").html(attr.decayDate);
+          $("#viewDecay").show();
+        } else {
+          $("#viewDecay").hide();
+        }
+
         $("#td_period").html(mars3d.Util.formatNum(attr.period, 2) + " 分钟");
         $("#td_inclination").html(attr.inclination + "°");
         $("#td_apogee").html(mars3d.Util.formatNum(attr.apogee, 0) + " km");
         $("#td_perigee").html(mars3d.Util.formatNum(attr.perigee, 0) + " km");
-        $("#td_size").html(attr.size);
-        $("#td_launch").html(attr.launch.format("yyyy-MM-dd"));
+        $("#td_rcs").html(attr.rcs || "未知");
+        $("#td_orbitCenter").html(attr.orbitCenter);
+        $("#td_orbitType").html(attr.orbitType);
 
         $("#link_n2yo").attr("href", "https://www.n2yo.com/satellite/?s=" + attr.id);
-        $("#link_tle").attr("href", "https://celestrak.com/satcat/tle.php?CATNR=" + attr.id);
       }
 
       // Orbital altitude definitions.
@@ -510,15 +557,18 @@
           selectSatellites();
         });
 
-        $("#chkSizeSmall").change(function () {
-          selectSatellites();
-        });
-        $("#chkSizeMedium").change(function () {
-          selectSatellites();
-        });
-        $("#chkSizeLarge").change(function () {
-          selectSatellites();
-        });
+        $("#slider-rcs")
+          .slider({
+            id: "slider-rcs-internal",
+            ticks: [0, 1, 10, 50, 100, 1000],
+            ticks_positions: [0, 20, 40, 60, 80, 100],
+            ticks_labels: ["0", "1", "10", "50", "100", "1000"],
+            range: true,
+            value: [0, 1000],
+          })
+          .on("slideStop", function () {
+            selectSatellites();
+          });
 
         $("#slider-launchdate")
           .slider({
@@ -593,10 +643,7 @@
         $("#selType").val("");
         $("#selGuidao").val("");
 
-        $("#chkSizeSmall").attr("checked", "checked");
-        $("#chkSizeMedium").attr("checked", "checked");
-        $("#chkSizeLarge").attr("checked", "checked");
-
+        resetSlider("#slider-rcs");
         resetSlider("#slider-launchdate");
         resetSlider("#slider-period");
         resetSlider("#slider-inclination");
@@ -607,8 +654,8 @@
         graphicLayer.eachGraphic(function (graphic) {
           if (graphic.selected) {
             graphic.setStyle({
-              pixelSize: 3,
-              color: "rgba(0,255,0,0.4)",
+              color: "rgba(0,255,0,0.6)",
+              outlineColor: "#000000",
             });
             graphic.selected = false;
           }
@@ -640,27 +687,26 @@
         var country = $("#selCountry").val(); //所属国家
         var type = $("#selType").val(); //对象类型
 
-        var sizeSmall = $("#chkSizeSmall").is(":checked");
-        var sizeMedium = $("#chkSizeMedium").is(":checked");
-        var sizeLarge = $("#chkSizeLarge").is(":checked");
-
         var val1 = $("#slider-launchdate").slider("getValue");
         var val2 = $("#slider-period").slider("getValue");
         var val3 = $("#slider-inclination").slider("getValue");
         var val4 = $("#slider-apogee").slider("getValue");
         var val5 = $("#slider-perigee").slider("getValue");
+        var val6 = $("#slider-rcs").slider("getValue");
 
         var min1 = $("#slider-launchdate").slider("getAttribute", "min");
         var min2 = $("#slider-period").slider("getAttribute", "min");
         var min3 = $("#slider-inclination").slider("getAttribute", "min");
         var min4 = $("#slider-apogee").slider("getAttribute", "min");
         var min5 = $("#slider-perigee").slider("getAttribute", "min");
+        var min6 = $("#slider-rcs").slider("getAttribute", "min");
 
         var max1 = $("#slider-launchdate").slider("getAttribute", "max");
         var max2 = $("#slider-period").slider("getAttribute", "max");
         var max3 = $("#slider-inclination").slider("getAttribute", "max");
         var max4 = $("#slider-apogee").slider("getAttribute", "max");
         var max5 = $("#slider-perigee").slider("getAttribute", "max");
+        var max6 = $("#slider-rcs").slider("getAttribute", "max");
 
         let selCount = 0;
 
@@ -669,8 +715,8 @@
           //先将所有样式还原
           if (graphic.selected) {
             graphic.setStyle({
-              pixelSize: 3,
-              color: "rgba(0,255,0,0.4)",
+              color: "rgba(0,255,0,0.6)",
+              outlineColor: "#000000",
             });
             graphic.selected = false;
           }
@@ -721,29 +767,14 @@
             }
           }
 
-          // 尺寸的判断
-          if (sizeSmall && sizeMedium && sizeLarge) {
-            //全选中时不判断
-          } else {
-            if (sizeSmall && "SMALL" != attr.size) {
-              return;
-            }
-            if (sizeMedium && "MEDIUM" != attr.size) {
-              return;
-            }
-            if (sizeLarge && "LARGE" != attr.size) {
-              return;
-            }
-          }
-
           // 滑动轨的判断
           // Launch date
           if (val1[0] !== min1 || val1[1] !== max1) {
-            if (!attr.launch) {
+            if (!attr.launchDate) {
               return;
             }
 
-            var y = attr.launch.getFullYear();
+            var y = attr.launchDate.getFullYear();
             if (y <= val1[0] || y >= val1[1]) {
               return;
             }
@@ -789,18 +820,364 @@
             }
           }
 
+          // 尺寸的判断
+          if (val6[0] !== min6 || val6[1] !== max6) {
+            if (!attr.rcs) {
+              return;
+            }
+            if (attr.rcs <= val6[0] || attr.rcs >= val6[1]) {
+              return;
+            }
+          }
+
           //将筛选到的数据修改为红色
           if (!graphic.selected) {
             graphic.selected = true;
             graphic.setStyle({
-              pixelSize: 7,
               color: "rgba(255,0,0,1.0)",
+              outlineColor: "#FFFFFF",
             });
           }
           selCount++;
         });
 
         haoutil.msg(`${allCount}个对象中，有 ${selCount} 个符合条件`);
+      }
+
+      function getStatusName(code) {
+        switch (code) {
+          case "+":
+            return "运作的";
+          case "-":
+            return "非运转的";
+          case "P":
+            return "部分运转,部分完成主要任务或次要任务";
+          case "B":
+            return "备份/备用,先前运行的卫星进入储备状态";
+          case "S":
+            return "备用,新卫星等待完全激活";
+          case "X":
+            return "扩展的任务";
+          case "D":
+            return "衰退的";
+          case "?":
+            return "未知的";
+        }
+        return code;
+      }
+
+      function getLaunchSiteName(code) {
+        switch (code) {
+          case "AFETR":
+            return "美国佛罗里达州空军东部试验场";
+          case "AFWTR":
+            return "美国加州空军西部试验场";
+          case "CAS":
+            return "Canaries Airspace";
+          case "DLS":
+            return "俄罗斯Dombarovskiy发射场";
+          case "ERAS":
+            return "东部领空范围";
+          case "FRGUI":
+            return "法属圭亚那库鲁的欧洲太空港";
+          case "HGSTR":
+            return "阿尔及利亚的Hammaguira空间轨道靶场";
+          case "JSC":
+            return "中国酒泉航天中心";
+          case "KODAK":
+            return "美国阿拉斯加科迪亚克发射中心";
+          case "KSCUT":
+            return "日本内浦航天中心";
+          case "KWAJ":
+            return "美国陆军夸贾林环礁";
+          case "KYMSC":
+            return "俄罗斯Kapustin Yar导弹和太空综合体";
+          case "NSC":
+            return "韩国罗老宇航中心";
+          case "PLMSC":
+            return "俄罗斯普列谢茨克导弹和太空综合体";
+          case "RLLB":
+            return "火箭实验室发射基地";
+          case "SEAL":
+            return "海上发射平台(流动)";
+          case "SEMLS":
+            return "伊朗塞姆南卫星发射场";
+          case "SMTS":
+            return "伊朗沙赫鲁德导弹试验场";
+          case "SNMLP":
+            return "印度洋(肯尼亚)圣马可发射平台";
+          case "SRILR":
+            return "印度萨迪什·达万航天中心";
+          case "SUBL":
+            return "潜艇发射平台(移动式)";
+          case "SVOBO":
+            return "俄罗斯Svobodnyy发射中心";
+          case "TAISC":
+            return "中国太原航天中心";
+          case "TANSC":
+            return "日本种子岛宇宙中心";
+          case "TYMSC":
+            return "哈萨克斯坦秋拉坦导弹和航天中心";
+          case "VOSTO":
+            return "俄罗斯东方港航天器发射场";
+          case "WLPIS":
+            return "美国弗吉尼亚州瓦勒普斯岛";
+          case "WOMRA":
+            return "澳大利亚Woomera";
+          case "WRAS":
+            return "西方领空范围";
+          case "WSC":
+            return "中国文昌卫星发射场";
+          case "XICLF":
+            return "中国西昌发射场";
+          case "YAVNE":
+            return "以色列Yavne发射设施";
+          case "YUN":
+            return "朝鲜云松发射场";
+          case "UNK":
+            return "未知的";
+        }
+        return code;
+      }
+
+      function getCountryName(code) {
+        switch (code) {
+          case "AB":
+            return "阿拉伯卫星通信组织";
+          case "ABS":
+            return "亚洲广播卫星";
+          case "AC":
+            return "亚洲卫星电讯公司";
+          case "ALG":
+            return "阿尔及利亚";
+          case "ANG":
+            return "安哥拉";
+          case "ARGN":
+            return "阿根廷";
+          case "ASRA":
+            return "奥地利";
+          case "AUS":
+            return "澳大利亚";
+          case "AZER":
+            return "阿塞拜疆";
+          case "BEL":
+            return "比利时";
+          case "BELA":
+            return "白俄罗斯";
+          case "BERM":
+            return "百慕大";
+          case "BGD":
+            return "孟加拉国";
+          case "BHUT":
+            return "不丹王国";
+          case "BOL":
+            return "玻利维亚";
+          case "BRAZ":
+            return "巴西";
+          case "BUL":
+            return "保加利亚";
+          case "CA":
+            return "加拿大";
+          case "CHBZ":
+            return "中国/巴西";
+          case "CHLE":
+            return "智利";
+          case "CIS":
+            return "前苏联";
+          case "COL":
+            return "哥伦比亚";
+          case "CRI":
+            return "哥斯达黎加共和国";
+          case "CZCH":
+            return "捷克";
+          case "DEN":
+            return "丹麦";
+          case "ECU":
+            return "厄瓜多尔";
+          case "EGYP":
+            return "埃及";
+          case "ESA":
+            return "欧洲太空总署";
+          case "ESRO":
+            return "欧洲空间研究组织";
+          case "EST":
+            return "爱沙尼亚";
+          case "EUME":
+            return "欧洲气象卫星开发组织";
+          case "EUTE":
+            return "欧洲电信卫星组织";
+          case "FGER":
+            return "法国/德国";
+          case "FIN":
+            return "芬兰";
+          case "FR":
+            return "法国";
+          case "FRIT":
+            return "法国/意大利";
+          case "GER":
+            return "德国";
+          case "GHA":
+            return "加纳共和国";
+          case "GLOB":
+            return "全球星";
+          case "GREC":
+            return "希腊";
+          case "GRSA":
+            return "希腊/沙特阿拉伯";
+          case "GUAT":
+            return "危地马拉";
+          case "HUN":
+            return "匈牙利";
+          case "IM":
+            return "国际移动卫星组织(INMARSAT)";
+          case "IND":
+            return "印度";
+          case "INDO":
+            return "印尼";
+          case "IRAN":
+            return "伊朗";
+          case "IRAQ":
+            return "伊拉克";
+          case "IRID":
+            return "IRID";
+          case "ISRA":
+            return "以色列";
+          case "ISRO":
+            return "印度空间研究组织";
+          case "ISS":
+            return "国际空间站";
+          case "IT":
+            return "意大利";
+          case "ITSO":
+            return "国际电信卫星组织";
+          case "JPN":
+            return "日本";
+          case "KAZ":
+            return "哈萨克斯坦";
+          case "KEN":
+            return "肯尼亚";
+          case "LAOS":
+            return "老挝";
+          case "LKA":
+            return "斯里兰卡";
+          case "LTU":
+            return "立陶宛";
+          case "LUXE":
+            return "卢森堡";
+          case "MA":
+            return "摩洛哥";
+          case "MALA":
+            return "马来西亚";
+          case "MEX":
+            return "墨西哥";
+          case "MMR":
+            return "缅甸";
+          case "MNG":
+            return "蒙古";
+          case "MUS":
+            return "毛里求斯";
+          case "NATO":
+            return "北大西洋公约组织";
+          case "NETH":
+            return "荷兰";
+          case "NICO":
+            return "新图标";
+          case "NIG":
+            return "尼日利亚";
+          case "NKOR":
+            return "朝鲜";
+          case "NOR":
+            return "挪威";
+          case "NPL":
+            return "尼泊尔";
+          case "NZ":
+            return "新西兰";
+          case "O3B":
+            return "O3b Networks公司";
+          case "ORB":
+            return "ORBCOMM卫星公司";
+          case "PAKI":
+            return "巴基斯坦";
+          case "PERU":
+            return "秘鲁";
+          case "POL":
+            return "波兰";
+          case "POR":
+            return "葡萄牙";
+          case "PRC":
+            return "中国";
+          case "PRY":
+            return "巴拉圭";
+          case "PRES":
+            return "中国/欧洲航天局";
+          case "QAT":
+            return "卡塔尔的状态";
+          case "RASC":
+            return "非洲区域卫星通信组织";
+          case "ROC":
+            return "台湾";
+          case "ROM":
+            return "罗马尼亚";
+          case "RP":
+            return "菲律宾";
+          case "RWA":
+            return "卢旺达";
+          case "SAFR":
+            return "南非";
+          case "SAUD":
+            return "沙特阿拉伯";
+          case "SDN":
+            return "苏丹";
+          case "SEAL":
+            return "Sea Launch公司";
+          case "SES":
+            return "SES电信公司";
+          case "SGJP":
+            return "新加坡/日本";
+          case "SING":
+            return "新加坡";
+          case "SKOR":
+            return "韩国";
+          case "SPN":
+            return "西班牙";
+          case "STCT":
+            return "新加坡/台湾";
+          case "SVN":
+            return "斯洛文尼亚";
+          case "SWED":
+            return "瑞典";
+          case "SWTZ":
+            return "瑞士";
+          case "TBD":
+            return "待定";
+          case "THAI":
+            return "泰国";
+          case "TMMC":
+            return "土库曼斯坦/摩纳哥";
+          case "TUN":
+            return "突尼斯共和国";
+          case "TURK":
+            return "土耳其";
+          case "UAE":
+            return "阿拉伯联合酋长国";
+          case "UK":
+            return "英国";
+          case "UKR":
+            return "乌克兰";
+          case "URY":
+            return "乌拉圭";
+          case "US":
+            return "美国";
+          case "USBZ":
+            return "美国/巴西";
+          case "VENZ":
+            return "委内瑞拉";
+          case "VTNM":
+            return "越南";
+          case "UNK":
+            return "未知";
+        }
+        return code;
       }
     </script>
   </body>
