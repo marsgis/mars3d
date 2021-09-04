@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -52,7 +52,7 @@
         <tr class="undergroundAttr">
           <td>地表透明度：</td>
           <td>
-            <input id="alpha" type="range" min="0.0" max="1.0" step="0.1" value="0.5" />
+            <input id="alpha"/>
           </td>
         </tr>
         <tr>
@@ -86,6 +86,13 @@
         //创建三维地球场景
         map = new mars3d.Map("mars3dContainer", mapOptions);
 
+        // 设置滑动条的样式
+        $("#alpha")
+          .slider({ min: 0.0, max: 1.0, step: 0.1, value: 0.5 })
+          .on("change", (e) => {
+            underground.alpha = e.value.newValue;
+          });
+
         let alpha = Number($("#alpha").val());
 
         var underground = new mars3d.thing.Underground({
@@ -101,12 +108,6 @@
           var val = $(this).is(":checked");
 
           underground.enabled = val;
-        });
-
-        $("#alpha").range({
-          onChange: function (value, bfb) {
-            underground.alpha = value;
-          },
         });
 
         //以下为演示数据

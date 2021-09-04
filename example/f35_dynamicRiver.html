@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -57,7 +57,7 @@
         <tr>
           <td class="nametd">水流速(米/秒)：</td>
           <td>
-            <input id="txtSpeed" type="range" min="0" max="50" step="1" value="10" />
+            <input id="txtSpeed" type="text" />
           </td>
         </tr>
         <tr>
@@ -164,14 +164,14 @@
           dynamicRiver.height = value;
         });
 
-        $("#txtSpeed").range({
-          onChange: function (value, bfb) {
+        $("#txtSpeed")
+          .slider({ min: 0, max: 50, step: 1, value: 10 })
+          .on("slide", (e) => {
             if (!dynamicRiver) {
               return;
             }
-            dynamicRiver.speed = value;
-          },
-        });
+            dynamicRiver.speed = e.value;
+          });
 
         //清除
         $("#btnClear").click(function (e) {

@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -51,7 +51,7 @@
         <tr>
           <td class="nametd">限制高度</td>
           <td>
-            <input id="range_currHeight" title="高度" type="range" min="0" max="180" step="0.1" value="80" />
+            <input id="range_currHeight" title="高度"  />
           </td>
           <td>当前高度: <span id="lbl_nowHeight">80</span></td>
         </tr>
@@ -145,12 +145,13 @@
         });
 
         //滑动条
-        $("#range_currHeight").range({
-          onChange: function (value, bfb) {
+        $("#range_currHeight")
+          .slider({ min: 0, max: 180, step: 0.1, value: 80 })
+          .on("change", (e) => {
+            var value = e.value.newValue;
             limitHeight.height = value;
             $("#lbl_nowHeight").html(value.toFixed(1));
-          },
-        });
+          });
 
         $("#btnClear").click(function () {
           limitHeight.clear();

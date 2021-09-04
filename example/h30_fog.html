@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.minicolors,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+      include="jquery,jquery.minicolors,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -57,13 +57,13 @@
         <tr>
           <td>近距离</td>
           <td>
-            <input id="fogByDistanceX" type="range" min="1" max="5000" step="1" value="100" />
+            <input id="fogByDistanceX"  />
           </td>
         </tr>
         <tr>
           <td>远距离</td>
           <td>
-            <input id="fogByDistanceZ" type="range" min="100" max="50000" step="1" value="9000" />
+            <input id="fogByDistanceZ" />
           </td>
         </tr>
       </table>
@@ -111,24 +111,26 @@
           fogEffect.enabled = val;
         });
 
-        $("#fogByDistanceX").range({
-          onChange: function (value, bfb) {
+        $("#fogByDistanceX")
+          .slider({ min: 1, max: 5000, step: 1, value: 100 })
+          .on("change", (e) => {
+            let value = e.value.newValue;
             if (value > fogEffect.fogByDistance.z) {
               haoutil.msg("近距离不能大于远距离");
               return;
             }
             fogEffect.fogByDistance.x = value;
-          },
-        });
-        $("#fogByDistanceZ").range({
-          onChange: function (value, bfb) {
+          });
+        $("#fogByDistanceZ")
+          .slider({ min: 100, max: 50000, step: 1, value: 9000 })
+          .on("change", (e) => {
+            let value = e.value.newValue;
             if (value < fogEffect.fogByDistance.x) {
               haoutil.msg("远距离 不能小于 近距离");
               return;
             }
             fogEffect.fogByDistance.z = value;
-          },
-        });
+          });
 
         $("#txtColor").minicolors({
           position: "bottom left",

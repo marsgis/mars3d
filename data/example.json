@@ -96,6 +96,12 @@
               "version": "3.1",
               "thumbnail": "d20_maskDiv.jpg",
               "fileName": "d20_maskDiv"
+            },
+            {
+              "name": "离线数据",
+              "version": "3.1",
+              "thumbnail": "a20_offline.jpg",
+              "fileName": "a20_offline"
             }
           ]
         }
@@ -1173,6 +1179,12 @@
         {
           "name": "视频融合应用",
           "children": [
+            {
+              "name": "视频点位",
+              "version": "3.0",
+              "thumbnail": "f40_divGraphic_camera.jpg",
+              "fileName": "f40_divGraphic_camera"
+            },
             {
               "name": "视频材质",
               "version": "1.6",

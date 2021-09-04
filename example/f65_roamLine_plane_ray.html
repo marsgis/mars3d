@@ -24,7 +24,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,jquery.range,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -221,13 +221,13 @@
         <tr class="jiaodu_2_angele">
           <td class="nametd">pitch值（前后）</td>
           <td>
-            <input id="model_pitch" type="range" min="-90" max="90" step="0.01" value="0" title="倾角pitch" />
+            <input id="model_pitch"  title="倾角pitch" />
           </td>
         </tr>
         <tr class="jiaodu_2_angele">
           <td class="nametd">roll值（左右）</td>
           <td>
-            <input id="model_roll" type="range" min="-90" max="90" step="0.01" value="10" title="滚动角roll" />
+            <input id="model_roll"  title="滚动角roll" />
           </td>
         </tr>
       </table>
@@ -388,16 +388,16 @@
           updateModel(isAuto);
         });
         //滑动条
-        $("#model_pitch").range({
-          onChange: function (value, bfb) {
+        $("#model_pitch")
+          .slider({ min: -90, max: 90, step: 0.01, value: 0 })
+          .on("change", (e) => {
             updateModel();
-          },
-        });
-        $("#model_roll").range({
-          onChange: function (value, bfb) {
+          });
+        $("#model_roll")
+          .slider({ min: -90, max: 90, step: 0.01, value: 10 })
+          .on("change", (e) => {
             updateModel();
-          },
-        });
+          });
 
         updateModel(false);
       }
@@ -581,6 +581,6 @@
           groundLayer.clear();
         }
       }
-     </script>
+    </script>
   </body>
 </html>

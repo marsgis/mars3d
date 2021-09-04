@@ -26,7 +26,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -97,32 +97,32 @@
         <tr>
           <td class="nametd">方向（heading）</td>
           <td>
-            <input id="model_heading" type="range" min="0" max="360" step="0.01" value="90" title="方向" />
+            <input id="model_heading" type="text" title="方向" />
           </td>
         </tr>
         <tr>
           <td class="nametd">仰角（pitch）</td>
           <td>
-            <input id="model_pitch" type="range" min="0" max="360" step="0.01" value="0" title="倾角pitch" />
+            <input id="model_pitch" type="text" title="倾角pitch" />
           </td>
         </tr>
         <tr>
           <td class="nametd">左右（roll）</td>
           <td>
-            <input id="model_roll" type="range" min="0" max="360" step="0.01" value="0" title="滚动角roll" />
+            <input id="model_roll" type="text" title="滚动角roll" />
           </td>
         </tr>
 
         <tr>
           <td class="nametd">上下夹角(X轴)</td>
           <td>
-            <input id="model_angle1" type="range" min="0" max="89" step="0.01" value="50" />
+            <input id="model_angle1" type="text" />
           </td>
         </tr>
         <tr>
           <td class="nametd">左右夹角(Y轴)</td>
           <td>
-            <input id="model_angle2" type="range" min="0" max="89" step="0.01" value="50" />
+            <input id="model_angle2" type="text" />
           </td>
         </tr>
         <tr>
@@ -215,7 +215,45 @@
       }
 
       function addGraphic_01(graphicLayer) {
-        //参数
+        //===========绑定一些事件更新属性================
+        //先设置滑动轨，才能获取到值
+        $("#model_heading")
+          .slider({ min: 0, max: 360, step: 0.01, value: 90 })
+          .on("slide", (e) => {
+            rectangularSensor.heading = e.value;
+          });
+        $("#model_pitch")
+          .slider({ min: 0, max: 360, step: 0.01, value: 0 })
+          .on("slide", (e) => {
+            rectangularSensor.pitch = e.value;
+          });
+        $("#model_roll")
+          .slider({ min: 0, max: 360, step: 0.01, value: 0 })
+          .on("slide", (e) => {
+            rectangularSensor.roll = e.value;
+          });
+
+        $("#model_radius").change(function () {
+          rectangularSensor.radius = Number($(this).val());
+        });
+
+        $("#model_angle1")
+          .slider({ min: 0, max: 89, step: 0.01, value: 50 })
+          .on("slide", (e) => {
+            rectangularSensor.style = { xHalfAngleDegree: e.value }; //传感器水平半角
+          });
+        $("#model_angle2")
+          .slider({ min: 0, max: 89, step: 0.01, value: 50 })
+          .on("slide", (e) => {
+            rectangularSensor.style = { yHalfAngleDegree: e.value }; //传感器垂直半角
+          });
+
+        $("#chkShowScanPlane").change(function () {
+          var showScanPlane = $("#chkShowScanPlane").is(":checked");
+          rectangularSensor.style = { showScanPlane: showScanPlane }; //是否显示扫描面
+        });
+
+        //===========参数================
         var heading = Number($("#model_heading").val());
         var pitch = Number($("#model_pitch").val());
         var roll = Number($("#model_roll").val());
@@ -223,6 +261,7 @@
         var xHalfAngle = Number($("#model_angle1").val());
         var yHalfAngle = Number($("#model_angle2").val());
         var showScanPlane = $("#chkShowScanPlane").is(":checked");
+        var value = $("#model_heading").slider("getValue");
 
         var rectangularSensor = new mars3d.graphic.RectangularSensor({
           position: [117.218875, 31.817812, 138],
@@ -249,43 +288,6 @@
         });
 
         graphicLayer.addGraphic(rectangularSensor);
-
-        //===========绑定一些事件更新属性================
-        //滑动条
-        $("#model_heading").range({
-          onChange: function (value, bfb) {
-            rectangularSensor.heading = value;
-          },
-        });
-        $("#model_pitch").range({
-          onChange: function (value, bfb) {
-            rectangularSensor.pitch = value;
-          },
-        });
-        $("#model_roll").range({
-          onChange: function (value, bfb) {
-            rectangularSensor.roll = value;
-          },
-        });
-
-        $("#model_radius").change(function () {
-          rectangularSensor.radius = Number($(this).val());
-        });
-
-        $("#model_angle1").range({
-          onChange: function (value, bfb) {
-            rectangularSensor.style = { xHalfAngleDegree: value }; //传感器水平半角
-          },
-        });
-        $("#model_angle2").range({
-          onChange: function (value, bfb) {
-            rectangularSensor.style = { yHalfAngleDegree: value }; //传感器垂直半角
-          },
-        });
-        $("#chkShowScanPlane").change(function () {
-          var showScanPlane = $("#chkShowScanPlane").is(":checked");
-          rectangularSensor.style = { showScanPlane: showScanPlane }; //是否显示扫描面
-        });
       }
     </script>
   </body>

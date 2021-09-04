@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -57,21 +57,21 @@
           <tr>
             <td>混合系数:</td>
             <td>
-              <input id="txtMixNum" type="range" min="0" max="1" step="0.1" value="0.7" />
+              <input id="txtMixNum" />
             </td>
             <td>调整 透明度</td>
           </tr>
           <tr>
             <td>水平拉伸:</td>
             <td>
-              <input id="cameraFov" type="range" min="30" max="120" step="0.1" value="45" />
+              <input id="cameraFov"/>
             </td>
             <td>调整 水平拉伸</td>
           </tr>
           <tr>
             <td>相机宽高比例:</td>
             <td>
-              <input id="cameraWidHei" type="range" min="0.5" max="3" step="0.05" value="1.6" />
+              <input id="cameraWidHei"/>
             </td>
             <td>调整 垂直拉伸</td>
           </tr>
@@ -332,32 +332,30 @@
           selectedView.showFrustum = showFrustum;
         });
 
-        $("#txtMixNum").range({
-          onChange: function (value, bfb) {
+        $("#txtMixNum")
+          .slider({ min: 0, max: 1, step: 0.1, value: 0.7 })
+          .on("slide", (e) => {
             if (!selectedView) {
               return;
             }
-            selectedView.opacity = value;
-          },
-        });
-
-        $("#cameraFov").range({
-          onChange: function (value, bfb) {
+            selectedView.opacity = e.value;
+          });
+        $("#cameraFov")
+          .slider({ min: 30, max: 120, step: 0.1, value: 45 })
+          .on("slide", (e) => {
             if (!selectedView) {
               return;
             }
-            selectedView.fovDegree = value;
-          },
-        });
-
-        $("#cameraWidHei").range({
-          onChange: function (value, bfb) {
+            selectedView.fovDegree = e.value;
+          });
+        $("#cameraWidHei")
+          .slider({ min: 0.5, max: 3, step: 0.05, value: 1.6 })
+          .on("slide", (e) => {
             if (!selectedView) {
               return;
             }
-            selectedView.aspectRatio = value;
-          },
-        });
+            selectedView.aspectRatio = e.value;
+          });
 
         $("#btnSelCamera").click(function () {
           if (!selectedView) {

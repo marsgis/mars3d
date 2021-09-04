@@ -133,12 +133,9 @@
         });
 
         //历史记录模型地址
-        var lasturl = haoutil.storage.get("g20_onlyModel");
-        localforage
-          .getItem("g20_onlyModel")
-          .then(function (lasturl) {
-            $("#txtModel").val(lasturl);
-          });
+        localforage.getItem("g20_onlyModel").then(function (lasturl) {
+          $("#txtModel").val(lasturl);
+        });
         setTimeout(showModel, 1000);
       }
 

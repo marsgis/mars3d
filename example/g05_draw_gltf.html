@@ -99,7 +99,7 @@
           $("#txtModel").val(url);
           console.log("a");
         } else {
-            //显示历史数据
+          //显示历史数据
           localforage.getItem("g05_draw_gltf").then(function (value) {
             $("#txtModel").val(value);
           });

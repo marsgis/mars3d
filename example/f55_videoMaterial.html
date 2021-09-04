@@ -26,7 +26,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -50,7 +50,7 @@
           <tr>
             <td>方向:</td>
             <td>
-              <input id="txtAngle" type="range" min="0" max="360" step="1" value="0" />
+              <input id="txtAngle" />
             </td>
           </tr>
           <tr>
@@ -115,11 +115,11 @@
           }
         });
 
-        $("#txtAngle").range({
-          onChange: function (value, bfb) {
-            rotation = Cesium.Math.toRadians(value);
-          },
-        });
+        $("#txtAngle")
+          .slider({ min: 0, max: 360, step: 1, value: 0 })
+          .on("slide", (e) => {
+            rotation = Cesium.Math.toRadians(e.value);
+          });
 
         //允许编辑
         map.graphicLayer.hasEdit = true;

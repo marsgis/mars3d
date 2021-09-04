@@ -18,14 +18,14 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>黑白效果 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>功能示例 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -37,27 +37,17 @@
 
     <div id="mars3dContainer" class="mars3d-container"></div>
 
-    <!-- 面板 -->
     <div class="infoview">
-      <table class="mars-table">
-        <tr>
-          <td>状态</td>
-          <td>
-            <div class="checkbox checkbox-primary checkbox-inline">
-              <input id="chkShowEffect" class="styled" type="checkbox" checked />
-              <label for="chkShowEffect"> 开启效果 </label>
-            </div>
-          </td>
-        </tr>
-
-        <tr>
-          <td>渐变</td>
-          <td>
-            <input id="txt_gradations" />
-          </td>
-        </tr>
-      </table>
+      提示：该示例目的演示交付的离线数据的效果<br/>
+      1) 包括全国12.5米地形(当前页面效果)<br/>
+      2) 包括0-12级影像底图(当前页面效果)<br/>
+      3) 包括所有模型数据：
+      <a href="editor.html#g10_3dtiles_layers" target="_blank" class="btn btn-default">3dtiles模型</a>
+      <a href="editor.html#g05_gltfList" target="_blank" class="btn btn-default">gltf模型</a>
+      <br/>
+      4) 包括其他所有示例的json等文件
     </div>
+
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
@@ -69,39 +59,31 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 33.591015, lng: 119.032698, alt: 73, heading: 343, pitch: -21 },
+            center: { lat: 14.741847, lng: 108.420914, alt: 10003793, heading: 356, pitch: -83 },
           },
+          basemaps: [
+            {
+              pid: 10,
+              name: "卫星地图",
+              type: "xyz",
+              icon: "img/basemaps/mapboxSatellite.png",
+              url: "//data.mars3d.cn/tile/googleImg/{z}/{x}/{y}.jpg",
+              minimumLevel: 0,
+              maximumLevel: 12,
+              show: true,
+            },
+            {
+              pid: 10,
+              name: "单张图片",
+              icon: "img/basemaps/offline.png",
+              type: "image",
+              url: "//data.mars3d.cn/file/img/world/world.jpg",
+            },
+          ],
         });
 
         //创建三维地球场景
         map = new mars3d.Map("mars3dContainer", mapOptions);
-
-        //添加参考三维模型
-        var tiles3dLayer = new mars3d.layer.TilesetLayer({
-          url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
-          position: { alt: 80.6 },
-          maximumScreenSpaceError: 1,
-          maximumMemoryUsage: 1024,
-          dynamicScreenSpaceError: true,
-          cullWithChildrenBounds: false,
-        });
-        map.addLayer(tiles3dLayer);
-
-        //构造效果
-        var blackAndWhite = new mars3d.effect.BlackAndWhiteEffect();
-        map.addEffect(blackAndWhite);
-
-        $("#chkShowEffect").change(function () {
-          var val = $(this).is(":checked");
-
-          blackAndWhite.enabled = val;
-        });
-
-        $("#txt_gradations")
-          .slider({ min: 1, max: 10, step: 0.01, value: 4 })
-          .on("change", (e) => {
-            blackAndWhite.gradations = e.value.newValue;
-          });
       }
     </script>
   </body>

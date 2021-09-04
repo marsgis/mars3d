@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d,mars3d-space"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d,mars3d-space"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -45,20 +45,20 @@
         <tr>
           <td class="nametd">前后侧摆（pitch）</td>
           <td>
-            <input id="model_pitch" type="range" min="-180" max="180" step="0.01" value="0" title="前后侧摆pitch" />
+            <input id="model_pitch" title="前后侧摆pitch" />
           </td>
         </tr>
         <tr>
           <td class="nametd">左右侧摆（roll）</td>
           <td>
-            <input id="model_roll" type="range" min="-180" max="180" step="0.01" value="0" title="左右侧摆roll" />
+            <input id="model_roll"  title="左右侧摆roll" />
           </td>
         </tr>
 
         <tr>
           <td class="nametd">夹角(半场角)</td>
           <td>
-            <input id="model_angle1" type="range" min="1" max="60" step="0.01" value="10" />
+            <input id="model_angle1" />
           </td>
         </tr>
 
@@ -196,13 +196,13 @@
         graphicLayer.addGraphic(graphic);
 
         //卫星边线2点
-        var angle1 = Number($("#model_angle1").val());
-        $("#model_angle1").range({
-          onChange: function (value, bfb) {
-            angle1 = value;
-            weixin.angle1 = value;
-          },
-        });
+        $("#model_angle1")
+          .slider({ min: 1, max: 60, step: 0.01, value: 10 })
+          .on("change", (e) => {
+            angle1 = e.value.newValue;
+            weixin.angle1 = e.value.newValue;
+          });
+        var angle1 = Number($("#model_angle1").val()); //设置在前，取值在后
 
         let graphicTriangle = new mars3d.graphic.PolylineEntity({
           positions: new Cesium.CallbackProperty(function (time) {
@@ -247,16 +247,16 @@
         });
 
         //滑动条
-        $("#model_pitch").range({
-          onChange: function (value, bfb) {
-            weixin.pitch = value;
-          },
-        });
-        $("#model_roll").range({
-          onChange: function (value, bfb) {
-            weixin.roll = value;
-          },
-        });
+        $("#model_pitch")
+          .slider({ min: -180, max: 180, step: 0.01, value: 0 })
+          .on("change", (e) => {
+            weixin.pitch = e.value.newValue;
+          });
+        $("#model_roll")
+          .slider({ min: -180, max: 180, step: 0.01, value: 0 })
+          .on("change", (e) => {
+            weixin.roll = e.value.newValue;
+          });
 
         $("#td_name").html(weixin.name);
         $("#td_tle1").html(weixin.options.tle1);

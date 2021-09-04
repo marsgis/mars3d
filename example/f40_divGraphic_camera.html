@@ -29,6 +29,7 @@
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
+    <link href="css/divGraphic.css" rel="stylesheet" />
     <style>
       .mars3d-camera-content {
         /* 防止下面的line一直随img动画 */
@@ -113,6 +114,22 @@
           console.log("您单击了", event);
         });
 
+        //在layer上绑定右键菜单
+        graphicLayer.bindContextMenu(
+          [
+            {
+              text: "查看摄像头",
+              iconCls: "fa fa-trash-o",
+              callback: function (e) {
+                let graphic = e.graphic;
+
+                haoutil.msg("右键菜单示例");
+              },
+            },
+          ],
+          { offsetY: -170 }
+        );
+
         //添加数据
         addGraphic(graphicLayer, [117.080397, 31.656139, 33.3]);
         addGraphic(graphicLayer, [117.078006, 31.65649, 49.4]);
@@ -136,6 +153,12 @@
           popup: `<video src='http://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style="width: 300px;" ></video>`,
           popupOptions: {
             offsetY: -170, //显示Popup的偏移值，是DivGraphic本身的像素高度值
+            template: `<div class="marsBlackPanel animation-spaceInDown">
+                        <div class="marsBlackPanel-text">{content}</div>
+                        <span class="mars3d-popup-close-button closeButton" >×</span>
+                      </div>`,
+            horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+            verticalOrigin: Cesium.VerticalOrigin.CENTER,
           },
         });
         graphicLayer.addGraphic(graphicImg);

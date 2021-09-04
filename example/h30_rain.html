@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -50,9 +50,21 @@
           </td>
         </tr>
         <tr>
-          <td>速度：</td>
+          <td>移动速度：</td>
           <td>
-            <input id="rainSpeed" type="range" min="1" max="50" step="1" value="10" />
+            <input id="rainSpeed" />
+          </td>
+        </tr>
+        <tr>
+          <td>粒子大小：</td>
+          <td>
+            <input id="rainSize" />
+          </td>
+        </tr>
+        <tr>
+          <td>方向：</td>
+          <td>
+            <input id="rainDirection" />
           </td>
         </tr>
       </table>
@@ -69,18 +81,6 @@
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
             center: { lat: 31.789209, lng: 117.214049, alt: 603, heading: 10, pitch: -11 },
-            contextOptions: {
-              webgl: {
-                alpha: true,
-                depth: false,
-                stencil: true,
-                antialias: true,
-                premultipliedAlpha: true,
-                preserveDrawingBuffer: true,
-                failIfMajorPerformanceCaveat: true,
-              },
-              allowTextureFilterAnisotropic: true,
-            },
           },
         });
 
@@ -98,6 +98,8 @@
         //雨效果
         var rainEffect = new mars3d.effect.RainEffect({
           speed: 10,
+          size: 20,
+          direction: -30,
         });
         map.addEffect(rainEffect);
 
@@ -107,13 +109,27 @@
           rainEffect.enabled = val;
         });
 
-        $("#rainSpeed").range({
-          onChange: function (value, bfb) {
+        $("#rainSpeed")
+          .slider({ min: 1, max: 100, step: 1, value: 10 })
+          .on("change", (e) => {
             if (rainEffect) {
-              rainEffect.speed = value;
+              rainEffect.speed = e.value.newValue;
             }
-          },
-        });
+          });
+        $("#rainSize")
+          .slider({ min: 1, max: 100, step: 1, value: 20 })
+          .on("change", (e) => {
+            if (rainEffect) {
+              rainEffect.size = e.value.newValue;
+            }
+          });
+        $("#rainDirection")
+          .slider({ min: -89, max: 89, step: 1, value: -30 })
+          .on("change", (e) => {
+            if (rainEffect) {
+              rainEffect.direction = e.value.newValue;
+            }
+          });
       }
     </script>
   </body>

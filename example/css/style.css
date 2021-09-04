@@ -162,6 +162,12 @@ li {
   background-color: #4db3ff;
 }
 
+
+.dark .slider-selection {
+  background-image: linear-gradient(to bottom, #86b9e6 0, #86b9e6 100%);
+}
+
+
 .dark .mars3d-popup-color {
   color: #ffffff;
 }

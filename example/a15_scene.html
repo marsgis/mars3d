@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,jquery.minicolors,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+      include="jquery,jquery.minicolors,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -127,7 +127,7 @@
             <td rowspan="6">地球Globe</td>
             <td class="nametd">地形夸张倍数</td>
             <td>
-              <input id="terrain" type="range" min="1" max="80" value="1" step="1" style="width: 80px" />
+              <input id="terrain" style="width: 80px" />
             </td>
           </tr>
           <tr>
@@ -216,45 +216,27 @@
           <tr>
             <td class="nametd">最小碰撞高度(米)</td>
             <td>
-              <input
-                id="minimumCollision"
-                data-name="minimumCollisionTerrainHeight"
-                type="range"
-                min="1"
-                max="500000"
-                value="15000"
-                step="100"
-                style="width: 80px"
-              />
+              <input id="minimumCollision" data-name="minimumCollisionTerrainHeight" style="width: 80px" />
             </td>
           </tr>
 
           <tr>
             <td class="nametd">相机最近视距(米)</td>
             <td>
-              <input id="minimumZoom" data-name="minimumZoomDistance" type="range" min="1" max="10000" value="1" step="100" style="width: 80px" />
+              <input id="minimumZoom" data-name="minimumZoomDistance" style="width: 80px" />
             </td>
           </tr>
           <tr>
             <td class="nametd">相机最远视距(米)</td>
             <td>
-              <input
-                id="maximumZoom"
-                data-name="maximumZoomDistance"
-                type="range"
-                min="10000"
-                max="90000000"
-                value="50000000"
-                step="1000"
-                style="width: 80px"
-              />
+              <input id="maximumZoom" data-name="maximumZoomDistance" style="width: 80px" />
             </td>
           </tr>
 
           <tr>
             <td class="nametd">滚轮放大倍数</td>
             <td>
-              <input id="zoomFactor" type="range" data-name="zoomFactor" min="1" max="10" value="1" step="1" style="width: 80px" />
+              <input id="zoomFactor" style="width: 80px" />
             </td>
           </tr>
         </tbody>
@@ -321,43 +303,66 @@
         });
 
         //地形夸张倍数
-        $("#terrain").range({
-          onChange: function (value, bfb) {
-            setSceneGlobeOptions("terrainExaggeration", value);
-          },
-        });
+        $("#terrain")
+          .slider({
+            min: 1,
+            max: 80,
+            value: 1,
+          })
+          .on("change", (e) => {
+            setSceneGlobeOptions("terrainExaggeration", e.value.newValue);
+          });
 
         // 鼠标滚轮放大步长参数
-        $("#zoomFactor").range({
-          onChange: function (set, bfb) {
+        $("#zoomFactor")
+          .slider({
+            min: 1,
+            max: 10,
+            value: 1,
+          })
+          .on("change", (e) => {
             let keys = $("#zoomFactor").attr("data-name");
-            setSceneCameraControllerOptions(keys, set);
-          },
-        });
+            setSceneCameraControllerOptions(keys, e.value.newValue);
+          });
 
         //变焦时相机位置的最小量级
-        $("#minimumZoom").range({
-          onChange: function (min, bfb) {
+        $("#minimumZoom")
+          .slider({
+            min: 1,
+            max: 10000,
+            value: 1,
+            step: 100,
+          })
+          .on("change", (e) => {
             let keys = $("#minimumZoom").attr("data-name");
-            setSceneCameraControllerOptions(keys, min);
-          },
-        });
+            setSceneCameraControllerOptions(keys, e.value.newValue);
+          });
 
         //变焦时相机位置的最大量级
-        $("#maximumZoom").range({
-          onChange: function (max, bfb) {
+        $("#maximumZoom")
+          .slider({
+            min: 10000,
+            max: 90000000,
+            value: 50000000,
+            step: 1000,
+          })
+          .on("change", (e) => {
             let key = $("#maximumZoom").attr("data-name");
-            setSceneCameraControllerOptions(key, max);
-          },
-        });
+            setSceneCameraControllerOptions(key, e.value.newValue);
+          });
 
         // 低于此高度时绕鼠标键绕圈，大于时绕视图中心点绕圈 默认值为80000
-        $("#minimumCollision").range({
-          onChange: function (hight, bfb) {
+        $("#minimumCollision")
+          .slider({
+            min: 1,
+            max: 500000,
+            value: 15000,
+            step: 100,
+          })
+          .on("change", (e) => {
             let num = $("#minimumCollision").attr("data-name");
-            setSceneCameraControllerOptions(num, hight);
-          },
-        });
+            setSceneCameraControllerOptions(num, e.value.newValue);
+          });
       }
 
       function setSceneOptions(name, value) {

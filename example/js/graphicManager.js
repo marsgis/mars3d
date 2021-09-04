@@ -166,6 +166,8 @@ function bindLayerPopup(graphicLayer) {
   graphicLayer.bindPopup(function (event) {
     let attr = event.graphic?.attr || {};
     attr.test1 = "测试属性";
+    // attr["视频"] = `<video src='http://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style="width: 300px;" ></video>`;
+
     return mars3d.Util.getTemplateHtml({ title: "layer上绑定的Popup", template: "all", attr: attr });
   });
 }
@@ -332,12 +334,8 @@ function initGraphicManager(graphic) {
               <th scope="col" colspan="2" style="text-align:center;font-size:15px;">我是graphic上绑定的Popup </th>
             </tr>
             <tr>
-              <td>属性：</td>
+              <td>提示：</td>
               <td>这只是测试信息，可以任意html</td>
-            </tr>
-            <tr>
-              <td>视频：</td>
-              <td><video src='http://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style="width: 300px;" ></video></td>
             </tr>
           </table>`;
   graphic.bindPopup(inthtml).openPopup();

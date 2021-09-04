@@ -26,7 +26,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,web-icons,bootstrap,bootstrap-select,bootstrap-checkbox,toastr,jquery.range,jstree,layer,haoutil,turf,mars3d,localforage"
+      include="jquery,font-awesome,web-icons,bootstrap,bootstrap-select,bootstrap-checkbox,bootstrap-slider,toastr,jstree,layer,haoutil,turf,mars3d,localforage"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -186,15 +186,15 @@
         <tr>
           <td>显示精度：</td>
           <td>
-            <input id="txt_maximumScreenSpaceError" type="range" min="1" max="30.0" step="1" value="8.0" title="显示精度" />
+            <input id="txt_maximumScreenSpaceError" title="显示精度" />
           </td>
           <td>材质底色：</td>
           <td>
-            <input id="txt_luminanceAtZenith" type="range" min="0.1" max="3.0" step="0.1" value="0.2" title="材质底色" />
+            <input id="txt_luminanceAtZenith" title="材质底色" />
           </td>
           <td>透明度：</td>
           <td>
-            <input id="txt_opacity" type="range" min="0.1" max="1.0" step="0.1" value="1.0" title="透明度：" />
+            <input id="txt_opacity"  title="透明度：" />
           </td>
         </tr>
       </table>
@@ -282,27 +282,27 @@
         });
 
         //滑动条
-        $("#txt_maximumScreenSpaceError").range({
-          onChange: function (value, bfb) {
+        $("#txt_maximumScreenSpaceError")
+          .slider({ min: 1, max: 30.0, step: 1, value: 8.0 })
+          .on("change", (e) => {
             if (tiles3dLayer?.tileset) {
-              tiles3dLayer.tileset.maximumScreenSpaceError = value;
+              tiles3dLayer.tileset.maximumScreenSpaceError = e.value.newValue;
             }
-          },
-        });
-        $("#txt_luminanceAtZenith").range({
-          onChange: function (value, bfb) {
+          });
+        $("#txt_luminanceAtZenith")
+          .slider({ min: 0.1, max: 3.0, step: 0.1, value: 0.2 })
+          .on("change", (e) => {
             if (tiles3dLayer?.tileset) {
-              tiles3dLayer.tileset.luminanceAtZenith = value;
+              tiles3dLayer.tileset.luminanceAtZenith = e.value.newValue;
             }
-          },
-        });
-        $("#txt_opacity").range({
-          onChange: function (value, bfb) {
+          });
+        $("#txt_opacity")
+          .slider({ min: 0.1, max: 1.0, step: 0.1, value: 1.0 })
+          .on("change", (e) => {
             if (tiles3dLayer?.tileset) {
-              tiles3dLayer.opacity = value;
+              tiles3dLayer.opacity = e.value.newValue;
             }
-          },
-        });
+          });
 
         //树控件
         initSceneTree();

@@ -619,11 +619,11 @@ var plotEdit = {
           if (!attrVal) {
             attrVal = $("#" + parname + attrName).val();
           }
-          if (attrVal !== null && attrVal !== undefined) {
-            this._last_attr.style[attrName] = attrVal;
-          }
+          // if (attrVal !== null && attrVal !== undefined) {
+          //   this._last_attr.style[attrName] = attrVal;
+          // }
         } else {
-          delete this._last_attr.style[attrName];
+          // delete this._last_attr.style[attrName];
           $("#" + parname + "tr_" + attrName).hide();
         }
       }

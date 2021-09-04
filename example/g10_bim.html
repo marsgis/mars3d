@@ -25,10 +25,17 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
+    <style>
+      /* 设置单个滑轨的样式 */
+      #oneSlider {
+        width: 100%;
+        margin-left: -100px;
+      }
+    </style>
   </head>
 
   <body class="dark">
@@ -50,7 +57,7 @@
           </td>
           <td>地表透明度：</td>
           <td colspan="2">
-            <input id="alpha" type="range" min="0.0" max="1.0" step="0.1" value="0.5" />
+            <input id="alpha"/>
           </td>
         </tr>
 
@@ -75,7 +82,7 @@
           <td>模型裁剪：</td>
           <td>裁剪距离：</td>
           <td>
-            <input id="rangeDistance" type="range" min="-50" max="50" step="0.1" value="0" title="距离" />
+            <input id="rangeDistance" title="距离" />
           </td>
           <td colspan="2">
             <input type="button" class="btn btn-primary" value="切顶" id="btnClipTop" />
@@ -134,6 +141,18 @@
         });
         map.addLayer(tiles3dLayer);
 
+        // 设置滑动条样式
+        $("#alpha")
+          .slider({ id: "oneSlider", min: 0.0, max: 1.0, step: 0.1, value: 0.5 })
+          .on("change", (e) => {
+            underground.alpha = e.value.newValue;
+          });
+        $("#rangeDistance")
+          .slider({ min: -50, max: 50, step: 0.1, value: 0 })
+          .on("change", (e) => {
+            tilesetPlanClip.distance = e.value.newValue;
+          });
+
         //单击事件
         tiles3dLayer.on(mars3d.EventType.click, function (event) {
           console.log("单击了3dtiles图层", event);
@@ -164,12 +183,6 @@
           var val = $(this).is(":checked");
 
           underground.enabled = val;
-        });
-
-        $("#alpha").range({
-          onChange: function (value, bfb) {
-            underground.alpha = value;
-          },
         });
 
         // 挖地区域
@@ -270,13 +283,6 @@
 
         $("#btnClearClip").click(function () {
           tilesetPlanClip.clear();
-        });
-
-        //滑动条
-        $("#rangeDistance").range({
-          onChange: function (value, bfb) {
-            tilesetPlanClip.distance = value;
-          },
         });
 
         $("#btnClipTop").click(function () {

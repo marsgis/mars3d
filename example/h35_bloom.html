@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -53,31 +53,31 @@
         <tr>
           <td>对比度</td>
           <td>
-            <input id="txt_contrast" type="range" min="-255.0" max="255.0" step="0.01" value="128" />
+            <input id="txt_contrast" />
           </td>
         </tr>
         <tr>
           <td>亮度</td>
           <td>
-            <input id="txt_brightness" type="range" min="-1.0" max="3.0" step="0.01" value="-0.3" />
+            <input id="txt_brightness" />
           </td>
         </tr>
         <tr>
           <td>增量</td>
           <td>
-            <input id="txt_delta" type="range" min="1" max="5" step="0.01" value="1.0" />
+            <input id="txt_delta" />
           </td>
         </tr>
         <tr>
           <td>步长</td>
           <td>
-            <input id="txt_stepSize" type="range" min="0" max="7" step="0.01" value="5.0" />
+            <input id="txt_stepSize" />
           </td>
         </tr>
         <tr>
           <td>Sigma</td>
           <td>
-            <input id="txt_sigma" type="range" min="1" max="10" step="0.01" value="3.78" />
+            <input id="txt_sigma" />
           </td>
         </tr>
       </table>
@@ -166,31 +166,31 @@
           bloomEffect.enabled = val;
         });
 
-        $("#txt_contrast").range({
-          onChange: function (value, bfb) {
-            bloomEffect.contrast = value;
-          },
-        });
-        $("#txt_brightness").range({
-          onChange: function (value, bfb) {
-            bloomEffect.brightness = value;
-          },
-        });
-        $("#txt_delta").range({
-          onChange: function (value, bfb) {
-            bloomEffect.delta = value;
-          },
-        });
-        $("#txt_sigma").range({
-          onChange: function (value, bfb) {
-            bloomEffect.sigma = value;
-          },
-        });
-        $("#txt_stepSize").range({
-          onChange: function (value, bfb) {
-            bloomEffect.stepSize = value;
-          },
-        });
+        $("#txt_contrast")
+          .slider({ min: -255.0, max: 255.0, step: 0.01, value: 128 })
+          .on("change", (e) => {
+            bloomEffect.contrast = e.value.newValue;
+          });
+        $("#txt_brightness")
+          .slider({ min: -1.0, max: 3.0, step: 0.01, value: -0.3 })
+          .on("change", (e) => {
+            bloomEffect.brightness = e.value.newValue;
+          });
+        $("#txt_delta")
+          .slider({ min: 1, max: 5, step: 0.01, value: 1.0 })
+          .on("change", (e) => {
+            bloomEffect.delta = e.value.newValue;
+          });
+        $("#txt_sigma")
+          .slider({ min: 1, max: 10, step: 0.01, value: 3.78 })
+          .on("change", (e) => {
+            bloomEffect.sigma = e.value.newValue;
+          });
+        $("#txt_stepSize")
+          .slider({ min: 0, max: 7, step: 0.01, value: 5.0 })
+          .on("change", (e) => {
+            bloomEffect.stepSize = e.value.newValue;
+          });
       }
     </script>
   </body>

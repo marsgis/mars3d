@@ -413,8 +413,8 @@
           { "text": "纯色", "value": "Color", "impact": ["color", "opacity"] },
           { "text": "波纹", "value": "CircleWave", "impact": ["color", "opacity", "speed", "count", "gradient"] },
           { "text": "网格", "value": "Grid", "impact": ["cellAlpha", "lineCount", "lineThickness"] },
-          { "text": "条纹", "value": "Stripe", "impact": ["color", "opacity", "repeat", "evenColor", "oddColor"] },
-          { "text": "棋盘", "value": "Checkerboard", "impact": ["color", "opacity", "repeat", "evenColor", "oddColor"] },
+          { "text": "条纹", "value": "Stripe", "impact": ["repeat", "evenColor", "oddColor"] },
+          { "text": "棋盘", "value": "Checkerboard", "impact": ["repeat", "evenColor", "oddColor"] },
           { "text": "图片", "value": "Image", "impact": ["image", "opacity"] }
         ]
       },

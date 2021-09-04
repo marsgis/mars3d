@@ -1935,16 +1935,28 @@ declare class NightVisionEffect extends BaseEffect {
  * @param options - 参数对象，包括以下：
  * @param [options.enabled = true] - 对象的启用状态
  * @param [options.speed = 10] - 速度
+ * @param [options.size = 20] - 雨粒子大小
+ * @param [options.direction = -30] - 雨的方向（度），0度垂直向下
  */
 declare class RainEffect extends BaseEffect {
     constructor(options: {
         enabled?: boolean;
         speed?: number;
+        size?: number;
+        direction?: number;
     });
     /**
      * 速度
      */
     speed: number;
+    /**
+     * 雨粒子大小
+     */
+    size: number;
+    /**
+     * 雨的方向（度），0度垂直向下
+     */
+    direction: number;
 }
 
 /**
@@ -2318,7 +2330,9 @@ declare class BaseGraphic extends BaseClass {
      * @param [content.show] - 菜单项是否显示的回调方法
      * @param [content.callback] - 菜单项单击后的回调方法
      * @param [content.children] - 当有二级子菜单时，配置数组。
-     * @param [options = {}] - 参数对象(预留，目前未用)
+     * @param [options = {}] - 控制参数
+     * @param [options.offsetX] - 用于非规则对象时，横向偏移的px像素值
+     * @param [options.offsetY] - 用于非规则对象时，垂直方向偏移的px像素值
      * @returns 当前对象本身，可以链式调用
      */
     bindContextMenu(content: {
@@ -2327,7 +2341,10 @@ declare class BaseGraphic extends BaseClass {
         show?: ((...params: any[]) => any) | boolean;
         callback?: (...params: any[]) => any;
         children?: object[];
-    }[], options?: any): this;
+    }[], options?: {
+        offsetX?: number;
+        offsetY?: number;
+    }): this;
     /**
      * 解除绑定的右键菜单
      * @param [stopPropagation = false] - 单击事件中是否继续冒泡查找
@@ -6251,6 +6268,13 @@ declare class BasePointPrimitive extends BasePrimitive {
      */
     roll: number;
     /**
+     * 设置并添加动画轨迹位置，按“指定时间”运动到达“指定位置”。
+     * @param point - 指定位置坐标
+     * @param [currTime = Cesium.JulianDate.now()] - 指定时间, 默认为当前时间5秒后。当为String时，可以传入'2021-01-01 12:13:00'; 当为Number时，可以传入当前时间延迟的秒数。
+     * @returns 当前对象本身，可以链式调用
+     */
+    addDynamicPosition(point: LatLngPoint | Cesium.Cartesian3, currTime?: Cesium.JulianDate | string | number): this;
+    /**
      * 异步计算更新坐标进行贴地(或贴模型)
      * @param [options = {}] - 参数对象:
      * @param [options.has3dtiles = auto] - 是否在3dtiles模型上分析（模型分析较慢，按需开启）,默认内部根据点的位置自动判断（但可能不准）
@@ -7309,7 +7333,7 @@ declare namespace PointPrimitive {
  * @param options.position - 坐标位置
  * @param options.style - 样式信息
  * @param [options.attr] - 附件的属性信息，可以任意附加属性，导出geojson或json时会自动处理导出。
- * @param [options.frameRate = 30] - 当postion为CallbackProperty时，多少帧获取一次数据。用于控制效率，如果卡顿就把该数值调大一些。
+ * @param [options.frameRate = 1] - 当postion为CallbackProperty时，多少帧获取一次数据。用于控制效率，如果卡顿就把该数值调大一些。
  */
 declare class PointPrimitive extends BasePointPrimitive {
     constructor(options: {
@@ -7323,10 +7347,6 @@ declare class PointPrimitive extends BasePointPrimitive {
      * 当加载primitive数据的内部Cesium容器
      */
     readonly primitiveCollection: Cesium.PointPrimitiveCollection;
-    /**
-     * 位置坐标 （笛卡尔坐标）, 赋值时可以传入LatLngPoint对象
-     */
-    position: Cesium.Cartesian3;
 }
 
 declare namespace PolygonPrimitive {
@@ -7644,6 +7664,37 @@ declare class WallPrimitive extends BasePolyPrimitive {
     });
 }
 
+declare namespace Water {
+    /**
+     * 水面   Primitive图元 支持的样式信息
+     * @property [baseWaterColor = "#123e59"] - 基础颜色
+     * @property [blendColor = "#123e59"] - 从水中混合到非水域时使用的rgba颜色对象。
+     * @property [specularMap] - 单一通道纹理用来指示水域的面积。
+     * @property [normalMap] - 水正常扰动的法线图。
+     * @property [frequency = 8000] - 控制波数的数字。
+     * @property [animationSpeed = 0.03] - 控制水的动画速度的数字。
+     * @property [amplitude = 5.0] - 控制水波振幅的数字。
+     * @property [specularIntensity = 0.8] - 控制镜面反射强度的数字。
+     * @property [fadeFactor = 1.0] - fadeFactor
+     * @property [opacity = 1.0] - 透明度，取值范围：0.0-1.0
+     * @property [clampToGround = false] - 是否贴地
+     * @property [options.父类参数] - 支持父类的参数
+     */
+    type StyleOptions = {
+        baseWaterColor?: string;
+        blendColor?: string;
+        specularMap?: string;
+        normalMap?: string;
+        frequency?: number;
+        animationSpeed?: number;
+        amplitude?: number;
+        specularIntensity?: number;
+        fadeFactor?: number;
+        opacity?: number;
+        clampToGround?: boolean;
+    };
+}
+
 /**
  * 水域面 Primitive图元 矢量对象
  * @param options - 参数对象，包括以下：
@@ -7658,7 +7709,7 @@ declare class Water extends PolygonPrimitive {
         通用参数?: BaseGraphic.ConstructorOptions;
         通用参数P?: BasePrimitive.ConstructorOptions;
         positions: LatLngPoint[] | Cesium.Cartesian3[];
-        style: PolygonPrimitive.StyleOptions;
+        style: Water.StyleOptions;
         attr?: any;
     });
 }
@@ -8185,7 +8236,7 @@ declare namespace RoamLine {
  * @param [options.camera.offsetZ = 0] - 'dy'锁定第一视角时，锁定点的本身的Z轴方向（高度）偏移值
  * @param [options.clockRange] - 指定播放的模式
  * @param [options.clockLoop = false] - 是否循环播放，等价于clockRange:Cesium.ClockRange.LOOP_STOP
- * @param [options.autoStop = false] - 是否自动停止，等价于clockRange:Cesium.ClockRange.UNBOUNDED
+ * @param [options.autoStop = false] - 是否自动停止
  *
  * //以下是 clampToGround中使用的
  * @param [options.splitNum = 100] - 当clampToGround计算时，插值数，等比分割的个数
@@ -8518,7 +8569,9 @@ declare class BaseGraphicLayer extends BaseLayer {
      * @param [content.show] - 菜单项是否显示的回调方法
      * @param [content.callback] - 菜单项单击后的回调方法
      * @param [content.children] - 当有二级子菜单时，配置数组。
-     * @param [options = {}] - 参数对象(预留，目前未用)
+     * @param [options = {}] - 控制参数
+     * @param [options.offsetX] - 用于非规则对象时，横向偏移的px像素值
+     * @param [options.offsetY] - 用于非规则对象时，垂直方向偏移的px像素值
      * @returns 当前对象本身，可以链式调用
      */
     bindContextMenu(content: {
@@ -8527,7 +8580,10 @@ declare class BaseGraphicLayer extends BaseLayer {
         show?: ((...params: any[]) => any) | boolean;
         callback?: (...params: any[]) => any;
         children?: object[];
-    }[], options?: any): this;
+    }[], options?: {
+        offsetX?: number;
+        offsetY?: number;
+    }): this;
     /**
      * 解除绑定的右键菜单
      * @param [stopPropagation = false] - 单击事件中是否继续冒泡查找
@@ -11769,8 +11825,8 @@ declare namespace Map {
      * @property cameraController - 相机操作相关参数
      * @property [cameraController.zoomFactor = 3.0] - 鼠标滚轮放大的步长参数
      * @property [cameraController.constrainedAxis = true] - 为false时 解除在南北极区域鼠标操作限制
-     * @property [cameraController.minimumZoomDistance = 1.0] - 变焦时相机位置的最小量级（以米为单位）。默认为1
-     * @property [cameraController.maximumZoomDistance = 50000000.0] - 变焦时相机位置的最大值（以米为单位）
+     * @property [cameraController.minimumZoomDistance = 1.0] - 变焦时相机位置的最小量级（以米为单位），默认为1。该值是相机与地表(含地形)的相对距离。
+     * @property [cameraController.maximumZoomDistance = 50000000.0] - 变焦时相机位置的最大值（以米为单位）。该值是相机与地表(含地形)的相对距离。
      * @property [cameraController.minimumCollisionTerrainHeight = 80000] - 低于此高度时绕鼠标键绕圈，大于时绕视图中心点绕圈。
      * @property [cameraController.enableRotate = true] - 2D和3D视图下，是否允许用户旋转相机
      * @property [cameraController.enableTranslate = true] - 2D和哥伦布视图下，是否允许用户平移地图
@@ -12846,7 +12902,9 @@ declare class Map extends BaseClass {
      * @param [content.show] - 菜单项是否显示的回调方法
      * @param [content.callback] - 菜单项单击后的回调方法
      * @param [content.children] - 当有二级子菜单时，配置数组。
-     * @param [options = {}] - 参数对象(预留，目前未用)
+     * @param [options = {}] - 控制参数
+     * @param [options.offsetX] - 用于非规则对象时，横向偏移的px像素值
+     * @param [options.offsetY] - 用于非规则对象时，垂直方向偏移的px像素值
      * @returns 当前对象本身，可以链式调用
      */
     bindContextMenu(content: {
@@ -12855,7 +12913,10 @@ declare class Map extends BaseClass {
         show?: ((...params: any[]) => any) | boolean;
         callback?: (...params: any[]) => any;
         children?: object[];
-    }[], options?: any): this;
+    }[], options?: {
+        offsetX?: number;
+        offsetY?: number;
+    }): this;
     /**
      * 解除绑定的右键菜单
      * @returns 当前对象本身，可以链式调用
@@ -14792,7 +14853,7 @@ declare namespace Satellite {
  * @param [options.path.closure = false] - 是否闭合轨道圆
  * @param [options.shadingLine] - 设置是否显示 星下轨迹 和对应的样式
  * @param [options.fixedFrameTransform] - 参考系
- * @param [options.frameRate = 30] - 多少帧刷新1次，控制效率，如果卡顿就把该数值调大一些。
+ * @param [options.frameRate = 50] - 多少帧刷新1次，控制效率，如果卡顿就把该数值调大一些。
  */
 declare class Satellite extends BaseGraphic {
     constructor(options: {
@@ -15302,11 +15363,17 @@ declare class TdtDmLayer extends BaseLayer {
         key?: string;
     });
     /**
-     * 对象添加到地图前创建一些对象的钩子方法，
-     * 只会调用一次
+     * 对象添加到地图上的创建钩子方法，
+     * 每次add时都会调用
      * @returns 无
      */
-    _mountedHook(): void;
+    _addedHook(): void;
+    /**
+     * 对象从地图上移除的创建钩子方法，
+     * 每次remove时都会调用
+     * @returns 无
+     */
+    _removedHook(): void;
 }
 
 /**
@@ -16353,7 +16420,7 @@ declare class GaodeRoute {
      * 按指定类别自动查询
      * @param queryOptions - 查询参数
      * @param queryOptions.type - 类型
-     * @param queryOptions.points - 按起点、途经点、终点 顺序的坐标数组,如[[117.500244, 40.417801],[117.500244, 40.417801]]
+     * @param queryOptions.points - 按起点、终点 顺序的坐标数组,如[[117.500244, 40.417801],[117.500244, 40.417801]]
      * @param [queryOptions.success] - 查询完成的回调方法
      * @param [queryOptions.error] - 查询失败的回调方法
      * @returns 当前对象本身，可以链式调用
@@ -16418,6 +16485,7 @@ declare class GaodeRoute {
      * 驾车路径规划查询
      * @param queryOptions - 查询参数
      * @param queryOptions.points - 按起点、途经点、终点 顺序的坐标数组,如[[117.500244, 40.417801],[117.500244, 40.417801]]
+     * @param queryOptions.avoidpolygons - 区域避让数组，支持32个避让区域，每个区域最多可有16个顶点。避让区域不能超过81平方公里，否则避让区域会失效。
      * @param [queryOptions.extensions = 'base'] - 返回结果控制,可选值：core/all  base:返回基本信息；all：返回全部信息
      * @param [queryOptions.strategy = 0] - 驾车选择策略，参考高德官网说明，默认为0：速度优先，不考虑当时路况，此路线不一定距离最短
      * @param [queryOptions.success] - 查询完成的回调方法
@@ -16426,6 +16494,7 @@ declare class GaodeRoute {
      */
     queryDriving(queryOptions: {
         points: any[][];
+        avoidpolygons: any[][];
         extensions?: string;
         strategy?: string;
         success?: (...params: any[]) => any;
@@ -16568,9 +16637,9 @@ declare class QueryGeoServer {
      * 按指定类别自动查询
      * @param queryOptions - 查询参数
      * @param [queryOptions.text] - 检索关键字。
-     * @param [queryOptions.column] - 检索关键字的字段名称。
-     * @param [queryOptions.geoColumn = 'the_geom'] - 检索关键字的字段名称。
+     * @param [queryOptions.column] - 检索关键字的属性名称(PropertyName)。
      * @param [queryOptions.graphic] - 限定的搜索区域
+     * @param [queryOptions.geoColumn = 'the_geom'] - 搜索区域的属性名称(PropertyName)。
      * @param [queryOptions.bbox] - 限定的矩形范围（左下角X坐标,左下角Y坐标,右上角X坐标,右上角Y坐标,EPSG：4326）
      * @param [queryOptions.sortby] - 排序字段
      * @param [queryOptions.maxFeatures = 1000] - 最多返回结果个数
@@ -16581,8 +16650,8 @@ declare class QueryGeoServer {
     query(queryOptions: {
         text?: string;
         column?: string;
-        geoColumn?: string;
         graphic?: BaseGraphic;
+        geoColumn?: string;
         bbox?: string;
         sortby?: string;
         maxFeatures?: number;
@@ -20032,6 +20101,19 @@ declare module "Util" {
      * @returns 无
      */
     function msg(msg: string): void;
+    /**
+     * 将 时间 转化为指定格式的字符串
+     * @example
+     * mars3d.Util.formatDate(date,"yyyy-MM-dd HH:mm:ss") ==> 2017-08-25 08:08:00
+     * mars3d.Util.formatDate(date,"yyyy-MM-dd HH:mm:ss.S") ==> 2017-08-25 08:08:00.423
+     * mars3d.Util.formatDate(date,"yyyy-M-d HH:mm:ss") ==> 2017-8-5 08:08:00
+     * mars3d.Util.formatDate(date,"yyyy-MM-dd EE hh:mm:ss") ==> 2016-03-10 周二 08:09:04
+     * mars3d.Util.formatDate(date,"yyyy-MM-dd EEE hh:mm:ss") ==> 2016-03-10 星期二 08:09:04
+     * @param date - 时间
+     * @param fmt - 格式模版，月(M)、日(d)、12小时(h)、24小时(H)、分(m)、秒(s)、周(E)、季度(q) 可以用 1-2 个占位符; 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字).
+     * @returns 指定格式的字符串
+     */
+    function formatDate(date: Date, fmt: string): string;
     /**
      * 根据设置的lang参数，获取当前key对应语言的文本内容。
      * @param key - 文本key

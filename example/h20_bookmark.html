@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d,localforage"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -172,19 +172,15 @@
         map.addLayer(graphicLayer);
 
         //加载历史数据
-        var lastData = haoutil.storage.get("h20_bookmark");
-        if (lastData) {
-          arrView = JSON.parse(lastData);
-          console.log("加载显示历史数据", arrView);
-
-          for (var i = 0; i < arrView.length; i++) {
-            let item = arrView[i];
+        localforage.getItem("h20_bookmark").then(function (markArr) {
+          console.log("历史数据", markArr);
+          for (var i = 0; i < markArr.length; i++) {
+            let item = markArr[i];
             addBookmark(item);
           }
-
           $("#addView .no-found").remove();
-          index = arrView[arrView.length - 1].id;
-        }
+          index = markArr[markArr.length - 1].id;
+        });
 
         // 添加视角
         $("#addtxtName").click(() => {
@@ -222,7 +218,7 @@
               addBookmark(item);
 
               //记录到历史
-              haoutil.storage.add("h20_bookmark", JSON.stringify(arrView));
+              localforage.setItem("h20_bookmark", arrView);
             },
           });
         });

@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -53,25 +53,25 @@
         <tr>
           <td>焦距</td>
           <td>
-            <input id="txt_focalDistance" type="range" min="0.0" max="500.0" step="1" value="87" />
+            <input id="txt_focalDistance"/>
           </td>
         </tr>
         <tr>
           <td>增量</td>
           <td>
-            <input id="txt_delta" type="range" min="0.1" max="2" step="0.01" value="1" />
+            <input id="txt_delta"  />
           </td>
         </tr>
         <tr>
           <td>Sigma</td>
           <td>
-            <input id="txt_sigma" type="range" min="0.5" max="5" step="0.01" value="3.78" />
+            <input id="txt_sigma" />
           </td>
         </tr>
         <tr>
           <td>步长</td>
           <td>
-            <input id="txt_stepSize" type="range" min="0" max="7" step="0.01" value="2.46" />
+            <input id="txt_stepSize" />
           </td>
         </tr>
       </table>
@@ -114,26 +114,26 @@
 
           depthOfField.enabled = val;
         });
-        $("#txt_focalDistance").range({
-          onChange: function (value, bfb) {
-            depthOfField.focalDistance = value;
-          },
-        });
-        $("#txt_delta").range({
-          onChange: function (value, bfb) {
-            depthOfField.delta = value;
-          },
-        });
-        $("#txt_sigma").range({
-          onChange: function (value, bfb) {
-            depthOfField.sigma = value;
-          },
-        });
-        $("#txt_stepSize").range({
-          onChange: function (value, bfb) {
-            depthOfField.stepSize = value;
-          },
-        });
+        $("#txt_focalDistance")
+          .slider({ min: 0.0, max: 500.0, step: 1, value: 87 })
+          .on("change", (e) => {
+            depthOfField.focalDistance = e.value.newValue;
+          });
+        $("#txt_delta")
+          .slider({ min: 0.1, max: 2, step: 0.01, value: 1 })
+          .on("change", (e) => {
+            depthOfField.delta = e.value.newValue;
+          });
+        $("#txt_sigma")
+          .slider({ min: 0.5, max: 5, step: 0.01, value: 3.78 })
+          .on("change", (e) => {
+            depthOfField.sigma = e.value.newValue;
+          });
+        $("#txt_stepSize")
+          .slider({ min: 0, max: 7, step: 0.01, value: 2.46 })
+          .on("change", (e) => {
+            depthOfField.stepSize = e.value.newValue;
+          });
       }
     </script>
   </body>

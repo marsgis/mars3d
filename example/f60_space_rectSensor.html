@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d,mars3d-space"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d,mars3d-space"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -53,32 +53,32 @@
         <tr>
           <td class="nametd">方向角（heading）</td>
           <td>
-            <input id="model_heading" type="range" min="0" max="360" step="0.01" value="0" title="方向heading" />
+            <input id="model_heading"/>
           </td>
         </tr>
         <tr>
           <td class="nametd">俯仰角（pitch）</td>
           <td>
-            <input id="model_pitch" type="range" min="-180" max="180" step="0.01" value="40" title="仰角pitch" />
+            <input id="model_pitch" />
           </td>
         </tr>
         <tr>
           <td class="nametd">左右角（roll）</td>
           <td>
-            <input id="model_roll" type="range" min="-180" max="180" step="0.01" value="0" title="左右roll" />
+            <input id="model_roll"  />
           </td>
         </tr>
 
         <tr>
           <td class="nametd">夹角1(半场角)</td>
           <td>
-            <input id="model_angle1" type="range" min="0.1" max="89" step="0.01" value="30" />
+            <input id="model_angle1"  />
           </td>
         </tr>
         <tr>
           <td class="nametd">夹角2(半场角)</td>
           <td>
-            <input id="model_angle2" type="range" min="0.1" max="89" step="0.01" value="30" />
+            <input id="model_angle2" />
           </td>
         </tr>
         <tr>
@@ -140,6 +140,33 @@
         });
         graphicLayer.addGraphic(graphic);
 
+        //滑动条
+        $("#model_heading")
+          .slider({ min: 0, max: 360, step: 0.01, value: 0 })
+          .on("change", (e) => {
+            rectSensor.heading = e.value.newValue;
+          });
+        $("#model_pitch")
+          .slider({ min: -180, max: 180, step: 0.01, value: 40 })
+          .on("change", (e) => {
+            rectSensor.pitch = e.value.newValue;
+          });
+        $("#model_roll")
+          .slider({ min: -180, max: 180, step: 0.01, value: 0 })
+          .on("change", (e) => {
+            rectSensor.roll = e.value.newValue;
+          });
+        $("#model_angle1")
+          .slider({ min: 0.1, max: 89, step: 0.01, value: 30 })
+          .on("change", (e) => {
+            rectSensor.angle1 = e.value.newValue;
+          });
+        $("#model_angle2")
+          .slider({ min: 0.1, max: 89, step: 0.01, value: 30 })
+          .on("change", (e) => {
+            rectSensor.angle2 = e.value.newValue;
+          });
+
         //参数
         var heading = Number($("#model_heading").val());
         var pitch = Number($("#model_pitch").val());
@@ -189,35 +216,6 @@
           },
         });
         graphicLayer.addGraphic(testLine);
-
-        //滑动条
-        $("#model_heading").range({
-          onChange: function (value, bfb) {
-            rectSensor.heading = value;
-          },
-        });
-        $("#model_pitch").range({
-          onChange: function (value, bfb) {
-            rectSensor.pitch = value;
-          },
-        });
-        $("#model_roll").range({
-          onChange: function (value, bfb) {
-            rectSensor.roll = value;
-          },
-        });
-
-        $("#model_angle1").range({
-          onChange: function (value, bfb) {
-            rectSensor.angle1 = value;
-          },
-        });
-
-        $("#model_angle2").range({
-          onChange: function (value, bfb) {
-            rectSensor.angle2 = value;
-          },
-        });
 
         $("#model_length").change(function () {
           rectSensor.length = Number($(this).val());

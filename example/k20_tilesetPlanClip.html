@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -79,7 +79,7 @@
         <tr>
           <td class="nametd">裁剪距离</td>
           <td>
-            <input id="rangeDistance" type="range" min="-20" max="20" step="1.0" value="0" title="距离" />
+            <input id="rangeDistance"  title="距离" />
           </td>
           <td style="width: 100px">
             <input id="txtDistance" value="0" type="number" class="form-control" step="0.1" />
@@ -139,15 +139,16 @@
         });
 
         //设置距离
+        $("#rangeDistance")
+          .slider({ min: -20, max: 20, step: 1.0, value: 0 })
+          .on("change", (e) => {
+            var value = e.value.newValue;
+            $("#txtDistance").val(value.toFixed(1));
+            tilesetPlanClip.distance = value;
+          });
         $("#txtDistance").change(function () {
           var value = Number($(this).val());
           tilesetPlanClip.distance = value;
-        });
-        $("#rangeDistance").range({
-          onChange: function (value, bfb) {
-            $("#txtDistance").val(value.toFixed(1));
-            tilesetPlanClip.distance = value;
-          },
         });
 
         $("#btnClipping1").click(function () {

@@ -25,10 +25,17 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.minicolors,jquery.range,layer,font-awesome,jedate,bootstrap,bootstrap-checkbox,admui-frame,haoutil,turf,mars3d,mars3d-space"
+      include="jquery,jquery.minicolors,layer,font-awesome,jedate,bootstrap,bootstrap-checkbox,bootstrap-slider,admui-frame,haoutil,turf,mars3d,mars3d-space"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
+    <style>
+      .slider.slider-horizontal {
+        width: 186px;
+        height: 20px;
+        margin-top: 5px;
+      }
+    </style>
   </head>
 
   <body class="dark">
@@ -43,7 +50,7 @@
         <div class="form-group">
           <label for="txtAngle" class="col-xs-4 col-sm-4 control-label">卫星张角：</label>
           <div class="col-xs-8 col-sm-8" style="padding-left: 0px">
-            <input id="txtAngle" type="range" min="1" max="70" step="1" value="10" />
+            <input id="txtAngle"  />
           </div>
         </div>
 
@@ -70,7 +77,7 @@
         <div class="form-group">
           <label for="txtOpacity" class="col-xs-4 col-sm-4 control-label">区域透明度</label>
           <div class="col-xs-8 col-sm-8" style="padding-left: 0px">
-            <input id="txtOpacity" type="range" min="0.01" max="1.00" step="0.01" value="0.40" />
+            <input id="txtOpacity"  />
           </div>
         </div>
         <div class="form-group" style="text-align: center">
@@ -239,15 +246,15 @@
           $("#txtColor").minicolors("hide");
         });
 
-        $("#txtOpacity").range({
-          onChange: function (value, bfb) {},
-        });
+        $("#txtOpacity")
+          .slider({ min: 0.01, max: 1.0, step: 0.01, value: 0.4 })
+          .on("change", (e) => {});
 
-        $("#txtAngle").range({
-          onChange: function (value, bfb) {
-            weixin.angle1 = value;
-          },
-        });
+        $("#txtAngle")
+          .slider({ min: 1, max: 70, step: 1, value: 10 })
+          .on("change", (e) => {
+            weixin.angle1 = e.value.newValue;
+          });
 
         $("#chkAngleS").change(function () {
           var val = $(this).is(":checked");

@@ -26,7 +26,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d,mars3d-space"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d,mars3d-space"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -60,28 +60,28 @@
         <tr>
           <td class="nametd">轨迹方向（heading）</td>
           <td>
-            <input id="model_heading" type="range" min="0" max="360" step="1" value="0" title="方向heading" />
+            <input id="model_heading" title="方向heading" />
           </td>
           <td>
-            <input id="model_heading_2" type="number" min="0" max="360" step="1" value="0" title="方向heading" />
+            <input id="model_heading_2" readonly="readonly" type="number" min="0" max="360" step="1" value="0" title="方向heading" />
           </td>
         </tr>
         <tr>
           <td class="nametd">前后侧摆（pitch）</td>
           <td>
-            <input id="model_pitch" type="range" min="-180" max="180" step="1" value="0" title="前后侧摆pitch" />
+            <input id="model_pitch" title="前后侧摆pitch" />
           </td>
           <td>
-            <input id="model_pitch_2" type="number" min="-180" max="180" step="1" value="0" title="前后侧摆pitch" />
+            <input id="model_pitch_2" readonly="readonly" type="number" min="-180" max="180" step="1" value="0" title="前后侧摆pitch" />
           </td>
         </tr>
         <tr>
           <td class="nametd">左右侧摆（roll）</td>
           <td>
-            <input id="model_roll" type="range" min="-180" max="180" step="1" value="0" title="左右侧摆roll" />
+            <input id="model_roll"  title="左右侧摆roll" />
           </td>
           <td>
-            <input id="model_roll_2" type="number" min="-180" max="180" step="1" value="0" title="左右侧摆roll" />
+            <input id="model_roll_2" readonly="readonly" type="number" min="-180" max="180" step="1" value="0" title="左右侧摆roll" />
           </td>
         </tr>
 
@@ -127,19 +127,19 @@
         <tr class="coneEntityAttr">
           <td class="nametd">夹角1(半场角)</td>
           <td>
-            <input id="model_angle1" type="range" min="0" max="89" step="0.001" value="5" />
+            <input id="model_angle1" />
           </td>
           <td>
-            <input id="model_angle1_2" type="number" min="0" max="89" step="0.001" value="5" />
+            <input id="model_angle1_2" readonly="readonly" type="number" min="0" max="89" step="0.001" value="5" />
           </td>
         </tr>
         <tr id="tr_angle2" class="coneEntityAttr">
           <td class="nametd">夹角2(半场角)</td>
           <td>
-            <input id="model_angle2" type="range" min="0" max="89" step="0.001" value="10" />
+            <input id="model_angle2"  />
           </td>
           <td>
-            <input id="model_angle2_2" type="number" min="0" max="89" step="0.001" value="10" />
+            <input id="model_angle2_2" readonly="readonly" type="number" min="0" max="89" step="0.001" value="10" />
           </td>
         </tr>
 
@@ -191,6 +191,79 @@
         //创建矢量数据图层
         var graphicLayer = new mars3d.layer.GraphicLayer();
         map.addLayer(graphicLayer);
+
+        //滑动条需要先设置，后才能取值
+        $("#model_heading")
+          .slider({ min: 0, max: 360, step: 1, value: 0 })
+          .on("change", (e) => {
+            $("#model_heading_2").val(e.value.newValue);
+
+            modelGraphic.heading = e.value.newValue;
+            satelliteSensor.heading = e.value.newValue;
+          });
+        $("#model_heading_2").change(function () {
+          var value = Number($(this).val());
+          $("#model_heading").slider("setValue", value);
+
+          modelGraphic.heading = value;
+          satelliteSensor.heading = value;
+        });
+
+        $("#model_pitch")
+          .slider({ min: -180, max: 180, step: 1, value: 0 })
+          .on("change", (e) => {
+            $("#model_pitch_2").val(e.value.newValue);
+
+            modelGraphic.pitch = e.value.newValue;
+            satelliteSensor.pitch = e.value.newValue;
+          });
+        $("#model_pitch_2").change(function () {
+          var value = Number($(this).val());
+          $("#model_pitch").slider("setValue", value);
+
+          modelGraphic.pitch = value;
+          satelliteSensor.pitch = value;
+        });
+
+        $("#model_roll")
+          .slider({ min: -180, max: 180, step: 1, value: 0 })
+          .on("change", (e) => {
+            $("#model_roll_2").val(e.value.newValue);
+
+            modelGraphic.roll = e.value.newValue;
+            satelliteSensor.roll = e.value.newValue;
+          });
+        $("#model_roll_2").change(function () {
+          var value = Number($(this).val());
+          $("#model_roll").slider("setValue", value);
+
+          modelGraphic.roll = value;
+          satelliteSensor.roll = value;
+        });
+
+        $("#model_angle1")
+          .slider({ min: 0, max: 89, step: 0.001, value: 5 })
+          .on("change", (e) => {
+            $("#model_angle1_2").val(e.value.newValue);
+            satelliteSensor.angle1 = e.value.newValue;
+          });
+        $("#model_angle1_2").change(function () {
+          var value = Number($(this).val());
+          $("#model_angle1").slider("setValue", value);
+          satelliteSensor.angle1 = value;
+        });
+
+        $("#model_angle2")
+          .slider({ min: 0, max: 89, step: 0.001, value: 10 })
+          .on("change", (e) => {
+            $("#model_angle2_2").val(e.value.newValue);
+            satelliteSensor.angle2 = e.value.newValue;
+          });
+        $("#model_angle2_2").change(function () {
+          var value = Number($(this).val());
+          $("#model_angle2").slider("setValue", value);
+          satelliteSensor.angle2 = value;
+        });
 
         //测试位置
         $("#model_x").val(117.169969);
@@ -268,81 +341,6 @@
 
         $("#chkUnderground").click(function () {
           satelliteSensor.rayEllipsoid = $(this)[0].checked;
-        });
-
-        //滑动条
-        $("#model_heading").range({
-          onChange: function (value, bfb) {
-            $("#model_heading_2").val(value);
-
-            modelGraphic.heading = value;
-            satelliteSensor.heading = value;
-          },
-        });
-
-        $("#model_heading_2").change(function () {
-          var value = Number($(this).val());
-          $("#model_heading").val(value);
-
-          modelGraphic.heading = value;
-          satelliteSensor.heading = value;
-        });
-
-        $("#model_pitch").range({
-          onChange: function (value, bfb) {
-            $("#model_pitch_2").val(value);
-
-            modelGraphic.pitch = value;
-            satelliteSensor.pitch = value;
-          },
-        });
-
-        $("#model_pitch_2").change(function () {
-          var value = Number($(this).val());
-          $("#model_pitch").val(value);
-
-          modelGraphic.pitch = value;
-          satelliteSensor.pitch = value;
-        });
-
-        $("#model_roll").range({
-          onChange: function (value, bfb) {
-            $("#model_roll_2").val(value);
-
-            modelGraphic.roll = value;
-            satelliteSensor.roll = value;
-          },
-        });
-        $("#model_roll_2").change(function () {
-          var value = Number($(this).val());
-          $("#model_roll").val(value);
-
-          modelGraphic.roll = value;
-          satelliteSensor.roll = value;
-        });
-
-        $("#model_angle1").range({
-          onChange: function (value, bfb) {
-            $("#model_angle1_2").val(value);
-            satelliteSensor.angle1 = value;
-          },
-        });
-        $("#model_angle1_2").change(function () {
-          var value = Number($(this).val());
-          $("#model_angle1").val(value);
-          satelliteSensor.angle1 = value;
-        });
-
-        $("#model_angle2").range({
-          onChange: function (value, bfb) {
-            $("#model_angle2_2").val(value);
-            satelliteSensor.angle2 = value;
-          },
-        });
-        $("#model_angle2_2").change(function () {
-          var value = Number($(this).val());
-          $("#model_angle2").val(value);
-          satelliteSensor.angle2 = value;
         });
 
         $("#model_x").change(function () {

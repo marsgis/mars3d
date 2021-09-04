@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d,mars3d-space"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d,mars3d-space"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -59,7 +59,7 @@
         <tr>
           <td class="nametd">夹角(半场角)</td>
           <td>
-            <input id="model_angle1" type="range" min="1" max="89" step="0.01" value="25" />
+            <input id="model_angle1" type="text"/>
           </td>
         </tr>
         <tr>
@@ -124,6 +124,13 @@
         });
         graphicLayer.addGraphic(graphic);
 
+        //滑动条
+        $("#model_angle1")
+          .slider({ min: 1, max: 89, step: 0.01, value: 25 })
+          .on("change", (e) => {
+            conicSensor.angle = e.value.newValue;
+          });
+
         //参数
         var angle = Number($("#model_angle1").val());
         var length = Number($("#model_length").val());
@@ -139,13 +146,6 @@
           },
         });
         graphicLayer.addGraphic(conicSensor);
-
-        //滑动条
-        $("#model_angle1").range({
-          onChange: function (value, bfb) {
-            conicSensor.angle = value;
-          },
-        });
 
         $("#model_length").change(function () {
           conicSensor.length = Number($(this).val());

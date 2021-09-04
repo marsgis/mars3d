@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,jquery.range,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -53,7 +53,7 @@
         <tr>
           <td>亮度</td>
           <td>
-            <input id="txt_brightness" type="range" min="0" max="5.0" step="0.01" value="2.0" />
+            <input id="txt_brightness" />
           </td>
         </tr>
       </table>
@@ -142,11 +142,11 @@
           brightnessEffect.enabled = val;
         });
 
-        $("#txt_brightness").range({
-          onChange: function (value, bfb) {
-            brightnessEffect.brightness = value;
-          },
-        });
+        $("#txt_brightness")
+          .slider({ min: 0, max: 5.0, step: 0.01, value: 2.0 })
+          .on("change", (e) => {
+            brightnessEffect.brightness = e.value.newValue;
+          });
       }
     </script>
   </body>

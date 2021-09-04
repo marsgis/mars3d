@@ -13,7 +13,7 @@ $(function () {
       that.parent().siblings(".mp_tab_con").children().eq(index).addClass("cur").siblings().removeClass("cur");
 
       var _id = $(this).attr("id");
-      haoutil.storage.add(storageName, _id);
+      localforage.setItem(storageName, _id)
     }
   });
 
@@ -35,12 +35,15 @@ function tab2attr() {
 
   // if ($("#tab_plot").hasClass('cur'))
 
-  var last_attr_tab = haoutil.storage.get(storageName); //读取localStorage值
-  if (last_attr_tab != null) {
-    $("#" + last_attr_tab).click();
-  } else {
-    $("#tab_attr").click();
-  }
+   //读取localStorage值
+  localforage.getItem(storageName).then(function (last_attr_tab) {
+    if (last_attr_tab != null) {
+      $("#" + last_attr_tab).click();
+    } else {
+      $("#tab_attr").click();
+    }
+  })
+
 }
 
 function changeOpenShowHide() {
