@@ -36,8 +36,8 @@
         }
 
         var name;
-        if (item.detail_info && item.detail_info.detail_url) {
-          name = '<a href="' + item.detail_info.detail_url + '"  target="_black" style="color: #ffffff; ">' + item.name + "</a>";
+        if (item.detailUrl) {
+          name = '<a href="' + item.detailUrl + '"  target="_black" style="color: #ffffff; ">' + item.name + "</a>";
         } else {
           name = item.name;
         }
@@ -91,7 +91,7 @@
       // 搜索框
       $("#txt_querypoi").click(function () {
         // 文本框内容为空
-        if ($.trim($(this).val()).length == 0) {
+        if ($.trim($(this).val()).length === 0) {
           that.hideAllQueryBarView();
           that.showHistoryList(); // 显示历史记录
         }
@@ -178,7 +178,7 @@
       this._queryPoi.getAddress({
         location: this.map.getCenter(),
         success: (result) => {
-          // console.log('地址', result)
+          // console.log("地址", result);
           this.address = result;
 
           $("#queryAddress").html("地址：" + result.address);
@@ -188,7 +188,6 @@
     hideAllQueryBarView() {
       $("#querybar_histroy_view").hide();
       $("#querybar_autotip_view").hide();
-      $("#querybar_detail_view").hide();
       $("#querybar_resultlist_view").hide();
     }
 
@@ -309,23 +308,14 @@
           item.index = startIdx + (index + 1);
 
           var _id = index;
-          var _mc;
-          if (item.detail_info && item.detail_info.detail_url) {
-            _mc = '<a href="' + item.detail_info.detail_url + '"  target="_black" style="color: #ffffff; ">' + item.name + "</a>";
-          } else {
-            _mc = item.name;
-          }
 
-          inhtml +=
-            '<div class="querybar-site" onclick="queryBaiduPOIWidget.showDetail(\'' +
-            _id +
-            '\')"> <div class="querybar-sitejj"> <h3>' +
-            item.index +
-            "、" +
-            _mc +
-            "</h3> <p>" +
-            (item.address || "") +
-            "</p> </div> </div>";
+          inhtml += `<div class="querybar-site" onclick="queryGaodePOIWidget.showDetail('${_id}')">
+            <div class="querybar-sitejj">
+              <h3>${item.index}、${item.name}
+              <a id="btnShowDetail" href="${item.detailUrl}" target="_blank" class="querybar-more">更多&gt;</a> </h3>
+              <p> ${item.address || ""}</p>
+            </div>
+          </div> `;
 
           this.objResultData[_id] = item;
         }
@@ -390,14 +380,14 @@
       this.clearLayers();
 
       arr.forEach((item) => {
-        var jd = Number(item.x);
-        var wd = Number(item.y);
+        var jd = Number(item.lng);
+        var wd = Number(item.lat);
         if (isNaN(jd) || isNaN(wd)) {
           return;
         }
 
-        item.x = jd;
-        item.y = wd;
+        item.lng = jd;
+        item.lat = wd;
 
         //添加实体
         var graphic = new mars3d.graphic.PointEntity({
@@ -468,8 +458,6 @@
         return;
       }
 
-      this.map.setCameraView({ x: jd, y: wd, minz: 2500 });
-
       //添加实体
       var graphic = new mars3d.graphic.PointEntity({
         position: Cesium.Cartesian3.fromDegrees(jd, wd),
@@ -485,6 +473,8 @@
         },
       });
       this.graphicLayer.addGraphic(graphic);
+
+      graphic.flyTo();
 
       graphic.bindPopup(`<div class="mars-popup-titile">坐标定位</div>
               <div class="mars-popup-content" >

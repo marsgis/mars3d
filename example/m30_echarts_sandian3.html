@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d,mars3d-echarts"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d,mars3d-echarts"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -35,6 +35,14 @@
     <div id="mask" class="signmask" onclick="removeMask()"></div>
 
     <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <!-- 面板 -->
+    <div class="infoview">
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkPointerEvents" class="styled" type="checkbox"  />
+        <label for="chkPointerEvents"> 启用Echars交互 </label>
+      </div>
+    </div>
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
@@ -59,10 +67,17 @@
 
       function createEchartsLayer() {
         var options = getEchartsOption();
-
         options.clampToGround = true; //计算贴地高度
+
+        options.pointerEvents = $("#chkPointerEvents").is(":checked");
+
         var echartsLayer = new mars3d.layer.EchartsLayer(options);
         map.addLayer(echartsLayer);
+
+        $("#chkPointerEvents").change(function () {
+          var val = $(this).is(":checked");
+          echartsLayer.pointerEvents = val;
+        });
 
         $(window).resize(function () {
           echartsLayer.resize();

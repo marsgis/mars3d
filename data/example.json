@@ -1429,6 +1429,12 @@
               "fileName": "f70_query_arcgis"
             },
             {
+              "name": "ArcGIS Server面的查询统计分析",
+              "version": "3.1",
+              "thumbnail": "f70_query_arcgis_polygon.jpg",
+              "fileName": "f70_query_arcgis_polygon"
+            },
+            {
               "name": "GeoServer矢量服务查询(OGC WFS)",
               "version": "1.9",
               "thumbnail": "f70_query_geoserver.jpg",
@@ -1901,6 +1907,12 @@
               "fileName": "h30_daoying"
             },
             {
+              "name": "对象描边",
+              "version": "3.1",
+              "thumbnail": "h30_outlineEffect.jpg",
+              "fileName": "h30_outlineEffect"
+            },
+            {
               "name": "泛光特效",
               "version": "1.6",
               "thumbnail": "h35_bloom.jpg",
@@ -2257,6 +2269,12 @@
         {
           "name": "ECharts支持",
           "children": [
+            {
+              "name": "饼形图标记",
+              "version": "3.1",
+              "thumbnail": "m30_divGraphic_pie.jpg",
+              "fileName": "m30_divGraphic_pie"
+            },
             {
               "name": "散点图 全省经济指标",
               "version": "1.6",

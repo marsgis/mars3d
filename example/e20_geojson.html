@@ -483,7 +483,7 @@
         //绑定事件
         geoJsonLayer.on(mars3d.EventType.load, function (event) {
           console.log("数据加载完成", event);
-          initTree(event.graphics);
+          initTree(event.list);
         });
         geoJsonLayer.on(mars3d.EventType.click, function (event) {
           console.log("单击了图层", event);
@@ -580,7 +580,7 @@
         //绑定事件
         geoJsonLayer.on(mars3d.EventType.load, function (event) {
           console.log("数据加载完成", event);
-          initTree(event.graphics);
+          initTree(event.list);
         });
         geoJsonLayer.on(mars3d.EventType.click, function (event) {
           console.log("单击了图层", event);

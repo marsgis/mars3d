@@ -46,8 +46,8 @@
 
       "defaultContextMenu": true,
       "mouseDownView": true,
-      "compass": { "top": "10px", "right": "5px" },
-      "distanceLegend": { "left": "100px", "bottom": "0px" },
+      "compass": { "bottom": "toolbar", "right": "5px" },
+      "distanceLegend": { "left": "100px", "bottom": "2px" },
       "locationBar": {
         "fps": true,
         "crs":"CGCS2000_GK_Zone_3",
@@ -68,8 +68,7 @@
         "icon": "http://mars3d.cn/example/img/basemaps/tdt_img.png",
         "type": "tdt",
         "layer": "img_d",
-        "key": ["9ae78c51a0a28f06444d541148496e36"],
-        "show": true
+        "key": ["9ae78c51a0a28f06444d541148496e36"]
       },
       {
         "pid": 10,
@@ -123,7 +122,8 @@
         "layers": [
           { "name": "底图", "type": "tencent", "layer": "img_d" },
           { "name": "注记", "type": "tencent", "layer": "img_z" }
-        ]
+        ],
+        "show": true
       },
       {
         "pid": 10,

@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,bootstrap-slider,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -36,6 +36,10 @@
     <div id="mask" class="signmask" onclick="removeMask()"></div>
 
     <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <div class="infoview">
+     速度：<input id="txtSpeed" type="text" />
+    </div>
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
@@ -112,6 +116,27 @@
           primitive.bindPopup(`合肥 - ${item.name}`);
           graphicLayer.addGraphic(primitive);
         }
+
+        $("#txtSpeed")
+          .slider({ min: 1, max: 100, step: 1, value: 10 })
+          .on("slide", (e) => {
+            let speed = e.value;
+            graphicLayer.eachGraphic((graphic) => {
+              if (graphic instanceof mars3d.graphic.PolylinePrimitive) {
+                //只更新速度（平滑过度）
+                graphic.uniforms.speed = speed;
+
+                //更新material
+                // graphic.setStyle({
+                //   material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
+                //     image: "img/textures/lineClr.png",
+                //     color: new Cesium.Color(255 / 255, 201 / 255, 38 / 255, 1),
+                //     speed: speed,
+                //   }),
+                // });
+              }
+            });
+          });
       }
     </script>
   </body>

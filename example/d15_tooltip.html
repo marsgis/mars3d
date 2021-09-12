@@ -156,6 +156,7 @@
             { field: "name", name: "名称" },
             { field: "type", name: "类型" },
           ],
+          tooltipOptions: { direction: "right", offsetX: 10 },
         });
         map.addLayer(geoJsonLayer);
       }
@@ -229,7 +230,7 @@
         }
 
         //绑定Tooltip
-        graphic.bindTooltip(getInnerHtml).openTooltip();
+        graphic.bindTooltip(getInnerHtml, { direction: "right" }).openTooltip();
 
         graphic.on(mars3d.EventType.tooltipOpen, function (event) {
           let container = event.container; //tooltip对应的DOM

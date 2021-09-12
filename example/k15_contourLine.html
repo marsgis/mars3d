@@ -169,21 +169,19 @@
           colorScheme: {
             elevation: {
               step: [0.0, 0.045, 0.1, 0.15, 0.37, 0.54, 1.0],
-              color: ["#000000", "#2747E0", "#D33B7D", "#D33038", "#FF9742", "#FF9742", "#ffd700", "#ffffff"],
+              color: ["#000000", "#2747E0", "#D33B7D", "#D33038", "#FF9742", "#FF9742", "#ffd700"],
             },
             slope: {
               step: [0.0, 0.29, 0.5, Math.sqrt(2) / 2, 0.87, 0.91, 1.0],
-              color: ["#000000", "#2747E0", "#D33B7D", "#D33038", "#FF9742", "#FF9742", "#ffd700", "#ffffff"],
+              color: ["#000000", "#2747E0", "#D33B7D", "#D33038", "#FF9742", "#FF9742", "#ffd700"],
             },
             aspect: {
               step: [0.0, 0.2, 0.4, 0.6, 0.8, 0.9, 1.0],
-              color: ["#000000", "#2747E0", "#D33B7D", "#D33038", "#FF9742", "#FF9742", "#ffd700", "#ffffff"],
+              color: ["#000000", "#2747E0", "#D33B7D", "#D33038", "#FF9742", "#FF9742", "#ffd700"],
             },
           },
         });
         map.addThing(contourLine);
-
-        window.contourLine = contourLine; //for test
 
         //演示的示例区域
         let areaItem = contourLine.addArea([

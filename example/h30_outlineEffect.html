@@ -18,14 +18,14 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>竖直飞线 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>功能示例 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -37,8 +37,6 @@
 
     <div id="mars3dContainer" class="mars3d-container"></div>
 
-
-
     <script src="./js/common.js"></script>
     <script type="text/javascript">
       "use script"; //开发环境建议开启严格模式
@@ -49,61 +47,69 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 31.801072, lng: 117.208356, alt: 1250, heading: 35, pitch: -17 },
+            center: { lat: 31.653633, lng: 117.075814, alt: 310, heading: 33, pitch: -29 },
           },
         });
 
         //创建三维地球场景
         map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        map.basemap = 2017; //切换到蓝色底图
-
-        var tilesetLayer = new mars3d.layer.TilesetLayer({
-          url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
+        //加模型
+        let tiles3dLayer = new mars3d.layer.TilesetLayer({
+          name: "石化工厂",
+          url: "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
+          position: { lng: 117.077158, lat: 31.659116, alt: 24.6 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
-          marsJzwStyle: true, //打开建筑物特效（内置Shader代码）
-          center: { lat: 31.801072, lng: 117.208356, alt: 1250, heading: 35, pitch: -17 },
-          popup: "all",
+          flyTo: true,
         });
-        map.addLayer(tilesetLayer);
+        map.addLayer(tiles3dLayer);
 
-        //创建Graphic图层
+        //加矢量数据
         var graphicLayer = new mars3d.layer.GraphicLayer();
         map.addLayer(graphicLayer);
 
-        var arrData = [];
-        for (var j = 0; j < 100; ++j) {
-          var startPt = randomPoint();
-
-          let endPt = startPt.clone();
-          endPt.alt = haoutil.math.random(1000, 2000);
-
-          arrData.push({
-            positions: [startPt, endPt],
-            style: {
-              width: 1,
-              material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlowColor, {
-                color: "rgb(141,172,172)",
-                speed: haoutil.math.random(10, 20),
-                percent: 0.1,
-                alpha: 0.01,
-              }),
-            },
-          });
-        }
-
-        //多个线对象的合并渲染。
-        var primitive = new mars3d.graphic.PolylineCombine({
-          instances: arrData,
+        var graphicBox = new mars3d.graphic.BoxEntity({
+          position: Cesium.Cartesian3.fromDegrees(117.074033, 31.663258, 31.3),
+          style: {
+            dimensions: new Cesium.Cartesian3(100.0, 100.0, 100.0),
+            material: Cesium.Color.GREY,
+          },
         });
-        graphicLayer.addGraphic(primitive);
-      }
-      //取区域内的随机图标
-      function randomPoint() {
-        var jd = haoutil.math.random(117.208056 * 1000, 117.25548 * 1000) / 1000;
-        var wd = haoutil.math.random(31.816617 * 1000, 31.855756 * 1000) / 1000;
-        return new mars3d.LatLngPoint(jd, wd, 100);
+        graphicLayer.addGraphic(graphicBox);
+
+        var graphic = new mars3d.graphic.EllipsoidEntity({
+          position: Cesium.Cartesian3.fromDegrees(117.074423, 31.664305, 30.8),
+          style: {
+            radii: new Cesium.Cartesian3(50.0, 50.0, 50.0),
+            material: Cesium.Color.GREY,
+          },
+        });
+        graphicLayer.addGraphic(graphic);
+
+        var graphicModel = new mars3d.graphic.ModelEntity({
+          name: "汽车",
+          position: Cesium.Cartesian3.fromDegrees(117.078572, 31.663526, 27.7),
+          style: {
+            url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
+            scale: 1,
+            minimumPixelSize: 50,
+          },
+        });
+        graphicLayer.addGraphic(graphicModel);
+
+        //添加特效
+        var outlineEffect = new mars3d.effect.OutlineEffect({
+          color: "#FFFF00",
+          width: 4,
+          glow: true,
+        });
+        map.addEffect(outlineEffect);
+
+        //绑定事件，对选中的对象进行特性绑定
+        map.on(mars3d.EventType.click, function (event) {
+          outlineEffect.selected = map.mouseEvent.getPicked(event.pickedObject);
+        });
       }
     </script>
   </body>

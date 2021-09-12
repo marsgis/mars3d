@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>vue功能示例 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/" include="vue,font-awesome,turf,mars3d"></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+    <style>
+      /* 十进制面板设置 */
+      .decimalismUi input {
+        height: 27px;
+        border-radius: 0;
+      }
+      /* 度分秒面板设置 */
+      .limitMinuteSecondUi input {
+        height: 27px;
+        border-radius: 0;
+      }
+      /* 平面面板设置 */
+      .planeUi input {
+        height: 27px;
+        border-radius: 0;
+      }
+      .planeUi .el-input:nth-child(2) {
+        margin-top: 2px;
+      }
+      /* 处理input的上下小箭头 */
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+      }
+      .el-input {
+        margin-top: -4px;
+      }
+      .el-radio span {
+        color: white;
+      }
+      .el-radio {
+        margin-right: 10px;
+      }
+      .el-button {
+        width: 70px;
+        margin-top: -3px;
+        margin-left: 48px;
+        background-color: rgba(7, 7, 7, 0.2) !important;
+      }
+      .el-button span {
+        margin-left: -13px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app" style="width: 100%; height: 100%">
+      <div id="mars3dContainer" class="mars3d-container"></div>
+
+      <!-- 面板 -->
+      <div class="infoview">
+        <!-- 单选框按钮 -->
+        <div>
+          <span>范围：</span>
+          <el-radio-group v-model="scopeRadio" @change="changeScopeRadio">
+            <el-radio label="decimalism">十进制</el-radio>
+            <el-radio label="limitMinuteSecond">度分秒</el-radio>
+            <el-radio label="plane">平面坐标</el-radio>
+          </el-radio-group>
+        </div>
+
+        <!-- 十进制面板 -->
+        <div class="decimalismUi" :style="{display:decimalism}">
+          <span>经度：</span>
+          <el-input
+            type="number"
+            v-model.number="positions.lng"
+            placeholder="请输入"
+            @input="inputDecimalismChange($event)"
+            :style="{width:decimalisWidth}"
+            :precision="5"
+          ></el-input>
+          <br />
+          <span>纬度：</span>
+          <el-input
+            type="number"
+            v-model.number="positions.lat"
+            placeholder="请输入"
+            @input="inputDecimalismChange($event)"
+            :style="{width:decimalisWidth}"
+          ></el-input>
+          <br />
+          <span>高程：</span>
+          <el-input
+            type="number"
+            v-model.number="positions.alt"
+            placeholder="请输入"
+            @input="inputDecimalismChange($event)"
+            :style="{width:decimalisWidth}"
+          ></el-input>
+          <br />
+        </div>
+
+        <!-- 度分秒面板 -->
+        <div class="limitMinuteSecondUi" :style="{display:limitMinuteSecond}">
+          <span>经度：</span>
+          <el-input
+            type="number"
+            v-model.number="degreeJD.degree"
+            placeholder="请输入"
+            @input="inputLMSChange($event)"
+            :style="{width:LMSwidth}"
+          ></el-input
+          >&nbsp;°
+          <el-input
+            type="number"
+            v-model.number="degreeJD.minute"
+            placeholder="请输入"
+            @input="inputLMSChange($event)"
+            :style="{width:LMSwidth}"
+          ></el-input
+          >&nbsp;′
+          <el-input
+            type="number"
+            v-model.number="degreeJD.second"
+            placeholder="请输入"
+            @input="inputLMSChange($event)"
+            :style="{width:LMSwidth}"
+          ></el-input
+          >&nbsp;″
+          <br />
+          <span>纬度：</span>
+          <el-input
+            type="number"
+            v-model.number="degreeWD.degree"
+            placeholder="请输入"
+            @input="inputLMSChange($event)"
+            :style="{width:LMSwidth}"
+          ></el-input
+          >&nbsp;°
+          <el-input
+            type="number"
+            v-model.number="degreeWD.minute"
+            placeholder="请输入"
+            @input="inputLMSChange($event)"
+            :style="{width:LMSwidth}"
+          ></el-input
+          >&nbsp;′
+          <el-input
+            type="number"
+            v-model.number="degreeWD.second"
+            placeholder="请输入"
+            @input="inputLMSChange($event)"
+            :style="{width:LMSwidth}"
+          ></el-input
+          >&nbsp;″
+          <br />
+          <span>高程：</span>
+          <el-input
+            type="number"
+            v-model.number="positions.alt"
+            placeholder="请输入"
+            @input="inputTxtNameChange($event)"
+            :style="{width:decimalisWidth}"
+          ></el-input>
+          <br />
+        </div>
+
+        <!-- 平面坐标面板 -->
+        <div class="planeUi" :style="{display:plane}">
+          <div>
+            <span>分带：</span>
+            <el-radio-group v-model="zoningRadio" @change="changeZoningRadio">
+              <el-radio label="three">三度带</el-radio>
+              <el-radio label="six">六度带</el-radio>
+            </el-radio-group>
+          </div>
+          <div>
+            <span>纵坐标：</span>
+            <el-input
+              type="number"
+              v-model.number="coordinate.endlong"
+              placeholder="请输入"
+              @input="inputPlaneChange($event)"
+              :style="{width:decimalisWidth}"
+            ></el-input>
+            <br />
+            <span>横坐标：</span>
+            <el-input
+              type="number"
+              v-model.number="coordinate.cross"
+              placeholder="请输入"
+              @input="inputPlaneChange($event)"
+              :style="{width:decimalisWidth}"
+            ></el-input>
+            <br />
+            <span>高度值：</span>
+            <el-input
+              type="number"
+              v-model.number="positions.alt"
+              placeholder="请输入"
+              @input="inputPlaneChange($event)"
+              :style="{width:decimalisWidth}"
+            ></el-input>
+            <br />
+          </div>
+        </div>
+
+        <!-- 地图坐标按钮 -->
+        <div>
+          <el-button type="primary" plain @click="mapPickUp">图上拾取</el-button>
+          <el-button type="primary" plain @click="flyToPoint">坐标定位</el-button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const App = {
+        data() {
+          return {
+            // radio的默认值
+            scopeRadio: "decimalism",
+            zoningRadio: "six",
+
+            // 拾取点的坐标位置
+            positions: { lng: 117.270617, lat: 31.815012, alt: 0 },
+            degreeJD: { degree: "", minute: "", second: "" }, //度分秒的经度
+            degreeWD: { degree: "", minute: "", second: "" }, //度分秒的纬度
+            coordinate: { endlong: "", cross: "" }, //纵、横坐标
+            //不同面板的input长度
+            LMSwidth: "80px",
+            decimalisWidth: "160px",
+            // 对应面板的显示与隐藏
+            decimalism: "",
+            limitMinuteSecond: "none",
+            plane: "none",
+          };
+        },
+        // 1.1 资源创建
+        mounted() {
+          //判断webgl支持
+          if (!mars3d.Util.webglreport()) {
+            mars3d.Util.webglerror();
+          }
+          //读取 config.json 配置文件
+          let configUrl = "config/config.json";
+          mars3d.Resource.fetchJson({ url: configUrl })
+            .then((json) => {
+              //构建地图
+              this.initMap(json.map3d);
+            })
+            .otherwise((error) => {
+              console.log("加载JSON出错", error);
+              //this.$message.success(error && error.message, '出错了')
+            });
+        },
+        // 1.2 资源销毁
+        beforeDestroy() {
+          this.map.destroy();
+        },
+
+        methods: {
+          initMap(options) {
+            //合并属性参数，可覆盖config.json中的对应配置
+            var mapOptions = mars3d.Util.merge(options, {
+              scene: {
+                center: { lat: 31.728284, lng: 117.274164, alt: 25061, heading: 358, pitch: -69 },
+                fxaa: true,
+              },
+            });
+
+            //创建三维地球场景
+            this.map = new mars3d.Map("mars3dContainer", mapOptions);
+
+            var graphicLayer = new mars3d.layer.GraphicLayer();
+            this.map.addLayer(graphicLayer);
+          },
+          transitionToLMS(lng, lat) {
+            // 经纬度值转换为度分秒
+            let tenJD = mars3d.PointTrans.degree2dms(lng);
+            let tenWD = mars3d.PointTrans.degree2dms(lat);
+            this.degreeJD.degree = tenJD.degree;
+            this.degreeJD.minute = tenJD.minute;
+            this.degreeJD.second = tenJD.second;
+
+            this.degreeWD.degree = tenWD.degree;
+            this.degreeWD.minute = tenWD.minute;
+            this.degreeWD.second = tenWD.second;
+          },
+          changeScopeRadio(value) {
+            if (value == "decimalism") {
+              // 十进制
+              this.decimalism = "";
+              this.limitMinuteSecond = "none";
+              this.plane = "none";
+
+              this.positions.lng = mars3d.Util.formatNum(this.positions.lng, 6);
+              this.positions.lat = mars3d.Util.formatNum(this.positions.lat, 6);
+            } else if (value == "limitMinuteSecond") {
+              //度分秒
+              this.decimalism = "none";
+              this.limitMinuteSecond = "";
+              this.plane = "none";
+
+              // 经纬度值转换为度分秒
+              this.transitionToLMS(this.positions.lng, this.positions.lat);
+            } else if (value == "plane") {
+              //平面
+              this.decimalism = "none";
+              this.limitMinuteSecond = "none";
+              this.plane = "";
+
+              // 经纬度转换为平面坐标
+              // 默认六度带
+              let zoon6 = mars3d.PointTrans.proj4Trans([this.positions.lng, this.positions.lat], mars3d.CRS.EPSG4326, mars3d.CRS.CGCS2000_GK_Zone_6);
+              this.coordinate.endlong = mars3d.Util.formatNum(zoon6[0], 1);
+              this.coordinate.cross = mars3d.Util.formatNum(zoon6[1], 1);
+            }
+          },
+          changeZoningRadio(value) {
+            if (value == "three") {
+              let zone3 = mars3d.PointTrans.proj4Trans([this.positions.lng, this.positions.lat], mars3d.CRS.EPSG4326, mars3d.CRS.CGCS2000_GK_Zone_3);
+              this.coordinate.endlong = mars3d.Util.formatNum(zone3[0], 1);
+              this.coordinate.cross = mars3d.Util.formatNum(zone3[1], 1);
+            } else if (value == "six") {
+              let zoon6 = mars3d.PointTrans.proj4Trans([this.positions.lng, this.positions.lat], mars3d.CRS.EPSG4326, mars3d.CRS.CGCS2000_GK_Zone_6);
+              this.coordinate.endlong = mars3d.Util.formatNum(zoon6[0], 1);
+              this.coordinate.cross = mars3d.Util.formatNum(zoon6[1], 1);
+            }
+          },
+          flyToPoint() {
+            if (this.map.graphicLayer) {
+              this.map.graphicLayer.clear();
+            }
+            // 添加图标点
+            let pointEntity = new mars3d.graphic.PointEntity({
+              position: this.positions,
+              style: {
+                color: "#3388ff",
+                pixelSize: 10,
+                outlineColor: "#ffffff",
+                outlineWidth: 2,
+              },
+            });
+            this.map.graphicLayer.addGraphic(pointEntity);
+            pointEntity.flyTo({ radius: 1000 });
+          },
+          mapPickUp() {
+            this.map.setCursor(true);
+            this.map.once(mars3d.EventType.click, (event) => {
+              this.map.setCursor(false);
+
+              let point = mars3d.LatLngPoint.fromCartesian(event.cartesian);
+
+              // 改变十进制的坐标值
+              this.positions.lng = point.lng;
+              this.positions.lat = point.lat;
+              this.positions.alt = point.alt;
+              // 改变其他面板的坐标值
+              this.changeScopeRadio(this.scopeRadio);
+
+              if (this.map.graphicLayer) {
+                this.map.graphicLayer.clear();
+              }
+              let pointEntity = new mars3d.graphic.PointEntity({
+                position: this.positions,
+                style: {
+                  color: "#3388ff",
+                  pixelSize: 10,
+                  outlineColor: "#ffffff",
+                  outlineWidth: 2,
+                },
+              });
+              this.map.graphicLayer.addGraphic(pointEntity);
+            });
+          },
+          inputDecimalismChange(e) {
+            this.$forceUpdate();
+          },
+          inputPlaneChange(e) {
+            // 将平面坐标系转换为地理坐标系
+            let epsg;
+            if (this.zoningRadio == "three") {
+              epsg = mars3d.PointTrans.proj4Trans([this.coordinate.endlong, this.coordinate.cross], mars3d.CRS.EPSG4326, mars3d.CRS.CGCS2000_GK_Zone_3);
+            } else if (this.zoningRadio == "six") {
+              epsg = mars3d.PointTrans.proj4Trans([this.coordinate.endlong, this.coordinate.cross], mars3d.CRS.EPSG4326, mars3d.CRS.CGCS2000_GK_Zone_6);
+            }
+            this.positions.lng = epsg[0];
+            this.positions.lat = epsg[1];
+          },
+          inputLMSChange(e) {
+            // 将度分秒转换为经纬度坐标系
+            this.positions.lng = mars3d.PointTrans.dms2degree(this.degreeJD.degree, this.degreeJD.minute, this.degreeJD.second);
+            this.positions.lat = mars3d.PointTrans.dms2degree(this.degreeWD.degree, this.degreeWD.minute, this.degreeWD.second);
+          },
+        },
+      };
+      const app = Vue.createApp(App);
+      app.use(ElementPlus);
+      app.mount("#app");
+    </script>
+  </body>
+</html>

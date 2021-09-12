@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>ArcGIS Server矢量服务查询 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,web-icons,bootstrap,bootstrap-table,bootstrap-checkbox,layer,toastr,haoutil,turf,mars3d,echarts"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+    <style>
+      .querybar-page {
+        margin: 10px 0 0 0;
+        font-size: 12px;
+      }
+
+      .querybar-ye a {
+        text-decoration: none;
+        padding: 4px 6px;
+        color: #fff;
+        border: solid 1px #ccc;
+        margin-right: 4px;
+      }
+
+      .querybar-ye a:hover {
+        color: #fff;
+        border-color: #dcdcdc;
+      }
+
+      .querybar-fl {
+        float: left;
+      }
+
+      .querybar-fr {
+        float: right;
+      }
+      .tab_list {
+        height: 39x;
+        /* border: 1px solid #ccc; */
+      }
+      .tab_list li {
+        float: left;
+        height: 39px;
+        line-height: 39px;
+        padding: 0 20px;
+        text-align: center;
+        cursor: pointer;
+      }
+      .tab_list .current {
+        background-color: rgba(63, 72, 84, 0.7);
+      }
+    </style>
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <div class="infoview">
+      <table class="mars-table">
+        <tr>
+          <td class="nametd">名称：</td>
+          <td>
+            <input id="queryText" type="text" placeholder="请输入查询关键字" value="" class="form-control" />
+          </td>
+        </tr>
+        <tr>
+          <td class="nametd">范围：</td>
+          <td>
+            <input type="button" class="btn btn-primary" value="框选范围" id="drawRectangle" />
+            <input type="button" class="btn btn-primary" value="圆形范围" id="drawCircle" />
+            <input type="button" class="btn btn-primary" value="多边形范围" id="drawPolygon" />
+          </td>
+        </tr>
+        <tr>
+          <td class="nametd">范围：</td>
+          <td>
+            <input type="button" class="btn btn-primary" value="查询" id="query" />
+            <input type="button" class="btn btn-primary" value="清除" id="removeAll" />
+          </td>
+        </tr>
+      </table>
+
+      <div class="tab" id="tab_check" style="display: none">
+        <di1v class="tab_list">
+          <ul>
+            <li class="current">表格</li>
+            <li>饼状图</li>
+            <li>柱状图</li>
+          </ul>
+        </di1v>
+        <div class="tab_con">
+          <table id="table" class="item" style="max-height: 300px; min-height: 100px; display: block"></table>
+          <div id="pieChart" class="item" style="width: 380px; height: 300px; display: none"></div>
+          <div id="histogram" class="item" style="width: 380px; height: 300px; display: none"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      "use script"; //开发环境建议开启严格模式
+
+      var map;
+      var queryMapserver;
+      var drawGraphic;
+      var geoJsonLayer;
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 31.837532, lng: 117.202653, alt: 10586, heading: 0, pitch: -90 },
+          },
+          control: {
+            infoBox: false,
+          },
+        });
+
+        //创建三维地球场景
+        map = new mars3d.Map("mars3dContainer", mapOptions);
+
+        //UI
+        initUI();
+
+        //用于参考
+        let arcGisLayer = new mars3d.layer.ArcGisLayer({
+          url: "//server.mars3d.cn/arcgis/rest/services/mars/guihua/MapServer",
+          opacity: 0.2,
+        });
+        map.addLayer(arcGisLayer);
+
+        //查询服务
+        queryMapserver = new mars3d.query.QueryArcServer({
+          url: "http://server.mars3d.cn/arcgis/rest/services/mars/guihua/MapServer/0",
+        });
+
+        //用于显示查询结果（geojson）的图层
+        geoJsonLayer = new mars3d.layer.GeoJsonLayer({
+          name: "规划用地",
+          symbol: {
+            type: "polygonP",
+            styleOptions: {
+              color: "rgba(205, 233, 247, 0.7)", //填充颜色
+              clampToGround: true,
+            },
+            styleField: "用地编号",
+            styleFieldOptions: styleFieldOptions,
+          },
+          popup: "all",
+        });
+        map.addLayer(geoJsonLayer);
+
+        //框选查询   多边
+        $("#drawPolygon").click(function () {
+          clearAll();
+          map.graphicLayer.startDraw({
+            type: "polygon",
+            style: {
+              color: "#00ffff",
+              opacity: 0.3,
+              outline: true,
+              outlineWidth: 2,
+              outlineColor: "#ffffff",
+              clampToGround: true,
+            },
+            success: function (graphic) {
+              drawGraphic = graphic;
+            },
+          });
+        });
+
+        //框选查询 矩形
+        $("#drawRectangle").click(function () {
+          clearAll();
+          map.graphicLayer.startDraw({
+            type: "rectangle",
+            style: {
+              color: "#00ffff",
+              opacity: 0.3,
+              outline: true,
+              outlineWidth: 2,
+              outlineColor: "#ffffff",
+              clampToGround: true,
+            },
+            success: function (graphic) {
+              drawGraphic = graphic;
+            },
+          });
+        });
+
+        //框选查询   圆
+        $("#drawCircle").click(function () {
+          clearAll();
+          map.graphicLayer.startDraw({
+            type: "circle",
+            style: {
+              color: "#00ffff",
+              opacity: 0.3,
+              outline: true,
+              outlineWidth: 2,
+              outlineColor: "#ffffff",
+              clampToGround: true,
+            },
+            success: function (graphic) {
+              drawGraphic = graphic;
+            },
+          });
+        });
+
+        $("#removeAll").click(function () {
+          clearAll();
+        });
+
+        $("#query").click(function () {
+          $("#tab_check").show();
+          queryData();
+        });
+      }
+
+      //table栏切换Ui
+      function initUI() {
+        var tab_list = document.querySelector(".tab_list");
+        var lis = tab_list.querySelectorAll("li");
+        var item = document.querySelectorAll(".item");
+
+        for (var i = 0; i < lis.length; i++) {
+          lis[i].setAttribute("index", i);
+          lis[i].onclick = function () {
+            for (var i = 0; i < lis.length; i++) {
+              lis[i].className = "";
+            }
+            this.className = "current";
+            var index = this.getAttribute("index");
+            for (var j = 0; j < item.length; j++) {
+              item[j].style.display = "none";
+            }
+            item[index].style.display = "block";
+          };
+        }
+      }
+
+      function clearAll(noClearDraw) {
+        drawGraphic = null;
+        map.graphicLayer.clear();
+      }
+
+      function queryData() {
+        if (drawGraphic == null) {
+          haoutil.msg("请绘制查询区域！");
+          return;
+        }
+        queryMapserver.query({
+          graphic: drawGraphic,
+          page: false,
+          success: (result) => {
+            if (result.count == 0) {
+              haoutil.msg("未查询到相关记录！");
+              return;
+            }
+
+            let drawGeoJSON = drawGraphic.toGeoJSON({ outline: true });
+
+            var arrArea = [];
+            let arrFeatures = result.geojson.features;
+            for (var i = 0; i < arrFeatures.length; i++) {
+              let feature = arrFeatures[i];
+
+              try {
+                let geojsonNew = turf.intersect(drawGeoJSON, feature); //切割
+                if (geojsonNew) {
+                  feature.geometry = geojsonNew.geometry;
+                }
+              } catch (e) {
+                console.log("切割失败", e);
+              }
+
+              var area = turf.area(feature) || feature.properties.Shape_Area || 0;
+
+              //需要统计的数据
+              arrArea.push({
+                type: feature.properties.用地名称,
+                area: area * 0.0015, // 平方米转亩
+              });
+            }
+
+            //显示数据
+            geoJsonLayer.load({ data: result.geojson });
+
+            calculateArea(arrArea);
+          },
+          error: (error, msg) => {
+            console.log("服务访问错误", error);
+            haoutil.alert(msg, "服务访问错误");
+          },
+        });
+      }
+
+      //统计面积数据并按表格图表来展示
+      function calculateArea(arr) {
+        console.log("计算前数据", arr);
+
+        let objTemp = {};
+        for (var i = 0; i < arr.length; i++) {
+          let item = arr[i];
+
+          if (!objTemp[item.type]) {
+            objTemp[item.type] = { area: 0, count: 0 };
+          }
+
+          objTemp[item.type].area += item.area;
+          objTemp[item.type].count++;
+        }
+        var arrTable = []; //表格: 名称+面积+数量
+
+        var arrPie = []; //饼状图:名称+面积
+
+        var arrType = []; //柱状图:名称
+        var arrArea = []; //柱状图:面积
+
+        for (let type in objTemp) {
+          let area = mars3d.Util.formatNum(objTemp[type].area, 2);
+          arrType.push(type);
+          arrArea.push(area);
+          arrPie.push({ name: type, value: area });
+          arrTable.push({ name: type, area: area, count: objTemp[type].count });
+        }
+        console.log("统计结果", arrTable);
+
+        //bootstratTable 表格
+        $("#table").bootstrapTable("destroy");
+        $("#table").bootstrapTable({
+          data: arrTable,
+          pagination: false,
+          singleSelect: true,
+          iconsPrefix: "fa",
+          columns: [
+            {
+              title: "序号",
+              sortable: true,
+              editable: false,
+              align: "center",
+              formatter: function (value, row, index) {
+                return index + 1;
+              },
+            },
+            {
+              title: "类别",
+              field: "name",
+              align: "center",
+              cellStyle: function (value, row, index) {
+                return {
+                  css: {
+                    width: "160px",
+                  },
+                };
+              },
+            },
+            {
+              title: "数量",
+              field: "count",
+              align: "center",
+            },
+            {
+              title: "面积(亩)",
+              field: "area",
+              align: "center",
+            },
+          ],
+        });
+
+        //echarts饼状图
+        var pieEcharts = echarts.init(document.getElementById("pieChart"));
+        var option = {
+          title: {
+            text: "饼状图",
+            left: "center",
+            textStyle: {
+              color: "#ffffff",
+            },
+          },
+          tooltip: {
+            trigger: "item",
+            formatter: "{a} <br/>{b} : {c} 亩</br>占比 : {d}%",
+            backgroundColor: "rgba(63, 72, 84, 0.7)",
+            textStyle: {
+              color: "#ffffff",
+            },
+          },
+          series: [
+            {
+              name: "用地面积",
+              type: "pie",
+              radius: "50%",
+              data: arrPie,
+              textStyle: {
+                color: "#ffffff",
+              },
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: "rgba(0, 0, 0, 0.5)",
+                },
+              },
+            },
+          ],
+        };
+        pieEcharts.setOption(option);
+
+        //echarts柱状图
+        var histogramECharts = echarts.init(document.getElementById("histogram"));
+        var histogramOption = {
+          tooltip: {
+            trigger: "item",
+            backgroundColor: "rgba(63, 72, 84, 0.7)",
+            formatter: "{b}: {c} 亩",
+            textStyle: {
+              color: "#ffffff",
+            },
+          },
+          title: {
+            text: "柱状图",
+            left: "center",
+            textStyle: {
+              color: "#ffffff",
+            },
+          },
+          grid: {
+            left: "3%",
+            right: "4%",
+            bottom: "3%",
+            containLabel: true,
+          },
+          xAxis: {
+            type: "value",
+            boundaryGap: [0, 0.01],
+            show: false,
+          },
+          yAxis: {
+            type: "category",
+            data: arrType,
+            axisLabel: {
+              textStyle: {
+                color: " #ffffff",
+              },
+            },
+          },
+          series: [
+            {
+              type: "bar",
+              data: arrArea,
+              itemStyle: {
+                normal: {
+                  label: {
+                    show: true,
+                    position: "right",
+                    textStyle: {
+                      color: "#ffffff",
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        };
+        histogramECharts.setOption(histogramOption);
+      }
+
+      //规划面着色配置
+      var styleFieldOptions = {
+        A1: {
+          // 行政办公用地
+          color: "rgba(255,127,159,0.9)",
+        },
+        A2: {
+          // 文化设施用地
+          color: "rgba(255,159,127,0.9)",
+        },
+        A22: {
+          // 文化活动用地
+          color: "rgba(255,159,127,0.9)",
+        },
+        A3: {
+          // 教育科研用地
+          color: "rgba(255,127,191,0.9)",
+        },
+        A31: {
+          // 高等院校用地
+          color: "rgba(255,127,191,0.9)",
+        },
+        A32: {
+          // 中等专业学校用地
+          color: "rgba(255,127,191,0.9)",
+        },
+        A33: {
+          // 中小学用地
+          color: "rgba(255,255,127,0.9)",
+        },
+        A34: {
+          // 特殊教育用地
+          color: "rgba(255,127,191,0.9)",
+        },
+        A35: {
+          // 科研用地
+          color: "rgba(255,127,191,0.9)",
+        },
+        A4: {
+          // 体育用地
+          color: "rgba(255,127,0,0.9)",
+        },
+        A41: {
+          // 体育场馆用地
+          color: "rgba(255,127,0,0.9)",
+        },
+        A5: {
+          // 医疗卫生用地
+          color: "rgba(255,127,127,0.9)",
+        },
+        A51: {
+          // 医院用地
+          color: "rgba(255,127,127,0.9)",
+        },
+        A52: {
+          // 卫生防疫用地
+          color: "rgba(255,127,127,0.9)",
+        },
+        A59: {
+          // 其他医疗卫生用地
+          color: "rgba(255,127,127,0.9)",
+        },
+        A6: {
+          // 社会福利用地
+          color: "rgba(165,82,103,0.9)",
+        },
+        A7: {
+          // 文物古迹用地
+          color: "rgba(165,41,0,0.9)",
+        },
+        A9: {
+          // 宗教用地
+          color: "rgba(165,82,103,0.9)",
+        },
+        B: {
+          // 商业服务业设施用地
+          color: "rgba(255,0,63,0.9)",
+        },
+        B1: {
+          // 商业用地
+          color: "rgba(255,0,63,0.9)",
+        },
+        B11: {
+          // 零售商业用地
+          color: "rgba(255,0,63,0.9)",
+        },
+        B12: {
+          // 批发市场用地
+          color: "rgba(255,0,63,0.9)",
+        },
+        B13: {
+          // 餐饮用地
+          color: "rgba(255,0,63,0.9)",
+        },
+        B14: {
+          // 旅馆用地
+          color: "rgba(255,0,63,0.9)",
+        },
+        B2: {
+          // 商务用地
+          color: "rgba(255,0,63,0.9)",
+        },
+        B21: {
+          // 金融保险用地
+          color: "rgba(255,0,63,0.9)",
+        },
+        B29: {
+          // 其他商务用地
+          color: "rgba(255,0,63,0.9)",
+        },
+        B3: {
+          // 娱乐康体用地
+          color: "rgba(255,159,127,0.9)",
+        },
+        B31: {
+          // 娱乐用地
+          color: "rgba(255,159,127,0.9)",
+        },
+        B32: {
+          // 康体用地
+          color: "rgba(255,159,127,0.9)",
+        },
+        B4: {
+          // 公用设施营业网点用地
+          color: "rgba(255,159,127,0.9)",
+        },
+        B41: {
+          // 加油加气站用地
+          color: "rgba(255,159,127,0.9)",
+        },
+        B9: {
+          // 其他服务设施用地
+          color: "rgba(255,159,127,0.9)",
+        },
+        BR: {
+          // 商住混合用地
+          color: "rgba(255,0,63,0.9)",
+        },
+        E1: {
+          // 水域
+          color: "rgba(127,255,255,0.9)",
+        },
+        E2: {
+          // 农林用地
+          color: "rgba(41,165,0,0.9)",
+        },
+        E9: {
+          // 其他非建设用地
+          color: "rgba(127,127,63,0.9)",
+        },
+        G: {
+          // 绿地与广场用地
+          color: "rgba(0,127,0,0.9)",
+        },
+        G1: {
+          // 公园绿地
+          color: "rgba(0,255,63,0.9)",
+        },
+        G2: {
+          // 防护绿地
+          color: "rgba(0,127,0,0.9)",
+        },
+        G3: {
+          // 广场用地
+          color: "rgba(128,128,128,0.9)",
+        },
+        H: {
+          // 建设用地
+          color: "rgba(165,124,0,0.9)",
+        },
+        H1: {
+          // 城乡居民点建设用地
+          color: "rgba(165,124,0,0.9)",
+        },
+        H14: {
+          // 村庄建设用地
+          color: "rgba(165,165,82,0.9)",
+        },
+        H2: {
+          // 区域交通设施用地
+          color: "rgba(192,192,192,0.9)",
+        },
+        H21: {
+          // 铁路用地
+          color: "rgba(192,192,192,0.9)",
+        },
+        H22: {
+          // 公路用地
+          color: "rgba(192,192,192,0.9)",
+        },
+        H23: {
+          // 港口用地
+          color: "rgba(192,192,192,0.9)",
+        },
+        H3: {
+          // 区域公共设施用地
+          color: "rgba(82,165,82,0.9)",
+        },
+        H4: {
+          // 特殊用地
+          color: "rgba(47,76,38,0.9)",
+        },
+        H41: {
+          // 军事用地
+          color: "rgba(47,76,38,0.9)",
+        },
+        H42: {
+          // 安保用地
+          color: "rgba(47,76,38,0.9)",
+        },
+        H9: {
+          // 其他建设用地
+          color: "rgba(165,165,82,0.9)",
+        },
+        M: {
+          // 工业用地
+          color: "rgba(127,95,63,0.9)",
+        },
+        M1: {
+          // 一类工业用地
+          color: "rgba(127,95,63,0.9)",
+        },
+        M2: {
+          // 二类工业用地
+          color: "rgba(76,57,38,0.9)",
+        },
+        M4: {
+          // 农业服务设施用地
+          color: "rgba(153,38,0,0.9)",
+        },
+        R: {
+          // 居住用地
+          color: "rgba(255,255,0,0.9)",
+        },
+        R1: {
+          // 一类居住用地
+          color: "rgba(255,255,127,0.9)",
+        },
+        R2: {
+          // 二类居住用地
+          color: "rgba(255,255,0,0.9)",
+        },
+        R21: {
+          // 住宅用地
+          color: "rgba(255,255,0,0.9)",
+        },
+        R22: {
+          // 服务设施用地
+          color: "rgba(255,255,0,0.9)",
+        },
+        RB: {
+          // 商住混合用地
+          color: "rgba(255,191,0,0.9)",
+        },
+        S: {
+          // 道路与交通设施用地
+          color: "rgba(128,128,128,0.9)",
+        },
+        S2: {
+          // 城市轨道交通用地
+          color: "rgba(128,128,128,0.9)",
+        },
+        S3: {
+          // 交通枢纽用地
+          color: "rgba(192,192,192,0.9)",
+        },
+        S4: {
+          // 交通场站用地
+          color: "rgba(128,128,128,0.9)",
+        },
+        S41: {
+          // 公共交通场站用地
+          color: "rgba(128,128,128,0.9)",
+        },
+        S42: {
+          // 社会停车场用地
+          color: "rgba(128,128,128,0.9)",
+        },
+        S9: {
+          // 其他交通设施用地
+          color: "rgba(63,111,127,0.9)",
+        },
+        U: {
+          // 公用设施用地
+          color: "rgba(0,95,127,0.9)",
+        },
+        U1: {
+          // 供应设施用地
+          color: "rgba(0,95,127,0.9)",
+        },
+        U11: {
+          // 供水用地
+          color: "rgba(0,95,127,0.9)",
+        },
+        U12: {
+          // 供电用地
+          color: "rgba(0,95,127,0.9)",
+        },
+        U13: {
+          // 供燃气用地
+          color: "rgba(0,95,127,0.9)",
+        },
+        U14: {
+          // 供热用地
+          color: "rgba(0,95,127,0.9)",
+        },
+        U15: {
+          // 通信用地
+          color: "rgba(0,95,127,0.9)",
+        },
+        U2: {
+          // 环境设施用地
+          color: "rgba(0,95,127,0.9)",
+        },
+        U21: {
+          // 排水用地
+          color: "rgba(0,95,127,0.9)",
+        },
+        U22: {
+          // 环卫用地
+          color: "rgba(0,95,127,0.9)",
+        },
+        U3: {
+          // 安全设施用地
+          color: "rgba(0,95,127,0.9)",
+        },
+        U4: {
+          // 环境设施用地
+          color: "rgba(0,95,127,0.9)",
+        },
+        U9: {
+          // 其他公用设施用地
+          color: "rgba(0,95,127,0.9)",
+        },
+        W: {
+          // 仓储用地
+          color: "rgba(159,127,255,0.9)",
+        },
+      };
+    </script>
+  </body>
+</html>

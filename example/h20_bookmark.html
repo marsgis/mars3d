@@ -103,6 +103,7 @@
         white-space: nowrap;
         overflow-x: hidden;
         text-overflow: ellipsis;
+        margin: 0;
       }
       .bookmarkView table td p:hover {
         display: inline-block;
@@ -113,13 +114,12 @@
       .bookmarkView table i {
         position: absolute;
         right: 10px;
-        top: 185px;
+        top: 10px;
         cursor: pointer;
       }
 
       .bookmarkView table img {
         width: 230px;
-        height: 170px;
         border: 1px solid rgb(112 129 132 / 54%);
       }
     </style>
@@ -173,13 +173,16 @@
 
         //加载历史数据
         localforage.getItem("h20_bookmark").then(function (markArr) {
-          console.log("历史数据", markArr);
-          for (var i = 0; i < markArr.length; i++) {
-            let item = markArr[i];
-            addBookmark(item);
+          if (markArr && markArr.length > 0) {
+            console.log("历史数据", markArr);
+
+            for (var i = 0; i < markArr.length; i++) {
+              let item = markArr[i];
+              addBookmark(item);
+            }
+            $("#addView .no-found").remove();
+            index = markArr[markArr.length - 1].id;
           }
-          $("#addView .no-found").remove();
-          index = markArr[markArr.length - 1].id;
         });
 
         // 添加视角
@@ -191,11 +194,15 @@
           }
 
           // 不能使用相同名称
-          for (var i = 0; i < arrView.length; i++) {
-            if (arrView[i].name == name) {
-              haoutil.msg(name + " 已存在，请更换名称!");
-              return;
+          if (arrView) {
+            for (var i = 0; i < arrView.length; i++) {
+              if (arrView[i].name == name) {
+                haoutil.msg(name + " 已存在，请更换名称!");
+                return;
+              }
             }
+          } else {
+            arrView = [];
           }
 
           // 动态的获取index
@@ -247,6 +254,7 @@
           if (arrView.length == 0) {
             $("#addView").append(`<tr><td class='no-found'>没有找到匹配的值</td></tr>`);
           }
+          localforage.setItem("h20_bookmark", arrView);
         });
 
         // 飞向视角

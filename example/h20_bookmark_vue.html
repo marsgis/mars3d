@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>vue功能示例 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script type="text/javascript" src="../lib/include-lib.js" libpath="../lib/" include="vue,font-awesome,turf,mars3d,haoutil,localforage"></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+    <style>
+      .infoview {
+        height: 91%;
+      }
+      .input_textName {
+        height: 50%;
+        width: 68%;
+        margin: 8px 4px 0 10px;
+      }
+      .but_addtxtName {
+        height: 20px;
+        font-size: 17px;
+        padding: 12px;
+        color: white;
+        margin: 8px 0 0 2px;
+        border: 1px solid rgba(0, 225, 255);
+        background: rgba(0, 225, 255, 0.199);
+        border-radius: 5px;
+      }
+      .bookmarkView {
+        width: 253px;
+        height: calc(100% - 60px);
+        border: 1px solid white;
+        border-radius: 5px;
+        margin: 10px 13px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 10px;
+      }
+      .markImg {
+        height: 160px;
+      }
+      .addNewImg {
+        position: relative;
+        border: 1px solid white;
+        margin-top: 22px;
+      }
+      .markImg :hover {
+        background-color: red;
+      }
+      .addNewImg p:after {
+        content: "";
+        width: calc(100% + 20px);
+        height: 1px;
+        background-color: white;
+        position: absolute;
+        bottom: -11px;
+        left: -11px;
+      }
+      .addNewImg p {
+        text-align: center;
+        display: inline-block;
+        width: 160px;
+        max-height: 50px;
+        margin-left: 20px;
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+      }
+      .addNewImg p:hover {
+        display: inline-block;
+        width: 160px;
+        white-space: normal;
+        word-wrap: break-word;
+      }
+      .deleteImg {
+        width: 54px;
+        height: 19px;
+        position: absolute;
+        top: 165px;
+        right: 7px;
+        background-color: rgba(0, 0, 0, 0);
+        border-color: rgba(0, 0, 0, 0);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app" style="width: 100%; height: 100%">
+      <div id="mars3dContainer" class="mars3d-container"></div>
+
+      <!-- 面板 -->
+      <div class="infoview">
+        <div>
+          <el-input class="input_textName" placeholder="请输入内容" v-model="input_name" @input="inputTxtNameChange($event)"> </el-input>
+          <el-button class="but_addtxtName" @click="butAddTxtName">{{ butTxt }}</el-button>
+        </div>
+        <div class="bookmarkView">
+          <div class="addNewImg" v-for="(value, index) in imgObject">
+            <el-image class="markImg" :src="value.img" :style="{display:noFound}" @click="flytoView(value.center)"></el-image>
+            <p>{{ value.name }}</p>
+            <el-button class="deleteImg" type="primary" icon="el-icon-delete" @click="butDeleteTxtName(index)" :style="{display:noFound}"></el-button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const App = {
+        data() {
+          return {
+            butTxt: "添加",
+            noFound: "none",
+            value: true,
+            input_name: "",
+            imgObject: [{ name: "没有匹配的值", img: "" }],
+          };
+        },
+        // 1.1 资源创建
+        mounted() {
+          //判断webgl支持
+          if (!mars3d.Util.webglreport()) {
+            mars3d.Util.webglerror();
+          }
+          //读取 config.json 配置文件
+          let configUrl = "config/config.json";
+          mars3d.Resource.fetchJson({ url: configUrl })
+            .then((json) => {
+              //构建地图
+              this.initMap(json.map3d);
+            })
+            .otherwise((error) => {
+              console.log("加载JSON出错", error);
+              //this.$message.success(error && error.message, '出错了')
+            });
+        },
+        // 1.2 资源销毁
+        beforeDestroy() {
+          this.map.destroy();
+        },
+
+        methods: {
+          initMap(options) {
+            //合并属性参数，可覆盖config.json中的对应配置
+            var mapOptions = mars3d.Util.merge(options, {
+              scene: {
+                center: { lat: 27.765308, lng: 116.057297, alt: 267, heading: 5, pitch: -48 },
+              },
+            });
+
+            //创建三维地球场景
+            this.map = new mars3d.Map("mars3dContainer", mapOptions);
+
+            var graphicLayer = new mars3d.layer.GraphicLayer();
+            this.map.addLayer(graphicLayer);
+          },
+          inputTxtNameChange(e) {
+            this.$forceUpdate();
+          },
+          butAddTxtName(e) {
+            // 空名称
+            if (this.input_name == "") {
+              // haoutil.msg('请输入名称')
+              alert("请输入名称");
+              return;
+            }
+
+            let name = this.input_name;
+            let center = this.map.getCameraView();
+
+            // 重复名称
+            for (let i in this.imgObject) {
+              let item = this.imgObject[i].name;
+              if (this.input_name == item) {
+                if (confirm("该名称已存在，是否覆盖原文件？")) {
+                  this.map.expImage({
+                    download: false,
+                    width: 300,
+                    callback: (image) => {
+                      this.imgObject[i].name = name;
+                      this.imgObject[i].img = image;
+                      this.imgObject[i].center = center;
+                      //记录到历史
+                      // localforage.setItem("h20_bookmark", arrView);
+                    },
+                  });
+                  this.input_name = "";
+                } else {
+                  this.input_name = "";
+                }
+                return;
+              }
+            }
+
+            // 获取图片，添加对象
+            this.map.expImage({
+              download: false,
+              width: 300,
+              callback: (image) => {
+                this.imgObject.push({ name: name, img: image, center: center });
+                //记录到历史
+                // localforage.setItem("h20_bookmark", arrView);
+              },
+            });
+
+            // 删除未匹配项
+            if (this.imgObject[0].img == "") {
+              this.imgObject.splice(0, 1);
+              this.noFound = "";
+            }
+
+            // 输入框清空
+            this.input_name = "";
+          },
+          butDeleteTxtName(index) {
+            // 删除指定视角
+            this.imgObject.splice(index, 1);
+            // 当视角为空，添加未匹配项
+            if (!this.imgObject.length) {
+              this.noFound = "none";
+              this.imgObject.push({ name: "没有匹配的值", img: "" });
+            }
+          },
+          flytoView(center) {
+            this.map.centerAt(center);
+          },
+        },
+      };
+      const app = Vue.createApp(App);
+      app.use(ElementPlus);
+      app.mount("#app");
+    </script>
+  </body>
+</html>

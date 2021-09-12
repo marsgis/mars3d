@@ -167,7 +167,7 @@
 
         geoJsonLayer.on(mars3d.EventType.load, geoJsonLayer_onLoadHandler);
 
-        //框选查询   多边
+        //框选查询   多边行
         $("#drawPolygon").click(function () {
           clearAll();
           map.graphicLayer.startDraw({
@@ -181,6 +181,7 @@
             },
             success: function (graphic) {
               drawGraphic = graphic;
+              console.log("多边行：", drawGraphic.toGeoJSON());
             },
           });
         });
@@ -199,6 +200,8 @@
             },
             success: function (graphic) {
               drawGraphic = graphic;
+
+              console.log("矩形：", drawGraphic.toGeoJSON({ outline: true }));
             },
           });
         });
@@ -217,6 +220,7 @@
             },
             success: function (graphic) {
               drawGraphic = graphic;
+              console.log("圆：", drawGraphic.toGeoJSON({ outline: true }));
             },
           });
         });
