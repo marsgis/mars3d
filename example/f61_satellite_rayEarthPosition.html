@@ -51,7 +51,7 @@
         <tr>
           <td class="nametd">左右侧摆（roll）</td>
           <td>
-            <input id="model_roll"  title="左右侧摆roll" />
+            <input id="model_roll" title="左右侧摆roll" />
           </td>
         </tr>
 
@@ -199,8 +199,10 @@
         $("#model_angle1")
           .slider({ min: 1, max: 60, step: 0.01, value: 10 })
           .on("change", (e) => {
-            angle1 = e.value.newValue;
-            weixin.angle1 = e.value.newValue;
+            if (e && e.value) {
+              angle1 = e.value.newValue;
+              weixin.angle1 = e.value.newValue;
+            }
           });
         var angle1 = Number($("#model_angle1").val()); //设置在前，取值在后
 
@@ -250,12 +252,16 @@
         $("#model_pitch")
           .slider({ min: -180, max: 180, step: 0.01, value: 0 })
           .on("change", (e) => {
-            weixin.pitch = e.value.newValue;
+            if (e && e.value) {
+              weixin.pitch = e.value.newValue;
+            }
           });
         $("#model_roll")
           .slider({ min: -180, max: 180, step: 0.01, value: 0 })
           .on("change", (e) => {
-            weixin.roll = e.value.newValue;
+            if (e && e.value) {
+              weixin.roll = e.value.newValue;
+            }
           });
 
         $("#td_name").html(weixin.name);

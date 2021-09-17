@@ -58,7 +58,7 @@
           <td>E :降低高度</td>
           <td title="平移的步长（单位：米）">
             步长：
-            <input id="txtStep"/>
+            <input id="txtStep" />
           </td>
         </tr>
         <tr>
@@ -153,7 +153,9 @@
           })
           .on("change", (e) => {
             //修改步长
-            map.keyboardRoam.moveStep = e.value.newValue;
+            if (e && e.value) {
+              map.keyboardRoam.moveStep = e.value.newValue;
+            }
           });
       }
 

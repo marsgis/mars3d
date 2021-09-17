@@ -163,11 +163,10 @@
 
         $("#txtAlpha")
           .slider({ min: 0, max: 1, step: 0.1, value: 1 })
-          .on("slide", (e) => {
-            if (!road) {
-              return;
+          .on("change", (e) => {
+            if (road && e?.value) {
+              road.opacity = e.value.newValue;
             }
-            road.opacity = e.value;
           });
 
         //清除

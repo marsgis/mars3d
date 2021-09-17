@@ -75,7 +75,7 @@
           <td></td>
           <td>间隔</td>
           <td>
-            <input id="txtSpacing" style="width: 136px"  />
+            <input id="txtSpacing" style="width: 136px" />
           </td>
           <td>米</td>
         </tr>
@@ -84,7 +84,7 @@
           <td></td>
           <td>线宽</td>
           <td>
-            <input id="txtWidth" style="width: 125px"  />
+            <input id="txtWidth" style="width: 125px" />
           </td>
           <td>px</td>
         </tr>
@@ -211,13 +211,17 @@
         $("#txtSpacing")
           .slider({ min: 10.0, max: 500.0, step: 1.0, value: 100 })
           .on("change", (e) => {
-            contourLine.spacing = e.value.newValue;
+            if (e?.value) {
+              contourLine.spacing = e.value.newValue;
+            }
           });
 
         $("#txtWidth")
           .slider({ min: 1.0, max: 10.0, step: 0.1, value: 1.5 })
           .on("change", (e) => {
-            contourLine.width = e.value.newValue;
+            if (e?.value) {
+              contourLine.width = e.value.newValue;
+            }
           });
 
         $("#btnDraw").click(function () {

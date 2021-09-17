@@ -53,7 +53,7 @@
         <tr>
           <td class="nametd">方向角（heading）</td>
           <td>
-            <input id="model_heading"/>
+            <input id="model_heading" />
           </td>
         </tr>
         <tr>
@@ -65,14 +65,14 @@
         <tr>
           <td class="nametd">左右角（roll）</td>
           <td>
-            <input id="model_roll"  />
+            <input id="model_roll" />
           </td>
         </tr>
 
         <tr>
           <td class="nametd">夹角1(半场角)</td>
           <td>
-            <input id="model_angle1"  />
+            <input id="model_angle1" />
           </td>
         </tr>
         <tr>
@@ -144,27 +144,37 @@
         $("#model_heading")
           .slider({ min: 0, max: 360, step: 0.01, value: 0 })
           .on("change", (e) => {
-            rectSensor.heading = e.value.newValue;
+            if (e && e.value) {
+              rectSensor.heading = e.value.newValue;
+            }
           });
         $("#model_pitch")
           .slider({ min: -180, max: 180, step: 0.01, value: 40 })
           .on("change", (e) => {
-            rectSensor.pitch = e.value.newValue;
+            if (e && e.value) {
+              rectSensor.pitch = e.value.newValue;
+            }
           });
         $("#model_roll")
           .slider({ min: -180, max: 180, step: 0.01, value: 0 })
           .on("change", (e) => {
-            rectSensor.roll = e.value.newValue;
+            if (e && e.value) {
+              rectSensor.roll = e.value.newValue;
+            }
           });
         $("#model_angle1")
           .slider({ min: 0.1, max: 89, step: 0.01, value: 30 })
           .on("change", (e) => {
-            rectSensor.angle1 = e.value.newValue;
+            if (e && e.value) {
+              rectSensor.angle1 = e.value.newValue;
+            }
           });
         $("#model_angle2")
           .slider({ min: 0.1, max: 89, step: 0.01, value: 30 })
           .on("change", (e) => {
-            rectSensor.angle2 = e.value.newValue;
+            if (e && e.value) {
+              rectSensor.angle2 = e.value.newValue;
+            }
           });
 
         //参数

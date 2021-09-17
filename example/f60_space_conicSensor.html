@@ -59,20 +59,20 @@
         <tr>
           <td class="nametd">俯仰角（pitch）</td>
           <td>
-            <input id="model_pitch"  />
+            <input id="model_pitch" />
           </td>
         </tr>
         <tr>
           <td class="nametd">左右角（roll）</td>
           <td>
-            <input id="model_roll"  />
+            <input id="model_roll" />
           </td>
         </tr>
 
         <tr>
           <td class="nametd">夹角(半场角)</td>
           <td>
-            <input id="model_angle1"  />
+            <input id="model_angle1" />
           </td>
         </tr>
         <tr>
@@ -140,22 +140,30 @@
         $("#model_heading")
           .slider({ min: 0, max: 360, step: 0.01, value: 0 })
           .on("change", (e) => {
-            conicSensor.heading = e.value.newValue;
+            if (e && e.value) {
+              conicSensor.heading = e.value.newValue;
+            }
           });
         $("#model_pitch")
           .slider({ min: -180, max: 180, step: 0.01, value: 40 })
           .on("change", (e) => {
-            conicSensor.pitch = e.value.newValue;
+            if (e && e.value) {
+              conicSensor.pitch = e.value.newValue;
+            }
           });
         $("#model_roll")
           .slider({ min: -180, max: 180, step: 0.01, value: 0 })
           .on("change", (e) => {
-            conicSensor.roll = e.value.newValue;
+            if (e && e.value) {
+              conicSensor.roll = e.value.newValue;
+            }
           });
         $("#model_angle1")
           .slider({ min: 0.1, max: 89.9, step: 0.01, value: 5 })
           .on("change", (e) => {
-            conicSensor.angle = e.value.newValue;
+            if (e && e.value) {
+              conicSensor.angle = e.value.newValue;
+            }
           });
 
         //参数

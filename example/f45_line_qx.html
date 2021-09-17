@@ -37,9 +37,7 @@
 
     <div id="mars3dContainer" class="mars3d-container"></div>
 
-    <div class="infoview">
-     速度：<input id="txtSpeed" type="text" />
-    </div>
+    <div class="infoview">速度：<input id="txtSpeed" type="text" /></div>
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
@@ -119,8 +117,12 @@
 
         $("#txtSpeed")
           .slider({ min: 1, max: 100, step: 1, value: 10 })
-          .on("slide", (e) => {
-            let speed = e.value;
+          .on("change", (e) => {
+            if (!e?.value) {
+              return;
+            }
+
+            let speed = e.value.newValue;
             graphicLayer.eachGraphic((graphic) => {
               if (graphic instanceof mars3d.graphic.PolylinePrimitive) {
                 //只更新速度（平滑过度）

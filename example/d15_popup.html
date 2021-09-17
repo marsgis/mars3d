@@ -119,17 +119,20 @@
         map.addLayer(geoJsonLayer);
 
         //在layer上绑定Popup单击弹窗
-        geoJsonLayer.bindPopup(function (event) {
-          let attr = event.graphic?.attr;
-          return attr.type + " 我是layer上绑定的Popup";
+        geoJsonLayer.bindPopup(
+          function (event) {
+            let attr = event.graphic?.attr;
+            return attr.type + " 我是layer上绑定的Popup" + new Date().toLocaleTimeString();
 
-          // return new Promise((resolve) => {
-          //   //这里可以进行后端接口请求数据，setTimeout测试异步
-          //   setTimeout(() => {
-          //     resolve("Promise异步回调显示的弹窗内容信息");
-          //   }, 2000);
-          // });
-        });
+            // return new Promise((resolve) => {
+            //   //这里可以进行后端接口请求数据，setTimeout测试异步
+            //   setTimeout(() => {
+            //     resolve("Promise异步回调显示的弹窗内容信息");
+            //   }, 2000);
+            // });
+          },
+          { timeRender: true } //timeRender实时刷新
+        );
 
         geoJsonLayer.on(mars3d.EventType.popupOpen, function (event) {
           let container = event.container; //popup对应的DOM

@@ -117,8 +117,10 @@
 
         $("#txtAngle")
           .slider({ min: 0, max: 360, step: 1, value: 0 })
-          .on("slide", (e) => {
-            rotation = Cesium.Math.toRadians(e.value);
+          .on("change", (e) => {
+            if (e && e.value) {
+              rotation = Cesium.Math.toRadians(e.value.newValue);
+            }
           });
 
         //允许编辑

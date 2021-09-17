@@ -113,7 +113,7 @@
         $("#snowSpeed")
           .slider({ min: 1, max: 100, step: 1, value: 20 })
           .on("change", (e) => {
-            if (snowEffect) {
+            if (snowEffect && e?.value) {
               snowEffect.speed = e.value.newValue;
             }
           });
@@ -133,7 +133,9 @@
         $("#alpha")
           .slider({ min: 0.0, max: 1.0, step: 0.1, value: 0.6 })
           .on("change", (e) => {
-            snowCover.alpha = e.value.newValue;
+            if (e?.value) {
+              snowCover.alpha = e.value.newValue;
+            }
           });
       }
     </script>

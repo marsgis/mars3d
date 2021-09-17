@@ -57,7 +57,7 @@
           </td>
           <td>地表透明度：</td>
           <td colspan="2">
-            <input id="alpha"/>
+            <input id="alpha" />
           </td>
         </tr>
 
@@ -145,12 +145,16 @@
         $("#alpha")
           .slider({ id: "oneSlider", min: 0.0, max: 1.0, step: 0.1, value: 0.5 })
           .on("change", (e) => {
-            underground.alpha = e.value.newValue;
+            if (e && e.value) {
+              underground.alpha = e.value.newValue;
+            }
           });
         $("#rangeDistance")
           .slider({ min: -50, max: 50, step: 0.1, value: 0 })
           .on("change", (e) => {
-            tilesetPlanClip.distance = e.value.newValue;
+            if (e && e.value) {
+              tilesetPlanClip.distance = e.value.newValue;
+            }
           });
 
         //单击事件

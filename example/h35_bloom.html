@@ -169,27 +169,37 @@
         $("#txt_contrast")
           .slider({ min: -255.0, max: 255.0, step: 0.01, value: 128 })
           .on("change", (e) => {
-            bloomEffect.contrast = e.value.newValue;
+            if (e?.value) {
+              bloomEffect.contrast = e.value.newValue;
+            }
           });
         $("#txt_brightness")
           .slider({ min: -1.0, max: 3.0, step: 0.01, value: -0.3 })
           .on("change", (e) => {
-            bloomEffect.brightness = e.value.newValue;
+            if (e?.value) {
+              bloomEffect.brightness = e.value.newValue;
+            }
           });
         $("#txt_delta")
           .slider({ min: 1, max: 5, step: 0.01, value: 1.0 })
           .on("change", (e) => {
-            bloomEffect.delta = e.value.newValue;
+            if (e?.value) {
+              bloomEffect.delta = e.value.newValue;
+            }
           });
         $("#txt_sigma")
           .slider({ min: 1, max: 10, step: 0.01, value: 3.78 })
           .on("change", (e) => {
-            bloomEffect.sigma = e.value.newValue;
+            if (e?.value) {
+              bloomEffect.sigma = e.value.newValue;
+            }
           });
         $("#txt_stepSize")
           .slider({ min: 0, max: 7, step: 0.01, value: 5.0 })
           .on("change", (e) => {
-            bloomEffect.stepSize = e.value.newValue;
+            if (e?.value) {
+              bloomEffect.stepSize = e.value.newValue;
+            }
           });
       }
     </script>

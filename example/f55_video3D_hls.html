@@ -51,14 +51,14 @@
           <tr>
             <td>混合系数:</td>
             <td>
-              <input id="txtMixNum"/>
+              <input id="txtMixNum" />
             </td>
             <td>调整 透明度</td>
           </tr>
           <tr>
             <td>水平拉伸:</td>
             <td>
-              <input id="cameraFov"/>
+              <input id="cameraFov" />
             </td>
             <td>调整 水平拉伸</td>
           </tr>
@@ -217,27 +217,24 @@
 
         $("#txtMixNum")
           .slider({ min: 0, max: 1, step: 0.1, value: 0.7 })
-          .on("slide", (e) => {
-            if (!selectedView) {
-              return;
+          .on("change", (e) => {
+            if (selectedView && e?.value) {
+              selectedView.opacity = e.value.newValue;
             }
-            selectedView.opacity = e.value;
           });
         $("#cameraFov")
           .slider({ min: 30, max: 120, step: 0.1, value: 45 })
-          .on("slide", (e) => {
-            if (!selectedView) {
-              return;
+          .on("change", (e) => {
+            if (selectedView && e?.value) {
+              selectedView.fov = e.value.newValue;
             }
-            selectedView.fov = e.value;
           });
         $("#cameraWidHei")
           .slider({ min: 0.5, max: 3, step: 0.05, value: 1.6 })
-          .on("slide", (e) => {
-            if (!selectedView) {
-              return;
+          .on("change", (e) => {
+            if (selectedView && e?.value) {
+              selectedView.aspectRatio = e.value.newValue;
             }
-            selectedView.aspectRatio = e.value;
           });
 
         $("#btnSelCamera").click(function () {

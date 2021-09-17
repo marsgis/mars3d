@@ -52,10 +52,10 @@
 
       var map;
       function initMap() {
-        //创建三维地球场景
+  //创建三维地球场景
         map = new mars3d.Map("mars3dContainer", {
           scene: {
-            center: { lat: 25.816726, lng: 114.165359, alt: 3339610, heading: 356, pitch: -81 },
+            center: { lat: 22.752876, lng: 113.208726, alt: 57251, heading: 360, pitch: -57 },
           },
           control: {
             baseLayerPicker: true, //basemaps底图切换按钮
@@ -128,6 +128,17 @@
           enablePickFeatures: false,
         });
         map.addLayer(tileLayer);
+
+        //测试
+        // tileLayer = new mars3d.layer.ArcGisLayer({
+        //   url: "http://183.62.45.174:6080/arcgis/rest/services/LBwater/LBCHL/ImageServer/exportImage",
+        //   queryParameters: {
+        //     mosaicRule: `{"where":"t='20180525'"}`, // 20201220  20180525
+        //   },
+        //   proxy: "//server.mars3d.cn/proxy/",
+        //   enablePickFeatures: false,
+        // });
+        // map.addLayer(tileLayer);
       }
       function removeLayer() {
         if (tileLayer) {

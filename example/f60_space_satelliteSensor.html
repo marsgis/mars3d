@@ -78,7 +78,7 @@
         <tr>
           <td class="nametd">左右侧摆（roll）</td>
           <td>
-            <input id="model_roll"  title="左右侧摆roll" />
+            <input id="model_roll" title="左右侧摆roll" />
           </td>
           <td>
             <input id="model_roll_2" readonly="readonly" type="number" min="-180" max="180" step="1" value="0" title="左右侧摆roll" />
@@ -136,7 +136,7 @@
         <tr id="tr_angle2" class="coneEntityAttr">
           <td class="nametd">夹角2(半场角)</td>
           <td>
-            <input id="model_angle2"  />
+            <input id="model_angle2" />
           </td>
           <td>
             <input id="model_angle2_2" readonly="readonly" type="number" min="0" max="89" step="0.001" value="10" />
@@ -196,10 +196,12 @@
         $("#model_heading")
           .slider({ min: 0, max: 360, step: 1, value: 0 })
           .on("change", (e) => {
-            $("#model_heading_2").val(e.value.newValue);
+            if (e && e.value) {
+              $("#model_heading_2").val(e.value.newValue);
 
-            modelGraphic.heading = e.value.newValue;
-            satelliteSensor.heading = e.value.newValue;
+              modelGraphic.heading = e.value.newValue;
+              satelliteSensor.heading = e.value.newValue;
+            }
           });
         $("#model_heading_2").change(function () {
           var value = Number($(this).val());
@@ -212,10 +214,12 @@
         $("#model_pitch")
           .slider({ min: -180, max: 180, step: 1, value: 0 })
           .on("change", (e) => {
-            $("#model_pitch_2").val(e.value.newValue);
+            if (e && e.value) {
+              $("#model_pitch_2").val(e.value.newValue);
 
-            modelGraphic.pitch = e.value.newValue;
-            satelliteSensor.pitch = e.value.newValue;
+              modelGraphic.pitch = e.value.newValue;
+              satelliteSensor.pitch = e.value.newValue;
+            }
           });
         $("#model_pitch_2").change(function () {
           var value = Number($(this).val());
@@ -228,10 +232,12 @@
         $("#model_roll")
           .slider({ min: -180, max: 180, step: 1, value: 0 })
           .on("change", (e) => {
-            $("#model_roll_2").val(e.value.newValue);
+            if (e && e.value) {
+              $("#model_roll_2").val(e.value.newValue);
 
-            modelGraphic.roll = e.value.newValue;
-            satelliteSensor.roll = e.value.newValue;
+              modelGraphic.roll = e.value.newValue;
+              satelliteSensor.roll = e.value.newValue;
+            }
           });
         $("#model_roll_2").change(function () {
           var value = Number($(this).val());
@@ -244,8 +250,10 @@
         $("#model_angle1")
           .slider({ min: 0, max: 89, step: 0.001, value: 5 })
           .on("change", (e) => {
-            $("#model_angle1_2").val(e.value.newValue);
-            satelliteSensor.angle1 = e.value.newValue;
+            if (e && e.value) {
+              $("#model_angle1_2").val(e.value.newValue);
+              satelliteSensor.angle1 = e.value.newValue;
+            }
           });
         $("#model_angle1_2").change(function () {
           var value = Number($(this).val());
@@ -256,8 +264,10 @@
         $("#model_angle2")
           .slider({ min: 0, max: 89, step: 0.001, value: 10 })
           .on("change", (e) => {
-            $("#model_angle2_2").val(e.value.newValue);
-            satelliteSensor.angle2 = e.value.newValue;
+            if (e && e.value) {
+              $("#model_angle2_2").val(e.value.newValue);
+              satelliteSensor.angle2 = e.value.newValue;
+            }
           });
         $("#model_angle2_2").change(function () {
           var value = Number($(this).val());

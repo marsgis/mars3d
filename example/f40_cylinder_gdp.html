@@ -330,24 +330,34 @@
               <input type="button" class="btnClosePopup closeButton" value="×" />
             </div>`,
           {
-            template: ``,
+            template: false,
             horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
             verticalOrigin: Cesium.VerticalOrigin.CENTER,
           }
         );
+
+        let gdpCharts;
         layerHuaihai.on(mars3d.EventType.popupOpen, function (event) {
           let container = event.container; //popup对应的DOM
           console.log("图层上打开了popup", container);
 
-          showCityCharts(event.graphic?.attr, container.querySelector("#gdpCharts"));
+          let option = getCityChartsOptions(event.graphic?.attr);
+          if (!option) {
+            return;
+          }
+          gdpCharts = echarts.init(container.querySelector("#gdpCharts"));
+          gdpCharts.setOption(option);
         });
         layerHuaihai.on(mars3d.EventType.popupClose, function (event) {
           let container = event.container; //popup对应的DOM
           console.log("图层上移除了popup", container);
+
+          gdpCharts.dispose();
+          gdpCharts = null;
         });
       }
 
-      function showCityCharts(attr, container) {
+      function getCityChartsOptions(attr) {
         let arrGDPvalues = objCity[attr.code];
         if (!arrGDPvalues) {
           haoutil.msg(attr.Name + " 无经济数据");
@@ -360,7 +370,6 @@
           arrData[b] = [b, 0, arrGDPvalues[b]];
         }
 
-        var myChart = echarts.init(container);
         var option = {
           visualMap: {
             max: 4500,
@@ -474,7 +483,7 @@
             },
           ],
         };
-        myChart.setOption(option);
+        return option;
       }
     </script>
   </body>

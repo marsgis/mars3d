@@ -142,9 +142,11 @@
         $("#rangeDistance")
           .slider({ min: -100, max: 100, step: 1.0, value: 0 })
           .on("change", (e) => {
-            var value = e.value.newValue;
-            $("#txtDistance").val(value.toFixed(1));
-            modelPlanClip.distance = value;
+            if (e?.value) {
+              var value = e.value.newValue;
+              $("#txtDistance").val(value.toFixed(1));
+              modelPlanClip.distance = value;
+            }
           });
         $("#txtDistance").change(function () {
           var value = Number($(this).val());

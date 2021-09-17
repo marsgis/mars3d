@@ -193,6 +193,7 @@
 
         $table = $("#table");
         $table.bootstrapTable({
+          height: 300,
           singleSelect: true, //单选
           iconsPrefix: "fa",
           pagination: true,
@@ -256,7 +257,7 @@
       }
 
       function queryData() {
-        $("#resultView").hide();
+        clearAll();
 
         var queryVal = $.trim($("#queryText").val());
 

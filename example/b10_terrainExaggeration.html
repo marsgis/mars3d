@@ -70,8 +70,10 @@
             step: 0.1,
             value: 10,
           })
-          .on("slide", (e) => {
-            map.scene.globe.terrainExaggeration = e.value;
+          .on("change", (e) => {
+            if (e && e.value) {
+              map.scene.globe.terrainExaggeration = e.value.newValue;
+            }
           });
       }
     </script>

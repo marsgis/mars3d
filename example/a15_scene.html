@@ -310,7 +310,9 @@
             value: 1,
           })
           .on("change", (e) => {
-            setSceneGlobeOptions("terrainExaggeration", e.value.newValue);
+            if (e && e.value) {
+              setSceneGlobeOptions("terrainExaggeration", e.value.newValue);
+            }
           });
 
         // 鼠标滚轮放大步长参数
@@ -322,7 +324,9 @@
           })
           .on("change", (e) => {
             let keys = $("#zoomFactor").attr("data-name");
-            setSceneCameraControllerOptions(keys, e.value.newValue);
+            if (e && e.value) {
+              setSceneCameraControllerOptions(keys, e.value.newValue);
+            }
           });
 
         //变焦时相机位置的最小量级
@@ -335,7 +339,9 @@
           })
           .on("change", (e) => {
             let keys = $("#minimumZoom").attr("data-name");
-            setSceneCameraControllerOptions(keys, e.value.newValue);
+            if (e && e.value) {
+              setSceneCameraControllerOptions(keys, e.value.newValue);
+            }
           });
 
         //变焦时相机位置的最大量级
@@ -348,7 +354,9 @@
           })
           .on("change", (e) => {
             let key = $("#maximumZoom").attr("data-name");
-            setSceneCameraControllerOptions(key, e.value.newValue);
+            if (e && e.value) {
+              setSceneCameraControllerOptions(key, e.value.newValue);
+            }
           });
 
         // 低于此高度时绕鼠标键绕圈，大于时绕视图中心点绕圈 默认值为80000
@@ -361,7 +369,9 @@
           })
           .on("change", (e) => {
             let num = $("#minimumCollision").attr("data-name");
-            setSceneCameraControllerOptions(num, e.value.newValue);
+            if (e && e.value) {
+              setSceneCameraControllerOptions(num, e.value.newValue);
+            }
           });
       }
 

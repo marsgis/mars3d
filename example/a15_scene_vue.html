@@ -319,22 +319,22 @@
             options: [
               {
                 value: 2,
-                label: '二维视图',
+                label: "二维视图",
               },
               {
                 value: 3,
-                label: '三维视图',
+                label: "三维视图",
               },
               {
                 value: 1,
-                label: '哥伦布视图',
+                label: "哥伦布视图",
               },
             ],
             value: 3,
 
             //颜色拾取器默认值
-            backgroundColor: '#0b0b0b', //空间背景颜色默认值
-            baseColor: '#546a53', //地球背景颜色默认值
+            backgroundColor: "#0b0b0b", //空间背景颜色默认值
+            baseColor: "#546a53", //地球背景颜色默认值
 
             //slider滑块
             terrainSlider: 1, //地形夸张倍数默认值
@@ -344,46 +344,46 @@
             collisionSlider: 15000, //最小碰撞高度默认值
 
             // radio单选框默认值 1表示是 2表示否
-            height: '2',
-            fxaa: '1',
-            sun: '1',
-            moon: '1',
-            skyBox: '1',
-            skyAt: '1',
-            fog: '1',
-            light: '2',
-            atmosphere: '1',
-            depthTest: '2',
-            showImg: '1',
-            zooms: '1',
-            tilt: '1',
-            rotate: '1',
-            translate: '1',
-            axis: '2',
-            detection: '2',
-          }
+            height: "2",
+            fxaa: "1",
+            sun: "1",
+            moon: "1",
+            skyBox: "1",
+            skyAt: "1",
+            fog: "1",
+            light: "2",
+            atmosphere: "1",
+            depthTest: "2",
+            showImg: "1",
+            zooms: "1",
+            tilt: "1",
+            rotate: "1",
+            translate: "1",
+            axis: "2",
+            detection: "2",
+          };
         },
         // 1.1 资源创建
         mounted() {
           //判断webgl支持
           if (!mars3d.Util.webglreport()) {
-            mars3d.Util.webglerror()
+            mars3d.Util.webglerror();
           }
           //读取 config.json 配置文件
-          let configUrl = 'config/config.json'
+          let configUrl = "config/config.json";
           mars3d.Resource.fetchJson({ url: configUrl })
             .then((json) => {
               //构建地图
-              this.initMap(json.map3d)
+              this.initMap(json.map3d);
             })
             .otherwise((error) => {
-              console.log('加载JSON出错', error)
+              console.log("加载JSON出错", error);
               //this.$message.success(error && error.message, '出错了')
-            })
+            });
         },
         // 1.2 资源销毁
         beforeDestroy() {
-          this.map.destroy()
+          this.map.destroy();
         },
 
         methods: {
@@ -393,34 +393,34 @@
               scene: {
                 center: { lat: 43.260076, lng: 59.511019, alt: 28590990, heading: 0, pitch: -90 },
               },
-            })
+            });
 
             //创建三维地球场景
-            this.map = new mars3d.Map('mars3dContainer', mapOptions)
+            this.map = new mars3d.Map("mars3dContainer", mapOptions);
 
-            var graphicLayer = new mars3d.layer.GraphicLayer()
-            this.map.addLayer(graphicLayer)
+            var graphicLayer = new mars3d.layer.GraphicLayer();
+            this.map.addLayer(graphicLayer);
           },
           setSceneOptions(name, value) {
-            var options = {}
-            options[name] = value
-            this.map.setSceneOptions(options)
+            var options = {};
+            options[name] = value;
+            this.map.setSceneOptions(options);
           },
           setSceneGlobeOptions(name, value) {
-            var options = { globe: {} }
-            options.globe[name] = value
-            this.map.setSceneOptions(options)
+            var options = { globe: {} };
+            options.globe[name] = value;
+            this.map.setSceneOptions(options);
           },
           setSceneCameraControllerOptions(name, value) {
-            var options = { cameraController: {} }
-            options.cameraController[name] = value
-            this.map.setSceneOptions(options)
+            var options = { cameraController: {} };
+            options.cameraController[name] = value;
+            this.map.setSceneOptions(options);
           },
         },
-      }
-      const app = Vue.createApp(App)
-      app.use(ElementPlus)
-      app.mount('#app')
+      };
+      const app = Vue.createApp(App);
+      app.use(ElementPlus);
+      app.mount("#app");
     </script>
   </body>
 </html>

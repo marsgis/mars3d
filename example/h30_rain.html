@@ -112,21 +112,21 @@
         $("#rainSpeed")
           .slider({ min: 1, max: 100, step: 1, value: 10 })
           .on("change", (e) => {
-            if (rainEffect) {
+            if (rainEffect && e?.value) {
               rainEffect.speed = e.value.newValue;
             }
           });
         $("#rainSize")
           .slider({ min: 1, max: 100, step: 1, value: 20 })
           .on("change", (e) => {
-            if (rainEffect) {
+            if (rainEffect && e?.value) {
               rainEffect.size = e.value.newValue;
             }
           });
         $("#rainDirection")
           .slider({ min: -89, max: 89, step: 1, value: -30 })
           .on("change", (e) => {
-            if (rainEffect) {
+            if (rainEffect && e?.value) {
               rainEffect.direction = e.value.newValue;
             }
           });

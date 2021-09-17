@@ -88,7 +88,7 @@
         polylines3 = [],
         polylines4 = [],
         polylines5 = [];
-      var polylinesTB=[]
+      var polylinesTB = [];
       for (var i = 0; i < arrdata.length; i++) {
         var item = arrdata[i];
 
@@ -115,7 +115,7 @@
         var newPoint4 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(-0.024999, 15.009109, 39.303012), hpr);
         var newPoint5 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(-0.025001, -15.009585, 39.301099), hpr);
 
-        polylinesTB.push(newPoint3) //图标显示的点
+        polylinesTB.push(newPoint3); //图标显示的点
 
         if (i === 0) {
           polylines1.push(newPoint1);
@@ -169,10 +169,8 @@
       drawGuideLine(polylines4, "#ff0000");
       drawGuideLine(polylines5, "#0000ff");
 
-
-
       //绘制断面图echarts图表
-      computeSurfacePointsHeight(polylinesTB)
+      computeSurfacePointsHeight(polylinesTB);
     }
 
     //绘制电线塔模型

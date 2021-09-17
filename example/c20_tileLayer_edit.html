@@ -286,14 +286,14 @@
 
       $("#slider_brightness")
         .slider()
-        .on("slide", function () {
+        .on("change", function () {
           if (tileLayer) {
             tileLayer.brightness = Number($("#slider_brightness").val());
           }
         });
       $("#slider_opacity")
         .slider()
-        .on("slide", function () {
+        .on("change", function () {
           if (tileLayer) {
             tileLayer.opacity = Number($("#slider_opacity").val());
           }

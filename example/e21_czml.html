@@ -28,6 +28,9 @@
       include="jquery,font-awesome,bootstrap,layer,haoutil,ztree,turf,mars3d"
     ></script>
 
+    <!--支持agi_conicSensor，agi_customPatternSensor和agi_rectangularSensor展示的czml插件-->
+    <script src="../lib/mars3d/thirdParty/sensorVolumes/cesium-sensor-volumes.js"></script>
+
     <link href="css/style.css" rel="stylesheet" />
   </head>
 
@@ -43,6 +46,7 @@
       <input type="button" class="btn btn-primary" value="船舶" onclick="showChuanboDemo()" />
       <input type="button" class="btn btn-primary" value="汽车" onclick="showQicheDemo()" />
       <input type="button" class="btn btn-primary" value="卫星" onclick="showWeixinDemo()" />
+      <input type="button" class="btn btn-primary" value="北斗卫星" onclick="showBDWeixinDemo()" />
       <input type="button" class="btn btn-primary" value="火箭发射" onclick="showHuojianDemo()" />
       <input type="button" class="btn btn-primary" value="消防演练" onclick="showXiaofangDemo()" />
     </div>
@@ -66,6 +70,10 @@
             // cameraController: {
             //   maximumZoomDistance: 500000000,
             // },
+          },
+          control: {
+            animation: true,
+            timeline: true,
           },
         });
 
@@ -173,6 +181,35 @@
       }
 
       //示例：
+      function showBDWeixinDemo() {
+        removeLayer();
+
+        //更新地球参数
+        map.setSceneOptions({
+          cameraController: {
+            maximumZoomDistance: 500000000,
+          },
+        });
+
+        czmlLayer = new mars3d.layer.CzmlLayer({
+          name: "北斗卫星",
+          url: "//data.mars3d.cn/file/czml/satellite.czml",
+          center: { lng: 10, lat: 111.833884, z: 150000000, heading: 0, pitch: -90, roll: 0 },
+          flyTo: true,
+        });
+        map.addLayer(czmlLayer);
+
+        //绑定事件
+        czmlLayer.on(mars3d.EventType.load, function (event) {
+          console.log("数据加载完成", event);
+
+          initTree(event.list);
+        });
+        czmlLayer.on(mars3d.EventType.click, function (event) {
+          console.log("单击了图层", event);
+        });
+      }
+
       function showWeixinDemo() {
         removeLayer();
 
@@ -185,8 +222,8 @@
 
         czmlLayer = new mars3d.layer.CzmlLayer({
           name: "卫星",
-          url: "//data.mars3d.cn/file/czml/satellite.czml",
-          center: { lng: 10, lat: 111.833884, z: 150000000, heading: 0, pitch: -90, roll: 0 },
+          url: "//data.mars3d.cn/file/czml/satellite-simple.czml",
+          center: { lat: -20.236138, lng: -144.262661, alt: 41875827, heading: 339, pitch: -90 },
           flyTo: true,
         });
         map.addLayer(czmlLayer);

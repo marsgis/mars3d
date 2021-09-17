@@ -78,7 +78,7 @@
         <tr id="tr_angle2">
           <td class="nametd">夹角2</td>
           <td>
-            <input id="model_angle2"  />
+            <input id="model_angle2" />
           </td>
         </tr>
         <tr>
@@ -257,22 +257,30 @@
         $("#model_pitch")
           .slider({ min: -180, max: 180, step: 0.01, value: 0 })
           .on("change", (e) => {
-            weixin.pitch = e.value.newValue;
+            if (e && e.value) {
+              weixin.pitch = e.value.newValue;
+            }
           });
         $("#model_roll")
           .slider({ min: -180, max: 180, step: 0.01, value: 0 })
           .on("change", (e) => {
-            weixin.roll = e.value.newValue;
+            if (e && e.value) {
+              weixin.roll = e.value.newValue;
+            }
           });
         $("#model_angle1")
           .slider({ min: 1, max: 89, step: 0.01, value: 30 })
           .on("change", (e) => {
-            weixin.angle1 = e.value.newValue;
+            if (e && e.value) {
+              weixin.angle1 = e.value.newValue;
+            }
           });
         $("#model_angle2")
           .slider({ min: 1, max: 89, step: 0.01, value: 20 })
           .on("change", (e) => {
-            weixin.angle2 = e.value.newValue;
+            if (e && e.value) {
+              weixin.angle2 = e.value.newValue;
+            }
           });
 
         $("input[type=radio][name=sensorType]").change(function () {

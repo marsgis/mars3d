@@ -90,7 +90,10 @@
       </table>
     </div>
 
-    <div id="tipView" class="info-tips">(1) 多个开挖区域距离太远时会存在误差。<br /></div>
+    <div id="tipView" class="info-tips">
+      (1) 开挖区域内矢量对象无法穿透进行拾取。<br />
+      (2) 多个开挖区域距离太远时会存在误差。<br />
+    </div>
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
@@ -104,7 +107,6 @@
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
             center: { lat: 30.827414, lng: 116.378229, alt: 16933, heading: 360, pitch: -56 },
-            highDynamicRange: true,
           },
         });
 

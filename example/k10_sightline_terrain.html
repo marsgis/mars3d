@@ -52,7 +52,7 @@
         <tr>
           <td class="nametd">前后侧摆（pitch）</td>
           <td>
-            <input id="model_pitch"  title="前后侧摆pitch" />
+            <input id="model_pitch" title="前后侧摆pitch" />
           </td>
           <td>
             <input id="model_pitch_2" readonly="readonly" type="number" min="-180" max="180" step="0.01" value="75" title="前后侧摆pitch" />
@@ -61,7 +61,7 @@
         <tr>
           <td class="nametd">左右侧摆（roll）</td>
           <td>
-            <input id="model_roll"  title="左右侧摆roll" />
+            <input id="model_roll" title="左右侧摆roll" />
           </td>
           <td>
             <input id="model_roll_2" readonly="readonly" type="number" min="-180" max="180" step="0.01" value="0" title="左右侧摆roll" />
@@ -139,8 +139,10 @@
         $("#model_heading")
           .slider({ min: 0, max: 360, step: 0.01, value: 220 })
           .on("change", (e) => {
-            $("#model_heading_2").val(e.value.newValue);
-            updateModel();
+            if (e?.value) {
+              $("#model_heading_2").val(e.value.newValue);
+              updateModel();
+            }
           });
         $("#model_heading_2").change(function () {
           var value = Number($(this).val());
@@ -151,8 +153,10 @@
         $("#model_pitch")
           .slider({ min: -180, max: 180, step: 0.01, value: 75 })
           .on("change", (e) => {
-            $("#model_pitch_2").val(e.value.newValue);
-            updateModel();
+            if (e?.value) {
+              $("#model_pitch_2").val(e.value.newValue);
+              updateModel();
+            }
           });
         $("#model_pitch_2").change(function () {
           var value = Number($(this).val());
@@ -163,8 +167,10 @@
         $("#model_roll")
           .slider({ min: -180, max: 180, step: 0.01, value: 0 })
           .on("change", (e) => {
-            $("#model_roll_2").val(e.value.newValue);
-            updateModel();
+            if (e?.value) {
+              $("#model_roll_2").val(e.value.newValue);
+              updateModel();
+            }
           });
         $("#model_roll_2").change(function () {
           var value = Number($(this).val());

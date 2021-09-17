@@ -53,13 +53,13 @@
         <tr>
           <td>焦距</td>
           <td>
-            <input id="txt_focalDistance"/>
+            <input id="txt_focalDistance" />
           </td>
         </tr>
         <tr>
           <td>增量</td>
           <td>
-            <input id="txt_delta"  />
+            <input id="txt_delta" />
           </td>
         </tr>
         <tr>
@@ -117,22 +117,30 @@
         $("#txt_focalDistance")
           .slider({ min: 0.0, max: 500.0, step: 1, value: 87 })
           .on("change", (e) => {
-            depthOfField.focalDistance = e.value.newValue;
+            if (e?.value) {
+              depthOfField.focalDistance = e.value.newValue;
+            }
           });
         $("#txt_delta")
           .slider({ min: 0.1, max: 2, step: 0.01, value: 1 })
           .on("change", (e) => {
-            depthOfField.delta = e.value.newValue;
+            if (e?.value) {
+              depthOfField.delta = e.value.newValue;
+            }
           });
         $("#txt_sigma")
           .slider({ min: 0.5, max: 5, step: 0.01, value: 3.78 })
           .on("change", (e) => {
-            depthOfField.sigma = e.value.newValue;
+            if (e?.value) {
+              depthOfField.sigma = e.value.newValue;
+            }
           });
         $("#txt_stepSize")
           .slider({ min: 0, max: 7, step: 0.01, value: 2.46 })
           .on("change", (e) => {
-            depthOfField.stepSize = e.value.newValue;
+            if (e?.value) {
+              depthOfField.stepSize = e.value.newValue;
+            }
           });
       }
     </script>

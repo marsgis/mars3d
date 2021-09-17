@@ -166,11 +166,10 @@
 
         $("#txtSpeed")
           .slider({ min: 0, max: 50, step: 1, value: 10 })
-          .on("slide", (e) => {
-            if (!dynamicRiver) {
-              return;
+          .on("change", (e) => {
+            if (dynamicRiver && e && e.value) {
+              dynamicRiver.speed = e.value.newValue;
             }
-            dynamicRiver.speed = e.value;
           });
 
         //清除

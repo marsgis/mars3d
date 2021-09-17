@@ -44,7 +44,7 @@
         <tr>
           <td class="nametd">方向角（heading）</td>
           <td>
-            <input id="model_heading"  />
+            <input id="model_heading" />
           </td>
         </tr>
         <tr>
@@ -56,7 +56,7 @@
         <tr>
           <td class="nametd">翻滚角（roll）</td>
           <td>
-            <input id="model_roll"  />
+            <input id="model_roll" />
           </td>
         </tr>
 
@@ -88,13 +88,13 @@
         <tr>
           <td class="nametd">垂直起始角度</td>
           <td>
-            <input id="model_startFovV"/>
+            <input id="model_startFovV" />
           </td>
         </tr>
         <tr>
           <td class="nametd">垂直结束角度</td>
           <td>
-            <input id="model_endFovV"  />
+            <input id="model_endFovV" />
           </td>
         </tr>
       </table>
@@ -144,38 +144,52 @@
         $("#model_heading")
           .slider({ min: 0, max: 360, step: 0.01, value: 0 })
           .on("change", (e) => {
-            camberRadar.heading = e.value.newValue;
+            if (e && e.value) {
+              camberRadar.heading = e.value.newValue;
+            }
           });
         $("#model_pitch")
           .slider({ min: -180, max: 180, step: 0.01, value: 0 })
           .on("change", (e) => {
-            camberRadar.pitch = e.value.newValue;
+            if (e && e.value) {
+              camberRadar.pitch = e.value.newValue;
+            }
           });
         $("#model_roll")
           .slider({ min: -180, max: 180, step: 0.01, value: 0 })
           .on("change", (e) => {
-            camberRadar.roll = e.value.newValue;
+            if (e && e.value) {
+              camberRadar.roll = e.value.newValue;
+            }
           });
 
         $("#model_startFovH")
           .slider({ min: -180, max: 180, step: 0.01, value: 180 })
           .on("change", (e) => {
-            camberRadar.startFovH = Cesium.Math.toRadians(e.value.newValue);
+            if (e && e.value) {
+              camberRadar.startFovH = Cesium.Math.toRadians(e.value.newValue);
+            }
           });
         $("#model_endFovH")
           .slider({ min: -180, max: 180, step: 0.01, value: -180 })
           .on("change", (e) => {
-            camberRadar.endFovH = Cesium.Math.toRadians(e.value.newValue);
+            if (e && e.value) {
+              camberRadar.endFovH = Cesium.Math.toRadians(e.value.newValue);
+            }
           });
         $("#model_startFovV")
           .slider({ min: 0, max: 90, step: 0.01, value: 0 })
           .on("change", (e) => {
-            camberRadar.startFovV = Cesium.Math.toRadians(e.value.newValue);
+            if (e && e.value) {
+              camberRadar.startFovV = Cesium.Math.toRadians(e.value.newValue);
+            }
           });
         $("#model_endFovV")
           .slider({ min: 0, max: 90, step: 0.01, value: 90 })
           .on("change", (e) => {
-            camberRadar.endFovV = Cesium.Math.toRadians(e.value.newValue);
+            if (e && e.value) {
+              camberRadar.endFovV = Cesium.Math.toRadians(e.value.newValue);
+            }
           });
 
         var style = getViewConfig();
