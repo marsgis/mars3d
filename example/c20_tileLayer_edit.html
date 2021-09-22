@@ -300,13 +300,18 @@
         });
 
       localforage.getItem("c20_tileLayer_edit").then(function (lastData) {
-        console.log("加载显示历史数据", lastData);
-        loadHistoricalData(lastData);
+        if (lastData) {
+          console.log("加载显示历史数据", lastData);
+          loadHistoricalData(lastData);
+        }
       });
     }
 
     // 瓦片数据的矩形区域范围
     function onDrawExtent() {
+      if (tileLayer) {
+        tileLayer.rectangle = null;
+      }
       map.graphicLayer.clear();
       map.graphicLayer.startDraw({
         type: "rectangle",

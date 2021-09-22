@@ -137,6 +137,9 @@
         });
 
         //单击事件
+        tileLayer.on(mars3d.EventType.loadConfig, function (event) {
+          console.log("加载了GetCapabilities", event);
+        });
         tileLayer.on(mars3d.EventType.click, function (event) {
           console.log("单击了矢量数据，共" + event.features.length + "条", event);
         });

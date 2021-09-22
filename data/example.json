@@ -1,4 +1,5 @@
 {
+  "version":"3.1.3",
   "result": [
     {
       "name": "快速开始",
@@ -1430,7 +1431,7 @@
             },
             {
               "name": "ArcGIS Server面的查询统计分析",
-              "version": "3.1",
+              "version": "3.1.3",
               "thumbnail": "f70_query_arcgis_polygon.jpg",
               "fileName": "f70_query_arcgis_polygon"
             },
@@ -1908,7 +1909,7 @@
             },
             {
               "name": "对象描边",
-              "version": "3.1",
+              "version": "3.1.3",
               "thumbnail": "h30_outlineEffect.jpg",
               "fileName": "h30_outlineEffect"
             },
@@ -2271,7 +2272,7 @@
           "children": [
             {
               "name": "饼形图标记",
-              "version": "3.1",
+              "version": "3.1.3",
               "thumbnail": "m30_divGraphic_pie.jpg",
               "fileName": "m30_divGraphic_pie"
             },
