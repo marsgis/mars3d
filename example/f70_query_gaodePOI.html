@@ -244,7 +244,7 @@
               var dmmc = $("#txtCity").data("citypicker").getName();
 
               loadData({
-                page: 1,
+                page: 0,
                 city: dmmc,
                 citylimit: true,
               });
@@ -252,12 +252,10 @@
             case "2": //当前视角范围
               var extent = map.getExtent();
               loadData({
-                page: 1,
+                page: 0,
                 polygon: [
                   [extent.xmin, extent.ymin],
-                  [extent.xmin, extent.ymax],
                   [extent.xmax, extent.ymax],
-                  [extent.xmax, extent.ymin],
                 ],
                 limit: true,
               });
@@ -268,7 +266,7 @@
                 return;
               }
               loadData({
-                page: 1,
+                page: 0,
                 graphic: drawGraphic,
                 limit: true,
               });

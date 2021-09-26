@@ -416,9 +416,7 @@
         }
       }
       //记录到历史
-      localforage.setItem("c20_tileLayer_edit", params).then(function (item) {
-        console.log("获取到的", item);
-      });
+      localforage.setItem("c20_tileLayer_edit", params);
       return params;
     }
 

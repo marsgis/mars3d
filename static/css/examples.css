@@ -1,0 +1,256 @@
+/* 2017-7-26 11:44:02 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） */
+.main-sidebar {
+  position: fixed;
+}
+
+.menuTitle a.active {
+  color: #f8f8f8;
+}
+
+.skin-blue .main-sidebar {
+  background-color: #4e97d9;
+}
+
+.skin-blue .sidebar-menu > li.treeview:hover > a {
+  border-left: 3px solid rgba(0, 0, 0, 0.1);
+}
+
+.skin-blue .sidebar-menu > li.treeview.active > a {
+  border-left: 3px solid rgba(0, 0, 0, 0.1);
+}
+
+.skin-blue .sidebar .second-menu,
+.skin-blue .sidebar .third-menu {
+  padding-left: 0;
+}
+
+.skin-blue .sidebar .third-menu a {
+  padding-left: 30px;
+}
+
+.skin-blue .sidebar a {
+  color: #000000;
+}
+
+.skin-blue .treeview-menu li > a {
+  border-left: 3px solid #4e97d9;
+}
+
+.skin-blue .treeview-menu li > a:hover,
+.skin-blue .treeview-menu li.active > a {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-left-color: rgba(0, 0, 0, 0.3);
+}
+
+.skin-blue .treeview-menu > li > a {
+  color: #000000;
+  padding-left: 35px;
+}
+
+.skin-blue .sidebar-menu > li > .treeview-menu {
+  margin: 0;
+  background: #4e97d9;
+}
+
+.sidebar-menu li.active > .treeview-menu {
+  background: #4e97d9;
+}
+
+/*侧边栏收起后向右展开的边框宽度*/
+.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > a > span:not(.pull-right),
+.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > .treeview-menu {
+  border-radius: 0;
+  width: 220px;
+}
+
+/*侧边栏收起后向右展开时一级菜单箭头的位置*/
+.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > a > .pull-right-container {
+  left: 220px !important;
+}
+
+.sidebar-mini.sidebar-collapse .sidebar-menu > li > .treeview-menu {
+  padding-top: 0;
+  padding-bottom: 0;
+  border-radius: 0;
+}
+
+.skin-blue .sidebar-menu > li:hover > a,
+.skin-blue .sidebar-menu > li.active > a {
+  color: #4e97d9;
+  background: #4688c3;
+}
+
+.skin-blue .treeview-menu > li.active > a,
+.skin-blue .treeview-menu > li > a:hover {
+  color: #000000;
+}
+
+.main-sidebar .iconName {
+  margin-right: 10px;
+  color: #ffffff;
+}
+
+.main-sidebar .firstMenuTitle {
+  color: #ffffff;
+}
+
+.main-sidebar .secondMenuTitle {
+  color: #ffffff;
+  padding-left: 10px;
+}
+
+.main-sidebar .thirdMenuTitle {
+  color: #ffffff;
+  font-size: 12px;
+  padding-left: 32px;
+}
+
+.main-sidebar .pull-right {
+  color: #ffffff;
+}
+
+/**********************/
+.main-header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+
+.examples-container {
+  background-color: #f9f9f9;
+  margin-top: 10px;
+  overflow: auto;
+}
+
+#charts-list {
+  margin: 0;
+  padding: 0 20px;
+  list-style: none;
+  overflow: inherit;
+  background-color: #f9f9f9;
+}
+
+h3.category-title {
+  margin-top: 0px;
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 0;
+  margin-left: 2px;
+  color: #555555;
+}
+
+@media (min-width: 1400px) {
+  .col-xlg-2 {
+    width: 16.66666667%;
+    padding-bottom: 5px;
+  }
+}
+
+#charts-list .chart {
+  width: 100%;
+  max-width: 260px;
+  margin: 4px auto;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 0 3px rgba(150, 150, 150, 0.5);
+  -webkit-box-shadow: 0 0 3px rgba(150, 150, 150, 0.5);
+}
+
+#charts-list .chart:hover,
+#charts-list .chart:focus {
+  transform: scale(1.1) translateZ(0);
+  z-index: 100;
+  -webkit-transform: scale(1.1) translateZ(0);
+  transition-duration: 0.4s;
+  box-shadow: 1px 1px 6px rgba(150, 150, 150, 0.6);
+  -webkit-box-shadow: 1px 1px 6px rgba(150, 150, 150, 0.6);
+}
+
+#charts-list .chart .chart-link {
+  position: relative;
+  display: block;
+}
+
+#charts-list .chart .chart-link .chart-title {
+  color: #2c3b41;
+  text-align: center;
+  padding: 2px;
+  overflow: hidden;
+  height: 36px;
+  line-height: 36px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0;
+  font-weight: normal;
+}
+
+#charts-list .chart .chart-link .chart-area {
+  width: 100%;
+}
+
+.box {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
+}
+
+.box.box-default {
+  border: 0;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #4e97d9;
+}
+
+.box-title {
+  padding-top: 10px;
+  padding-bottom: 0;
+  color: #111111;
+  font-family: "Microsoft Yahei";
+}
+
+.box-title-details {
+  padding-left: 20px;
+  color: #a4aebd;
+  margin: 5px;
+}
+.box-header {
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-left: 0;
+  background-color: #f9f9f9;
+}
+
+.box-body {
+  background-color: #f9f9f9;
+  padding-top: 5px;
+}
+
+.main-footer {
+  color: #7d7d7d;
+  font-size: 13px !important;
+  text-align: center;
+  bottom: 0;
+}
+.nav > li > a:hover,
+.nav > li > a:active,
+.nav > li > a:focus {
+  background: #4e97d9;
+}
+
+.category {
+  padding-top: 60px;
+}
+
+.newTitle {
+  color: #f9f9f9;
+  width: 30px;
+  height: 30px;
+  font-size: 15px;
+  line-height: 30px;
+  text-align: center;
+  top: -7px;
+  right: -7px;
+  position: absolute;
+  background: #ff5722;
+  border-radius: 50%;
+}

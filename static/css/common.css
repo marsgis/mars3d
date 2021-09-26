@@ -1,0 +1,169 @@
+@charset "UTF-8";
+/*重写AdmineLTE 的部分效果 start*/
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, "Heiti SC", "Microsoft Yahei", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: "Helvetica Neue", Helvetica, Arial, "Heiti SC", "Microsoft Yahei", sans-serif;
+}
+
+a {
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .main-sidebar,
+  .left-side {
+    padding-top: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-mini.sidebar-collapse .main-header .navbar {
+    margin-left: 0 !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > a > .pull-right-container {
+    position: relative !important;
+    float: right;
+    width: auto !important;
+    left: 180px !important;
+    top: -22px !important;
+    z-index: 900;
+  }
+
+  .sidebar-mini.sidebar-collapse .main-header .navbar {
+    margin-left: 0;
+  }
+}
+
+.skin-blue .wrapper,
+.skin-blue .main-sidebar,
+.skin-blue .left-side {
+  background-color: #ffffff;
+}
+
+.main-header .navbar {
+  -webkit-transition: margin-left 0.3s ease-in-out;
+  -o-transition: margin-left 0.3s ease-in-out;
+  transition: margin-left 0.3s ease-in-out;
+  margin-bottom: 0;
+  margin-left: 0;
+  border: none;
+  min-height: 60px;
+  border-radius: 0;
+}
+
+.navbar-header {
+  margin: 0 16px;
+}
+
+.navbar-brand {
+  height: 60px;
+  line-height: 50px;
+  padding: 0;
+}
+
+.main-header .sidebar-toggle {
+  float: left;
+  background-color: transparent;
+  background-image: none;
+  padding: 15px 17px;
+  font-family: fontAwesome;
+}
+
+.navbar-nav > .nav-dropdown-menu > .dropdown-menu {
+  width: 150px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  padding: 0 0 0 0;
+  margin: 0;
+  right: 16px;
+  top: 100%;
+}
+
+.main-header .navbar-custom-menu {
+  padding: 0;
+  margin: 0 16px;
+}
+
+*,
+*:after,
+*::before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.main-sidebar,
+.left-side {
+  padding-top: 60px;
+}
+
+/*重写AdmineLTE 的部分效果 end*/
+
+/*footer */
+
+.main-footer {
+  padding: 0;
+  color: #7d7d7d;
+  border-top: 0;
+}
+
+.icl-footer {
+  margin-top: 100px;
+  text-align: center;
+  bottom: 0;
+}
+
+.icl-copyright {
+  font-size: 14px !important;
+  text-align: center;
+  height: 54px;
+  line-height: 54px;
+  border-top: 1px solid #ddd;
+}
+
+.icl-contact {
+  padding: 10px 0;
+}
+
+.contact-main {
+  margin: 0 auto;
+  max-width: 770px;
+  text-align: left;
+  padding: 0 20px;
+}
+
+.home-link {
+  padding: 14px 60px;
+}
+
+.home-link a {
+  padding: 0 20px;
+  color: #7d7d7d;
+}
+
+.contact-link,
+.join-link {
+  padding-left: 20px;
+}
+
+.join-link {
+  margin-top: 10px;
+}
+
+/*footer end */

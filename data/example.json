@@ -1,5 +1,4 @@
 {
-  "version":"3.1.3",
   "result": [
     {
       "name": "快速开始",
@@ -94,13 +93,13 @@
             },
             {
               "name": "蒙板遮盖",
-              "version": "3.1",
+              "version": "3.1.0",
               "thumbnail": "d20_maskDiv.jpg",
               "fileName": "d20_maskDiv"
             },
             {
               "name": "离线数据",
-              "version": "3.1",
+              "version": "3.1.0",
               "thumbnail": "a20_offline.jpg",
               "fileName": "a20_offline"
             }
@@ -279,7 +278,7 @@
             },
             {
               "name": "瓦片底图的参数调试",
-              "version": "3.1",
+              "version": "3.1.1",
               "thumbnail": "c20_tileLayer_edit.jpg",
               "fileName": "c20_tileLayer_edit"
             },
@@ -332,7 +331,7 @@
               "fileName": "d10_vr"
             },
             {
-              "name": "POI兴趣点搜索",
+              "name": "POI兴趣点搜索(Cesium原生)",
               "version": "1.1",
               "thumbnail": "d10_geocoder.jpg",
               "fileName": "d10_geocoder"
@@ -443,6 +442,12 @@
               "version": "1.6",
               "thumbnail": "d20_geolocation.jpg",
               "fileName": "d20_geolocation"
+            },
+            {
+              "name": "POI兴趣点搜索",
+              "version": "3.1.5",
+              "thumbnail": "d20_poiQuerybar.jpg",
+              "fileName": "d20_poiQuerybar"
             }
           ]
         }
@@ -640,7 +645,7 @@
             },
             {
               "name": "Canvas图片点",
-              "version": "3.1",
+              "version": "3.1.1",
               "thumbnail": "f10_entity_billboard_canvas.jpg",
               "fileName": "f10_entity_billboard_canvas"
             },
@@ -856,7 +861,7 @@
             },
             {
               "name": "点对象动态位置",
-              "version": "3.1",
+              "version": "3.1.0",
               "thumbnail": "f20_primitive_dynamic.gif",
               "fileName": "f20_primitive_dynamic"
             },
@@ -868,7 +873,7 @@
             },
             {
               "name": "大数据线(合并渲染)",
-              "version": "3.1",
+              "version": "3.1.0",
               "thumbnail": "f25_primitive_polylineCombine.jpg",
               "fileName": "f25_primitive_polylineCombine"
             },
@@ -1699,7 +1704,7 @@
             },
             {
               "name": "自定义BIM属性及样式",
-              "version": "3.1",
+              "version": "3.1.2",
               "thumbnail": "g18_style_custom.jpg",
               "fileName": "g18_style_custom"
             }
@@ -1757,7 +1762,7 @@
             },
             {
               "name": "街景联动",
-              "version": "3.1",
+              "version": "3.1.0",
               "thumbnail": "h10_streetview.jpg",
               "fileName": "h10_streetview"
             }
@@ -1902,7 +1907,7 @@
               "fileName": "h30_cloud"
             },
             {
-              "name": "水面倒影 demo",
+              "name": "水面倒影 Demo",
               "version": "1.9",
               "thumbnail": "h30_daoying.jpg",
               "fileName": "h30_daoying"
@@ -1979,7 +1984,7 @@
               "fileName": "k10_measure_volume"
             },
             {
-              "name": "通视分析 demo",
+              "name": "通视分析 Demo",
               "version": "1.9",
               "thumbnail": "k10_sightline.jpg",
               "fileName": "k10_sightline"
