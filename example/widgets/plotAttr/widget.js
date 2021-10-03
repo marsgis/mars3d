@@ -137,7 +137,10 @@
     //文件处理
     getGeoJson() {
       let graphic = this.config.graphic;
-      return graphic.toGeoJSON();
+      let geojson = graphic.toGeoJSON();
+      geojson.properties._layer = graphic._layer.name; //记录分组信息
+
+      return geojson;
     }
   }
 

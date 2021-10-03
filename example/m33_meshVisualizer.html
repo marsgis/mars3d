@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>Mesh可视化扩展  | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+  <body class="dark">
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <!-- 面板 -->
+    <div class="infoview">提示：实现了模仿Threejs的Mesh、Geometry、Material并实现一个负责渲染和管理它们的更支持动态管理可渲染对象</div>
+
+
+
+    <script src="../lib/mars3d/thirdParty/meshVisualizer/CesiumMeshVisualizer.js"></script>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      "use script"; //开发环境建议开启严格模式
+
+      var map;
+      var homePosition = [117.220206, 31.834866, 50000]; //初始位置
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 31.834035, lng: 117.21969, alt: 106, heading: 33, pitch: -32 },
+            fxaa: true,
+          },
+        });
+
+        //创建三维地球场景
+        map = new mars3d.Map("mars3dContainer", mapOptions);
+
+        look(homePosition[0], homePosition[1], homePosition[2]); //定位视角
+
+        let MeshVisualizer = Cesium.MeshVisualizer;
+        let Mesh = Cesium.Mesh;
+        let MeshMaterial = Cesium.MeshMaterial;
+        let FramebufferTexture = Cesium.FramebufferTexture;
+        let GeometryUtils = Cesium.GeometryUtils;
+        let LOD = Cesium.LOD;
+
+        var center = Cesium.Cartesian3.fromDegrees(homePosition[0], homePosition[1], 500);
+        var modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(center);
+
+        var meshVisualizer = new MeshVisualizer({
+          modelMatrix: modelMatrix,
+          up: { z: 1 },
+          referenceAxisParameter: {
+            length: 11000,
+            width: 10,
+            headLength: 100,
+            headWidth: 20,
+          },
+        });
+        map.scene.primitives.add(meshVisualizer);
+        meshVisualizer.showReference = true; //显示坐标轴
+
+        var material = new MeshMaterial({
+          defaultColor: "rgba(200,0,0,1.0)",
+          wireframe: true,
+          side: MeshMaterial.Sides.FRONT,
+        });
+        var geometry = new Cesium.SphereGeometry({
+          radius: 5000.0,
+          vertexFormat: Cesium.VertexFormat.POSITION_ONLY,
+        });
+        var mesh = new Mesh(geometry, material);
+        mesh.position.z += 5000;
+        meshVisualizer.add(mesh);
+
+        setInterval(function () {
+          mesh.rotation.angle += 1;
+          mesh.modelMatrixNeedsUpdate = true;
+        }, 20);
+      }
+
+      function look(lon, lat, offset) {
+        var center = Cesium.Cartesian3.fromDegrees(lon, lat);
+        var transform = Cesium.Transforms.eastNorthUpToFixedFrame(center);
+
+        // View in east-north-up frame
+        var camera = map.camera;
+        camera.constrainedAxis = Cesium.Cartesian3.UNIT_Z;
+        camera.lookAtTransform(transform, new Cesium.Cartesian3(-offset, -offset, offset));
+        setTimeout(function () {
+          camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+        }, 100);
+      }
+    </script>
+  </body>
+</html>

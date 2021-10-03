@@ -61,9 +61,15 @@
         var graphicLayer = new mars3d.layer.GraphicLayer();
         map.addLayer(graphicLayer);
 
+        addGraphic_a1(graphicLayer);
+        addGraphic_a2(graphicLayer);
+        addGraphic_a3(graphicLayer);
+      }
+
+      function addGraphic_a1(graphicLayer) {
         var graphic = new mars3d.graphic.ModelEntity({
           name: "飞机",
-          position: [116.239918, 30.879709, 1206.1],
+          position: [116.239918, 30.879709, 1208],
           style: {
             url: "//data.mars3d.cn/gltf/mars/feiji.glb",
             scale: 2,
@@ -76,7 +82,27 @@
           direction: false, //控制方向, true逆时针，false顺时针
           time: 30, //time：给定飞行一周所需时间(单位 秒)，控制速度
         });
+      }
 
+      function addGraphic_a2(graphicLayer) {
+        var graphic = new mars3d.graphic.ModelEntity({
+          name: "四凌锥体",
+          position: [116.257665, 30.869372, 1500],
+          style: {
+            url: "//data.mars3d.cn/gltf/mars/zhui.glb",
+            scale: 200,
+          },
+        });
+        graphicLayer.addGraphic(graphic);
+
+        //开始 自旋转效果
+        graphic.rotateStart({
+          direction: true, //控制方向, true逆时针，false顺时针
+          time: 6, //time：给定飞行一周所需时间(单位 秒)，控制速度
+        });
+      }
+
+      function addGraphic_a3(graphicLayer) {
         var graphicCar = new mars3d.graphic.ModelEntity({
           name: "汽车",
           position: [116.210938, 30.87518, 613.1],

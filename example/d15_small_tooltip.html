@@ -25,7 +25,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -36,6 +36,13 @@
     <div id="mask" class="signmask" onclick="removeMask()"></div>
 
     <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <div class="infoview">
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkEnabled" class="styled" type="checkbox" checked />
+        <label for="chkEnabled"> 启用/禁用 </label>
+      </div>
+    </div>
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
@@ -51,7 +58,7 @@
         map = new mars3d.Map("mars3dContainer", mapOptions);
 
         //smallTooltip是一种简易的tooltip，目前标绘中用到的就是smallTooltip
-        // map.smallTooltip.direction = true //改变方向到左侧显示
+        // map.smallTooltip.direction = true; //改变方向到左侧显示
 
         //关闭tooltip
         map.closeSmallTooltip();
@@ -59,6 +66,12 @@
         map.mouseEvent.enabledMoveDelay = false;
         map.on(mars3d.EventType.mouseMove, (event) => {
           map.openSmallTooltip(event.windowPosition, "可以放任意html信息");
+        });
+
+        //启用/禁用
+        $("#chkEnabled").change(function () {
+          var enabled = $(this).is(":checked");
+          map.smallTooltip.enabled = enabled;
         });
       }
     </script>

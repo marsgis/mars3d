@@ -187,21 +187,14 @@
         //演示个性化处理graphic，代码在\js\graphicManager.js
         initGraphicManager(graphic);
 
-        //graphic转geojson
-        var geojson = graphic.toGeoJSON();
-        console.log("转换后的geojson", geojson);
-        addGeoJson(geojson, graphicLayer);
-      }
+        //graphic转json，clone一个对象
+        var json = graphic.toJSON();
+        console.log("转换后的json", json);
 
-      //添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
-      function addGeoJson(geojson, graphicLayer) {
-        var graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0];
-        delete graphicCopy.attr;
-        //新的坐标
-        graphicCopy.position = [116.33493, 30.822064, 644.43];
-        graphicCopy.style.label = graphicCopy.style.label || {};
-        graphicCopy.style.label.text = "我是转换后生成的";
-        graphicLayer.addGraphic(graphicCopy);
+        json.position = [116.33493, 30.822064, 644.43]; //新的坐标
+        json.style.label = json.style.label || {};
+        json.style.label.text = "我是转换后生成的";
+        graphicLayer.addGraphic(json); //支持直接加json，内部转为graphic
       }
 
       function addGraphic_a2(graphicLayer) {

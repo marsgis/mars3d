@@ -40,6 +40,7 @@
     <!-- 面板 -->
     <div class="infoview">
       <input type="button" class="btn btn-primary" value="绘制矩形" id="btnDrawExtent" />
+      <input type="button" class="btn btn-primary" value="绘制矩形(外)" id="btnDrawExtent2" />
       <input
         type="button"
         class="btn btn-primary"
@@ -51,7 +52,7 @@
       <input
         type="button"
         class="btn btn-primary"
-        value="绘制面-外裁剪"
+        value="绘制面(外)"
         id="btnDrawPoly2"
         title="提示： 因为使用clippingPlanes接口，部分围合角度时，存在效果不对"
       />
@@ -161,6 +162,29 @@
               map.graphicLayer.clear();
 
               tilesetPlanClip.positions = positions;
+            },
+          });
+        });
+
+        $("#btnDrawExtent2").click(function () {
+          tilesetPlanClip.clear();
+          map.graphicLayer.startDraw({
+            type: "rectangle",
+            style: {
+              color: "#007be6",
+              opacity: 0.8,
+              outline: false,
+              // clampToGround: true
+            },
+            success: function (graphic) {
+              //绘制成功后回调
+              var positions = graphic.getOutlinePositions(false);
+              map.graphicLayer.clear();
+
+              tilesetPlanClip.clipOutSide = true;
+              tilesetPlanClip.positions = positions;
+
+              console.log(JSON.stringify(mars3d.PointTrans.cartesians2lonlats(positions))); //打印下边界
             },
           });
         });

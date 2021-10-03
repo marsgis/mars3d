@@ -400,12 +400,8 @@
 
         $("#btnStart").click(function () {
           //启动漫游
-          if (roamLine.isStart) {
-            roamLine.proceed(); //继续
-          } else {
-            roamLine.start();
-          }
-          $("#btnPause").show();
+          roamLine.start();
+          $("#btnPause").show().val("暂停");
         });
         $("#btnPause").hide();
         $("#btnPause").click(function () {

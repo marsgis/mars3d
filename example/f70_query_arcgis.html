@@ -143,6 +143,7 @@
               scaleByDistance_near: 1000,
               scaleByDistance_nearValue: 1,
               clampToGround: true,
+              highlight: { type: "click", image: "img/marker/mark1.png" },
               label: {
                 text: "{项目名称}",
                 font_size: 25,
@@ -280,7 +281,15 @@
               toastr.warning(item.name + " 无经纬度坐标信息！");
               return;
             }
-            graphic.flyTo({ radius: 1000 });
+            graphic.openHighlight();
+
+            graphic.flyTo({
+              radius: 1000, //点数据：radius控制视距距离
+              scale: 1.5, //线面数据：scale控制边界的放大比例
+              complete: () => {
+                graphic.openPopup();
+              },
+            });
           },
         });
       }

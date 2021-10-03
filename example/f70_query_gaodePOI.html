@@ -199,15 +199,14 @@
               toastr.warning(item.name + " 无经纬度坐标信息！");
               return;
             }
-            var position = graphic.positionShow;
-            poiLayer.closePopup();
 
-            map.flyToPoint(position, {
-              radius: 2000, //距离目标点的距离
-              duration: 3,
-              complete: function (e) {
-                //飞行完成回调方法
-                poiLayer.openPopup(graphic);
+            graphic.openHighlight();
+
+            graphic.flyTo({
+              radius: 2000, //点数据：radius控制视距距离
+              scale: 1.5, //线面数据：scale控制边界的放大比例
+              complete: () => {
+                graphic.openPopup();
               },
             });
           },
@@ -412,6 +411,7 @@
               scaleByDistance_near: 1000,
               scaleByDistance_nearValue: 1,
               clampToGround: true, //贴地
+              highlight: { type: "click", image: "img/marker/mark1.png" },
               label: {
                 text: item.name,
                 font: "20px 楷体",

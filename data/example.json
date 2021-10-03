@@ -1179,6 +1179,12 @@
               "version": "3.0",
               "thumbnail": "f45_typhoon.jpg",
               "fileName": "f45_typhoon"
+            },
+            {
+              "name": "数字城市(综合案例)",
+              "version": "3.1.5",
+              "thumbnail": "f45_digitalCity.jpg",
+              "fileName": "f45_digitalCity"
             }
           ]
         },
@@ -2378,6 +2384,42 @@
             }
           ]
         },
+        {
+          "name": "ammo物理引擎支持",
+          "children": [
+            {
+              "name": "车辆运动",
+              "version": "1.4",
+              "thumbnail": "m33_ammo_vehicle.gif",
+              "fileName": "m33_ammo_vehicle"
+            },
+            {
+              "name": "转动（旗子）",
+              "version": "1.4",
+              "thumbnail": "m33_ammo_turn_cloth.jpg",
+              "fileName": "m33_ammo_turn_cloth"
+            },
+            {
+              "name": "转动（球）",
+              "version": "1.4",
+              "thumbnail": "m33_ammo_turn_rope.jpg",
+              "fileName": "m33_ammo_turn_rope"
+            },
+            {
+              "name": "撞击（软体）",
+              "version": "1.4",
+              "thumbnail": "m33_ammo_softbody_volume.jpg",
+              "fileName": "m33_ammo_softbody_volume"
+            },
+            {
+              "name": "撞击（断裂体）",
+              "version": "1.4",
+              "thumbnail": "m33_ammo_convex_break.jpg",
+              "fileName": "m33_ammo_convex_break"
+            }
+          ]
+        },
+
         {
           "name": "虚拟仿真",
           "children": [

@@ -393,8 +393,13 @@
           params.format = $("#txtTileFormat").val();
 
           //一些不适合UI调的固定参数，可以在下面加上
+          params.style = "default";
           // params.tileMatrixSetID = 'EPSG:4326'
-
+          // params.queryParameters = {
+          //   STANDARD: "OGC",
+          //   ACCOUNT: "lwl",
+          //   PASSWD: "123456",
+          // };
           break;
       }
       console.log(params);

@@ -474,17 +474,21 @@
       });
       this.graphicLayer.addGraphic(graphic);
 
-      graphic.flyTo();
-
       graphic.bindPopup(`<div class="mars-popup-titile">坐标定位</div>
               <div class="mars-popup-content" >
                 <div><label>经度</label> ${jd}</div>
                 <div><label>纬度</label>${wd}</div>
               </div>`);
 
-      setTimeout(() => {
-        graphic.openPopup();
-      }, 3000);
+      graphic.openHighlight();
+
+      graphic.flyTo({
+        radius: 1000, //点数据：radius控制视距距离
+        scale: 1.5, //线面数据：scale控制边界的放大比例
+        complete: () => {
+          graphic.openPopup();
+        },
+      });
     }
 
     //===================历史记录相关========================

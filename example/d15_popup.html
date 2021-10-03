@@ -158,7 +158,14 @@
             { field: "id", name: "编码" },
             { field: "name", name: "名称" },
             { field: "type", name: "类型" },
+            {
+              type: "html",
+              html: `<label>视频</label><video src='http://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style="width: 300px;" ></video>`,
+            },
           ],
+          popupOptions: {
+            autoCenter: true,
+          },
         });
         map.addLayer(geoJsonLayer);
       }
