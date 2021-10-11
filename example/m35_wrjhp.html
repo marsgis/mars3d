@@ -177,7 +177,7 @@
           this.frameNum++;
 
           //当前的路线中的点位
-          var currIndex = this.roamLine.indexForFlyOK; //当前飞行的线路,共五条线，从零开始
+          var currIndex = this.roamLine.currIndex; //当前飞行的线路,共五条线，从零开始
 
           if (currIndex % 2 == 0) {
             if (this.frameNum % this.stepNum == 0) {
@@ -194,9 +194,9 @@
                 return;
               }
               // 获取起点坐标到终点坐标的 Heading Pitch Roll方向角度值
-              var hpr = mars3d.PointUtil.getHeadingPitchRollForLine(p1, p2); //hpr.heading -- 是2.
-              // 将弧度转换为度  hpr.heading--方向对于当前线路是斜的
-              var heading = Cesium.Math.toDegrees(hpr.heading); //heading -- 是143.
+              var hpr = mars3d.PointUtil.getHeadingPitchRollForLine(p1, p2);
+              // 将弧度转换为度
+              var heading = Cesium.Math.toDegrees(hpr.heading);
 
               //添加四棱锥体线
               var graphicFrustum = new mars3d.graphic.FrustumPrimitive({
@@ -215,6 +215,8 @@
                 flat: true,
               });
               graphicLayer.addGraphic(graphicFrustum);
+
+              console.log(graphicFrustum);
 
               this.arr4LinePrimitive.push(graphicFrustum);
             }

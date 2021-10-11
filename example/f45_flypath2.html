@@ -90,17 +90,17 @@
         linePositions.push(linePositions[0]); //闭合圆
 
         //圆圈线
-        let graphicLine = new mars3d.graphic.PolylineEntity({
-          positions: linePositions,
-          style: {
-            width: 8,
-            material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolylineGlow, {
-              glowPower: 0.2,
-              color: Cesium.Color.GREEN,
-            }),
-          },
-        });
-        graphicLayer.addGraphic(graphicLine);
+        // let graphicLine = new mars3d.graphic.PolylineEntity({
+        //   positions: linePositions,
+        //   style: {
+        //     width: 8,
+        //     material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.PolylineGlow, {
+        //       glowPower: 0.2,
+        //       color: Cesium.Color.GREEN,
+        //     }),
+        //   },
+        // });
+        // graphicLayer.addGraphic(graphicLine);
 
         //飞机path路径
         var property = new Cesium.SampledPositionProperty();
@@ -123,9 +123,9 @@
           position: property,
           orientation: new Cesium.VelocityOrientationProperty(property),
           style: {
-            width: 1,
-            color: "#ff0000",
-            opacity: 0.5,
+            width: 2,
+            color: "#ffff00",
+            opacity: 0.9,
           },
           label: {
             text: "火星1号",

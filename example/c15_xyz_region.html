@@ -18,17 +18,18 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>立体户型图 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title> 本地影像 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
+
   </head>
 
   <body class="dark">
@@ -37,7 +38,8 @@
 
     <div id="mars3dContainer" class="mars3d-container"></div>
 
-    <script src="./js/HuxingLayer.js"></script>
+    <!-- 面板 -->
+    <!-- <div class="infoview"> </div> -->
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
@@ -46,39 +48,44 @@
       var map;
 
       function initMap(options) {
-        //合并属性参数，可覆盖config.json中的对应配置
+        let color = "#363635";
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 31.820474, lng: 117.178655, alt: 326, heading: 24, pitch: -45 },
+            center: { lat: 25.845231, lng: 117.57678, alt: 488175, heading: 358, pitch: -42 },
+            showSun: false,
+            showMoon: false,
+            showSkyBox: false,
+            showSkyAtmosphere: false,
+            fog: false,
+            backgroundColor: color, //天空背景色
+            globe: {
+              baseColor: color, //地球地面背景色
+              showGroundAtmosphere: false,
+              enableLighting: false,
+            },
           },
+          control: {
+            baseLayerPicker: false,
+          },
+          basemaps: [],
+          layers: [],
         });
 
         //创建三维地球场景
         map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        //HuxingLayer类定义在./js/HuxingLayer.js
-        let layer = new HuxingLayer({
-          url: "//data.mars3d.cn/file/geojson/huxing.json",
-        });
-        map.addLayer(layer);
+        // 添加矢量图层
+        var graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
 
-        //可以绑定Popup弹窗，回调方法中任意处理
-        // layer.bindPopup(function (event) {
-        //   let item = event.graphic?.attr;
-        //   if (!item) {
-        //     return false;
-        //   }
-        //   return mars3d.Util.getTemplateHtml({
-        //     title: "楼栋",
-        //     attr: item,
-        //     template: [
-        //       { field: "CH", name: "层号" },
-        //       { field: "DYH", name: "单元" },
-        //       { field: "FH", name: "房号" },
-        //       { field: "WZ", name: "位置" },
-        //     ],
-        //   });
-        // });
+        //安徽省卫星底图
+        var tileLayer = new mars3d.layer.XyzLayer({
+          url: "//data.mars3d.cn/tile/anhui/{z}/{x}/{y}.png",
+          minimumLevel: 0,
+          maximumLevel: 12,
+          rectangle: { xmin: 114.811691, xmax: 119.703609, ymin: 29.35597, ymax: 34.698585 },
+        });
+        map.addLayer(tileLayer);
       }
     </script>
   </body>

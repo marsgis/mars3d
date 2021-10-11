@@ -89,9 +89,8 @@ class Typhoon {
       style: {
         material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.Text, {
           text: this.options.name_cn,
-          font: "60px 宋体",
-          color: "red",
-          backgroundColor: new Cesium.Color(0.0, 0.0, 0.0, 0),
+          font_size: 60,
+          fillColor: "red",
         }),
         zIndex: 2,
       },

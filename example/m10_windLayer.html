@@ -82,6 +82,7 @@
         map.addLayer(windLayer);
 
         DataProcess.loadData("//data.mars3d.cn/file/apidemo/wind.nc", "//data.mars3d.cn/file/apidemo/windColor.json").then((data) => {
+          console.log("加载数据", data);
           windLayer.setData(data);
         });
 
@@ -176,6 +177,7 @@
             request.send();
           });
         };
+
         var loadText = function (filePath) {
           var request = new XMLHttpRequest();
           request.open("GET", filePath, false);

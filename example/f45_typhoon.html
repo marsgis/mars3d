@@ -33,7 +33,7 @@
       .messagetable {
         position: absolute;
         display: none;
-        top: 420px;
+        top: 345px;
         left: 10px;
         padding: 10px 15px;
         width: 380px;
@@ -116,8 +116,8 @@
 
       .legendContent {
         position: fixed;
-        bottom: 30px;
-        left: 1px;
+        top: 3px;
+        right: 1px;
         color: #e9e9e9;
         text-shadow: 2px 2px 2px #000;
         background-color: rgba(0, 0, 0, 0.4);
@@ -215,7 +215,7 @@
       function showTyphoonTable(data) {
         $("#listTable").bootstrapTable({
           data: data,
-          height: 390,
+          height: 300,
           pagination: false,
           singleSelect: false,
           checkboxHeader: false,
@@ -377,7 +377,7 @@
       }
 
       function getHeight() {
-        return $(window).height() - 520;
+        return $(window).height() - 440;
       }
 
       //访问后端接口，取台风列表数据
@@ -399,10 +399,10 @@
           window.typhoon_jsons_list_default = typhoon_jsons_list_default;
 
           $.ajax({
-            url: "http://typhoon.nmc.cn/weatherservice/typhoon/jsons/list_default", //在线实时接口
-            dataType: "jsonp",
-            // url: '//data.mars3d.cn/file/apidemo/typhoon/list_2020.json', //mock离线数据
-            // dataType: 'json',
+            // url: "http://typhoon.nmc.cn/weatherservice/typhoon/jsons/list_default", //在线实时接口
+            // dataType: "jsonp",
+            url: "//data.mars3d.cn/file/apidemo/typhoon/list_2020.json", //mock离线数据
+            dataType: "json",
             type: "GET",
             data: {
               t: new Date().getTime(),
@@ -428,10 +428,10 @@
           window["typhoon_jsons_view_" + id] = typhoon_jsons_view;
 
           $.ajax({
-            url: "http://typhoon.nmc.cn/weatherservice/typhoon/jsons/view_" + id, //在线实时接口
-            dataType: "jsonp",
-            // url: '//data.mars3d.cn/file/apidemo/typhoon/view_' + id + '.json', //mock离线数据
-            // dataType: 'json',
+            // url: "http://typhoon.nmc.cn/weatherservice/typhoon/jsons/view_" + id, //在线实时接口
+            // dataType: "jsonp",
+            url: "//data.mars3d.cn/file/apidemo/typhoon/view_" + id + ".json", //mock离线数据
+            dataType: "json",
             type: "GET",
             data: {
               t: new Date().getTime(),

@@ -638,6 +638,10 @@
       }
 
       function resetUI() {
+        if (!graphicLayer) {
+          return;
+        }
+
         $("#selXilie").val("");
         $("#selCountry").val("");
         $("#selType").val("");
@@ -683,6 +687,10 @@
 
       // 判断卫星数据
       function selectSatellites(options = {}) {
+        if (!graphicLayer) {
+          return;
+        }
+
         var xilie = $("#selXilie").val(); //系列卫星
         var country = $("#selCountry").val(); //所属国家
         var type = $("#selType").val(); //对象类型

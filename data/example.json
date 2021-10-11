@@ -210,7 +210,14 @@
               "version": "1.6",
               "thumbnail": "c10_mvt.jpg",
               "fileName": "c10_mvt"
+            },
+            {
+              "name": "实时交通态势图",
+              "version": "3.0",
+              "thumbnail": "c10_realtimeTraffic.jpg",
+              "fileName": "c10_realtimeTraffic"
             }
+
           ]
         },
         {
@@ -228,6 +235,12 @@
               "version": "1.1",
               "thumbnail": "c15_xyz.jpg",
               "fileName": "c15_xyz"
+            },
+            {
+              "name": "xyz金字塔瓦片(区域影像)",
+              "version": "3.0",
+              "thumbnail": "c15_xyz_region.jpg",
+              "fileName": "c15_xyz_region"
             },
             {
               "name": "arcgis格式瓦片",
@@ -1163,6 +1176,12 @@
               "fileName": "f45_district"
             },
             {
+              "name": "行政区突出展示2",
+              "version": "3.1.0",
+              "thumbnail": "f45_district2.jpg",
+              "fileName": "f45_district2"
+            },
+            {
               "name": "矿区岩层效果",
               "version": "2.0",
               "thumbnail": "f45_kuangqu.jpg",
@@ -1181,7 +1200,13 @@
               "fileName": "f45_typhoon"
             },
             {
-              "name": "数字城市(综合案例)",
+              "name": "智慧社区",
+              "version": "3.1.7",
+              "thumbnail": "f45_community.jpg",
+              "fileName": "f45_community"
+            },
+            {
+              "name": "数字城市",
               "version": "3.1.5",
               "thumbnail": "f45_digitalCity.jpg",
               "fileName": "f45_digitalCity"
@@ -1650,6 +1675,32 @@
           "name": "三维模型单体化",
           "children": [
             {
+              "name": "分栋矢量单体化",
+              "version": "1.6",
+              "thumbnail": "g15_dth_fd.jpg",
+              "fileName": "g15_dth_fd"
+            },
+            {
+              "name": "分栋矢量单体化编辑",
+              "version": "1.9",
+              "thumbnail": "g15_dth_fd_edit.jpg",
+              "fileName": "g15_dth_fd_edit"
+            },
+            {
+              "name": "分层分户矢量单体化",
+              "version": "1.9",
+              "thumbnail": "g15_dth_fcfh.jpg",
+              "fileName": "g15_dth_fcfh"
+            },
+
+
+            {
+              "name": "矢量单体化(叠加WFS服务)",
+              "version": "2.0",
+              "thumbnail": "g15_dth_wfs.jpg",
+              "fileName": "g15_dth_wfs"
+            },
+            {
               "name": "3dtiles数据内单体化(建筑物或人工建模)",
               "version": "1.5",
               "thumbnail": "g15_dth_inside.jpg",
@@ -1660,31 +1711,8 @@
               "version": "1.9",
               "thumbnail": "g15_dth_classificationType.jpg",
               "fileName": "g15_dth_classificationType"
-            },
-            {
-              "name": "矢量单体化(GeoJson叠加)",
-              "version": "1.6",
-              "thumbnail": "g15_dth_fd.jpg",
-              "fileName": "g15_dth_fd"
-            },
-            {
-              "name": "矢量单体化编辑(GeoJson叠加)",
-              "version": "1.9",
-              "thumbnail": "g15_dth_fd_edit.jpg",
-              "fileName": "g15_dth_fd_edit"
-            },
-            {
-              "name": "矢量单体化(WFS矢量叠加)",
-              "version": "2.0",
-              "thumbnail": "g15_dth_wfs.jpg",
-              "fileName": "g15_dth_wfs"
-            },
-            {
-              "name": "分层分户矢量单体化(GeoJson叠加)",
-              "version": "1.9",
-              "thumbnail": "g15_dth_fcfh.jpg",
-              "fileName": "g15_dth_fcfh"
             }
+
           ]
         },
         {

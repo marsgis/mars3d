@@ -93,16 +93,31 @@
       var map;
 
       function initMap(options) {
-        //合并属性参数，可覆盖config.json中的对应配置
+        let color = "#363635";
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 24.890314, lng: 118.165162, alt: 831420, heading: 355, pitch: -48 },
-            fxaa: false,
+            center: { lat: 25.845231, lng: 117.57678, alt: 488175, heading: 358, pitch: -42 },
+            showSun: false,
+            showMoon: false,
+            showSkyBox: false,
+            showSkyAtmosphere: false,
+            fog: false,
+            backgroundColor: color, //天空背景色
+            globe: {
+              baseColor: color, //地球地面背景色
+              showGroundAtmosphere: false,
+              enableLighting: false,
+            },
           },
+          control: {
+            baseLayerPicker: false,
+          },
+          basemaps: [],
+          layers: [],
         });
+
         //创建三维地球场景
         map = new mars3d.Map("mars3dContainer", mapOptions);
-        map.basemap = 2017; //蓝色底图
 
         // 添加矢量图层
         var graphicLayer = new mars3d.layer.GraphicLayer();
@@ -114,23 +129,16 @@
         addOutCircle(graphicLayer);
       }
 
-      let diffHeight = 20000;
-
       //添加安徽省底图和墙
       function addAnhui(graphicLayer) {
         //安徽省卫星底图
-        var anhuiImg = new mars3d.graphic.RectanglePrimitive({
-          positions: [
-            [114.877478595, 29.395624614],
-            [119.644266263, 34.655111865],
-          ],
-          style: {
-            height: diffHeight,
-            materialType: mars3d.MaterialType.Image2,
-            image: "//data.mars3d.cn/file/img/anhui.png",
-          },
+        var tileLayer = new mars3d.layer.XyzLayer({
+          url: "//data.mars3d.cn/tile/anhui/{z}/{x}/{y}.png",
+          minimumLevel: 0,
+          maximumLevel: 12,
+          rectangle: { xmin: 114.811691, xmax: 119.703609, ymin: 29.35597, ymax: 34.698585 },
         });
-        graphicLayer.addGraphic(anhuiImg);
+        map.addLayer(tileLayer);
 
         // 安徽省边界线墙
         var anhuiWall = new mars3d.layer.GeoJsonLayer({
@@ -139,9 +147,11 @@
           symbol: {
             type: "wallP",
             styleOptions: {
-              diffHeight: diffHeight, //墙高
+              setHeight: -15000,
+              diffHeight: 15000, //墙高
               materialType: mars3d.MaterialType.Image2,
-              image: "./img/icon/wall.png",
+              image: "./img/textures/grawall.png",
+              color: "rgba(0,255,255,1.0)",
             },
           },
         });
@@ -155,7 +165,6 @@
             type: "polyline",
             styleOptions: {
               color: "rgba(255,255,255,0.3)",
-              setHeight: diffHeight,
               width: 2,
               label: {
                 text: "{name}",
@@ -186,7 +195,7 @@
 
       //添加示范城市的相关对象
       function addCenterCity(graphicLayer) {
-        let point = [117.234218, 31.814155, diffHeight + 500];
+        let point = [117.234218, 31.814155, 0];
 
         // divgraphic标注
         var divgraphic = new mars3d.graphic.DivGraphic({
@@ -259,26 +268,26 @@
         }
 
         //自转的半椭圆
-        var rotation = Cesium.Math.toRadians(50);
-        function getRotationValue() {
-          rotation += 0.005;
-          return rotation;
-        }
-        var primitive1 = new mars3d.graphic.RectangleEntity({
-          positions: [
-            [114.642444, 34.789658],
-            [119.814361, 29.425181],
-          ],
-          style: {
-            materialType: mars3d.MaterialType.Image2,
-            image: "./img/icon/calib-semicircle.png",
-            opacity: 0.2,
-            clampToGround: true,
-            rotation: new Cesium.CallbackProperty(getRotationValue, false),
-            stRotation: new Cesium.CallbackProperty(getRotationValue, false),
-          },
-        });
-        graphicLayer.addGraphic(primitive1);
+        // var rotation = Cesium.Math.toRadians(50);
+        // function getRotationValue() {
+        //   rotation += 0.005;
+        //   return rotation;
+        // }
+        // var primitive1 = new mars3d.graphic.RectangleEntity({
+        //   positions: [
+        //     [114.642444, 34.789658],
+        //     [119.814361, 29.425181],
+        //   ],
+        //   style: {
+        //     materialType: mars3d.MaterialType.Image2,
+        //     image: "./img/icon/calib-semicircle.png",
+        //     opacity: 0.2,
+        //     clampToGround: true,
+        //     rotation: new Cesium.CallbackProperty(getRotationValue, false),
+        //     stRotation: new Cesium.CallbackProperty(getRotationValue, false),
+        //   },
+        // });
+        // graphicLayer.addGraphic(primitive1);
       }
     </script>
   </body>
