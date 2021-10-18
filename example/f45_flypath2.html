@@ -158,9 +158,7 @@
         $("#btnSeeTop").click(function () {
           //顶视图
           map.trackedEntity = undefined;
-          graphicLine.flyTo({
-            duration: 3,
-          });
+          map.flyToPositions(linePositions, { pitch: -90 });
         });
 
         $("#btnSeeCe").click(function () {

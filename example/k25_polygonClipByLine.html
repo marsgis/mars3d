@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>功能示例 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <!-- 面板 -->
+    <div class="infoview">
+      <input type="button" class="btn btn-primary" id="drawLine" value="绘制线" />
+      <input type="button" class="btn btn-primary" id="removeData" value="清除" />
+    </div>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      "use script"; //开发环境建议开启严格模式
+
+      var map;
+      var polygonLayer;
+      var drawLayer;
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 31.855058, lng: 117.312337, alt: 79936, heading: 0, pitch: -90 },
+          },
+        });
+
+        //创建三维地球场景
+        map = new mars3d.Map("mars3dContainer", mapOptions);
+
+        //加载面数据
+        loadPolygon();
+
+        drawLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(drawLayer);
+
+        $("#removeData").click(function () {
+          drawLayer.clear();
+        });
+
+        $("#drawLine").click(function () {
+          drawLayer.clear();
+          drawLayer.startDraw({
+            type: "polyline",
+            maxPointNum: 2,
+            style: {
+              color: "#55ff33",
+              width: 3,
+            },
+            success: (graphic) => {
+              var clipLine = graphic.toGeoJSON();
+              clipAllPolygon(clipLine);
+
+              graphic.remove();
+            },
+          });
+        });
+      }
+
+      //加载面数据
+      function loadPolygon() {
+        polygonLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(polygonLayer);
+
+        var postionArr = [
+          {
+            postions: [
+              [117.21983, 31.780687],
+              [117.179661, 31.745352],
+              [117.201462, 31.727826],
+              [117.258453, 31.727534],
+              [117.27459, 31.757619],
+              [117.270985, 31.775139],
+              [117.26738, 31.774701],
+              [117.259827, 31.783752],
+              [117.21983, 31.780687],
+            ],
+          },
+          {
+            postions: [
+              [117.490393, 31.88435],
+              [117.596823, 31.895413],
+              [117.626349, 31.784167],
+              [117.449369, 31.775197],
+              [117.490393, 31.88435],
+            ],
+          },
+
+          {
+            postions: [
+              [117.250042, 31.954209],
+              [117.273903, 31.970234],
+              [117.306862, 31.957994],
+              [117.303772, 31.912971],
+              [117.293816, 31.901294],
+              [117.269611, 31.900128],
+              [117.250042, 31.954209],
+            ],
+          },
+          {
+            postions: [
+              [117.168674, 31.964546],
+              [117.202492, 31.926669],
+              [117.132111, 31.923592],
+              [117.125759, 31.95099],
+              [117.168674, 31.964546],
+            ],
+          },
+        ];
+
+        for (var i = 0; i < postionArr.length; i++) {
+          var polygonGraphic = new mars3d.graphic.PolygonEntity({
+            positions: [postionArr[i].postions],
+            style: {
+              color: "#00ffff",
+              opacity: 0.2,
+              clampToGround: true,
+            },
+          });
+          polygonLayer.addGraphic(polygonGraphic);
+        }
+      }
+
+      //循环所有面，判断相交的去切割面
+      function clipAllPolygon(clipLine) {
+        polygonLayer.eachGraphic(function (graphic) {
+          try {
+            var clippedPolygon = geoUtil.polygonClipByLine(graphic.toGeoJSON(), clipLine);
+
+            drawLayer.loadGeoJSON(clippedPolygon, {
+              style: {
+                randomColor: true,
+                opacity: 0.5,
+                outline: true,
+                outlineWidth: 2,
+                outlineColor: "#ffffff",
+                clampToGround: true,
+              },
+            });
+          } catch (error) {
+            // haoutil.msg('<div style="color:#ff0000;">' + error.state + ":</br>" + error.message + "</div>");S
+          }
+        });
+      }
+
+      //交点样式
+      function intersectsStyle(slicedClipLine) {
+        var positions = slicedClipLine.geometry.coordinates;
+        for (var i = 0; i < positions.length; i++) {
+          var pointGraphic = new mars3d.graphic.PointPrimitive({
+            positions: [positions[i]],
+            style: {
+              color: "#ccc",
+              opacity: 1,
+              outline: true,
+              outlineWidth: 3,
+              outlineColor: "#ccc",
+              clampToGround: true,
+            },
+          });
+          polygonLayer.addGraphic(pointGraphic);
+        }
+      }
+
+      /**
+       * geoJson数据处理模块(需要引入turf.js)
+       * 输入输出数据均为标准geoJson格式
+       */
+      var geoUtil = {
+        /**
+         * 合并多边形
+         */
+        unionPolygon: function (polygons) {
+          var polygon = polygons[0];
+          for (var i = 0; i < polygons.length; i++) {
+            polygon = turf.union(polygon, polygons[i]);
+          }
+          return polygon;
+        },
+        /**
+         * 线分割面
+         * 面类型只能是polygon 但可以是环
+         * 注:线与多边形必须有两个交点
+         */
+        polygonClipByLine: function (polygon, clipLine) {
+          if (polygon.geometry.type === "Polygon") {
+            var polyLine = turf.polygonToLine(polygon);
+            if (polyLine.geometry.type === "LineString") {
+              // 切割普通多边形
+              return this._singlePolygonClip(polyLine, clipLine);
+            } else if (polyLine.geometry.type === "MultiLineString") {
+              //切割环
+              return this._multiPolygonClip(polyLine, clipLine);
+            }
+          } else if (polygon.geometry.type === "MultiPolygon") {
+            // 若输入的多边形类型为Multipolygon则拆分成多个Polygon
+            var polygons = this.multiPolygon2polygons(polygon);
+            var clipPolygon = null;
+            var clipPolygonIndex = -1;
+            // 获取MultiPolygon中与切割线相交的多边形（有且只能有一个多边形相交2个交点）
+            polygons.forEach(function (polygon, index) {
+              var polyLine = turf.polygonToLine(polygon);
+              if (turf.lineIntersect(polyLine, clipLine).features.length === 2) {
+                if (!clipPolygon) {
+                  clipPolygon = polygon;
+                  clipPolygonIndex = index;
+                } else {
+                  throw { state: "裁剪失败", message: "MultiPolygon只能有一个多边形与切割线存在交点" };
+                }
+              }
+            });
+            if (clipPolygonIndex !== -1) {
+              polygons.splice(clipPolygonIndex, 1);
+              return turf.featureCollection(polygons.concat(this.polygonClipByLine(clipPolygon, clipLine).features));
+            } else {
+              throw { state: "裁剪失败", message: "MultiPolygon与切割线无交点" };
+            }
+          } else {
+            throw { state: "裁剪失败", message: "输入的多边形类型为错误" };
+          }
+        },
+
+        _singlePolygonClip: function (polyLine, clipLine) {
+          // 获得裁切点
+          var intersects = turf.lineIntersect(polyLine, clipLine);
+          if (intersects.features.length !== 2) {
+            throw { state: "裁剪失败", message: "切割线与多边形交点应该为2个,当前交点个数为" + intersects.features.length };
+          }
+          // 检查切割线与多边形的位置关系 （切割线的起点和终点不能落在多边形内部）
+          var clipLineLength = clipLine.geometry.coordinates.length;
+          var clipLineStartPoint = turf.point(clipLine.geometry.coordinates[0]);
+          var clipLineEndPoint = turf.point(clipLine.geometry.coordinates[clipLineLength - 1]);
+          var polygon = turf.polygon([polyLine.geometry.coordinates]);
+          if (turf.booleanPointInPolygon(clipLineStartPoint, polygon) || turf.booleanPointInPolygon(clipLineEndPoint, polygon)) {
+            throw { state: "裁剪失败", message: "切割线起点或终点不能在 裁剪多边形内部" };
+          }
+          // 通过裁切点 分割多边形（只能获得多边形的一部分）
+          var slicedPolyLine = turf.lineSlice(intersects.features[0], intersects.features[1], polyLine);
+          // 裁剪线分割 保留多边形内部部分
+          var slicedClipLine = turf.lineSlice(intersects.features[0], intersects.features[1], clipLine);
+          // 重新拼接多边形 存在 对接的问题 所以先进行判断 如何对接裁剪的多边形和裁剪线
+          var resultPolyline1 = this.connectLine(slicedPolyLine, slicedClipLine);
+          // 闭合线 来构造多边形
+          resultPolyline1.geometry.coordinates.push(resultPolyline1.geometry.coordinates[0]);
+          var resultPolygon1 = turf.lineToPolygon(resultPolyline1);
+          // 构造切割的另一面多边形
+          var firstPointOnLine = this.isOnLine(turf.point(polyLine.geometry.coordinates[0]), slicedPolyLine);
+          var pointList = [];
+          if (firstPointOnLine) {
+            for (var i = 0; i < polyLine.geometry.coordinates.length; i++) {
+              var coordinate = polyLine.geometry.coordinates[i];
+              if (!this.isOnLine(turf.point(coordinate), slicedPolyLine)) {
+                pointList.push(coordinate);
+              }
+            }
+          } else {
+            var skipNum = 0; // 记录前面被跳过的点的个数
+            var isStartPush = false;
+            for (var i = 0; i < polyLine.geometry.coordinates.length; i++) {
+              var coordinate = polyLine.geometry.coordinates[i];
+              if (!this.isOnLine(turf.point(coordinate), slicedPolyLine)) {
+                if (isStartPush) {
+                  pointList.push(coordinate);
+                } else {
+                  skipNum++;
+                }
+              } else {
+                isStartPush = true;
+              }
+            }
+            // 将前面跳过的点补充到 点数组中
+            for (var i = 0; i < skipNum; i++) {
+              pointList.push(polyLine.geometry.coordinates[i]);
+            }
+          }
+          var slicedPolyLine_2 = turf.lineString(pointList);
+          var resultPolyline2 = this.connectLine(slicedPolyLine_2, slicedClipLine);
+          // 闭合线 来构造多边形
+          resultPolyline2.geometry.coordinates.push(resultPolyline2.geometry.coordinates[0]);
+          var resultPolygon2 = turf.lineToPolygon(resultPolyline2);
+          // 返回面要素集
+          return turf.featureCollection([resultPolygon1, resultPolygon2]);
+        },
+
+        _multiPolygonClip: function (polyLine, clipLine) {
+          // 将环 多边形分割成 内部逆时针多边形+外部多边形
+          var outPolyline,
+            insidePolylineList = [];
+          for (var i = 0; i < polyLine.geometry.coordinates.length; i++) {
+            var splitPolyline = turf.lineString(polyLine.geometry.coordinates[i]);
+            if (turf.booleanClockwise(splitPolyline)) {
+              if (outPolyline) {
+                throw { state: "裁剪失败", message: "出现了两个外部多边形无法处理" };
+              } else {
+                outPolyline = splitPolyline;
+              }
+            } else {
+              var intersects = turf.lineIntersect(splitPolyline, clipLine);
+              if (intersects.features.length > 0) {
+                throw { state: "裁剪失败", message: "切割线不能与内环有交点" };
+              }
+              insidePolylineList.push(splitPolyline);
+            }
+          }
+          var resultCollection = this._singlePolygonClip(outPolyline, clipLine);
+
+          for (var i = 0; i < resultCollection.features.length; i++) {
+            for (var j = 0; j < insidePolylineList.length; j++) {
+              var startPoint = turf.point(insidePolylineList[j].geometry.coordinates[0]);
+              if (turf.booleanPointInPolygon(startPoint, resultCollection.features[i])) {
+                resultCollection.features[i] = turf.mask(resultCollection.features[i], turf.lineToPolygon(insidePolylineList[j]));
+              }
+            }
+          }
+          return resultCollection;
+        },
+
+        /**
+         * 连接两条线
+         * 方法会将两条线段最近的一段直接连接
+         */
+        connectLine: function (line1, line2) {
+          var line2_length = line2.geometry.coordinates.length;
+          var line1_startPoint = line1.geometry.coordinates[0];
+          var line2_startPoint = line2.geometry.coordinates[0];
+          var line2_endPoint = line2.geometry.coordinates[line2_length - 1];
+          var pointList = [];
+          // 获取line1 所有点坐标
+          for (var i = 0; i < line1.geometry.coordinates.length; i++) {
+            var coordinate = line1.geometry.coordinates[i];
+            pointList.push(coordinate);
+          }
+
+          // 判断两条线的 起点是否接近，如果接近 逆转line2线 进行连接
+          if (turf.distance(line1_startPoint, line2_startPoint) < turf.distance(line1_startPoint, line2_endPoint)) {
+            line2.geometry.coordinates = line2.geometry.coordinates.reverse();
+          }
+          for (var i = 0; i < line2.geometry.coordinates.length; i++) {
+            var coordinate = line2.geometry.coordinates[i];
+            pointList.push(coordinate);
+          }
+          return turf.lineString(pointList);
+        },
+
+        /**
+         * 判断点是否在线里面
+         * 注：线组成的坐标对比
+         */
+        isOnLine: function (point, line) {
+          for (var i = 0; i < line.geometry.coordinates.length; i++) {
+            var coordinate = line.geometry.coordinates[i];
+            if (point.geometry.coordinates[0] === coordinate[0] && point.geometry.coordinates[1] === coordinate[1]) {
+              return true;
+            }
+          }
+          return false;
+        },
+
+        /**
+         * 获得两条线交点
+         */
+        getIntersectPoints: function (line1, line2) {
+          return turf.lineIntersect(line1, line2);
+        },
+        /**
+         * multiPolygon转polygons,不涉及属性
+         */
+        multiPolygon2polygons: function (multiPolygon) {
+          if (multiPolygon.geometry.type !== "MultiPolygon") {
+            return;
+          }
+          var polygons = [];
+          multiPolygon.geometry.coordinates.forEach((item) => {
+            var polygon = {
+              type: "Feature",
+              properties: {},
+              geometry: {
+                type: "Polygon",
+                coordinates: [],
+              },
+            };
+            polygon.geometry.coordinates = item;
+            polygons.push(polygon);
+          });
+          return polygons;
+        },
+        /**
+         * polygons转multiPolygon,不涉及属性，只输出属性为{}
+         * 考虑polygons中就存在多面的情况
+         */
+        polygons2MultiPolygon: function (geoJson) {
+          var newGeoJson = {
+            type: "FeatureCollection",
+            features: [{ geometry: { coordinates: [], type: "MultiPolygon" }, type: "Feature", properties: {} }],
+          };
+          geoJson.features.forEach((item) => {
+            if (item.geometry.type === "Polygon") {
+              newGeoJson.features[0].geometry.coordinates.push(item.geometry.coordinates);
+            } else {
+              item.geometry.coordinates.forEach((item) => {
+                newGeoJson.features[0].geometry.coordinates.push(item);
+              });
+            }
+          });
+          return newGeoJson;
+        },
+      };
+    </script>
+  </body>
+</html>

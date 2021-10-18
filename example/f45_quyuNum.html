@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>数字社区 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>功能示例 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -29,6 +29,23 @@
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
+
+    <style>
+      @font-face {
+        font-family: "UnidreamLED";
+        src: url("./css/fonts/UnidreamLED.ttf") format("truetype");
+      }
+
+      .coneNum {
+        font-family: "UnidreamLED";
+        font-size: 26px;
+        color: #febc01;
+        background: linear-gradient(180deg, #fecb01 0%, #fe4201 100%);
+        white-space: nowrap;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    </style>
   </head>
 
   <body class="dark">
@@ -45,72 +62,48 @@
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
+
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 31.818816, lng: 117.221131, alt: 2553, heading: 0, pitch: -55 },
+            center: { lat: 30.053342, lng: 117.677104, alt: 187118, heading: 350, pitch: -50 },
+            showSun: false,
+            showMoon: false,
+            showSkyBox: false,
+            showSkyAtmosphere: false,
+            fog: false,
+            backgroundColor: " #120f44", //天空背景色
+            globe: {
+              baseColor: "#120f44", //地球地面背景色
+              showGroundAtmosphere: false,
+              enableLighting: false,
+            },
           },
+          control: {
+            baseLayerPicker: false,
+          },
+          basemaps: [],
+          layers: [],
         });
-
         //创建三维地球场景
         map = new mars3d.Map("mars3dContainer", mapOptions);
-        map.basemap = 2017; //切换到蓝色底图
 
-        addTilesetLayer();
-        addGraphics();
-      }
-
-      //合肥市建筑物模型
-      function addTilesetLayer() {
-        var fragmentShader = `
-          // 注意shader中写浮点数是，一定要带小数点，否则会报错，比如0需要写成0.0，1要写成1.0
-          float _baseHeight = 0.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
-          float _heightRange = 25.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
-          float _glowRange = 300.0; // 光环的移动范围(高度)
-
-          // 建筑基础色
-          float mars_height = marsJzwHeight - _baseHeight;
-          float mars_a11 = fract(czm_frameNumber / 120.0) * 3.14159265 * 2.0;
-          float mars_a12 = mars_height / _heightRange + sin(mars_a11) * 0.1;
-          gl_FragColor *= vec4(vec3(mars_a12), 1.0);// 渐变
-
-          // 动态光环
-          float time = fract(czm_frameNumber / 360.0);
-          time = abs(time - 0.5) * 2.0;
-          float mars_h = clamp(mars_height / _glowRange, 0.0, 1.0);
-          float mars_diff = step(0.005, abs(mars_h - time));
-          gl_FragColor.rgb += gl_FragColor.rgb * (1.0 - mars_diff);
-       `;
-
-        var tiles3dLayer = new mars3d.layer.TilesetLayer({
-          name: "合肥市建筑物",
-          url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
-          maximumScreenSpaceError: 1,
-          maximumMemoryUsage: 1024,
-          marsJzwStyle: fragmentShader,
-          style: {
-            color: {
-              conditions: [["true", "rgba(16, 119, 209, 1)"]],
+        // 合肥市边界墙
+        var borderWall = new mars3d.layer.GeoJsonLayer({
+          name: "合肥市边界墙",
+          url: "//data.mars3d.cn/file/geojson/areas/340100.json",
+          symbol: {
+            type: "wallP",
+            styleOptions: {
+              setHeight: -25000,
+              diffHeight: 25000, //墙高
+              materialType: mars3d.MaterialType.Image2,
+              image: "./img/textures/grawall.png",
+              color: "#4881A7",
             },
           },
         });
-        map.addLayer(tiles3dLayer);
+        map.addLayer(borderWall);
 
-        //模型裁剪
-        var modelThing = new mars3d.thing.TilesetClip({
-          layer: tiles3dLayer,
-          positions: [
-            [117.22648, 31.827441],
-            [117.210341, 31.830612],
-            [117.211311, 31.842438],
-            [117.226091, 31.842885],
-          ],
-          clipOutSide: true, //外裁剪
-        });
-
-        map.addThing(modelThing);
-      }
-
-      function addGraphics() {
         //创建矢量数据图层
         var graphicLayer = new mars3d.layer.GraphicLayer();
         map.addLayer(graphicLayer);
@@ -125,8 +118,21 @@
             var polygonEntity = new mars3d.graphic.PolygonEntity({
               positions: item.positions,
               style: {
-                color: item.attr.color,
-                opacity: 0.4,
+                fill: true,
+                color: "#4881a7",
+                opacity: 0.5,
+                label: {
+                  text: item.attr.name,
+                  font_size: 20,
+                  color: "#ffffff",
+                  font_family: "楷体",
+                  outline: true,
+                  outlineColor: "black",
+                  setHeight: 2000,
+                  visibleDepth: false,
+                  distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 500000),
+                  scaleByDistance: new Cesium.NearFarScalar(200000, 1.0, 500000, 0.5),
+                },
               },
             });
             graphicLayer.addGraphic(polygonEntity);
@@ -135,27 +141,35 @@
             var graphicLine = new mars3d.graphic.PolylineEntity({
               positions: item.positions,
               style: {
-                width: 4,
-                closure: true,
-                // clampToGround: true,
-                material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineTrail, {
-                  color: item.attr.color,
-                  speed: 4,
-                }),
+                color: "rgba(255,255,255,0.5)",
+                width: 1,
               },
             });
             graphicLayer.addGraphic(graphicLine);
 
-            //动态边框文本 DIV
-            var graphic = new mars3d.graphic.DivBoderLabel({
-              position: polygonEntity.center,
+            //中心点
+            var center = item.attr.centroid;
+
+            //光锥体
+            var coneGlow = new mars3d.graphic.LightCone({
+              position: center,
               style: {
-                text: item.attr.name,
-                font_size: 15,
-                font_family: "微软雅黑",
-                color: "#ccc",
-                boderColor: "#15d1f2",
-                addHeight: 100,
+                radius: 1500,
+                height: 15000,
+              },
+            });
+            graphicLayer.addGraphic(coneGlow);
+
+            //LED数字显示
+            var number = Math.floor(Math.random() * (4000 - 3000 + 1) + 3000); //随机数字 3000-4000
+            var graphic = new mars3d.graphic.DivGraphic({
+              position: [center[0], center[1], 12000],
+              style: {
+                html: `<div class ="coneNum">${number}`,
+                horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+                verticalOrigin: Cesium.VerticalOrigin.CENTER,
+                distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 500000),
+                scaleByDistance: new Cesium.NearFarScalar(200000, 1.0, 500000, 0.5),
               },
             });
             graphicLayer.addGraphic(graphic);
@@ -166,7 +180,7 @@
       function queryAreasData() {
         return new Promise(function (resolve, reject) {
           $.ajax({
-            url: "//data.mars3d.cn/file/geojson/hefei-shequ.json",
+            url: "//data.mars3d.cn/file/geojson/areas/340100_full.json",
             type: "get",
             dataType: "json",
             success: function (geojson) {

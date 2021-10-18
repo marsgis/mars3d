@@ -217,7 +217,6 @@
               "thumbnail": "c10_realtimeTraffic.jpg",
               "fileName": "c10_realtimeTraffic"
             }
-
           ]
         },
         {
@@ -229,6 +228,12 @@
               "version": "1.1",
               "thumbnail": "c15_image.jpg",
               "fileName": "c15_image"
+            },
+            {
+              "name": "本地单张图片(区域影像)",
+              "version": "3.0",
+              "thumbnail": "c15_image2.jpg",
+              "fileName": "c15_image2"
             },
             {
               "name": "xyz金字塔瓦片",
@@ -1116,6 +1121,12 @@
               "fileName": "f45_oneBeltOneRoad"
             },
             {
+              "name": "城市拓扑连线",
+              "version": "3.0",
+              "thumbnail": "f45_line_city.jpg",
+              "fileName": "f45_line_city"
+            },
+            {
               "name": "迁徙效果",
               "version": "1.7",
               "thumbnail": "f45_line_qx.gif",
@@ -1168,6 +1179,12 @@
               "version": "3.0",
               "thumbnail": "f45_polyGradient.jpg",
               "fileName": "f45_polyGradient"
+            },
+            {
+              "name": "行政区数据统计图",
+              "version": "3.1.8",
+              "thumbnail": "f45_quyuNum.jpg",
+              "fileName": "f45_quyuNum"
             },
             {
               "name": "行政区突出展示",
@@ -1693,7 +1710,6 @@
               "fileName": "g15_dth_fcfh"
             },
 
-
             {
               "name": "矢量单体化(叠加WFS服务)",
               "version": "2.0",
@@ -1712,7 +1728,6 @@
               "thumbnail": "g15_dth_classificationType.jpg",
               "fileName": "g15_dth_classificationType"
             }
-
           ]
         },
         {
@@ -1789,10 +1804,16 @@
               "fileName": "h10_mapCompare"
             },
             {
-              "name": "二三维联动Demo(leaflet+cesium)",
+              "name": "二三维联动(与leaflet)",
               "version": "1.6",
               "thumbnail": "h10_link_leaflet.jpg",
               "fileName": "h10_link_leaflet"
+            },
+            {
+              "name": "二三维联动(与openlayers)",
+              "version": "3.1",
+              "thumbnail": "h10_link_ol.jpg",
+              "fileName": "h10_link_ol"
             },
             {
               "name": "街景联动",
@@ -2160,10 +2181,34 @@
           "name": "客户端空间分析",
           "children": [
             {
+              "name": "生成随机数据(点线面)",
+              "version": "3.1",
+              "thumbnail": "k25_random.jpg",
+              "fileName": "k25_random"
+            },
+            {
+              "name": "生成网格",
+              "version": "3.1",
+              "thumbnail": "k25_grid.jpg",
+              "fileName": "k25_grid"
+            },
+            {
+              "name": "最近点分析",
+              "version": "3.1",
+              "thumbnail": "k25_nearestPoint.jpg",
+              "fileName": "k25_nearestPoint"
+            },
+            {
               "name": "面求交",
               "version": "2.3",
               "thumbnail": "k25_intersect.jpg",
               "fileName": "k25_intersect"
+            },
+            {
+              "name": "面切割",
+              "version": "3.1",
+              "thumbnail": "k25_polygonClipByLine.jpg",
+              "fileName": "k25_polygonClipByLine"
             },
             {
               "name": "等值面",

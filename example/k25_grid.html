@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- 标题及搜索关键字 -->
+    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <meta
+      name="description"
+      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
+    <title>功能示例 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+
+    <!--第三方lib-->
+    <script
+      type="text/javascript"
+      src="../lib/include-lib.js"
+      libpath="../lib/"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+    ></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+
+    <style>
+      .infoview input {
+        vertical-align: middle;
+        padding-top: 2px;
+        padding-bottom: 2px;
+      }
+    </style>
+  </head>
+
+  <body class="dark">
+    <!--加载前进行操作提示，优化用户体验-->
+    <div id="mask" class="signmask" onclick="removeMask()"></div>
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <!-- 面板 -->
+    <div class="infoview">
+      步长: <input id="stepVlaue" type="number" style="width: 60px" value="1" />公里 &nbsp;&nbsp;
+
+      <input type="button" class="btn btn-primary" id="btn_points" value="点" />
+      <input type="button" class="btn btn-primary" id="btn_triangle" value="三角网" />
+      <input type="button" class="btn btn-primary" id="btn_square" value="方格网" />
+      <input type="button" class="btn btn-primary" id="btn_cellular" value="蜂窝网" />
+    </div>
+
+    <script src="./js/common.js"></script>
+    <script type="text/javascript">
+      "use script"; //开发环境建议开启严格模式
+
+      var map;
+      var graphicLayer;
+
+      function initMap(options) {
+        //合并属性参数，可覆盖config.json中的对应配置
+        var mapOptions = mars3d.Util.merge(options, {
+          scene: {
+            center: { lat: 31.843636, lng: 117.270754, alt: 31583, heading: 360, pitch: -90 },
+          },
+        });
+
+        //创建三维地球场景
+        map = new mars3d.Map("mars3dContainer", mapOptions);
+
+        let extent = map.getExtent({ scale: 0.9 }); // 取当前视域边界
+        let bbox = [extent.xmin, extent.ymin, extent.xmax, extent.ymax];
+
+        graphicLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(graphicLayer);
+
+        var turfOptions = { units: "kilometers" };
+
+        $("#btn_cellular").click(function () {
+          let cellSide = $("#stepVlaue").val();
+
+          var geojson = turf.hexGrid(bbox, cellSide, turfOptions);
+          drawPolyon(geojson);
+        });
+
+        $("#btn_points").click(function () {
+          let cellSide = $("#stepVlaue").val();
+
+          var geojson = turf.pointGrid(bbox, cellSide, turfOptions);
+          drawPoint(geojson);
+        });
+
+        $("#btn_square").click(function () {
+          let cellSide = $("#stepVlaue").val();
+
+          var geojson = turf.squareGrid(bbox, cellSide, turfOptions);
+          drawPolyon(geojson);
+        });
+
+        $("#btn_triangle").click(function () {
+          let cellSide = $("#stepVlaue").val();
+
+          var geojson = turf.triangleGrid(bbox, cellSide, turfOptions);
+          drawPolyon(geojson);
+        });
+      }
+
+      //蜂窝网格、正方形网格、三角形网格
+      function drawPolyon(geojson) {
+        graphicLayer.clear();
+        let polygons = mars3d.Util.geoJsonToGraphics(geojson); //解析geojson
+
+        for (var i = 0; i < polygons.length; i++) {
+          var item = polygons[i];
+
+          let graphic = new mars3d.graphic.PolygonEntity({
+            positions: item.positions,
+            style: {
+              color: "#ffff00",
+              opacity: 0.2,
+              outline: true,
+              outlineWidth: 2,
+              outlineColor: "#ffff00",
+              outlineOpacity: 0.5,
+              clampToGround: true,
+            },
+            attr: item.attr,
+            popup: "第" + i + "个",
+          });
+          graphicLayer.addGraphic(graphic);
+        }
+      }
+
+      //点网格
+      function drawPoint(geojson) {
+        graphicLayer.clear();
+
+        let points = mars3d.Util.geoJsonToGraphics(geojson); //解析geojson
+
+        for (var i = 0; i < points.length; i++) {
+          var item = points[i];
+
+          graphic = new mars3d.graphic.PointPrimitive({
+            position: item.position,
+            style: {
+              color: "#ffff00",
+              pixelSize: 8,
+            },
+            popup: "第" + i + "个",
+          });
+          graphicLayer.addGraphic(graphic);
+        }
+      }
+    </script>
+  </body>
+</html>

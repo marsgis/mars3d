@@ -1,15 +1,16 @@
+<!-- 2017-12-4 14:24:10 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
 <!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-    <meta name="author" content="火星科技 http://mars3d.cn " />
     <meta name="apple-touch-fullscreen" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="x5-fullscreen" content="true" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
     <!-- 标题及搜索关键字 -->
     <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
     <meta
@@ -18,28 +19,20 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title> 本地影像 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>本地单张图片 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
-    <!--第三方lib-->
     <script
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
-
   </head>
 
   <body class="dark">
-    <!--加载前进行操作提示，优化用户体验-->
-    <div id="mask" class="signmask" onclick="removeMask()"></div>
-
     <div id="mars3dContainer" class="mars3d-container"></div>
-
-    <!-- 面板 -->
-    <!-- <div class="infoview"> </div> -->
 
     <script src="./js/common.js"></script>
     <script type="text/javascript">
@@ -48,61 +41,33 @@
       var map;
 
       function initMap(options) {
-        let color = "#363635";
+        //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 25.845231, lng: 117.57678, alt: 488175, heading: 358, pitch: -42 },
-            showSun: false,
-            showMoon: false,
-            showSkyBox: false,
-            showSkyAtmosphere: false,
-            fog: false,
-            backgroundColor: color, //天空背景色
-            globe: {
-              baseColor: color, //地球地面背景色
-              showGroundAtmosphere: false,
-              enableLighting: false,
+            center: {"lat":31.839403,"lng":117.257352,"alt":2540,"heading":0,"pitch":-90},
+          },
+          layers: [
+            //方式1：在创建地球前的参数中配置
+            {
+              name: "中科大-东区",
+              type: "image",
+              url: "//data.mars3d.cn/file/img/zkd-dq.png",
+              rectangle: { xmin: 117.259691, xmax: 117.267778, ymin: 31.834432, ymax: 31.84387 },
+              show: true,
             },
-          },
-          control: {
-            baseLayerPicker: false,
-          },
-          basemaps: [],
-          layers: [],
+          ],
         });
 
         //创建三维地球场景
         map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        // 添加 安徽省边界线墙
-        var anhuiWall = new mars3d.layer.GeoJsonLayer({
-          name: "安徽省边界墙",
-          url: "//data.mars3d.cn/file/geojson/areas/340000.json",
-          symbol: {
-            type: "wallP",
-            styleOptions: {
-              setHeight: -15000,
-              diffHeight: 15000, //墙高
-              materialType: mars3d.MaterialType.Image2,
-              image: "./img/textures/grawall.png",
-              color: "rgba(0,255,255,0.6)",
-            },
-          },
-        });
-        map.addLayer(anhuiWall);
-
-        //安徽省卫星底图
-        var tileLayer = new mars3d.layer.XyzLayer({
-          url: "//data.mars3d.cn/tile/anhui/{z}/{x}/{y}.png",
-          minimumLevel: 0,
-          maximumLevel: 12,
-          rectangle: { xmin: 114.811691, xmax: 119.703609, ymin: 29.35597, ymax: 34.698585 },
+        //方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+        var tileLayer = new mars3d.layer.ImageLayer({
+          name: "中科大-西区",
+          url: "//data.mars3d.cn/file/img/zkd-xq.png",
+          rectangle: { xmin: 117.245648, xmax: 117.254431, ymin:31.836891, ymax: 31.843413 },
         });
         map.addLayer(tileLayer);
-
-
-
-
       }
     </script>
   </body>
