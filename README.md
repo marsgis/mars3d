@@ -57,45 +57,41 @@
 ## 【Github】开源仓库导航
 > 功能示例：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d)    
 
-### 传统技术栈(原生JS)
-1. 最简项目[https://github.com/marsgis/mars3d-es5-template](https://github.com/marsgis/mars3d-es5-template)
-2. 基础项目(widget模式)[https://github.com/marsgis/mars3d-es5-widget](https://github.com/marsgis/mars3d-es5-widget)
+### 最简项目模板
+1. 传统技术栈(原生JS)[https://github.com/marsgis/mars3d-es5-template](https://github.com/marsgis/mars3d-es5-template)
+2. Vue技术栈[https://github.com/marsgis/mars3d-vue-template](https://github.com/marsgis/mars3d-vue-template)
+3. React技术栈[https://github.com/marsgis/mars3d-react-template](https://github.com/marsgis/mars3d-react-template)
+4. Angular技术栈[https://github.com/marsgis/mars3d-angular-template](https://github.com/marsgis/mars3d-angular-template)
 
-### Vue技术栈
-1. 最简项目[https://github.com/marsgis/mars3d-vue-template](https://github.com/marsgis/mars3d-vue-template)
-2. 基础项目(widget模式)[https://github.com/marsgis/mars3d-vue-widget](https://github.com/marsgis/mars3d-vue-widget) 
+### 基础项目
+1. 传统技术栈(原生JS的widget模式)[https://github.com/marsgis/mars3d-widget-project](https://github.com/marsgis/mars3d-widget-project)
+2. Vue技术栈[https://github.com/marsgis/mars3d-vue-project](https://github.com/marsgis/mars3d-vue-project)
 
-
-### React技术栈
-1. 最简项目[https://github.com/marsgis/mars3d-react-template](https://github.com/marsgis/mars3d-react-template)
-
-### Angular技术栈 
-1. 最简项目[https://github.com/marsgis/mars3d-angular-template](https://github.com/marsgis/mars3d-angular-template)
-
+ 
 ### 其他Cesium技术栈 
 1. 超图集成示例[https://github.com/marsgis/mars3d-link-supermap](https://github.com/marsgis/mars3d-link-supermap)
+2. EarthSDK集成示例[https://github.com/marsgis/mars3d-link-earthsdk](https://github.com/marsgis/mars3d-link-earthsdk)
  
  
 
 ## 【国内Gitee】开源仓库导航
 
 > 功能示例：[ https://gitee.com/marsgis/mars3d]( https://gitee.com/marsgis/mars3d)
-### 传统技术栈(原生JS)
-1. 最简项目[https://gitee.com/marsgis/mars3d-es5-template](https://gitee.com/marsgis/mars3d-es5-template)
-2. 基础项目(widget模式)[https://gitee.com/marsgis/mars3d-es5-widget](https://gitee.com/marsgis/mars3d-es5-widget)
 
-### Vue技术栈 
-1. 最简项目[https://gitee.com/marsgis/mars3d-vue-template](https://gitee.com/marsgis/mars3d-vue-template)
-2. 基础项目(widget模式)[https://gitee.com/marsgis/mars3d-vue-widget](https://gitee.com/marsgis/mars3d-vue-widget)
+### 最简项目模板
+1. 传统技术栈(原生JS)[https://gitee.com/marsgis/mars3d-es5-template](https://gitee.com/marsgis/mars3d-es5-template)
+2. Vue技术栈[https://gitee.com/marsgis/mars3d-vue-template](https://gitee.com/marsgis/mars3d-vue-template)
+3. React技术栈[https://gitee.com/marsgis/mars3d-react-template](https://gitee.com/marsgis/mars3d-react-template)
+4. Angular技术栈[https://gitee.com/marsgis/mars3d-angular-template](https://gitee.com/marsgis/mars3d-angular-template)
 
-### React技术栈
-1. 最简项目[https://gitee.com/marsgis/mars3d-react-template](https://gitee.com/marsgis/mars3d-react-template)
+### 基础项目
+1. 传统技术栈(原生JS的widget模式)[https://gitee.com/marsgis/mars3d-widget-project](https://gitee.com/marsgis/mars3d-widget-project)
+2. Vue技术栈[https://gitee.com/marsgis/mars3d-vue-project](https://gitee.com/marsgis/mars3d-vue-project)
 
-### Angular技术栈 
-1. 最简项目[https://gitee.com/marsgis/mars3d-angular-template](https://gitee.com/marsgis/mars3d-angular-template)
-
+ 
 ### 其他Cesium技术栈 
 1. 超图集成示例[https://gitee.com/marsgis/mars3d-link-supermap](https://gitee.com/marsgis/mars3d-link-supermap)
+2. EarthSDK集成示例[https://gitee.com/marsgis/mars3d-link-earthsdk](https://gitee.com/marsgis/mars3d-link-earthsdk)
  
 
 
