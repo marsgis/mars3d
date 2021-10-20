@@ -62,12 +62,8 @@
 2. 基础项目(widget模式)[https://github.com/marsgis/mars3d-es5-widget](https://github.com/marsgis/mars3d-es5-widget)
 
 ### Vue技术栈
-1. 最简项目(CDN版)[https://github.com/marsgis/mars3d-vue-template-cdn](https://github.com/marsgis/mars3d-vue-template-cdn)
-2. 最简项目(NPM版)[https://github.com/marsgis/mars3d-vue-template](https://github.com/marsgis/mars3d-vue-template)
-3. 基础项目(widget模式)[https://github.com/marsgis/mars3d-vue-widget](https://github.com/marsgis/mars3d-vue-widget)
-4. CS桌面程序项目 [https://github.com/marsgis/mars3d-vue-electron](https://github.com/marsgis/mars3d-vue-electron)
-
-
+1. 最简项目[https://github.com/marsgis/mars3d-vue-template](https://github.com/marsgis/mars3d-vue-template)
+2. 基础项目(widget模式)[https://github.com/marsgis/mars3d-vue-widget](https://github.com/marsgis/mars3d-vue-widget) 
 
 
 ### React技术栈
@@ -78,8 +74,7 @@
 
 ### 其他Cesium技术栈 
 1. 超图集成示例[https://github.com/marsgis/mars3d-link-supermap](https://github.com/marsgis/mars3d-link-supermap)
-2. Mars3D+超图+Vue版最简项目(NPM版)[https://github.com/marsgis/mars3d-link-supermap-vue](https://github.com/marsgis/mars3d-link-supermap-vue)
-
+ 
  
 
 ## 【国内Gitee】开源仓库导航
@@ -89,12 +84,9 @@
 1. 最简项目[https://gitee.com/marsgis/mars3d-es5-template](https://gitee.com/marsgis/mars3d-es5-template)
 2. 基础项目(widget模式)[https://gitee.com/marsgis/mars3d-es5-widget](https://gitee.com/marsgis/mars3d-es5-widget)
 
-### Vue技术栈
-1. 最简项目(CDN版)[https://gitee.com/marsgis/mars3d-vue-template-cdn](https://gitee.com/marsgis/mars3d-vue-template-cdn)
-2. 最简项目(NPM版)[https://gitee.com/marsgis/mars3d-vue-template](https://gitee.com/marsgis/mars3d-vue-template)
-3. 基础项目(widget模式)[https://gitee.com/marsgis/mars3d-vue-widget](https://gitee.com/marsgis/mars3d-vue-widget)
-4. CS桌面程序项目 [https://gitee.com/marsgis/mars3d-vue-electron](https://gitee.com/marsgis/mars3d-vue-electron)
-
+### Vue技术栈 
+1. 最简项目[https://gitee.com/marsgis/mars3d-vue-template](https://gitee.com/marsgis/mars3d-vue-template)
+2. 基础项目(widget模式)[https://gitee.com/marsgis/mars3d-vue-widget](https://gitee.com/marsgis/mars3d-vue-widget)
 
 ### React技术栈
 1. 最简项目[https://gitee.com/marsgis/mars3d-react-template](https://gitee.com/marsgis/mars3d-react-template)
@@ -104,10 +96,9 @@
 
 ### 其他Cesium技术栈 
 1. 超图集成示例[https://gitee.com/marsgis/mars3d-link-supermap](https://gitee.com/marsgis/mars3d-link-supermap)
-2. Mars3D+超图+Vue版最简项目(NPM版)[https://gitee.com/marsgis/mars3d-link-supermap-vue](https://gitee.com/marsgis/mars3d-link-supermap-vue)
-
+ 
 
 
 ## 版权说明
 1. 任何`个人或组织`可以在遵守Mars3D相关要求下`免费无限制`使用。
-2. 如有`个性化需求`或`商业应用`，请联系[火星科技](http://mars3d.cn)购买。
+2. 如有个性化定制需求，请联系[火星科技](http://mars3d.cn)付费提供相关服务。
