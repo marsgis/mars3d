@@ -14,8 +14,6 @@
 <img alt="Npm version" src="https://img.shields.io/npm/v/mars3d.svg?style=flat&logo=npm&label=version"/>
 </a>
 </p>
-
-## Mars3D介绍
  
  `Mars3D平台` 是[火星科技](http://marsgis.cn/)研发的一款基于 WebGL 技术实现的三维客户端开发平台，基于[Cesium](https://cesium.com/cesiumjs/)优化提升与B/S架构设计，支持多行业扩展的轻量级高效能GIS开发平台，能够免安装、无插件地在浏览器中高效运行，并可快速接入与使用多种GIS数据和三维模型，呈现三维空间的可视化，完成平台在不同行业的灵活应用。
 
@@ -25,8 +23,7 @@
  在任意开发编辑器（如vscode等）或http服务器(如node、nginx、tomcat、IIS等)下直接运行浏览`examples.html`即可,运行效果参考[在线预览](http://mars3d.cn/example)  
  
 ### 反馈问题
- 为了方便交流及留存，所有bug及建议均统一提交至：
->  [https://github.com/marsgis/mars3d/issues](https://github.com/marsgis/mars3d/issues)  
+ 为了方便交流及留存，所有bug及建议均统一提交至：[github issues](https://github.com/marsgis/mars3d/issues)  
  
 ### 相关学习资料
 
@@ -37,7 +34,7 @@
 
  
 
-## 【Github】开源仓库导航
+## Mars3D其他仓库导航 - Github
 > 功能示例：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d)    
 
 ### 最简项目模板
@@ -56,9 +53,7 @@
 2. EarthSDK集成示例[https://github.com/marsgis/mars3d-link-earthsdk](https://github.com/marsgis/mars3d-link-earthsdk)
  
  
-
-## 【国内Gitee】开源仓库导航
-
+## Mars3D其他仓库导航 - Gitee(国内)
 > 功能示例：[ https://gitee.com/marsgis/mars3d]( https://gitee.com/marsgis/mars3d)
 
 ### 最简项目模板
