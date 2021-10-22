@@ -196,6 +196,16 @@
     {
       "pid": 2030,
       "type": "3dtiles",
+      "name": "校园",
+      "url": "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
+      "position": {"alt": 15.8 },
+      "maximumScreenSpaceError": 1,
+      "maximumMemoryUsage": 1024,
+      "center": { "lat": 43.821193, "lng": 125.143124, "alt": 990, "heading": 342, "pitch": -50 }
+    },
+    {
+      "pid": 2030,
+      "type": "3dtiles",
       "name": "合肥大学科技园",
       "url": "//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
       "position": { "alt": -24 },

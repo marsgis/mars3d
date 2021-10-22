@@ -188,22 +188,23 @@
       // function addGraphic_a2(graphicLayer) {
       //   //加一些演示数据
       //   Cesium.Resource.fetchJson({
-      //     url: '//data.mars3d.cn/file/geojson/buildings-hf.json',
+      //     url: "//data.mars3d.cn/file/geojson/buildings-hf.json",
       //   })
       //     .then((data) => {
-      //       let arr = mars3d.Util.geoJsonToGraphics(data)
+      //       let arr = mars3d.Util.geoJsonToGraphics(data);
 
-      //       haoutil.msg('共加载' + arr.length + '个面')
+      //       haoutil.msg("共加载" + arr.length + "个面");
 
       //       //多个面对象的合并渲染。
-      //       const instances = []
+      //       const instances = [];
       //       for (let i = 0; i < arr.length; i++) {
-      //         const item = arr[i]
-      //         let itemColor = Cesium.Color.fromRandom()
+      //         const item = arr[i];
+      //         let itemColor = Cesium.Color.fromRandom();
 
       //         const instance = new Cesium.GeometryInstance({
-      //           geometry: new Cesium.PolygonGeometry({
-      //             polygonHierarchy: new Cesium.PolygonHierarchy(mars3d.LatLngArray.toCartesians(item.positions)),
+      //           //其他Geometry类型的数据，按Cesium语法修改下面的geometry
+      //           geometry: new Cesium.RectangleGeometry({
+      //             rectangle: Cesium.Rectangle.fromCartesianArray(mars3d.LatLngArray.toCartesians(item.positions)),
       //             vertexFormat: Cesium.PerInstanceColorAppearance.VERTEX_FORMAT,
       //             height: 0,
       //             extrudedHeight: (item.attr.floor || 1) * 5,
@@ -211,20 +212,20 @@
       //           attributes: {
       //             color: Cesium.ColorGeometryInstanceAttribute.fromColor(itemColor),
       //           },
-      //         })
-      //         instance.attr = item.attr //重要：绑定相关属性
-      //         instances.push(instance)
+      //         });
+      //         instance.attr = item.attr; //重要：绑定相关属性
+      //         instances.push(instance);
       //       }
 
       //       //多个对象的合并渲染。
       //       var primitive = new mars3d.graphic.BaseCombine({
       //         instances: instances,
-      //       })
-      //       graphicLayer.addGraphic(primitive)
+      //       });
+      //       graphicLayer.addGraphic(primitive);
       //     })
       //     .otherwise(function (error) {
-      //       haoutil.alert('服务出错', error)
-      //     })
+      //       haoutil.alert("服务出错", error);
+      //     });
       // }
 
       //取区域内的随机图标

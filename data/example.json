@@ -641,13 +641,19 @@
       "children": [
         {
           "name": "Entity基础对象",
-          "details": "Entity 支持各种属性、自定义控制及操作，功能强大但渲染效率要弱些。",
+          "details": "适用于需要属性机制控制，并且小于一千条数据的加载场景。Entity 支持各种属性、自定义控制及操作，功能强大但渲染效率要弱些。",
           "children": [
             {
               "name": "Label 文字",
               "version": "1.5",
               "thumbnail": "f10_entity_label.jpg",
               "fileName": "f10_entity_label"
+            },
+            {
+              "name": "文字贴图",
+              "version": "1.8",
+              "thumbnail": "f16_textMaterialProperty.jpg",
+              "fileName": "f16_textMaterialProperty"
             },
             {
               "name": "Point 点 ",
@@ -798,24 +804,24 @@
               "version": "3.0",
               "thumbnail": "f16_polygon_sector.jpg",
               "fileName": "f16_polygon_sector"
-            },
-            {
-              "name": "文字贴图",
-              "version": "1.8",
-              "thumbnail": "f16_textMaterialProperty.jpg",
-              "fileName": "f16_textMaterialProperty"
             }
           ]
         },
         {
           "name": "Primitive基础对象",
-          "details": "Primitive 是更底层的实现方式，渲染效率更高，但功能性较差。",
+          "details": "适用于几千条数据的加载场景。Primitive 是更底层的实现方式，渲染效率更高，但功能性较差。",
           "children": [
             {
               "name": "Label 文字(支持大数据)",
               "version": "3.0",
               "thumbnail": "f20_primitive_label.jpg",
               "fileName": "f20_primitive_label"
+            },
+            {
+              "name": "文字贴图",
+              "version": "1.8",
+              "thumbnail": "f25_textMaterial.jpg",
+              "fileName": "f25_textMaterial"
             },
             {
               "name": "Point 点(支持大数据)",
@@ -860,6 +866,12 @@
               "fileName": "f20_primitive_frustum"
             },
             {
+              "name": "光锥体",
+              "version": "3.0",
+              "thumbnail": "f30_lightCone.gif",
+              "fileName": "f30_lightCone"
+            },
+            {
               "name": "Ellipsoid 球、半球、椭球",
               "version": "3.0",
               "thumbnail": "f20_primitive_ellipsoid.jpg",
@@ -870,12 +882,6 @@
               "version": "2.1",
               "thumbnail": "f20_primitive_model.jpg",
               "fileName": "f20_primitive_model"
-            },
-            {
-              "name": "大数据 小模型(合并渲染)",
-              "version": "3.0",
-              "thumbnail": "f20_primitive_modelCombine.jpg",
-              "fileName": "f20_primitive_modelCombine"
             },
             {
               "name": "点对象动态位置",
@@ -890,12 +896,6 @@
               "fileName": "f25_primitive_polyline"
             },
             {
-              "name": "大数据线(合并渲染)",
-              "version": "3.1.0",
-              "thumbnail": "f25_primitive_polylineCombine.jpg",
-              "fileName": "f25_primitive_polylineCombine"
-            },
-            {
               "name": "PolylineVolume 管道线",
               "version": "3.0",
               "thumbnail": "f25_primitive_polylineVolume.jpg",
@@ -906,71 +906,6 @@
               "version": "3.0",
               "thumbnail": "f25_primitive_corridor.jpg",
               "fileName": "f25_primitive_corridor"
-            },
-            {
-              "name": "Wall 墙",
-              "version": "3.0",
-              "thumbnail": "f25_primitive_wall.jpg",
-              "fileName": "f25_primitive_wall"
-            },
-            {
-              "name": "Rectangle 矩形",
-              "version": "3.0",
-              "thumbnail": "f25_primitive_rectangle.jpg",
-              "fileName": "f25_primitive_rectangle"
-            },
-            {
-              "name": "Polygon 面",
-              "version": "3.0",
-              "thumbnail": "f25_primitive_polygon.jpg",
-              "fileName": "f25_primitive_polygon"
-            },
-            {
-              "name": "大数据面(合并渲染)",
-              "version": "3.0",
-              "thumbnail": "f25_primitive_polygonCombine.jpg",
-              "fileName": "f25_primitive_polygonCombine"
-            },
-            {
-              "name": "文字贴图",
-              "version": "1.8",
-              "thumbnail": "f25_textMaterial.jpg",
-              "fileName": "f25_textMaterial"
-            }
-          ]
-        },
-        {
-          "name": "扩展的矢量对象",
-          "children": [
-            {
-              "name": "Div文本点",
-              "version": "1.7",
-              "thumbnail": "f30_divGraphic.jpg",
-              "fileName": "f30_divGraphic"
-            },
-            {
-              "name": "光锥体",
-              "version": "3.0",
-              "thumbnail": "f30_lightCone.gif",
-              "fileName": "f30_lightCone"
-            },
-            {
-              "name": "平放的图标",
-              "version": "2.1",
-              "thumbnail": "f30_flatBillboard.jpg",
-              "fileName": "f30_flatBillboard"
-            },
-            {
-              "name": "粒子效果",
-              "version": "3.0",
-              "thumbnail": "f30_particleSystem.jpg",
-              "fileName": "f30_particleSystem"
-            },
-            {
-              "name": "相控阵雷达范围",
-              "version": "1.7",
-              "thumbnail": "f30_rectangularSensor.gif",
-              "fileName": "f30_rectangularSensor"
             },
             {
               "name": "动态河流",
@@ -985,6 +920,12 @@
               "fileName": "f35_road"
             },
             {
+              "name": "Wall 墙",
+              "version": "3.0",
+              "thumbnail": "f25_primitive_wall.jpg",
+              "fileName": "f25_primitive_wall"
+            },
+            {
               "name": "扩散围墙",
               "version": "3.0",
               "thumbnail": "f35_diffuseWall.gif",
@@ -997,6 +938,18 @@
               "fileName": "f35_scrollWall"
             },
             {
+              "name": "Rectangle 矩形",
+              "version": "3.0",
+              "thumbnail": "f25_primitive_rectangle.jpg",
+              "fileName": "f25_primitive_rectangle"
+            },
+            {
+              "name": "Polygon 面",
+              "version": "3.0",
+              "thumbnail": "f25_primitive_polygon.jpg",
+              "fileName": "f25_primitive_polygon"
+            },
+            {
               "name": "水域面",
               "version": "3.0",
               "thumbnail": "f35_water.jpg",
@@ -1007,6 +960,59 @@
               "version": "3.0",
               "thumbnail": "f35_pit.jpg",
               "fileName": "f35_pit"
+            }
+          ]
+        },
+        {
+          "name": "Primitive大数据对象",
+          "details": "适用于大数据的加载场景。Primitive合并渲染是支持大数据的加载方式。",
+          "children": [
+            {
+              "name": "ModelCombine 大量模型",
+              "version": "3.0",
+              "thumbnail": "f26_primitive_modelCombine.jpg",
+              "fileName": "f26_primitive_modelCombine"
+            },
+            {
+              "name": "FlatBillboard 平面图标",
+              "version": "2.1",
+              "thumbnail": "f26_flatBillboard.jpg",
+              "fileName": "f26_flatBillboard"
+            },
+            {
+              "name": "PolylineCombine 大量线",
+              "version": "3.1.0",
+              "thumbnail": "f27_primitive_polylineCombine.jpg",
+              "fileName": "f27_primitive_polylineCombine"
+            },
+            {
+              "name": "PolygonCombine 大量面",
+              "version": "3.0",
+              "thumbnail": "f27_primitive_polygonCombine.jpg",
+              "fileName": "f27_primitive_polygonCombine"
+            },
+            {
+              "name": "WaterCombine 大量水面",
+              "version": "3.1",
+              "thumbnail": "f27_primitive_waterCombine.jpg",
+              "fileName": "f27_primitive_waterCombine"
+            }
+          ]
+        },
+        {
+          "name": "其他矢量对象",
+          "children": [
+            {
+              "name": "DIV文本点",
+              "version": "1.7",
+              "thumbnail": "f30_divGraphic.jpg",
+              "fileName": "f30_divGraphic"
+            },
+            {
+              "name": "粒子效果",
+              "version": "3.0",
+              "thumbnail": "f30_particleSystem.jpg",
+              "fileName": "f30_particleSystem"
             }
           ]
         },
@@ -1280,6 +1286,12 @@
         {
           "name": "卫星场景对象",
           "children": [
+            {
+              "name": "相控阵雷达范围",
+              "version": "1.7",
+              "thumbnail": "f30_rectangularSensor.gif",
+              "fileName": "f30_rectangularSensor"
+            },
             {
               "name": "CamberRadar 双曲面雷达范围",
               "version": "1.8",
@@ -1580,8 +1592,8 @@
             {
               "name": "ModelCombine对象(大数据+合并渲染)",
               "version": "3.0",
-              "thumbnail": "f20_primitive_modelCombine.jpg",
-              "fileName": "f20_primitive_modelCombine"
+              "thumbnail": "f26_primitive_modelCombine.jpg",
+              "fileName": "f26_primitive_modelCombine"
             },
             {
               "name": "ModelLayer图层对象",
@@ -1692,7 +1704,19 @@
           "name": "三维模型单体化",
           "children": [
             {
-              "name": "分栋矢量单体化",
+              "name": "模型内单体化(人工建模或建筑物)",
+              "version": "1.5",
+              "thumbnail": "g15_dth_inside.jpg",
+              "fileName": "g15_dth_inside"
+            },
+            {
+              "name": "ClassificationType单体化模型(叠加另外1个3dtiles)",
+              "version": "1.9",
+              "thumbnail": "g15_dth_classificationType.jpg",
+              "fileName": "g15_dth_classificationType"
+            },
+            {
+              "name": "分栋矢量单体化(叠加矢量数据)",
               "version": "1.6",
               "thumbnail": "g15_dth_fd.jpg",
               "fileName": "g15_dth_fd"
@@ -1704,29 +1728,22 @@
               "fileName": "g15_dth_fd_edit"
             },
             {
+              "name": "分层矢量单体化",
+              "version": "3.1",
+              "thumbnail": "g15_dth_fc.jpg",
+              "fileName": "g15_dth_fc"
+            },
+            {
               "name": "分层分户矢量单体化",
-              "version": "1.9",
+              "version": "3.1",
               "thumbnail": "g15_dth_fcfh.jpg",
               "fileName": "g15_dth_fcfh"
             },
-
             {
               "name": "矢量单体化(叠加WFS服务)",
               "version": "2.0",
               "thumbnail": "g15_dth_wfs.jpg",
               "fileName": "g15_dth_wfs"
-            },
-            {
-              "name": "3dtiles数据内单体化(建筑物或人工建模)",
-              "version": "1.5",
-              "thumbnail": "g15_dth_inside.jpg",
-              "fileName": "g15_dth_inside"
-            },
-            {
-              "name": "3dtiles单体化(叠加ClassificationType)",
-              "version": "1.9",
-              "thumbnail": "g15_dth_classificationType.jpg",
-              "fileName": "g15_dth_classificationType"
             }
           ]
         },
@@ -2193,10 +2210,46 @@
               "fileName": "k25_grid"
             },
             {
+              "name": "点相关计算",
+              "version": "3.1",
+              "thumbnail": "k25_point.jpg",
+              "fileName": "k25_point"
+            },
+            {
               "name": "最近点分析",
               "version": "3.1",
               "thumbnail": "k25_nearestPoint.jpg",
               "fileName": "k25_nearestPoint"
+            },
+            {
+              "name": "线相关计算",
+              "version": "3.1",
+              "thumbnail": "k25_line.jpg",
+              "fileName": "k25_line"
+            },
+            {
+              "name": "线求交",
+              "version": "3.1",
+              "thumbnail": "k25_lineIntersect.jpg",
+              "fileName": "k25_lineIntersect"
+            },
+            {
+              "name": "线上最近点",
+              "version": "3.1",
+              "thumbnail": "k25_nearestPointOnLine.jpg",
+              "fileName": "k25_nearestPointOnLine"
+            },
+            {
+              "name": "最短路径",
+              "version": "3.1",
+              "thumbnail": "k25_shortestPath.jpg",
+              "fileName": "k25_shortestPath"
+            },
+            {
+              "name": "面相关计算",
+              "version": "3.1",
+              "thumbnail": "k25_polygon.jpg",
+              "fileName": "k25_polygon"
             },
             {
               "name": "面求交",
@@ -2435,13 +2488,6 @@
               "version": "1.6",
               "thumbnail": "m30_echarts_lineroad.jpg",
               "fileName": "m30_echarts_lineroad",
-              "plugins": "echarts"
-            },
-            {
-              "name": "公交路线热力图",
-              "version": "1.6",
-              "thumbnail": "m30_echarts_lineroad2.gif",
-              "fileName": "m30_echarts_lineroad2",
               "plugins": "echarts"
             }
           ]

@@ -86,6 +86,15 @@
           </td>
           <td>（米）</td>
         </tr>
+
+        <tr>
+          <td class="nametd">斜切偏移量</td>
+          <td>
+            <input id="rangeNormalZ" title="斜切偏移量" />
+          </td>
+          <td style="width: 100px">
+          </td>
+        </tr>
       </table>
 
       <button type="button" id="btnClear" class="btn btn-primary">清除</button>
@@ -111,8 +120,8 @@
           position: { lng: 117.251229, lat: 31.844015, alt: 31.2 },
           maximumScreenSpaceError: 16,
           maximumMemoryUsage: 1024,
-          highlight: { type: "click", color: "#00FFFF" },
-          popup: "all",
+          // highlight: { type: "click", color: "#00FFFF" },
+          // popup: "all",
           flyTo: true,
         });
         map.addLayer(tilesetLayer);
@@ -152,6 +161,15 @@
           var value = Number($(this).val());
           tilesetPlanClip.distance = value;
         });
+
+        $("#rangeNormalZ")
+          .slider({ min: -10, max: 10, step: 0.1, value: 0 })
+          .on("change", (e) => {
+            if (e?.value) {
+              var value = e.value.newValue;
+              tilesetPlanClip.normalZ = value;
+            }
+          });
 
         $("#btnClipping1").click(function () {
           tilesetPlanClip.type = mars3d.thing.TilesetPlanClip.Type.Z;

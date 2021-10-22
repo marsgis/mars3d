@@ -39,10 +39,17 @@
 
     <!-- 面板 -->
     <div class="infoview">
-      <button class="btn btn-primary" onclick="randomPoints()" type="button">随机点</button>
-      <button class="btn btn-primary" onclick="randomPolylines()" type="button">随机线</button>
-      <button class="btn btn-primary" onclick="randomPolygons()" type="button">随机面</button>
-      <button class="btn btn-primary" onclick="clearAll()" type="button">清除</button>
+      <div>
+        原始数据：
+        <button class="btn btn-primary" onclick="randomPoints()" type="button">随机点</button>
+        <button class="btn btn-danger" onclick="clearlayer()" type="button">清除</button>
+      </div>
+      <div>
+        相关计算：
+        <button class="btn btn-primary" id="convexPolygon" type="button">计算包围面</button>
+        <button class="btn btn-primary" id="voronoiPolygon" type="button">计算泰森多边形</button>
+        <button class="btn btn-primary" id="tinPolygon" type="button">计算TIN多边形</button>
+      </div>
     </div>
 
     <script src="./js/common.js"></script>
@@ -51,6 +58,7 @@
 
       var map;
       var graphicLayer;
+      var pointsLayer;
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -67,27 +75,33 @@
         graphicLayer = new mars3d.layer.GraphicLayer();
         map.addLayer(graphicLayer);
 
-        randomPoints();
-      }
+        //点矢量数据图层
+        pointsLayer = new mars3d.layer.GraphicLayer();
+        map.addLayer(pointsLayer);
 
-      //颜色
-      var index = 0;
-      var colors = ["#99CCCC", "#66FF66", "#FF6666", "#00CCFF", "#00FF33", "#CC0000", "#CC00CC", "#CCFF00", "#0000FF"];
-      function getColor() {
-        var i = index++ % colors.length;
-        return colors[i];
+        $("#convexPolygon").click(() => {
+          convexPolygon();
+        });
+
+        $("#voronoiPolygon").click(() => {
+          voronoiPolygon();
+        });
+
+        $("#tinPolygon").click(() => {
+          tinPolygon();
+        });
       }
 
       let bbox = [116.984788, 31.625909, 117.484068, 32.021504];
 
+      // 生成50个随机点
       function randomPoints() {
-        graphicLayer.clear();
+        clearlayer();
 
-        var points = turf.randomPoint(100, { bbox: bbox });
+        var points = turf.randomPoint(50, { bbox: bbox }); //50个随机点
 
         points.features.forEach((e, index) => {
           let position = e.geometry.coordinates;
-
           let primitive = new mars3d.graphic.BillboardPrimitive({
             position: position,
             style: {
@@ -96,71 +110,96 @@
               horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
               verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
               scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 500000, 0.1),
+              clampToGround: false,
             },
             popup: "第" + index + "个",
           });
-          graphicLayer.addGraphic(primitive);
+          pointsLayer.addGraphic(primitive);
         });
       }
 
-      function randomPolylines() {
+      //计算包围面
+      function convexPolygon() {
         graphicLayer.clear();
 
-        let num_vertices = parseInt(Math.random() * 10);
-        num_vertices = num_vertices < 3 ? 3 : num_vertices;
+        let points = pointsLayer.toGeoJSON();
 
-        var polylines = turf.randomLineString(100, {
+        var hull = turf.convex(points);
+
+        var convexPoints = hull.geometry.coordinates;
+        // 外包围面;
+        var polygonGraphic = new mars3d.graphic.PolygonEntity({
+          positions: convexPoints,
+          style: {
+            color: "#00ffff",
+            opacity: 0.2,
+            clampToGround: false,
+          },
+        });
+        graphicLayer.addGraphic(polygonGraphic);
+      }
+
+      //泰森多边形
+      function voronoiPolygon() {
+        graphicLayer.clear();
+
+        let points = pointsLayer.toGeoJSON();
+
+        var options = {
           bbox: bbox,
-          num_vertices: num_vertices, //每个 LineString 将包含多少个坐标。
-          max_length: 0.01, //大小
-        });
+        };
+        var voronoiPolygons = turf.voronoi(points, options);
 
-        polylines.features.forEach((e, index) => {
-          let positions = e.geometry.coordinates;
+        voronoiPolygons.features.forEach((e, index) => {
+          let position = e.geometry.coordinates;
 
-          let primitive = new mars3d.graphic.PolylinePrimitive({
-            positions: positions,
+          let voronoiPolygon = new mars3d.graphic.PolygonEntity({
+            positions: position,
             style: {
-              width: 4,
-              color: getColor(),
-              opacity: 0.8,
-              clampToGround: true,
+              randomColor: true, //随机色
+              opacity: 0.5,
+              clampToGround: false,
             },
             popup: "第" + index + "个",
           });
-          graphicLayer.addGraphic(primitive);
+          graphicLayer.addGraphic(voronoiPolygon);
         });
       }
 
-      function randomPolygons() {
+      // 计算TIN多边形
+      function tinPolygon() {
         graphicLayer.clear();
 
-        let num_vertices = parseInt(Math.random() * 10);
-        num_vertices = num_vertices < 3 ? 3 : num_vertices;
+        let points = pointsLayer.toGeoJSON();
+        for (var i = 0; i < points.features.length; i++) {
+          points.features[i].properties.z = ~~(Math.random() * 9);
+        }
+        var tin = turf.tin(points, "z");
 
-        var polygons = turf.randomPolygon(100, {
-          bbox: bbox,
-          num_vertices: num_vertices, //坐标个数,必须多于或等于四个
-          max_radial_length: 0.01, //大小
-        });
+        tin.features.forEach((e, index) => {
+          let position = e.geometry.coordinates;
 
-        polygons.features.forEach((e, index) => {
-          let positions = e.geometry.coordinates;
-          let primitive = new mars3d.graphic.PolygonPrimitive({
-            positions: positions,
+          // TIN多边形
+          let tinPolygon = new mars3d.graphic.PolygonEntity({
+            positions: position,
             style: {
-              color: colors(index),
-              opacity: 0.6,
-              clampToGround: true,
+              randomColor: true, //随机色
+              opacity: 0.5,
+              outline: true,
+              outlineColor: "rgb(3, 4, 5,0.2)",
+              outlineWidth: 2,
+              clampToGround: false,
             },
             popup: "第" + index + "个",
           });
-          graphicLayer.addGraphic(primitive);
+          graphicLayer.addGraphic(tinPolygon);
         });
       }
 
-      function clearAll() {
+      //清除所有矢量图层
+      function clearlayer() {
         graphicLayer.clear();
+        pointsLayer.clear();
       }
     </script>
   </body>

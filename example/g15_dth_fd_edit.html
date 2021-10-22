@@ -79,7 +79,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 33.589028, lng: 119.032321, alt: 359, heading: 0, pitch: -44 },
+            center: { lat: 43.820826, lng: 125.144526, alt: 679, heading: 333, pitch: -32 },
           },
           control: {
             infoBox: false,
@@ -91,9 +91,10 @@
 
         //三维模型
         var tilesetLayer = new mars3d.layer.TilesetLayer({
-          name: "文庙",
-          url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
-          position: { alt: 80.6 },
+          type: "3dtiles",
+          name: "校园",
+          url: "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
+          position: { alt: 15.8 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
         });
@@ -101,7 +102,7 @@
 
         //单体化图层
         geoJsonLayerDTH = new mars3d.layer.GeoJsonLayer({
-          name: "文庙-单体化",
+          name: "校园-单体化",
           symbol: {
             type: "polygonP",
             styleOptions: {
@@ -112,15 +113,14 @@
               buffer: 1,
               //单体化鼠标移入或单击后高亮的样式
               highlight: {
-                // type: mars3d.EventType.click,
+                type: mars3d.EventType.click,
                 color: "rgba(255,255,0,0.4)",
               },
             },
           },
           popup: [
-            { field: "name", name: "房屋名称" },
-            { field: "jznf", name: "建造年份" },
-            { field: "ssdw", name: "所属单位" },
+            { field: "name", name: "学校场所" },
+            { field: "sfkf", name: "是否开放" },
             { field: "remark", name: "备注信息" },
           ],
         });
@@ -129,6 +129,13 @@
         graphicLayerEdit = new mars3d.layer.GraphicLayer({
           hasEdit: true,
           isAutoEditing: true, //绘制完成后是否自动激活编辑
+          symbol: {
+            type: "polygon",
+            styleOptions: {
+              color: "rgba(255, 255, 0, 0.4)",
+              clampToGround: true,
+            },
+          },
         });
         map.addLayer(graphicLayerEdit);
 
@@ -213,7 +220,7 @@
       function queryDthData() {
         return new Promise(function (resolve, reject) {
           $.ajax({
-            url: "//data.mars3d.cn/file/geojson/dth-wm.json",
+            url: "//data.mars3d.cn/file/geojson/dth-xuexiao-fd.json",
             type: "get",
             dataType: "json",
             success: function (result) {
@@ -296,9 +303,8 @@
             lonlats: graphic.coordinates,
             attrList: [
               { name: "id", label: "主键", type: "hidden", defval: "" },
-              { name: "name", label: "房屋名称", type: "text", defval: "" },
-              { name: "jznf", label: "建造年份", type: "text", defval: "" },
-              { name: "ssdw", label: "所属单位", type: "text", defval: "" },
+              { name: "name", label: "学校场所", type: "text", defval: "" },
+              { name: "sfkf", label: "是否开放", type: "text", defval: "" },
               { name: "remark", label: "备注信息", type: "textarea", defval: "" },
             ],
           });

@@ -86,6 +86,14 @@
           </td>
           <td>（米）</td>
         </tr>
+        <tr>
+          <td class="nametd">斜切偏移量</td>
+          <td>
+            <input id="rangeNormalZ" title="斜切偏移量" />
+          </td>
+          <td style="width: 100px">
+          </td>
+        </tr>
       </table>
 
       <button type="button" id="btnClear" class="btn btn-primary">清除</button>
@@ -152,6 +160,15 @@
           var value = Number($(this).val());
           modelPlanClip.distance = value;
         });
+
+        $("#rangeNormalZ")
+          .slider({ min: -10, max: 10, step: 0.1, value: 0 })
+          .on("change", (e) => {
+            if (e?.value) {
+              var value = e.value.newValue;
+              modelPlanClip.normalZ = value;
+            }
+          });
 
         $("#btnClipping1").click(function () {
           modelPlanClip.type = mars3d.thing.ModelPlanClip.Type.Z;

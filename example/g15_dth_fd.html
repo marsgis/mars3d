@@ -26,7 +26,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,bootstrap-checkbox,layer,haoutil,turf,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -38,6 +38,15 @@
 
     <div id="mars3dContainer" class="mars3d-container"></div>
 
+
+    <!-- 面板 -->
+    <div class="infoview">
+      <div class="checkbox checkbox-primary checkbox-inline">
+        <input id="chkShowColor" class="styled" type="checkbox" checked />
+        <label for="chkShowColor"> 是否显示各栋颜色 </label>
+      </div>
+    </div>
+
     <script src="./js/common.js"></script>
     <script type="text/javascript">
       "use script"; //开发环境建议开启严格模式
@@ -48,7 +57,7 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 33.588256, lng: 119.031747, alt: 154, heading: 3, pitch: -23 },
+            center: { lat: 43.821193, lng: 125.143124, alt: 990, heading: 342, pitch: -50 },
           },
         });
 
@@ -57,39 +66,40 @@
 
         //三维模型
         var tilesetLayer = new mars3d.layer.TilesetLayer({
-          name: "文庙",
           type: "3dtiles",
-          url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
-          position: { alt: 80.6 },
+          name: "校园",
+          url: "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
+          position: { alt: 15.8 },
           maximumScreenSpaceError: 1,
           maximumMemoryUsage: 1024,
-          show: true,
         });
         map.addLayer(tilesetLayer);
 
         //单体化图层
         var geoJsonLayerDTH = new mars3d.layer.GeoJsonLayer({
-          name: "文庙-单体化",
-          url: "//data.mars3d.cn/file/geojson/dth-wm.json",
+          name: "学校-单体化",
+          url: "//data.mars3d.cn/file/geojson/dth-xuexiao-fd.json",
           symbol: {
             type: "polygonP",
             styleOptions: {
               //单体化默认显示样式
-              color: "rgba(0, 255, 0, 0.2)",
+              color: "#00ffff",
+              opacity: 0.2,
               clampToGround: true,
               classification: true,
               buffer: 1,
               //单体化鼠标移入或单击后高亮的样式
               highlight: {
-                // type: mars3d.EventType.click,
-                color: "rgba(255,255,0,0.3)",
+                type: mars3d.EventType.click,
+                color: "#ffff00",
+                opacity: 0.6,
               },
 
               label: {
                 text: "{name}",
-                height: 25, //单体化面没有高度，所以中心点文字需要指定一个高度值。
+                height: 240, //单体化面没有高度，所以中心点文字需要指定一个高度值。
                 opacity: 1,
-                font_size: 22,
+                font_size: 30,
                 color: "#ffffff",
                 font_family: "楷体",
                 outline: true,
@@ -107,13 +117,31 @@
             },
           },
           popup: [
-            { field: "name", name: "房屋名称" },
-            { field: "jznf", name: "建造年份" },
-            { field: "ssdw", name: "所属单位" },
+            { field: "name", name: "学校场所" },
+            { field: "sfkf", name: "是否开放" },
             { field: "remark", name: "备注信息" },
           ],
         });
         map.addLayer(geoJsonLayerDTH);
+
+        $("#chkShowColor").change(function () {
+          let val = $(this).is(":checked");
+
+          geoJsonLayerDTH.closePopup();
+          if (val) {
+            geoJsonLayerDTH.eachGraphic((graphic, index) => {
+              graphic.setStyle({
+                opacity: 0.2,
+              });
+            });
+          } else {
+            geoJsonLayerDTH.eachGraphic((graphic) => {
+              graphic.setStyle({
+                opacity: 0.01,
+              });
+            });
+          }
+        });
       }
     </script>
   </body>

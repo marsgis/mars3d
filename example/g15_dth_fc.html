@@ -18,7 +18,7 @@
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="http://mars3d.cn/favicon.ico" />
-    <title>分层分户矢量单体化(GeoJson叠加) | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>功能示例 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
 
     <!--第三方lib-->
     <script
@@ -41,7 +41,7 @@
     <div class="infoview">
       <div class="checkbox checkbox-primary checkbox-inline">
         <input id="chkShowColor" class="styled" type="checkbox" checked />
-        <label for="chkShowColor"> 是否显示各户颜色 </label>
+        <label for="chkShowColor"> 是否显示各层颜色 </label>
       </div>
     </div>
 
@@ -78,18 +78,16 @@
 
         //创建单体化图层
         geoJsonLayerDTH = new mars3d.layer.GeoJsonLayer({
-          name: "分层分户单体化",
-          url: "//data.mars3d.cn/file/geojson/dth-xuexiao-fcfh.json",
+          name: "分层单体化",
+          url: "//data.mars3d.cn/file/geojson/dth-xuexiao-fc.json",
           onCreateGraphic: createDthGraphic, //自定义解析数据
         });
         map.addLayer(geoJsonLayerDTH);
 
         geoJsonLayerDTH.bindPopup((e) => {
           let item = e.graphic.attr;
-          let html = `房号：${item.name}<br/>
-                      楼层：第${item.thisFloor}层 (共${item.allFloor}层)<br/>
-                      班级：${item.remark}<br/>
-                      说明：教学楼`;
+          let html = `楼层：第${item.thisFloor}层 (共${item.allFloor}层)<br/>
+                      备注：${item.remark} `;
           return html;
         });
 

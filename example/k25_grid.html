@@ -47,7 +47,7 @@
 
     <!-- 面板 -->
     <div class="infoview">
-      步长: <input id="stepVlaue" type="number" style="width: 60px" value="1" />公里 &nbsp;&nbsp;
+      步长: <input id="stepVlaue" type="number" style="width: 60px" value="5" />公里 &nbsp;&nbsp;
 
       <input type="button" class="btn btn-primary" id="btn_points" value="点" />
       <input type="button" class="btn btn-primary" id="btn_triangle" value="三角网" />
@@ -66,15 +66,14 @@
         //合并属性参数，可覆盖config.json中的对应配置
         var mapOptions = mars3d.Util.merge(options, {
           scene: {
-            center: { lat: 31.843636, lng: 117.270754, alt: 31583, heading: 360, pitch: -90 },
+            center: { lat: 31.255881, lng: 117.271026, alt: 60133, heading: 360, pitch: -46 },
           },
         });
 
         //创建三维地球场景
         map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        let extent = map.getExtent({ scale: 0.9 }); // 取当前视域边界
-        let bbox = [extent.xmin, extent.ymin, extent.xmax, extent.ymax];
+        let bbox = [116.984788, 31.625909, 117.484068, 32.021504];
 
         graphicLayer = new mars3d.layer.GraphicLayer();
         map.addLayer(graphicLayer);
@@ -145,7 +144,7 @@
         for (var i = 0; i < points.length; i++) {
           var item = points[i];
 
-          graphic = new mars3d.graphic.PointPrimitive({
+          let graphic = new mars3d.graphic.PointPrimitive({
             position: item.position,
             style: {
               color: "#ffff00",

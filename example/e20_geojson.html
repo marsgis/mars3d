@@ -205,11 +205,15 @@
           name: "全国省界",
           url: "//data.mars3d.cn/file/geojson/areas/100000_full.json",
           symbol: {
-            type: "polylineP",
+            type: "polylineCombine",
             styleOptions: {
-              color: "#ffffff",
               width: 2,
-              opacity: 0.8,
+              material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
+                color: "#00ffff",
+                image: "img/textures/fenceline.png",
+                speed: 10,
+                repeat_x: 10,
+              }),
               label: {
                 text: "{name}",
                 font_size: 30,

@@ -2,6 +2,23 @@
 
 -------------------------------------------
 
+## 3.1.9 2021-10-23
+
+#### Additions 🎉
+- 增加大数据水面对象 WaterCombine
+- 默认右键菜单中增加量算功能
+- TilesetPlanClip 模型支持斜切
+- 增加多个客户端空间分析示例
+- 调整优化了矢量单体化示例
+
+#### Fixes 🔧  
+- PathEntity更新为固定位置时的availability时间内部未自动处理问题
+- DivLayer默认show:false传参无效问题
+- GraphicLayer的loadGeoJSON方法type部分识别无效问题
+
+
+
+
 ## 3.1.8 2021-10-18
 
 #### Additions 🎉
