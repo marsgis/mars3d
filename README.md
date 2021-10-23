@@ -3,7 +3,7 @@
 <img src="https://mars3d.cn/logo.png" width="300px" />
 </p>
 
-<p align="center">一款基于WebGL技术实现的三维地球客户端开发平台 ：Mars3D</p>
+<p align="center">🌎 一款基于WebGL技术实现的三维地球客户端开发平台 ：Mars3D</p>
 
 <p align="center">
 <a target="_black" href="https://github.com/marsgis/mars3d">
@@ -94,5 +94,6 @@
 
 
 ## 版权说明
-1. 任何`个人或组织`可以在遵守Mars3D相关要求下`免费无限制`使用。
+1. Mars3D平台由[火星科技](http://marsgis.cn/)自主研发，拥有所有权利。
+2. 任何个人或组织可以在遵守相关要求下可以免费无限制使用。
 

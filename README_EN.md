@@ -3,7 +3,7 @@
 <img src="https://mars3d.cn/logo.png" width="300px" />
 </p>
 
-<p align="center">A 3D Earth client development platform based on WebGL Technology ：Mars3D</p>
+<p align="center">🌎 A 3D Earth client development platform based on WebGL Technology ：Mars3D</p>
 
 <p align="center">
 <a target="_black" href="https://github.com/marsgis/mars3d">
@@ -37,7 +37,7 @@ Directly run and browse `examples.html` under any development editor (such as vs
 
  
 
-## Mars3D Other warehouse navigation - Github
+## Mars3D Other warehouse navigation
 > Function example：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d)    
 
 ### Simplest project template
@@ -55,24 +55,6 @@ Directly run and browse `examples.html` under any development editor (such as vs
 1. Hypergraph integration example[https://github.com/marsgis/mars3d-link-supermap](https://github.com/marsgis/mars3d-link-supermap)
 2. EarthSDK integration example[https://github.com/marsgis/mars3d-link-earthsdk](https://github.com/marsgis/mars3d-link-earthsdk)
  
- 
-## Mars3D Other warehouse navigation - Gitee(domestic)
-> Function example：[ https://gitee.com/marsgis/mars3d]( https://gitee.com/marsgis/mars3d)
-
-### Simplest project template
-1. Traditional technology stack (Native JS)[https://gitee.com/marsgis/mars3d-es5-template](https://gitee.com/marsgis/mars3d-es5-template)
-2. Vue technology stack[https://gitee.com/marsgis/mars3d-vue-template](https://gitee.com/marsgis/mars3d-vue-template)
-3. React technology stack[https://gitee.com/marsgis/mars3d-react-template](https://gitee.com/marsgis/mars3d-react-template)
-4. Angular technology stack[https://gitee.com/marsgis/mars3d-angular-template](https://gitee.com/marsgis/mars3d-angular-template)
-
-### Basic project
-1. Traditional technology stack (Widget mode of native JS)[https://gitee.com/marsgis/mars3d-widget-project](https://gitee.com/marsgis/mars3d-widget-project)
-2. Vue technology stack[https://gitee.com/marsgis/mars3d-vue-project](https://gitee.com/marsgis/mars3d-vue-project)
-
- 
-### Other Cesium technology stacks
-1. Hypergraph integration example[https://gitee.com/marsgis/mars3d-link-supermap](https://gitee.com/marsgis/mars3d-link-supermap)
-2. EarthSDK integration example[https://gitee.com/marsgis/mars3d-link-earthsdk](https://gitee.com/marsgis/mars3d-link-earthsdk)
  
 
 ## Platform related effects  
