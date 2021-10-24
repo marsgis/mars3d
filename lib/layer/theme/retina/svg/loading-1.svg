@@ -1,0 +1,37 @@
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;"><circle cx="75" cy="50" fill="undefined" r="3">
+		<animate attributeName="r" values="3;3;5;3;3" times="0;0.1;0.2;0.3;1" dur="1s" repeatCount="indefinite" begin="-0.917s"></animate>
+		<animate attributeName="fill" values="rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177);#37474f;rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177)" repeatCount="indefinite" times="0;0.1;0.2;0.3;1" dur="1s" begin="-0.917s"></animate>
+</circle><circle cx="71.651" cy="62.5" fill="undefined" r="3">
+		<animate attributeName="r" values="3;3;5;3;3" times="0;0.1;0.2;0.3;1" dur="1s" repeatCount="indefinite" begin="-0.833s"></animate>
+		<animate attributeName="fill" values="rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177);#37474f;rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177)" repeatCount="indefinite" times="0;0.1;0.2;0.3;1" dur="1s" begin="-0.833s"></animate>
+</circle><circle cx="62.5" cy="71.651" fill="undefined" r="3">
+		<animate attributeName="r" values="3;3;5;3;3" times="0;0.1;0.2;0.3;1" dur="1s" repeatCount="indefinite" begin="-0.75s"></animate>
+		<animate attributeName="fill" values="rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177);#37474f;rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177)" repeatCount="indefinite" times="0;0.1;0.2;0.3;1" dur="1s" begin="-0.75s"></animate>
+</circle><circle cx="50" cy="75" fill="undefined" r="3">
+		<animate attributeName="r" values="3;3;5;3;3" times="0;0.1;0.2;0.3;1" dur="1s" repeatCount="indefinite" begin="-0.667s"></animate>
+		<animate attributeName="fill" values="rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177);#37474f;rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177)" repeatCount="indefinite" times="0;0.1;0.2;0.3;1" dur="1s" begin="-0.667s"></animate>
+</circle><circle cx="37.5" cy="71.651" fill="undefined" r="3.26933">
+		<animate attributeName="r" values="3;3;5;3;3" times="0;0.1;0.2;0.3;1" dur="1s" repeatCount="indefinite" begin="-0.583s"></animate>
+		<animate attributeName="fill" values="rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177);#37474f;rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177)" repeatCount="indefinite" times="0;0.1;0.2;0.3;1" dur="1s" begin="-0.583s"></animate>
+</circle><circle cx="28.349" cy="62.5" fill="undefined" r="3.93333">
+		<animate attributeName="r" values="3;3;5;3;3" times="0;0.1;0.2;0.3;1" dur="1s" repeatCount="indefinite" begin="-0.5s"></animate>
+		<animate attributeName="fill" values="rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177);#37474f;rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177)" repeatCount="indefinite" times="0;0.1;0.2;0.3;1" dur="1s" begin="-0.5s"></animate>
+</circle><circle cx="25" cy="50" fill="undefined" r="4.59733">
+		<animate attributeName="r" values="3;3;5;3;3" times="0;0.1;0.2;0.3;1" dur="1s" repeatCount="indefinite" begin="-0.417s"></animate>
+		<animate attributeName="fill" values="rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177);#37474f;rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177)" repeatCount="indefinite" times="0;0.1;0.2;0.3;1" dur="1s" begin="-0.417s"></animate>
+</circle><circle cx="28.349" cy="37.5" fill="undefined" r="4.73067">
+		<animate attributeName="r" values="3;3;5;3;3" times="0;0.1;0.2;0.3;1" dur="1s" repeatCount="indefinite" begin="-0.333s"></animate>
+		<animate attributeName="fill" values="rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177);#37474f;rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177)" repeatCount="indefinite" times="0;0.1;0.2;0.3;1" dur="1s" begin="-0.333s"></animate>
+</circle><circle cx="37.5" cy="28.349" fill="undefined" r="4.06667">
+		<animate attributeName="r" values="3;3;5;3;3" times="0;0.1;0.2;0.3;1" dur="1s" repeatCount="indefinite" begin="-0.25s"></animate>
+		<animate attributeName="fill" values="rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177);#37474f;rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177)" repeatCount="indefinite" times="0;0.1;0.2;0.3;1" dur="1s" begin="-0.25s"></animate>
+</circle><circle cx="50" cy="25" fill="undefined" r="3.40267">
+		<animate attributeName="r" values="3;3;5;3;3" times="0;0.1;0.2;0.3;1" dur="1s" repeatCount="indefinite" begin="-0.167s"></animate>
+		<animate attributeName="fill" values="rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177);#37474f;rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177)" repeatCount="indefinite" times="0;0.1;0.2;0.3;1" dur="1s" begin="-0.167s"></animate>
+</circle><circle cx="62.5" cy="28.349" fill="undefined" r="3">
+		<animate attributeName="r" values="3;3;5;3;3" times="0;0.1;0.2;0.3;1" dur="1s" repeatCount="indefinite" begin="-0.083s"></animate>
+		<animate attributeName="fill" values="rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177);#37474f;rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177)" repeatCount="indefinite" times="0;0.1;0.2;0.3;1" dur="1s" begin="-0.083s"></animate>
+</circle><circle cx="71.651" cy="37.5" fill="undefined" r="3">
+		<animate attributeName="r" values="3;3;5;3;3" times="0;0.1;0.2;0.3;1" dur="1s" repeatCount="indefinite" begin="0s"></animate>
+		<animate attributeName="fill" values="rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177);#37474f;rgba(0%,0%,0%,0.177);rgba(0%,0%,0%,0.177)" repeatCount="indefinite" times="0;0.1;0.2;0.3;1" dur="1s" begin="0s"></animate>
+</circle></svg>

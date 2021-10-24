@@ -1,0 +1,429 @@
+{
+  "id": "887615",
+  "name": "marsgis",
+  "font_family": "marsgis",
+  "css_prefix_text": "marsgis-",
+  "description": "火星科技marsgis地图相关字体图标库",
+  "glyphs": [
+    {
+      "icon_id": "7277986",
+      "name": "circle",
+      "font_class": "circle1",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "12590699",
+      "name": "视角书签",
+      "font_class": "sjsq",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "12590923",
+      "name": "方量分析",
+      "font_class": "flfx",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "12590925",
+      "name": "工具栏",
+      "font_class": "gjl",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "12590926",
+      "name": "_高度差",
+      "font_class": "gdc",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "12590927",
+      "name": "空间距离",
+      "font_class": "kjjl",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "12590928",
+      "name": "面积",
+      "font_class": "area",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "12590929",
+      "name": "角度测量",
+      "font_class": "jdcl",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "12590930",
+      "name": "面",
+      "font_class": "mian",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "12590931",
+      "name": "模型剖切",
+      "font_class": "mxpq",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "12590932",
+      "name": "模型压平",
+      "font_class": "mxyp",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "12590934",
+      "name": "全屏",
+      "font_class": "qp",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "12590935",
+      "name": "剖面",
+      "font_class": "pm",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "12590936",
+      "name": "模型裁剪",
+      "font_class": "mxcj",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "12590937",
+      "name": "日照分析",
+      "font_class": "rzfx",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "12590940",
+      "name": "日期",
+      "font_class": "riqi",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "12590941",
+      "name": "分享",
+      "font_class": "share",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
+      "icon_id": "12590942",
+      "name": "素材库",
+      "font_class": "sck",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "12590944",
+      "name": "三角测量",
+      "font_class": "sanjiao",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "12590949",
+      "name": "_mars_text",
+      "font_class": "text",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "12590951",
+      "name": "一键关闭",
+      "font_class": "yjgb",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
+      "icon_id": "12590959",
+      "name": "比例尺",
+      "font_class": "bilic",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "12590960",
+      "name": "坐标测量",
+      "font_class": "zbcl",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
+      "icon_id": "12590962",
+      "name": "贴地距离",
+      "font_class": "_mars_dtjl",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "12590963",
+      "name": "地形展示",
+      "font_class": "dxzs",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "12590965",
+      "name": "叠加",
+      "font_class": "diejia",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "12590966",
+      "name": "poi搜索",
+      "font_class": "ss",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "12590967",
+      "name": "通视分析",
+      "font_class": "tshifx",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "12590969",
+      "name": "导航球",
+      "font_class": "dhq",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "12590972",
+      "name": "快捷键",
+      "font_class": "kjj",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "12590973",
+      "name": "二三位切换",
+      "font_class": "eswqh",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
+      "icon_id": "12593745",
+      "name": "坐标定位",
+      "font_class": "zbdw",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "12593746",
+      "name": "地图纠错",
+      "font_class": "edit",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "12593747",
+      "name": "底图",
+      "font_class": "map",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    },
+    {
+      "icon_id": "12593750",
+      "name": "飞行漫游",
+      "font_class": "fxmy",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
+      "icon_id": "12593751",
+      "name": "定位",
+      "font_class": "dingwei",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    },
+    {
+      "icon_id": "12593753",
+      "name": "点标记",
+      "font_class": "marker",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
+      "icon_id": "12593754",
+      "name": "贴地矩形",
+      "font_class": "extent",
+      "unicode": "e661",
+      "unicode_decimal": 58977
+    },
+    {
+      "icon_id": "12593755",
+      "name": "地图输出",
+      "font_class": "print",
+      "unicode": "e662",
+      "unicode_decimal": 58978
+    },
+    {
+      "icon_id": "12593756",
+      "name": "贴地面",
+      "font_class": "polygon",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "12593757",
+      "name": "线",
+      "font_class": "polyline",
+      "unicode": "e664",
+      "unicode_decimal": 58980
+    },
+    {
+      "icon_id": "12593759",
+      "name": "圆",
+      "font_class": "circle",
+      "unicode": "e666",
+      "unicode_decimal": 58982
+    },
+    {
+      "icon_id": "12593761",
+      "name": "图上量算",
+      "font_class": "tsls",
+      "unicode": "e668",
+      "unicode_decimal": 58984
+    },
+    {
+      "icon_id": "12593762",
+      "name": "图层",
+      "font_class": "tc",
+      "unicode": "e669",
+      "unicode_decimal": 58985
+    },
+    {
+      "icon_id": "12593763",
+      "name": "上下",
+      "font_class": "updown",
+      "unicode": "e66a",
+      "unicode_decimal": 58986
+    },
+    {
+      "icon_id": "12593764",
+      "name": "图上标绘",
+      "font_class": "tsbh",
+      "unicode": "e66b",
+      "unicode_decimal": 58987
+    },
+    {
+      "icon_id": "12593886",
+      "name": "批量单体化",
+      "font_class": "dth",
+      "unicode": "e66d",
+      "unicode_decimal": 58989
+    },
+    {
+      "icon_id": "12594315",
+      "name": "分析工具",
+      "font_class": "fxgj",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
+    },
+    {
+      "icon_id": "12594813",
+      "name": "规划方案比选",
+      "font_class": "ghfadb",
+      "unicode": "e66e",
+      "unicode_decimal": 58990
+    },
+    {
+      "icon_id": "12594825",
+      "name": "全景数据分析",
+      "font_class": "qjsjdb",
+      "unicode": "e66f",
+      "unicode_decimal": 58991
+    },
+    {
+      "icon_id": "12595035",
+      "name": "模型新增",
+      "font_class": "mxxz",
+      "unicode": "e670",
+      "unicode_decimal": 58992
+    },
+    {
+      "icon_id": "12596189",
+      "name": "扩散模型",
+      "font_class": "ksmx",
+      "unicode": "e671",
+      "unicode_decimal": 58993
+    },
+    {
+      "icon_id": "12596190",
+      "name": "连通性分析",
+      "font_class": "ltxfx",
+      "unicode": "e672",
+      "unicode_decimal": 58994
+    },
+    {
+      "icon_id": "12596191",
+      "name": "数据转换",
+      "font_class": "sjzh",
+      "unicode": "e673",
+      "unicode_decimal": 58995
+    },
+    {
+      "icon_id": "12596192",
+      "name": "缓冲分析",
+      "font_class": "hcfx",
+      "unicode": "e674",
+      "unicode_decimal": 58996
+    },
+    {
+      "icon_id": "12596650",
+      "name": "叠置分析",
+      "font_class": "dzfx",
+      "unicode": "e675",
+      "unicode_decimal": 58997
+    },
+    {
+      "icon_id": "12596824",
+      "name": "分屏对比",
+      "font_class": "jldb",
+      "unicode": "e667",
+      "unicode_decimal": 58983
+    },
+    {
+      "icon_id": "12596986",
+      "name": "空间分析",
+      "font_class": "kjfx",
+      "unicode": "e676",
+      "unicode_decimal": 58998
+    },
+    {
+      "icon_id": "12597162",
+      "name": "可视域",
+      "font_class": "keshiyu",
+      "unicode": "e677",
+      "unicode_decimal": 58999
+    },
+    {
+      "icon_id": "12625154",
+      "name": "模型开挖",
+      "font_class": "moxingkaiwa",
+      "unicode": "e67a",
+      "unicode_decimal": 59002
+    }
+  ]
+}

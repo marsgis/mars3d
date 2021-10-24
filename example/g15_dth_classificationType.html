@@ -26,7 +26,7 @@
       type="text/javascript"
       src="../lib/include-lib.js"
       libpath="../lib/"
-      include="jquery,font-awesome,bootstrap,layer,haoutil,turf,mars3d"
+      include="jquery,font-awesome,bootstrap,layer,haoutil,mars3d"
     ></script>
 
     <link href="css/style.css" rel="stylesheet" />
@@ -43,7 +43,6 @@
       "use script"; //开发环境建议开启严格模式
 
       var map;
-      var primitives; //存放数据的图层
 
       function initMap(options) {
         //合并属性参数，可覆盖config.json中的对应配置
@@ -56,7 +55,7 @@
         //创建三维地球场景
         map = new mars3d.Map("mars3dContainer", mapOptions);
 
-        //添加参考三维模型
+        //添加三维模型
         var tiles3dLayer = new mars3d.layer.TilesetLayer({
           name: "河道边厂房",
           url: "//data.mars3d.cn/3dtiles/qx-xiaolou/tileset.json",
@@ -66,6 +65,7 @@
         });
         map.addLayer(tiles3dLayer);
 
+        //创建单体化图层
         var tiles3dLayerDT = new mars3d.layer.TilesetLayer({
           name: "河道边厂房-单体",
           url: "//data.mars3d.cn/3dtiles/qx-xiaolou-dth/tileset.json",

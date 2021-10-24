@@ -1,0 +1,86 @@
+﻿/**
+* 自定义扩展layer弹窗样式 
+* 火星科技 http://marsgis.cn
+*/
+
+.layui-layer-lan[type=dialog] {
+    min-width: 400px;
+}
+
+/*自定义弹窗样式 */
+.layer-mars-dialog {
+    background-color: transparent !important; 
+    border: 1px solid rgba(32,160,255,0.6);
+    border-radius: 5px !important;
+}
+
+.layer-mars-dialog .layui-layer-title {
+    padding: 0 80px 0 10px; 
+    border-color: rgba(32,160,255,0.3); 
+    background: rgba(30,36,50,0.6);
+    height: 40px;
+    line-height: 40px;
+    color: #FFFFFF;
+    font-size: 16px;
+}
+
+.layer-mars-dialog .layui-layer-content {
+    color: #FFFFFF; 
+ 	background-color: rgba(30,36,50,0.6);
+    border: 0;
+}
+.layer-mars-dialog .layui-layer-btn {  
+    background-color: rgba(30,36,50,0.6);
+}
+
+.layer-mars-dialog .layui-layer-setwin .layui-layer-min cite {
+    background-color: #ffffff;
+}
+
+
+/*自定义弹窗样式, 图片背景 样式*/
+.layer-mars-dialog2 {
+    background-color: transparent !important;
+}
+
+.layer-mars-dialog2 .layui-layer-title {
+    border-top: 22px solid transparent;
+    border-left: 10px solid transparent;
+    border-right: 45px solid transparent;
+    border-bottom: 0;
+    border-image: url(./img/title-border.png) 22 45 22 10 round;
+    background-color: transparent;
+    height: 20px;
+    line-height: 20px;
+    background-image: url('./img/title-background1.png'),url('./img/title-background2.png');
+    background-repeat: no-repeat,no-repeat;
+    background-position: left center,center;
+    background-size: auto,100% 100%;
+    padding-left: 20px;
+    padding-right: 35px;
+    font-size: 16px;
+    color: #FFFFFF;
+}
+
+.layer-mars-dialog2 .layui-layer-content {
+    color: #FFFFFF;
+    background-color: transparent;
+    background-image: url(./img/content-background.png);
+    border: 1px solid rgba(32,160,255,0.52);
+    border-top: 0;
+}
+
+.layer-mars-dialog2 .layui-layer-setwin {
+    width: 39px;
+    height: 26px;
+    right: 0;
+    top: -10px;
+}
+.layer-mars-dialog2 .layui-layer-setwin .layui-layer-close.layui-layer-close1 { 
+    width: 100%;
+    height: 100%;
+    background: url(./img/close.png) no-repeat right top;
+    margin-left: 0;
+}
+
+ 

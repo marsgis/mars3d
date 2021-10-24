@@ -1,0 +1,19 @@
+﻿.ztree li span.node_name{color:#FFFFFF;}
+.ztree li a{padding:2px 3px 16px 0 !important;}
+.ztree li span.button.switch{height:26px!important;}
+.ztree li span.button.center_docu{background-position: -56px -18px !important;}
+.ztree li span.button.bottom_docu{background-position: -56px -43px !important;}
+.ztree li span.button.roots_open{background-position: -92px 9px !important;}
+.ztree li span.button.center_open{background-position: -92px -17px !important;}
+.ztree li span.button.bottom_open{background-position: -92px -42px !important;}
+.ztree li span.button.roots_close{background-position: -74px 9px !important;}
+.ztree li span.button.center_close{background-position: -74px -17px !important;}
+.ztree li span.button.bottom_close{background-position: -74px -42px !important;}
+.ztree li span.button.root_open{background-position: -92px -61px !important;}
+.ztree li span.button.root_close{background-position: -74px -61px !important;}
+.ztree li span.button.roots_docu{background-position: -56px 6px !important;}
+.ztree li span.button {line-height:0; margin:0; width:16px; height:16px; display: inline-block; vertical-align:middle;
+	border:0 none; cursor: pointer;outline:none;
+	background-color:transparent; background-repeat:no-repeat; background-attachment: scroll;
+	background-image:url("./images/zTreeStandard.png"); *background-image:url("./images/zTreeStandard.gif")}
+.ztree li a.curSelectedNode { background-color: #483a1f;}

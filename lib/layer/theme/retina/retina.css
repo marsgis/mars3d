@@ -1,0 +1,166 @@
+/**
+ * UI v1.0.0
+ * Copyright 2015-2017 Muyao
+ * Licensed under the Muyao License 1.0 
+ */
+/**
+ * 对layer官方默认样式中进行重写
+ * 图标和loading图片均采用svg图片
+ */
+.layui-layer-lan .layui-layer .layui-layer-title, .layui-layer-molv .layui-layer .layui-layer-title {
+	color: #37474f;
+}
+.layui-layer .layui-layer-setwin .layui-layer-min cite {
+	width: 12px;
+}
+.layui-layer .layui-layer-setwin .layui-layer-min:hover {
+	opacity: .7;
+}
+.layui-layer .layui-layer-setwin .layui-layer-min:hover cite {
+	background-color: #37474f;
+}
+.layui-layer .layui-layer-setwin .layui-layer-ico {
+	background-repeat: no-repeat;
+	background-position: center center;
+	-webkit-background-size: 16px 16px;
+	        background-size: 16px 16px;
+}
+.layui-layer .layui-layer-setwin .layui-layer-ico:hover {
+	opacity: .7;
+}
+.layui-layer .layui-layer-setwin .layui-layer-max {
+	background-image: url("svg/maximize.svg");
+}
+.layui-layer .layui-layer-setwin .layui-layer-max.layui-layer-maxmin {
+	background-image: url("svg/restore.svg");
+}
+.layui-layer .layui-layer-setwin .layui-layer-close.layui-layer-close1 {
+	background-image: url("svg/close-1.svg");
+	-webkit-background-size: 18px 18px;
+	        background-size: 18px;
+}
+.layui-layer .layui-layer-setwin .layui-layer-close.layui-layer-close2 {
+	background-color: #fff;
+	background-image: url("svg/close-2.svg");
+	-webkit-background-size: 30px 30px;
+	        background-size: 30px;
+	border: solid 3px #fff;
+	border-radius: 50%;
+}
+.layui-layer .layui-layer-setwin .layui-layer-close.layui-layer-close2:hover {
+	opacity: .9;
+}
+.layui-layer .layui-layer-content .layui-layer-ico {
+	background: url("svg/icon-1.svg") no-repeat center center;
+	-webkit-background-size: cover;
+	        background-size: cover;
+}
+.layui-layer .layui-layer-content .layui-layer-ico.layui-layer-ico2 {
+	background-image: url("svg/icon-2.svg");
+}
+.layui-layer .layui-layer-content .layui-layer-ico {
+	background: url("svg/icon-1.svg") no-repeat center center;
+	-webkit-background-size: cover;
+	        background-size: cover;
+}
+.layui-layer .layui-layer-content .layui-layer-ico.layui-layer-ico3 {
+	background-image: url("svg/icon-3.svg");
+}
+.layui-layer .layui-layer-content .layui-layer-ico {
+	background: url("svg/icon-1.svg") no-repeat center center;
+	-webkit-background-size: cover;
+	        background-size: cover;
+}
+.layui-layer .layui-layer-content .layui-layer-ico.layui-layer-ico4 {
+	background-image: url("svg/icon-4.svg");
+}
+.layui-layer .layui-layer-content .layui-layer-ico {
+	background: url("svg/icon-1.svg") no-repeat center center;
+	-webkit-background-size: cover;
+	        background-size: cover;
+}
+.layui-layer .layui-layer-content .layui-layer-ico.layui-layer-ico5 {
+	background-image: url("svg/icon-5.svg");
+}
+.layui-layer .layui-layer-content .layui-layer-ico {
+	background: url("svg/icon-1.svg") no-repeat center center;
+	-webkit-background-size: cover;
+	        background-size: cover;
+}
+.layui-layer .layui-layer-content .layui-layer-ico.layui-layer-ico6 {
+	background-image: url("svg/icon-6.svg");
+}
+.layui-layer .layui-layer-content .layui-layer-ico {
+	background: url("svg/icon-1.svg") no-repeat center center;
+	-webkit-background-size: cover;
+	        background-size: cover;
+}
+.layui-layer .layui-layer-content .layui-layer-ico.layui-layer-ico7 {
+	background-image: url("svg/icon-7.svg");
+}
+.layui-layer .layui-layer-content .layui-layer-ico {
+	background: url("svg/icon-1.svg") no-repeat center center;
+	-webkit-background-size: cover;
+	        background-size: cover;
+}
+.layui-layer .layui-layer-content .layui-layer-ico.layui-layer-ico8 {
+	background-image: url("svg/icon-8.svg");
+}
+.layui-layer.layui-layer-loading .layui-layer-loading0 {
+	background: url("svg/loading-0.svg") no-repeat center center;
+	-webkit-background-size: 58px auto;
+	        background-size: 58px auto;
+}
+.layui-layer.layui-layer-loading .layui-layer-loading1 {
+	background: url("svg/loading-1.svg") no-repeat center center;
+	-webkit-background-size: 58px auto;
+	        background-size: 58px auto;
+}
+.layui-layer.layui-layer-loading .layui-layer-loading2 {
+	background: url("svg/loading-2.svg") no-repeat center center;
+	-webkit-background-size: 58px auto;
+	        background-size: 58px auto;
+}
+.layui-layer.layui-layer-msg {
+	border: none;
+	-webkit-box-shadow: 1px 1px 30px rgba(0, 0, 0, .1);
+	        box-shadow: 1px 1px 30px rgba(0, 0, 0, .1);
+}
+.layui-layer.layui-layer-tab .layui-layer-title span.layui-this {
+	height: 42px;
+}
+.layui-layer.layui-layer-tab .layui-layer-tabmain {
+	padding: 1px;
+	list-style: none;
+}
+.layui-layer.layui-layer-page {
+	-webkit-box-shadow: 1px 1px 30px rgba(0, 0, 0, .1);
+	        box-shadow: 1px 1px 30px rgba(0, 0, 0, .1);
+}
+.layui-layer.layui-layer-page:not(.layui-layer-photos) .layui-layer-content {
+	padding: 1px;
+}
+ 
+.layui-layer.layui-layer-photos .layui-layer-imgprev, .layui-layer.layui-layer-photos .layui-layer-imgnext {
+	width: 40px;
+	height: 60px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	-webkit-background-size: 100% auto;
+	        background-size: 100% auto;
+	border-radius: 3px;
+	opacity: .8;
+}
+.layui-layer.layui-layer-photos .layui-layer-imgprev:hover, .layui-layer.layui-layer-photos .layui-layer-imgnext:hover {
+	background-color: rgba(0, 0, 0, .3);
+	opacity: 1;
+}
+.layui-layer.layui-layer-photos .layui-layer-imgprev {
+	background-image: url("svg/prev.svg");
+}
+.layui-layer.layui-layer-photos .layui-layer-imgnext {
+	background-image: url("svg/next.svg");
+}
+.layui-layer.layui-layer-photos .layui-layer-imgbar {
+	background-color: rgba(0, 0, 0, .3);
+}

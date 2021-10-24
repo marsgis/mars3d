@@ -1629,6 +1629,12 @@
               "version": "1.8",
               "thumbnail": "g05_gltf_rotate.gif",
               "fileName": "g05_gltf_rotate"
+            },
+            {
+              "name": "模型管理(楼栋分层控制)",
+              "version": "3.1.9",
+              "thumbnail": "g05_floorGraphic.gif",
+              "fileName": "g05_floorGraphic"
             }
           ]
         }
