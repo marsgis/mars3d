@@ -75,9 +75,9 @@
         });
 
         var weixin = new mars3d.graphic.Satellite({
-          name: "GAOFEN 1",
-          tle1: "1 39150U 13018A   21180.50843864  .00000088  00000-0  19781-4 0  9997",
-          tle2: "2 39150  97.8300 252.9072 0018449 344.7422  15.3253 14.76581022440650",
+          name: "COSMOS 33924U",
+          tle1: "1 33924U 93036ED  21197.52273790  .00000077  00000-0  98248-4 0  9996",
+          tle2: "2 33924  73.9172 330.8929 0412462 300.5791  55.5226 13.47506448610712",
           model: {
             url: "//data.mars3d.cn/gltf/mars/weixin2.gltf",
             scale: 1,
@@ -118,9 +118,9 @@
 
         // 目标卫星
         var winxinMB = new mars3d.graphic.Satellite({
-          name: "COSMOS 2251 DEB",
-          tle1: "1 33916U 93036DV  21197.38574736  .00000034  00000-0  48020-4 0  9991",
-          tle2: "2 33916  74.0517 160.4563 0330253 328.4241 153.7022 13.66391564618811",
+          name: "COSMOS 33919U",
+          tle1: "1 33919U 93036DY  21197.91197918  .00000904  00000-0  20362-3 0  9990",
+          tle2: "2 33919  74.0505 161.6299 0033213 276.5546  83.1838 14.57578432657116",
           model: {
             url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
             scale: 1,
@@ -172,6 +172,7 @@
             topShow: true,
             topSteps: 2,
             rayEllipsoid: true, //与地球求交
+            // hideRayEllipsoid: true,
           },
         });
         graphicLayer.addGraphic(rectSensor);

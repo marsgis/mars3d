@@ -2,6 +2,17 @@
 
 -------------------------------------------
 
+## 3.1.10 2021-10-29
+
+#### Additions 🎉
+- map的requestRenderMode属性默认值改为true 
+- 优化图层的flyTo处理，对echarts等图层增加flyTo支持
+- 军事标绘支持positions传入数组坐标CallbackProperty回调属性
+- xyz图层增加tms属性，简化tms类型图层配置
+- PolylinePrimitive支持colors属性
+- EllipsoidEntity扫描效果支持暂停
+ 
+
 ## 3.1.9 2021-10-24
 
 #### Additions 🎉

@@ -1537,6 +1537,12 @@
               "fileName": "f80_draw"
             },
             {
+              "name": "标绘数据展示(马拉松)",
+              "version": "1.7",
+              "thumbnail": "f80_draw_read.jpg",
+              "fileName": "f80_draw_read"
+            },
+            {
               "name": "军事标绘",
               "version": "1.9",
               "thumbnail": "f80_military_plot.jpg",

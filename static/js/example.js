@@ -11,7 +11,10 @@ $(document).ready(function () {
     $("img.chart-thumb").lazyload();
   }, 1000);
 
-  fetch(window.exampleConfig || "../data/example.json")
+  //记录url传入参数
+  let request = haoutil.system.getRequest();
+
+  fetch(request.json|| window.exampleConfig || "../data/example.json")
     .then(function (response) {
       if (!response.ok) {
         let error = new Error(response.statusText);

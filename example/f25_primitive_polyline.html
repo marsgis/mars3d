@@ -135,6 +135,7 @@
         addGraphic_a7(graphicLayer);
         addGraphic_a8(graphicLayer);
         addGraphic_a9(graphicLayer);
+        addGraphic_a10(graphicLayer);
       }
 
       //取区域内的随机图标
@@ -341,6 +342,31 @@
               percent: 0.15,
               alpha: 0.2,
             }),
+          },
+        });
+        graphicLayer.addGraphic(graphic);
+      }
+
+      function addGraphic_a10(graphicLayer) {
+        var colors = [];
+        for (var i = 0; i < 7; ++i) {
+          colors.push(Cesium.Color.fromRandom({ alpha: 1.0 }));
+        }
+
+        let graphic = new mars3d.graphic.PolylinePrimitive({
+          positions: [
+            [117.063958, 31.831931, 35.1],
+            [117.094926, 31.83328, 33.3],
+            [117.099639, 31.812169, 30.9],
+            [117.120429, 31.811357, 32.3],
+            [117.120415, 31.785387, 21.3],
+            [117.142865, 31.784693, 23.6],
+            [117.142902, 31.784508, 23.6],
+          ],
+          style: {
+            width: 5,
+            colors: colors, //每一段都不同颜色,
+            // colorsPerVertex: true,
           },
         });
         graphicLayer.addGraphic(graphic);
