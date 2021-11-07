@@ -29,7 +29,7 @@
 |  ----  |----|----  | ----| ----  |
 |导航页|  | [mars3d](https://github.com/marsgis/mars3d) |[mars3d](https://gitee.com/marsgis/mars3d)  | 所有开源仓库的清单 |  
 |功能示例|原生JS |[mars3d-es5-example](https://github.com/marsgis/mars3d-es5-example) |[mars3d-es5-example](https://gitee.com/marsgis/mars3d-es5-example)  | 功能示例原生JS源码 |  
-|功能示例|Vue3 |[mars3d-vue3-example](https://github.com/marsgis/mars3d-vue3-example) |[mars3d-vue3-example](https://gitee.com/marsgis/mars3d-vue3-example)  | 功能示例Vue3源码 |  
+|功能示例|Vue3 |[mars3d-vue-example](https://github.com/marsgis/mars3d-vue-example) |[mars3d-vue-example](https://gitee.com/marsgis/mars3d-vue-example)  | 功能示例Vue3源码 |  
 |最简项目模板|原生JS | [mars3d-es5-template](https://github.com/marsgis/mars3d-es5-template) |[mars3d-es5-template](https://gitee.com/marsgis/mars3d-es5-template)  | 原生JS最简项目的模版  |  
 |最简项目模板|Vue2| [mars3d-vue2-template](https://github.com/marsgis/mars3d-vue2-template) |[mars3d-vue2-template](https://gitee.com/marsgis/mars3d-vue2-template)  | Vue2最简项目的模版  |  
 |最简项目模板|Vue3 | [mars3d-vue-template](https://github.com/marsgis/mars3d-vue-template) |[mars3d-vue-template](https://gitee.com/marsgis/mars3d-vue-template)  | Vue3最简项目的模版  |  
