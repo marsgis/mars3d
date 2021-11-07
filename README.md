@@ -30,15 +30,15 @@
 |导航页|  | [mars3d](https://github.com/marsgis/mars3d) |[mars3d](https://gitee.com/marsgis/mars3d)  | 所有开源仓库的清单 |  
 |功能示例|原生JS |[mars3d-es5-example](https://github.com/marsgis/mars3d-es5-example) |[mars3d-es5-example](https://gitee.com/marsgis/mars3d-es5-example)  | 功能示例原生JS源码 |  
 |功能示例|Vue3 |[mars3d-vue-example](https://github.com/marsgis/mars3d-vue-example) |[mars3d-vue-example](https://gitee.com/marsgis/mars3d-vue-example)  | 功能示例Vue3源码 |  
-|最简项目模板|原生JS | [mars3d-es5-template](https://github.com/marsgis/mars3d-es5-template) |[mars3d-es5-template](https://gitee.com/marsgis/mars3d-es5-template)  | 原生JS最简项目的模版  |  
-|最简项目模板|Vue2| [mars3d-vue2-template](https://github.com/marsgis/mars3d-vue2-template) |[mars3d-vue2-template](https://gitee.com/marsgis/mars3d-vue2-template)  | Vue2最简项目的模版  |  
-|最简项目模板|Vue3 | [mars3d-vue-template](https://github.com/marsgis/mars3d-vue-template) |[mars3d-vue-template](https://gitee.com/marsgis/mars3d-vue-template)  | Vue3最简项目的模版  |  
-|最简项目模板|React | [mars3d-react-template](https://github.com/marsgis/mars3d-react-template) |[mars3d-react-template](https://gitee.com/marsgis/mars3d-react-template)  | React最简项目的模版  |  
-|最简项目模板|Angular | [mars3d-angular-template](https://github.com/marsgis/mars3d-angular-template) |[mars3d-angular-template](https://gitee.com/marsgis/mars3d-angular-template)  | Angular最简项目的模版  |  
-|基础项目|原生JS | [mars3d-widget-project](https://github.com/marsgis/mars3d-widget-project) |[mars3d-widget-project](https://gitee.com/marsgis/mars3d-widget-project)  | 原生JS的widget模式基础项目  |   
+|最简模板|原生JS | [mars3d-es5-template](https://github.com/marsgis/mars3d-es5-template) |[mars3d-es5-template](https://gitee.com/marsgis/mars3d-es5-template)  | 原生JS最简的项目模板  |  
+|最简模板|Vue2| [mars3d-vue2-template](https://github.com/marsgis/mars3d-vue2-template) |[mars3d-vue2-template](https://gitee.com/marsgis/mars3d-vue2-template)  | Vue2最简的项目模板  |  
+|最简模板|Vue3 | [mars3d-vue-template](https://github.com/marsgis/mars3d-vue-template) |[mars3d-vue-template](https://gitee.com/marsgis/mars3d-vue-template)  | Vue3最简的项目模板  |  
+|最简模板|React | [mars3d-react-template](https://github.com/marsgis/mars3d-react-template) |[mars3d-react-template](https://gitee.com/marsgis/mars3d-react-template)  | React最简的项目模板  |  
+|最简模板|Angular | [mars3d-angular-template](https://github.com/marsgis/mars3d-angular-template) |[mars3d-angular-template](https://gitee.com/marsgis/mars3d-angular-template)  | Angular最简的项目模板  |  
+|基础项目|原生JS | [mars3d-widget-project](https://github.com/marsgis/mars3d-widget-project) |[mars3d-widget-project](https://gitee.com/marsgis/mars3d-widget-project)  | 原生JS开发的(widget模式)基础项目 |   
 |基础项目|Vue3 | [mars3d-vue-project](https://github.com/marsgis/mars3d-vue-project) |[mars3d-vue-project](https://gitee.com/marsgis/mars3d-vue-project)  | Vue3开发的基础项目  | 
-|第3方平台融合|supermap | [mars3d-link-supermap](https://github.com/marsgis/mars3d-link-supermap) |[mars3d-link-supermap](https://gitee.com/marsgis/mars3d-link-supermap)  | 与超图公司supermap平台融合使用的相关示例代码  | 
-|第3方平台融合|earthsdk | [mars3d-link-earthsdk](https://github.com/marsgis/mars3d-link-earthsdk) |[mars3d-link-earthsdk](https://gitee.com/marsgis/mars3d-link-earthsdk)  | 与西部世界公司earthsdk平台融合使用的相关示例代码  | 
+|第3方平台融合|supermap | [mars3d-link-supermap](https://github.com/marsgis/mars3d-link-supermap) |[mars3d-link-supermap](https://gitee.com/marsgis/mars3d-link-supermap)  | 第3方平台融合示例 | 
+|第3方平台融合|earthsdk | [mars3d-link-earthsdk](https://github.com/marsgis/mars3d-link-earthsdk) |[mars3d-link-earthsdk](https://gitee.com/marsgis/mars3d-link-earthsdk)  | 第3方平台融合示例  | 
 
 
  
