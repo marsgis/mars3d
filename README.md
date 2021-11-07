@@ -37,8 +37,8 @@
 |最简模板|Angular | [mars3d-angular-template](https://github.com/marsgis/mars3d-angular-template) |[mars3d-angular-template](https://gitee.com/marsgis/mars3d-angular-template)  | Angular最简的项目模板  |  
 |基础项目|原生JS | [mars3d-widget-project](https://github.com/marsgis/mars3d-widget-project) |[mars3d-widget-project](https://gitee.com/marsgis/mars3d-widget-project)  | 原生JS开发的(widget模式)基础项目 |   
 |基础项目|Vue3 | [mars3d-vue-project](https://github.com/marsgis/mars3d-vue-project) |[mars3d-vue-project](https://gitee.com/marsgis/mars3d-vue-project)  | Vue3开发的基础项目  | 
-|第3方平台融合|supermap | [mars3d-link-supermap](https://github.com/marsgis/mars3d-link-supermap) |[mars3d-link-supermap](https://gitee.com/marsgis/mars3d-link-supermap)  | 第3方平台融合示例 | 
-|第3方平台融合|earthsdk | [mars3d-link-earthsdk](https://github.com/marsgis/mars3d-link-earthsdk) |[mars3d-link-earthsdk](https://gitee.com/marsgis/mars3d-link-earthsdk)  | 第3方平台融合示例  | 
+|第3方平台融合|supermap | [mars3d-link-supermap](https://github.com/marsgis/mars3d-link-supermap) |[mars3d-link-supermap](https://gitee.com/marsgis/mars3d-link-supermap)  | 与超图公司平台融合示例 | 
+|第3方平台融合|earthsdk | [mars3d-link-earthsdk](https://github.com/marsgis/mars3d-link-earthsdk) |[mars3d-link-earthsdk](https://gitee.com/marsgis/mars3d-link-earthsdk)  | 与earthsdk平台融合示例  | 
 
 
  
