@@ -22,12 +22,11 @@
  `Mars3D platform` is [Mars technology](http://marsgis.cn/) a 3D client development platform based on WebGL technology, which is based on [Cesium](https://cesium.com/cesiumjs/) optimization and B / S architecture design,The lightweight and efficient GIS development platform supporting multi industry expansion can run efficiently in the browser without installation and plug-ins, and can quickly access and use a variety of GIS data and three-dimensional models, present the visualization of three-dimensional space, and complete the flexible application of the platform in different industries。
 
 
-### Current warehouse description 
-Directly run and browse `examples.html` under any development editor (such as vscode) or HTTP server (such as node, nginx, Tomcat, IIS, etc.). Refer to [online preview](http://mars3d.cn/example) for operation effect
  
 ### Feedback questions
  In order to facilitate communication and retention, all bugs and suggestions are submitted to : [github issues](https://github.com/marsgis/mars3d/issues)  
  
+
 ### Relevant learning materials
 
 - Development tutorial: [http://mars3d.cn/dev/](http://mars3d.cn/dev/)  
@@ -38,7 +37,7 @@ Directly run and browse `examples.html` under any development editor (such as vs
  
 
 ## Mars3D Other warehouse navigation
-> Function example：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d)    
+> Function example：[https://github.com/marsgis/mars3d-es5-example](https://github.com/marsgis/mars3d-es5-example)    
 
 ### Simplest project template
 1. Traditional technology stack (Native JS)[https://github.com/marsgis/mars3d-es5-template](https://github.com/marsgis/mars3d-es5-template)
