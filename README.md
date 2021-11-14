@@ -20,8 +20,14 @@
 [**English**](./README_EN.md) |[**中文**](./README.md) 
 
  
- 当前仓库是Mars3D平台所有开源仓库的清单导航页 
+ 当前仓库是Mars3D平台所有开源仓库的清单导航页 ，包含最新SDK下载包、离线API文档和其他仓库导航。
 
+
+Github：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d)
+
+国内Gitee：[https://gitee.com/marsgis/mars3d](https://gitee.com/marsgis/mars3d)  
+
+ 
  
  ## 功能示例
  对平台每个功能编写的案例代码，可以阅读每个示例代码来学习各功能，与官网功能示例一致效果。

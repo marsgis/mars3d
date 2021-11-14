@@ -2,6 +2,26 @@
 
 -------------------------------------------
 
+## 3.1.12 2021-11-14
+
+#### Breaking Changes 📣
+- Cesium升级至1.87
+
+#### Additions 🎉
+- ModelPrimitive、TilesetLayer 支持customShader参数来自定义shader效果
+- ToolButton的icon参数支持传入图片url
+- Shadows增加terrain参数控制是否开启地形的阴影效果
+
+#### Fixes 🔧  
+- Cesium v1.87下计算计算贴地(或贴模型)路线点异常问题
+- 绘制DivGraphic时success回调参数无效
+- 解决OutlineEffect的Entity类型数据拾取异常
+- 飞行漫游对象的gs跟随视角设置视距无效
+- PolygonEntity、CircleEntity对象更新outline边线的宽度失效和导出geojson的未记录outlineStyle样式 
+- GraphicLayer的data参数被构造2次
+
+
+
 ## 3.1.11 2021-11-7
 #### Additions 🎉
 - wms、wmts等图层增加getCapabilities参数控制
