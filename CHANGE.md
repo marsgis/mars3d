@@ -2,6 +2,20 @@
 
 -------------------------------------------
 
+## 3.1.13   2012-11-21
+#### Additions 🎉
+- PolygonPrimitive、PolygonCombine、RectanglePrimitive、CirclePrimitive增加支持ouline宽度及材质设置
+- ModelEntity对象addDynamicPosition时，增加noPitchRoll参数，可以设置模型只动态更改方向，内部固定模型的Pitch和Roll方向值为0 
+- RoamLine优化clockLoop参数，并支持导出Json
+- ViewShed3D增加terrain参数控制是否开启地形的阴影效果
+
+#### Fixes 🔧  
+- 更新 mars3d.Token.bing 令牌
+- 解决v3.1.12产生的方量分析bug
+- RoamLine的addShading方法报错
+
+
+
 ## 3.1.12 2021-11-14
 
 #### Breaking Changes 📣
