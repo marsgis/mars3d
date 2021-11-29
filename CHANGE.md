@@ -1,6 +1,19 @@
 # Mars3D更新日志  
 
 -------------------------------------------
+## 3.1.14 2021-11-29
+#### Additions 🎉
+- Zoom控件支持增加zoomOutIcon、zoomOutIcon传入图片url
+- PolygonCombine的outline支持优化
+- DivGraphic在clampToGround:true时支持随地形切换后贴地
+- map增加terrainChange、tileLoadProgress事件
+- TilesetFlat读取模型高度值的优化
+
+#### Fixes 🔧  
+- map的requestRenderMode属性默认值改回false 
+- RoamLine的addShading方法polyline无效
+
+
 
 ## 3.1.13   2012-11-21
 #### Additions 🎉
