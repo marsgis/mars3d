@@ -1,6 +1,28 @@
 # Mars3D更新日志  
 
 -------------------------------------------
+## 3.1.16 2021-12-11
+#### Breaking Changes 📣
+- 事件回调对象增加stopPropagation方法可以停止事件冒泡
+- 原有对象的stopPropagation更名为eventParent，不仅用于关闭冒泡的父级还可以指定父级冒泡对象
+
+#### Additions 🎉
+- 增加contextMenuOpen、contextMenuClose、contextMenuClick右键菜单相关事件
+- 控件和DivGraphic对象支持parentContainer参数来指定自定义的父级DOM
+
+
+#### Fixes 🔧  
+- 修复v3.1.12修改产生的模型OutlineEffect效果对其他对象生效问题
+- 修复v3.1.12产生的地形开挖高度失效
+- 修复v3.1.15优化RoamLine的flyToPoint方法产生的视角切换异常问题
+- DivGraphic对象绑定的tooltip闪烁问题
+- 线面对象的按距离显示属性显示异常
+- RoamLine默认传入model.roll和pitch未生效
+- 解决GroupLayer抛出2次事件问题
+
+
+
+
 ## 3.1.15   2021-12-5
 #### Breaking Changes 📣
 - 升级 Cesium 到 1.88 版本
