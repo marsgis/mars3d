@@ -62,8 +62,6 @@ Github：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d)
 |原生JS | [mars3d-widget-project](https://github.com/marsgis/mars3d-widget-project) |[mars3d-widget-project](https://gitee.com/marsgis/mars3d-widget-project)  | 原生JS开发的(widget模式)基础项目 |   
 
 
- 
-
 ## 第3方平台融合
 Mars3D支持结合Cesium相关的各类平台来兼容使用，方便结合不同平台的优点来达到完成各种项目需求。
 
@@ -71,6 +69,18 @@ Mars3D支持结合Cesium相关的各类平台来兼容使用，方便结合不�
  |----|----  | ----| ----  |
 |supermap | [mars3d-link-supermap](https://github.com/marsgis/mars3d-link-supermap) |[mars3d-link-supermap](https://gitee.com/marsgis/mars3d-link-supermap)  | 与超图公司平台融合示例 | 
 |earthsdk | [mars3d-link-earthsdk](https://github.com/marsgis/mars3d-link-earthsdk) |[mars3d-link-earthsdk](https://gitee.com/marsgis/mars3d-link-earthsdk)  | 与earthsdk平台融合示例  | 
+
+
+
+
+## 其他
+
+|技术栈 | Github | 国内Gitee  |   说明  | 
+|----|----  | ----| ----  |
+|ES6 | [mars3d-plugin](https://github.com/marsgis/mars3d-plugin) |[mars3d-plugin](https://gitee.com/marsgis/mars3d-plugin)  | 部分开源插件  |  
+ 
+
+
 
 
  
