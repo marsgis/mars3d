@@ -38,6 +38,7 @@
 
 ## 3.1.15   2021-12-5
 #### Breaking Changes 📣
+- 上线 功能示例Vue版本 并[开源](https://gitee.com/marsgis/mars3d-vue-example)
 - 升级 Cesium 到 1.88 版本
 
 #### Additions 🎉
