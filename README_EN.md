@@ -1,6 +1,6 @@
  
 <p align="center">
-<img src="https://cdn.jsdelivr.net/gh/muyao1987/cdn/mars3d.cn/logo.png" width="300px" />
+<img src="https://muyao1987.gitee.io/cdn/mars3d.cn/logo.png" width="300px" />
 </p>
 
 <p align="center">🌎 A 3D Earth client development platform based on WebGL Technology ：Mars3D</p>
@@ -59,19 +59,19 @@
 ## Platform related effects  
  Function example：
  
- ![image](https://cdn.jsdelivr.net/gh/muyao1987/cdn/mars3d.cn/xm/example/1.jpg)
+ ![image](https://muyao1987.gitee.io/cdn/mars3d.cn/xm/example/1.jpg)
  
  Basic project：[online experience](http://mars3d.cn/project/jcxm/index.html)
 
- ![image](https://cdn.jsdelivr.net/gh/muyao1987/cdn/mars3d.cn/xm/jcxm/1.jpg)
+ ![image](https://muyao1987.gitee.io/cdn/mars3d.cn/xm/jcxm/1.jpg)
  
  Electronic sand table project：[online experience](http://mars3d.cn/project/dzsp/login.html)
 
- ![image](https://cdn.jsdelivr.net/gh/muyao1987/cdn/mars3d.cn/xm/dzsp/1.jpg)
+ ![image](https://muyao1987.gitee.io/cdn/mars3d.cn/xm/dzsp/1.jpg)
  
  Comprehensive situation project：[online experience](http://mars3d.cn/project/zhts/index.html)
 
- ![image](https://cdn.jsdelivr.net/gh/muyao1987/cdn/mars3d.cn/xm/zhts/1.jpg)
+ ![image](https://muyao1987.gitee.io/cdn/mars3d.cn/xm/zhts/1.jpg)
 
 
 
