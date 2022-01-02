@@ -1,6 +1,19 @@
 # Mars3D更新日志  
 
 -------------------------------------------
+## 3.1.19   2022-1-2 
+#### Additions 🎉
+- 进行了一次API文档的规范和检查改正
+- RoamLine类增加setOptions方法、支持model.highlight配置
+- 优化ContextMenu右键菜单二级菜单超出屏幕时的展示
+- 增加CylinderWaveMaterialProperty材质属性
+- LineFlicker材质增加背景色参数
+
+#### Fixes 🔧  
+- 解决v3.1.18产生的Map的控件相关参数false时显示的问题
+
+
+
 ## 3.1.18   2021-12-25
 #### Breaking Changes 📣
 - 对Map的控件相关做了优化，构造参数支持所有控件类型的配置，事件增加addControl等
@@ -263,7 +276,6 @@
 - map增加了renderError事件
 - 增加mars3d.LatLngPoint.FormatLength全局变量，控制经度纬度的格式化时的长度
 - 反选遮罩层支持多面的geojson
-- npm包及下载sdk等发布了对ts的支持(mars3d.d.ts)
 
 #### Fixes 🔧  
 - DivGraphic绑定的popup未正常显示
