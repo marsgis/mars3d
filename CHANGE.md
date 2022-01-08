@@ -1,6 +1,20 @@
 # Mars3D更新日志  
 
 -------------------------------------------
+## 3.1.21   2022-1-8
+#### Additions 🎉
+- 封装增加mars3d.control.Timeline控件，方便后续控制
+- 优化LocationBar的不同屏幕宽度下的展示
+- 优化DivGraphic、Popup、右键菜单 的样式和展示
+- 标绘编辑增加hasHeightEdit属性控制是否修改高度值
+- LineFlowMaterialProperty支持时长参数
+
+#### Fixes 🔧  
+- outline边线高度支持读取height属性自适应
+- PolygonEntity的setHeight、addHeight属性无效
+
+
+
 ## 3.1.20   2022-1-4 
 #### Breaking Changes 📣
 - Cesium升级至1.89
