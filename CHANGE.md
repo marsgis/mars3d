@@ -1,6 +1,17 @@
 # Mars3D更新日志  
 
 -------------------------------------------
+## 3.1.23   2022-1-23 
+#### Additions 🎉
+- Video3D增加maskImage羽化图片参数
+- 优化地图Zoom的处理，限定最大最小距离
+
+#### Fixes 🔧  
+- RectangleEntity对象flyTo定位位置不对
+- 优化TS和API文档对应jsdoc注释
+ 
+
+
 ## 3.1.22   2022-1-15
 #### Breaking Changes 📣
 - 模型、矢量数据等增加allowDrillPick参数，允许鼠标穿透拾取进行交互
