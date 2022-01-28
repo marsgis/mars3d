@@ -3,12 +3,12 @@
 -------------------------------------------
 ## 3.2.0  2022-1-28
 #### Breaking Changes 📣
-- vue版功能示例和项目迁移至vite架构
+- vue版本示例和项目迁移至vite架构
 - 增加CircleCombine、RectangleCombine、WallCombine等10个大数据合并渲染graphic矢量对象
-- 重写了Video2D、Video3D视频投射矢量对象(API全部变化了，参考API升级)
-- 移除了mars3d.thing.ViewShed3D，增加了 mars3d.graphic.ViewShed 矢量对象 (参考示例升级)
 - LatLngPoint 改名为 LngLatPoint、LatLngArray改名为LngLatArray (批量替换下)
-
+- 移除了mars3d.thing.ViewShed3D，增加了 mars3d.graphic.ViewShed 矢量对象 (参考示例升级)
+- 重写了Video2D、Video3D视频投射矢量对象(API全部变化了，参考API升级)
+- 重写了WindLayer的参数，简化优化API结构(参考示例修改)
 
 #### Additions 🎉
 - 增加Tetrahedron、CloudPrimitive等graphic矢量对象
@@ -17,7 +17,7 @@
 - DivGraphic的className参数更改到style下(参考API文档)
 - Map的鼠标事件除move外event回调中均加上拾取的mars3d矢量对象和图层
 - 模型剖切支持plane的显示和编辑
-- FloodByMaterial淹没分析支持颜色的修改 
+- FloodByMaterial淹没分析支持颜色的修改
 
 #### Fixes 🔧  
 - Entity对象中，初始无lable时后续更新lable文本无效的问题
