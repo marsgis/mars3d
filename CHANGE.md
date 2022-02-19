@@ -1,6 +1,21 @@
 # Mars3D更新日志  
 
 -------------------------------------------
+## 3.2.2    2022-2-19
+#### Breaking Changes 📣
+- 功能示例Vue版和基础项目Vue版2个项目统一UI及架构等，形成稳定版
+
+#### Additions 🎉
+- 优化RoamLine的endItem事件
+- QueryGeoServer增加queryBySql方法，支持cql_filter 
+- WfsLayer增加geometryName参数
+
+
+#### Fixes 🔧  
+- DivGraphic对象的popup和tooltip的zIndex处理
+
+
+
 ## 3.2.1  2021-2-13
 #### Breaking Changes 📣
 - Cesium升级至1.90
