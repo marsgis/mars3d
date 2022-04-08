@@ -1,27 +1,32 @@
 # Mars3D 更新日志  
+-------------------------------------------
 
-------------------------------------------- 
-## 3.3.3  - 2022-04-06
+
+## 3.3.4  - 2022-4-8
 #### Breaking Changes 📣
-- SDK内部重新架构
-- Cesium升级至1.92
+- Cesium升级至1.92 ([1.92的Promise](https://community.cesium.com/t/cesiumjs-is-switching-from-when-js-to-native-promises-which-will-be-a-breaking-change-in-1-92/17213) 与之前版本不兼容 )
+- SDK内部重新架构，并需要Cesium升级v1.92+
 
 #### Additions 🎉
+- 提供[移动端APP项目模板](http://mars3d.cn/details.html?id=app-vue)
+- 支持[3dtiles模型卷帘](http://mars3d.cn/editor.html?id=control/basis/mapSplit)
 - 增加TilesetBoxClip模型盒子裁剪
-- TilesetPlanClip增加显示和编辑plan平面
-- 更新mars3d.Token所有默认值
+- 所有图层增加readyPromise属性，方便使用
+- 增加了flv视频协议、红蓝对抗演习 等示例
 - 增加MeasureUtil.getSurfaceArea方法
 - 军标对象增加getOutlinePositions静态方法，可外部调用计算边界点坐标
 - VolumeMeasure方量分析增加一些参数
+- 矢量数据的clampToGround方法更名为autoSurfaceHeight(兼容旧名称)
+- 调整手机端标绘提示文字
 - 标绘startDraw等方法返回值改为Promise
-- 增加了flv视频协议、红蓝对抗演习 等示例
+- 优化TilesetPlanClip增加显示和编辑plan平面
+- 更新mars3d.Token所有默认值
 
 #### Fixes 🔧  
 - BillboardEntity.startBounce弹跳时，已有偏移文本的处理优化
 - 修改Effect特效移除再添加时的报错
 - 热力图diffHeight参数优化
 - 修复一些已知bug
-
 
 
 ## 3.2.4  - 2022-3-3
