@@ -5,7 +5,7 @@
 ## 3.3.4  - 2022-4-8
 #### Breaking Changes 📣
 - Cesium升级至1.92 ([1.92的Promise](https://community.cesium.com/t/cesiumjs-is-switching-from-when-js-to-native-promises-which-will-be-a-breaking-change-in-1-92/17213) 与之前版本不兼容 )
-- SDK内部重新架构，并需要Cesium升级v1.92+
+- SDK内部重新架构，并需要Cesium升级v1.92+或引入[cesium-comp](http://mars3d.cn/lib/mars3d/plugins/compatible/cesium-when.js)
 
 #### Additions 🎉
 - 提供[移动端APP项目模板](http://mars3d.cn/details.html?id=app-vue)
