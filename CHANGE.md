@@ -2,9 +2,10 @@
 -------------------------------------------
 
 
-## 3.3.4  - 2022-4-8
+## 3.3.5  - 2022-4-18
 #### Breaking Changes 📣
 - Cesium升级至1.92 ([1.92的Promise](https://community.cesium.com/t/cesiumjs-is-switching-from-when-js-to-native-promises-which-will-be-a-breaking-change-in-1-92/17213) 与之前版本不兼容 )
+- 整理优化mars3d-cesium库，减少内部修改,增加对外接口等(mars3d v3.3.5+ 依赖 mars3d-cesium v1.92.2+)
 - SDK内部重新架构，并需要Cesium升级v1.92+或引入[cesium-comp](http://mars3d.cn/lib/mars3d/plugins/compatible/cesium-when.js)
 
 #### Additions 🎉
@@ -20,7 +21,9 @@
 - 调整手机端标绘提示文字
 - 标绘startDraw等方法返回值改为Promise
 - 优化TilesetPlanClip增加显示和编辑plan平面
+- Primitive中增加depthFail参数
 - 更新mars3d.Token所有默认值
+- ArcGIS/WMS瓦片图层的maxLength参数改名为graphicConver
 
 #### Fixes 🔧  
 - BillboardEntity.startBounce弹跳时，已有偏移文本的处理优化
