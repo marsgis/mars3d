@@ -2,10 +2,31 @@
 -------------------------------------------
 
 
+
+## 3.3.6  - 2022-4-22
+#### Breaking Changes 📣
+- 对 vue功能示例、vue基础项目 规范优化整改了一轮
+
+#### Additions 🎉
+- 增加了多个矢量对象材质
+- Measure量算方法增加decimal等参数，支持自定义显示的文本中保留的小数位
+- 增加GroupThing类
+- 支持直接对EchartsLayer、MapVLayer绑定单击等事件
+
+#### Fixes 🔧  
+- 调试并修复cesium v1.92相关的兼容性问题
+- 解决PolylineCombine的材质转换问题
+- 矢量对象toGeoJSON时坐标为空报错
+- Tooltip 贴地对象中显示偏移
+- CircleEntity的radius更新时未同步更新outline
+
+
+
+
 ## 3.3.5  - 2022-4-18
 #### Breaking Changes 📣
 - Cesium升级至1.92 ([1.92的Promise](https://community.cesium.com/t/cesiumjs-is-switching-from-when-js-to-native-promises-which-will-be-a-breaking-change-in-1-92/17213) 与之前版本不兼容 )
-- 整理优化mars3d-cesium库，减少内部修改,增加对外接口等(mars3d v3.3.5+ 依赖 mars3d-cesium v1.92.2+)
+- 整理优化mars3d-cesium库，减少内部修改,增加对外接口等(mars3d v3.3.5+ 依赖 mars3d-cesium v1.92+)
 - SDK内部重新架构，并需要Cesium升级v1.92+或引入[cesium-comp](http://mars3d.cn/lib/mars3d/plugins/compatible/cesium-when.js)
 
 #### Additions 🎉
