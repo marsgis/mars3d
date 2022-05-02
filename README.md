@@ -49,6 +49,7 @@ Github：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d)
 |**Vue** | [mars3d-vue-template](https://github.com/marsgis/mars3d-vue-template) |[mars3d-vue-template](https://gitee.com/marsgis/mars3d-vue-template)  | Vue最简的项目模板  |  
 |React | [mars3d-react-template](https://github.com/marsgis/mars3d-react-template) |[mars3d-react-template](https://gitee.com/marsgis/mars3d-react-template)  | React最简的项目模板  |  
 |Angular | [mars3d-angular-template](https://github.com/marsgis/mars3d-angular-template) |[mars3d-angular-template](https://gitee.com/marsgis/mars3d-angular-template)  | Angular最简的项目模板  |  
+|uni-app | [mars3d-uni-app](https://github.com/marsgis/mars3d-uni-app) |[mars3d-uni-app](https://gitee.com/marsgis/mars3d-uni-app)  | uni-app的项目模板  |  
 |原生JS | [mars3d-es5-template](https://github.com/marsgis/mars3d-es5-template) |[mars3d-es5-template](https://gitee.com/marsgis/mars3d-es5-template)  | 原生JS最简的项目模板  |  
 
 

@@ -2,6 +2,24 @@
 -------------------------------------------
 
 
+## 3.3.7  - 2022-5-2
+
+#### Additions 🎉
+- 增加CanvasLabelEntity文本点对象
+- 对GeoJsonLayer增加支持加载topojson数据
+- 增加mars2d.Token.updateAll方法，Map增加token参数，方便外部更新覆盖
+- 优化ArcGisLayer，不依赖Cesium修改，改用内部ArcGisImageryProvider实现
+- 修改 RotateOut、RotatePoint 于时钟脱离依赖，时钟停止也可有效运行
+
+#### Fixes 🔧  
+- 优化DivBillboardEntity大量点的生成图片失败
+- 编辑矢量对象时附加的label位置同步问题
+- 修复ModelPrimitive动态运动对象的modelMatrix异常报错问题
+- 修复v3.3.6产生的Plan相关矩形裁剪失效问题
+- 修复v3.3.6产生的模型url路径中的“+”符号转义失效问题
+- 修复v3.3.6产生的地形开挖、等高线删除最后一个失效问题
+
+
 
 ## 3.3.6  - 2022-4-22
 #### Breaking Changes 📣
@@ -19,7 +37,6 @@
 - 矢量对象toGeoJSON时坐标为空报错
 - Tooltip 贴地对象中显示偏移
 - CircleEntity的radius更新时未同步更新outline
-
 
 
 
