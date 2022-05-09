@@ -1,9 +1,24 @@
 # Mars3D 更新日志  
 -------------------------------------------
 
+## 3.3.8  - 2022-5-10
+#### Breaking Changes 📣
+- Cesium升级至1.93
+- 原生JS版功能示例、基础项目 中依赖的jquery升级至v3+最新版
+
+#### Additions 🎉
+- 增加Icon类，可以外部自定义默认右键菜单的图标
+- 优化ToolButton和 右键菜单的icon图标，支持 图片url路径、base64字符串、svg字符串、字体图标class名 等形式
+- 优化ModelCombine增加scaleX、scaleY、scaleZ参数
+- 优化ModelPrimitive增加noPitchRoll参数
+- 增加主库和插件库中第3方依赖JS库未引入时的错误提示，方便排查问题
+
+#### Fixes 🔧  
+- 修复v3.3.7的ts定义错误
+
+
 
 ## 3.3.7  - 2022-5-2
-
 #### Additions 🎉
 - 增加CanvasLabelEntity文本点对象
 - 对GeoJsonLayer增加支持加载topojson数据
