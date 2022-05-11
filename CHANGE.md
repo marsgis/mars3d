@@ -11,6 +11,7 @@
 - 优化ToolButton和 右键菜单的icon图标，支持 图片url路径、base64字符串、svg字符串、字体图标class名 等形式
 - 优化ModelCombine增加scaleX、scaleY、scaleZ参数
 - 优化ModelPrimitive增加noPitchRoll参数
+- 增加 MultipleSkyBox 多天空盒
 - 增加主库和插件库中第3方依赖JS库未引入时的错误提示，方便排查问题
 
 #### Fixes 🔧  
