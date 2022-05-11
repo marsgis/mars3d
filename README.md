@@ -29,6 +29,8 @@ Github：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d)
 
 国内Gitee：[https://gitee.com/marsgis/mars3d](https://gitee.com/marsgis/mars3d)  
  
+ 
+更新日志: [CHANGE.md](./CHANGE.md)
 
 
 ## 功能示例
