@@ -51,8 +51,8 @@ Github：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d)
 |Vue技术栈 | [mars3d-vue-template](https://github.com/marsgis/mars3d-vue-template) |[mars3d-vue-template](https://gitee.com/marsgis/mars3d-vue-template)  | 
 |React技术栈 | [mars3d-react-template](https://github.com/marsgis/mars3d-react-template) |[mars3d-react-template](https://gitee.com/marsgis/mars3d-react-template)  |   
 |Angular技术栈 | [mars3d-angular-template](https://github.com/marsgis/mars3d-angular-template) |[mars3d-angular-template](https://gitee.com/marsgis/mars3d-angular-template)  |   
-|CS桌面程序 | [mars3d-electron](https://github.com/marsgis/mars3d-electron) |[mars3d-electron](https://gitee.com/marsgis/mars3d-electron)  |   
-|移动端APP | [mars3d-uni-app](https://github.com/marsgis/mars3d-uni-app) |[mars3d-uni-app](https://gitee.com/marsgis/mars3d-uni-app)  |   
+|CS桌面端程序 | [mars3d-electron](https://github.com/marsgis/mars3d-electron) |[mars3d-electron](https://gitee.com/marsgis/mars3d-electron)  |   
+|APP移动端程序 | [mars3d-uni-app](https://github.com/marsgis/mars3d-uni-app) |[mars3d-uni-app](https://gitee.com/marsgis/mars3d-uni-app)  |   
 
 
 
