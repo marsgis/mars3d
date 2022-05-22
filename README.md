@@ -114,15 +114,15 @@ Mars3D支持结合Cesium相关的各类平台来兼容使用，方便结合不�
  功能示例：
  ![image](https://muyao1987.gitee.io/cdn/mars3d.cn/xm/example/1.jpg)
  
- 基础项目：[在线体验](http://mars3d.cn/project/jcxm/index.html)
+ 基础项目：[在线体验](http://mars3d.cn/project/es5/jcxm.html)
 
  ![image](https://muyao1987.gitee.io/cdn/mars3d.cn/xm/jcxm/1.jpg)
  
- 电子沙盘项目：[在线体验](http://mars3d.cn/project/dzsp/login.html)
+ 电子沙盘项目：[在线体验](http://mars3d.cn/project/es5/dzsp.html)
 
  ![image](https://muyao1987.gitee.io/cdn/mars3d.cn/xm/dzsp/1.jpg)
  
- 综合态势项目：[在线体验](http://mars3d.cn/project/zhts/index.html)
+ 综合态势项目：[在线体验](http://mars3d.cn/project/es5/theme/login.html)
 
  ![image](https://muyao1987.gitee.io/cdn/mars3d.cn/xm/zhts/1.jpg)
 
