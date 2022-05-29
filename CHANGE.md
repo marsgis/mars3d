@@ -1,15 +1,24 @@
 # Mars3D 更新日志  
 -------------------------------------------
 
-## 3.3.10 - 2022-5-23
+## 3.3.11 - 2022-5-29
+#### 重要说明 📣
+- 发布了 功能示例 React版
+- 重写了 Vue 功能示例、基础项目的UI
+
 #### 优化 💪
 - 热力图支持动态平滑变化的处理
 - 优化WallScroll材质，增加方向等参数
+- 矢量数据增加updatePosition事件
+- 支持Popup与矢量数据在外部更新position后的位置联动
 
 #### 修复 🔧
 - v3.3.9产生的Slope分析结果未展示问题
 - PolylinePrimitive的distanceDisplayCondition参数无效
+- v3.3.8产生的RoamLine贴地方法计算有误
 
+#### 弃用 & API重构 🔒
+- Map的control参数下移除了defaultContextMenu 参数，改为 contextmenu.hasDefault 参数
 
 
 ## 3.3.9 - 2022-5-16
