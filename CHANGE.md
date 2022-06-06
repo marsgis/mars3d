@@ -1,5 +1,22 @@
 # Mars3D 更新日志  
 -------------------------------------------
+## 3.3.12 - 2022-6-6
+#### 重要说明 📣
+- Cesium 升级至 1.94
+
+#### 优化 💪
+- DiffuseWall增加 maxScale 扩散的最大比例参数
+- WFS图层增加update事件和isLoading
+- HeatLayer公开max和min参数
+- 优化Compass导航球控件双击定位规则
+- PathEntity根据forwardExtrapolationType参数自动保留路线
+- 右键菜单单击一级菜单时不关闭二级菜单
+
+#### 修复 🔧
+- 多边形、矩形 周长值属性有误 
+- BaiduLayer 的 readyPromise失效
+
+
 
 ## 3.3.11 - 2022-5-29
 #### 重要说明 📣
