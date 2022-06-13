@@ -1,9 +1,24 @@
 # Mars3D 更新日志  
 -------------------------------------------
-## 3.3.12 - 2022-6-6
+## 3.3.13 - 2022-6-13
 #### 重要说明 📣
-- Cesium 升级至 1.94
+- Cesium 升级至 1.94.1
 
+#### 增加 ⚡
+- GeoJsonLayer增加chinaCRS参数，用于自动纠偏或加偏数据
+
+#### 优化 💪
+- 对部分矢量对象的getRectangle方法优化
+- Primitive矢量对象的show属性更新机制优化
+- RoamLine根据forwardExtrapolationType参数自动保留路线
+
+#### 修复 🔧
+- BillboardEntity、PointEntity、ModelEntity附带对象的setOptions未更新
+- Tooltip在screenSpaceCameraController禁用部分操作时不显示
+
+
+
+## 3.3.12 - 2022-6-6
 #### 优化 💪
 - DiffuseWall增加 maxScale 扩散的最大比例参数
 - WFS图层增加update事件和isLoading
