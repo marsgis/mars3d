@@ -3,15 +3,15 @@
 
 # 1. Mars3D的版本
 
- Mars3D的版本号包括三个部分，比如版本**3.2.1** 表示主版本号是 3，大版本号是 2，小版本号是 1
+ Mars3D的版本号包括三个部分，比如 **v3.2.1**版本中，**主版本号是 3，大版本号是 2，小版本号是 1**
 
 版本号是根据本次发布中包含的变更的级别进行递增的。
 
-- 主版本：包含重要的新特性和架构性调整，在升级时会需要由开发人员提供少量的协助才能完成。当升级到新的主版本时，你可能需要运行升级脚本、重构代码、运行其它测试以及学习新的API。
+- **主版本**(v3)：包含重要的新特性和架构性调整，在升级时会需要由开发人员提供少量的协助才能完成。当升级到新的主版本时，你可能需要运行升级脚本、重构代码、运行其它测试以及学习新的API。
 
-- 大版本：包含新增功能和API优化重构，大版本其中大部分功能是向后兼容的，只有少部分特性是不兼容的(更新日志会说明弃用的API)，参考说明或示例简单调整即可。
+- **大版本**(v3.2)：包含新增功能和API优化重构，大版本其中大部分功能是向后兼容的，只有少部分特性是不兼容的(更新日志会说明弃用的API)，参考说明或示例简单调整即可。
 
-- 小版本：包含新的小型特性优化，bug修改等。 小版本是完全向后兼容的，在升级期间，不需要开发人员提供协助。
+- **小版本**(v3.2.1)：包含新的小型特性优化，bug修改等。 小版本是完全向后兼容的，在升级期间，不需要开发人员提供协助。【授权版时：无论哪种授权方式，小版本均是免费更新】
 
 
 # 2. 发布频率
@@ -20,13 +20,13 @@
 > 这些日期仅供一般性参考，如有更改，恕不另行通知。
 
 通常的发布周期如下：
-- 每2年 发布1个主版本
-- 每季度 发布1个大版本 （1个主版本包括 8个 左右大版本）
-- 每周 发布1个小版本，正常均在**周一下午**发布 （1个大版本包括 12个 左右小版本） 
+- 约每2年发布1个主版本
+- 约每季度发布1个大版本
+- 约每周发布1个小版本，正常均在**周一下午**发布
  
   
 # 3. 弃用策略
-"重大变更"（比如移除特定的 API 和特性）有时候是必须的，比如创新、让最佳实践与时俱进、变更依赖关系甚至来自 Web 平台自身的变化。
+"弃用 & API重构"（比如移除特定的 API 和特性）有时候是必须的，比如创新、更高效率、让最佳实践与时俱进、变更依赖关系甚至来自 Web 平台自身的变化。
 
 要让这些转变尽可能的简单，我们会给你下列保证：
 - 我们会尽量减少重大变更的数量，并尽可能提供迁移工具。
@@ -35,6 +35,21 @@
 
 
 # 4. 更新日志
+
+
+## 3.4.1 - 2022-7-25
+#### 增加 ⚡
+- 新增MapCompare地图对比控件
+- 优化MapSplit控件图层参数，支持构造参数传入和数组传入
+
+#### 优化 💪
+- PolylineVolume新增thicknes、slices、startAngle等参数，提供更多外观样式
+- 修改所有MaterialProperty，公开所有属性便于修改
+- TilesetLayer增加hasEdit属性，对无transform不支持编辑的模型做了判断
+
+#### 修复 🔧
+- 在isRestorePositions:true时RectangleEntity结束绘制时坐标值异常
+- 编辑矢量对象时，不能覆盖screenSpaceCameraController.enableInputs原有值
 
 
 ## 3.4.0 - 2022-7-15
@@ -59,6 +74,7 @@
 - 材质对应的所有Property材质进行补全
 - 重写了示例中矢量数据style样式属性编辑弹窗
 - [ParticleSystem](http://mars3d.cn/api/ParticleSystem.html#.StyleOptions) 增加了heading、pitch、roll等参数，并优化了渲染效率
+- TilesetLayer中增加clip、flat、flood、planClip参数
 
 #### 弃用 & API重构 🔒
 - 图层、矢量数据类弃用uuid属性，全部统一为[id](http://mars3d.cn/api/BaseGraphic.html#id)
@@ -67,12 +83,14 @@
 - 移除了Entity类矢量数据中fromDraw静态方法
 - 移除了Entity类矢量数据中entity参数和fromEntity静态方法
 - Entity编辑中的对应样式类型 edittype 属性名称改为 styleType（影响到style编辑属性弹窗）
-- 所有callback回调方法全部改为返回Promise方式，影响到一些方法的传参和返回值
+- 所有callback回调方法全部改为返回Promise方式，影响到一些方法的传参和返回值 
+- ArcGIS/WMS 瓦片图层的 maxLength/graphicConver 参数改名为 hasToGraphic,并增加featureToGraphic参数
 - [PointUtil.getSurfaceHeight](http://mars3d.cn/api/PointUtil.html#.getSurfaceHeight) 改为Promise方式，同步请改用 [PointUtil.getHeight](http://mars3d.cn/api/PointUtil.html#.getHeight)方法
 - [PolyUtil.interPolygon](http://mars3d.cn/api/PolyUtil.html#.interPolygon) 等方式中的`asyn`参数改名为`exact`
 - 移除图层的noLayerManage标识，增加[isPrivate](http://mars3d.cn/api/BaseLayer.html?classFilter=basel#isPrivate)属性
 - [ParticleSystem](http://mars3d.cn/api/ParticleSystem.html) 参数移除了target参数，options中部分参数全部统一到style中
 - 矢量图层内[getGraphicByAttr](http://mars3d.cn/api/GraphicLayer.html#getGraphicByAttr)方法参数调整了顺序，与其他类似方法保持一致
+- 移除内置的将3dtiles中的“+”符号转义处理，如有需要自行增加Cesium.Resource.ReplaceUrl = function(url){  return url.replace(/\+/gm, "%2B") }
 
 
 ---
@@ -896,11 +914,61 @@
 
 
 ---
+## 2.3.0 - 2020-12-31
+#### 重要说明 📣
+- 发布了 v2.3 版
+
+## 2.2.0 - 2020-10-1
+#### 重要说明 📣
+- 发布了 v2.2 版
+
+## 2.1.0 - 2020-7-1
+#### 重要说明 📣
+- 发布了 v2.1 版
+
 ## 2.0.0 - 2020-1-1
 #### 重要说明 📣
 - 发布了 v2.0 版
 
 
+
+---
+
+## 1.9.0 - 2019-10-1
+#### 重要说明 📣
+- 发布了 v1.9 版
+
+## 1.8.0 - 2019-6-1
+#### 重要说明 📣
+- 发布了 v1.8 版
+
+## 1.7.0 - 2019-1-1
+#### 重要说明 📣
+- 发布了 v1.7 版
+
+## 1.6.0 - 2018-10-1
+#### 重要说明 📣
+- 发布了 v1.6 版
+
+## 1.5.0 - 2018-7-1
+#### 重要说明 📣
+- 发布了 v1.5 版
+
+## 1.4.0 - 2018-4-1
+#### 重要说明 📣
+- 发布了 v1.4 版
+
+## 1.3.0 - 2018-1-1
+#### 重要说明 📣
+- 发布了 v1.3 版
+
+## 1.2.0 - 2017-12-1
+#### 重要说明 📣
+- 发布了 v1.2 版
+
+## 1.1.0 - 2017-10-1
+#### 重要说明 📣
+- 发布了 v1.1 版
 
 ## 1.0.0 - 2017-8-25
 #### 重要说明 📣
