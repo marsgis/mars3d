@@ -256,7 +256,7 @@
 #### 重要说明 📣
 - 发布了 v3.3 版 
 - Cesium 升级至 [1.92](https://github.com/CesiumGS/cesium/releases/tag/1.92)
-- 发布了 [移动端 APP 项目模板](http://mall.marsgis.cn/#/product-details/mars3d-vue-app)
+- 发布了 [移动端 APP 项目模板](http://mall.marsgis.cn/#/product/mars3d-vue-app)
 
 #### 增加 ⚡
 - 新增了 [TilesetBoxClip](http://mars3d.cn/api/TilesetBoxClip.html) 模型盒子裁剪功能
