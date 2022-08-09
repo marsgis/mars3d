@@ -60,7 +60,7 @@ Github：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d)
 
 ## 基础项目 
 基础项目是具备一个GIS项目常见功能的项目模板，只用更换数据及叠加业务即可完成项目交付。
-如果需要更多功能可以考虑购买[付费项目模板](http://mars3d.cn/template.html)。
+如果需要更多功能可以考虑购买[付费项目模板](http://mall.marsgis.cn/#/product-list?category=project)。
 
 |说明 |教程  |视频  | Github源码 | 国内Gitee源码  |   
 |----|----  |----  | ----| ----  |
@@ -68,7 +68,7 @@ Github：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d)
 |基础项目 Vue版|[查看](http://mars3d.cn/dev/guide/project/jcxm-vue.html) |[查看](https://www.bilibili.com/video/BV1JF411q7Ut/)| [mars3d-vue-project](https://github.com/marsgis/mars3d-vue-project) |[mars3d-vue-project](https://gitee.com/marsgis/mars3d-vue-project)  |  
 |基础项目 Vue版+admin管理 |无 | 无| [mars3d-vue-project-admin](https://github.com/marsgis/mars3d-vue-project-admin) |[mars3d-vue-project-admin](https://gitee.com/marsgis/mars3d-vue-project-admin)  |   
 |基础项目 React版|[查看](http://mars3d.cn/dev/guide/project/jcxm-react.html) |[查看](https://www.bilibili.com/video/BV1n3411u7Dm/)| [mars3d-react-project](https://github.com/marsgis/mars3d-react-project) |[mars3d-react-project](https://gitee.com/marsgis/mars3d-react-project)  |  
-|三维地球APP项目|  [查看](http://mars3d.cn/dev/guide/project/app-vue.html)  | [查看](https://www.bilibili.com/video/BV1iY4y1t7jk/)| [付费提供](http://mars3d.cn/details.html?id=app-vue) |  [付费提供](http://mars3d.cn/details.html?id=app-vue) | 
+|三维地球APP项目|  [查看](http://mars3d.cn/dev/guide/project/app-vue.html)  | [查看](https://www.bilibili.com/video/BV1iY4y1t7jk/)| [付费提供](http://mall.marsgis.cn/#/product/mars3d-vue-app) |  [付费提供](http://mall.marsgis.cn/#/product/mars3d-vue-app) | 
  
 
  

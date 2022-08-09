@@ -42,6 +42,24 @@
 
 # 4. 更新日志
 
+## 3.4.3 - 2022-8-8
+#### 重要说明 📣
+- Cesium 升级至 [1.96](https://github.com/CesiumGS/cesium/releases/tag/1.96)
+
+#### 优化 💪
+- 量算结果显示支持divGraphic等对象展示
+- WallEntity增加fixedTop参数
+- FontBillboardEntity 增加iconPadding参数
+
+#### 修复 🔧
+- 修复v3.4.0产生的PolygonEntity挖洞面失效问题
+- Primitive对象面高亮时outline的增加或移除处理
+- Primitive对象diffHeight参数未配置height时没显示
+- Popup配置autoClose:false时多次单击重复弹窗
+
+
+
+
 ## 3.4.2 - 2022-8-1
 #### 增加 ⚡
 - 增加BusineDataLayer业务数据图层
@@ -98,7 +116,7 @@
 #### 弃用 & API重构 🔒
 - 图层、矢量数据类弃用uuid属性，全部统一为[id](http://mars3d.cn/api/BaseGraphic.html#id)
 - 移除 ModelLayer 图层，需要改用 [GraphicLayer](http://mars3d.cn/api/GraphicLayer.html)
-- 移除了 RoamLine DynamicRoamLine类，需要改用 [Route](http://mars3d.cn/api/Route.html)、[FixedRoute](http://mars3d.cn/api/FixedRoute.html)类
+- 移除了RoamLine类，需要改用[FixedRoute](http://mars3d.cn/api/FixedRoute.html)类；移除了DynamicRoamLine需改用 [Route](http://mars3d.cn/api/Route.html)
 - 移除了Entity类矢量数据中fromDraw静态方法
 - 移除了Entity类矢量数据中entity参数和fromEntity静态方法
 - Entity编辑中的对应样式类型 edittype 属性名称改为 styleType（影响到style编辑属性弹窗）
