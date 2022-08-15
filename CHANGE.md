@@ -42,6 +42,16 @@
 
 # 4. 更新日志
 
+## 3.4.4 - 2022-8-15
+#### 优化 💪
+- map.expImage支持高宽同时指定，自动裁剪中间区域
+- map增加mouse.transform参数，来兼容body被缩放的情况
+
+#### 修复 🔧
+- 异步Popup时的popupOpen事件处理
+
+
+
 ## 3.4.3 - 2022-8-8
 #### 重要说明 📣
 - Cesium 升级至 [1.96](https://github.com/CesiumGS/cesium/releases/tag/1.96)
@@ -59,7 +69,6 @@
 
 
 
-
 ## 3.4.2 - 2022-8-1
 #### 增加 ⚡
 - 增加BusineDataLayer业务数据图层
@@ -70,7 +79,6 @@
 #### 修复 🔧
 - FixedRoute重新运行速度变慢的问题
 - 棋盘材质颜色名称有误，无法更新
-
 
 
 
@@ -87,6 +95,7 @@
 #### 修复 🔧
 - 在isRestorePositions:true时RectangleEntity结束绘制时坐标值异常
 - 编辑矢量对象时，不能覆盖screenSpaceCameraController.enableInputs原有值
+
 
 
 ## 3.4.0 - 2022-7-15
@@ -128,6 +137,7 @@
 - [ParticleSystem](http://mars3d.cn/api/ParticleSystem.html) 参数移除了target参数，options中部分参数全部统一到style中
 - 矢量图层内[getGraphicByAttr](http://mars3d.cn/api/GraphicLayer.html#getGraphicByAttr)方法参数调整了顺序，与其他类似方法保持一致
 - 移除内置的将3dtiles中的“+”符号转义处理，如有需要自行增加Cesium.Resource.ReplaceUrl = function(url){  return url.replace(/\+/gm, "%2B") }
+
 
 
 ---
