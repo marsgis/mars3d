@@ -71,16 +71,7 @@ Github：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d)
 |三维地球APP项目|  [查看](http://mars3d.cn/dev/guide/project/app-vue.html)  | [查看](https://www.bilibili.com/video/BV1iY4y1t7jk/)| [付费提供](http://mall.marsgis.cn/#/product/mars3d-vue-app) |  [付费提供](http://mall.marsgis.cn/#/product/mars3d-vue-app) | 
  
 
- 
   
-## 第3方平台融合
-Mars3D支持结合Cesium相关的各类平台来兼容使用，方便结合不同平台的优点来达到完成各种项目需求。
-
-|说明 | Github | 国内Gitee  |  
-|----|----  | ----| 
-|与supermap平台融合示例 | [mars3d-link-supermap](https://github.com/marsgis/mars3d-link-supermap) |[mars3d-link-supermap](https://gitee.com/marsgis/mars3d-link-supermap)   |
-|与earthsdk平台融合示例 | [mars3d-link-earthsdk](https://github.com/marsgis/mars3d-link-earthsdk) |[mars3d-link-earthsdk](https://gitee.com/marsgis/mars3d-link-earthsdk)  |
-
 
 
 ## 其他

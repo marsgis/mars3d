@@ -14,7 +14,7 @@
 - **小版本**(v3.2.1)：包含新的小型特性优化，bug修改等。 小版本是完全向后兼容的，在升级期间，不需要开发人员提供协助。【授权版时：无论哪种授权方式，小版本均是免费更新】
 
 ## 历史版本下载
-我们已切换到v3.3.18版本为例：
+我们以切换到v3.3.18版本为例：
 - npm 安装的项目，请打开package.json修改mars3d版本号`"mars3d": "3.3.18"` ，再npm install重新安装
 - 静态引入的，请复制链接[https://registry.npmjs.org/mars3d/-/mars3d-3.3.18.tgz](https://registry.npmjs.org/mars3d/-/mars3d-3.3.18.tgz) 后，在浏览器地址栏粘贴并修改版本号为指定版本后会回车进行下载。
 
@@ -41,6 +41,30 @@
 
 
 # 4. 更新日志
+## 3.4.7 - 2022-9-7
+
+#### 优化 💪
+- DivLightPoint 支持label的属性字段名称配置
+
+#### 修复 🔧
+- PolylineVolume在star样式时显示异常
+- 矢量数据setOptions部分简单属性时合并属性未生效
+- zoom在2.5D下缩放异常
+
+#### 弃用 & API重构 🔒
+- 移除模型矢量对象的 fixedHeading（传heading值即可）、noPitchRoll（传pitch:0和roll:0） 参数，自动判断优先级，如style设置heading/pitch/roll值，优先级高于orientation
+
+
+
+## 3.4.6 - 2022-8-29
+#### 修复 🔧
+- 更新被封的高德Key
+- 地形加载完成事件失效
+- 挖洞面编辑错误
+- 修复v3.4.5新产生的矢量矢量图层flyTo失效问题
+- 修复v3.4.5新产生的map.expImage指定高度时裁剪异常问题
+
+
 
 ## 3.4.5 - 2022-8-21
 #### 优化 💪
