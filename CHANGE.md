@@ -27,7 +27,7 @@
 
 通常的发布周期如下：
 - 约每2年发布1个主版本
-- 约每季度发布1个大版本
+- 约每4个月发布1个大版本
 - 约每周发布1个小版本，正常均在**周一下午**发布
  
   
@@ -41,8 +41,29 @@
 
 
 # 4. 更新日志
-## 3.4.7 - 2022-9-7
+## 3.4.8 - 2022-9-26
+#### 增加 ⚡
+- 增加 天地图POI 查询类
 
+#### 优化 💪
+- map增加onlyPickTerrainPosition属性
+- LineFlow材质增加mixt参数
+- Sector增加noCenter参数
+- TilesetLayer增加position.alt_offset参数
+
+#### 修复 🔧
+- Skyline的enabled参数无效
+- div矢量对象的setStyle更新样式
+- map.getExtent方法scale参数无效
+
+
+#### 弃用 & API重构 🔒
+- CamberRadar的4个角度参数由弧度值改为角度值
+- 移除矢量数据编辑的styleType值，全部外部属性框中配置
+
+
+
+## 3.4.7 - 2022-9-7
 #### 优化 💪
 - DivLightPoint 支持label的属性字段名称配置
 
