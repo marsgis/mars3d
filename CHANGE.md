@@ -41,6 +41,14 @@
 
 
 # 4. 更新日志
+## 3.4.9 - 2022-10-10
+#### 优化 💪
+- BloomTargetEffect增加objectsToExclude参数
+- FixedRoute增加interpolationAlgorithm参数
+- BusineDataLayer等图层setOptions方法优化
+
+
+
 ## 3.4.8 - 2022-9-26
 #### 增加 ⚡
 - 增加 天地图POI 查询类
