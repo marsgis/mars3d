@@ -41,11 +41,21 @@
 
 
 # 4. 更新日志
-## 3.4.9 - 2022-10-10
+## 3.4.10 - 2022-10-17
 #### 优化 💪
+- 所有图层的setOptions方法重构和优化
 - BloomTargetEffect增加objectsToExclude参数
 - FixedRoute增加interpolationAlgorithm参数
-- BusineDataLayer等图层setOptions方法优化
+- 优化MapCompare持续漫游时的联动平滑度
+- FlatBillboard增加translucent参数
+- CzmGeoJsonLayer、CzmlLayer图层增加process方法
+- 矢量数据增加dblClick双击事件
+
+#### 修复 🔧
+- FlatBillboard的高宽大小无效
+- PolylinePrimitive的colors参数失效
+- RectanglePrimitive边线旋转角度无效
+- WallScroll材质颜色透明度无效
 
 
 
@@ -76,22 +86,17 @@
 - DivLightPoint 支持label的属性字段名称配置
 
 #### 修复 🔧
+- 更新被封的高德Key
+- 地形加载完成事件失效
+- 挖洞面编辑错误
+- 修复v3.4.5新产生的矢量矢量图层flyTo失效问题
+- 修复v3.4.5新产生的map.expImage指定高度时裁剪异常问题
 - PolylineVolume在star样式时显示异常
 - 矢量数据setOptions部分简单属性时合并属性未生效
 - zoom在2.5D下缩放异常
 
 #### 弃用 & API重构 🔒
 - 移除模型矢量对象的 fixedHeading（传heading值即可）、noPitchRoll（传pitch:0和roll:0） 参数，自动判断优先级，如style设置heading/pitch/roll值，优先级高于orientation
-
-
-
-## 3.4.6 - 2022-8-29
-#### 修复 🔧
-- 更新被封的高德Key
-- 地形加载完成事件失效
-- 挖洞面编辑错误
-- 修复v3.4.5新产生的矢量矢量图层flyTo失效问题
-- 修复v3.4.5新产生的map.expImage指定高度时裁剪异常问题
 
 
 
@@ -111,29 +116,22 @@
 #### 重要说明 📣
 - Cesium 升级至 [1.96](https://github.com/CesiumGS/cesium/releases/tag/1.96)
 
-#### 优化 💪
-- 量算结果显示支持divGraphic等对象展示
-- WallEntity增加fixedTop参数
-- FontBillboardEntity 增加iconPadding参数
-
-#### 修复 🔧
-- 修复v3.4.0产生的PolygonEntity挖洞面失效问题
-- Primitive对象面高亮时outline的增加或移除处理
-- Primitive对象diffHeight参数未配置height时没显示
-- Popup配置autoClose:false时多次单击重复弹窗
-
-
-
-## 3.4.2 - 2022-8-1
 #### 增加 ⚡
 - 增加BusineDataLayer业务数据图层
 
 #### 优化 💪
 - div对象增加按轴移动编辑
+- 量算结果显示支持divGraphic等对象展示
+- WallEntity增加fixedTop参数
+- FontBillboardEntity 增加iconPadding参数
 
 #### 修复 🔧
 - FixedRoute重新运行速度变慢的问题
 - 棋盘材质颜色名称有误，无法更新
+- 修复v3.4.0产生的PolygonEntity挖洞面失效问题
+- Primitive对象面高亮时outline的增加或移除处理
+- Primitive对象diffHeight参数未配置height时没显示
+- Popup配置autoClose:false时多次单击重复弹窗
 
 
 
