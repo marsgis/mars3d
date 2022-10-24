@@ -41,6 +41,22 @@
 
 
 # 4. 更新日志
+## 3.4.11 - 2022-10-24 
+#### 优化 💪
+- Timeline控件增加maxSpan最大刻度跨度参数、优化时间文本展示
+- 贴地线面量算增加exact快速概略的计算模式参数
+- 长度量算增加万米单位
+- PolylineVolume管道矢量对象增加vscale、hscale参数
+- HeatLayer图层增加arcDirection参数
+
+#### 修复 🔧
+- WallEntity在setStyle更新closure参数未生效
+- DistanceLegend在大屏分辨率鼠标滚动比例显示异常
+- ParticleSystem在时间跨度大时切换页面卡死
+- ModelEntity等导出json时缺少billboard附加信息
+- 修改v3.4.8修改LineFlow材质后产生的亮度暗问题
+
+
 ## 3.4.10 - 2022-10-17
 #### 优化 💪
 - 所有图层的setOptions方法重构和优化
