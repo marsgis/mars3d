@@ -41,6 +41,26 @@
 
 
 # 4. 更新日志
+## 3.4.13 - 2022-11-7
+#### 增加 ⚡
+- 新增LineDotDash点划线材质
+
+#### 优化 💪
+- Video2D支持动态属性和setStyle更新url
+- 公开矢量数据编辑对象的startMoveMatrix、stopMoveMatrix、stopRotateMatrix、stopRotateMatrix等方法
+- Primitive点对象传modelMatrix时兼容允许编辑
+- Map构造参数geocoder区分原生cesium和高德POI查询
+- CanvasWindLayer增加worker参数支持多线程
+
+#### 修复 🔧
+- FlatBillboard在2D模式只显示最后一个对象
+- FixedRoute的clockLoop:true在存在time字段时无效
+- 移除QueryArcServer、QueryArcServer内置的popup: "all"，由外部控制
+- S3MLayer的flyTo:false失效
+- Combine矢量对象图片等材质失效
+- 修复FixedRoute在3.4.11产生的贴地计算无效
+
+
 ## 3.4.11 - 2022-10-24 
 #### 优化 💪
 - Timeline控件增加maxSpan最大刻度跨度参数、优化时间文本展示
