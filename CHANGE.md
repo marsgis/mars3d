@@ -41,6 +41,19 @@
 
 
 # 4. 更新日志
+## 3.4.14 - 2022-11-22  
+#### 增加 ⚡
+- Map增加setOptions方法
+- 相关控件对象的setOptions方法支持
+
+#### 优化 💪
+- Combine对象的setStyle方法优化
+- Entity对象的setStyle方法中对setHeight和addHeight的支持
+- 量算对象的默认传入坐标的直接显示
+- 图层增加flyToOptions参数 
+
+
+
 ## 3.4.13 - 2022-11-7
 #### 增加 ⚡
 - 新增LineDotDash点划线材质
