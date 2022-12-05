@@ -41,10 +41,33 @@
 
 
 # 4. 更新日志
+## 3.4.15 - 2022-12-5
+#### 增加 ⚡
+- FixedRoute传入的路线增加heading、pitch参数支持
+- PolygonEntity、CircleEntity、RectangleEntity支持clampToGround参数的动态更新
+
+#### 优化 💪
+- Popup对象的depthTest参数默认值改为false
+- OverviewMap鹰眼底图禁用右键
+- ParticleSystem增加complete事件
+- 相关Effect特效对象的setOptions方法支持
+- Route、FixedRoute对象的setOptions方法支持
+- Map的zoomIn、zoomOut增加mandatory是否强制更新参数
+
+#### 修复 🔧
+- FixedRoute内的path自动保留
+- FlatBillboard对象的销毁内存释放
+- ViewShed可视域对象的框选不显示
+- 火狐浏览器下DivGraphic右键和编辑坐标偏移问题
+- 取消DivGraphic编辑时单击对象的位置变动
+- WindLayer鼠标移动时渲染被影响
+- Polygon编辑时setStyle时diffHeight值跳动
+
+
 ## 3.4.14 - 2022-11-22  
 #### 增加 ⚡
 - Map增加setOptions方法
-- 相关控件对象的setOptions方法支持
+- 相关Control控件对象的setOptions方法支持
 
 #### 优化 💪
 - Combine对象的setStyle方法优化
