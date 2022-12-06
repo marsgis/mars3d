@@ -41,7 +41,7 @@
 
 
 # 4. 更新日志
-## 3.4.15 - 2022-12-5
+## 3.4.16 - 2022-12-5
 #### 增加 ⚡
 - FixedRoute传入的路线增加heading、pitch参数支持
 - PolygonEntity、CircleEntity、RectangleEntity支持clampToGround参数的动态更新
