@@ -41,6 +41,19 @@
 
 
 # 4. 更新日志
+## 3.4.17 - 2022-12-12
+#### 优化 💪
+- TilesetLayer增加 highlight.uniqueKey参数，可以按指定字段进行对应相关构件的整体高亮
+- map地图增加zoomIn/zoomOut方法缩放事件zoom
+- HeatLayer增加image类型渲染方式
+- ToolButton控件增加setIcon方法修改图标
+
+#### 修复 🔧
+- 无地形时贴地对象的flyTo存在错误
+- turf.buffer首尾判断存在异常修复
+
+
+
 ## 3.4.16 - 2022-12-5
 #### 增加 ⚡
 - FixedRoute传入的路线增加heading、pitch参数支持
