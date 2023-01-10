@@ -41,6 +41,18 @@
 
 
 # 4. 更新日志
+## 3.4.20 - 2023-01-09
+#### 优化 💪
+- PathEntity禁用编辑
+- CzmlLayer增加autoUpdateClock参数
+- 优化CircleWave材质执行效率
+
+#### 修复 🔧
+- 无地形时计算贴地点高度的异常处理
+- TilesetLayer等图层flyToOptions参数无效
+- 3.4.19产生的Popup弹窗不显示问题
+
+
 ## 3.4.19 - 2022-12-26
 #### 优化 💪
 - Route增加了clampToTileset等参数
