@@ -41,10 +41,27 @@
 
 
 # 4. 更新日志
+## 3.4.22 - 2023-02-06
+#### 优化 💪
+- 面的中心点计算改用truf处理
+- FixedRoute增加updateClock参数，多路线时可禁用内部对时钟的处理
+- 动态点对象addDynamicPosition方法对长时间无数据时的优化
+- 贴模型相关计算中矢量图层内部自动处理objectsToExclude属性
+- 流动线材质speed参数传O可以保持不流动
+
+#### 修复 🔧
+- 按轴移动时抛出了多次editMovePoint事件
+- PolygonPrimitive矢量边线materialType材质属性无法setStyle更新
+- map.expImage导出的image/jpeg图片后缀一直是png
+- map.zoomIn/zoomOut在2D模式时限定minimumZoomDistance/maximumZoomDistance最小最大距离
+- map.setCameraView的duration为0时未触发完成回调参数
+
+
+
 ## 3.4.20 - 2023-01-09
 #### 优化 💪
 - PathEntity禁用编辑
-- CzmlLayer增加autoUpdateClock参数
+- CzmlLayer增加updateClock参数
 - 优化CircleWave材质执行效率
 
 #### 修复 🔧
