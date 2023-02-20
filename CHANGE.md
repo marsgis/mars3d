@@ -41,6 +41,19 @@
 
 
 # 4. 更新日志
+## 3.4.23 - 2023-02-20
+#### 优化 💪
+- 支持对聚合对象的事件监听和获取对应聚合列表数据
+- 标绘绘制时增加hasDrawDelPoint参数，控制是否开启右击删除点
+- FixedRoute中重复点的特殊处理
+
+#### 修复 🔧
+- ConeTrack的distanceDisplayCondition参数无效
+- PolyCombine对象的setStyle无法更新颜色
+- EllipsoidEntity闪烁方法无效
+- 按轴移动时未抛出updatePosition事件
+- map.listens方法Cesium原生事件判断有误
+
 ## 3.4.22 - 2023-02-06
 #### 优化 💪
 - 面的中心点计算改用truf处理
