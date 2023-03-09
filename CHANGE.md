@@ -41,6 +41,18 @@
 
 
 # 4. 更新日志
+## 3.4.26 - 2023-03-01
+#### 优化 💪
+- RectangleEntity回调坐标对象的编辑支持
+- WFS图层改为等Map加载基本完成再去请求加载
+
+#### 修复 🔧
+- PolygonPrimitive对象编辑时diffHeight重复计算了
+- PolygonCombine的outline边线颜色显示不对
+- DivGraphic开启编辑后绑定的事件多次触发
+- ModelEntity的label多个显示
+
+
 ## 3.4.23 - 2023-02-20
 #### 优化 💪
 - 支持对聚合对象的事件监听和获取对应聚合列表数据
@@ -53,6 +65,8 @@
 - EllipsoidEntity闪烁方法无效
 - 按轴移动时未抛出updatePosition事件
 - map.listens方法Cesium原生事件判断有误
+
+
 
 ## 3.4.22 - 2023-02-06
 #### 优化 💪
@@ -74,7 +88,7 @@
 ## 3.4.20 - 2023-01-09
 #### 优化 💪
 - PathEntity禁用编辑
-- CzmlLayer增加updateClock参数
+- CzmlLayer增加autoUpdateClock参数
 - 优化CircleWave材质执行效率
 
 #### 修复 🔧
