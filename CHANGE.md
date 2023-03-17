@@ -41,6 +41,35 @@
 
 
 # 4. 更新日志
+
+
+## 3.5.0 - 2023-03-17
+#### 重要说明 📣
+- Cesium 升级至 [1.103](https://github.com/CesiumGS/cesium/releases/tag/1.103)
+- 改用WebGL2进行渲染
+- Cesium v1.97+ 采用了新的glTF架构代码重写，影响3dtiles部分功能无法使用和部分gltf/3dtiles数据报错
+
+#### 增加 ⚡
+- 增加了[TerrainUplift](http://mars3d.cn/api/TerrainUplift.html)地形抬升、[TerrainFlat](http://mars3d.cn/api/TerrainFlat.html)地形压平功能
+- 增加了[PitEntity](http://mars3d.cn/api/PitEntity.html)、 [ThickWall](http://mars3d.cn/api/ThickWall.html)、 [DoubleSidedPlane](http://mars3d.cn/api/DoubleSidedPlane.html)、 [VolumeDepthMeasure](http://mars3d.cn/api/VolumeDepthMeasure.html)、 [ReflectionWater](http://mars3d.cn/api/ReflectionWater.html) 等矢量对象
+- 增加了[BaseLayerPicker](http://mars3d.cn/api/BaseLayerPicker.html)、[Animation](http://mars3d.cn/api/Animation.html)、[FullscreenButton](http://mars3d.cn/api/FullscreenButton.html) 等11个Cesium原生控件的包装类，便于统一控制
+- 重写了[Satellite](http://mars3d.cn/api/Satellite.html)矢量对象(使用继承于Route类的方式)
+- 重写了TilesetClip、TilesetFlat类(仅支持Cesium v1.97+的新架构方式)
+- 增加了LineThreeDash 等矢量数据材质
+
+#### 优化 💪
+- [SnowCoverEffect](http://mars3d.cn/api/SnowCoverEffect.html)增加layer参数，可以对3dtiles模型单独生效
+
+#### 弃用 & API重构 🔒
+- Cesium v1.97+造成部分功能失效，已暂时移除：TilesetFlood、ModelCombine等类和部分示例
+- Cesium v1.102+造成部分第3方插件webgl2不兼容，已暂时移除：超图S3M图层 等示例
+- npm包除去cesium库的css自动引入，改为需要项目内手动引入；npm包依赖改为peerDependencies需在项目内安装提示的依赖包
+- 移除了 PolylineSimplePrimitive类
+- [SatelliteSensor](http://mars3d.cn/api/SatelliteSensor.html) 移除了 trackedEntity、autoHeading 参数（改用orientation）
+
+
+
+---
 ## 3.4.26 - 2023-03-01
 #### 优化 💪
 - RectangleEntity回调坐标对象的编辑支持
@@ -65,7 +94,6 @@
 - EllipsoidEntity闪烁方法无效
 - 按轴移动时未抛出updatePosition事件
 - map.listens方法Cesium原生事件判断有误
-
 
 
 ## 3.4.22 - 2023-02-06
