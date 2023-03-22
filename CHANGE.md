@@ -56,6 +56,7 @@
 - 重写了[Satellite](http://mars3d.cn/api/Satellite.html)矢量对象(使用继承于Route类的方式)
 - 重写了TilesetClip、TilesetFlat类(仅支持Cesium v1.97+的新架构方式)
 - 增加了LineThreeDash 等矢量数据材质
+- 增加了 I3SLayer 三维模型图层
 
 #### 优化 💪
 - [SnowCoverEffect](http://mars3d.cn/api/SnowCoverEffect.html)增加layer参数，可以对3dtiles模型单独生效
