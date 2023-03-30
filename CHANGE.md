@@ -43,6 +43,26 @@
 # 4. 更新日志
 
 
+## 3.5.1 - 2023-3-27
+#### 优化 💪
+- OverviewMap鹰眼图增加center属性和change事件等
+- GraphicGroupLayer保存和读取geojson时记录图层id等属性
+- MapboxLayer图层增加token参数
+- WMS、ArcGisLayer图层增加featureIndex参数
+- 右键菜单相关event中增加graphic_parent返回值
+
+#### 修复 🔧
+- map.getLayersByAttr方法返回值有重复值和空值
+- Route的点在无坐标时间内未消失
+- ViewShed的show参数未生效
+- RectanglePrimitive高度值未从坐标自动获取
+- GraphicLayer矢量图层loadGeoJSON未读取其保存的id值
+
+#### 弃用 & API重构 🔒
+- DivGraphic去掉了CSS属性：user-select: none 
+
+
+
 ## 3.5.0 - 2023-03-17
 #### 重要说明 📣
 - Cesium 升级至 [1.103](https://github.com/CesiumGS/cesium/releases/tag/1.103)
@@ -64,9 +84,10 @@
 #### 弃用 & API重构 🔒
 - Cesium v1.97+造成部分功能失效，已暂时移除：TilesetFlood、ModelCombine等类和部分示例
 - Cesium v1.102+造成部分第3方插件webgl2不兼容，已暂时移除：超图S3M图层 等示例
-- npm包除去cesium库的css自动引入，改为需要项目内手动引入；npm包依赖改为peerDependencies需在项目内安装提示的依赖包
-- 移除了 PolylineSimplePrimitive类
+- npm包除去cesium库的css自动引入，需要在项目引入mars3.css前加 ` import "mars3d-cesium/Build/Cesium/Widgets/widgets.css" ` 代码手动引入
+- npm包依赖改为peerDependencies，需在项目内手动安装提示的依赖包，可以执行 ` npm install mars3d-cesium @turf/turf --save  ` 命令安装
 - [SatelliteSensor](http://mars3d.cn/api/SatelliteSensor.html) 移除了 trackedEntity、autoHeading 参数（改用orientation）
+- 移除了 PolylineSimplePrimitive类
 
 
 
