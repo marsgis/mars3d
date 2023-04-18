@@ -43,6 +43,23 @@
 # 4. 更新日志
 
 
+## 3.5.3 - 2023-4-17 
+#### 重要说明 📣 
+- Cesium 升级至 [1.104](https://github.com/CesiumGS/cesium/releases/tag/1.104)
+
+#### 优化 💪
+- Control控件加click触发事件
+- 矢量对象的distanceDisplayCondition_far参数默认值改为Number.MAX_VALUE
+- 量算对象toJSON方法增加量算结果的导出
+
+#### 修复 🔧
+- GraphicType补充缺失的枚举项
+- Map的control.terrainProviderViewModels参数失效
+- FixedRoute未start前显示了path
+- BillboardEntity的model未显示
+
+
+
 ## 3.5.2 - 2023-4-3
 #### 优化 💪
 - PathEntity的model增加mergeOrientation等参数
