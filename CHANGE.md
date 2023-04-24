@@ -43,6 +43,24 @@
 # 4. 更新日志
 
 
+## 3.5.4 - 2023-4-24
+#### 增加 ⚡
+- FrustumPrimitive增加支持camera参数
+- TilesetPlanClip 增加对平面的旋转角度属性
+
+#### 优化 💪
+- 重新了TilesetClip、TilesetFlat类，恢复TilesetFlood类
+- Map参数中支持scene.skyBox传参
+
+#### 修复 🔧
+- EllipsoidEntity导出geojson后再导入未显示扫描面
+- PolygonEntity.setCallbackPositions方法兼容非笛卡尔坐标传参
+
+#### 弃用 & API重构 🔒
+- TilesetFlat中的flatHeight 参数更名为 editHeight 
+
+
+
 ## 3.5.3 - 2023-4-17 
 #### 重要说明 📣 
 - Cesium 升级至 [1.104](https://github.com/CesiumGS/cesium/releases/tag/1.104)
