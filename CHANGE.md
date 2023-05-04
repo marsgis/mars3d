@@ -43,6 +43,21 @@
 # 4. 更新日志
 
 
+## 3.5.5 - 2023-5-4
+#### 重要说明 📣
+- Cesium 升级至 [1.105](https://github.com/CesiumGS/cesium/releases/tag/1.105)
+
+#### 增加 ⚡
+- 日照分析增加阴影率分析
+
+#### 优化 💪
+- BillboardPrimitive 支持 alignedAxis 属性参数
+- Route、FixedRoute增加 autoMiddleDynamicPosition 参数
+- 增加map.mouseEvent.pickImageryLayerFeatures方法，可以手动模拟了单击WMS等图层
+
+
+
+
 ## 3.5.4 - 2023-4-24
 #### 增加 ⚡
 - FrustumPrimitive增加支持camera参数
