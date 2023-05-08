@@ -43,6 +43,19 @@
 # 4. 更新日志
 
 
+## 3.5.6 - 2023-5-8
+#### 优化 💪
+- 矢量图层startDraw方法增加validDrawPosition外部自定义校验坐标参数
+- 曲线增加sharpness参数
+
+#### 修复 🔧
+- 矢量图层zIndex参数在贴地线面图层间无效
+- 量算对象更新positions属性赋值未更新计算结果
+- 更新Google瓦片图层服务地址
+- TerrainClip对象
+
+
+
 ## 3.5.5 - 2023-5-4
 #### 重要说明 📣
 - Cesium 升级至 [1.105](https://github.com/CesiumGS/cesium/releases/tag/1.105)
