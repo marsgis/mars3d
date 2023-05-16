@@ -43,6 +43,21 @@
 # 4. 更新日志
 
 
+## 3.5.7 - 2023-5-16 
+#### 优化 💪
+- Map增加changeBasemap事件
+- 矢量数据增加hasEditContextMenu参数
+
+#### 修复 🔧
+- 修改v3.5.6产生的贴地面无法量算问题
+
+#### 弃用 & API重构 🔒
+- 为了兼容cesium的[1.104](https://github.com/CesiumGS/cesium/blob/1.104/CHANGES.md)公示的将在`1.107`弃用的api变更，SDK以下方法返回值改为async承诺：
+[createImageryProvider](http://mars3d.cn/api/LayerUtil.html#.createImageryProvider)、
+[createTerrainProvider](http://mars3d.cn/api/LayerUtil.html#.createTerrainProvider) 等方法
+
+
+
 ## 3.5.6 - 2023-5-8
 #### 优化 💪
 - 矢量图层startDraw方法增加validDrawPosition外部自定义校验坐标参数
