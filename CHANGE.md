@@ -43,10 +43,23 @@
 # 4. 更新日志
 
 
+## 3.5.8 - 2023-5-23
+#### 增加 ⚡
+- 增加VideoPrimitive对象
+
+#### 优化 💪
+- 重写了PolyUtil.centerOfMass取中心点算法
+
+#### 修复 🔧
+- Polygon面编辑时positions坐标赋值无效 
+
+
+
 ## 3.5.7 - 2023-5-16 
 #### 优化 💪
 - Map增加changeBasemap事件
 - 矢量数据增加hasEditContextMenu参数
+- State增加ADD状态
 
 #### 修复 🔧
 - 修改v3.5.6产生的贴地面无法量算问题
