@@ -44,6 +44,20 @@
 
 
 --- 
+## 3.5.10 - 2023-6-5
+#### 优化 💪
+- TilesetLayer增加luminanceAtZenith亮度属性
+- map增加pauseCameraViewList和proceedCameraViewList方法
+- ImageLayer支持EPSG3857坐标系
+
+#### 修复 🔧
+- 修复v3.5.7产生的ModelPrimitive单击事件无效问题
+- Route在时钟停止时未更新坐标位置
+- 修复一些TS定义错误
+
+
+
+
 ## 3.5.9 - 2023-5-29
 #### 增加 ⚡
 - GraphicLayer矢量图层增加drawEndEventType参数，支持标绘自定义结束事件
