@@ -44,10 +44,39 @@
 
 
 --- 
-## 3.5.10 - 2023-6-5
+## 3.5.12 - 2023-6-19 
 #### 优化 💪
+- Compass控件兼容移动端交互操作
+- 增加setLangText方法
+
+#### 修复 🔧
+- Satellite卫星轨道在二维模式下最后一个坐标显示异常
+- OutlineEffect与Tetrahedron同时存在时报错
+- 贴模型计算贴地线时，offset偏移高度无效
+
+
+
+## 3.5.11 - 2023-6-12
+#### 重要说明 📣
+- Cesium 升级至 [1.106](https://github.com/CesiumGS/cesium/releases/tag/1.106)
+
+#### 优化 💪
+- LabelPrimitive对象clampToGround贴地时，切换2D时的显示优化
+- PointPrimitive支持clampToGround贴地属性
+
+#### 修复 🔧
+- 修改v3.5.6产生的DistanceSurfaceMeasure 贴地长度量算异常
+- TdtTerrainProvider天地图地形时的相关地形计算无效
+- BaiduPOI等query对象的proxy属性无效
+- TerrainClip在clipOutSide外切时放大区域显示异常
+
+
+## 3.5.10 - 2023-6-5
+#### 增加 ⚡
 - TilesetLayer增加luminanceAtZenith亮度属性
 - map增加pauseCameraViewList和proceedCameraViewList方法
+
+#### 优化 💪
 - ImageLayer支持EPSG3857坐标系
 
 #### 修复 🔧
