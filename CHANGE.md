@@ -44,6 +44,21 @@
 
 
 --- 
+## 3.5.14 - 2023-7-3
+#### 优化 💪
+- Video2D的编辑点优化
+- QueryArcServer的query方法增加parameters参数
+
+#### 修复 🔧
+- DivGraphic在二三维切换时位置未刷新
+- PathEntity在3个角度均传入时未固定
+- 线面在clampToGround切换时编辑状态丢失
+- 贴地对象在移动
+- Regular、Sector对象toGeoJSON后无法重新加载
+- 经纬网在180度时未正常显示
+
+
+
 ## 3.5.13 - 2023-6-26
 #### 优化 💪
 - 优化鼠标移动事件对FPS的影响
