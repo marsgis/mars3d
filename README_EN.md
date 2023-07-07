@@ -50,10 +50,7 @@
 2. Vue technology stack[https://github.com/marsgis/mars3d-vue-project](https://github.com/marsgis/mars3d-vue-project)
 
  
-### Other Cesium technology stacks 
-1. Hypergraph integration example[https://github.com/marsgis/mars3d-link-supermap](https://github.com/marsgis/mars3d-link-supermap)
-2. EarthSDK integration example[https://github.com/marsgis/mars3d-link-earthsdk](https://github.com/marsgis/mars3d-link-earthsdk)
- 
+
  
 
 ## Platform related effects  

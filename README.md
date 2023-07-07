@@ -67,9 +67,8 @@ Github：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d)
 |基础项目 原生JS版 |[查看](http://mars3d.cn/dev/guide/project/jcxm-es5.html) | [查看](https://www.bilibili.com/video/BV1nF41157Rn/)| [mars3d-es5-project](https://github.com/marsgis/mars3d-es5-project) |[mars3d-es5-project](https://gitee.com/marsgis/mars3d-es5-project)  |
 |基础项目 Vue版|[查看](http://mars3d.cn/dev/guide/project/jcxm-vue.html) |[查看](https://www.bilibili.com/video/BV1JF411q7Ut/)| [mars3d-vue-project](https://github.com/marsgis/mars3d-vue-project) |[mars3d-vue-project](https://gitee.com/marsgis/mars3d-vue-project)  |  
 |基础项目 Vue版+admin管理 |无 | 无| [mars3d-vue-project-admin](https://github.com/marsgis/mars3d-vue-project-admin) |[mars3d-vue-project-admin](https://gitee.com/marsgis/mars3d-vue-project-admin)  |   
+|三维地球APP项目|  [查看](http://mars3d.cn/dev/guide/project/app-vue.html)  | [查看](https://www.bilibili.com/video/BV1iY4y1t7jk/)|  [mars3d-vue-app](https://github.com/marsgis/mars3d-vue-app) |[mars3d-vue-app](https://gitee.com/marsgis/mars3d-vue-app)  |  
 |基础项目 React版|[查看](http://mars3d.cn/dev/guide/project/jcxm-react.html) |[查看](https://www.bilibili.com/video/BV1n3411u7Dm/)| [mars3d-react-project](https://github.com/marsgis/mars3d-react-project) |[mars3d-react-project](https://gitee.com/marsgis/mars3d-react-project)  |  
-|三维地球APP项目|  [查看](http://mars3d.cn/dev/guide/project/app-vue.html)  | [查看](https://www.bilibili.com/video/BV1iY4y1t7jk/)| [付费提供](http://mall.marsgis.cn/#/product/mars3d-vue-app) |  [付费提供](http://mall.marsgis.cn/#/product/mars3d-vue-app) | 
- 
 
   
 
