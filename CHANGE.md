@@ -44,6 +44,26 @@
 
 
 --- 
+## 3.6.1 - 2023-8-14 
+#### 增加 ⚡
+- 增加 ColorRamp 色带类
+
+#### 优化 💪
+- Map增加isInView方法
+- CanvasWindLayer增加colors根据风速渲染不同颜色
+- Timeline增加zoom是否可以缩放参数
+- PolylineCombine等合并渲染对象支持openPopup方法
+- ModelEntity的moveTo方法增加orientation参数
+- GaodeRoute更新高德服务api至v5
+
+#### 修复 🔧
+- Route、FixedRoute的change事件未在图层上抛出
+- DistanceMeasure的更新坐标为空时，label未清除
+- 瓦片图层未加载完成时reload后无法移除
+- GaodeRoute骑行路径查询无效
+
+
+
 ## 3.6.0 - 2023-8-4
 #### 重要说明 📣
 - Cesium 升级至 [1.108](https://github.com/CesiumGS/cesium/releases/tag/1.108)
