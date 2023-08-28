@@ -44,6 +44,17 @@
 
 
 --- 
+## 3.6.3 - 2023-8-28
+#### 增加 ⚡
+- 对大部分矢量数据增加availability时序显示控制参数和属性
+- 增加mars3d.PointUtil.getPropertyIndex方法
+
+#### 修复 🔧
+- DivGraphic开始绘制时就取消绘制触发了完成回调
+- RotatePoint在部分视角下报错
+
+ 
+
 ## 3.6.2 - 2023-8-21
 #### 修复 🔧
 - cesium原生相关控件的enabled参数未生效
