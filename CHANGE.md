@@ -44,10 +44,28 @@
 
 
 --- 
-## 3.6.3 - 2023-8-28
+## 3.6.4 - 2023-9-5
+#### 重要说明 📣
+- Cesium 升级至 [1.109](https://github.com/CesiumGS/cesium/releases/tag/1.109)
+
+#### 优化 💪
+- SnowEffect增加maxHeight参数
+- LocationBar的fps改为模版配置，并可从locationData取fps值
+
+#### 修复 🔧
+- DivGraphic图层允许编辑时未自动处理pointerEvents
+- DivLightPoint传setStyle方法传html时造成color参数无效
+- 优化v3.6.3增加的availability相关支持
+
+
+## 3.6.3 - 2023-8-29
 #### 增加 ⚡
 - 对大部分矢量数据增加availability时序显示控制参数和属性
 - 增加mars3d.PointUtil.getPropertyIndex方法
+
+#### 优化 💪
+- Compass双击事件定位视角改为目标中心点不动
+- ContourLine增加minHeight、maxHeight属性，可动态更改
 
 #### 修复 🔧
 - DivGraphic开始绘制时就取消绘制触发了完成回调
