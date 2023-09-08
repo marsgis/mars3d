@@ -44,9 +44,26 @@
 
 
 --- 
+## 3.6.5 - 2023-9-11
+#### 增加 ⚡
+- xyz图层url中增加scale、origin模版(用于使用超图的瓦片底图服务)
+
+#### 优化 💪
+- ReflectionWater对象增加animationSpeed、specularIntensity参数
+
+#### 修复 🔧
+- Route的Popup弹窗视角很近时卡顿
+- 矢量对象在closeLast=false时closeHighlight无效
+- PointPrimitive在setStyle时改变了贴地高度
+- wms等图层click时发送多次query请求
+- Measure在setOptions赋值未更新到内部矢量图层
+
+
 ## 3.6.4 - 2023-9-5
 #### 重要说明 📣
 - Cesium 升级至 [1.109](https://github.com/CesiumGS/cesium/releases/tag/1.109)
+- 无法跨域引入cdn版本Cesium v1.109,需要本地引入（待后续版本解决）。
+- FireFox浏览器需要v114及以上版本才能运行。
 
 #### 优化 💪
 - SnowEffect增加maxHeight参数
