@@ -49,6 +49,7 @@
 - xyz图层url中增加scale、origin模版(用于使用超图的瓦片底图服务)
 
 #### 优化 💪
+- 优化地形开挖、抬升等地形编辑相关功能效率(需要升级mars3d-cesium到1.109.1)
 - ReflectionWater对象增加animationSpeed、specularIntensity参数
 
 #### 修复 🔧
@@ -132,7 +133,8 @@
 - 重写了 TerrainClip、FloodByMaterial、ContourLine地形相关分析类
 
 #### 弃用 & API重构 🔒
-- 正式放弃对不支持webgl2的超图S3M图层等功能的支持
+- 弃用mars3d-widget插件，原生JS技术栈下项目中直接改为使用源码(es5-widget.js)
+- 弃用mars3d-supermap插件，正式放弃对不支持webgl2的超图S3M图层等功能的支持
 
 
 

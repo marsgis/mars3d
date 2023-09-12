@@ -46,8 +46,7 @@
 4. Angular technology stack[https://github.com/marsgis/mars3d-angular-template](https://github.com/marsgis/mars3d-angular-template)
 
 ### Basic project
-1. Traditional technology stack (Widget mode of native JS)[https://github.com/marsgis/mars3d-widget-project](https://github.com/marsgis/mars3d-widget-project)
-2. Vue technology stack[https://github.com/marsgis/mars3d-vue-project](https://github.com/marsgis/mars3d-vue-project)
+1. Vue technology stack[https://github.com/marsgis/mars3d-vue-project](https://github.com/marsgis/mars3d-vue-project)
 
  
 
