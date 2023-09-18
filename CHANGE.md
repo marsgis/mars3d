@@ -44,6 +44,24 @@
 
 
 --- 
+## 3.6.6 - 2023-9-18
+#### 增加 ⚡
+- 新增BrushLineEntity自由绘制线对象
+- 新增GroupGraphic矢量数据组对象
+
+#### 优化 💪
+- BillboardEntity增加distanceDisplayPoint等参数
+- TilesetLayer增加editUpAxis轴标识参数
+
+#### 修复 🔧
+- 解决v3.6.5产生的FixedRoute停止时的Popup移动问题
+- 量算对象show改变时label未同步显示隐藏
+
+#### 弃用 & API重构 🔒
+- 更新了部分3dtiles模型在线数据，如果有偏差需要参考最新示例更改postion参数
+
+
+
 ## 3.6.5 - 2023-9-11
 #### 增加 ⚡
 - xyz图层url中增加scale、origin模版(用于使用超图的瓦片底图服务)
