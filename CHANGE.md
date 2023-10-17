@@ -44,6 +44,29 @@
 
 
 --- 
+## 3.6.9 - 2023-10-17 
+#### 增加 ⚡
+- primitive矢量数据增加了readyPromise属性
+
+#### 优化 💪
+- 重新设计了lang多语言相关，支持自定义多语言
+- control控件类insertBefore参数支持配置div的id
+- Image2材质增加repeat参数
+- DivGraphic的pointerEvents参数优先级改为最高
+
+#### 修复 🔧
+- DivGraphic的setStyle方法更新clampToGround时，高度未贴地
+- v3.6.8产生的toJSON、toGeoJSON方法错误
+- CircleEntity的height高度失效
+- TdtLayer的chinaCRS未生效
+- geosjon数据导入时MultiPolygon对象的id重复后报错
+
+#### 弃用 & API重构 🔒
+- lang相关重构，与之前不兼容，移除了LangType、重构了Lang类和map.lang相关属性及方法
+- VolumeCloud的steps更名为detail，并增加了colors和steps参数
+
+
+
 ## 3.6.8 - 2023-10-9 
 #### 重要说明 📣
 - Cesium 升级至 [1.110](https://github.com/CesiumGS/cesium/releases/tag/1.110) 【已知问题：PolygonPrimitive材质异常】
@@ -60,6 +83,8 @@
 - 矢量图层支持clustering的setOptions更新
 - ArcGisLayer的flyTo属性失效
 
+
+
 ## 3.6.7 - 2023-9-25 
 #### 优化 💪
 - 增加pixelOffsetScaleByDistance参数的导入导出json支持
@@ -68,6 +93,7 @@
 #### 修复 🔧
 - WmtsLayer的subdomain参数存在时取配置信息出错
 - computeSurfacePoints计算时点数量不变
+
 
 
 ## 3.6.6 - 2023-9-18
