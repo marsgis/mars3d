@@ -44,6 +44,31 @@
 
 
 --- 
+## 3.6.11 - 2023-11-3
+#### 重要说明 📣
+- Cesium 升级至 [1.111](https://github.com/CesiumGS/cesium/releases/tag/1.111) 
+
+#### 增加 ⚡
+- 新增LineCross十字形间隔线材质
+- Water、PolygonPrimitive等对象增加offsetHeight平移指定偏移高度参数
+- WaterCombine、PolygonCombine等对象增加offsetHeight属性和setOffsetHeight方法
+- TilesetClip、TilesetFlat 增加precise参数，支持掩膜模式压平裁剪，支持大量数据
+
+#### 优化 💪
+- ImageLayer增加加载完成回调
+
+#### 修复 🔧
+- 导航球控件中提示文本的Lang多语言支持
+- CircleEntity编辑时“半径”文本的Lang多语言支持
+- DivGraphic在存在视距缩放属性时位置不对
+- 矢量数据编辑时，2D模式下拖拽高度点遮挡了移动位置点
+- 地形抬升中国大区域时边缘区域存在偏移情况
+
+#### 弃用 & API重构 🔒
+- DynamicRiver 的 offsetHeight 方法改名为 setOffsetHeight
+- Video2D、Video3D、ViewShed、ConeVisibility、SpotLight的heading由原来正北为0度，改为正东为0度
+
+
 ## 3.6.10 - 2023-10-23
 #### 增加 ⚡
 - 所有combine类型Primitive大数据对象增加style.label参数
@@ -84,7 +109,7 @@
 
 ## 3.6.8 - 2023-10-9 
 #### 重要说明 📣
-- Cesium 升级至 [1.110](https://github.com/CesiumGS/cesium/releases/tag/1.110) 【已知问题：PolygonPrimitive材质异常】
+- Cesium 升级至 [1.110](https://github.com/CesiumGS/cesium/releases/tag/1.110) 【已知问题：PolygonPrimitive材质纹理默认值异常，v1.111.1已修复】
 
 #### 优化 💪
 - 暴露mars3d.edit.*相关编辑类，方便外部继承使用
