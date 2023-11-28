@@ -44,9 +44,29 @@
 
 
 --- 
+
+## 3.6.14 - 2023-11-27
+#### 增加 🌟
+- 增加 EditPointType 类，DrawUtil类新增setEditPointStyle、setAllEditPointStyle方法，支持完全每种编辑点的矢量对象类型和样式
+
+#### 优化 💪
+- GraphicLayer增加 drawAddEventType 绘制时增加点的事件参数
+- CzmGeoJsonLayer的flyTo方法改为一致的定位机制
+
+#### 修复 🐞
+- TdtDmLayer的show:false未生效 [#I8IKIN](https://gitee.com/marsgis/mars3d/issues/I8IKIN)
+- [Satellite.setStyle](http://mars3d.cn/api/Satellite.html)方法更新cone无效
+- Regular.setStyle更新border无效
+- GraphicLayer再remove时聚合未销毁
+
+#### 弃用 & API重构 🔒
+- 重构了DrawUtil类，移除了setPointStyle等方法  [#I8J3D9](https://gitee.com/marsgis/mars3d/issues/I8J3D9)
+ 
+
+
 ## 3.6.13 - 2023-11-21 
 #### 优化 💪
-- [GeoJsonLayer](https://mars3d.cn/api/GeoJsonLayer.html)、[WfsLayer](https://mars3d.cn/api/WfsLayer.html) 等图层增加simplify参数
+- [GeoJsonLayer](http://mars3d.cn/api/GeoJsonLayer.html)、[WfsLayer](http://mars3d.cn/api/WfsLayer.html) 等图层增加simplify参数
 - 整理矢量对象的setHeight、addHeight参数代码，之前在部分情况存在重复addHeight或未addHeight的情况
 - 优化 [TilesetClip](http://mars3d.cn/api/TilesetClip.html?classFilter=Tileset)、[TilesetFlat](http://mars3d.cn/api/TilesetFlat.html?classFilter=Tileset) 、[TilesetFlood](http://mars3d.cn/api/TilesetFlood.html?classFilter=Tileset) 模型压平、裁剪、淹没支持部分特殊模型。
 - GraphicLayer 增加drawAddEventType 绘制参数
@@ -67,8 +87,8 @@
 - Layer相关类增加 [availability](http://mars3d.cn/api/BaseLayer.html?classFilter=Layer#availability) 属性
 
 #### 优化 💪
-- 点状Entity对象在GraphicLayer的[drawEndEventType](https://mars3d.cn/api/GraphicLayer.html)参数下支持右键结束标绘  [#I8EULQ](https://gitee.com/marsgis/mars3d/issues/I8EULQ)
-- [TilesetLayer](https://mars3d.cn/api/TilesetLayer.html)增加scaleX、scaleY、scaleZ参数   [#I8F5ZG](https://gitee.com/marsgis/mars3d/issues/I8F5ZG)
+- 点状Entity对象在GraphicLayer的[drawEndEventType](http://mars3d.cn/api/GraphicLayer.html)参数下支持右键结束标绘  [#I8EULQ](https://gitee.com/marsgis/mars3d/issues/I8EULQ)
+- [TilesetLayer](http://mars3d.cn/api/TilesetLayer.html)增加scaleX、scaleY、scaleZ参数   [#I8F5ZG](https://gitee.com/marsgis/mars3d/issues/I8F5ZG)
 
 #### 修复 🐞
 - 矢量对象在randomColor随机色时，高亮每次会变动颜色  [#I8ES0G](https://gitee.com/marsgis/mars3d/issues/I8ES0G)
