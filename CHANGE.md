@@ -45,6 +45,19 @@
 
 --- 
 
+## 3.6.15 - 2023-12-5
+#### 重要说明 📣
+- Cesium 升级至 [1.112](https://github.com/CesiumGS/cesium/releases/tag/1.112) 
+
+#### 优化 💪
+- SnowEffect增加scale粒子大小参数
+
+#### 修复 🐞
+- SnowCoverEffect初始化enabled:false时更新为true无效
+
+ 
+
+
 ## 3.6.14 - 2023-11-27
 #### 增加 🌟
 - 增加 EditPointType 类，DrawUtil类新增setEditPointStyle、setAllEditPointStyle方法，支持完全每种编辑点的矢量对象类型和样式
