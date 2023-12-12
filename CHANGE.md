@@ -45,6 +45,22 @@
 
 --- 
 
+## 3.6.16 - 2023-12-12 
+#### 增加 🌟
+- 增加ThingType、ThingUtil 类
+- map增加thing参数，支持地形压平 等thing对象通过参数初始化传入
+
+#### 优化 💪
+- measure.point增加popup自定义回调参数 [#I8MKV3](https://gitee.com/marsgis/mars3d/issues/I8MKV3)
+- entity.startFlicker方法color颜色默认值改为自身颜色
+- TdtLayer图层增加url配置服务前缀
+
+#### 修复 🐞
+- Route、FixedRoute 默认show:false时，更新show=true无效
+- MapboxLayer的scaleFactor参数无效
+
+
+
 ## 3.6.15 - 2023-12-5
 #### 重要说明 📣
 - Cesium 升级至 [1.112](https://github.com/CesiumGS/cesium/releases/tag/1.112) 
