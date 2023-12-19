@@ -27,7 +27,7 @@
 
 通常的发布周期如下：
 - 约 每3年 发布1个主版本
-- 约 每5个月 发布1个大版本
+- 约 每6个月 发布1个大版本
 - 约 每周 发布1个小版本，正常均在**周二上午**发布（如果有紧急的 bugfix，则任何时候都可发布）
   
 
@@ -44,6 +44,15 @@
 
 
 --- 
+## 3.6.17 - 2023-12-19
+#### 修复 🐞
+- lod、wfs图层部分情况下未加载，需要动一下视角才加载 [#I8NO0L](https://gitee.com/marsgis/mars3d/issues/I8NO0L)
+- ConeTrack类修改位置后不显示  [#I8OS1G](https://gitee.com/marsgis/mars3d/issues/I8OS1G)
+- 天地图地形计算贴地高度的报错优化
+- clampTileset 瓦片图层贴模型数量大于16个图层报错
+- Water、Route 对象availability无效
+
+
 
 ## 3.6.16 - 2023-12-12 
 #### 增加 🌟
