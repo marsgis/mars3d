@@ -44,6 +44,18 @@
 
 
 --- 
+## 3.6.18 - 2023-12-31
+#### 优化 💪
+- PolygonCombine 挖洞面 支持Cartesian3和LngLatPoint格式坐标
+- Video3D 初始化options参数增加play是否播放
+- 线面对象绘制时支持updateDrawPosition参数来自定义控制修改绘制的坐标
+
+#### 修复 🐞
+- GraphicLaye在 show:false时使用BillboardPrimitive聚合的时候未隐藏   [#I8QB9I](https://gitee.com/marsgis/mars3d/issues/I8QB9I) 
+- BusineDataLayer类传data切开启聚合时未聚合 [#I8Q6DT](https://gitee.com/marsgis/mars3d/issues/I8Q6DT) 
+- 修复v3.6.14增加编辑点的矢量对象类型和样式功能带来的编辑点异常问题。
+
+
 ## 3.6.17 - 2023-12-19
 #### 修复 🐞
 - lod、wfs图层部分情况下未加载，需要动一下视角才加载 [#I8NO0L](https://gitee.com/marsgis/mars3d/issues/I8NO0L)
