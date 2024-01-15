@@ -44,6 +44,34 @@
 
 
 --- 
+## 3.7.0 - 2024-1-15
+#### 重要说明 📣
+- Cesium 升级至 [1.113](https://github.com/CesiumGS/cesium/releases/tag/1.113) 
+
+#### 增加 🌟
+- 新增 标绘 顶点吸附 功能，通过 map.onlyVertexPosition开启关闭
+- 新增 DivPlane、JammingRadar、FixedJammingRadar 矢量对象
+- 新增 DivIndicator 固定指向且可拖动面板的DIV示例
+
+#### 优化 💪
+- primitive增加zIndex参数和属性
+- entity.startFlicker方法增加step参数
+- TilesetLayer增加assetId参数
+- GroupLayer的layers参数支持图层对象传入
+- TerrainClip的开挖对象取区域内最低点高度为开挖高度的相对0米
+- TilesetClip增加clipOutSide参数和属性
+- 聚合点增加clampToTileset参数
+
+#### 修复 🐞
+- Combine合并渲染矢量对象label文本的单击事件未正常拾取attr
+
+#### 弃用 & API重构 🔒
+- TilesetPlanClip类type参数更名为clipType
+
+
+
+
+--- 
 ## 3.6.18 - 2023-12-31
 #### 优化 💪
 - PolygonCombine 挖洞面 支持Cartesian3和LngLatPoint格式坐标
@@ -61,7 +89,7 @@
 - lod、wfs图层部分情况下未加载，需要动一下视角才加载 [#I8NO0L](https://gitee.com/marsgis/mars3d/issues/I8NO0L)
 - ConeTrack类修改位置后不显示  [#I8OS1G](https://gitee.com/marsgis/mars3d/issues/I8OS1G)
 - 天地图地形计算贴地高度的报错优化
-- clampTileset 瓦片图层贴模型数量大于16个图层报错
+- clampToTileset 瓦片图层贴模型数量大于16个图层报错
 - Water、Route 对象availability无效
 
 
