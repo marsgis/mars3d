@@ -44,6 +44,29 @@
 
 
 --- 
+## 3.7.2 - 2024-1-29
+#### 优化 💪
+- DivGraphic增加addClass、removeClass方法
+- 增加PolyUtil.getMapExtentPositions方法，并对map.getExtent方法优化重写
+
+#### 修复 🐞
+- Combine合并渲染矢量对象的附加label只能加一个 [#I8YTK1](https://gitee.com/marsgis/mars3d/issues/I8YTK1) 
+
+
+
+
+## 3.7.1 - 2024-1-22
+#### 优化 💪
+- WMS图层、ArcGIS瓦片图层，在clampToTileset贴模型时单击拾取事件的支持。
+- ModelPrimitive增加startFlicker、stopFlicker方法
+- GraticuleLayer增加steps属性，和setOptions更新steps的支持。
+
+#### 修复 🐞
+- Map配置了terrainProviderViewModels:[],控件会提示 undefined  [#I8XEY4](https://gitee.com/marsgis/mars3d/issues/I8XEY4) 
+- LineFlow材质color改为原样传入
+
+
+
 ## 3.7.0 - 2024-1-15
 #### 重要说明 📣
 - Cesium 升级至 [1.113](https://github.com/CesiumGS/cesium/releases/tag/1.113) 
@@ -67,7 +90,7 @@
 
 #### 弃用 & API重构 🔒
 - TilesetPlanClip类type参数更名为clipType
-
+- KeyboardRoam的minPitch、maxPitch参数改为度数值
 
 
 
