@@ -44,6 +44,22 @@
 
 
 --- 
+## 3.7.3 - 2024-2-5
+#### 重要说明 📣
+- Cesium 升级至 [1.114](https://github.com/CesiumGS/cesium/releases/tag/1.114) 
+- 矢量数据clampToGround: true属性将同时支持贴模型和地形，HeightReference属性可以设置单独贴模型或贴地形等。
+
+#### 增加 🌟
+- 增加 TilesetColorCorrection 模型单独颜色校正对象
+- Map、TilesetLayer类增加 getHeight 贴地高度计算方法 
+- TilesetLayer图层增加 disableCollision参数(默认值false)，是否允许相机进入模型的内部或下方。
+
+#### 优化 💪
+- 重写了PointUtil.getHeight、PointUtil.getSurfacePosition方法，相关参数有调整
+- 矢量图层聚合图标回调增加相关对象的返回，并优化示例增加大数据异步生成
+
+
+
 ## 3.7.2 - 2024-1-29
 #### 优化 💪
 - DivGraphic增加addClass、removeClass方法
@@ -51,7 +67,6 @@
 
 #### 修复 🐞
 - Combine合并渲染矢量对象的附加label只能加一个 [#I8YTK1](https://gitee.com/marsgis/mars3d/issues/I8YTK1) 
-
 
 
 
@@ -90,8 +105,8 @@
 
 #### 弃用 & API重构 🔒
 - TilesetPlanClip类type参数更名为clipType
-- KeyboardRoam的minPitch、maxPitch参数改为度数值
-
+- KeyboardRoam的minPitch、maxPitch参数改为度数值  
+- 移除部分对V3.4之前相关老版本SDK的内部兼容参数写法，提高代码效率
 
 
 --- 
