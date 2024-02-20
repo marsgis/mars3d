@@ -48,11 +48,12 @@
 #### 重要说明 📣
 - Cesium 升级至 [1.114](https://github.com/CesiumGS/cesium/releases/tag/1.114) 
 - 矢量数据clampToGround: true属性将同时支持贴模型和地形，HeightReference属性可以设置单独贴模型或贴地形等。
+- TilesetLayer模型图层默认不允许鼠标穿透，增加 disableCollision参数设置是否允许相机进入模型的内部或下方。
 
 #### 增加 🌟
 - 增加 TilesetColorCorrection 模型单独颜色校正对象
 - Map、TilesetLayer类增加 getHeight 贴地高度计算方法 
-- TilesetLayer图层增加 disableCollision参数(默认值false)，是否允许相机进入模型的内部或下方。
+
 
 #### 优化 💪
 - 重写了PointUtil.getHeight、PointUtil.getSurfacePosition方法，相关参数有调整
