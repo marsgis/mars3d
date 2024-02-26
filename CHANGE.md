@@ -44,15 +44,34 @@
 
 
 --- 
+## 3.7.4 - 2024-2-22
+#### 优化 💪
+- Tooltip的显示的方向自适应
+- TerrainLayer增加terrainType参数，优化参数结构
+- 线面矢量对象编辑，增加hasMidPoint参数控制是否显示中间点
+- GeoJsonLayer图层mask支持全球遮掩
+
+#### 修复 🐞
+- PolygonPrimitive对象`outline: true,outlineWidth: 1`属性时,面的渲染颜色有问题
+- GroupGraphic对象内的矢量数据无法交互
+- PointPrimitive的setStyle修改时pixelSize被重置为默认值了
+- CircleEntity.isInPoly判断排除高度值的影响
+
+#### 弃用 & API重构 🔒
+- 矢量数据关联的popup实时更新事件，由postRender更名为popupRender
+
+
+
 ## 3.7.3 - 2024-2-5
 #### 重要说明 📣
 - Cesium 升级至 [1.114](https://github.com/CesiumGS/cesium/releases/tag/1.114) 
 - 矢量数据clampToGround: true属性将同时支持贴模型和地形，HeightReference属性可以设置单独贴模型或贴地形等。
+- TilesetLayer模型图层默认不允许鼠标穿透，增加 disableCollision参数设置是否允许相机进入模型的内部或下方。
 
 #### 增加 🌟
 - 增加 TilesetColorCorrection 模型单独颜色校正对象
 - Map、TilesetLayer类增加 getHeight 贴地高度计算方法 
-- TilesetLayer图层增加 disableCollision参数(默认值false)，是否允许相机进入模型的内部或下方。
+
 
 #### 优化 💪
 - 重写了PointUtil.getHeight、PointUtil.getSurfacePosition方法，相关参数有调整
