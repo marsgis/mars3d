@@ -44,6 +44,27 @@
 
 
 --- 
+## 3.7.5 - 2024-3-5
+#### 重要说明 📣
+- Cesium 升级至 [1.115](https://github.com/CesiumGS/cesium/releases/tag/1.115) 
+
+#### 增加 🌟
+- 新增CubeView立方体视图控件
+
+#### 优化 💪
+- Map增加backgroundImage、backgroundType参数，并自动处理互斥关系
+- 矢量数据高亮highlight参数增加enabled子参数，可以进行启用的控制
+- HomeButton、FullscreenButton、NavigationHelpButton控件增加icon参数
+- GroundSkyBox增加maxHeight参数
+- 所有highlight相关类中增加highlight.enabled子参数
+- map的scene构造参数增加了backgroundType、backgroundImage并自动处理了互斥关系
+- 优化map.getCurrentOptions方法导出相关参数。
+
+#### 修复 🐞
+- BloomTargetEffect造成地球背景图片消失
+- Route的Popup关闭后无法打开
+
+
 ## 3.7.4 - 2024-2-22
 #### 优化 💪
 - Tooltip的显示的方向自适应
