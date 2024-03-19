@@ -44,6 +44,40 @@
 
 
 --- 
+## 3.7.7 - 2024-3-19  
+#### 优化 💪
+- I3SLayer增加position、rotation、scale等参数
+- Compass控件增加clickToNorth参数
+- HeightTriangleMeasure三角测量结果增加角度值
+- DoubleSidedPlane支持穿透显示对面的其他矢量对象
+- Animation控件存在时Timeline自动避让
+- Shadows 增加darkness参数
+
+#### 修复 🐞
+- Mask遮盖边线多面时未显示
+- 多个Map或分屏对比时，TilesetClip等对象移除报错
+- RectangleCombine的outline效果不是4个边线点
+- ParticleSystem的setStyle更新image无效
+- 模型编辑toJSON未导出id等参数
+- ModelPrimitive的setStyle支持模型动画参数的修改
+
+
+
+## 3.7.6 - 2024-3-11 
+#### 优化 💪
+- PolyGradient材质增加isInner参数
+- RainEffect增加maxHeight参数
+- ArcGisTileLayer增加token参数
+- MapVLayer图层增加聚合点的支持
+- TilesetLayer增加ionAccessToken、ionServer参数
+
+#### 修复 🐞
+- v3.7.4产生的Tooltip的offsetX、offsetY参数无效
+- RectangleEntity的setCallbackPositions方法无效
+- VolumeDepthMeasure移除时附加对象未清除干净
+- ModelPrimitive的setStyle方法更新runAnimations无效
+
+
 ## 3.7.5 - 2024-3-5
 #### 重要说明 📣
 - Cesium 升级至 [1.115](https://github.com/CesiumGS/cesium/releases/tag/1.115) 
