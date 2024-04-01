@@ -44,6 +44,21 @@
 
 
 --- 
+## 3.7.9 - 2024-4-1 
+#### 重要说明 📣
+- Cesium 升级至 [1.116](https://github.com/CesiumGS/cesium/releases/tag/1.116) 
+
+#### 优化 💪
+- FixedRoute的change事件增加index_original原始index返回值
+
+#### 修复 🐞
+- Mask遮盖对象直接直接构造使用
+- 矢量图层clear后聚合失效
+- TdtPOI.getAddress方法失效
+- RadarWave材质透明度无效
+
+
+
 ## 3.7.7 - 2024-3-19  
 #### 优化 💪
 - I3SLayer增加position、rotation、scale等参数
