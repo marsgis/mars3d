@@ -44,18 +44,22 @@
 
 
 --- 
-## 3.7.9 - 2024-4-1 
+## 3.7.9 - 2024-4-6 
 #### 重要说明 📣
 - Cesium 升级至 [1.116](https://github.com/CesiumGS/cesium/releases/tag/1.116) 
 
 #### 优化 💪
+- Map增加scene.logarithmicDepthBuffer参数
 - FixedRoute的change事件增加index_original原始index返回值
+- GraphicLayer增加minChanged参数
 
 #### 修复 🐞
+- zoom控件缩放时，DivGraphic未重现渲染
 - Mask遮盖对象直接直接构造使用
 - 矢量图层clear后聚合失效
 - TdtPOI.getAddress方法失效
 - RadarWave材质透明度无效
+- POI矩形和多边形查询无结果
 
 
 
