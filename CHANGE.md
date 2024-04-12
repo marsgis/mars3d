@@ -44,14 +44,38 @@
 
 
 --- 
+## 3.7.10 - 2024-4-15 
+#### 增加 🌟
+- Map增加method参数(并将之前chinaCRS、lang、templateValues、token参数移动到method下)
+- TerrainUplift地形抬升增加抬升动画方法movingAnimation
+- 矢量数据支持从Ajax后端动态读取属性和点状坐标的配置
+
+#### 优化 💪
+- 图层popupOptions参数中增加showNull可以控制显示空值字段
+- Popup增加toggle参数，控制是否打开状态下再次单击时关闭Popup [#I9F4AO](https://gitee.com/marsgis/mars3d/issues/I9F4AO) 
+- VolumeDepthMeasure支持传入历史计算的值，可以固化测量结果，避免地形精度和视角剔除带来的测量结果每次不同
+- PolylinePrimitive增加style.depthFailMaterial参数
+
+#### 修复 🐞
+- Popup在timeRender为true时关闭按钮无法操作
+- PolygonEntity调用setCallbackPositions方法setHeight参数丢失 [#I9EUH4](https://gitee.com/marsgis/mars3d/issues/I9EUH4) 
+- 体积计算方法measure.volume，在传参直接调用时会触发两次计算 [#I9F6PQ](https://gitee.com/marsgis/mars3d/issues/I9F6PQ) 
+
+#### 弃用 & API重构 🔒 
+- Map的之前chinaCRS、lang、templateValues、token参数移动到method参数下
+- 移除IonLayer图层，合并至XyzLayer(增加assetId、ionToken、ionServer参数)
+- TilesetLayer的ion资源时的ionAccessToken参数命名改为ionToken
+
+
+
 ## 3.7.9 - 2024-4-6 
 #### 重要说明 📣
 - Cesium 升级至 [1.116](https://github.com/CesiumGS/cesium/releases/tag/1.116) 
 
 #### 优化 💪
 - Map增加scene.logarithmicDepthBuffer参数
-- FixedRoute的change事件增加index_original原始index返回值
-- GraphicLayer增加minChanged参数
+- FixedRoute的change事件增加index_original原始index返回值  [#I9B880](https://gitee.com/marsgis/mars3d/issues/I9B880) 
+- GraphicLayer矢量图层聚合增加clustering.minChanged参数
 
 #### 修复 🐞
 - zoom控件缩放时，DivGraphic未重现渲染
