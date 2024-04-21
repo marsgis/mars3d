@@ -44,6 +44,19 @@
 
 
 --- 
+## 3.7.11 - 2024-4-22
+#### 优化 💪
+- DivLightPoint增加billboard参数
+- GraphicLayer增加loadJSON方法
+
+#### 修复 🐞
+- 优化Map.toJSON导出参数方法
+- 更新被封谷歌底图域名
+- style.label在贴地和visibleDepth: false 会重影 [#I9G8R4](https://gitee.com/marsgis/mars3d/issues/I9G8R4) 
+- PolygonEntity在highlight中修改diffHeight无效 [#I9I1TN](https://gitee.com/marsgis/mars3d/issues/I9I1TN) 
+
+
+
 ## 3.7.10 - 2024-4-15 
 #### 增加 🌟
 - Map增加method参数(并将之前chinaCRS、lang、templateValues、token参数移动到method下)
