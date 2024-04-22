@@ -54,6 +54,8 @@
 - 更新被封谷歌底图域名
 - style.label在贴地和visibleDepth: false 会重影 [#I9G8R4](https://gitee.com/marsgis/mars3d/issues/I9G8R4) 
 - PolygonEntity在highlight中修改diffHeight无效 [#I9I1TN](https://gitee.com/marsgis/mars3d/issues/I9I1TN) 
+- RotatePoint.setOptions未生效 [#I9IN2V](https://gitee.com/marsgis/mars3d/issues/I9IN2V) 
+
 
 
 
