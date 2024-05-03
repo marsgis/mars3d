@@ -44,6 +44,29 @@
 
 
 --- 
+## 3.7.12 - 2024-5-6
+#### 重要说明 📣
+- Cesium 升级至 [1.117](https://github.com/CesiumGS/cesium/releases/tag/1.117) 
+
+#### 优化 💪
+- 优化TilesetClip、TilesetPlanClip 模型裁剪开挖功能
+- 优化TerrainClip、TerrainPlanClip 地形开挖功能，并TerrainPlanClip支持按线切分看地形切割
+- LimitHeight限高分析增加diffHeight参数
+- WMS等瓦片图层卷帘时单击事件和Popup的不可见区域不触发
+- Map增加availabilityEnabled参数，可以全局开关availability
+- 增加tif、excel、csv文件的本地数据读取示例
+
+#### 修复 🐞
+- Pit墙面的材质显示没有拉伸的效果  [#I9J143](https://gitee.com/marsgis/mars3d/issues/I9J143) 
+- Combine对象多次单击Popup时面板展示属性不对  [#I9HD5X](https://gitee.com/marsgis/mars3d/issues/I9HD5X) 
+- CirclePrimitive对象标绘时切换贴地属性和导出JSON时，坐标显示了历史值  [#I9J010](https://gitee.com/marsgis/mars3d/issues/I9J010) 
+
+
+#### 弃用 & API重构 🔒
+- 标绘事件event的drawtype命名改名为drawType
+ 
+
+
 ## 3.7.11 - 2024-4-22
 #### 优化 💪
 - DivLightPoint增加billboard参数
@@ -51,7 +74,6 @@
 
 #### 修复 🐞
 - 优化Map.toJSON导出参数方法
-- 更新被封谷歌底图域名
 - style.label在贴地和visibleDepth: false 会重影 [#I9G8R4](https://gitee.com/marsgis/mars3d/issues/I9G8R4) 
 - PolygonEntity在highlight中修改diffHeight无效 [#I9I1TN](https://gitee.com/marsgis/mars3d/issues/I9I1TN) 
 - RotatePoint.setOptions未生效 [#I9IN2V](https://gitee.com/marsgis/mars3d/issues/I9IN2V) 
