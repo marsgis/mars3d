@@ -44,6 +44,19 @@
 
 
 --- 
+## 3.7.13 - 2024-5-14
+#### 优化 💪
+- NavigationHelpButton控件增加firstOpen、localStorageName参数
+- Map增加readyPromise属性
+
+#### 修复 🐞
+- Shadows的change事件失效
+
+#### 弃用 & API重构 🔒
+- graphicLayer.removeGraphic 方法的第2个参数hasDestroy默认值改为true
+
+
+
 ## 3.7.12 - 2024-5-6
 #### 重要说明 📣
 - Cesium 升级至 [1.117](https://github.com/CesiumGS/cesium/releases/tag/1.117) 
