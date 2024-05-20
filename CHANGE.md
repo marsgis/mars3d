@@ -44,6 +44,20 @@
 
 
 --- 
+## 3.7.15 - 2024-5-20
+#### 优化 💪
+- TerrainClip增加czm参数
+- ModelEntity、ModelPrimitive增加splitDirection属性
+- Sector增加对动态属性坐标的支持
+- HeightMeasure结果默认按高度下降为负数、上升是正数显示
+- GeoJsonLayer增加filter数据筛选方法参数
+
+#### 修复 🐞
+- polylin线绘制时，当有depthFail:true参数会绘制不出来  [#I9ODHK](https://gitee.com/marsgis/mars3d/issues/I9ODHK)  
+
+
+
+
 ## 3.7.13 - 2024-5-14
 #### 优化 💪
 - NavigationHelpButton控件增加firstOpen、localStorageName参数
