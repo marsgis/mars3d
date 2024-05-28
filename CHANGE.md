@@ -44,7 +44,18 @@
 
 
 --- 
-## 3.7.15 - 2024-5-20
+## 3.7.16 - 2024-5-28
+#### 优化 💪
+- 图层flyTo方法重构
+- 矢量数据toJSON方法优化
+
+#### 修复 🐞
+- CzmlLayer图层的flyTo：true参数时定位错误 [#I9R9CD](https://gitee.com/marsgis/mars3d/issues/I9R9CD)  
+- shadows移除时未停止
+
+
+
+## 3.7.15 - 2024-5-21
 #### 优化 💪
 - TerrainClip增加czm参数
 - ModelEntity、ModelPrimitive增加splitDirection属性
@@ -54,7 +65,7 @@
 
 #### 修复 🐞
 - polylin线绘制时，当有depthFail:true参数会绘制不出来  [#I9ODHK](https://gitee.com/marsgis/mars3d/issues/I9ODHK)  
-
+- shadows.remove报错 [#I9QYHI](https://gitee.com/marsgis/mars3d/issues/I9QYHI)  
 
 
 
