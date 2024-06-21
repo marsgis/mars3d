@@ -44,6 +44,49 @@
 
 
 --- 
+## 3.7.19 - 2024-6-25
+#### 优化 💪
+- 矢量数据增加matrixMoveRadius参数用于右键菜单中按轴移动编辑
+- SectionMeasure剖面增加minDistance参数
+- WmtsLayer增加getFeatureInfoFormat参数
+
+#### 修复 🐞
+- ToolButton、Zoom控件的parentContainer参数无效
+- 贴地PointEntity在二维视图下不显示(Cesium本身bug)
+
+
+
+## 3.7.18 - 2024-6-17
+#### 增加 🌟
+- 新增了DivBillboardPrimitive对象
+
+#### 优化 💪
+- EllipsoidEntity的scanPlane动画改为与时序无关
+
+#### 修复 🐞
+- BrightnessEffect加载后backgroundImage失效 [#I9VRHT](https://gitee.com/marsgis/mars3d/issues/I9VRHT)  
+- MapSplit控件show属性控制无效
+- ConeTrack在动态坐标下更新heading值有误
+ 
+ 
+
+## 3.7.17 - 2024-6-5
+#### 重要说明 📣
+- Cesium 升级至 [1.118](https://github.com/CesiumGS/cesium/releases/tag/1.118) 
+
+#### 优化 💪
+- ReflectionWater增加farDistance和farColor参数
+- 重写mars3d.PolyUtil.getRectangle方法，增加最大高度返回值
+
+#### 修复 🐞
+- RectSensor初始化是空坐标时后续不显示 [#I9TFU9](https://gitee.com/marsgis/mars3d/issues/I9TFU9)  
+- CZML图层部分情况下flyTo无效
+- Video2D部分浏览器下一直未播放
+- 点状对象flyTo的高度值不对
+- v3.7.16修改造成的geojson图层flyTo失效
+
+
+
 ## 3.7.16 - 2024-5-28
 #### 优化 💪
 - 图层flyTo方法重构
