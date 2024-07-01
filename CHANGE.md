@@ -44,11 +44,22 @@
 
 
 --- 
-## 3.7.19 - 2024-6-25
+## 3.7.20- 2024-7-X
+#### 优化 💪
+- 文本材质、CanvasLabelEntity 增加\n换行和字间距参数
+- Mask增加style.global参数
+
+#### 修复 🐞
+- GaodePOI增加chinaCRS参数，解决在map.chinaCRS是GCJ02时坐标无需做加偏纠偏处理
+
+
+
+## 3.7.19 - 2024-6-26
 #### 优化 💪
 - 矢量数据增加matrixMoveRadius参数用于右键菜单中按轴移动编辑
 - SectionMeasure剖面增加minDistance参数
 - WmtsLayer增加getFeatureInfoFormat参数
+- PointMeasure位置测量增加参数及优化显示
 
 #### 修复 🐞
 - ToolButton、Zoom控件的parentContainer参数无效
@@ -57,7 +68,7 @@
 
 
 ## 3.7.18 - 2024-6-17
-#### 增加 🌟
+#### 新增 🌟
 - 新增了DivBillboardPrimitive对象
 
 #### 优化 💪
@@ -163,7 +174,7 @@
 
 
 ## 3.7.10 - 2024-4-15 
-#### 增加 🌟
+#### 新增 🌟
 - Map增加method参数(并将之前chinaCRS、lang、templateValues、token参数移动到method下)
 - TerrainUplift地形抬升增加抬升动画方法movingAnimation
 - 矢量数据支持从Ajax后端动态读取属性和点状坐标的配置
@@ -243,7 +254,7 @@
 #### 重要说明 📣
 - Cesium 升级至 [1.115](https://github.com/CesiumGS/cesium/releases/tag/1.115) 
 
-#### 增加 🌟
+#### 新增 🌟
 - 新增CubeView立方体视图控件
 
 #### 优化 💪
@@ -284,7 +295,7 @@
 - 矢量数据clampToGround: true属性将同时支持贴模型和地形，HeightReference属性可以设置单独贴模型或贴地形等。
 - TilesetLayer模型图层默认不允许鼠标穿透，增加 disableCollision参数设置是否允许相机进入模型的内部或下方。
 
-#### 增加 🌟
+#### 新增 🌟
 - 增加 TilesetColorCorrection 模型单独颜色校正对象
 - Map、TilesetLayer类增加 getHeight 贴地高度计算方法 
 
@@ -321,7 +332,7 @@
 #### 重要说明 📣
 - Cesium 升级至 [1.113](https://github.com/CesiumGS/cesium/releases/tag/1.113) 
 
-#### 增加 🌟
+#### 新增 🌟
 - 新增 标绘 顶点吸附 功能，通过 map.onlyVertexPosition开启关闭
 - 新增 DivPlane、JammingRadar、FixedJammingRadar 矢量对象
 - 新增 DivIndicator 固定指向且可拖动面板的DIV示例
@@ -368,7 +379,7 @@
 
 
 ## 3.6.16 - 2023-12-12 
-#### 增加 🌟
+#### 新增 🌟
 - 增加ThingType、ThingUtil 类
 - map增加thing参数，支持地形压平 等thing对象通过参数初始化传入
 
@@ -397,7 +408,7 @@
 
 
 ## 3.6.14 - 2023-11-27
-#### 增加 🌟
+#### 新增 🌟
 - 增加 EditPointType 类，DrawUtil类新增setEditPointStyle、setAllEditPointStyle方法，支持完全每种编辑点的矢量对象类型和样式
 
 #### 优化 💪
@@ -432,7 +443,7 @@
 
 
 ## 3.6.12 - 2023-11-13
-#### 增加 🌟
+#### 新增 🌟
 - 新增 [ColorCorrectionEffect 颜色校正](http://mars3d.cn/editor-vue.html?id=effect/colorCorrection) 特效
 - Effect相关类增加 [availability](http://mars3d.cn/api/BaseEffect.html?classFilter=Effect#availability) 属性
 - Layer相关类增加 [availability](http://mars3d.cn/api/BaseLayer.html?classFilter=Layer#availability) 属性
@@ -451,7 +462,7 @@
 #### 重要说明 📣
 - Cesium 升级至 [1.111](https://github.com/CesiumGS/cesium/releases/tag/1.111) 
 
-#### 增加 🌟
+#### 新增 🌟
 - 新增[LineCross](http://mars3d.cn/editor-vue.html?id=graphic\entity\circle)十字形间隔线材质
 - [Water](http://mars3d.cn/api/Water.html?classFilter=Water)、[PolygonPrimitive](http://mars3d.cn/api/PolygonPrimitive.html?classFilter=PolygonPrimitive)等对象增加offsetHeight平移指定偏移高度参数
 - [WaterCombine](http://mars3d.cn/api/WaterCombine.html?classFilter=WaterCombine)、[PolygonCombine](http://mars3d.cn/api/PolygonCombine.html?classFilter=PolygonCombine)等对象增加offsetHeight属性和setOffsetHeight方法
@@ -475,7 +486,7 @@
 
 
 ## 3.6.10 - 2023-10-23
-#### 增加 🌟
+#### 新增 🌟
 - 所有combine类型Primitive大数据对象增加style.label参数
 
 #### 优化 💪
@@ -490,7 +501,7 @@
 
 
 ## 3.6.9 - 2023-10-17 
-#### 增加 🌟
+#### 新增 🌟
 - primitive矢量数据增加了[readyPromise](http://mars3d.cn/api/BasePrimitive.html?classFilter=basep#readyPromise)属性
 
 #### 优化 💪
@@ -542,7 +553,7 @@
 
 
 ## 3.6.6 - 2023-9-18
-#### 增加 🌟
+#### 新增 🌟
 - 新增[BrushLineEntity](http://mars3d.cn/api/BrushLineEntity.html?classFilter=BrushLineEntity)自由绘制线对象
 - 新增[GroupGraphic](http://mars3d.cn/api/GroupGraphic.html?classFilter=GroupGraphic)矢量数据组对象
 
@@ -560,7 +571,7 @@
 
 
 ## 3.6.5 - 2023-9-11
-#### 增加 🌟
+#### 新增 🌟
 - xyz图层url中增加scale、origin模版(用于使用超图的瓦片底图服务)
 
 #### 优化 💪
@@ -592,7 +603,7 @@
 
 
 ## 3.6.3 - 2023-8-29
-#### 增加 🌟
+#### 新增 🌟
 - 对大部分矢量数据增加availability时序显示控制参数和属性
 - 增加mars3d.PointUtil.getPropertyIndex方法
 
@@ -615,7 +626,7 @@
 
 
 ## 3.6.1 - 2023-8-14 
-#### 增加 🌟
+#### 新增 🌟
 - 增加 ColorRamp 色带类
 
 #### 优化 💪
@@ -638,7 +649,7 @@
 #### 重要说明 📣
 - Cesium 升级至 [1.108](https://github.com/CesiumGS/cesium/releases/tag/1.108)
 
-#### 增加 🌟
+#### 新增 🌟
 - 新增[PointLight点光源](http://mars3d.cn/editor-vue.html?id=graphic/custom/pointLight)、[SpotLight聚光灯](http://mars3d.cn/editor-vue.html?id=graphic/custom/spotLight)、[VolumeCloud气象云三维体](http://mars3d.cn/editor-vue.html?id=graphic/custom/volumeCloud)、[Visibility合并可视化](http://mars3d.cn/editor-vue.html?id=graphic/custom/visibility) 等矢量对象
 - 新增[TilesetShake地震模拟](http://mars3d.cn/editor-vue.html?id=thing/tileset/shake)、[ViewDome开敞度分析](http://mars3d.cn/editor-vue.html?id=graphic/custom/viewDome)、[SkylineBody天际线体](http://mars3d.cn/editor-vue.html?id=graphic/custom/skylineBody)等模型相关分析
 - 新增对[BillboardPrimitive](http://mars3d.cn/api/BillboardPrimitive.html?classFilter=BillboardPrimitive)、[PointPrimitive](http://mars3d.cn/api/PointPrimitive.html?classFilter=PointPrimitive)、[LabelPrimitive](http://mars3d.cn/api/LabelPrimitive.html?classFilter=LabelPrimitive)对象的聚合支持
@@ -759,7 +770,7 @@
 
 
 ## 3.5.10 - 2023-6-5
-#### 增加 🌟
+#### 新增 🌟
 - TilesetLayer增加luminanceAtZenith亮度属性
 - map增加pauseCameraViewList和proceedCameraViewList方法
 
@@ -775,7 +786,7 @@
 
 
 ## 3.5.9 - 2023-5-29
-#### 增加 🌟
+#### 新增 🌟
 - GraphicLayer矢量图层增加drawEndEventType参数，支持标绘自定义结束事件
 - Satellite支持通过标绘机制中设置样式等
 
@@ -791,7 +802,7 @@
 
 
 ## 3.5.8 - 2023-5-23
-#### 增加 🌟
+#### 新增 🌟
 - 增加VideoPrimitive对象
 
 #### 优化 💪
@@ -835,7 +846,7 @@
 #### 重要说明 📣
 - Cesium 升级至 [1.105](https://github.com/CesiumGS/cesium/releases/tag/1.105)
 
-#### 增加 🌟
+#### 新增 🌟
 - 日照分析增加阴影率分析
 
 #### 优化 💪
@@ -847,7 +858,7 @@
 
 
 ## 3.5.4 - 2023-4-24
-#### 增加 🌟
+#### 新增 🌟
 - FrustumPrimitive增加支持camera参数
 - TilesetPlanClip 增加对平面的旋转角度属性
 
@@ -921,7 +932,7 @@
 - 改用WebGL2进行渲染
 - Cesium v1.97+ 采用了新的glTF架构代码重写，影响3dtiles部分功能无法使用和部分gltf/3dtiles数据报错
 
-#### 增加 🌟
+#### 新增 🌟
 - 增加了[TerrainUplift](http://mars3d.cn/api/TerrainUplift.html)地形抬升、[TerrainFlat](http://mars3d.cn/api/TerrainFlat.html)地形压平功能
 - 增加了[PitEntity](http://mars3d.cn/api/PitEntity.html)、 [ThickWall](http://mars3d.cn/api/ThickWall.html)、 [DoubleSidedPlane](http://mars3d.cn/api/DoubleSidedPlane.html)、 [VolumeDepthMeasure](http://mars3d.cn/api/VolumeDepthMeasure.html)、 [ReflectionWater](http://mars3d.cn/api/ReflectionWater.html) 等矢量对象
 - 增加了[BaseLayerPicker](http://mars3d.cn/api/BaseLayerPicker.html)、[Animation](http://mars3d.cn/api/Animation.html)、[FullscreenButton](http://mars3d.cn/api/FullscreenButton.html) 等11个Cesium原生控件的包装类，便于统一控制
@@ -1024,7 +1035,7 @@
 
 
 ## 3.4.16 - 2022-12-5
-#### 增加 🌟
+#### 新增 🌟
 - FixedRoute传入的路线增加heading、pitch参数支持
 - PolygonEntity、CircleEntity、RectangleEntity支持clampToGround参数的动态更新
 
@@ -1047,7 +1058,7 @@
 
 
 ## 3.4.14 - 2022-11-22  
-#### 增加 🌟
+#### 新增 🌟
 - Map增加setOptions方法
 - 相关Control控件对象的setOptions方法支持
 
@@ -1060,7 +1071,7 @@
 
 
 ## 3.4.13 - 2022-11-7
-#### 增加 🌟
+#### 新增 🌟
 - 新增LineDotDash点划线材质
 
 #### 优化 💪
@@ -1114,7 +1125,7 @@
 
 
 ## 3.4.8 - 2022-9-26
-#### 增加 🌟
+#### 新增 🌟
 - 增加 天地图POI 查询类
 
 #### 优化 💪
@@ -1170,7 +1181,7 @@
 #### 重要说明 📣
 - Cesium 升级至 [1.96](https://github.com/CesiumGS/cesium/releases/tag/1.96)
 
-#### 增加 🌟
+#### 新增 🌟
 - 增加BusineDataLayer业务数据图层
 
 #### 优化 💪
@@ -1190,7 +1201,7 @@
 
 
 ## 3.4.1 - 2022-7-25
-#### 增加 🌟
+#### 新增 🌟
 - 新增MapCompare地图对比控件
 - 优化MapSplit控件图层参数，支持构造参数传入和数组传入
 
@@ -1210,7 +1221,7 @@
 - 发布v3.4
 - 对 矢量数据 做了一轮非常大的整改，包括功能一致性、渲染效率等
 
-#### 增加 🌟
+#### 新增 🌟
 - 新增了[BloomTargetEffect](http://mars3d.cn/api/BloomTargetEffect.html)对象泛光特效
 - 新增[MatrixMove](http://mars3d.cn/api/MatrixMove.html)矩阵图上平移编辑类、[MatrixRotate](http://mars3d.cn/api/MatrixRotate.html)矩阵图上旋转编辑类
 - gltf、3dtiles模型新增沿XYZ轴平移图上编辑和旋转角度图上编辑
@@ -1271,7 +1282,7 @@
 #### 重要说明 📣 
 - Cesium 升级至 [1.94](https://github.com/CesiumGS/cesium/releases/tag/1.94)
 
-#### 增加 🌟
+#### 新增 🌟
 - GeoJsonLayer增加chinaCRS参数，用于自动纠偏或加偏数据
 
 #### 优化 💪
@@ -1329,7 +1340,7 @@
 - Cesium 升级至 [1.93](https://github.com/CesiumGS/cesium/releases/tag/1.93)
 - 原生 JS 版功能示例、基础项目 中依赖的 jquery 升级至 v3+最新版
 
-#### 增加 🌟
+#### 新增 🌟
 - ModelCombine大数据模型类 增加 scaleX、scaleY、scaleZ 参数
 - ModelPrimitive模型类 增加 noPitchRoll 参数
 - 增加 MultipleSkyBox 多天空盒
@@ -1350,7 +1361,7 @@
 
 
 ## 3.3.7 - 2022-5-2
-#### 增加 🌟
+#### 新增 🌟
 - 新增了 CanvasLabelEntity 文本点对象
 
 #### 优化 💪
@@ -1370,7 +1381,7 @@
 
 
 ## 3.3.6 - 2022-4-22
-#### 增加 🌟
+#### 新增 🌟
 - 增加了多个材质对象
 - 增加 GroupThing 组合类
 
@@ -1393,7 +1404,7 @@
 - Cesium 升级至 [1.92](https://github.com/CesiumGS/cesium/releases/tag/1.92)
 - 发布了 [移动端 APP 项目模板](http://mall.marsgis.cn/#/product/mars3d-vue-app)
 
-#### 增加 🌟
+#### 新增 🌟
 - 新增了 [TilesetBoxClip](http://mars3d.cn/api/TilesetBoxClip.html) 模型盒子裁剪功能
 - 新增对 3dtiles 模型的卷帘对比支持
 - 所有图层增加 readyPromise 属性，方便使用
@@ -1453,7 +1464,7 @@
 #### 重要说明 📣
 - Cesium 升级至 [1.90](https://github.com/CesiumGS/cesium/releases/tag/1.90)
 
-#### 增加 🌟
+#### 新增 🌟
 - map新增了地形加载失败、地形加载成功、load初始化 事件
 
 #### 优化 💪
@@ -1470,7 +1481,7 @@
 - 发布了 v3.2 版
 - Vue功能示例和基础项目架构由webpack迁移至vite框架
 
-#### 增加 🌟
+#### 新增 🌟
 - 新增了 [CircleCombine](http://mars3d.cn/api/CircleCombine.html) 、[RectangleCombine](http://mars3d.cn/api/RectangleCombine.html)、[WallCombine](http://mars3d.cn/api/WallCombine.html) 等10多个合并渲染的大数据矢量对象
 - 新增了[Tetrahedron](http://mars3d.cn/api/Tetrahedron.html)、[CloudPrimitive](http://mars3d.cn/api/CloudPrimitive.html)、[ViewShed](http://mars3d.cn/api/ViewShed.html) 等 graphic 矢量对象  
 - 新增瓦片图层颜色滤镜功能，增加 invertColor、filterColor等参数来修改瓦片颜色
@@ -1496,7 +1507,7 @@
 ---
 
 ## 3.1.23 - 2022-1-23
-#### 增加 🌟
+#### 新增 🌟
 - 模型和矢量对象中增加 allowDrillPick 参数，允许鼠标穿透拾取进行交互
 - Video3D 增加 maskImage 羽化图片参数
 
@@ -1533,7 +1544,7 @@
 - 发布上线了 基础项目 Vue版
 - Cesium 升级至 [1.89](https://github.com/CesiumGS/cesium/releases/tag/1.89)
 
-#### 增加 🌟
+#### 新增 🌟
 - 新增了 CylinderWaveMaterialProperty 材质属性
 
 #### 优化 💪
@@ -1548,7 +1559,7 @@
 
 
 ## 3.1.18 - 2021-12-25
-#### 增加 🌟
+#### 新增 🌟
 - 增加 ConeTrackPrimitive 圆锥追踪体矢量对象
 - 增加 EffectType、ControlType 类
 - 统一规范了所有Control，支持Map中control传参预加载构造、新增了type类型，相关新增移除事件等
@@ -1565,7 +1576,7 @@
 
 
 ## 3.1.17 - 2021-12-19
-#### 增加 🌟
+#### 新增 🌟
 - 矢量对象标绘事件中，增加修改或增加点的 index 值
 
 #### 优化 💪
@@ -1582,7 +1593,7 @@
 
 
 ## 3.1.16 - 2021-12-11 
-#### 增加 🌟
+#### 新增 🌟
 - 所有类的事件回调对象增加 stopPropagation 方法可以停止事件冒泡
 - Map类增加 contextMenuOpen、contextMenuClose、contextMenuClick 右键菜单相关事件
 
@@ -1608,7 +1619,7 @@
 - 发布上线了 功能示例 Vue版
 - Cesium 升级至 [1.88](https://github.com/CesiumGS/cesium/releases/tag/1.88)
 
-#### 增加 🌟
+#### 新增 🌟
 - 增加 ClockAnimate 控件
 
 #### 优化 💪
@@ -1622,7 +1633,7 @@
 
 
 ## 3.1.14 - 2021-11-29
-#### 增加 🌟
+#### 新增 🌟
 - map 增加 terrainChange、tileLoadProgress 事件
 - [DivGraphic](http://mars3d.cn/api/DivGraphic.html?classFilter=Div) 在 clampToGround:true 时支持随地形切换后贴地
 
@@ -1638,7 +1649,7 @@
 
 
 ## 3.1.13 - 2012-11-21
-#### 增加 🌟
+#### 新增 🌟
 - PolygonPrimitive、PolygonCombine、RectanglePrimitive、CirclePrimitive 新增支持 ouline 宽度及材质设置
 
 #### 优化 💪
@@ -1657,7 +1668,7 @@
 #### 重要说明 📣
 - Cesium 升级至 [1.87](https://github.com/CesiumGS/cesium/releases/tag/1.87)
 
-#### 增加 🌟
+#### 新增 🌟
 - ModelPrimitive、TilesetLayer 支持 customShader 参数来设置自定义 shader 效果
 
 #### 优化 💪
@@ -1688,7 +1699,7 @@
 
 
 ## 3.1.9 - 2021-10-24
-#### 增加 🌟
+#### 新增 🌟
 - 增加了 WaterCombine大数据水面对象 
 - TilesetPlanClip中新增了对模型斜切
 - 增加多个客户端空间分析示例
@@ -1707,7 +1718,7 @@
 
 
 ## 3.1.7 - 2021-10-11
-#### 增加 🌟
+#### 新增 🌟
 - 增加了行政区突出展示、智慧社区等多个功能示例
 
 #### 优化 💪
@@ -1725,7 +1736,7 @@
 #### 重要说明 📣
 - Cesium 升级至 [1.86](https://github.com/CesiumGS/cesium/releases/tag/1.86)
 
-#### 增加 🌟
+#### 新增 🌟
 - 矢量数据和图层中增加 getRectangle 方法获取数据的矩形边界
 
 #### 优化 💪
@@ -1767,7 +1778,7 @@
 - Cesium 升级至 [1.85](https://github.com/CesiumGS/cesium/releases/tag/1.85)
 
 
-#### 增加 🌟
+#### 新增 🌟
 - 增加了描边 OutlineEffect 特效对象
 - CircleEntity 和 RectangleEntity 对象的 toGeoJSON 方法支持导出边线
 - GaodeRoute 支持途经点、避让区域参数
@@ -1791,7 +1802,7 @@
 
 
 ## 3.1.1 - 2021-8-27
-#### 增加 🌟
+#### 新增 🌟
 - 点状Primitive对象类中新增addDynamicPosition动态点动画轨迹方法
 - map 增加了 renderError 事件
 - 增加 mars3d.LatLngPoint.FormatLength 全局变量，控制经度纬度的格式化时的长度
@@ -1815,7 +1826,7 @@
 #### 重要说明 📣
 - 发布了 v3.1 版
 
-#### 增加 🌟
+#### 新增 🌟
 - 矢量数据增加 highlight 高亮相关属性和方法，支持鼠标移入或单击后的按指定样式高亮矢量对象 
 - 重写了 图上量算的所有矢量对象，采用继承Graphic矢量类的方式实现
 - 重写了 [Popup](http://mars3d.cn/api/Popup.html) 和 [Tooltip](http://mars3d.cn/api/Tooltip.html) 类，采用继承DivGraphic类的方式实现
@@ -1855,7 +1866,7 @@
 - Cesium 升级至 [1.84](https://github.com/CesiumGS/cesium/releases/tag/1.84)
 
 
-#### 增加 🌟
+#### 新增 🌟
 - 增加 [PolylineCombine](http://mars3d.cn/api/PolylineCombine.html)大数据线对象
 
 #### 优化 💪
@@ -1877,7 +1888,7 @@
 
 ## 3.0.32 - 2021-7-27
 
-#### 增加 🌟
+#### 新增 🌟
 - 增加[Tle](http://mars3d.cn/api/Tle.html)算法类，用于卫星 TLE 和 SGP4 相关计算
 - [PointPrimitive](http://mars3d.cn/api/PointPrimitive.html)对象新增对CallbackProperty动态坐标的支持
 - Map 类增加 [zoomIn](http://mars3d.cn/api/Map.html#zoomIn) 和  [zoomOut](http://mars3d.cn/api/Map.html#zoomOut) 缩放地图方法
@@ -1902,7 +1913,7 @@
 
 
 ## 3.0.31 - 2021-7-20
-#### 增加 🌟
+#### 新增 🌟
 - Map 类新增lang 多语言参数，用于切换SDK内的文字语言展示
 - [Popup](http://mars3d.cn/api/Popup.html)  和 [Tooltip](http://mars3d.cn/api/Tooltip.html)  新增template参数，用于支持配置外部模板
 
@@ -1924,7 +1935,7 @@
 
 
 ## 3.0.30 - 2021-07-11
-#### 增加 🌟
+#### 新增 🌟
 - 增加 [PointUtil.getMidpoint](http://mars3d.cn/api/PointUtil.html#.getMidpoint)  方法，优化标绘的中点计算
 
 #### 优化 💪
@@ -1971,7 +1982,7 @@
 - Cesium 升级至 [1.82](https://github.com/CesiumGS/cesium/releases/tag/1.82)
 
 
-#### 增加 🌟
+#### 新增 🌟
 - 图层、控件等类中增加 stopPropagation 参数，用于控制事件是否冒泡
 - 对 wmts 服务图层支持单击拾取矢量数据
 
@@ -1990,7 +2001,7 @@
 
 
 ## 3.0.27 - 2021-6-11
-#### 增加 🌟
+#### 新增 🌟
 - Entity点对象类中新增 [addDynamicPosition](http://mars3d.cn/api/BasePointEntity.html#addDynamicPosition) 动态点动画轨迹方法
 - 默认右键菜单中，增加场景特效菜单项
 
@@ -2008,7 +2019,7 @@
 
 
 ## 3.0.26 - 2021-6-3
-#### 增加 🌟
+#### 新增 🌟
 - 支持对CGCS2000投影坐标(EPSG:4502 到 EPSG:4554)的坐标显示和转换
 
 #### 优化 💪
@@ -2022,7 +2033,7 @@
 
 
 ## 3.0.23 - 2021-05-08
-#### 增加 🌟
+#### 新增 🌟
 - 新增了 [PolygonCombine](http://mars3d.cn/api/PolygonCombine.html)、[ModelCombine](http://mars3d.cn/api/ModelCombine.html)  等大数据展示的合并渲染对象
 - 新增了 [DivUpLabel](http://mars3d.cn/api/DivUpLabel.html)、[DivBoderLabel](http://mars3d.cn/api/DivBoderLabel.html) 等多个 DivGraphic子类对象及其功能示例
 - 新增了 [ConeTrack](http://mars3d.cn/api/ConeTrack.html) 圆锥追踪体对象
@@ -2036,7 +2047,7 @@
 - Cesium 升级至 [1.80](https://github.com/CesiumGS/cesium/releases/tag/1.80)
 - 完成所有 V2 的功能示例的对应 V3 新版开发
 
-#### 增加 🌟
+#### 新增 🌟
 - 材质统一管理：新增了 [MaterialType](http://mars3d.cn/api/MaterialType.html) 和 [MaterialUtil](http://mars3d.cn/api/MaterialUtil.html) 类来统一管理材质。
 - 样式统一规范：梳理规范了所有矢量数据的style样式参数。
 - 重写了 [GeoJsonLayer](http://mars3d.cn/api/GeoJsonLayer.html)图层，采用可在 symobl 中配置 type 参数指定 Graphic 类型来渲染，默认为 primitive 方式。
@@ -2060,7 +2071,7 @@
 - 详细的 API 和教程：重新编写了详细的教程文档、自动根据 SDK 注释生成的最详尽的 API 文档，并完全免费开放。
 - 功能示例和项目模板：并规划开发了 Vue 版、React 版功能示例和基础项目。
 
-#### 增加 🌟
+#### 新增 🌟
 - 矢量数据：全新设计的矢量图层 [GraphicLayer](http://mars3d.cn/api/GraphicLayer.html) 和 [Graphic](http://mars3d.cn/api/BaseGraphic.html)  矢量数据体系，可以自由切换数据类型，提高渲染效率。
 - 材质：新增了十多个全新动态材质，并使用 MaterialType 和 MaterialUtil 类来统一管理矢量数据的材质对象，简单易用。
 - 模型分析：优化了模型压平、模型开挖、模型淹没，支持多个模型压平等并提高渲染效率。
@@ -2072,7 +2083,7 @@
 
 
 ---
-> V2版本将于 2023-12-30 起停止维护
+> V2版本已停止维护
 
 ## 2.3.0 - 2020-12-31
 #### 重要说明 📣
