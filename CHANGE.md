@@ -44,10 +44,11 @@
 
 
 --- 
-## 3.7.20- 2024-7-X
+## 3.7.20- 2024-7-5
 #### 优化 💪
 - 文本材质、CanvasLabelEntity 增加\n换行和字间距参数
 - Mask增加style.global参数
+- mars3d-cesium库升级到[v1.119](https://github.com/CesiumGS/cesium/releases/tag/1.119) 
 
 #### 修复 🐞
 - GaodePOI增加chinaCRS参数，解决在map.chinaCRS是GCJ02时坐标无需做加偏纠偏处理
@@ -81,13 +82,11 @@
  
  
 
-## 3.7.17 - 2024-6-5
-#### 重要说明 📣
-- Cesium 升级至 [1.118](https://github.com/CesiumGS/cesium/releases/tag/1.118) 
-
+## 3.7.17 - 2024-6-5 
 #### 优化 💪
 - ReflectionWater增加farDistance和farColor参数
 - 重写mars3d.PolyUtil.getRectangle方法，增加最大高度返回值
+- mars3d-cesium库升级到[v1.118](https://github.com/CesiumGS/cesium/releases/tag/1.118) 
 
 #### 修复 🐞
 - RectSensor初始化是空坐标时后续不显示 [#I9TFU9](https://gitee.com/marsgis/mars3d/issues/I9TFU9)  
@@ -136,10 +135,7 @@
 
 
 
-## 3.7.12 - 2024-5-6
-#### 重要说明 📣
-- Cesium 升级至 [1.117](https://github.com/CesiumGS/cesium/releases/tag/1.117) 
-
+## 3.7.12 - 2024-5-6 
 #### 优化 💪
 - 优化TilesetClip、TilesetPlanClip 模型裁剪开挖功能
 - 优化TerrainClip、TerrainPlanClip 地形开挖功能，并TerrainPlanClip支持按线切分看地形切割
@@ -147,6 +143,7 @@
 - WMS等瓦片图层卷帘时单击事件和Popup的不可见区域不触发
 - Map增加availabilityEnabled参数，可以全局开关availability
 - 增加tif、excel、csv文件的本地数据读取示例
+- mars3d-cesium库升级到[v1.117](https://github.com/CesiumGS/cesium/releases/tag/1.117) 
 
 #### 修复 🐞
 - Pit墙面的材质显示没有拉伸的效果  [#I9J143](https://gitee.com/marsgis/mars3d/issues/I9J143) 
@@ -197,14 +194,12 @@
 
 
 
-## 3.7.9 - 2024-4-6 
-#### 重要说明 📣
-- Cesium 升级至 [1.116](https://github.com/CesiumGS/cesium/releases/tag/1.116) 
-
+## 3.7.9 - 2024-4-6  
 #### 优化 💪
 - Map增加scene.logarithmicDepthBuffer参数
 - FixedRoute的change事件增加index_original原始index返回值  [#I9B880](https://gitee.com/marsgis/mars3d/issues/I9B880) 
 - GraphicLayer矢量图层聚合增加clustering.minChanged参数
+- mars3d-cesium库升级到[v1.116](https://github.com/CesiumGS/cesium/releases/tag/1.116) 
 
 #### 修复 🐞
 - zoom控件缩放时，DivGraphic未重现渲染
@@ -251,9 +246,6 @@
 
 
 ## 3.7.5 - 2024-3-5
-#### 重要说明 📣
-- Cesium 升级至 [1.115](https://github.com/CesiumGS/cesium/releases/tag/1.115) 
-
 #### 新增 🌟
 - 新增CubeView立方体视图控件
 
@@ -265,6 +257,7 @@
 - 所有highlight相关类中增加highlight.enabled子参数
 - map的scene构造参数增加了backgroundType、backgroundImage并自动处理了互斥关系
 - 优化map.getCurrentOptions方法导出相关参数。
+- mars3d-cesium库升级到[v1.114](https://github.com/CesiumGS/cesium/releases/tag/1.114) 
 
 #### 修复 🐞
 - BloomTargetEffect造成地球背景图片消失
@@ -291,7 +284,6 @@
 
 ## 3.7.3 - 2024-2-5
 #### 重要说明 📣
-- Cesium 升级至 [1.114](https://github.com/CesiumGS/cesium/releases/tag/1.114) 
 - 矢量数据clampToGround: true属性将同时支持贴模型和地形，HeightReference属性可以设置单独贴模型或贴地形等。
 - TilesetLayer模型图层默认不允许鼠标穿透，增加 disableCollision参数设置是否允许相机进入模型的内部或下方。
 
@@ -303,6 +295,7 @@
 #### 优化 💪
 - 重写了PointUtil.getHeight、PointUtil.getSurfacePosition方法，相关参数有调整
 - 矢量图层聚合图标回调增加相关对象的返回，并优化示例增加大数据异步生成
+- mars3d-cesium库升级到[v1.114](https://github.com/CesiumGS/cesium/releases/tag/1.114) 
 
 
 
@@ -329,15 +322,13 @@
 
 
 ## 3.7.0 - 2024-1-15
-#### 重要说明 📣
-- Cesium 升级至 [1.113](https://github.com/CesiumGS/cesium/releases/tag/1.113) 
-
 #### 新增 🌟
 - 新增 标绘 顶点吸附 功能，通过 map.onlyVertexPosition开启关闭
 - 新增 DivPlane、JammingRadar、FixedJammingRadar 矢量对象
 - 新增 DivIndicator 固定指向且可拖动面板的DIV示例
 
 #### 优化 💪
+- mars3d-cesium库升级到[v1.113](https://github.com/CesiumGS/cesium/releases/tag/1.113) 
 - primitive增加zIndex参数和属性
 - entity.startFlicker方法增加step参数
 - TilesetLayer增加assetId参数
@@ -395,11 +386,9 @@
 
 
 ## 3.6.15 - 2023-12-5
-#### 重要说明 📣
-- Cesium 升级至 [1.112](https://github.com/CesiumGS/cesium/releases/tag/1.112) 
-
 #### 优化 💪
 - SnowEffect增加scale粒子大小参数
+- mars3d-cesium库升级到[v1.112](https://github.com/CesiumGS/cesium/releases/tag/1.112) 
 
 #### 修复 🐞
 - SnowCoverEffect初始化enabled:false时更新为true无效
@@ -459,9 +448,6 @@
 
 
 ## 3.6.11 - 2023-11-3
-#### 重要说明 📣
-- Cesium 升级至 [1.111](https://github.com/CesiumGS/cesium/releases/tag/1.111) 
-
 #### 新增 🌟
 - 新增[LineCross](http://mars3d.cn/editor-vue.html?id=graphic\entity\circle)十字形间隔线材质
 - [Water](http://mars3d.cn/api/Water.html?classFilter=Water)、[PolygonPrimitive](http://mars3d.cn/api/PolygonPrimitive.html?classFilter=PolygonPrimitive)等对象增加offsetHeight平移指定偏移高度参数
@@ -470,6 +456,7 @@
 
 #### 优化 💪
 - [ImageLayer](http://mars3d.cn/api/ImageLayer.html?classFilter=ImageLayer)增加加载完成回调
+- mars3d-cesium库升级到[v1.111](https://github.com/CesiumGS/cesium/releases/tag/1.111) 
 
 #### 修复 🐞
 - 导航球控件中提示文本的Lang多语言支持 [#I8AZGV](https://gitee.com/marsgis/mars3d/issues/I8AZGV)
@@ -524,14 +511,12 @@
 
 
 ## 3.6.8 - 2023-10-9 
-#### 重要说明 📣
-- Cesium 升级至 [1.110](https://github.com/CesiumGS/cesium/releases/tag/1.110) 【已知问题：PolygonPrimitive材质纹理默认值异常，v1.111.1已修复】
-
 #### 优化 💪
 - 暴露mars3d.edit.*相关编辑类，方便外部继承使用
 - 矢量数据toGeoJSON方法增加options的导入导出
 - 优化矢量数据availability属性相关
 - Map的terrain参数支持是否默认启用地形开挖、压平等配置
+- mars3d-cesium库升级到[v1.110](https://github.com/CesiumGS/cesium/releases/tag/1.110) 【已知问题：PolygonPrimitive材质纹理默认值异常，v1.111.1已修复】
 
 #### 修复 🐞
 - FixedRoute在showStop:true时, 模型未展示 [#I860EZ](https://gitee.com/marsgis/mars3d/issues/I860EZ)
@@ -587,14 +572,10 @@
 
 
 ## 3.6.4 - 2023-9-5
-#### 重要说明 📣
-- Cesium 升级至 [1.109](https://github.com/CesiumGS/cesium/releases/tag/1.109)
-- 无法跨域引入cdn版本Cesium v1.109,需要本地引入（v1.110版本已解决）。
-- FireFox浏览器需要v114及以上版本才能运行。
-
 #### 优化 💪
 - [SnowEffect](http://mars3d.cn/api/SnowEffect.html?classFilter=SnowEffect)增加maxHeight参数
 - [LocationBar](http://mars3d.cn/api/LocationBar.html?classFilter=LocationBar)的fps改为模版配置，并可从locationData取fps值
+- mars3d-cesium库升级到[v1.109](https://github.com/CesiumGS/cesium/releases/tag/1.109) 无法跨域引入cdn版本Cesium v1.109,需要本地引入（v1.110版本已解决）。
 
 #### 修复 🐞
 - DivGraphic图层允许编辑时未自动处理pointerEvents
@@ -645,10 +626,7 @@
 
 
 
-## 3.6.0 - 2023-8-4
-#### 重要说明 📣
-- Cesium 升级至 [1.108](https://github.com/CesiumGS/cesium/releases/tag/1.108)
-
+## 3.6.0 - 2023-8-4 
 #### 新增 🌟
 - 新增[PointLight点光源](http://mars3d.cn/editor-vue.html?id=graphic/custom/pointLight)、[SpotLight聚光灯](http://mars3d.cn/editor-vue.html?id=graphic/custom/spotLight)、[VolumeCloud气象云三维体](http://mars3d.cn/editor-vue.html?id=graphic/custom/volumeCloud)、[Visibility合并可视化](http://mars3d.cn/editor-vue.html?id=graphic/custom/visibility) 等矢量对象
 - 新增[TilesetShake地震模拟](http://mars3d.cn/editor-vue.html?id=thing/tileset/shake)、[ViewDome开敞度分析](http://mars3d.cn/editor-vue.html?id=graphic/custom/viewDome)、[SkylineBody天际线体](http://mars3d.cn/editor-vue.html?id=graphic/custom/skylineBody)等模型相关分析
@@ -657,6 +635,7 @@
 
 #### 优化 💪
 - 重写了 [TerrainClip](http://mars3d.cn/api/TerrainClip.html?classFilter=TerrainClip)、[FloodByMaterial](http://mars3d.cn/api/FloodByMaterial.html?classFilter=FloodByMaterial)、[ContourLine](http://mars3d.cn/api/ContourLine.html?classFilter=ContourLine)地形相关分析类
+- mars3d-cesium库升级到[v1.108](https://github.com/CesiumGS/cesium/releases/tag/1.108)
 
 #### 弃用 & API重构 🔒
 - 弃用mars3d-widget插件，原生JS技术栈下项目中直接改为使用源码(es5-widget.js)
@@ -700,16 +679,14 @@
 
 
 
-## 3.5.15 - 2023-7-10
-#### 重要说明 📣
-- Cesium 升级至 [1.107](https://github.com/CesiumGS/cesium/releases/tag/1.107)
-
+## 3.5.15 - 2023-7-10  
 #### 优化 💪
 - Animation控件增加ticks参数
 - Pit的围合墙部分改为普通wall
 - 优化经纬网文本的展示
 - 矢量线面对象在切换是否贴地时编辑点的更新处理
 - BingLayer、GeeLayer、IonLayer对[1.107](https://github.com/CesiumGS/cesium/releases/tag/1.107)版本的支持修复
+- mars3d-cesium库升级到[v1.107](https://github.com/CesiumGS/cesium/releases/tag/1.107)
 
 #### 修复 🐞
 - PolylineEntity编辑时外部赋值坐标位置未生效
@@ -755,12 +732,10 @@
 
 
 ## 3.5.11 - 2023-6-12
-#### 重要说明 📣
-- Cesium 升级至 [1.106](https://github.com/CesiumGS/cesium/releases/tag/1.106)
-
 #### 优化 💪
 - LabelPrimitive对象clampToGround贴地时，切换2D时的显示优化
 - PointPrimitive支持clampToGround贴地属性
+- mars3d-cesium库升级到[v1.106](https://github.com/CesiumGS/cesium/releases/tag/1.106)
 
 #### 修复 🐞
 - 修改v3.5.6产生的DistanceSurfaceMeasure 贴地长度量算异常
@@ -843,9 +818,6 @@
 
 
 ## 3.5.5 - 2023-5-4
-#### 重要说明 📣
-- Cesium 升级至 [1.105](https://github.com/CesiumGS/cesium/releases/tag/1.105)
-
 #### 新增 🌟
 - 日照分析增加阴影率分析
 
@@ -853,6 +825,7 @@
 - BillboardPrimitive 支持 alignedAxis 属性参数
 - Route、FixedRoute增加 autoMiddleDynamicPosition 参数
 - 增加map.mouseEvent.pickImageryLayerFeatures方法，可以手动模拟了单击WMS等图层
+- mars3d-cesium库升级到[v1.105](https://github.com/CesiumGS/cesium/releases/tag/1.105)
 
 
 
@@ -876,13 +849,11 @@
 
 
 ## 3.5.3 - 2023-4-17 
-#### 重要说明 📣 
-- Cesium 升级至 [1.104](https://github.com/CesiumGS/cesium/releases/tag/1.104)
-
 #### 优化 💪
 - Control控件加click触发事件
 - 矢量对象的distanceDisplayCondition_far参数默认值改为Number.MAX_VALUE
 - 量算对象toJSON方法增加量算结果的导出
+- mars3d-cesium库升级到[v1.104](https://github.com/CesiumGS/cesium/releases/tag/1.104)
 
 #### 修复 🐞
 - GraphicType补充缺失的枚举项
@@ -928,7 +899,7 @@
 
 ## 3.5.0 - 2023-03-17
 #### 重要说明 📣
-- Cesium 升级至 [1.103](https://github.com/CesiumGS/cesium/releases/tag/1.103)
+- mars3d-cesium库升级到[v1.103](https://github.com/CesiumGS/cesium/releases/tag/1.103)
 - 改用WebGL2进行渲染
 - Cesium v1.97+ 采用了新的glTF架构代码重写，影响3dtiles部分功能无法使用和部分gltf/3dtiles数据报错
 
@@ -1178,9 +1149,6 @@
 
 
 ## 3.4.3 - 2022-8-8
-#### 重要说明 📣
-- Cesium 升级至 [1.96](https://github.com/CesiumGS/cesium/releases/tag/1.96)
-
 #### 新增 🌟
 - 增加BusineDataLayer业务数据图层
 
@@ -1189,6 +1157,7 @@
 - 量算结果显示支持divGraphic等对象展示
 - WallEntity增加fixedTop参数
 - FontBillboardEntity 增加iconPadding参数
+- mars3d-cesium库升级到[v1.96](https://github.com/CesiumGS/cesium/releases/tag/1.96)
 
 #### 修复 🐞
 - FixedRoute重新运行速度变慢的问题
@@ -1260,9 +1229,6 @@
 
 ---
 ## 3.3.18 - 2022-7-5
-#### 重要说明 📣 
-- Cesium 升级至 [1.95](https://github.com/CesiumGS/cesium/releases/tag/1.95)
-
 #### 优化 💪
 - MapSplit移除时对图层的处理方式优化
 - Tetrahedron 增加支持鼠标拾取
@@ -1270,6 +1236,7 @@
 - GeoJsonLayer反选遮罩层flyTo优化
 - 增加enabledEvent可以禁用事件，大数据创建清除时建议开启
 - ModelPrimitive类动态点时增加fixedHeading参数支持固定heading角度值
+- mars3d-cesium库升级到[v1.95](https://github.com/CesiumGS/cesium/releases/tag/1.95)
 
 #### 修复 🐞
 - CanvasLabelEntity高亮无效
@@ -1279,9 +1246,6 @@
 
 
 ## 3.3.15 - 2022-6-20
-#### 重要说明 📣 
-- Cesium 升级至 [1.94](https://github.com/CesiumGS/cesium/releases/tag/1.94)
-
 #### 新增 🌟
 - GeoJsonLayer增加chinaCRS参数，用于自动纠偏或加偏数据
 
@@ -1289,6 +1253,7 @@
 - 对部分矢量对象的getRectangle方法优化
 - Primitive矢量对象的show属性更新机制优化
 - RoamLine根据forwardExtrapolationType参数自动保留路线
+- mars3d-cesium库升级到[v1.94](https://github.com/CesiumGS/cesium/releases/tag/1.94)
 
 #### 修复 🐞
 - BillboardEntity、PointEntity、ModelEntity附带对象的setOptions未更新
@@ -1337,7 +1302,6 @@
 
 ## 3.3.8 - 2022-5-10
 #### 重要说明 📣 
-- Cesium 升级至 [1.93](https://github.com/CesiumGS/cesium/releases/tag/1.93)
 - 原生 JS 版功能示例、基础项目 中依赖的 jquery 升级至 v3+最新版
 
 #### 新增 🌟
@@ -1352,6 +1316,7 @@
 - RoamLine 增加 noPitchRoll 参数
 - BillboardEntity、PointEntity、ModelEntity 支持其他 point、model、ellipse、path 附带对象
 - PolyUtil 类部分异步方法由 void 改为返回 Promise
+- mars3d-cesium库升级到[v1.93](https://github.com/CesiumGS/cesium/releases/tag/1.93)
 
 #### 修复 🐞
 - 修复 v3.3.7 的 ts 定义错误
@@ -1399,9 +1364,7 @@
 
 
 ## 3.3.0 - 2022-4-18
-#### 重要说明 📣
-- 发布了 v3.3 版 
-- Cesium 升级至 [1.92](https://github.com/CesiumGS/cesium/releases/tag/1.92)
+#### 重要说明 📣 
 - 发布了 [移动端 APP 项目模板](http://mall.marsgis.cn/#/product/mars3d-vue-app)
 
 #### 新增 🌟
@@ -1419,6 +1382,7 @@
 - 标绘 startDraw 等方法返回值改为 Promise
 - 优化 [TilesetPlanClip](http://mars3d.cn/api/TilesetPlanClip.html) 增加显示和编辑 plan 平面
 - 更新 [Token](http://mars3d.cn/api/Token.html)  所有默认值
+- mars3d-cesium库升级到[v1.92](https://github.com/CesiumGS/cesium/releases/tag/1.92)
 
 #### 弃用 & API重构 🔒
 - 因Cesium 升级至 1.92后，其Promise与之前版本不兼容，v3.3+依赖cesium v1.92+，相关版本兼容处理参考[教程](http://mars3d.cn/dev/guide/issue/version.html)
@@ -1437,11 +1401,9 @@
 ---
 
 ## 3.2.4 - 2022-3-3
-#### 重要说明 📣 
-- Cesium 升级至 [1.91](https://github.com/CesiumGS/cesium/releases/tag/1.91)
-
 #### 优化 💪
 - ModelPrimitive 等类增加 clampToTileset 等参数
+- mars3d-cesium库升级到[v1.91](https://github.com/CesiumGS/cesium/releases/tag/1.91)
 
 #### 修复 🐞
 - 修复 v3.2.3 产生的 symbol 配置的样式失效
@@ -1461,15 +1423,13 @@
 
 
 ## 3.2.1 - 2022-2-13
-#### 重要说明 📣
-- Cesium 升级至 [1.90](https://github.com/CesiumGS/cesium/releases/tag/1.90)
-
 #### 新增 🌟
 - map新增了地形加载失败、地形加载成功、load初始化 事件
 
 #### 优化 💪
 - map 增加 toolbar 和 controls 中增加 ceisum 原生控件的获取，方便使用
 - Map初始化地形加载失败时，自动切换至无地形进行展示，避免黑色球效果
+- mars3d-cesium库升级到[v1.90](https://github.com/CesiumGS/cesium/releases/tag/1.90)
 
 #### 修复 🐞
 - 测试并修改 V3.2.0 产生的多个 bug 问题
@@ -1542,7 +1502,6 @@
 ## 3.1.20 - 2022-1-4
 #### 重要说明 📣
 - 发布上线了 基础项目 Vue版
-- Cesium 升级至 [1.89](https://github.com/CesiumGS/cesium/releases/tag/1.89)
 
 #### 新增 🌟
 - 新增了 CylinderWaveMaterialProperty 材质属性
@@ -1552,6 +1511,7 @@
 - RoamLine 类增加 setOptions 方法、支持 model.highlight 配置
 - 优化 ContextMenu 右键菜单二级菜单超出屏幕时的展示
 - 进行了一次 API 文档的规范和检查改正
+- mars3d-cesium库升级到[v1.89](https://github.com/CesiumGS/cesium/releases/tag/1.89)
 
 #### 修复 🐞
 - 解决 v3.1.18 产生的 Map 的控件相关参数 false 时显示的问题
@@ -1617,13 +1577,13 @@
 ## 3.1.15 - 2021-12-5
 #### 重要说明 📣
 - 发布上线了 功能示例 Vue版
-- Cesium 升级至 [1.88](https://github.com/CesiumGS/cesium/releases/tag/1.88)
 
 #### 新增 🌟
 - 增加 ClockAnimate 控件
 
 #### 优化 💪
 - 优化 RoamLine 的 flyToPoint 方法
+- mars3d-cesium库升级到[v1.88](https://github.com/CesiumGS/cesium/releases/tag/1.88)
 
 #### 修复 🐞
 - 整理 API 文档，去除多层 options 的参数
@@ -1665,9 +1625,6 @@
 
 
 ## 3.1.12 - 2021-11-14
-#### 重要说明 📣
-- Cesium 升级至 [1.87](https://github.com/CesiumGS/cesium/releases/tag/1.87)
-
 #### 新增 🌟
 - ModelPrimitive、TilesetLayer 支持 customShader 参数来设置自定义 shader 效果
 
@@ -1676,6 +1633,7 @@
 - wms、wmts 等图层增加 getCapabilities 参数控制是否进行读取图层配置信息
 - Shadows 增加 terrain 参数控制是否开启地形的阴影效果
 - 优化 Sightline 通视分析效果
+- mars3d-cesium库升级到[v1.87](https://github.com/CesiumGS/cesium/releases/tag/1.87)
 
 #### 修复 🐞
 - Cesium v1.87 下计算计算贴地(或贴模型)路线点异常问题
@@ -1733,9 +1691,6 @@
 
 
 ## 3.1.6 - 2021-10-3
-#### 重要说明 📣
-- Cesium 升级至 [1.86](https://github.com/CesiumGS/cesium/releases/tag/1.86)
-
 #### 新增 🌟
 - 矢量数据和图层中增加 getRectangle 方法获取数据的矩形边界
 
@@ -1746,6 +1701,7 @@
 - Popup 增加 autoCenter 参数
 - RoamLine 增加 forwardExtrapolationType 等参数
 - 公开 map.mouseEvent.moveDelay 参数控制鼠标移动事件的响应时间
+- mars3d-cesium库升级到[v1.86](https://github.com/CesiumGS/cesium/releases/tag/1.86)
 
 #### 修复 🐞
 - 量算类的 label 属性失效
@@ -1773,11 +1729,7 @@
 
 
 
-## 3.1.3 - 2021-9-12
-#### 重要说明 📣
-- Cesium 升级至 [1.85](https://github.com/CesiumGS/cesium/releases/tag/1.85)
-
-
+## 3.1.3 - 2021-9-12 
 #### 新增 🌟
 - 增加了描边 OutlineEffect 特效对象
 - CircleEntity 和 RectangleEntity 对象的 toGeoJSON 方法支持导出边线
@@ -1791,6 +1743,7 @@
 - ToolButton 增加鼠标移入移出事件
 - RainEffect 增加粒子大小和方向参数
 - Util 增加 formatDate 方法
+- mars3d-cesium库升级到[v1.85](https://github.com/CesiumGS/cesium/releases/tag/1.85)
 
 #### 修复 🐞
 - TerrainClip 的细长型出现裁剪异常
@@ -1862,10 +1815,6 @@
 ---
 
 ## 3.0.36 - 2021-08-18
-#### 重要说明 📣
-- Cesium 升级至 [1.84](https://github.com/CesiumGS/cesium/releases/tag/1.84)
-
-
 #### 新增 🌟
 - 增加 [PolylineCombine](http://mars3d.cn/api/PolylineCombine.html)大数据线对象
 
@@ -1873,6 +1822,7 @@
 - 增加了一批矢量数据应用功能示例
 - [Compass](http://mars3d.cn/api/Compass.html)导航球增加自定义样式和 svg 的外部接口
 - [WMTS图层](http://mars3d.cn/api/WmtsLayer.html)支持自动读取服务本身配置，可减少外部配置参数
+- mars3d-cesium库升级到[v1.84](https://github.com/CesiumGS/cesium/releases/tag/1.84)
 
 
 #### 修复 🐞
@@ -1959,15 +1909,12 @@
 
 
 
-## 3.0.29 - 2021-7-2
-#### 重要说明 📣
-- Cesium 升级至 [1.83](https://github.com/CesiumGS/cesium/releases/tag/1.83)
-
-
+## 3.0.29 - 2021-7-2  
 #### 优化 💪
 - 对动态点增加贴模型参数，支持自动贴模型
 - [TilesetLayer](http://mars3d.cn/api/TilesetLayer.html#modelMatrix) 三维模型图层支持外部更新 modelMatrix
 - RoamLine 的第一视角模式增加 offset3 个方向偏移值，可以进行驾驶舱内视角进行漫游
+- mars3d-cesium库升级到[v1.83](https://github.com/CesiumGS/cesium/releases/tag/1.83)
 
 #### 修复 🐞
 - 修复[GraphicLayer](http://mars3d.cn/api/GraphicLayer.html#isContinued)矢量图层的 isContinued:true 时支持连续测量
@@ -1977,11 +1924,7 @@
 - 除了线之外的面对象的 distanceDisplayCondition_far 值内部自动加 6378137 来保持效果一致。
 
 
-## 3.0.28 - 2021-6-22
-#### 重要说明 📣 
-- Cesium 升级至 [1.82](https://github.com/CesiumGS/cesium/releases/tag/1.82)
-
-
+## 3.0.28 - 2021-6-22  
 #### 新增 🌟
 - 图层、控件等类中增加 stopPropagation 参数，用于控制事件是否冒泡
 - 对 wmts 服务图层支持单击拾取矢量数据
@@ -1990,6 +1933,7 @@
 - DivGraphic矢量对象增加按视角自动计算叠加层次关系
 - 绘制圆时增加半径距离的显示
 - 比例尺控件，增加 distance 属性和 change 事件
+- mars3d-cesium库升级到[v1.82](https://github.com/CesiumGS/cesium/releases/tag/1.82)
 
 #### 修复 🐞
 - 修复 map 上 once 绑定事件出错问题
@@ -2044,7 +1988,6 @@
 
 ## 3.0.20 - 2021-04-19
 #### 重要说明 📣
-- Cesium 升级至 [1.80](https://github.com/CesiumGS/cesium/releases/tag/1.80)
 - 完成所有 V2 的功能示例的对应 V3 新版开发
 
 #### 新增 🌟
@@ -2052,6 +1995,9 @@
 - 样式统一规范：梳理规范了所有矢量数据的style样式参数。
 - 重写了 [GeoJsonLayer](http://mars3d.cn/api/GeoJsonLayer.html)图层，采用可在 symobl 中配置 type 参数指定 Graphic 类型来渲染，默认为 primitive 方式。
 - 重写了 [LodGraphicLayer](http://mars3d.cn/api/LodGraphicLayer.html)图层，采用 Graphic 方式渲染，默认内部为 primitive 方式，也可以按需自定义 type。
+
+#### 优化 💪
+- mars3d-cesium库升级到[v1.80](https://github.com/CesiumGS/cesium/releases/tag/1.80)
 
 #### 弃用 & API重构 🔒
 - 原有Cesium进行渲染的 GeoJsonLayer图层更名为 CzmGeoJsonLayer
