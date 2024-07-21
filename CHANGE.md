@@ -44,12 +44,26 @@
 
 
 --- 
+## 3.7.23- 2024-7-22
+#### 优化 💪
+- Video3D增加distanceDisplayCondition参数
+- Sightline通视分析add方法增加objectsToExclude参数
+- VolumeDepthMeasure的maxHeight改变含义，会影响挖方量
+- ConeTrack的style.label改为在椎体中间
+
+#### 修复 🐞
+- GraphicLayer矢量图层聚合时，后续增加的primitive未更新聚合值
+- 控件被加入2次
+- 热力图跨省区域下存在偏移问题
+
+
 ## 3.7.22- 2024-7-16
 #### 优化 💪
 - BillboardPrimitive增加distanceDisplayPoint参数
 
 #### 修复 🐞
 - DivGraphic按轴移动时DIV本身遮挡了移动轴
+- Tooltip直接构造时style下的offsetX、offsetY值未生效
 
 
 
