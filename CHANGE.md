@@ -28,7 +28,7 @@
 通常的发布周期如下：
 - 约 每3年 发布1个主版本
 - 约 每6个月 发布1个大版本
-- 约 每周 发布1个小版本，正常均在**周二上午**发布（如果有紧急的 bugfix，则任何时候都可发布）
+- 约 每周 发布1个小版本，正常均在**周二晚上**发布（如果有紧急的 bugfix，则任何时候都可发布）
   
 
 # 3. 弃用策略
@@ -44,6 +44,52 @@
 
 
 --- 
+## 3.8.0 - 2024-8-20
+#### 新增 🌟
+- 新增BillboardIndicator可拖拽面板矢量对象
+- 重写HeatLayer热力图图层类，支持全球渲染及缩放重新渲染
+- PolylineEntity增加snakeAnimation流动生长(贪吃蛇)动画参数及相关方法
+- 绘制线面对象，增加drawShowMeasure参数显示测量结果辅助标绘
+- 瓦片图层支持自定义切片的加载，增加origin、resolutions、zOffset等相关相关参数
+
+#### 优化 💪
+- Image2材质增加rotation旋转角度属性
+- TilesetLayer及矢量数据增加matrixMove、matrixRotate参数支持编辑时自定义轴参数
+- WindLayer重写适配最新版Cesium（WebGL2渲染）
+- ParticleSystem增加visibleDepth属性可以控制不被遮挡
+- geojson数据加载时增加可自动转为Primitive渲染的toPrimitive参数
+
+#### 修复 🐞
+- TilesetBoxClip盒子裁剪clipOutSide参数无效 [#IAKIJP](https://gitee.com/marsgis/mars3d/issues/IAKIJP)
+
+#### 弃用 & API重构 🔒
+- 免费版SDK的Logo位置：将出现在屏幕四周随机位置 (如需无Logo请您[购买授权](http://mall.marsgis.cn/#/product/mars3d-sdk-2) 支持mars3d的可持续发展)
+- 矢量数据编辑时按轴移动使用的matrixMoveRadius参数移除，可改用matrixMove参数
+
+
+
+---
+## 3.7.25- 2024-8-16
+#### 修复 🐞
+- CurveEntity曲线setHeight属性未生效
+- CorridorEntity的坐标中高度值未生效
+- Regular、Sector矢量对象的hasMoveEdit属性无效
+
+
+## 3.7.24- 2024-8-6
+#### 优化 💪
+- PointPrimitive增加clampToGroundExact参数，clampToGround的默认是概略快速计算
+- mars3d-cesium库升级到[v1.120](https://github.com/CesiumGS/cesium/releases/tag/1.120) 
+
+#### 修复 🐞
+- ViewShed和Video3D在图层设置show为false时显示异常
+- BillboardEntity的distanceDisplayPoint.distanceDisplayCondition_far参数无效
+- ModelEntity的flyTo飞行定位去掉自动计算的radius，改为与其他矢量数据规则一致
+- Image2MaterialProperty属性材质的noWhite参数无效
+- VideoPrimitive导入导出json支持记录网格编辑点信息
+- Route在clampToTileset贴模型属性为true时Popup未贴模型
+
+
 ## 3.7.23- 2024-7-23
 #### 优化 💪
 - Video3D增加distanceDisplayCondition参数
@@ -73,7 +119,7 @@
 #### 优化 💪
 - 文本材质、CanvasLabelEntity 增加\n换行和字间距参数
 - Mask增加style.global参数
-- mars3d-cesium库升级到[v1.119](https://github.com/CesiumGS/cesium/releases/tag/1.119) 
+- mars3d-cesium库升级到[v1.119](https://github.com/CesiumGS/cesium/releases/tag/1.119)
 
 #### 修复 🐞
 - GaodePOI增加chinaCRS参数，解决在map.chinaCRS是GCJ02时坐标无需做加偏纠偏处理
@@ -101,20 +147,20 @@
 - EllipsoidEntity的scanPlane动画改为与时序无关
 
 #### 修复 🐞
-- BrightnessEffect加载后backgroundImage失效 [#I9VRHT](https://gitee.com/marsgis/mars3d/issues/I9VRHT)  
+- BrightnessEffect加载后backgroundImage失效 [#I9VRHT](https://gitee.com/marsgis/mars3d/issues/I9VRHT)
 - MapSplit控件show属性控制无效
 - ConeTrack在动态坐标下更新heading值有误
- 
- 
 
-## 3.7.17 - 2024-6-5 
+
+
+## 3.7.17 - 2024-6-5
 #### 优化 💪
 - ReflectionWater增加farDistance和farColor参数
 - 重写mars3d.PolyUtil.getRectangle方法，增加最大高度返回值
-- mars3d-cesium库升级到[v1.118](https://github.com/CesiumGS/cesium/releases/tag/1.118) 
+- mars3d-cesium库升级到[v1.118](https://github.com/CesiumGS/cesium/releases/tag/1.118)
 
 #### 修复 🐞
-- RectSensor初始化是空坐标时后续不显示 [#I9TFU9](https://gitee.com/marsgis/mars3d/issues/I9TFU9)  
+- RectSensor初始化是空坐标时后续不显示 [#I9TFU9](https://gitee.com/marsgis/mars3d/issues/I9TFU9)
 - CZML图层部分情况下flyTo无效
 - Video2D部分浏览器下一直未播放
 - 点状对象flyTo的高度值不对
@@ -128,7 +174,7 @@
 - 矢量数据toJSON方法优化
 
 #### 修复 🐞
-- CzmlLayer图层的flyTo：true参数时定位错误 [#I9R9CD](https://gitee.com/marsgis/mars3d/issues/I9R9CD)  
+- CzmlLayer图层的flyTo：true参数时定位错误 [#I9R9CD](https://gitee.com/marsgis/mars3d/issues/I9R9CD)
 - shadows移除时未停止
 
 
@@ -142,8 +188,8 @@
 - GeoJsonLayer增加filter数据筛选方法参数
 
 #### 修复 🐞
-- polylin线绘制时，当有depthFail:true参数会绘制不出来  [#I9ODHK](https://gitee.com/marsgis/mars3d/issues/I9ODHK)  
-- shadows.remove报错 [#I9QYHI](https://gitee.com/marsgis/mars3d/issues/I9QYHI)  
+- polylin线绘制时，当有depthFail:true参数会绘制不出来  [#I9ODHK](https://gitee.com/marsgis/mars3d/issues/I9ODHK)
+- shadows.remove报错 [#I9QYHI](https://gitee.com/marsgis/mars3d/issues/I9QYHI)
 
 
 
@@ -160,7 +206,7 @@
 
 
 
-## 3.7.12 - 2024-5-6 
+## 3.7.12 - 2024-5-6
 #### 优化 💪
 - 优化TilesetClip、TilesetPlanClip 模型裁剪开挖功能
 - 优化TerrainClip、TerrainPlanClip 地形开挖功能，并TerrainPlanClip支持按线切分看地形切割
@@ -168,17 +214,17 @@
 - WMS等瓦片图层卷帘时单击事件和Popup的不可见区域不触发
 - Map增加availabilityEnabled参数，可以全局开关availability
 - 增加tif、excel、csv文件的本地数据读取示例
-- mars3d-cesium库升级到[v1.117](https://github.com/CesiumGS/cesium/releases/tag/1.117) 
+- mars3d-cesium库升级到[v1.117](https://github.com/CesiumGS/cesium/releases/tag/1.117)
 
 #### 修复 🐞
-- Pit墙面的材质显示没有拉伸的效果  [#I9J143](https://gitee.com/marsgis/mars3d/issues/I9J143) 
-- Combine对象多次单击Popup时面板展示属性不对  [#I9HD5X](https://gitee.com/marsgis/mars3d/issues/I9HD5X) 
-- CirclePrimitive对象标绘时切换贴地属性和导出JSON时，坐标显示了历史值  [#I9J010](https://gitee.com/marsgis/mars3d/issues/I9J010) 
+- Pit墙面的材质显示没有拉伸的效果  [#I9J143](https://gitee.com/marsgis/mars3d/issues/I9J143)
+- Combine对象多次单击Popup时面板展示属性不对  [#I9HD5X](https://gitee.com/marsgis/mars3d/issues/I9HD5X)
+- CirclePrimitive对象标绘时切换贴地属性和导出JSON时，坐标显示了历史值  [#I9J010](https://gitee.com/marsgis/mars3d/issues/I9J010)
 
 
 #### 弃用 & API重构 🔒
 - 标绘事件event的drawtype命名改名为drawType
- 
+
 
 
 ## 3.7.11 - 2024-4-22
@@ -188,14 +234,14 @@
 
 #### 修复 🐞
 - 优化Map.toJSON导出参数方法
-- style.label在贴地和visibleDepth: false 会重影 [#I9G8R4](https://gitee.com/marsgis/mars3d/issues/I9G8R4) 
-- PolygonEntity在highlight中修改diffHeight无效 [#I9I1TN](https://gitee.com/marsgis/mars3d/issues/I9I1TN) 
-- RotatePoint.setOptions未生效 [#I9IN2V](https://gitee.com/marsgis/mars3d/issues/I9IN2V) 
+- style.label在贴地和visibleDepth: false 会重影 [#I9G8R4](https://gitee.com/marsgis/mars3d/issues/I9G8R4)
+- PolygonEntity在highlight中修改diffHeight无效 [#I9I1TN](https://gitee.com/marsgis/mars3d/issues/I9I1TN)
+- RotatePoint.setOptions未生效 [#I9IN2V](https://gitee.com/marsgis/mars3d/issues/I9IN2V)
 
 
 
 
-## 3.7.10 - 2024-4-15 
+## 3.7.10 - 2024-4-15
 #### 新增 🌟
 - Map增加method参数(并将之前chinaCRS、lang、templateValues、token参数移动到method下)
 - TerrainUplift地形抬升增加抬升动画方法movingAnimation
@@ -203,28 +249,28 @@
 
 #### 优化 💪
 - 图层popupOptions参数中增加showNull可以控制显示空值字段
-- Popup增加toggle参数，控制是否打开状态下再次单击时关闭Popup [#I9F4AO](https://gitee.com/marsgis/mars3d/issues/I9F4AO) 
+- Popup增加toggle参数，控制是否打开状态下再次单击时关闭Popup [#I9F4AO](https://gitee.com/marsgis/mars3d/issues/I9F4AO)
 - VolumeDepthMeasure支持传入历史计算的值，可以固化测量结果，避免地形精度和视角剔除带来的测量结果每次不同
 - PolylinePrimitive增加style.depthFailMaterial参数
 
 #### 修复 🐞
 - Popup在timeRender为true时关闭按钮无法操作
-- PolygonEntity调用setCallbackPositions方法setHeight参数丢失 [#I9EUH4](https://gitee.com/marsgis/mars3d/issues/I9EUH4) 
-- 体积计算方法measure.volume，在传参直接调用时会触发两次计算 [#I9F6PQ](https://gitee.com/marsgis/mars3d/issues/I9F6PQ) 
+- PolygonEntity调用setCallbackPositions方法setHeight参数丢失 [#I9EUH4](https://gitee.com/marsgis/mars3d/issues/I9EUH4)
+- 体积计算方法measure.volume，在传参直接调用时会触发两次计算 [#I9F6PQ](https://gitee.com/marsgis/mars3d/issues/I9F6PQ)
 
-#### 弃用 & API重构 🔒 
+#### 弃用 & API重构 🔒
 - Map的之前chinaCRS、lang、templateValues、token参数移动到method参数下
 - 移除IonLayer图层，合并至XyzLayer(增加assetId、ionToken、ionServer参数)
 - TilesetLayer的ion资源时的ionAccessToken参数命名改为ionToken
 
 
 
-## 3.7.9 - 2024-4-6  
+## 3.7.9 - 2024-4-6
 #### 优化 💪
 - Map增加scene.logarithmicDepthBuffer参数
-- FixedRoute的change事件增加index_original原始index返回值  [#I9B880](https://gitee.com/marsgis/mars3d/issues/I9B880) 
+- FixedRoute的change事件增加index_original原始index返回值  [#I9B880](https://gitee.com/marsgis/mars3d/issues/I9B880)
 - GraphicLayer矢量图层聚合增加clustering.minChanged参数
-- mars3d-cesium库升级到[v1.116](https://github.com/CesiumGS/cesium/releases/tag/1.116) 
+- mars3d-cesium库升级到[v1.116](https://github.com/CesiumGS/cesium/releases/tag/1.116)
 
 #### 修复 🐞
 - zoom控件缩放时，DivGraphic未重现渲染
@@ -236,7 +282,7 @@
 
 
 
-## 3.7.7 - 2024-3-19  
+## 3.7.7 - 2024-3-19
 #### 优化 💪
 - I3SLayer增加position、rotation、scale等参数
 - Compass控件增加clickToNorth参数
@@ -255,7 +301,7 @@
 
 
 
-## 3.7.6 - 2024-3-11 
+## 3.7.6 - 2024-3-11
 #### 优化 💪
 - PolyGradient材质增加isInner参数
 - RainEffect增加maxHeight参数
@@ -282,7 +328,7 @@
 - 所有highlight相关类中增加highlight.enabled子参数
 - map的scene构造参数增加了backgroundType、backgroundImage并自动处理了互斥关系
 - 优化map.getCurrentOptions方法导出相关参数。
-- mars3d-cesium库升级到[v1.114](https://github.com/CesiumGS/cesium/releases/tag/1.114) 
+- mars3d-cesium库升级到[v1.114](https://github.com/CesiumGS/cesium/releases/tag/1.114)
 
 #### 修复 🐞
 - BloomTargetEffect造成地球背景图片消失
@@ -314,13 +360,13 @@
 
 #### 新增 🌟
 - 增加 TilesetColorCorrection 模型单独颜色校正对象
-- Map、TilesetLayer类增加 getHeight 贴地高度计算方法 
+- Map、TilesetLayer类增加 getHeight 贴地高度计算方法
 
 
 #### 优化 💪
 - 重写了PointUtil.getHeight、PointUtil.getSurfacePosition方法，相关参数有调整
 - 矢量图层聚合图标回调增加相关对象的返回，并优化示例增加大数据异步生成
-- mars3d-cesium库升级到[v1.114](https://github.com/CesiumGS/cesium/releases/tag/1.114) 
+- mars3d-cesium库升级到[v1.114](https://github.com/CesiumGS/cesium/releases/tag/1.114)
 
 
 
@@ -330,7 +376,7 @@
 - 增加PolyUtil.getMapExtentPositions方法，并对map.getExtent方法优化重写
 
 #### 修复 🐞
-- Combine合并渲染矢量对象的附加label只能加一个 [#I8YTK1](https://gitee.com/marsgis/mars3d/issues/I8YTK1) 
+- Combine合并渲染矢量对象的附加label只能加一个 [#I8YTK1](https://gitee.com/marsgis/mars3d/issues/I8YTK1)
 
 
 
@@ -341,7 +387,7 @@
 - GraticuleLayer增加steps属性，和setOptions更新steps的支持。
 
 #### 修复 🐞
-- Map配置了terrainProviderViewModels:[],控件会提示 undefined  [#I8XEY4](https://gitee.com/marsgis/mars3d/issues/I8XEY4) 
+- Map配置了terrainProviderViewModels:[],控件会提示 undefined  [#I8XEY4](https://gitee.com/marsgis/mars3d/issues/I8XEY4)
 - LineFlow材质color改为原样传入
 
 
@@ -353,7 +399,7 @@
 - 新增 DivIndicator 固定指向且可拖动面板的DIV示例
 
 #### 优化 💪
-- mars3d-cesium库升级到[v1.113](https://github.com/CesiumGS/cesium/releases/tag/1.113) 
+- mars3d-cesium库升级到[v1.113](https://github.com/CesiumGS/cesium/releases/tag/1.113)
 - primitive增加zIndex参数和属性
 - entity.startFlicker方法增加step参数
 - TilesetLayer增加assetId参数
@@ -367,11 +413,11 @@
 
 #### 弃用 & API重构 🔒
 - TilesetPlanClip类type参数更名为clipType
-- KeyboardRoam的minPitch、maxPitch参数改为度数值  
+- KeyboardRoam的minPitch、maxPitch参数改为度数值
 - 移除部分对V3.4之前相关老版本SDK的内部兼容参数写法，提高代码效率
 
 
---- 
+---
 ## 3.6.18 - 2023-12-31
 #### 优化 💪
 - PolygonCombine 挖洞面 支持Cartesian3和LngLatPoint格式坐标
@@ -379,8 +425,8 @@
 - 线面对象绘制时支持updateDrawPosition参数来自定义控制修改绘制的坐标
 
 #### 修复 🐞
-- GraphicLaye在 show:false时使用BillboardPrimitive聚合的时候未隐藏   [#I8QB9I](https://gitee.com/marsgis/mars3d/issues/I8QB9I) 
-- BusineDataLayer类传data切开启聚合时未聚合 [#I8Q6DT](https://gitee.com/marsgis/mars3d/issues/I8Q6DT) 
+- GraphicLaye在 show:false时使用BillboardPrimitive聚合的时候未隐藏   [#I8QB9I](https://gitee.com/marsgis/mars3d/issues/I8QB9I)
+- BusineDataLayer类传data切开启聚合时未聚合 [#I8Q6DT](https://gitee.com/marsgis/mars3d/issues/I8Q6DT)
 - 修复v3.6.14增加编辑点的矢量对象类型和样式功能带来的编辑点异常问题。
 
 
@@ -394,7 +440,7 @@
 
 
 
-## 3.6.16 - 2023-12-12 
+## 3.6.16 - 2023-12-12
 #### 新增 🌟
 - 增加ThingType、ThingUtil 类
 - map增加thing参数，支持地形压平 等thing对象通过参数初始化传入
@@ -413,12 +459,12 @@
 ## 3.6.15 - 2023-12-5
 #### 优化 💪
 - SnowEffect增加scale粒子大小参数
-- mars3d-cesium库升级到[v1.112](https://github.com/CesiumGS/cesium/releases/tag/1.112) 
+- mars3d-cesium库升级到[v1.112](https://github.com/CesiumGS/cesium/releases/tag/1.112)
 
 #### 修复 🐞
 - SnowCoverEffect初始化enabled:false时更新为true无效
 
- 
+
 
 
 ## 3.6.14 - 2023-11-27
@@ -437,10 +483,10 @@
 
 #### 弃用 & API重构 🔒
 - 重构了DrawUtil类，移除了setPointStyle等方法  [#I8J3D9](https://gitee.com/marsgis/mars3d/issues/I8J3D9)
- 
 
 
-## 3.6.13 - 2023-11-21 
+
+## 3.6.13 - 2023-11-21
 #### 优化 💪
 - [GeoJsonLayer](http://mars3d.cn/api/GeoJsonLayer.html)、[WfsLayer](http://mars3d.cn/api/WfsLayer.html) 等图层增加simplify参数
 - 整理矢量对象的setHeight、addHeight参数代码，之前在部分情况存在重复addHeight或未addHeight的情况
@@ -469,7 +515,7 @@
 #### 修复 🐞
 - 矢量对象在randomColor随机色时，高亮每次会变动颜色  [#I8ES0G](https://gitee.com/marsgis/mars3d/issues/I8ES0G)
 - 多语言相关的一些内置文字处理，修复为支持多语言 [#I8F7WI](https://gitee.com/marsgis/mars3d/issues/I8F7WI)
- 
+
 
 
 ## 3.6.11 - 2023-11-3
@@ -481,7 +527,7 @@
 
 #### 优化 💪
 - [ImageLayer](http://mars3d.cn/api/ImageLayer.html?classFilter=ImageLayer)增加加载完成回调
-- mars3d-cesium库升级到[v1.111](https://github.com/CesiumGS/cesium/releases/tag/1.111) 
+- mars3d-cesium库升级到[v1.111](https://github.com/CesiumGS/cesium/releases/tag/1.111)
 
 #### 修复 🐞
 - 导航球控件中提示文本的Lang多语言支持 [#I8AZGV](https://gitee.com/marsgis/mars3d/issues/I8AZGV)
@@ -512,7 +558,7 @@
 
 
 
-## 3.6.9 - 2023-10-17 
+## 3.6.9 - 2023-10-17
 #### 新增 🌟
 - primitive矢量数据增加了[readyPromise](http://mars3d.cn/api/BasePrimitive.html?classFilter=basep#readyPromise)属性
 
@@ -535,7 +581,7 @@
 
 
 
-## 3.6.8 - 2023-10-9 
+## 3.6.8 - 2023-10-9
 #### 优化 💪
 - 暴露mars3d.edit.*相关编辑类，方便外部继承使用
 - 矢量数据toGeoJSON方法增加options的导入导出
@@ -551,7 +597,7 @@
 
 
 
-## 3.6.7 - 2023-9-25 
+## 3.6.7 - 2023-9-25
 #### 优化 💪
 - 增加pixelOffsetScaleByDistance参数的导入导出json支持
 - SmallTooltip在空文本时不展示
@@ -621,7 +667,7 @@
 - DivGraphic开始绘制时就取消绘制触发了完成回调
 - RotatePoint在部分视角下报错
 
- 
+
 
 ## 3.6.2 - 2023-8-21
 #### 修复 🐞
@@ -631,7 +677,7 @@
 
 
 
-## 3.6.1 - 2023-8-14 
+## 3.6.1 - 2023-8-14
 #### 新增 🌟
 - 增加 ColorRamp 色带类
 
@@ -651,9 +697,9 @@
 
 
 
-## 3.6.0 - 2023-8-4 
+## 3.6.0 - 2023-8-4
 #### 新增 🌟
-- 新增[PointLight点光源](http://mars3d.cn/editor-vue.html?id=graphic/custom/pointLight)、[SpotLight聚光灯](http://mars3d.cn/editor-vue.html?id=graphic/custom/spotLight)、[VolumeCloud气象云三维体](http://mars3d.cn/editor-vue.html?id=graphic/custom/volumeCloud)、[Visibility合并可视化](http://mars3d.cn/editor-vue.html?id=graphic/custom/visibility) 等矢量对象
+- 新增[PointLight点光源](http://mars3d.cn/editor-vue.html?id=graphic/custom/pointLight)、[SpotLight聚光灯](http://mars3d.cn/editor-vue.html?id=graphic/custom/spotLight)、[VolumeCloud气象云三维体](http://mars3d.cn/editor-vue.html?id=graphic/custom/volumeCloud)、[PointVisibility](http://mars3d.cn/editor-vue.html?id=graphic/custom/visibility) 等矢量对象
 - 新增[TilesetShake地震模拟](http://mars3d.cn/editor-vue.html?id=thing/tileset/shake)、[ViewDome开敞度分析](http://mars3d.cn/editor-vue.html?id=graphic/custom/viewDome)、[SkylineBody天际线体](http://mars3d.cn/editor-vue.html?id=graphic/custom/skylineBody)等模型相关分析
 - 新增对[BillboardPrimitive](http://mars3d.cn/api/BillboardPrimitive.html?classFilter=BillboardPrimitive)、[PointPrimitive](http://mars3d.cn/api/PointPrimitive.html?classFilter=PointPrimitive)、[LabelPrimitive](http://mars3d.cn/api/LabelPrimitive.html?classFilter=LabelPrimitive)对象的聚合支持
 - 瓦片图层新增clampToTileset贴模型功能
@@ -669,7 +715,7 @@
 
 
 
---- 
+---
 ## 3.5.18 - 2023-7-31
 #### 优化 💪
 - ClockAnimate与DistanceLegend或Timeline同时存在时的css自动处理改为兼容外部参数
@@ -704,7 +750,7 @@
 
 
 
-## 3.5.15 - 2023-7-10  
+## 3.5.15 - 2023-7-10
 #### 优化 💪
 - Animation控件增加ticks参数
 - Pit的围合墙部分改为普通wall
@@ -744,7 +790,7 @@
 
 
 
-## 3.5.12 - 2023-6-19 
+## 3.5.12 - 2023-6-19
 #### 优化 💪
 - Compass控件兼容移动端交互操作
 - 增加setLangText方法
@@ -809,11 +855,11 @@
 - 重写了PolyUtil.centerOfMass取中心点算法
 
 #### 修复 🐞
-- Polygon面编辑时positions坐标赋值无效 
+- Polygon面编辑时positions坐标赋值无效
 
 
 
-## 3.5.7 - 2023-5-16 
+## 3.5.7 - 2023-5-16
 #### 优化 💪
 - Map增加changeBasemap事件
 - 矢量数据增加hasEditContextMenu参数
@@ -869,11 +915,11 @@
 - PolygonEntity.setCallbackPositions方法兼容非笛卡尔坐标传参
 
 #### 弃用 & API重构 🔒
-- TilesetFlat中的flatHeight 参数更名为 editHeight 
+- TilesetFlat中的flatHeight 参数更名为 editHeight
 
 
 
-## 3.5.3 - 2023-4-17 
+## 3.5.3 - 2023-4-17
 #### 优化 💪
 - Control控件加click触发事件
 - 矢量对象的distanceDisplayCondition_far参数默认值改为Number.MAX_VALUE
@@ -918,7 +964,7 @@
 - GraphicLayer矢量图层loadGeoJSON未读取其保存的id值
 
 #### 弃用 & API重构 🔒
-- DivGraphic去掉了CSS属性：user-select: none 
+- DivGraphic去掉了CSS属性：user-select: none
 
 
 
@@ -1053,7 +1099,7 @@
 - Polygon编辑时setStyle时diffHeight值跳动
 
 
-## 3.4.14 - 2022-11-22  
+## 3.4.14 - 2022-11-22
 #### 新增 🌟
 - Map增加setOptions方法
 - 相关Control控件对象的setOptions方法支持
@@ -1062,7 +1108,7 @@
 - Combine对象的setStyle方法优化
 - Entity对象的setStyle方法中对setHeight和addHeight的支持
 - 量算对象的默认传入坐标的直接显示
-- 图层增加flyToOptions参数 
+- 图层增加flyToOptions参数
 
 
 
@@ -1086,7 +1132,7 @@
 - 修复FixedRoute在3.4.11产生的贴地计算无效
 
 
-## 3.4.11 - 2022-10-24 
+## 3.4.11 - 2022-10-24
 #### 优化 💪
 - Timeline控件增加maxSpan最大刻度跨度参数、优化时间文本展示
 - 贴地线面量算增加exact快速概略的计算模式参数
@@ -1241,7 +1287,7 @@
 - 移除了Entity类矢量数据中fromDraw静态方法
 - 移除了Entity类矢量数据中entity参数和fromEntity静态方法
 - Entity编辑中的对应样式类型 edittype 属性名称改为 styleType（影响到style编辑属性弹窗）
-- 所有callback回调方法全部改为返回Promise方式，影响到一些方法的传参和返回值 
+- 所有callback回调方法全部改为返回Promise方式，影响到一些方法的传参和返回值
 - ArcGIS/WMS 瓦片图层的 maxLength/graphicConver 参数改名为 hasToGraphic,并增加featureToGraphic参数
 - [PointUtil.getSurfaceHeight](http://mars3d.cn/api/PointUtil.html#.getSurfaceHeight) 改为Promise方式，同步请改用 [PointUtil.getHeight](http://mars3d.cn/api/PointUtil.html#.getHeight)方法
 - [PolyUtil.interPolygon](http://mars3d.cn/api/PolyUtil.html#.interPolygon) 等方式中的`asyn`参数改名为`exact`
@@ -1299,7 +1345,7 @@
 - 右键菜单单击一级菜单时不关闭二级菜单
 
 #### 修复 🐞
-- 多边形、矩形 周长值属性有误 
+- 多边形、矩形 周长值属性有误
 - BaiduLayer 的 readyPromise失效
 
 
@@ -1326,7 +1372,7 @@
 
 
 ## 3.3.8 - 2022-5-10
-#### 重要说明 📣 
+#### 重要说明 📣
 - 原生 JS 版功能示例、基础项目 中依赖的 jquery 升级至 v3+最新版
 
 #### 新增 🌟
@@ -1389,7 +1435,7 @@
 
 
 ## 3.3.0 - 2022-4-18
-#### 重要说明 📣 
+#### 重要说明 📣
 - 发布了 [移动端 APP 项目模板](http://mall.marsgis.cn/#/product/mars3d-vue-app)
 
 #### 新增 🌟
@@ -1397,7 +1443,7 @@
 - 新增对 3dtiles 模型的卷帘对比支持
 - 所有图层增加 readyPromise 属性，方便使用
 - Primitive矢量数据新增 depthFail 参数支持遮挡部分的展示
-- 增加 [MeasureUtil.getSurfaceArea](http://mars3d.cn/api/MeasureUtil.html#.getSurfaceArea) 方法 
+- 增加 [MeasureUtil.getSurfaceArea](http://mars3d.cn/api/MeasureUtil.html#.getSurfaceArea) 方法
 - 增加了 flv 视频协议、红蓝对抗演习 等示例
 
 #### 优化 💪
@@ -1468,7 +1514,7 @@
 
 #### 新增 🌟
 - 新增了 [CircleCombine](http://mars3d.cn/api/CircleCombine.html) 、[RectangleCombine](http://mars3d.cn/api/RectangleCombine.html)、[WallCombine](http://mars3d.cn/api/WallCombine.html) 等10多个合并渲染的大数据矢量对象
-- 新增了[Tetrahedron](http://mars3d.cn/api/Tetrahedron.html)、[CloudPrimitive](http://mars3d.cn/api/CloudPrimitive.html)、[ViewShed](http://mars3d.cn/api/ViewShed.html) 等 graphic 矢量对象  
+- 新增了[Tetrahedron](http://mars3d.cn/api/Tetrahedron.html)、[CloudPrimitive](http://mars3d.cn/api/CloudPrimitive.html)、[ViewShed](http://mars3d.cn/api/ViewShed.html) 等 graphic 矢量对象
 - 新增瓦片图层颜色滤镜功能，增加 invertColor、filterColor等参数来修改瓦片颜色
 - 重写了 [DivGraphic](http://mars3d.cn/api/DivGraphic.html) 的编辑处理，支持直接拖拽 div 对象
 
@@ -1480,7 +1526,7 @@
 #### 弃用 & API重构 🔒
 - 重写了 Video2D、Video3D 视频投射矢量对象(API 全部变化了，参考 API 升级)
 - 重写了 WindLayer 的参数，简化优化 API 结构(参考示例修改)
-- 移除了 mars3d.thing.ViewShed3D(改用mars3d.graphic.ViewShed，参考示例升级) 
+- 移除了 mars3d.thing.ViewShed3D(改用mars3d.graphic.ViewShed，参考示例升级)
 - [DivGraphic](http://mars3d.cn/api/DivGraphic.html?classFilter=Div) 的 className 参数更改到 style 下(参考 API 文档)
 - LatLngPoint 改名为 LngLatPoint、LatLngArray 改名为 LngLatArray (批量替换下)
 
@@ -1577,7 +1623,7 @@
 - 修复 v3.1.16 产生的 Popup 关闭时错误
 
 
-## 3.1.16 - 2021-12-11 
+## 3.1.16 - 2021-12-11
 #### 新增 🌟
 - 所有类的事件回调对象增加 stopPropagation 方法可以停止事件冒泡
 - Map类增加 contextMenuOpen、contextMenuClose、contextMenuClick 右键菜单相关事件
@@ -1670,10 +1716,10 @@
 
 
 
-## 3.1.10 - 2021-10-29 
+## 3.1.10 - 2021-10-29
 #### 优化 💪
 - 优化图层的 flyTo 处理，对 echarts 等图层增加 flyTo 支持
-- 军事标绘positions支持 传入CallbackProperty回调属性 
+- 军事标绘positions支持 传入CallbackProperty回调属性
 - xyz 图层增加 tms 属性，简化 tms 类型图层配置
 - PolylinePrimitive 支持 colors 属性
 - EllipsoidEntity 扫描效果支持暂停
@@ -1683,7 +1729,7 @@
 
 ## 3.1.9 - 2021-10-24
 #### 新增 🌟
-- 增加了 WaterCombine大数据水面对象 
+- 增加了 WaterCombine大数据水面对象
 - TilesetPlanClip中新增了对模型斜切
 - 增加多个客户端空间分析示例
 
@@ -1731,7 +1777,7 @@
 #### 修复 🐞
 - 量算类的 label 属性失效
 - map 在有 divGraphic 等矢量数据时销毁报错
-- WMS 新增后快速移除报错 
+- WMS 新增后快速移除报错
 - RoamLine 跟随视角时暂停不了的问题
 - ouline 样式无效
 - 军事标绘优化夹角
@@ -1754,7 +1800,7 @@
 
 
 
-## 3.1.3 - 2021-9-12 
+## 3.1.3 - 2021-9-12
 #### 新增 🌟
 - 增加了描边 OutlineEffect 特效对象
 - CircleEntity 和 RectangleEntity 对象的 toGeoJSON 方法支持导出边线
@@ -1805,7 +1851,7 @@
 - 发布了 v3.1 版
 
 #### 新增 🌟
-- 矢量数据增加 highlight 高亮相关属性和方法，支持鼠标移入或单击后的按指定样式高亮矢量对象 
+- 矢量数据增加 highlight 高亮相关属性和方法，支持鼠标移入或单击后的按指定样式高亮矢量对象
 - 重写了 图上量算的所有矢量对象，采用继承Graphic矢量类的方式实现
 - 重写了 [Popup](http://mars3d.cn/api/Popup.html) 和 [Tooltip](http://mars3d.cn/api/Tooltip.html) 类，采用继承DivGraphic类的方式实现
 - 新增了 [OverviewMap](http://mars3d.cn/api/OverviewMap.html) 鹰眼地图控件
@@ -1815,7 +1861,7 @@
 
 #### 优化 💪
 - 矢量数据和图层增加 popupOpen、popupClose、tooltipOpen、tooltipClose 事件
-- 矢量图层的进入编辑的方式修改，可以右键去激活编辑矢量数据 
+- 矢量图层的进入编辑的方式修改，可以右键去激活编辑矢量数据
 - 标绘编辑点支持在  [DrawUtil.setPointStyle](http://mars3d.cn/api/DrawUtil.html#.setPointStyle) 方法修改样式
 - 导出 GeoJSON 等接口支持不导出高度值
 - [DivGraphic](http://mars3d.cn/api/DivGraphic.html)矢量对象增加 className、timeRender 属性、增加 postRender 事件
@@ -1853,7 +1899,7 @@
 #### 修复 🐞
 - 修改 DivLayer 图层移除报错
 - 修复 PathEntity 更新动态点无效问题
-- 屏蔽贴地面存在 outline 边线时的错误 
+- 屏蔽贴地面存在 outline 边线时的错误
 - 修改 npm 版本的自动化编译及发布方式
 - 修复动态路线的坐标定位错误
 - 修复方量挖方量数字显示错误
@@ -1892,7 +1938,7 @@
 - Map 类新增lang 多语言参数，用于切换SDK内的文字语言展示
 - [Popup](http://mars3d.cn/api/Popup.html)  和 [Tooltip](http://mars3d.cn/api/Tooltip.html)  新增template参数，用于支持配置外部模板
 
-#### 优化 💪 
+#### 优化 💪
 - [EchartsLayer](http://mars3d.cn/api/EchartsLayer.html) 图层升级支持 echarts5 (mars3d-echarts 插件)
 - RoamLine 在启动前增加静态模型的显示
 - ViewShed3D 增加部分事件方便外部使用
@@ -1934,7 +1980,7 @@
 
 
 
-## 3.0.29 - 2021-7-2  
+## 3.0.29 - 2021-7-2
 #### 优化 💪
 - 对动态点增加贴模型参数，支持自动贴模型
 - [TilesetLayer](http://mars3d.cn/api/TilesetLayer.html#modelMatrix) 三维模型图层支持外部更新 modelMatrix
@@ -1949,7 +1995,7 @@
 - 除了线之外的面对象的 distanceDisplayCondition_far 值内部自动加 6378137 来保持效果一致。
 
 
-## 3.0.28 - 2021-6-22  
+## 3.0.28 - 2021-6-22
 #### 新增 🌟
 - 图层、控件等类中增加 stopPropagation 参数，用于控制事件是否冒泡
 - 对 wmts 服务图层支持单击拾取矢量数据
@@ -2047,10 +2093,10 @@
 - 材质：新增了十多个全新动态材质，并使用 MaterialType 和 MaterialUtil 类来统一管理矢量数据的材质对象，简单易用。
 - 模型分析：优化了模型压平、模型开挖、模型淹没，支持多个模型压平等并提高渲染效率。
 - 地形分析：优化了地形开挖、等高线、坡度坡向等地形相关功能，支持多个地形开挖并提高渲染效率。
- 
+
 #### 弃用 & API重构 🔒
 - v3.0版与v2.x版本还不兼容(API结构不同)，无法兼容平滑的升级，因为v3所有代码从零开始编写搭建的,不是基于之前的老版本修改的。
- 
+
 
 
 ---
