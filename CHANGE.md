@@ -44,6 +44,19 @@
 
 
 --- 
+## 3.8.1 - 2024-9-3
+#### 优化 💪
+- SatelliteSensor、RectSensor、ConicSensor增加slices参数并默认值改为最小，可以自定义传值优化效率和效果
+- mars3d-cesium库升级到[v1.121](https://github.com/CesiumGS/cesium/releases/tag/1.121) 
+
+#### 修复 🐞
+- PointLight绘制时，传入color无效 [#IALND0](https://gitee.com/marsgis/mars3d/issues/IALND0)
+- 合并渲染对象调用openHighlight、closeHighlight方法无法指定index
+- Video3D对象play属性赋值无效
+- ModelPrimitive在highlight属性交互时模型会重绘闪烁
+- CameraHistory在2D模式下无法限定范围
+
+
 ## 3.8.0 - 2024-8-20
 #### 新增 🌟
 - 新增BillboardIndicator可拖拽面板矢量对象
