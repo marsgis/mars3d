@@ -44,9 +44,23 @@
 
 
 --- 
+## 3.8.2 - 2024-9-10
+#### 新增 🌟
+- 新增LineDashArrow虚线箭头线材质
+
+#### 优化 💪
+- 优化SatelliteSensor在不动时的渲染效率
+
+#### 修复 🐞
+- 非标准地形服务(天地图、ArcGIS地形)不支持准确贴地高度计算时报错的容错处理
+- Polygon本身不贴地但outline边线贴地时报错的容错处理
+
+
+
 ## 3.8.1 - 2024-9-3
 #### 优化 💪
 - SatelliteSensor、RectSensor、ConicSensor增加slices参数并默认值改为最小，可以自定义传值优化效率和效果
+- OutlineEffect增加closeOnClick参数
 - mars3d-cesium库升级到[v1.121](https://github.com/CesiumGS/cesium/releases/tag/1.121) 
 
 #### 修复 🐞
@@ -55,6 +69,7 @@
 - Video3D对象play属性赋值无效
 - ModelPrimitive在highlight属性交互时模型会重绘闪烁
 - CameraHistory在2D模式下无法限定范围
+
 
 
 ## 3.8.0 - 2024-8-20
