@@ -44,6 +44,20 @@
 
 
 --- 
+## 3.8.2 - 2024-9-23
+#### 优化 💪
+- PointVisibility、ConeVisibility 增加visibleAreaColor、hiddenAreaColor颜色自定义参数
+- PathEntity不在时序范围内，使用取最近的一个状态的方向值
+- TdtPOI、BaiduPOI、GaodePOI等key参数同时支持字符串或数组
+- TilesetClip、TilesetFlat增加maxCanvasSize参数
+- Geocoder参数优化并补充API
+
+#### 修复 🐞
+- 按轴平移时editMovePoint事件返回的cartesian坐标值不是最新的
+- TerrainClip外裁剪时删除到最后一个报错
+- BillboardEntity的color和opacity同时存在时color无效
+
+
 ## 3.8.2 - 2024-9-10
 #### 新增 🌟
 - 新增LineDashArrow虚线箭头线材质
