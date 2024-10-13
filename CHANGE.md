@@ -44,13 +44,31 @@
 
 
 --- 
-## 3.8.2 - 2024-9-23
+## 3.8.4 - 2024-10-15
+#### 优化 💪
+- VolumeDepthMeasure修改参数支持盒子可以按需显示
+- Image2图片材质增加maskImage参数
+- Video2D增加maskImage样式参数
+- mars3d-cesium库升级到[v1.122](https://github.com/CesiumGS/cesium/releases/tag/1.122) 
+
+#### 修复 🐞
+- v3.8.3产生的wmts内部自动解析参数错误的问题
+- BaseLayerPicker控件在外部更新底图和地形后的自动更新
+- ModelPrimitive存在distanceDisplayBillboard属性时开始编辑会消失  [#IAUS4W](https://gitee.com/marsgis/mars3d/issues/IAUS4W)
+- Satellite不存在model参数时cone的创建及更新方向异常
+- PointPrimitive图层设置透明度无效
+- DoubleSidedPlane 深度检测下没有遮挡
+
+## 3.8.3 - 2024-9-25
 #### 优化 💪
 - PointVisibility、ConeVisibility 增加visibleAreaColor、hiddenAreaColor颜色自定义参数
 - PathEntity不在时序范围内，使用取最近的一个状态的方向值
 - TdtPOI、BaiduPOI、GaodePOI等key参数同时支持字符串或数组
 - TilesetClip、TilesetFlat增加maxCanvasSize参数
 - Geocoder参数优化并补充API
+- WMTS增加tileMatrixBefore参数
+- 标绘时的顶点吸附，改为允许空白处正常拾取标绘
+- turf库升级到[v7.1](http://turfjs.org/) 
 
 #### 修复 🐞
 - 按轴平移时editMovePoint事件返回的cartesian坐标值不是最新的
