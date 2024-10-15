@@ -49,7 +49,7 @@
 - VolumeDepthMeasure修改参数支持盒子可以按需显示
 - Image2图片材质增加maskImage参数
 - Video2D增加maskImage样式参数
-- mars3d-cesium库升级到[v1.122](https://github.com/CesiumGS/cesium/releases/tag/1.122) 
+- mars3d-cesium库升级到[v1.122](https://github.com/CesiumGS/cesium/releases/tag/1.122) (已知问题：很多计算渲染过程造成间隔闪烁)
 
 #### 修复 🐞
 - v3.8.3产生的wmts内部自动解析参数错误的问题
