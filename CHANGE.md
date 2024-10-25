@@ -26,8 +26,8 @@
 > 这些日期仅供一般性参考，如有更改，恕不另行通知。
 
 通常的发布周期如下：
-- 约 每3年 发布1个主版本
-- 约 每6个月 发布1个大版本
+- 主版本 没有时间规划，如果有架构性变化时会升主版本
+- 约 半年 发布1个大版本
 - 约 每周 发布1个小版本，正常均在**周二晚上**发布（如果有紧急的 bugfix，则任何时候都可发布）
   
 
@@ -44,6 +44,20 @@
 
 
 --- 
+## 3.8.5 - 2024-10-28
+#### 优化 💪
+- map的getCenter、getExtent、flyToExtent方法算法重写
+- OverviewMap增加polygon视域范围面的展示，并优化视角同步效果
+- RectangleEntity整体移动算法优化重写
+- v3.4移除的 ModelLayer 恢复还原并修改了参数，用于单个gltf模型时简洁快速管理
+
+#### 修复 🐞
+- BillboardEntity、BillboardPrimitive、PointEntity贴地在2D时不显示
+- PathEntity的getIndex或index不对
+- 图上量算的hasMoveEdit参数无效
+
+
+
 ## 3.8.4 - 2024-10-15
 #### 优化 💪
 - VolumeDepthMeasure修改参数支持盒子可以按需显示
