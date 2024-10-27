@@ -45,6 +45,9 @@
 
 --- 
 ## 3.8.5 - 2024-10-28
+#### 新增 🌟
+- 矢量图层聚合重写，支持所有数据类型的聚合，并使用新的cluster参数、clusterEnabled属性、clusterStop事件。
+
 #### 优化 💪
 - map的getCenter、getExtent、flyToExtent方法算法重写
 - OverviewMap增加polygon视域范围面的展示，并优化视角同步效果
@@ -55,6 +58,9 @@
 - BillboardEntity、BillboardPrimitive、PointEntity贴地在2D时不显示
 - PathEntity的getIndex或index不对
 - 图上量算的hasMoveEdit参数无效
+
+#### 弃用 & API重构 🔒
+- 矢量图层聚合相关全部重写，已移除clustering参数、clustering属性等，已由其他参数替代。
 
 
 
