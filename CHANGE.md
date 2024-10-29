@@ -44,14 +44,16 @@
 
 
 --- 
-## 3.8.5 - 2024-10-28
+## 3.8.5 - 2024-10-29
 #### 新增 🌟
-- 矢量图层聚合重写，支持所有数据类型的聚合，并使用新的cluster参数、clusterEnabled属性、clusterStop事件。
+- 矢量图层聚合重写，支持所有数据类型的聚合，并使用新的cluster参数、clusterEnabled属性、clusterStop事件。(Tip:不参与聚合的类型：合并渲染对象、处于标绘或编辑状态的对象)
 
 #### 优化 💪
 - map的getCenter、getExtent、flyToExtent方法算法重写
 - OverviewMap增加polygon视域范围面的展示，并优化视角同步效果
 - RectangleEntity整体移动算法优化重写
+- SectionMeasure剖面分析的距离由空间距离改为切面的水平距离
+- Timeline增加format参数、ClockAnimate优化format参数
 - v3.4移除的 ModelLayer 恢复还原并修改了参数，用于单个gltf模型时简洁快速管理
 
 #### 修复 🐞
