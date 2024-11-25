@@ -49,7 +49,11 @@
 - 新增ParallelogramEntity、ParallelogramPrimitive平行四边形矢量对象
 
 #### 优化 💪
--
+- FrustumPrimitive增加near参数
+- Map增加getLayrsTree方法
+- WFS图层内部增加自动取消已发出请求
+- Map增加isDrawing属性
+- LineFlow材质增加bgColor参数
 
 #### 修复 🐞
 - PointVisibility、ConeVisibility合并渲染可视域对象opacity参数无效
