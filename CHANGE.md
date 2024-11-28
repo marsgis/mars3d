@@ -49,9 +49,9 @@
 - 新增ParallelogramEntity、ParallelogramPrimitive平行四边形矢量对象
 
 #### 优化 💪
-- FrustumPrimitive增加near参数
-- Map增加getLayrsTree方法
+- Map增加getLayrsTree方法、矢量图层增加getGraphicsTree方法
 - WFS图层内部增加自动取消已发出请求
+- FrustumPrimitive增加near参数
 - Map增加isDrawing属性
 - LineFlow材质增加bgColor参数
 
