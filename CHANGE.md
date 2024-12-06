@@ -44,6 +44,20 @@
 
 
 --- 
+## 3.8.9 - 2024-12-7
+#### 优化 💪
+- 矢量图层loadJSON、GeoJSON图层加载json数据互相兼容格式
+- Map.setOptions、setLayersOptions方法增加过滤图层参数
+- 矢量图层加载json数据toPrimitive参数(自动转为Primitive渲染)规则优化
+- Popup增加useGraphicPostion参数控制是否使用graphic本身坐标
+- mars3d-cesium库升级到[v1.124](https://github.com/CesiumGS/cesium/releases/tag/1.124) 
+
+#### 修复 🐞
+- 部分线面对象聚合异常
+- DivGraphic移除时按轴平移对象未销毁
+- GroupGraphic对象组flyTo错误
+
+
 ## 3.8.8 - 2024-11-26
 #### 新增 🌟
 - 新增ParallelogramEntity、ParallelogramPrimitive平行四边形矢量对象
@@ -68,7 +82,7 @@
 
 #### 弃用 & API重构 🔒
 - TilesetLayer移除了luminanceAtZenith参数
-- npm包中去掉`dist`子目录，与下载的静态包目录保持一致(如果`import "mars3d/mars3d.css"`报错，请改为`import "mars3d/mars3d.css"`)
+- npm包中去掉`dist`子目录，与下载的静态包目录保持一致(如果`import "mars3d/dist/mars3d.css"`报错，请改为`import "mars3d/mars3d.css"`)
 
 
 
