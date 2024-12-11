@@ -43,18 +43,18 @@
 # 4. 更新日志
 
 
---- 
-## 3.8.9 - 2024-12-10
+---
+## 3.8.10 - 2024-12-11
 #### 优化 💪
-- 矢量图层loadJSON、GeoJSON图层加载json数据互相兼容格式
 - Map.setOptions、setLayersOptions方法增加过滤图层参数
+- 默认右键菜单增加图层及场景的配置导出
+- WindLayer风向图图层重写
+- 矢量图层loadJSON、GeoJSON图层加载json数据互相兼容格式 
 - 矢量图层加载json数据toPrimitive参数(自动转为Primitive渲染)规则优化
-- Popup增加useGraphicPostion参数控制是否使用graphic本身坐标
-- 右键菜单增加图层及场景的配置导出
+- 矢量图层更新symbol时symbol.type切换时自动丢弃之前的styleOptions
+- Popup增加useGraphicPostion参数控制是否使用graphic本身坐标 
 - BillboardEntity、PointEntity等label增加combine参数控制是否使用Entity附带文本
 - PolygonEntity增加outlineStyle.usePolyline参数控制是否使用polyline对象模拟边线
-- 矢量图层更新symbol时symbol.type切换时自动丢弃之前的styleOptions
-- WindLayer风向图图层重写
 - mars3d-cesium库升级到[v1.124](https://github.com/CesiumGS/cesium/releases/tag/1.124) 
 
 #### 修复 🐞
