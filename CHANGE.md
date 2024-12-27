@@ -44,6 +44,18 @@
 
 
 ---
+## 3.8.11 - 2024-12-24
+#### 优化 💪
+- 所有对象setOptions方法增加第2个参数，可以控制内部是否merge合并
+- CzmGeoJsonLayer、KmlLayer支持highlight参数
+- LineBloom材质增加showRatio参数，可控制显示一半
+- 地形编辑、模型编辑相关类增加area属性
+
+#### 修复 🐞
+- 修复v3.8.7增加挂载colorCorrection造成TilesetLayer图层导出JSON失败的问题
+
+
+
 ## 3.8.10 - 2024-12-11
 #### 优化 💪
 - Map.setOptions、setLayersOptions方法增加过滤图层参数
