@@ -44,6 +44,74 @@
 
 
 ---
+## 3.9.0 - 2025-2-15
+#### 重要说明 📣
+- 对矢量数据postion、positions属性和时序位置相关做了重大调整
+
+#### 新增 🌟
+- 点矢量对象postion新增支持传入[时序坐标](http://mars3d.cn/api/BaseGraphic.html#.TimePosition)进行动态展示
+- 线面Entity矢量对象positions新增支持传入[时序坐标](http://mars3d.cn/api/BaseGraphic.html#.TimePolyPositions)进行动态展示,并支持addTimePositions方法加时序位置
+- 矢量图层新增collision属性，支持文本及点矢量对象的碰撞检测自动隐藏不展示
+- 增加内置ToolBar控件对象，增加对map工具按钮栏上下左右位置的配置position参数
+- 新增QueryPOI、QueryRoute查询类，内部service参数控制选用天地图、百度、高德服务
+
+#### 优化 💪
+- GeodePoiLayer类更名PoiLayer，并支持 天地图、百度、高德服务类型参数
+- Geocoder支持天地图、百度、高德不同类型
+- mars3d-cesium库升级到[v1.126](https://github.com/CesiumGS/cesium/releases/tag/1.126) 
+
+#### 弃用 & API重构 🔒
+- 矢量对象属性变更：移除coordinate和coordinates（改用coord）、点矢量对象删除positions、points(可以用coord或graphic.isPoint判断区分点和线面)
+- 矢量对象方法变更：addDynamicPosition改名addTimePosition ，移除getCoordinates和getCoordinate(改用getCoord)
+- PathEntity、Route、FixedRoute取消positions等参数，改为其他点对象一样的[时序坐标](http://mars3d.cn/api/BaseGraphic.html#.TimePosition)方式
+- 移除GraphicGroupLayer图层(改用GroupGraphic进行分组管理)
+- GraphicLayer移除hasEdit属性、activateEdit、disableEdit方法，请改用isAutoEditing属性（因为含义为“是否自动激活编辑”而不是“是否允许编辑”）
+- GeoJSON图层解析时MultiLineString、MultiPolygon默认采用GroupGraphic包一层（可传hasGroup:false），取对象方式有变化
+- 移除map.keyboardRoam，解耦改为按需构造mars3d.thing.KeyboardRoam对象
+- 移除了TdtPOI、BaiduPOI、GaodePOI、GaodeRoute类(改用QueryPOI、QueryRoute)
+- 移除了GaodePOIGeocoder、GeodePoiLayer(改用PoiLayer)
+- 移除了CircleScan材质，请直接用Image2
+- map移除了toolbar属性(改用map.control.toolbar)
+
+
+
+--- 
+## 3.8.15 - 2025-01-28
+#### 优化 💪
+- 增加对vue3支持自动判断不双向绑定
+
+#### 修复 🐞
+- Graphic矢量数据setOptions修改popupOptions属性未合并
+- 矢量数据图层聚合优化，show变更后未自动更新聚合状态等
+
+
+
+## 3.8.13 - 2025-01-20
+#### 优化 💪
+- Timeline控件增加refresh刷新方法
+- MapCompare控件增加是否同步视角参数
+- PointMeasure增加popupOptions参数
+- GraticuleLayer经纬网步长规则优化为正方形格
+- ContextMenu右击graphic时自动处理
+- map.proceedCameraViewList方法优化减去暂停前的播放时长
+
+#### 修复 🐞
+- effect特效toJSON修改过的属性值未导出
+- FixedRoute存在暂停时间时重复播放index有问题
+- VolumeDepthMeasure初始化传入minHeight、maxHeight值无效
+
+
+
+## 3.8.12 - 2025-01-06
+#### 优化 💪
+- CubeView控件增加单击交互和相关参数
+- mars3d-cesium库升级到[v1.125](https://github.com/CesiumGS/cesium/releases/tag/1.125) 
+
+#### 修复 🐞
+- Sector编辑按轴移动异常
+
+
+
 ## 3.8.11 - 2024-12-24
 #### 优化 💪
 - 所有对象setOptions方法增加第2个参数，可以控制内部是否merge合并
@@ -64,7 +132,7 @@
 - 矢量图层loadJSON、GeoJSON图层加载json数据互相兼容格式 
 - 矢量图层加载json数据toPrimitive参数(自动转为Primitive渲染)规则优化
 - 矢量图层更新symbol时symbol.type切换时自动丢弃之前的styleOptions
-- Popup增加useGraphicPostion参数控制是否使用graphic本身坐标 
+- Popup、Tooltip增加useGraphicPostion参数控制是否使用graphic本身坐标 
 - BillboardEntity、PointEntity等label增加combine参数控制是否使用Entity附带文本
 - PolygonEntity增加outlineStyle.usePolyline参数控制是否使用polyline对象模拟边线
 - mars3d-cesium库升级到[v1.124](https://github.com/CesiumGS/cesium/releases/tag/1.124) 
@@ -74,6 +142,10 @@
 - DivGraphic移除时按轴平移对象未销毁
 - GroupGraphic对象组flyTo错误
 - 编辑矢量对象时，整体平移编辑点的按轴平移时部分异常
+
+#### 弃用 & API重构 🔒
+- Popup、Tooltip之前取矢量对象坐标全改为鼠标坐标，如需继续使用矢量对象本身坐标，请加useGraphicPostion:true参数
+
 
 
 ## 3.8.8 - 2024-11-26
@@ -1619,7 +1691,7 @@
 - mars3d-cesium库升级到[v1.92](https://github.com/CesiumGS/cesium/releases/tag/1.92)
 
 #### 弃用 & API重构 🔒
-- 因Cesium 升级至 1.92后，其Promise与之前版本不兼容，v3.3+依赖cesium v1.92+，相关版本兼容处理参考[教程](http://mars3d.cn/dev/guide/issue/version.html)
+- 因Cesium 升级至 1.92后，其Promise与之前版本不兼容，v3.3+依赖cesium v1.92+，相关版本兼容处理参考[教程](http://mars3d.cn/docs/issue/version/)
 - 为了降低对Cesium源码修改的依赖，重新整理优化 mars3d-cesium 库，非常大的修改了一轮
 - ArcGIS/WMS 瓦片图层的 maxLength 参数改名为 graphicConver
 - 矢量数据的 clampToGround 方法更名为 autoSurfaceHeight(兼容旧名称)
@@ -2263,7 +2335,7 @@
 
 
 ---
-> V2版本已停止维护
+
 
 ## 2.3.0 - 2020-12-31
 #### 重要说明 📣
@@ -2289,7 +2361,7 @@
 
 
 ---
-> V1版本已停止维护
+
 
 ## 1.9.0 - 2019-10-1
 #### 重要说明 📣

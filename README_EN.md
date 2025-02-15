@@ -29,7 +29,7 @@
 
 ### Relevant learning materials
 
-- Development tutorial: [http://mars3d.cn/dev/](http://mars3d.cn/dev/)  
+- Development tutorial: [http://mars3d.cn/docs/](http://mars3d.cn/docs/)  
 - API documentation：[http://mars3d.cn/api/](http://mars3d.cn/api/)  
 - Mars3D official website：[http://mars3d.cn](http://mars3d.cn)  
 
