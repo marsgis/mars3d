@@ -44,6 +44,16 @@
 
 
 ---
+## 3.9.5 - 2025-4-2
+#### 优化 💪
+- mars3d-cesium库升级到[v1.128](https://github.com/CesiumGS/cesium/releases/tag/1.128) 
+
+#### 修复 🐞
+- v3.9.4产生的MapCompare释放后事件报错
+- v3.9.3产生的map触发2次load事件
+- MultipleSkyBox销毁时报错
+
+
 ## 3.9.4 - 2025-3-25
 #### 优化 💪
 - MapCompare对比事件代码优化
@@ -74,8 +84,8 @@
 - 矢量图层新增attr属性，支持对图层内所有矢量数据统一配置ajax动态属性。
 
 #### 优化 💪
-- mars3d-cesium库升级到[v1.127](https://github.com/CesiumGS/cesium/releases/tag/1.127) 
 - ConeTrack、ConeTrackPrimitive支持标绘和编辑
+- mars3d-cesium库升级到[v1.127](https://github.com/CesiumGS/cesium/releases/tag/1.127) 
 
 #### 修复 🐞
 - MapCompare控件show属性切换时优化
