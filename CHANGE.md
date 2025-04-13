@@ -44,6 +44,17 @@
 
 
 ---
+## 3.9.6 - 2025-4-15
+#### 优化 💪
+- DoubleSidedPlane支持文本材质
+
+#### 修复 🐞
+- PolylineEntity的startSnakeAnimation方法算法重写
+- PathEntity在未加入图层时toJSON方法未导出坐标信息
+- Mask遮盖对象toJSON坐标不对
+
+
+
 ## 3.9.5 - 2025-4-2
 #### 优化 💪
 - mars3d-cesium库升级到[v1.128](https://github.com/CesiumGS/cesium/releases/tag/1.128) 
