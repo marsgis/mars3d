@@ -44,6 +44,22 @@
 
 
 ---
+## 3.9.7 - 2025-4-21
+#### 新增 🌟
+- 增加对矢量对象的 复制、剪切、粘贴 右键菜单功能
+
+#### 优化 💪
+- 矢量图层的symbol.styleFieldOptions参数支持JS语法字符串配置
+- GeoJsonLayer等矢量图层filter参数支持JS语法字符串配置
+- VideoPrimitive对象增加maskImage参数
+- 优化时序对象的编辑等操作
+
+#### 修复 🐞
+- 修复v3.9.6产生的zIndex的顺序错误
+- 热力图图层setOptions方法支持动态更新热力图效果相关参数
+
+
+
 ## 3.9.6 - 2025-4-15
 #### 优化 💪
 - DoubleSidedPlane支持文本材质
@@ -367,7 +383,7 @@
 - TilesetBoxClip盒子裁剪clipOutSide参数无效 [#IAKIJP](https://gitee.com/marsgis/mars3d/issues/IAKIJP)
 
 #### 弃用 & API重构 🔒
-- 免费版SDK的Logo位置：将出现在屏幕四周随机位置 (如需无Logo请您[购买授权](http://mall.marsgis.cn/#/product/mars3d-sdk-2) 支持mars3d的可持续发展)
+- 免费版SDK的Logo位置：将出现在屏幕四周随机位置 (如需无Logo请您[购买授权](http://mall.marsgis.cn/#/product/mars3d-sdk-1) 支持mars3d的可持续发展)
 - 矢量数据编辑时按轴移动使用的matrixMoveRadius参数移除，可改用matrixMove参数
 
 
