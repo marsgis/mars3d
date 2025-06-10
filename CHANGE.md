@@ -47,9 +47,10 @@
 ## 3.9.11 - 2025-6-10
 
 #### 新增 🌟
-- 新增标准[mars3d-plot](http://mars3d.cn/example.html#/ex_6)军标插件（非公开）
-- 新增PolyGradient2双色渐变面材质
 - GraphicLayer、GeoJsonLayer、BusineDataLayer新增配置symbol参数方式直接渲染热力图方式
+- 新增WfsSingleLayer简单wfs图层，可以一次性加载wfs数据
+- 新增PolyGradient2双色渐变面材质
+- 新增标准[mars3d-plot](http://mars3d.cn/example.html#/ex_6)军标插件（非公开）
 
 #### 优化 💪 
 - HeatLayer增加valueColumn参数，并positions支持类似点矢量数据相同构造数据的直接传入渲染
