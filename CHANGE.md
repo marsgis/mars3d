@@ -44,13 +44,26 @@
 
 
 ---
+## 3.9.12 - 2025-6-20
+
+#### 优化 💪 
+- 支持3DGS高斯泼溅模型时渲染(请升级mars3d-cesium库到v1.130.1)
+- 矢量图层symbol.styleFieldOptions配置优化，支持属性表达式配置
+- 默认右键菜单增加导入JSON文件菜单项
+- 插件增加注册成功的F12打印log提示，便于排查问题
+
+#### 修复 🐞
+- 修复已知bug问题
+
+
+
 ## 3.9.11 - 2025-6-10
 
 #### 新增 🌟
 - GraphicLayer、GeoJsonLayer、BusineDataLayer新增配置symbol参数方式直接渲染热力图方式
 - 新增WfsSingleLayer简单wfs图层，可以一次性加载wfs数据
 - 新增PolyGradient2双色渐变面材质
-- 新增标准[mars3d-plot](http://mars3d.cn/example.html#/ex_6)军标插件（非公开）
+- 新增标准[mars3d-plot](https://www.bilibili.com/video/BV1zSMMz8Etx/)军标插件（非公开）
 
 #### 优化 💪 
 - HeatLayer增加valueColumn参数，并positions支持类似点矢量数据相同构造数据的直接传入渲染
