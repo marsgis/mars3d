@@ -48,6 +48,7 @@
 #### 优化 💪 
 - GroupGraphic支持设置availability属性对对所有子级生效
 - Subtitles不展示文本时div进行隐藏(方便设置背景色)
+- mars3d-cesium库升级到[v1.132](https://github.com/CesiumGS/cesium/releases/tag/1.132) 
 
 #### 修复 🐞
 - PitEntity的label默认初始化未显示
