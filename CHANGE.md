@@ -44,12 +44,28 @@
 
 
 ---
+## 3.10.1 - 2025-8-3
+#### 优化 💪 
+- GroupGraphic支持设置availability属性对对所有子级生效
+- Subtitles不展示文本时div进行隐藏(方便设置背景色)
+
+#### 修复 🐞
+- PitEntity的label默认初始化未显示
+- Mask遮盖对象flyTo效果不对
+- GraphicLayer初始加载json时readyPromise未触发
+- HeatLayer热力图更新不在相同rectangle的positions时有偏移
+- PolyUtil.isInPoly方法改为使用truf库算法(之前的改名为isInPoly2，判断地球背面的坐标存在错误)
+- 手动修改map.clock.multiplier时ClockAnimate控件未自动更新
+
+
 ## 3.10.0 - 2025-7-6
 #### 新增 🌟
 - 新增标准[mars3d-plot](https://www.bilibili.com/video/BV1zSMMz8Etx/)军标插件（非公开）
+- 新增了Sector扇形材质 
 
 #### 优化 💪
 - OverviewMap增加sync参数
+- CircleWave材质增加square、startAngle、endAngle、isDouble参数
 - mars3d-cesium库升级到[v1.131](https://github.com/CesiumGS/cesium/releases/tag/1.131) 
 
 #### 修复 🐞
