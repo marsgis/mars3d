@@ -44,6 +44,17 @@
 
 
 ---
+## 3.10.2 - 2025-8-11
+#### 优化 💪 
+- Timeline的format参数支持直接传入时间格式化文本 
+- 按住ctrl/alt/shift键进行click时，事件内支持返回ctrlKey/altKey/shiftKey:true的标识
+
+#### 修复 🐞
+- CircleEntity存在diffHeight时，高度编辑点失效
+- GraphicLayer配置symbol为热力图时，切换show未同步进行显示隐藏处理
+- map.setBasemapsOptions方法传空值时未清除原有配置
+
+
 ## 3.10.1 - 2025-8-3
 #### 优化 💪 
 - GroupGraphic支持设置availability属性对对所有子级生效
