@@ -44,6 +44,18 @@
 
 
 ---
+## 3.10.3 - 2025-8-20
+#### 优化 💪 
+- bindContextMenu绑定菜单增加mergeMap参数控制是否合并一起显示map默认右键菜单
+
+#### 修复 🐞
+- DivGraphic对象在移动端无法编辑
+- ConeTrack的setStyle更新heading时位置错位
+- WallEntity时序坐标时报错
+- 默认右键菜单的粘贴矢量对象未支持时序坐标
+
+
+
 ## 3.10.2 - 2025-8-11
 #### 优化 💪 
 - Timeline的format参数支持直接传入时间格式化文本 
