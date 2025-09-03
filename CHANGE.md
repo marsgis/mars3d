@@ -44,9 +44,25 @@
 
 
 ---
-## 3.10.3 - 2025-8-20
+## 3.10.4 - 2025-9-5
+#### 优化 💪 
+- WallEntity增加riseAnimationDuration参数和startRiseAnimation方法
+- TilesetLayer增加opaquePass、renderState参数
+- map增加tilePromise、terrainPromise属性
+- MatrixMove2的radius自动根据视角缩放
+- ModelEntity存在color值时自动填充颜色
+- popup支持配置iframe方式(如显示实时视频)
+- mars3d-cesium库升级到[v1.133](https://github.com/CesiumGS/cesium/releases/tag/1.133) 
+
+#### 修复 🐞
+- MatrixMove的enabled属性无效
+
+
+
+## 3.10.3 - 2025-8-22
 #### 优化 💪 
 - bindContextMenu绑定菜单增加mergeMap参数控制是否合并一起显示map默认右键菜单
+- MouseDownView自动判断鼠标按钮事件
 
 #### 修复 🐞
 - DivGraphic对象在移动端无法编辑
@@ -67,6 +83,7 @@
 - map.setBasemapsOptions方法传空值时未清除原有配置
 
 
+
 ## 3.10.1 - 2025-8-3
 #### 优化 💪 
 - GroupGraphic支持设置availability属性对对所有子级生效
@@ -80,6 +97,7 @@
 - HeatLayer热力图更新不在相同rectangle的positions时有偏移
 - PolyUtil.isInPoly方法改为使用truf库算法(之前的改名为isInPoly2，判断地球背面的坐标存在错误)
 - 手动修改map.clock.multiplier时ClockAnimate控件未自动更新
+
 
 
 ## 3.10.0 - 2025-7-6
