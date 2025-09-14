@@ -28,7 +28,7 @@
 通常的发布周期如下：
 - 主版本 没有时间规划，如果有架构性变化时会升主版本
 - 约 每年 发布1个大版本
-- 约 每10天 发布1个小版本，正常每月10/20/30日发布（如果有紧急的 bugfix，则任何时候都可发布）
+- 约 每2周 发布1个小版本，在第2周的周二发布（如果有紧急的 bugfix，则任何时候都可发布）
   
 
 # 3. 弃用策略
@@ -44,6 +44,17 @@
 
 
 ---
+## 3.10.5 - 2025-9-16
+#### 优化 💪 
+- FixedRoute增加autoStart参数
+
+#### 修复 🐞
+- DistanceMeasure的updateText参数中总长label未生效
+- arcgis图层subdomains参数未生效
+- Task时序任务返回的index值有误
+
+
+
 ## 3.10.4 - 2025-9-5
 #### 优化 💪 
 - WallEntity增加riseAnimationDuration参数和startRiseAnimation方法
