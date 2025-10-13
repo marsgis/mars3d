@@ -47,6 +47,8 @@
 ## 3.10.6 - 2025-10-10
 #### 优化 💪 
 - cesium内部材质entity与primitive材质不同属性名称的兼容处理
+- flyTo方法增加onBefore参数
+- RotateOut、RotatePoint增加暂停和继续方法
 - mars3d-cesium库升级到[v1.134](https://github.com/CesiumGS/cesium/releases/tag/1.134) 
 
 #### 修复 🐞
