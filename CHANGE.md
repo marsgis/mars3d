@@ -44,6 +44,18 @@
 
 
 ---
+## 3.10.7 - 2025-10-24
+#### 优化 💪 
+- ColorRamp增加getImage取色带图片方法，可用于图例
+- MeasureUtil.formatArea方法参数增加mile(平方海里)
+- PolyUtil.interPolygonByDepth增加isInPoly参数可返回标准网格全量结果
+
+#### 修复 🐞
+- 2D二维模式下map.zoomOut方法异常
+
+
+
+
 ## 3.10.6 - 2025-10-10
 #### 优化 💪 
 - cesium内部材质entity与primitive材质不同属性名称的兼容处理
