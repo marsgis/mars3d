@@ -45,6 +45,19 @@
 
 ---
 --- 
+## 3.10.9 - 2025-11-28
+#### 优化 💪 
+- VolumeCloud新增clip参数
+
+#### 修复 🐞
+- VolumeDepthMeasure在3个坐标时分析失败
+
+
+#### 弃用 & API重构 🔒
+- VolumeCloud移除xCut、yCut、zCut参数(请改用clip)
+
+
+
 ## 3.10.8 - 2025-11-06
 #### 新增 🌟
 - 新增ShortestPath根据地形和最大坡度限制进行最短路径分析类
