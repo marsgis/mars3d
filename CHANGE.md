@@ -52,7 +52,6 @@
 #### 修复 🐞
 - VolumeDepthMeasure在3个坐标时分析失败
 
-
 #### 弃用 & API重构 🔒
 - VolumeCloud移除xCut、yCut、zCut参数(请改用clip)
 
@@ -168,6 +167,7 @@
 #### 新增 🌟
 - 新增标准[mars3d-plot](https://www.bilibili.com/video/BV1zSMMz8Etx/)军标插件（非公开）
 - 新增了Sector扇形材质 
+- 新增 HighFog 高度雾特效
 
 #### 优化 💪
 - OverviewMap增加sync参数
