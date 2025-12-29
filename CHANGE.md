@@ -45,6 +45,18 @@
 
 ---
 --- 
+## 3.10.11 - 2025-12-30
+#### 优化 💪 
+- DistanceLegend增加unit参数
+- WfsLayer图层cql_filter参数支持动态变量
+- mars3d-cesium库升级到[v1.136](https://github.com/CesiumGS/cesium/releases/tag/1.136) 
+
+#### 新增 🌟
+- 新增QueryIServer
+
+
+
+
 ## 3.10.9 - 2025-11-28
 #### 优化 💪 
 - VolumeCloud新增clip参数
