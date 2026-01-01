@@ -54,6 +54,8 @@
 #### 新增 🌟
 - 新增QueryIServer
 
+#### 修复 🐞
+- CamberRadar构造参数传入show:false无效
 
 
 
