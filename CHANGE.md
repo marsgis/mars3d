@@ -44,6 +44,19 @@
 
 
 ---
+## 3.11.1 - 2026-3-15
+
+#### 优化 💪
+- mars3d-cesium库升级到[v1.139](https://github.com/CesiumGS/cesium/releases/tag/1.139) 
+
+#### 修复 🐞
+- FrustumPrimitive、FrustumCombine的夹角计算规则有误差，修改计算规则
+- 部分多环面toJSON未正确导出孔洞坐标
+- 矢量图层isContinued连续绘制时提示id重复警告移除
+- WFS图层配置rectangle切flyTo:true时未正常飞行定位
+
+
+
 ## 3.11.0 - 2026-2-14
 
 #### 优化 💪
