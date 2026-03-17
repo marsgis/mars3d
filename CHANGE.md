@@ -27,8 +27,8 @@
 
 通常的发布周期如下：
 - 主版本 没有时间规划，如果有架构性变化时会升主版本
-- 约 每年 发布1个大版本
-- 约 每2周 发布1个小版本，在第2周的周二发布（如果有紧急的 bugfix，则任何时候都可发布）
+- 约每年发布1个大版本
+- 约每月发布1个大版本（如果有紧急的 bugfix，则任何时候都可发布）
   
 
 # 3. 弃用策略
@@ -44,7 +44,7 @@
 
 
 ---
-## 3.11.1 - 2026-3-15
+## 3.11.1 - 2026-3-17
 
 #### 优化 💪
 - mars3d-cesium库升级到[v1.139](https://github.com/CesiumGS/cesium/releases/tag/1.139) 
@@ -53,12 +53,10 @@
 - FrustumPrimitive、FrustumCombine的夹角计算规则有误差，修改计算规则
 - 部分多环面toJSON未正确导出孔洞坐标
 - 矢量图层isContinued连续绘制时提示id重复警告移除
-- WFS图层配置rectangle切flyTo:true时未正常飞行定位
-
+- WFS图层配置rectangle切flyTo:true时未正常飞行定位 
 
 
 ## 3.11.0 - 2026-2-14
-
 #### 优化 💪
 - ParallelogramEntity增加isRect参数可以限定为角度是90度的矩形
 - mars3d-cesium库升级到[v1.138](https://github.com/CesiumGS/cesium/releases/tag/1.138) 
