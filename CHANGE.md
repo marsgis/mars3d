@@ -44,8 +44,21 @@
 
 
 ---
-## 3.11.1 - 2026-3-17
+## 3.11.2 - 2026-4-8
+#### 新增 🌟
+- 新增HollowCylinder中空圆柱体矢量对象
 
+#### 优化 💪
+- LabelEntity、BillboardEntity增加bounce参数自动执行弹跳效果
+- mars3d-cesium库升级到[v1.140](https://github.com/CesiumGS/cesium/releases/tag/1.140) 
+
+#### 修复 🐞
+- DivPlane无法聚合
+- 多环面toJSON未正确导出孔洞坐标
+
+
+
+## 3.11.1 - 2026-3-17
 #### 优化 💪
 - mars3d-cesium库升级到[v1.139](https://github.com/CesiumGS/cesium/releases/tag/1.139) 
 
