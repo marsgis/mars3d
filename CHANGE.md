@@ -44,6 +44,15 @@
 
 
 ---
+## 3.11.4 - 2026-6-5 
+#### 优化 💪
+- mars3d-cesium库升级到[v1.142](https://github.com/CesiumGS/cesium/releases/tag/1.142) 
+
+#### 修复 🐞
+- Route、Satellite对象position直接传入动态属性坐标
+
+
+
 ## 3.11.3 - 2026-5-13 
 #### 优化 💪
 - GeoJsonLayer的buildings参数优化，支持polygonC类型和属性字段支持模版字符串
