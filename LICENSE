@@ -1,8 +1,115 @@
+Mars3D 三维可视化平台（以下简称 “Mars3D” 或 “本软件”）
+https://mars3d.cn
+
+================================================================================
+                     Mars3D 授权协议（双重授权 / Dual Licensing）
+================================================================================
+
+Mars3D 采用 “社区免费版 + 商业授权版” 双重授权：
+
+一、社区免费版
+    在遵守 Apache License 2.0（见本文件第二部分）及本文件第一部分
+    《Mars3D 免费版附加条款》的前提下，您可以免费地使用、复制、修改、
+    发布和分发本软件（含商业用途）。
+    核心条件：您必须保留软件运行时页面周边的 Mars3D 品牌标识（Logo）
+    及浏览器开发者工具控制台（F12 Console）输出的版权信息，不得移除、
+    遮挡、修改或通过任何技术手段规避。
+
+二、商业授权版
+    付费购买商业授权后，可去除页面 Logo，并将 F12 控制台信息替换为
+    被授权方单位 / 项目名称；不限制项目数、节点数、用户数和使用期限，
+    按 SDK 大版本授权，并提供盖章授权文件与技术服务。
+    购买与咨询：https://mall.marsgis.cn
+
+未取得有效商业授权（以授权证书载明的被授权方与授权版本为准）而复制、
+安装、使用或分发本软件的，视为您已完整接受社区免费版的全部条款。
+
+English summary:
+    The Community Free Edition is licensed under the Apache License 2.0
+    WITH additional attribution terms: you must keep the runtime Mars3D
+    logo and the F12 browser-console copyright notice intact, and must
+    NOT remove, hide, modify or circumvent them. A Commercial License
+    (https://mall.marsgis.cn) permits logo removal and custom console
+    attribution.
+
+================================================================================
+第一部分　Mars3D 免费版附加条款
+（Mars3D Free Edition Additional Terms；与 Apache-2.0 冲突时，就冲突
+部分以本附加条款为准，未尽事项适用 Apache-2.0）
+================================================================================
+
+第 1 条（定义）
+    “署名标识” 指本软件运行时呈现的下列内容的总称：(1) 品牌标识：
+    在三维地球视图及页面周边自动渲染的 Mars3D / MarsGIS 名称、Logo、
+    图标、水印及跳转链接；(2) 控制台声明：浏览器开发者工具控制台
+    （即 F12 面板）输出的版权、版本及授权信息；(3) 上述内容所依赖的
+    代码、资源、配置与渲染逻辑。
+
+第 2 条（授权授予）
+    在您遵守本附加条款及 Apache-2.0 的前提下，版权方授予您免费的、
+    非独占、不可转让、全球范围的许可，以使用、复制、修改、发布、分发
+    本软件（含商业用途，不限制项目数、节点数、用户数及使用期限），
+    但该权利的行使始终受第 3 条限制。本许可不包含商标、商号的使用
+    授权。
+
+第 3 条（署名标识保留义务）
+    3.1 您使用、部署、公开展示、演示、分发本软件或其衍生作品（含以
+        网络 / SaaS 方式提供）时，必须保证署名标识在运行时原样、完整、
+        清晰、可见。
+    3.2 未经版权方书面许可，您不得，也不得协助、教唆第三方实施下列
+        行为：
+        (1) 删除、移除、隐藏、遮挡、覆盖、缩小、淡化品牌标识，或删除、
+            屏蔽、篡改、替换控制台声明；
+        (2) 通过修改源代码、打包 / 混淆后的 JavaScript、CSS、DOM、
+            资源文件或配置，或通过脚本注入、浏览器插件、网络拦截、
+            资源替换、反编译、反混淆、逆向工程等任何技术手段，使署名
+            标识不显示、不输出、不可见或难以发现；
+        (3) 对署名标识的显隐设置域名、运行环境、调试模式等条件判断；
+        (4) 提供、传播用于移除或规避署名标识的工具、补丁、脚本或教程。
+    3.3 您可以为实现自身业务修改、扩展本软件的业务代码与扩展插件，
+        但不得触及、破坏或影响署名标识的生成、渲染与输出逻辑。
+
+第 4 条（分发义务）
+    以源代码或二进制形式分发本软件或其衍生作品时，必须完整随附本
+    许可文件，保留署名标识，在显著位置如实注明 “基于 Mars3D
+    （https://mars3d.cn）构建”，且不得以与本附加条款相冲突或就署名
+    标识而言更宽松的条件再分发。
+
+第 5 条（违约与终止）
+    您违反第 3 条或第 4 条的，本许可自动、即时终止，无需版权方另行
+    通知；您应立即停止使用并销毁全部副本。终止后继续使用、分发的，
+    构成著作权侵权，版权方有权要求停止侵害、消除影响、赔偿损失
+    （含律师费、公证费等合理维权费用）。
+
+第 6 条（商业授权豁免）
+    取得有效商业授权的被授权方，在授权证书载明的被授权方与大版本
+    （如 V3.11 系列）范围内，豁免第 3 条义务：可移除品牌标识，控制台
+    声明替换为被授权方单位 / 项目名称。商业授权按大版本授予，小版本
+    免费升级，跨大版本升级需重新购买；被授权方不得擅自变更授权主体
+    或转让授权。
+
+第 7 条（商标与第三方组件）
+    “Mars3D”“MarsGIS” 及相关 Logo 的著作权、商标权均归版权方所有；
+    未经书面同意，不得用于您的产品名称、商标、域名、宣传或背书，
+    如实的描述性说明（如 “基于 Mars3D 开发”）除外。本软件包含
+    Cesium 等第三方开源组件，仍适用其各自的开源许可。本软件并非
+    Apache 软件基金会产品，与 Apache 软件基金会无关。
+
+第 8 条（其他）
+    本软件按 “现状”（AS IS）提供，不提供任何担保，版权方的责任限制
+    适用 Apache-2.0 第 7、8 条。本附加条款适用中华人民共和国法律，
+    因本条款产生的争议由版权方所在地（合肥市）有管辖权的人民法院
+    管辖。
+
+================================================================================
+第二部分　Apache License, Version 2.0（官方全文）
+================================================================================
+
+
 
                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
-                        http://mars3d.cn/
 
    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 
@@ -188,7 +295,7 @@
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright [2017-2026] [Hefei Mars Technology Co., LTD., China] http://mars3d.cn/
+   Copyright [yyyy] [name of copyright owner]
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -196,11 +303,8 @@
 
        http://www.apache.org/licenses/LICENSE-2.0
 
-
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-
-
