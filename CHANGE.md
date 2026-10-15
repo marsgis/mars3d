@@ -28,7 +28,7 @@
 通常的发布周期如下：
 - 主版本 没有时间规划，如果有架构性变化时会升主版本
 - 约每年发布1个大版本
-- 约每月发布1个大版本（如果有紧急的 bugfix，则任何时候都可发布）
+- 约每月发布1个小版本（如果有紧急的 bugfix，则任何时候都可发布）
   
 
 # 3. 弃用策略
@@ -44,6 +44,30 @@
 
 
 ---
+## 3.11.7 - 2026-9-17
+#### 优化 💪
+- 优化getTextImage方法绘制文本的背景间距
+- mars3d-cesium库升级到[v1.145](https://github.com/CesiumGS/cesium/releases/tag/1.145) 
+
+
+
+## 3.11.6 - 2026-8-8
+#### 优化 💪
+- ClockAnimate增加maxSpeed参数
+- mars3d-cesium库升级到[v1.144](https://github.com/CesiumGS/cesium/releases/tag/1.144) 
+
+
+
+## 3.11.5 - 2026-7-8
+#### 优化 💪
+- WfsLayer图层请求由Cesium.Resource改为XMLHttpRequest不阻塞Cesium本身请求
+- mars3d-cesium库升级到[v1.143](https://github.com/CesiumGS/cesium/releases/tag/1.143) 
+
+#### 修复 🐞 
+- GraphicsLayer在isContinued: true时clearDrawing方法第2次无效
+
+
+
 ## 3.11.4 - 2026-6-5 
 #### 优化 💪
 - mars3d-cesium库升级到[v1.142](https://github.com/CesiumGS/cesium/releases/tag/1.142) 
