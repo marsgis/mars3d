@@ -82,7 +82,7 @@ Github：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d)
 
 ## 通用项目模版 
 通用项目模版是具备一个GIS项目常见功能的项目模板，只用更换数据及叠加业务即可完成项目交付。
-如果需要更多功能可以考虑购买[付费项目模板](http://mall.marsgis.cn/#/product-list?category=project)。
+如果需要更多功能可以考虑购买[付费项目模板](http://mars3d.cn/buy.html?product=template)。
 
 |说明 |教程  |视频  | Github源码 | 国内Gitee源码  |   
 |----|----  |----  | ----| ----  |
@@ -169,4 +169,4 @@ Mars3D SDK采用 **“社区免费版 + 商业授权版” 双重授权**。
 | 数量 / 期限限制 | 无 | 无 |
 | 商业交付 / 招投标 | 须保留署名 | 提供盖章授权，合规无忧 |
 
-📘 完整协议：[`LICENSE`](./LICENSE) ｜ [购买授权](https://mall.marsgis.cn)
+📘 完整协议：[`LICENSE`](./LICENSE) ｜ [购买授权](http://mars3d.cn/buy.html)

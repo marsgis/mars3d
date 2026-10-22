@@ -673,7 +673,7 @@
 - TilesetBoxClip盒子裁剪clipOutSide参数无效 [#IAKIJP](https://gitee.com/marsgis/mars3d/issues/IAKIJP)
 
 #### 弃用 & API重构 🔒
-- 免费版SDK的Logo位置：将出现在屏幕四周随机位置 (如需无Logo请您[购买授权](http://mall.marsgis.cn/#/product/mars3d-sdk-1) 支持mars3d的可持续发展)
+- 免费版SDK的Logo位置：将出现在屏幕四周随机位置 (如需无Logo请您[购买授权](http://mars3d.cn/goods.html?id=mars3d-sdk) 支持mars3d的可持续发展)
 - 矢量数据编辑时按轴移动使用的matrixMoveRadius参数移除，可改用matrixMove参数
 
 
@@ -2046,7 +2046,7 @@
 
 ## 3.3.0 - 2022-4-18
 #### 重要说明 📣
-- 发布了 [移动端 APP 项目模板](http://mall.marsgis.cn/#/product/mars3d-vue-app)
+- 发布了 [移动端 APP 项目模板](http://mars3d.cn/buy.html?product=template)
 
 #### 新增 🌟
 - 新增了 [TilesetBoxClip](http://mars3d.cn/api/TilesetBoxClip.html) 模型盒子裁剪功能

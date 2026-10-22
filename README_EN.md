@@ -86,7 +86,7 @@ Minimal project templates for different tech stacks are provided. You can use th
 ## General Project Templates
 
 The general project template is a project template that includes the common features of a GIS project. You can deliver a project simply by replacing the data and overlaying your business logic.
-If you need more features, consider purchasing a [paid project template](http://mall.marsgis.cn/#/product-list?category=project).
+If you need more features, consider purchasing a [paid project template](http://mars3d.cn/buy.html?product=template).
 
 |Description |Tutorial  |Video  | Github Source | Gitee Source (China) |
 |----|----  |----  | ----| ----  |
@@ -163,4 +163,4 @@ The Mars3D SDK is provided under a **dual license: "Community Free Edition + Com
 | Quantity / Period Limits | None | None |
 | Commercial Delivery / Bidding | Attribution must be retained | Stamped authorization provided, fully compliant |
 
-📘 Full license: [`LICENSE`](./LICENSE) ｜ [Purchase a License](https://mall.marsgis.cn)
+📘 Full license: [`LICENSE`](./LICENSE) ｜ [Purchase a License](http://mars3d.cn/buy.html)
