@@ -40,17 +40,32 @@
 
 ## 3.12.0 - 2026-11-1
 #### 重要说明 📣
-- 请同步升级至 mars3d-cesium 至 ^1.146.0，**引擎与 SDK 必须配套构建和替换** 
+- 请同步升级至 mars3d-cesium 至 v1.146.0，**mars3d v3.12必须配套mars3d-cesium v1.146.0及以上版本**
+
+#### 新增 🌟
+- 优化 `mars3d.js` 主文件打包体积,减少约 52.4% ，同时提升运行性能。
+- 优化 `mars3d.d.ts` 类型声明，补齐与运行时一致的公开成员。
+- [mars3d-cesium](https://www.npmjs.com/package/mars3d-cesium)自v1.146版本，对Cesium官方源码的补丁文件从 32 个减到 14 个（−56.25%），同期净减 695 行（+665/−1,360），对源码的改动只保留通用扩展接口与发布链路,提升对原始Cesium使用兼容度。
+- 新增一组公开只读访问器与扩展点：[BaseGraphic](http://mars3d.cn/api/BaseGraphic.html) 的 `map`、`layer`、`styleToJSON()`、`toJSONEx()`，[BaseEntity](http://mars3d.cn/api/BaseEntity.html) 的 `entityOutlines`、`createEntity()`，以及 [Map](http://mars3d.cn/api/Map.html) 的 `getCurrentMousePosition` 可选 `pickedObject`、`skipPick` 参数；`BaseThing`、`TaskItem`、`BaseLayer`、`EditBase`、`FloodByMaterial` 也补充了 `map`、`graphic`、`maxHeight` 等只读访问器。
 
 #### 优化 💪
-- [mars3d-cesium](https://www.npmjs.com/package/mars3d-cesium)自v1.146版本，对Cesium官方源码的补丁文件从 32 个减到 14 个（−56.25%），同期净减 695 行（+665/−1,360），对源码的改动只保留通用扩展接口与发布链路。
-- 优化 SDK 打包：主文件 mars3d.js 由 4.89 MB 减小到 2.33 MB（约 52.4%），同时提升运行性能。
-- 梳理 mars3d.d.ts 类型声明，补齐与运行时一致的公开成员。
 - 全面校正 JSDoc 注释与实际实现不一致的问题（默认值、返回值、继承关系、失效选项等），并删除或标注尚未实现的选项与文档占位。API文档支持查询属性、方法名称，并修复子类未正常显示继承于父类相关方法的错误。
 - 新增自动化测试体系：单元、契约与示例驱动测试, 真实 Chrome/Edge 端到端测试）、c8 覆盖率门槛、采集浏览器覆盖率并与 c8 合并, 串联静态检查 → 构建 → 声明校验 → 单测 → E2E。
+- 优化鼠标悬停、坐标栏与提示框性能：[LocationBar](http://mars3d.cn/api/LocationBar.html) 复用 hover 已拾取坐标、避免二次 `scene.pick`，并仅在模板需要时统计帧率；[Tooltip](http://mars3d.cn/api/Tooltip.html) 与 [DivGraphic](http://mars3d.cn/api/DivGraphic.html) 内容、尺寸、位置未变化时不再重写 DOM（示例：[Tooltip鼠标移入信息窗](http://mars3d.cn/editor-vue.html?id=control/inside/tooltip)、[LocationBar 下侧状态栏](http://mars3d.cn/editor-vue.html?id=control/basis/locationBar)）。
+- 优化逐帧控件与动画开销：[ClockAnimate](http://mars3d.cn/api/ClockAnimate.html)、[Compass](http://mars3d.cn/api/Compass.html)、[CubeView](http://mars3d.cn/api/CubeView.html)、[DistanceLegend](http://mars3d.cn/api/DistanceLegend.html) 在文本或视角未变化时跳过 DOM 写入；[FlickerEntity](http://mars3d.cn/api/FlickerEntity.html) 复用同一颜色对象；[EchartsLayer](http://mars3d.cn/api/EchartsLayer.html) 隐藏时暂停动画；风场与 [MapVLayer](http://mars3d.cn/api/MapVLayer.html) 在 canvas 尺寸未变时不重设画布；材质默认色改为复用常量。
+- 优化样式与 Shader 处理：缓存相关计算结果；GeoJSON 批量转 Graphic 改为逐项追加；批量添加矢量时聚合与碰撞只刷新一次；CustomShader 与地形 Shader 按源码或对象缓存分词结果，地形锚点一次定位后批量替换。
+
+
+#### 修复 🐞
+- 修复 [TilesetLayer](http://mars3d.cn/api/TilesetLayer.html) 的 `axis` 传入矩阵时 `instanceof Cesium.Axis` 抛错、[BingLayer](http://mars3d.cn/api/BingLayer.html) 默认样式常量大小写错误、[GeeLayer](http://mars3d.cn/api/GeeLayer.html) 静态工厂误用 `new` 的图层创建问题。
+- 修复 [ReflectionWater](http://mars3d.cn/api/ReflectionWater.html) 水面顶点格式、[MultipleSkyBox](http://mars3d.cn/api/MultipleSkyBox.html) 天空盒缓冲用途引用不存在的 Cesium 常量的问题。
+- 修复 [BillboardEntity](http://mars3d.cn/api/BillboardEntity.html)、[LabelEntity](http://mars3d.cn/api/LabelEntity.html) 弹跳动画 `CallbackProperty` 缺少 `isConstant`、默认 `verticalOrigin` 兜底失效，以及 [PolyUtil](http://mars3d.cn/api/PolyUtil.html) 多边形几何工厂误用 `new` 的问题。
+- 修复 [DivGraphic](http://mars3d.cn/api/DivGraphic.html) 反复添加与移除后事件监听无法解绑、[BasePrimitive](http://mars3d.cn/api/BasePrimitive.html) 在就绪前销毁仍监听 `postRender` 的问题。
+- 修复 [Map](http://mars3d.cn/api/Map.html) 销毁后仍派发 `load` 事件或决议 `readyPromise` 的问题；鼠标在同一像素、相机移动后复用旧拾取目标的问题。
 
 #### 弃用 & API重构 🔒
-- 请同步升级至 mars3d-cesium 至 ^1.146.0，**引擎与 SDK 必须配套构建和替换** ，不适配v1.145及之前版本。
+- 请同步升级至 mars3d-cesium 至 ^1.146.0，**引擎与 SDK 必须配套构建和替换**，不适配v1.145及之前版本。
+
 
 
 
